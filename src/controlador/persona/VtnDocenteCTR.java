@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.estilo.TblEstilo;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;
@@ -72,6 +71,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void iniciar() {
         vtnDocente.getBtnReporteDocente().setEnabled(false);
         vtnDocente.getBtnReporteDocenteMateria().setEnabled(false);
+
         cargarCmbTipoDocentes();
         String[] titulo = {"Cedula", "Nombres Completos", "Celular", "Correo", "Tipo Contrato"};
         String[][] datos = {};
@@ -79,7 +79,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDocente.getTblDocente().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDocente.getTblDocente());
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 85);
+        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 100);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 1, 250);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 90);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 3, 230);
@@ -89,7 +89,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
         vtnDocente.getBtnEliminar().addActionListener(e -> eliminarDocente());
         vtnDocente.getBtnFinContratacion().addActionListener(e -> finContratacion());
-        vtnDocente.getBtnReasignarM().addActionListener(e-> finContratacion());
+
         vtnDocente.getCbxDocentesEliminados().addActionListener(e -> cargarDocentes());
         cargarTipoDocentes();
         vtnDocente.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -117,7 +117,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         });
 
         ctrPrin.agregarVtn(vtnDocente);
-        vtnDocente.getCmbTipoDocente().addActionListener(e-> cargarTipoDocentes());        
+        vtnDocente.getCmbTipoDocente().addActionListener(e -> cargarTipoDocentes());
     }
 
     private void cargarCmbTipoDocentes() {
@@ -138,7 +138,6 @@ public class VtnDocenteCTR extends DVtnCTR {
                 docentesMD = docente.cargarDocentesFinContrato();
                 llenarTabla(docentesMD);
                 break;
-
             default:
                 docentesMD = docente.cargarDocentes();
                 llenarTabla(docentesMD);
@@ -272,24 +271,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 
     public void eliminarDocente() {
@@ -430,9 +412,9 @@ public class VtnDocenteCTR extends DVtnCTR {
 
         posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            System.out.println("Este es el ID: " + docentesMD.get(posFila).getIdDocente());
+//            System.out.println("Este es el ID: " + docentesMD.get(posFila).getIdDocente());
             JDFinContratacionCTR ctr = new JDFinContratacionCTR(ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(),
-                    docente.buscarDocente(vtnDocente.getTblDocente().getValueAt(posFila, 0).toString()).getIdDocente());
+                    docente.capturarIdDocente(vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(), 0).getIdDocente());
             ctr.iniciar();
 
         } else {
@@ -440,7 +422,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
-    
+
     private void habilitarBotones() {
         vtnDocente.getBtnEliminar().setEnabled(true);
         vtnDocente.getBtnEditar().setEnabled(true);

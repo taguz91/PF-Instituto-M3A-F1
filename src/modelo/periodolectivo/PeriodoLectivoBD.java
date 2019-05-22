@@ -9,28 +9,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.persona.AlumnoBD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     //Para guardar carrera en un periodo  
-    private final CarreraBD car;
+    private CarreraBD car;
 
     private CarreraMD carrera;
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         pool = new ConnDBPool();
+    }
+
+    public PeriodoLectivoBD() {
     }
 
     public PeriodoLectivoBD(ConectarDB conecta) {
@@ -106,8 +106,37 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         }
     }
 
+    public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
+        String sql = "SELECT p.id_prd_lectivo, c.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, \n"
+                + "p.prd_lectivo_fecha_fin, p.prd_lectivo_estado, c.carrera_nombre FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c"
+                + " USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                p.setCarrera(carrera);
+                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                lista.add(p);
+            }
+            rs.close();
+            ps.getConnection().close();
+            return lista;
+        } catch (SQLException ex) {
+            System.out.println("No pudimos consultar el periodo: " + ex.getMessage());
+            return null;
+        }
+    }
+
     public List<PeriodoLectivoMD> periodoDocente(int aguja) {
-        System.out.println("docente " + aguja);
         String sql = "SELECT DISTINCT p.prd_lectivo_nombre, p.id_prd_lectivo FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
                 + "public.\"Docentes\" d USING(id_docente)\n"
                 + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
@@ -558,7 +587,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return fi;
     }
 
-    public static List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
+    public List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
@@ -611,7 +640,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static List<PeriodoLectivoMD> SelectAll() {
+    public List<PeriodoLectivoMD> selectIdNombreAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
@@ -640,7 +669,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public static Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
+    public Map<String, PeriodoLectivoMD> selectPeriodosFaltantes() {
         String SELECT = "SELECT DISTINCT\n"
                 + "	p1.id_prd_lectivo,\n"
                 + "	p1.id_carrera,\n"
@@ -662,7 +691,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
                 + "		AND ( \"Carreras\".carrera_modalidad ='PRESENCIAL' OR \"Carreras\".carrera_modalidad ='TRADICIONAL' ) \n"
                 + "	) \n"
-                + "	AND 11 != (\n"
+                + "	AND 12 != (\n"
                 + "	SELECT\n"
                 + "		\"count\" ( * ) \n"
                 + "	FROM\n"
@@ -675,6 +704,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	)\n"
                 + "	\n"
                 + "ORDER BY p1.prd_lectivo_nombre";
+
+        System.out.println(SELECT);
 
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
 
@@ -707,5 +738,95 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
         return map;
     }
-    
+
+    public Map<String, PeriodoLectivoMD> selectWhere(String nombrePeriodo) {
+
+        String SELECT = "SELECT DISTINCT\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".id_carrera,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"Carreras\".carrera_nombre,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
+                + "FROM\n"
+                + "	\"PeriodoLectivo\" \n"
+                + "	INNER JOIN \"public\".\"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre = ?";
+        Map<String, PeriodoLectivoMD> map = new HashMap<>();
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, nombrePeriodo);
+
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, parametros);
+
+        System.out.println("--->" + pool.getStmt());
+
+        try {
+            while (rst.next()) {
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+
+                CarreraMD carreraMap = new CarreraMD();
+                carreraMap.setId(rst.getInt("id_carrera"));
+                carreraMap.setNombre(rst.getString("carrera_nombre"));
+                carreraMap.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(carreraMap);
+
+                String key = rst.getString("prd_lectivo_nombre");
+
+                map.put(key, periodo);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+
+        return map;
+    }
+
+    public List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
+        String SELECT = "SELECT DISTINCT\n"
+                + " \"public\".\"Docentes\".id_docente,\n"
+                + " \"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + " (prd_lectivo_fecha_fin - prd_lectivo_fecha_inicio)/7 AS semanas\n"
+                + " FROM\n"
+                + " \"public\".\"Carreras\"\n"
+                + " INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + " INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + " INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_docente = \"public\".\"Cursos\".id_docente\n"
+                + " INNER JOIN \"public\".\"Materias\" ON \"public\".\"Materias\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + " INNER JOIN \"public\".\"SesionClase\" ON \"public\".\"SesionClase\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + " WHERE\n"
+                + " \"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
+                + " \"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPrd + "";
+        List<PeriodoLectivoMD> semana = new ArrayList<>();
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
+
+        System.out.println("Query: \n" + SELECT);
+
+        try {
+            while (rst.next()) {
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+
+                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                System.out.println("Semanas " + rst.getInt(3));
+                periodo.setNumSemanas(rst.getInt(3));
+                semana.add(periodo);
+            }
+        } catch (SQLException | NullPointerException e) {
+            if (e instanceof SQLException) {
+                System.out.println(e.getMessage());
+            }
+        } finally {
+            pool.close(conn);
+        }
+        return semana;
+
+    }
+
 }

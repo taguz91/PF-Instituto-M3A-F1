@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
-import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
 /**
@@ -18,13 +16,9 @@ import modelo.persona.DocenteMD;
 public class DocenteMateriaBD extends DocenteMateriaMD {
 
     private final ConectarDB conecta;
-    private final DocenteBD doc;
-    private final MateriaBD mat;
 
     public DocenteMateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.doc = new DocenteBD(conecta);
-        this.mat = new MateriaBD(conecta);
     }
 
     public boolean guardar() {

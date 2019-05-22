@@ -42,8 +42,8 @@ public abstract class AbstractForm {
 
     public void Init() {
 
-        listaNomPeriodos = PeriodoLectivoBD.SelectAll();
-        listaNomNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+        //listaNomPeriodos = PeriodoLectivoBD.SelectAll();
+        //listaNomNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
         cargarComboNotas();
         cargarComboPeriodo();
 

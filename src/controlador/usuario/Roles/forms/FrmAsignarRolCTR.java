@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.usuario.RolBD;
-import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
@@ -34,12 +33,18 @@ public class FrmAsignarRolCTR {
     private String Funcion;
 
     //Listas
-    private List<RolMD> rolesDisponibles;
-    private List<RolMD> rolesDados;
+    private List<RolBD> rolesDisponibles;
+    private List<RolBD> rolesDados;
     private List<RolesDelUsuarioBD> listaBorrar;
     //tablas
     private DefaultTableModel tablaDisponibles;
     private DefaultTableModel tablaDados;
+
+    private final RolBD rolBD;
+
+    {
+        rolBD = new RolBD();
+    }
 
     public FrmAsignarRolCTR(VtnPrincipal desktop, FrmAsignarRoles vista, RolesDelUsuarioBD modelo, UsuarioBD usuario, String Funcion) {
         this.desktop = desktop;
@@ -54,7 +59,7 @@ public class FrmAsignarRolCTR {
      */
     public void Init() {
         //SE INICIALIZA LISTAS Y TABLAS
-        rolesDisponibles = RolBD.selectAll();
+        rolesDisponibles = rolBD.selectAll();
         rolesDados = new ArrayList<>();
 
         tablaDisponibles = (DefaultTableModel) vista.getTabRolesDisp().getModel();
@@ -121,11 +126,11 @@ public class FrmAsignarRolCTR {
         METODOS DE APOYO
      */
     private void setRolesEnListas() {
-        rolesDados = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
+        rolesDados = rolBD.SelectWhereUSUARIOusername(usuario.getUsername());
         System.out.println("Llamamos al rol una vez");
         validacion();
 
-        List<RolMD> listaTemporal = new ArrayList<>(rolesDisponibles);
+        List<RolBD> listaTemporal = new ArrayList<>(rolesDisponibles);
 
         listaTemporal.forEach((rolMD) -> {
             rolesDados.stream()
@@ -144,7 +149,7 @@ public class FrmAsignarRolCTR {
         vista.getBtnReset().setEnabled(estado);
     }
 
-    private void cargarTabla(List<RolMD> lista, DefaultTableModel tabla) {
+    private void cargarTabla(List<RolBD> lista, DefaultTableModel tabla) {
         tabla.setRowCount(0);
         lista.stream()
                 .forEach(obj -> {
@@ -153,14 +158,14 @@ public class FrmAsignarRolCTR {
 
     }
 
-    private void agregarFila(RolMD obj, DefaultTableModel tabla) {
+    private void agregarFila(RolBD obj, DefaultTableModel tabla) {
         tabla.addRow(new Object[]{
             obj.getNombre()
         });
     }
 
-    private void moverTodos(List<RolMD> listaAgregar, List<RolMD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar) {
-        List<RolMD> listaTemporal = new ArrayList<>(listaQuitar);
+    private void moverTodos(List<RolBD> listaAgregar, List<RolBD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar) {
+        List<RolBD> listaTemporal = new ArrayList<>(listaQuitar);
 
         listaTemporal.stream().forEach(obj -> {
             listaAgregar.add(obj);
@@ -176,9 +181,9 @@ public class FrmAsignarRolCTR {
 
     }
 
-    private void moverUno(String permiso, List<RolMD> listaAgregar, List<RolMD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar, boolean isArray) {
+    private void moverUno(String permiso, List<RolBD> listaAgregar, List<RolBD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar, boolean isArray) {
 
-        List<RolMD> listaTemporal = new ArrayList<>(listaQuitar);
+        List<RolBD> listaTemporal = new ArrayList<>(listaQuitar);
 
         listaTemporal.stream()
                 .filter(item -> item.getNombre().equals(permiso))
@@ -217,7 +222,7 @@ public class FrmAsignarRolCTR {
 
     private void EditarRoles() {
         listaBorrar = new ArrayList<>();
-        List<RolMD> listaTemporal = new ArrayList<>(RolBD.selectAll());
+        List<RolBD> listaTemporal = new ArrayList<>(rolBD.selectAll());
 
         listaTemporal.stream()
                 .forEach(obj -> {

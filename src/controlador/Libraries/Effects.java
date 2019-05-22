@@ -74,11 +74,11 @@ public class Effects {
         if (color != null) {
             component.setForeground(color);
         }
-        component.setText(message);
-        setText(component, time);
+        setText(component, message, time);
     }
 
-    public static void setText(JLabel component, int time) {
+    public static void setText(JLabel component, String text, int time) {
+        component.setText(text);
         Timer task = new Timer(time * 1000, e -> {
             component.setText("");
         });
@@ -88,7 +88,7 @@ public class Effects {
 
     public static void setLoadCursor(Container view) {
         view.setCursor(LOAD_CURSOR);
-        
+
     }
 
     public static void setDefaultCursor(Container view) {

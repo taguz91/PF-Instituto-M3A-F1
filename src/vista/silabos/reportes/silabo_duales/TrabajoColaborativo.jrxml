@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="18381cb6-84df-4868-a7a2-8670ce45ebd4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT e.instrumento,u.numero_unidad,e.id_evaluacion,e.id_unidad,e.indicador,e.id_tipo_actividad,e.valoracion,e.fecha_presentacion,e.fecha_envio FROM "EvaluacionSilabo" e,"UnidadSilabo" u where id_tipo_actividad=2 and e.id_unidad=u.id_unidad 
+and u.id_silabo=$P!{parameter1}]]>
+	</queryString>
+	<field name="instrumento" class="java.lang.String"/>
+	<field name="numero_unidad" class="java.lang.Integer"/>
+	<field name="id_evaluacion" class="java.lang.Integer"/>
+	<field name="id_unidad" class="java.lang.Integer"/>
+	<field name="indicador" class="java.lang.String"/>
+	<field name="id_tipo_actividad" class="java.lang.Integer"/>
+	<field name="valoracion" class="java.lang.Double"/>
+	<field name="fecha_presentacion" class="java.sql.Date"/>
+	<field name="fecha_envio" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="207" y="0" width="105" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="f5baf044-f979-4125-8e2f-a3230bf0b783"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[INSTRUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="465" y="0" width="89" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="9b81bad6-4f5e-47fd-97e6-33a992ca333c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHA DE 
+PRESENTACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="145" y="0" width="62" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="d2d70510-be45-48df-b33b-5649d9fe4f81"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UNIDAD 
+DIDÁCTICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="40" y="0" width="105" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="051254a1-2bea-4e5c-9275-c867a43d2a04"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[APRENDIZAJE COLABORATIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="312" y="0" width="75" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="38d6582a-d489-4d34-8268-a6cc4ce99d83"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VALORACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="41" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="39292290-6d7b-4ae7-a7ce-931cb34445a5"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="387" y="0" width="78" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="3f6f16c8-83e5-49b1-9692-52edc96340d3"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHA 
+DE ENVIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="0" width="41" height="67" uuid="04af889e-f04f-4346-bb29-2a171c935b64"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
+				<text><![CDATA[Gestión de la docencia]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="0" width="105" height="67" uuid="f601498f-3443-4e68-94d1-6cd75e91a119"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{indicador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="62" height="67" uuid="a54bfbe0-d1a1-4149-ae87-55fa0596361b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="0" width="105" height="67" uuid="c5f0fe29-a912-4e41-9075-3e17a1f6051a"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="0" width="75" height="67" uuid="7fedfb25-16a7-4bd3-a9cd-5199f6147446"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{valoracion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="387" y="0" width="78" height="67" uuid="6f636550-10d2-44b2-a60b-9a4910dcbb52"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_envio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="465" y="0" width="89" height="67" uuid="b4260ea7-3dbb-44b6-94a9-64ee2350045b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_presentacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

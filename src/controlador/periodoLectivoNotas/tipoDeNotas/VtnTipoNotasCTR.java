@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -37,11 +38,17 @@ public class VtnTipoNotasCTR {
     private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
-    public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
+    private final PeriodoLectivoBD periodo;
+
+    {
+        periodo = new PeriodoLectivoBD();
+    }
+
+    public VtnTipoNotasCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
-        this.vista = vista;
-        this.modelo = modelo;
-        this.permisos = permisos;
+        this.vista = new VtnTipoNotas();
+        this.modelo = new TipoDeNotaBD();
+        this.permisos = CONS.ROL;
     }
 
     public VtnTipoNotas getVista() {
@@ -56,7 +63,7 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
-        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+        listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
         cargarTabla(listaTiposNotas);
         cargarCmbPeriodos();
     }
@@ -67,9 +74,12 @@ public class VtnTipoNotasCTR {
 
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
 
-        vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).InitAgregar());
+        vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).Init());
 
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(TipoDeNotaBD.selectAllWhereEstadoIs(true)));
+        vista.getBtnActualizar().addActionListener(e -> {
+            listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
+            cargarTabla(listaTiposNotas);
+        });
 
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -119,7 +129,7 @@ public class VtnTipoNotasCTR {
 
     private void cargarCmbPeriodos() {
 
-        listaPeriodos = PeriodoLectivoBD.SelectAll();
+        listaPeriodos = periodo.selectIdNombreAll();
 
         vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos
@@ -147,7 +157,7 @@ public class VtnTipoNotasCTR {
         return obj -> {
             tablaTiposNotas.addRow(new Object[]{
                 tablaTiposNotas.getDataVector().size() + 1,
-                obj.getIdTipoNota(),
+                obj.getId(),
                 obj.getNombre(),
                 obj.getPeriodoLectivo().getNombre_PerLectivo(),
                 obj.getPeriodoLectivo().getCarrera().getNombre(),
@@ -170,11 +180,11 @@ public class VtnTipoNotasCTR {
             int ID = Integer.valueOf(vista.getTblTipoNotas().getValueAt(fila, 1).toString());
 
             modelo = listaTiposNotas.stream()
-                    .filter(item -> item.getIdTipoNota() == ID)
+                    .filter(item -> item.getId() == ID)
                     .findFirst().get();
 
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);
-            form.InitEditar();
+            form.Init();
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA");

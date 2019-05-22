@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.lugar.LugarBD;
+import modelo.lugar.LugarMD;
 
 /**
  *
@@ -24,17 +25,17 @@ import modelo.lugar.LugarBD;
  */
 public class PersonaBD extends PersonaMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     //Se usaran estas clases para consultar
-    private final LugarBD lugar;
+    private LugarBD lugar;
 
     //Esto se usara para cargar las fotos 
     InputStream is;
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -47,12 +48,15 @@ public class PersonaBD extends PersonaMD {
         this.lugar = new LugarBD(conecta);
     }
 
+    public PersonaBD() {
+    }
+
     /**
      * Este método guarda a la Persona en la Base de Datos con todos estos
      * atributos
      */
     public void insertarPersona() {
-
+        LugarMD lg = new LugarMD();
         //Aqui id_persona ya no va porque es autoincrementable
         //TipoPersona si porque necesitamos saber si es estudiante
         //docente u otro 
@@ -99,6 +103,15 @@ public class PersonaBD extends PersonaMD {
                     + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
                     + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
         }
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se guardo correctamente");
+        }
+    }
+
+    public void insertarIdentificacion() {
+        String nsql = "INSERT INTO public. \"Personas\"(persona_identificacion) VALUES ('" + getIdentificacion() + "');";
+
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
             System.out.println("Se guardo correctamente");
@@ -224,6 +237,20 @@ public class PersonaBD extends PersonaMD {
         PreparedStatement ps = conecta.getPS(sql);
         if (conecta.nosql(ps) == null) {
             System.out.println("Se edito correctamente");
+            return true;
+        } else {
+            System.out.println("Error");
+            return false;
+        }
+    }
+
+    public boolean editarIdentificacion(int aguja) {
+        String sql = "UPDATE public. \"Personas\" SET persona_identificacion ='" + getIdentificacion() + "'\n"
+                + "WHERE id_persona= " + aguja + ";";
+
+        PreparedStatement ps = conecta.getPS(sql);
+        if (conecta.nosql(ps) == null) {
+            System.out.println("Se edito correctamente la identificacion");
             return true;
         } else {
             System.out.println("Error");
@@ -508,30 +535,28 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
-    //Buscar Persona con aguja
-    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
-        String sql = "SELECT id_persona, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-                + " persona_celular "
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-                + " id_persona = " + idPersona + ";";
-
-        return consultarParaReferencia(sql);
-    }
-
-    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
-        String sql = "SELECT id_persona, id_lugar_natal, "
-                + "id_lugar_residencia, persona_foto, persona_identificacion,"
-                + " persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-                + " persona_celular "
-                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-                + " persona_identificacion ='" + identificacion + "'";
-
-        return consultarParaReferencia(sql);
-    }
-
+//    //Buscar Persona con aguja
+//    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
+//        String sql = "SELECT id_persona, persona_identificacion,"
+//                + " persona_primer_apellido, persona_segundo_apellido, "
+//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+//                + " persona_celular "
+//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+//                + " id_persona = " + idPersona + ";";
+//
+//        return consultarParaReferencia(sql);
+//    }
+//    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
+//        String sql = "SELECT id_persona, id_lugar_natal, "
+//                + "id_lugar_residencia, persona_foto, persona_identificacion,"
+//                + " persona_primer_apellido, persona_segundo_apellido, "
+//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
+//                + " persona_celular "
+//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
+//                + " persona_identificacion ='" + identificacion + "'";
+//
+//        return consultarParaReferencia(sql);
+//    }
     private PersonaMD consultarParaReferencia(String sql) {
         PersonaMD p = new PersonaMD();
         PreparedStatement ps = conecta.getPS(sql);
@@ -576,7 +601,11 @@ public class PersonaBD extends PersonaMD {
                     p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     p.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+                    if (rs.getDate("persona_fecha_nacimiento") == null) {
+                        p.setFechaNacimiento(null);
+                    } else {
+                        p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+                    }
                     p.setCelular(rs.getString("persona_celular"));
                     p.setTelefono(rs.getString("persona_telefono"));
                     p.setCorreo(rs.getString("persona_correo"));
@@ -664,11 +693,35 @@ public class PersonaBD extends PersonaMD {
             }
 
             //Aqui solo cojemos la letra de la posicion 0 porque solo recibe un char
-            persona.setSexo(rs.getString("persona_sexo").charAt(0));
-            persona.setEstadoCivil(rs.getString("persona_estado_civil"));
-            persona.setEtnia(rs.getString("persona_etnia"));
-            persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
-            persona.setTipoSangre(rs.getString("persona_tipo_sangre"));
+            if (rs.wasNull()) {
+                persona.setSexo(' ');
+            } else {
+                persona.setSexo(rs.getString("persona_sexo").charAt(0));
+            }
+
+            if (rs.wasNull()) {
+                persona.setEstadoCivil(null);
+            } else {
+                persona.setEstadoCivil(rs.getString("persona_estado_civil"));
+            }
+
+            if (rs.wasNull()) {
+                persona.setEtnia(null);
+            } else {
+                persona.setEtnia(rs.getString("persona_etnia"));
+            }
+
+            if (rs.wasNull()) {
+                persona.setIdiomaRaiz(null);
+            } else {
+                persona.setIdiomaRaiz(rs.getString("persona_idioma_raiz"));
+            }
+
+            if (rs.wasNull()) {
+                persona.setTipoSangre(null);
+            } else {
+                persona.setTipoSangre(rs.getString("persona_tipo_sangre"));
+            }
 
             if (rs.wasNull()) {
                 persona.setTelefono(null);
@@ -682,7 +735,12 @@ public class PersonaBD extends PersonaMD {
                 persona.setCelular(rs.getString("persona_celular"));
             }
 
-            persona.setCorreo(rs.getString("persona_correo"));
+            if (rs.wasNull()) {
+                persona.setCorreo(null);
+            } else {
+                persona.setCorreo(rs.getString("persona_correo"));
+            }
+
             persona.setFechaRegistro(rs.getDate("persona_fecha_registro").toLocalDate());
             persona.setDiscapacidad(rs.getBoolean("persona_discapacidad"));
 
@@ -703,12 +761,13 @@ public class PersonaBD extends PersonaMD {
             } else {
                 persona.setCarnetConadis(rs.getString("persona_carnet_conadis"));
             }
-            /*
+
             if (rs.wasNull()) {
                 persona.setCallePrincipal(null);
             } else {
                 persona.setCallePrincipal(rs.getString("persona_calle_principal"));
-            }*/
+            }
+
             persona.setCallePrincipal(rs.getString("persona_calle_principal"));
 
             if (rs.wasNull()) {
@@ -735,16 +794,26 @@ public class PersonaBD extends PersonaMD {
                 persona.setSector(rs.getString("persona_sector"));
             }
 
-            persona.setIdioma(rs.getString("persona_idioma"));
+            if (rs.wasNull()) {
+                persona.setIdioma(null);
+            } else {
+                persona.setIdioma(rs.getString("persona_idioma"));
+            }
 
             if (rs.wasNull()) {
-                persona.setTipoResidencia(null);
+                persona.setTipoResidencia("SELECCIONE");
             } else {
                 persona.setTipoResidencia(rs.getString("persona_tipo_residencia"));
             }
 
             //Solo se usa la funcion .toLocalDate cuando nos regresa un tipo date 
+//            if (rs.wasNull()) {
+//                persona.setFechaNacimiento(null);
+//            } else {
+//                persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+//            }
             persona.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
+
             persona.setPersonaActiva(rs.getBoolean("persona_activa"));
 
             if (rs.wasNull()) {
@@ -768,7 +837,7 @@ public class PersonaBD extends PersonaMD {
         return consultarParaTabla(nsql);
     }
 
-    public static Map<String, PersonaMD> selectAll() {
+    public Map<String, PersonaMD> selectAll() {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Personas\".id_persona,\n"
                 + "\"public\".\"Personas\".persona_identificacion,\n"

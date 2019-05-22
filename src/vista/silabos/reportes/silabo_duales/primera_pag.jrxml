@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="661"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_silabo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  
+case m.materia_ciclo 
+when 1 then 'PRIMERO'
+when 2 then 'SEGUNDO'
+when 3 then 'TERCERO'
+WHEN 4 THEN 'CUARTO'
+WHEN 5 THEN 'QUINTO'
+WHEN 6 THEN 'SEXTO'
+end as ciclo
+,c.id_carrera,m.materia_codigo, m.materia_nombre,m.materia_descripcion,
+m.materia_objetivo,m.materia_objetivo_especifico,m.materia_organizacion_curricular,
+m.materia_campo_formacion,m.materia_horas_docencia,m.materia_horas_practicas,
+m.materia_horas_auto_estudio,round(cast(cast(m.materia_horas_docencia as float)/cast(c.carrera_semanas as float) as numeric),1) as horas_sem_docen,
+round (cast(CAST(m.materia_horas_practicas AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)as numeric),1)  as horas_sem_prac, current_date,
+round(cast(CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) as numeric),1) as horas_sem_auto  ,m.materia_horas_docencia+m.materia_horas_practicas + m.materia_horas_auto_estudio as materia_total_horas, c.carrera_nombre,
+c.carrera_modalidad,round(cast(CAST(m.materia_horas_practicas AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)+CAST(m.materia_horas_docencia AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)+ CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) 
+as numeric),1)as horas_semanales from "Materias" m,"Carreras" c where 
+m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
+	</queryString>
+	<field name="ciclo" class="java.lang.String"/>
+	<field name="id_carrera" class="java.lang.Integer"/>
+	<field name="materia_codigo" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="materia_descripcion" class="java.lang.String"/>
+	<field name="materia_objetivo" class="java.lang.String"/>
+	<field name="materia_objetivo_especifico" class="java.lang.String"/>
+	<field name="materia_organizacion_curricular" class="java.lang.String"/>
+	<field name="materia_campo_formacion" class="java.lang.String"/>
+	<field name="materia_horas_docencia" class="java.lang.String"/>
+	<field name="materia_horas_practicas" class="java.lang.String"/>
+	<field name="materia_horas_auto_estudio" class="java.lang.String"/>
+	<field name="horas_sem_docen" class="java.lang.Double"/>
+	<field name="horas_sem_prac" class="java.lang.Double"/>
+	<field name="current_date" class="java.sql.Date"/>
+	<field name="horas_sem_auto" class="java.lang.Double"/>
+	<field name="materia_total_horas" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="carrera_modalidad" class="java.lang.String"/>
+	<field name="horas_semanales" class="java.lang.Double"/>
+	<pageHeader>
+		<band height="65">
+			<image>
+				<reportElement x="21" y="0" width="227" height="49" uuid="adb1a9a0-a560-4152-8e4d-6bdfaf12fa62"/>
+				<imageExpression><![CDATA["vista/silabos/reportes/silabo2/1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="49" width="558" height="16" uuid="33662a9c-5973-409a-8e77-555a776e287e"/>
+				<imageExpression><![CDATA["vista/silabos/reportes/silabo2/Captura.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="226">
+			<staticText>
+				<reportElement x="10" y="96" width="163" height="20" uuid="c7abb436-2521-4d1c-9f24-5c3d6b0e1adb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Ciclo/semestre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="76" width="163" height="20" uuid="bd101f74-2e6b-45c6-8e70-16ca68190754"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="25" width="100" height="20" uuid="b1995422-2395-4f94-aee9-21e7aaa73f7b"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="20" width="173" height="20" forecolor="#006699" uuid="47679ae4-7b7d-4bbc-ad89-3524550366a7"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.DATOS DE LA ASIGNATURA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="76" width="372" height="20" uuid="ec4c82e5-0362-47c5-85fa-bb640197507d"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="96" width="372" height="20" uuid="ba460eb2-ac56-4f10-94af-dd0ac5f678b6"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{ciclo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="136" width="163" height="20" uuid="03da61b3-89ed-4ee8-b504-149b0e28ff22"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Campo de formación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="156" width="163" height="20" uuid="b8949dd4-27c7-4179-a385-77f17bcf20c3"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Modalidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="116" width="163" height="20" uuid="34d264a5-5cc1-4ce5-868b-0df688e3ccb1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[ Unidad de formación curricular:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="156" width="372" height="20" uuid="fce43460-62dc-4819-a2e9-dec2537ffad2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{carrera_modalidad}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="283" y="189" width="262" height="37" uuid="064bafc6-eade-4c2d-8de2-e20042d910f1"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "co_requisitos.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="124" y="0" width="149" height="20" uuid="c8ec47ec-4b7a-48c5-973a-efe838959238"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período Académico: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="45" width="535" height="20" uuid="cfc9688e-32b5-4520-8c36-1dc8cd96b424"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="136" width="372" height="20" uuid="0b023e90-0e88-417a-a734-02ab8b39e805"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_campo_formacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="116" width="372" height="20" uuid="51591c03-b1c4-4048-a743-14537224c5ca"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_organizacion_curricular}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="189" width="267" height="37" uuid="af75bce3-24ff-4c8a-8eaa-c22e269dea15"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "requisitos.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="460" y="25" width="85" height="20" uuid="6ecb9c29-3bfd-43f2-b95f-404f512644ca"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{materia_codigo}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="273" y="0" width="200" height="20" uuid="8611e4ef-3b22-41fb-9163-cebfb6735914"/>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PERIODO_LECTIVO.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="207">
+			<staticText>
+				<reportElement x="10" y="5" width="211" height="20" forecolor="#006699" uuid="c48f09d1-d3bf-4f26-8bbd-fa99b7b8ca44"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. ACTIVIDADES DE APRENDIZAJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="117" width="263" height="20" uuid="a242e4d9-338b-4865-a75c-2b276700791c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="97" width="263" height="20" uuid="94a741c2-c5dc-42ac-a6b2-afbf611ff4ea"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Horas Autónomas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="117" width="135" height="20" uuid="13caca91-4e58-448d-8485-00f8a6af99da"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horas_semanales}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="77" width="263" height="20" uuid="779ddc9f-00a2-4a87-aac1-ceb3e4473709"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Horas Prácticas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="263" height="32" uuid="d0680cba-3856-40d7-a048-2373edcee0e4"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Horas docentes 
+ (Asistido por el profesor y colaborativo)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="25" width="137" height="20" uuid="d61a53d1-0c04-475d-ad66-6b868e82632f"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas de ciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="25" width="263" height="20" uuid="9eb73ce9-1125-4477-8e16-a703bef5947c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Componentes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="25" width="135" height="20" uuid="d6c07ef7-bb1a-4821-b7c9-5d4598ab4a04"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horas semanales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="147" width="100" height="20" forecolor="#006699" uuid="ded16094-b266-4298-a847-bd47639ec825"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. DOCENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="45" width="135" height="32" uuid="5855ee4b-86c6-4543-a8a0-8a7c8575b2e2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horas_sem_docen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="77" width="135" height="20" uuid="a034d0b8-9514-4045-bf7c-ddc00aa9bab1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horas_sem_prac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="97" width="135" height="20" uuid="73e3dbec-6506-4c1d-9e27-39a123127438"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{horas_sem_auto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="45" width="137" height="32" uuid="2a7731da-2de6-408b-a608-aa9624172508"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="77" width="137" height="20" uuid="d4ecafcc-0d71-484d-a00e-15435f04cc77"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{materia_horas_practicas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="97" width="137" height="20" uuid="536edda6-3fe6-4b26-9c7d-827b1dd2ccbd"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{materia_horas_auto_estudio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="117" width="137" height="20" uuid="cbb76671-d974-4a84-921f-3b7c79c3e526"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{materia_total_horas}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="167" width="519" height="40" uuid="644e762c-e0fa-4a0e-8d65-05a31d2c4597"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "profesres.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="64" splitType="Stretch">
+			<break>
+				<reportElement x="0" y="7" width="100" height="1" uuid="892f2362-887e-487b-b96f-f2ffe3d3d9bc"/>
+			</break>
+			<subreport>
+				<reportElement x="7" y="19" width="519" height="45" uuid="30f461d9-9cef-4105-8f9e-bec237141dee"/>
+				<subreportParameter name="id_materia">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "horario.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="139">
+			<staticText>
+				<reportElement x="10" y="0" width="211" height="20" forecolor="#006699" uuid="7fe4ced5-307b-41c7-9eb8-e3cbdab633b1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[4. DESCRIPCIÓN DE LA ASIGNATURA]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="21" y="20" width="524" height="119" uuid="b6ebdc03-f95f-4e33-8ea7-e972bdfc0059"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="241">
+			<staticText>
+				<reportElement x="10" y="0" width="211" height="20" forecolor="#006699" uuid="609fef1d-d32d-4c0f-a2f0-bfb221a7feea"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.OBJETIVO DE LA ASIGNATURA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="20" width="524" height="72" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_objetivo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="92" width="168" height="20" forecolor="#006699" uuid="88f37a7b-4666-4fc0-8567-eb308c548ea9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.1. OBJETIVOS ESPECÍFICOS]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="21" y="112" width="524" height="129" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="51">
+			<subreport>
+				<reportElement x="0" y="1" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "TABLA6.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="0" width="555" height="1" uuid="4ac910bb-c617-4a9a-ba3f-00f4ea70598c"/>
+			</break>
+		</band>
+		<band height="65">
+			<subreport>
+				<reportElement x="1" y="7" width="509" height="58" uuid="29f15136-c8b5-493a-a094-42a7ce8f88ce"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tabla6.1.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="2d5b2002-b2b3-444b-915f-24ad2ad78489"/>
+			</break>
+		</band>
+		<band height="57">
+			<subreport>
+				<reportElement x="0" y="1" width="510" height="56" uuid="68685fd0-acd5-4898-8951-069eaa9c6171"/>
+				<subreportParameter name="id_materia">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "7.requerimientos.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="f61673c2-6e83-455b-aa06-bc3ffea40873"/>
+			</break>
+		</band>
+		<band height="56">
+			<subreport>
+				<reportElement x="0" y="6" width="509" height="50" uuid="558fa2d0-e245-420f-81f4-acc49a96e4d3"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bibliografiabase.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="c2daab53-804d-4929-9e59-bf3e34105cb0"/>
+			</break>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="509" height="50" uuid="2f4d1c5f-16f2-4488-a1fe-8bbb20cd541f"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bibliografia_complemetaria.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="509" height="50" uuid="2b8b5515-dffd-4e3b-8851-711df0ae556d"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "linkografia.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="47">
+			<subreport>
+				<reportElement x="0" y="0" width="509" height="47" uuid="08f9d3ff-b659-45c8-a27e-f7178bd87bf5"/>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "9APROBACION.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="494" y="0" width="61" height="20" uuid="804bec07-eee5-464b-9409-acf16beaadd3"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

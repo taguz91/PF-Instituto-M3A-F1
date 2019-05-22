@@ -23,6 +23,11 @@ public class CarreraBD extends CarreraMD {
         this.doc = new DocenteBD(conecta);
     }
 
+    public CarreraBD() {
+        this.conecta = null;
+        this.doc = null;
+    }
+
     public boolean guardarCarrera() {
         String nsql = "INSERT INTO public.\"Carreras\"(\n"
                 + "	id_docente_coordinador, carrera_nombre, \n"

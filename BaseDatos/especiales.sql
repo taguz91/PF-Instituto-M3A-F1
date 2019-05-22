@@ -4,58 +4,23 @@
 */
 
 		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'BDcierre';
+		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'BDinsta';
+
+		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE usename = 'JOHNNY';
+		select count(*) from pg_stat_activity WHERE datname = 'BDinsta'
 
 
-		--BACKUP para windows
+--UPDATE PARA CONTRASEÑA DE LOS DOCENTES
 
-
-		pg_dump.exe -h 35.193.226.187 -p 5432 -U postgres -F c -v -d BDnotas -f C:\Users\diego\OneDrive\Documentos\prueba.backup
-
-		--backup para Ubuntu
-
-		sudo su - postgres
-
-		pg_dump > postgres.backup
-
-		psql
-
-		CREATE DATABASE "nombreBD";
-
-		\q
-
-		psql "nombreBD" < postgres.backup
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 14 
-WHERE id_tipo_nota = 5;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 39
-WHERE id_tipo_nota = 6;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 13
-WHERE id_tipo_nota = 7;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 15
-WHERE id_tipo_nota = 8;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 16
-WHERE id_tipo_nota = 9;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 12
-WHERE id_tipo_nota = 4;
-
-
-UPDATE public."Notas"
-SET id_tipo_nota = 17
-WHERE id_tipo_nota = 10;
+UPDATE "Usuarios" 
+SET usu_password = set_byte( MD5( 'BLOCK' ) :: bytea, 4, 64 ) 
+WHERE
+	usu_username IN (
+	SELECT
+		rol_1.usu_username 
+	FROM
+		"public"."Roles"
+		INNER JOIN "public"."RolesDelUsuario" rol_1 ON rol_1.id_rol = "public"."Roles".id_rol 
+	WHERE
+	"Roles".rol_nombre = 'DOCENTE' 
+	AND 1 = ( SELECT "count" ( * ) FROM "RolesDelUsuario" rol_2 WHERE rol_2.usu_username = rol_1.usu_username ));

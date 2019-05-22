@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="400"/>
+	<property name="ireport.y" value="924"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
@@ -485,52 +485,16 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "horario.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="447">
+		<band height="101">
 			<staticText>
-				<reportElement x="10" y="139" width="211" height="20" forecolor="#006699" uuid="609fef1d-d32d-4c0f-a2f0-bfb221a7feea"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[5.OBJETIVO DE LA ASIGNATURA]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="21" y="159" width="524" height="72" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textFieldExpression><![CDATA[$F{materia_objetivo}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="39" y="231" width="168" height="20" forecolor="#006699" uuid="88f37a7b-4666-4fc0-8567-eb308c548ea9"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[5.1. OBJETIVOS ESPECÍFICOS]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="21" y="251" width="524" height="177" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="10" y="0" width="211" height="20" forecolor="#006699" uuid="7fe4ced5-307b-41c7-9eb8-e3cbdab633b1"/>
+				<reportElement x="7" y="0" width="211" height="20" forecolor="#006699" uuid="7fe4ced5-307b-41c7-9eb8-e3cbdab633b1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[4. DESCRIPCIÓN DE LA ASIGNATURA]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="21" y="20" width="524" height="119" uuid="b6ebdc03-f95f-4e33-8ea7-e972bdfc0059"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="21" y="20" width="524" height="81" uuid="b6ebdc03-f95f-4e33-8ea7-e972bdfc0059"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -541,12 +505,50 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<textFieldExpression><![CDATA[$F{materia_descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="57">
+		<band height="259">
 			<break>
-				<reportElement x="0" y="-3" width="555" height="1" uuid="4ac910bb-c617-4a9a-ba3f-00f4ea70598c"/>
+				<reportElement x="0" y="258" width="555" height="1" uuid="4ac910bb-c617-4a9a-ba3f-00f4ea70598c"/>
 			</break>
+			<staticText>
+				<reportElement x="10" y="0" width="211" height="20" forecolor="#006699" uuid="609fef1d-d32d-4c0f-a2f0-bfb221a7feea"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.OBJETIVO DE LA ASIGNATURA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="20" width="524" height="72" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_objetivo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="92" width="168" height="20" forecolor="#006699" uuid="88f37a7b-4666-4fc0-8567-eb308c548ea9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.1. OBJETIVOS ESPECÍFICOS]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="20" y="112" width="524" height="135" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
 			<subreport>
-				<reportElement x="1" y="7" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
+				<reportElement x="0" y="0" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -555,9 +557,9 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "TABLA6.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="66">
+		<band height="64">
 			<subreport>
-				<reportElement x="1" y="8" width="509" height="58" uuid="29f15136-c8b5-493a-a094-42a7ce8f88ce"/>
+				<reportElement x="2" y="6" width="509" height="58" uuid="29f15136-c8b5-493a-a094-42a7ce8f88ce"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -566,21 +568,21 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tabla6.1.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="2" width="100" height="1" uuid="2d5b2002-b2b3-444b-915f-24ad2ad78489"/>
+				<reportElement x="0" y="5" width="100" height="1" uuid="2d5b2002-b2b3-444b-915f-24ad2ad78489"/>
 			</break>
 		</band>
-		<band height="56">
+		<band height="53">
+			<break>
+				<reportElement x="0" y="1" width="100" height="1" uuid="f61673c2-6e83-455b-aa06-bc3ffea40873"/>
+			</break>
 			<subreport>
-				<reportElement x="1" y="5" width="510" height="51" uuid="7b24ddad-b930-41de-95fd-52f7f3bd1cab"/>
+				<reportElement x="2" y="2" width="507" height="51" uuid="7b24ddad-b930-41de-95fd-52f7f3bd1cab"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "INFORMACION.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement x="0" y="2" width="100" height="1" uuid="f61673c2-6e83-455b-aa06-bc3ffea40873"/>
-			</break>
 		</band>
 		<band height="50">
 			<subreport>
@@ -594,7 +596,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 		</band>
 		<band height="50">
 			<subreport>
-				<reportElement x="1" y="0" width="509" height="50" uuid="2f4d1c5f-16f2-4488-a1fe-8bbb20cd541f"/>
+				<reportElement x="0" y="0" width="509" height="50" uuid="2f4d1c5f-16f2-4488-a1fe-8bbb20cd541f"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>

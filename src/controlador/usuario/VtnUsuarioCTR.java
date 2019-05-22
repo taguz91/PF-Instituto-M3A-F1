@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosBD;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
@@ -37,10 +36,10 @@ public class VtnUsuarioCTR {
     private static DefaultTableModel tablaUsuarios;
     private boolean cargar = true;
 
-    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos) {
+    public VtnUsuarioCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
-        this.vista = vista;
-        this.permisos = permisos;
+        this.vista = new VtnUsuario();
+        this.permisos = CONS.ROL;
     }
 
     public VtnUsuario getVista() {
@@ -52,7 +51,7 @@ public class VtnUsuarioCTR {
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
-        listaUsuarios = UsuarioBD.selectAll();
+        listaUsuarios = modelo.selectAll();
         cargarTabla(listaUsuarios);
         //InitPermisos();
         InitEventos();
@@ -65,7 +64,10 @@ public class VtnUsuarioCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmUsuarioAdd(desktop, this).Init());
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla(UsuarioBD.selectAll()));
+        vista.getBtnActualizar().addActionListener(e -> {
+            listaUsuarios = modelo.selectAll();
+            cargarTabla(listaUsuarios);
+        });
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
         vista.getBtnVerRoles().addActionListener(e -> btnVerRoles(e));
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -74,30 +76,6 @@ public class VtnUsuarioCTR {
                 cargarTablaFilter(vista.getTxtBuscar().getText());
             }
         });
-
-    }
-
-    private void InitPermisos() {
-
-        for (AccesosMD obj : AccesosBD.selectWhereLIKE(permisos.getId(), "USUARIOS")) {
-
-            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-                vista.getBtnIngresar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("USUARIOS-Editar")) {
-                vista.getBtnEditar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-                vista.getBtnEliminar().setEnabled(true);
-            }
-            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-                vista.getBtnAsignarRoles().setEnabled(true);
-            }
-            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-                vista.getBtnVerRoles().setEnabled(true);
-            }
-
-        }
 
     }
 
@@ -205,7 +183,7 @@ public class VtnUsuarioCTR {
                     }
                     modelo.cambiarEstado(Username, false);
 
-                    cargarTabla(UsuarioBD.selectAll());
+                    cargarTabla(listaUsuarios = modelo.selectAll());
 
                 } else {
                     JOptionPane.showMessageDialog(vista, "HA DECIDIDO NO BORRAR AL USUARIO!!");

@@ -3,6 +3,8 @@ package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -18,12 +20,28 @@ public class FrmTipoNotaAgregar extends AbstracForm {
     }
 
     //INITS
-    public void InitAgregar() {
+    @Override
+    public void Init() {
+        InitListas();
+        InitTablas();
 
-        Init();
+        tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
-        vista.setTitle("Agregar Nueva Nota");
+        listaPeriodos = periodoBD.selectPeriodosFaltantes();
 
+        if (listaPeriodos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO HAY PERIODOS PENDIENTES HA INGRESAR NOTAS!!");
+        } else {
+
+            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+            vista.setTitle("Agregar Tipos De Nota");
+            cargarComboCarreras();
+            listaNombres = modelo.selectNombreWhere(getIdPeriodo());
+            setlblCarrera();
+            cargarTabla();
+            InitEventos();
+
+        }
     }
 
     //EVENTOS

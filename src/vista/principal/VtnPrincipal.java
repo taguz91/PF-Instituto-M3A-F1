@@ -27,6 +27,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtPlandeClase;
     }
 
+    public JMenuItem getMnCtAsistencia() {
+        return mnCtAsistencia;
+    }
+
+    public void setMnCtAsistencia(JMenuItem mnCtAsistencia) {
+        this.mnCtAsistencia = mnCtAsistencia;
+    }
+
     public JMenuItem getMnCtRendimientoAcademico() {
         return mnCtRendimientoAcademico;
     }
@@ -415,6 +423,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         MnBiblioteca = new javax.swing.JMenuItem();
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
+        mnCtAsistencia = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -645,7 +654,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnAyuda.setBorderPainted(false);
         btnAyuda.setContentAreaFilled(false);
         btnAyuda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAyuda.setOpaque(true);
 
         btnConsola.setBackground(new java.awt.Color(51, 51, 51));
         btnConsola.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -806,6 +814,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtMiPerfil.setText("Mi Perfil");
         mnTipoNotas.add(mnCtMiPerfil);
+
+        mnCtAsistencia.setText("Asistencia");
+        mnTipoNotas.add(mnCtAsistencia);
 
         menuCrud.add(mnTipoNotas);
 
@@ -975,6 +986,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtActivarNotas;
     private javax.swing.JMenuItem mnCtAlmnRetirados;
     private javax.swing.JMenuItem mnCtAlumno;
+    private javax.swing.JMenuItem mnCtAsistencia;
     private javax.swing.JMenuItem mnCtCarrera;
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
