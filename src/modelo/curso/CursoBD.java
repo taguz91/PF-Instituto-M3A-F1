@@ -38,7 +38,6 @@ public class CursoBD extends CursoMD {
 
     public CursoBD() {
         this.conecta = null;
-        this.POOL = null;
     }
 
     private void iniciarIngresoNotas() {
