@@ -53,7 +53,7 @@ public class FrmAsistenciaCTR {
     private static int semanas;
     private static List<LocalDate> items = new ArrayList<>();
     private static ArrayList<String> lista_fecha = new ArrayList<>();
-    
+
     private static String dia_String;
     private static int dia;
     private static String Fecha;
@@ -64,8 +64,8 @@ public class FrmAsistenciaCTR {
     private List<MateriaMD> listaMaterias;
     private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
-    private VtnPrincipalCTR ctrPrin; 
-    private SesionClaseBD sclase; 
+    private VtnPrincipalCTR ctrPrin;
+    private SesionClaseBD sclase;
 
     // TABLA
     private DefaultTableModel tablaTrad;
@@ -76,8 +76,7 @@ public class FrmAsistenciaCTR {
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
-    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, 
-            RolBD rolSeleccionado) {
+    public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
         this.usuario = usuario;
@@ -117,10 +116,10 @@ public class FrmAsistenciaCTR {
 
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
-           cargarComboCiclo();
-           cargarComboSemanas();
+            cargarComboCiclo();
+            cargarComboSemanas();
         });
-        
+
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
@@ -151,10 +150,13 @@ public class FrmAsistenciaCTR {
         List<String> items = new ArrayList<>();
         items.add("1");
         items.add("2");
-     
-//        jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
-//        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
-//        jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
+
+        // jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true,
+        // items));
+        // jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true,
+        // items));
+        // jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true,
+        // items));
     }
 
     // </editor-fold>
@@ -281,7 +283,7 @@ public class FrmAsistenciaCTR {
             items.add(FinSemana.plusWeeks(i));
 
             // items.forEach(item -> item.c);
-            Fecha= "Semana "+ i +" "+IniSemana.plusWeeks(i) +"  a  "+ FinSemana.plusWeeks(i)+"";
+            Fecha = "Semana " + i + " " + IniSemana.plusWeeks(i) + "  a  " + FinSemana.plusWeeks(i) + "";
             lista_fecha.add(Fecha);
             System.out.println(IniSemana.plusWeeks(i).getDayOfWeek().name());
             System.out.println(FinSemana.plusWeeks(i));
@@ -421,23 +423,20 @@ public class FrmAsistenciaCTR {
                 System.out.println(periodo.getNumSemanas());
                 semanas = periodo.getNumSemanas();
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
-               
 
-                      lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
+                lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
 
-                
-                    
-                
             }
-          
-             lista_fecha.forEach(t -> System.out.println(t));
+
+            lista_fecha.forEach(t -> System.out.println(t));
         } catch (Exception e) {
         }
     }
-    
-    public void CargarDiasClase(){
+
+    public void CargarDiasClase() {
         listaSesionClase = sclase.cargarDiasClase(dia_String, dia, semanas, dia_String);
     }
+
     // Agregar Filas
     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
