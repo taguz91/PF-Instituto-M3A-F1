@@ -7,13 +7,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
-import modelo.usuario.RolMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnSelectRol;
@@ -25,29 +24,25 @@ import vista.usuario.VtnSelectRol;
 public class VtnSelectRolCTR {
 
     private final VtnSelectRol vista;
-    private final RolBD modelo;
+    private RolBD modelo;
     private final UsuarioBD usuario;
 
     private final ConectarDB conexion;
 
-    List<RolMD> rolesDelUsuario;
+    List<RolBD> rolesDelUsuario;
     //Icono de la aplicacion  
     private final ImageIcon icono;
     private final Image ista;
 
     /**
-     *
-     * @param vista
-     * @param modelo
-     * @param usuario
      * @param conexion
      * @param icono
      * @param ista
      */
-    public VtnSelectRolCTR(VtnSelectRol vista, RolBD modelo, UsuarioBD usuario, ConectarDB conexion, ImageIcon icono, Image ista, boolean b) {
-        this.vista = vista;
-        this.modelo = modelo;
-        this.usuario = usuario;
+    public VtnSelectRolCTR(ConectarDB conexion, ImageIcon icono, Image ista) {
+        this.vista = new VtnSelectRol();
+        this.modelo = new RolBD();
+        this.usuario = CONS.USUARIO;
         this.conexion = conexion;
         this.icono = icono;
         this.ista = ista;
@@ -130,28 +125,21 @@ public class VtnSelectRolCTR {
 
     }
 
-    private void setObjFromCombo() {
+    private void setModelo() {
 
-        String nombreRol = (String) vista.getCmbRoles().getSelectedItem();
-
-        rolesDelUsuario
+        modelo = rolesDelUsuario
                 .stream()
-                .filter(item -> item.getNombre().equals(nombreRol))
-                .collect(Collectors.toList())
-                .forEach(obj -> {
-
-                    modelo.setId(obj.getId());
-                    modelo.setNombre(obj.getNombre());
-
-                });
+                .filter(item -> item.getNombre().equals(vista.getCmbRoles().getSelectedItem().toString()))
+                .findFirst()
+                .orElse(null);
 
     }
 
     private void ingresar() {
 
-        setObjFromCombo();
-
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(new VtnPrincipal(), modelo, usuario, conexion, icono, ista, this);
+        setModelo();
+        CONS.setRol(modelo);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(conexion, icono, ista, this);
         vtn.iniciar();
         vista.dispose();
     }

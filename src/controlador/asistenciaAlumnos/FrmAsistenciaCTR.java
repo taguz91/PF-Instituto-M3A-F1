@@ -417,8 +417,8 @@ public class FrmAsistenciaCTR {
         //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
 
         try {
-            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            System.out.println(fechaInicial);
+//            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
+//            System.out.println(fechaInicial);
         
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();

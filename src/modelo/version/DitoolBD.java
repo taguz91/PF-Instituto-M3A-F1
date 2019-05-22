@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import modelo.Constantes;
+import modelo.CONS;
 
 /**
  *
@@ -63,7 +63,7 @@ public class DitoolBD {
     }
 
     private String generarURL() {
-        File bd = new File(Constantes.BD_DIR);
+        File bd = new File(CONS.BD_DIR);
         Properties p = new Properties();
         if (!bd.exists()) {
             crearPropiedades(p, bd);
@@ -82,13 +82,13 @@ public class DitoolBD {
 
         try {
             p.load(new FileReader(bd));
-            ip = p.getProperty(Constantes.BD_IP);
-            port = p.getProperty(Constantes.BD_PUERTO);
-            database = p.getProperty(Constantes.BD_DATABASE);
+            ip = p.getProperty(CONS.BD_IP);
+            port = p.getProperty(CONS.BD_PUERTO);
+            database = p.getProperty(CONS.BD_DATABASE);
 
-            System.out.println("ip = " + p.getProperty(Constantes.BD_IP));
-            System.out.println("database = " + p.getProperty(Constantes.BD_DATABASE));
-            System.out.println("port = " + p.getProperty(Constantes.BD_PUERTO));
+            System.out.println("ip = " + p.getProperty(CONS.BD_IP));
+            System.out.println("database = " + p.getProperty(CONS.BD_DATABASE));
+            System.out.println("port = " + p.getProperty(CONS.BD_PUERTO));
         } catch (IOException e) {
             System.out.println("No encontramos el señor archivo. " + e.getMessage());
         }
@@ -100,15 +100,15 @@ public class DitoolBD {
         boolean todas = true;
         try {
             p.load(new FileReader(bd));
-            if (p.getProperty(Constantes.BD_DATABASE) == null) {
+            if (p.getProperty(CONS.BD_DATABASE) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.BD_IP) == null) {
+            if (p.getProperty(CONS.BD_IP) == null) {
                 todas = false;
             }
 
-            if (p.getProperty(Constantes.BD_PUERTO) == null) {
+            if (p.getProperty(CONS.BD_PUERTO) == null) {
                 todas = false;
             }
 
