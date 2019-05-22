@@ -230,6 +230,11 @@
                 <Property name="text" type="java.lang.String" value="Mi Perfil"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAsistencia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Asistencia"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">

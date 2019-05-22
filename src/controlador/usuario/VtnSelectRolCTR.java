@@ -94,7 +94,7 @@ public class VtnSelectRolCTR {
 
     //Inits
     public void Init() {
-        rolesDelUsuario = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
+        rolesDelUsuario = modelo.SelectWhereUSUARIOusername(usuario.getUsername());
         vista.getLblUsuario().setText(usuario.getUsername());
         System.out.println("Llamamos al rol una vez");
 

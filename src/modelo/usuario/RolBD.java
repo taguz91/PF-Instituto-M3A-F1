@@ -17,11 +17,11 @@ import modelo.ConnDBPool;
  */
 public class RolBD extends RolMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -32,7 +32,7 @@ public class RolBD extends RolMD {
     public RolBD() {
     }
 
-    private static String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
+    private String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
 
     public boolean insertar() {
 
@@ -45,24 +45,24 @@ public class RolBD extends RolMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public static List<RolMD> selectAll() {
+    public List<RolMD> selectAll() {
 
         String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
         return SelectSimple(SELECT);
     }
 
-    public static List<RolMD> SelectWhereNombreLike(String Aguja) {
+    public List<RolMD> SelectWhereNombreLike(String Aguja) {
         String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
-    public static List<RolMD> SelectWhereUSUARIOusername(String username) {
+    public List<RolMD> SelectWhereUSUARIOusername(String username) {
         String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 
-    private static List<RolMD> SelectSimple(String Query) {
+    private List<RolMD> SelectSimple(String Query) {
         List<RolMD> Lista = new ArrayList<>();
 
         try {

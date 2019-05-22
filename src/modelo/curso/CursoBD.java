@@ -24,16 +24,21 @@ public class CursoBD extends CursoMD {
 
     private final ConectarDB conecta;
 
-    private final static ConnDBPool POOL;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool POOL;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         POOL = new ConnDBPool();
     }
 
     public CursoBD(ConectarDB conecta) {
         this.conecta = conecta;
+    }
+
+    public CursoBD() {
+        this.conecta = null;
+        this.POOL = null;
     }
 
     private void iniciarIngresoNotas() {
@@ -707,7 +712,7 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
+    public List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"Cursos\".curso_nombre\n"

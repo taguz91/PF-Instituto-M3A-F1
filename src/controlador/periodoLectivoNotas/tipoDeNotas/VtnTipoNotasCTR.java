@@ -37,6 +37,12 @@ public class VtnTipoNotasCTR {
     private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
+    private final PeriodoLectivoBD periodo;
+
+    {
+        periodo = new PeriodoLectivoBD();
+    }
+
     public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
@@ -56,7 +62,7 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
-        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+        listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
         cargarTabla(listaTiposNotas);
         cargarCmbPeriodos();
     }
@@ -70,7 +76,7 @@ public class VtnTipoNotasCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).Init());
 
         vista.getBtnActualizar().addActionListener(e -> {
-            listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+            listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
             cargarTabla(listaTiposNotas);
         });
 
@@ -122,7 +128,7 @@ public class VtnTipoNotasCTR {
 
     private void cargarCmbPeriodos() {
 
-        listaPeriodos = PeriodoLectivoBD.selectIdNombreAll();
+        listaPeriodos = periodo.selectIdNombreAll();
 
         vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos
@@ -150,7 +156,7 @@ public class VtnTipoNotasCTR {
         return obj -> {
             tablaTiposNotas.addRow(new Object[]{
                 tablaTiposNotas.getDataVector().size() + 1,
-                obj.getIdTipoNota(),
+                obj.getId(),
                 obj.getNombre(),
                 obj.getPeriodoLectivo().getNombre_PerLectivo(),
                 obj.getPeriodoLectivo().getCarrera().getNombre(),
@@ -173,7 +179,7 @@ public class VtnTipoNotasCTR {
             int ID = Integer.valueOf(vista.getTblTipoNotas().getValueAt(fila, 1).toString());
 
             modelo = listaTiposNotas.stream()
-                    .filter(item -> item.getIdTipoNota() == ID)
+                    .filter(item -> item.getId() == ID)
                     .findFirst().get();
 
             FrmTipoNotaEditar form = new FrmTipoNotaEditar(desktop, new FrmTipoNota(), modelo, this);

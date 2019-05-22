@@ -28,11 +28,11 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
     private CursoBD cur;
     private String nsqlMatri = "", nsqlMatriUpdate = "";
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -332,7 +332,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
+    public List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"AlumnoCurso\".id_alumno,\n"
@@ -372,6 +372,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         try {
             conn = pool.getConnection();
             rst = pool.ejecutarQuery(SELECT, conn, null);
+            NotasBD notasBD = new NotasBD();
             while (rst.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
@@ -391,7 +392,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                 alumnoCurso.setAlumno(alumno);
 
-                List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
+                List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
 
                 alumnoCurso.setNotas(notas);
 

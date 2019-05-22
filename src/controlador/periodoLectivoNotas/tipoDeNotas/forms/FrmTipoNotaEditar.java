@@ -3,6 +3,7 @@ package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
+import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -36,7 +37,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         setlblCarrera();
 
-        listaTipos = TipoDeNotaBD.selectWhere(ID_PERIODO);
+        listaTipos = modelo.selectWhere(ID_PERIODO);
         vista.getCmbPeriodoLectivo().setEditable(false);
         vista.setTitle("Editar Tipo De Nota");
         InitEventos();
@@ -52,9 +53,24 @@ public class FrmTipoNotaEditar extends AbstracForm {
                 obj.getNombre(),
                 obj.getValorMinimo(),
                 obj.getValorMaximo(),
-                obj.getIdTipoNota()
+                obj.getId()
             });
         });
+    }
+
+    @Override
+    protected void setObjs() {
+        IntStream.range(0, tabla.getDataVector().size())
+                .forEach(i -> {
+                    int id = Integer.valueOf(tabla.getValueAt(i, 3).toString());
+                    TipoDeNotaBD tipo = listaTipos.stream()
+                            .filter(item -> item.getId() == id)
+                            .findFirst()
+                            .get();
+                    tipo.setValorMinimo(Double.valueOf(tabla.getValueAt(i, 1).toString()));
+                    tipo.setValorMaximo(Double.valueOf(tabla.getValueAt(i, 2).toString()));
+                });
+
     }
 
     //EVENTOS
@@ -67,9 +83,10 @@ public class FrmTipoNotaEditar extends AbstracForm {
             setObjs();
 
             listaTipos.forEach(obj -> {
-                obj.editar(obj.getIdTipoNota());
+                new Thread(() -> {
+                    obj.editar(obj.getId());
+                }).start();
             });
-
             Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
         }).start();
         vista.dispose();
