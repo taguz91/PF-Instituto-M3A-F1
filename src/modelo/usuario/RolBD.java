@@ -45,31 +45,31 @@ public class RolBD extends RolMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public List<RolMD> selectAll() {
+    public List<RolBD> selectAll() {
 
         String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
         return SelectSimple(SELECT);
     }
 
-    public List<RolMD> SelectWhereNombreLike(String Aguja) {
+    public List<RolBD> SelectWhereNombreLike(String Aguja) {
         String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
-    public List<RolMD> SelectWhereUSUARIOusername(String username) {
+    public List<RolBD> SelectWhereUSUARIOusername(String username) {
         String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 
-    private List<RolMD> SelectSimple(String Query) {
-        List<RolMD> Lista = new ArrayList<>();
+    private List<RolBD> SelectSimple(String Query) {
+        List<RolBD> Lista = new ArrayList<>();
 
         try {
             conn = pool.getConnection();
             rs = pool.ejecutarQuery(Query, conn, null);
             while (rs.next()) {
-                RolMD rol = new RolMD();
+                RolBD rol = new RolBD();
 
                 rol.setId(rs.getInt("id_rol"));
                 rol.setNombre(rs.getString("rol_nombre"));

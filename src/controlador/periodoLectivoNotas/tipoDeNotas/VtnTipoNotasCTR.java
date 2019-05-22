@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
@@ -43,11 +44,11 @@ public class VtnTipoNotasCTR {
         periodo = new PeriodoLectivoBD();
     }
 
-    public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
+    public VtnTipoNotasCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
-        this.vista = vista;
-        this.modelo = modelo;
-        this.permisos = permisos;
+        this.vista = new VtnTipoNotas();
+        this.modelo = new TipoDeNotaBD();
+        this.permisos = CONS.ROL;
     }
 
     public VtnTipoNotas getVista() {

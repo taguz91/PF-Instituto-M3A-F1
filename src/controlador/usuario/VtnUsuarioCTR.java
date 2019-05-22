@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
@@ -35,10 +36,10 @@ public class VtnUsuarioCTR {
     private static DefaultTableModel tablaUsuarios;
     private boolean cargar = true;
 
-    public VtnUsuarioCTR(VtnPrincipal desktop, VtnUsuario vista, RolMD permisos) {
+    public VtnUsuarioCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
-        this.vista = vista;
-        this.permisos = permisos;
+        this.vista = new VtnUsuario();
+        this.permisos = CONS.ROL;
     }
 
     public VtnUsuario getVista() {
