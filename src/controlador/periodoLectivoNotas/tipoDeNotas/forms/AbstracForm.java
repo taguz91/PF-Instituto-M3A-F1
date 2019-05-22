@@ -198,13 +198,10 @@ public abstract class AbstracForm {
             public void accept(String obj) {
                 TipoDeNotaBD tipo = new TipoDeNotaBD();
                 tipo.setNombre(obj);
+                
                 tipo.setValorMinimo(new Double(vista.getTblTipoNota().getValueAt(index, 1).toString()));
                 tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
-
-                try {
-                    tipo.setIdTipoNota(Integer.valueOf(vista.getTblTipoNota().getValueAt(index, 3).toString()));
-                } catch (NullPointerException e) {
-                }
+                
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setId_PerioLectivo(getIdPeriodo());
                 tipo.setPeriodoLectivo(periodo);
