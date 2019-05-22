@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
+import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -43,17 +44,20 @@ public class FrmAsistenciaCTR {
     private final RolBD rolSeleccionado;
 
     // CALCULOS SEMANAS
+    private List<PeriodoLectivoMD> listaPrdSemana;
     private static LocalDate IniSemana;
     private static LocalDate FinSemana;
     private static LocalDate fechaInicial = LocalDate.now();
     private static int semanas;
     private static List<LocalDate> items = new ArrayList<>();
     private static String dia_String;
+    private static int dia;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
+    private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
 
     // TABLA
@@ -104,7 +108,7 @@ public class FrmAsistenciaCTR {
         vista.getCmbDocenteAsis().addActionListener(e -> cargarComboPeriodos());
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
             cargarComboCiclo();
-            //cargarComboSemanas();
+            // cargarComboSemanas();
         });
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
@@ -130,15 +134,16 @@ public class FrmAsistenciaCTR {
     }
 
     private void InitTablas() {
+
+        ConstruirTabla(tablaTrad);
         jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         List<String> items = new ArrayList<>();
         items.add("1");
         items.add("2");
-        items.add("3");
-        items.add("4");
-        jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
-        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
-        jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
+     
+//        jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+//        jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
+//        jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
     }
 
     // </editor-fold>
@@ -194,13 +199,8 @@ public class FrmAsistenciaCTR {
 
             String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
 
-            vista.getLblHorasAsis().setText(listaMaterias
-                    .stream()
-                    .filter(item -> item.getNombre().equals(materia))
-                    .map(c -> c.getHorasPresenciales())
-                    .findFirst()
-                    .orElse(-1) + ""
-            );
+            vista.getLblHorasAsis().setText(listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
+                    .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1) + "");
         } catch (NullPointerException e) {
             vista.getCmbAsignaturaAsis().removeAllItems();
         }
@@ -211,49 +211,49 @@ public class FrmAsistenciaCTR {
 
     private static void CalculoSemana(int NumeroDia) {
         switch (NumeroDia) {
-            case 1:
-                IniSemana = fechaInicial.minusDays(0);
-                FinSemana = fechaInicial.plusDays(6);
+        case 1:
+            IniSemana = fechaInicial.minusDays(0);
+            FinSemana = fechaInicial.plusDays(6);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 2:
-                IniSemana = fechaInicial.minusDays(1);
-                FinSemana = fechaInicial.plusDays(5);
+            CalculoSemanaPorSemana();
+            break;
+        case 2:
+            IniSemana = fechaInicial.minusDays(1);
+            FinSemana = fechaInicial.plusDays(5);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 3:
-                IniSemana = fechaInicial.minusDays(2);
-                FinSemana = fechaInicial.plusDays(4);
+            CalculoSemanaPorSemana();
+            break;
+        case 3:
+            IniSemana = fechaInicial.minusDays(2);
+            FinSemana = fechaInicial.plusDays(4);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 4:
-                IniSemana = fechaInicial.minusDays(3);
-                FinSemana = fechaInicial.plusDays(3);
+            CalculoSemanaPorSemana();
+            break;
+        case 4:
+            IniSemana = fechaInicial.minusDays(3);
+            FinSemana = fechaInicial.plusDays(3);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 5:
-                IniSemana = fechaInicial.minusDays(4);
-                FinSemana = fechaInicial.plusDays(2);
+            CalculoSemanaPorSemana();
+            break;
+        case 5:
+            IniSemana = fechaInicial.minusDays(4);
+            FinSemana = fechaInicial.plusDays(2);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 6:
-                IniSemana = fechaInicial.minusDays(5);
-                FinSemana = fechaInicial.plusDays(1);
+            CalculoSemanaPorSemana();
+            break;
+        case 6:
+            IniSemana = fechaInicial.minusDays(5);
+            FinSemana = fechaInicial.plusDays(1);
 
-                CalculoSemanaPorSemana();
-                break;
-            case 7:
-                IniSemana = fechaInicial.minusDays(6);
-                FinSemana = fechaInicial.plusDays(0);
+            CalculoSemanaPorSemana();
+            break;
+        case 7:
+            IniSemana = fechaInicial.minusDays(6);
+            FinSemana = fechaInicial.plusDays(0);
 
-                CalculoSemanaPorSemana();
+            CalculoSemanaPorSemana();
 
-                break;
+            break;
 
         }
 
@@ -278,40 +278,39 @@ public class FrmAsistenciaCTR {
     }
 
     public static void ConstruirTabla(DefaultTableModel modelo) {
-        // modelo = (DefaultTableModel) vista.tab.getModel();
+        modelo = (DefaultTableModel) vista.getTblAsistencia().getModel();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
 
-            // modelo.addColumn(DiaDeLaSemana(dia));
-            // dia++;
+            modelo.addColumn(DiaDeLaSemana(1));
+            dia++;
         }
 
-        // Vista_Tabla.tblPrueba.setModel(modelo);
-        vista.setVisible(true);
+        vista.getTblAsistencia().setModel(modelo);
 
     }
 
     public static String DiaDeLaSemana(int diaValue) {
 
         switch (diaValue) {
-            case 1:
-                dia_String = "LUNES";
-                break;
-            case 2:
-                dia_String = "MARTES";
-                break;
-            case 3:
-                dia_String = "MIERCOLES";
-                break;
-            case 4:
-                dia_String = "JUEVES";
-                break;
-            case 5:
-                dia_String = "VIERNES";
-                break;
-            case 6:
-                dia_String = "SABADO";
-                break;
+        case 1:
+            dia_String = "LUNES";
+            break;
+        case 2:
+            dia_String = "MARTES";
+            break;
+        case 3:
+            dia_String = "MIERCOLES";
+            break;
+        case 4:
+            dia_String = "JUEVES";
+            break;
+        case 5:
+            dia_String = "VIERNES";
+            break;
+        case 6:
+            dia_String = "SABADO";
+            break;
         }
         return dia_String;
     }
@@ -400,9 +399,9 @@ public class FrmAsistenciaCTR {
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
 
-            listaPeriodos = PeriodoLectivoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
-            if (listaPeriodos.size() > 0) {
-                PeriodoLectivoMD periodo = listaPeriodos.get(0);
+            listaPrdSemana = PeriodoLectivoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
+            if (listaPrdSemana.size() > 0) {
+                PeriodoLectivoMD periodo = listaPrdSemana.get(0);
 
                 System.out.println(periodo.getFecha_Inicio());
                 System.out.println(periodo.getNumSemanas());
@@ -429,9 +428,9 @@ public class FrmAsistenciaCTR {
         return (obj, tabla) -> {
 
             // System.out.println(obj);
-            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(), obj.getNumFalta(),});
+            tabla.addRow(new Object[] { tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+                    obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+                    obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(), obj.getNumFalta(), });
             return null;
         };
     }
@@ -444,7 +443,7 @@ public class FrmAsistenciaCTR {
             int r = JOptionPane.showOptionDialog(vista,
                     "Reporte de Asistencia de Alumnos\n" + "¿Elegir el tipo de Reporte?", "REPORTE ASISTENCIA",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{"Asistencia Alumnos"}, "Cancelar");
+                    new Object[] { "Asistencia Alumnos" }, "Cancelar");
 
             Effects.setLoadCursor(vista);
 
