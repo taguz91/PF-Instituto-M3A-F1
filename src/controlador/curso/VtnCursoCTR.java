@@ -53,6 +53,7 @@ public class VtnCursoCTR extends DVtnCTR {
 
     public void iniciar() {
         vtnCurso.getBtnListaAlumnos().setEnabled(false);
+        vtnCurso.getBtnListaSilabos().setEnabled(false);
         cargarCmbPrdLectio();
         cargarNombreCursos();
         //Iniciamos la tabla  
@@ -89,13 +90,14 @@ public class VtnCursoCTR extends DVtnCTR {
             }
         });
         vtnCurso.getBtnListaAlumnos().addActionListener(e -> reporteListaAlumnos());
+        vtnCurso.getBtnListaSilabos().addActionListener(e -> reporteListaSilabos());
         iniciarBuscador();
 
         ctrPrin.agregarVtn(vtnCurso);
     }
-    
+
     /**
-     * Iniciamos el buscador de esta ventana 
+     * Iniciamos el buscador de esta ventana
      */
     private void iniciarBuscador() {
         vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -182,15 +184,15 @@ public class VtnCursoCTR extends DVtnCTR {
         llenarTbl(cursos);
         System.out.println("Se cargaron cursos");
     }
-    
+
     /**
-     * Cargamos los nombres de todos los cursos 
+     * Cargamos los nombres de todos los cursos
      */
     public void cargarNombreCursos() {
         nombresC = curso.cargarNombreCursos();
         cargarCmbCursos(nombresC);
     }
-    
+
     /**
      * Cargamos todos los cursos por el periodo
      */
@@ -208,9 +210,9 @@ public class VtnCursoCTR extends DVtnCTR {
             cargarCursos();
         }
     }
-    
+
     /**
-     * Cargamos los cursos por nombre 
+     * Cargamos los cursos por nombre
      */
     private void cargarCursosPorNombre() {
         vtnCurso.getTxtBuscar().setText("");
@@ -227,10 +229,11 @@ public class VtnCursoCTR extends DVtnCTR {
             llenarTbl(cursos);
         }
     }
-    
+
     /**
-     * Llenamos la tabla con los cursos 
-     * @param cursos 
+     * Llenamos la tabla con los cursos
+     *
+     * @param cursos
      */
     private void llenarTbl(ArrayList<CursoMD> cursos) {
         mdTbl.setRowCount(0);
@@ -254,9 +257,9 @@ public class VtnCursoCTR extends DVtnCTR {
             vtnCurso.getLblResultados().setText("0 Resultados obtenidos.");
         }
     }
-    
+
     /**
-     * Cargamos el combo de periodo lectivo 
+     * Cargamos el combo de periodo lectivo
      */
     private void cargarCmbPrdLectio() {
         periodos = prd.cargarPrdParaCmbVtn();
@@ -268,7 +271,7 @@ public class VtnCursoCTR extends DVtnCTR {
             });
         }
     }
-    
+
     /**
      * Reporte de la lista de alumnos por curso
      */
@@ -285,10 +288,34 @@ public class VtnCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
+    public void reporteListaSilabos() {
+        String titleRepor;
+        titleRepor = JOptionPane.showInputDialog("Escriba el título para su reporte");
+        if (titleRepor.length() > 5) {
+            JasperReport jr;
+            String path = "/vista/reportes/repListaSocializacion.jasper";
+            try {
+                posFila = vtnCurso.getTblCurso().getSelectedRow();
+                Map parametro = new HashMap();
+                parametro.put("curso", cursos.get(posFila).getId());
+                parametro.put("titulo", titleRepor);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Socialización Sílabos");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Escriba primero un título");
+            reporteListaSilabos();
+        }
+    }
+
     /**
-     * Cargamos los cursos 
-     * @param nombresC 
+     * Cargamos los cursos
+     *
+     * @param nombresC
      */
     private void cargarCmbCursos(ArrayList<String> nombresC) {
         vtnCurso.getCmbCurso().removeAllItems();
@@ -365,8 +392,10 @@ public class VtnCursoCTR extends DVtnCTR {
         int selecTabl = vtnCurso.getTblCurso().getSelectedRow();
         if (selecTabl >= 0) {
             vtnCurso.getBtnListaAlumnos().setEnabled(true);
+            vtnCurso.getBtnListaSilabos().setEnabled(true);
         } else {
             vtnCurso.getBtnListaAlumnos().setEnabled(false);
+            vtnCurso.getBtnListaSilabos().setEnabled(false);
         }
     }
 
