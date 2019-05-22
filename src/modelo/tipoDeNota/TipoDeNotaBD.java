@@ -25,11 +25,11 @@ import modelo.periodolectivo.PeriodoLectivoMD;
  */
 public class TipoDeNotaBD extends TipoDeNotaMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -64,7 +64,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public static List<TipoDeNotaBD> selectAllWhereEstadoIs(boolean estado) {
+    public List<TipoDeNotaBD> selectAllWhereEstadoIs(boolean estado) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
@@ -87,7 +87,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     }
 
-    private static List<TipoDeNotaBD> SelectSimple(String QUERY) {
+    private List<TipoDeNotaBD> SelectSimple(String QUERY) {
         List<TipoDeNotaBD> Lista = new ArrayList<>();
 
         conn = pool.getConnection();
@@ -128,7 +128,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return Lista;
     }
 
-    public static List<TipoDeNotaBD> selectWhere(int idPeriodo) {
+    public List<TipoDeNotaBD> selectWhere(int idPeriodo) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
@@ -164,7 +164,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         return lista;
     }
 
-    public static List<String> selectNombreWhere(int idPeriodo) {
+    public List<String> selectNombreWhere(int idPeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"TipoDeNota\".tipo_nota_nombre\n"

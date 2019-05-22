@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
@@ -148,9 +147,9 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnMallaAlm);
     }
-    
+
     /**
-     * Iniciamos los permisos si son tester 
+     * Iniciamos los permisos si son tester
      */
     private void InitPermisosTester() {
         if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
@@ -159,10 +158,11 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             vtnMallaAlm.getTxtBuscar().setEnabled(false);
         }
     }
-    
+
     /**
      * Actualizamos la ventana al ingresar en un JD para actualizar notas
-     * @param m 
+     *
+     * @param m
      */
     public void actualizarVtn(MallaAlumnoMD m) {
         mallas = mallaAlm.cargarMallasPorEstudiante(m.getAlumnoCarrera().getId());
@@ -428,24 +428,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 
     /**

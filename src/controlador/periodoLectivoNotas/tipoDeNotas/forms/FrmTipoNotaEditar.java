@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
@@ -38,7 +37,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         setlblCarrera();
 
-        listaTipos = TipoDeNotaBD.selectWhere(ID_PERIODO);
+        listaTipos = modelo.selectWhere(ID_PERIODO);
         vista.getCmbPeriodoLectivo().setEditable(false);
         vista.setTitle("Editar Tipo De Nota");
         InitEventos();
@@ -84,7 +83,9 @@ public class FrmTipoNotaEditar extends AbstracForm {
             setObjs();
 
             listaTipos.forEach(obj -> {
-                obj.editar(obj.getId());
+                new Thread(() -> {
+                    obj.editar(obj.getId());
+                }).start();
             });
             Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
         }).start();
