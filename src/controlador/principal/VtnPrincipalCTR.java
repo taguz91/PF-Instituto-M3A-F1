@@ -285,37 +285,6 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void iniciandoBtns() {
-        accesos = AccesosBD.SelectWhereACCESOROLidRol(rolSeleccionado.getId());
-        accesos.forEach(a -> {
-
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS][1])) {
-                vtnPrin.getBtnAlumno().setEnabled(true);
-                vtnPrin.getMnIgAlumno().setEnabled(true);
-            } else {
-                vtnPrin.getBtnAlumno().setEnabled(false);
-                vtnPrin.getMnIgAlumno().setEnabled(false);
-            }
-
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_PERIODO_LECTIVO][3])) {
-                vtnPrin.getBtnPrdLectivo().setEnabled(true);
-                vtnPrin.getMnIgPrdLectivo().setEnabled(true);
-            } else {
-                vtnPrin.getBtnPrdLectivo().setEnabled(false);
-                vtnPrin.getMnIgPrdLectivo().setEnabled(false);
-            }
-
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS_CARRERA][1])) {
-                vtnPrin.getBtnInscripcion().setEnabled(true);
-                vtnPrin.getMnIgInscripcion().setEnabled(true);
-            } else {
-                vtnPrin.getBtnInscripcion().setEnabled(false);
-                vtnPrin.getMnIgInscripcion().setEnabled(false);
-            }
-
-        });
-    }
-
     public void abrirVtnPersona() {
         VtnPersona vtnPersona = new VtnPersona();
         eventoInternal(vtnPersona);
@@ -1085,84 +1054,6 @@ public class VtnPrincipalCTR {
     
 
 
-    private void InitPermisos() {
-        List<AccesosMD> listaPermisos = AccesosBD.selectWhereLIKE(rolSeleccionado.getId(), "CONSULTAR");
-
-        for (AccesosMD acceso : listaPermisos) {
-
-            if (acceso.getNombre().equalsIgnoreCase("PERSONAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("DOCENTES-CONSULTAR")) {
-                vtnPrin.getMnCtDocente().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtDocente().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("ALUMNOS-CONSULTAR")) {
-                vtnPrin.getMnCtAlumno().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtAlumno().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("CARRERAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("CURSOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("PERIODOS-LECTIVOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATERIAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("INSCRIPCIONES-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATRICULAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MALLA-ALUMNOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATERIAS-DOCENTES-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("SILABOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("HISTORIAL-USUARIOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("INGRESO-NOTAS-ACTIVAR-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-
-        }
-    }
 
     private void InitPermisosTesterYDocente() {
 

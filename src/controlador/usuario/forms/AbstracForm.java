@@ -28,6 +28,12 @@ public abstract class AbstracForm {
     //LISTAS
     protected Map<String, PersonaMD> listaPersonas;
 
+    private final PersonaBD personaBD;
+
+    {
+        personaBD = new PersonaBD();
+    }
+
     public AbstracForm(VtnPrincipal desktop, VtnUsuarioCTR vtnPadre) {
         this.desktop = desktop;
         this.vtnPadre = vtnPadre;
@@ -41,7 +47,7 @@ public abstract class AbstracForm {
             InitEventos();
         }).start();
         activarFormulario(false);
-        listaPersonas = PersonaBD.selectAll();
+        listaPersonas = personaBD.selectAll();
         cargarComoPersonas();
         activarFormulario(true);
 

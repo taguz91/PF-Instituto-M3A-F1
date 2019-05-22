@@ -15,11 +15,11 @@ import modelo.tipoDeNota.TipoDeNotaMD;
  */
 public class NotasBD extends NotasMD {
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rs;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
@@ -30,7 +30,7 @@ public class NotasBD extends NotasMD {
     public NotasBD() {
     }
 
-    public static List<NotasBD> selectWhere(AlumnoCursoMD alumnnoCurso) {
+    public List<NotasBD> selectWhere(AlumnoCursoMD alumnnoCurso) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Notas\".id_nota,\n"
                 + "\"public\".\"Notas\".nota_valor,\n"

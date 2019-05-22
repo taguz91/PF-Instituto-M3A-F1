@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -78,29 +77,29 @@ public class VtnPrdLectivoCTR extends DCTR {
         ctrPrin.abrirFrmPrdLectivo();
         vtnPrdLectivo.dispose();
     }
-    
-    public void cargarCarreras(){
+
+    public void cargarCarreras() {
         CarreraBD bdCarrera = new CarreraBD(ctrPrin.getConecta());
         carreras = bdCarrera.cargarCarreras();
         for (int i = 0; i < carreras.size(); i++) {
             vtnPrdLectivo.getCmbx_Filtrar().addItem(carreras.get(i).getNombre());
         }
     }
-    
-    public void filtrarCarreras(){
+
+    public void filtrarCarreras() {
         String nombre;
         int idCarrera = 0;
         List<PeriodoLectivoMD> lista;
-        if(vtnPrdLectivo.getCmbx_Filtrar().getSelectedIndex() > 0){
+        if (vtnPrdLectivo.getCmbx_Filtrar().getSelectedIndex() > 0) {
             nombre = vtnPrdLectivo.getCmbx_Filtrar().getSelectedItem().toString();
             for (int i = 0; i < carreras.size(); i++) {
-                if(carreras.get(i).getNombre().equals(nombre)){
+                if (carreras.get(i).getNombre().equals(nombre)) {
                     idCarrera = carreras.get(i).getId();
                 }
             }
             lista = bdPerLectivo.llenarPeriodosxCarreras(idCarrera);
             llenarTabla(lista);
-        } else{
+        } else {
             llenarTabla(periodos);
         }
     }
@@ -140,7 +139,6 @@ public class VtnPrdLectivoCTR extends DCTR {
 
 //            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
 //                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
-
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre_PerLectivo(), i, 2);
@@ -262,24 +260,7 @@ public class VtnPrdLectivoCTR extends DCTR {
 
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 
 }

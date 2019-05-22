@@ -37,6 +37,12 @@ public class VtnTipoNotasCTR {
     private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
+    private final PeriodoLectivoBD periodo;
+
+    {
+        periodo = new PeriodoLectivoBD();
+    }
+
     public VtnTipoNotasCTR(VtnPrincipal desktop, VtnTipoNotas vista, TipoDeNotaBD modelo, RolBD permisos) {
         this.desktop = desktop;
         this.vista = vista;
@@ -56,7 +62,7 @@ public class VtnTipoNotasCTR {
         tablaTiposNotas = (DefaultTableModel) vista.getTblTipoNotas().getModel();
 
         InitEventos();
-        listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+        listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
         cargarTabla(listaTiposNotas);
         cargarCmbPeriodos();
     }
@@ -70,7 +76,7 @@ public class VtnTipoNotasCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmTipoNotaAgregar(desktop, new FrmTipoNota(), new TipoDeNotaBD(), this).Init());
 
         vista.getBtnActualizar().addActionListener(e -> {
-            listaTiposNotas = TipoDeNotaBD.selectAllWhereEstadoIs(true);
+            listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
             cargarTabla(listaTiposNotas);
         });
 
@@ -122,7 +128,7 @@ public class VtnTipoNotasCTR {
 
     private void cargarCmbPeriodos() {
 
-        listaPeriodos = PeriodoLectivoBD.selectIdNombreAll();
+        listaPeriodos = periodo.selectIdNombreAll();
 
         vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos

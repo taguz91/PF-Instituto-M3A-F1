@@ -36,7 +36,7 @@ public class VtnRolCTR {
     private static DefaultTableModel tabla;
 
     private boolean cargarTabla = true;
-    
+
     public VtnRolCTR(VtnPrincipal desktop, VtnRol vista, RolBD modelo, RolBD rol) {
         this.desktop = desktop;
         this.vista = vista;
@@ -47,7 +47,6 @@ public class VtnRolCTR {
     public VtnRol getVista() {
         return vista;
     }
-    
 
     //Inits
     public void Init() {
@@ -101,7 +100,6 @@ public class VtnRolCTR {
 //                vista.getBtnEditarPermisos().setEnabled(true);
 //            }
 //        }
-
     }
 
     //Metodos de Apoyo
@@ -117,7 +115,7 @@ public class VtnRolCTR {
 
                 cargarTabla = false;
 
-                listaRoles = RolBD.selectAll();
+                listaRoles = modelo.selectAll();
 
                 listaRoles.stream().forEach(VtnRolCTR::agregarFila);
 

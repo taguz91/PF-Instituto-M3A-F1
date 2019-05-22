@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -93,9 +92,9 @@ public class VtnCursoCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnCurso);
     }
-    
+
     /**
-     * Iniciamos el buscador de esta ventana 
+     * Iniciamos el buscador de esta ventana
      */
     private void iniciarBuscador() {
         vtnCurso.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -182,15 +181,15 @@ public class VtnCursoCTR extends DVtnCTR {
         llenarTbl(cursos);
         System.out.println("Se cargaron cursos");
     }
-    
+
     /**
-     * Cargamos los nombres de todos los cursos 
+     * Cargamos los nombres de todos los cursos
      */
     public void cargarNombreCursos() {
         nombresC = curso.cargarNombreCursos();
         cargarCmbCursos(nombresC);
     }
-    
+
     /**
      * Cargamos todos los cursos por el periodo
      */
@@ -208,9 +207,9 @@ public class VtnCursoCTR extends DVtnCTR {
             cargarCursos();
         }
     }
-    
+
     /**
-     * Cargamos los cursos por nombre 
+     * Cargamos los cursos por nombre
      */
     private void cargarCursosPorNombre() {
         vtnCurso.getTxtBuscar().setText("");
@@ -227,10 +226,11 @@ public class VtnCursoCTR extends DVtnCTR {
             llenarTbl(cursos);
         }
     }
-    
+
     /**
-     * Llenamos la tabla con los cursos 
-     * @param cursos 
+     * Llenamos la tabla con los cursos
+     *
+     * @param cursos
      */
     private void llenarTbl(ArrayList<CursoMD> cursos) {
         mdTbl.setRowCount(0);
@@ -254,9 +254,9 @@ public class VtnCursoCTR extends DVtnCTR {
             vtnCurso.getLblResultados().setText("0 Resultados obtenidos.");
         }
     }
-    
+
     /**
-     * Cargamos el combo de periodo lectivo 
+     * Cargamos el combo de periodo lectivo
      */
     private void cargarCmbPrdLectio() {
         periodos = prd.cargarPrdParaCmbVtn();
@@ -268,7 +268,7 @@ public class VtnCursoCTR extends DVtnCTR {
             });
         }
     }
-    
+
     /**
      * Reporte de la lista de alumnos por curso
      */
@@ -285,10 +285,11 @@ public class VtnCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-    
+
     /**
-     * Cargamos los cursos 
-     * @param nombresC 
+     * Cargamos los cursos
+     *
+     * @param nombresC
      */
     private void cargarCmbCursos(ArrayList<String> nombresC) {
         vtnCurso.getCmbCurso().removeAllItems();
@@ -341,24 +342,7 @@ public class VtnCursoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(ctrPrin.getRolSeleccionado().getId())) {
 
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 
     public void validarBotonesReportes() {

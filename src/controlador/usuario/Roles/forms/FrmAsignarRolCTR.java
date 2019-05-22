@@ -41,6 +41,12 @@ public class FrmAsignarRolCTR {
     private DefaultTableModel tablaDisponibles;
     private DefaultTableModel tablaDados;
 
+    private final RolBD rolBD;
+
+    {
+        rolBD = new RolBD();
+    }
+
     public FrmAsignarRolCTR(VtnPrincipal desktop, FrmAsignarRoles vista, RolesDelUsuarioBD modelo, UsuarioBD usuario, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
@@ -54,7 +60,7 @@ public class FrmAsignarRolCTR {
      */
     public void Init() {
         //SE INICIALIZA LISTAS Y TABLAS
-        rolesDisponibles = RolBD.selectAll();
+        rolesDisponibles = rolBD.selectAll();
         rolesDados = new ArrayList<>();
 
         tablaDisponibles = (DefaultTableModel) vista.getTabRolesDisp().getModel();
@@ -121,7 +127,7 @@ public class FrmAsignarRolCTR {
         METODOS DE APOYO
      */
     private void setRolesEnListas() {
-        rolesDados = RolBD.SelectWhereUSUARIOusername(usuario.getUsername());
+        rolesDados = rolBD.SelectWhereUSUARIOusername(usuario.getUsername());
         System.out.println("Llamamos al rol una vez");
         validacion();
 
@@ -217,7 +223,7 @@ public class FrmAsignarRolCTR {
 
     private void EditarRoles() {
         listaBorrar = new ArrayList<>();
-        List<RolMD> listaTemporal = new ArrayList<>(RolBD.selectAll());
+        List<RolMD> listaTemporal = new ArrayList<>(rolBD.selectAll());
 
         listaTemporal.stream()
                 .forEach(obj -> {
