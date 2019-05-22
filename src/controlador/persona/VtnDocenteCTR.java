@@ -80,7 +80,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDocente.getTblDocente().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDocente.getTblDocente());
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 85);
+        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 100);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 1, 250);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 90);
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 3, 230);
