@@ -8,6 +8,10 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Constantes;
@@ -26,6 +30,8 @@ public class VtnDitoolCTR {
     private boolean aCorrecto = true;
     private final ImageIcon icono;
     private boolean cerrar = false;
+    //Cancion al descargar el sistema.
+    private Clip sonido;
 
     //Iconos para el sprit 
     private final ImageIcon estados[] = {
@@ -45,6 +51,8 @@ public class VtnDitoolCTR {
 
     public void iniciar() {
         mostrarVtn();
+        //Accion del boton 
+        vtnDitool.getBtnPausar().addActionListener(e -> clickPausar());
         mostrarInformacion();
         if (validarVersion()) {
             if (aCorrecto) {
@@ -141,6 +149,7 @@ public class VtnDitoolCTR {
         switch (s) {
             case 0:
                 iniciarSprint();
+                musicaDescarga();
                 vtnDitool.getLblEstado().setText("Descargando...");
                 File pv = new File(Constantes.V_DIR);
                 Properties p = new Properties();
@@ -266,6 +275,47 @@ public class VtnDitoolCTR {
         } catch (InterruptedException e) {
             System.out.println("No se durmio el hilo " + e.getMessage());
         }
+    }
+
+    private void musicaDescarga() {
+        try {
+            File a = new File("dancin8bits.wav");
+            if (a.exists()) {
+                sonido = AudioSystem.getClip();
+
+                sonido.open(AudioSystem.getAudioInputStream(a));
+                sonido.start();
+            } else {
+                JOptionPane.showMessageDialog(vtnDitool, "No encontramos el audio.");
+            }
+
+        } catch (LineUnavailableException e) {
+            System.out.println("No pudimos encontrar el audio. " + e.getMessage());
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            System.out.println("No encontramos el archivo de audio. " + ex.getMessage());
+        }
+    }
+
+    private void clickPausar() {
+        if (vtnDitool.getBtnPausar().getText().equals("Pausar")) {
+            vtnDitool.getBtnPausar().setText("Reanudar");
+            pausar();
+        } else {
+            vtnDitool.getBtnPausar().setText("Pausar");
+            reanudar();
+        }
+    }
+
+    private void pausar() {
+        sonido.stop();
+    }
+
+    private void reanudar() {
+        sonido.start();
+    }
+
+    private void silenciar() {
+        sonido.close();
     }
 
 }
