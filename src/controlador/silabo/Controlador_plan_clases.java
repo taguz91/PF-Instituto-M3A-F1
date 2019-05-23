@@ -302,44 +302,7 @@ public class Controlador_plan_clases {
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();
-        if (fPlanClase.getjScrollPane10().isShowing()) {//Anticipacion
-            if (fPlanClase.getTxt_estrategias().getText().equals("")
-                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
-                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
-                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
-                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
-                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
-                    for (int i = 0; i < array_Anticipacion.size(); i++) {
-                        modelo_anticipacion.addElement(array_Anticipacion.get(i));
-                    }
-                    fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
-                    fPlanClase.getTxt_estrategias().setText("");
-                }
-            }
-            
-        } else if(fPlanClase.getjScrollPane11().isShowing()){//Construccion
-            if (fPlanClase.getTxt_estrategias().getText().equals("")
-                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
-                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
-                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
-                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
-                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
-                    for (int i = 0; i < array_Construccion.size(); i++) {
-                       modelo_anticipacion.addElement(array_Construccion.get(i));
-                    }
-                    fPlanClase.getListConstruccionPC().setModel(modelo_anticipacion);
-                    fPlanClase.getTxt_estrategias().setText("");
-                }
-            }
-        } else if(fPlanClase.getjScrollPane9().isShowing()){//Consolidacion
+        if (fPlanClase.getListConsolidacionPC().isShowing()) {
             if (fPlanClase.getTxt_estrategias().getText().equals("")
                     || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -351,9 +314,46 @@ public class Controlador_plan_clases {
                 } else {
                     array_Consolidacion.add(fPlanClase.getTxt_estrategias().getText());
                     for (int i = 0; i < array_Consolidacion.size(); i++) {
-                       modelo_anticipacion.addElement(array_Consolidacion.get(i));
+                        modelo_Consolidacion.addElement(array_Consolidacion.get(i));
                     }
-                    fPlanClase.getListConsolidacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                    fPlanClase.getTxt_estrategias().setText("");
+                }
+            }
+            
+        } else if(fPlanClase.getListAnticipacionPC().isShowing()){
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
+                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Anticipacion.size(); i++) {
+                       modelo_anticipacion.addElement(array_Anticipacion.get(i));
+                    }
+                    fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
+                }
+            }
+        } else if(fPlanClase.getListConstruccionPC().isShowing()){
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
+                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Construccion.size(); i++) {
+                       modelo_Construccion.addElement(array_Construccion.get(i));
+                    }
+                    fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
                     fPlanClase.getTxt_estrategias().setText("");
                 }
             }
@@ -365,7 +365,7 @@ public class Controlador_plan_clases {
             String indice2;
             String indice3;
             
-            if (fPlanClase.getjScrollPane10().isShowing()) {
+            if (fPlanClase.getListAnticipacionPC().isShowing()) {
                  if (fPlanClase.getListAnticipacionPC().getSelectedIndex()==-1) {
                     JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -376,7 +376,7 @@ public class Controlador_plan_clases {
                     
                     recargarElemwentos();
                 }
-            }else if (fPlanClase.getjScrollPane11().isShowing()){
+            }else if (fPlanClase.getListConstruccionPC().isShowing()){
                 if (fPlanClase.getListConstruccionPC().getSelectedIndex()==-1) {
                     JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -386,7 +386,7 @@ public class Controlador_plan_clases {
                     fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
                     recargarElemwentos2();
                 }
-            }else if (fPlanClase.getjScrollPane9().isShowing()){
+            }else if (fPlanClase.getListConsolidacionPC().isShowing()){
                 if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
                     JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {

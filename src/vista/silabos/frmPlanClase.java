@@ -358,27 +358,27 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     }
 
     public JList<String> getListAnticipacionPC() {
-        return listAnticipacionPC;
+        return listConsolidaciónPC;
     }
 
     public void setListAnticipacionPC(JList<String> listAnticipacionPC) {
-        this.listAnticipacionPC = listAnticipacionPC;
+        this.listConsolidaciónPC = listAnticipacionPC;
     }
 
     public JList<String> getListConsolidacionPC() {
-        return listConsolidacionPC;
-    }
-
-    public void setListConsolidacionPC(JList<String> listConsolidacionPC) {
-        this.listConsolidacionPC = listConsolidacionPC;
-    }
-
-    public JList<String> getListConstruccionPC() {
         return listConstruccionPC;
     }
 
+    public void setListConsolidacionPC(JList<String> listConsolidacionPC) {
+        this.listConstruccionPC = listConsolidacionPC;
+    }
+
+    public JList<String> getListConstruccionPC() {
+        return listAnticipacionPC;
+    }
+
     public void setListConstruccionPC(JList<String> listConstruccionPC) {
-        this.listConstruccionPC = listConstruccionPC;
+        this.listAnticipacionPC = listConstruccionPC;
     }
 
     public JTabbedPane getTbpEstrategiasPC() {
@@ -550,11 +550,11 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         lbResultadosAprendizaje = new javax.swing.JLabel();
         tbpEstrategiasPC = new javax.swing.JTabbedPane();
         jScrollPane11 = new javax.swing.JScrollPane();
-        listConstruccionPC = new javax.swing.JList<>();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        listConsolidacionPC = new javax.swing.JList<>();
-        jScrollPane10 = new javax.swing.JScrollPane();
         listAnticipacionPC = new javax.swing.JList<>();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        listConstruccionPC = new javax.swing.JList<>();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        listConsolidaciónPC = new javax.swing.JList<>();
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
         txt_estrategias = new javax.swing.JTextField();
@@ -691,15 +691,15 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbResultadosAprendizaje.setText("Resultados de Aprendizaje:");
 
-        jScrollPane11.setViewportView(listConstruccionPC);
+        jScrollPane11.setViewportView(listAnticipacionPC);
 
         tbpEstrategiasPC.addTab("Anticipacion", jScrollPane11);
 
-        jScrollPane9.setViewportView(listConsolidacionPC);
+        jScrollPane9.setViewportView(listConstruccionPC);
 
         tbpEstrategiasPC.addTab("Construccion", jScrollPane9);
 
-        jScrollPane10.setViewportView(listAnticipacionPC);
+        jScrollPane10.setViewportView(listConsolidaciónPC);
 
         tbpEstrategiasPC.addTab("Consolidacion", jScrollPane10);
 
@@ -995,7 +995,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbTrabajoAutonomo;
     private javax.swing.JLabel lbUnidad;
     private javax.swing.JList<String> listAnticipacionPC;
-    private javax.swing.JList<String> listConsolidacionPC;
+    private javax.swing.JList<String> listConsolidaciónPC;
     private javax.swing.JList<String> listConstruccionPC;
     private javax.swing.JTabbedPane tbpEstrategiasPC;
     private javax.swing.JTextArea txrContenidosPC;
