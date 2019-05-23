@@ -144,7 +144,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         parametros.put(1, idPeriodo);
 
         conn = pool.getConnection();
-        rs = pool.ejecutarQuery(SELECT, conn, null);
+        rs = pool.ejecutarQuery(SELECT, conn, parametros);
         PeriodoLectivoMD periodo = new PeriodoLectivoMD();
         periodo.setId_PerioLectivo(idPeriodo);
         try {
