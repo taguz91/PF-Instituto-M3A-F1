@@ -293,7 +293,8 @@ public class Controlador_plan_clases {
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();
         if (fPlanClase.getjScrollPane10().isShowing()) {//Anticipacion
-            if (fPlanClase.getTxt_estrategias().getText().equals("")) {
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
@@ -311,7 +312,8 @@ public class Controlador_plan_clases {
             }
             
         } else if(fPlanClase.getjScrollPane11().isShowing()){//Construccion
-            if (fPlanClase.getTxt_estrategias().getText().equals("")) {
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
@@ -328,7 +330,8 @@ public class Controlador_plan_clases {
                 }
             }
         } else if(fPlanClase.getjScrollPane9().isShowing()){//Consolidacion
-            if (fPlanClase.getTxt_estrategias().getText().equals("")) {
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||

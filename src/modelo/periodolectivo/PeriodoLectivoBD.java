@@ -44,12 +44,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
                 + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
@@ -72,12 +67,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
@@ -85,12 +75,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean abrirPeriodo(int id) {
@@ -98,12 +83,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
