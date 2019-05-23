@@ -5,31 +5,29 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT nombre_estrategia as descripcion_estrategia FROM "EstrategiasMetodologias"  where tipo_estrategias_metodologias='Anticipacion' and id_plan_de_clases=$P!{id_plan_clase}]]>
+		<![CDATA[select  string_agg(anticipacion,'') as anticipacion,string_agg(construccion,'') as construccion,string_agg(consolidacion,'') as consolidacion from(
+SELECT nombre_estrategia as anticipacion,'' as construccion,'' as consolidacion FROM "EstrategiasMetodologias"  where tipo_estrategias_metodologias='Anticipacion' and id_plan_de_clases=$P!{id_plan_clase}
+union
+SELECT '' as anticipacion,nombre_estrategia as construccion,'' as consolidacion  FROM "EstrategiasMetodologias"  where tipo_estrategias_metodologias='Construccion' and id_plan_de_clases=$P!{id_plan_clase}
+union
+SELECT '' as anticipacion,'' as construccion,nombre_estrategia as consolidacion  FROM "EstrategiasMetodologias"  where tipo_estrategias_metodologias='Consolidacion' and id_plan_de_clases=$P!{id_plan_clase}
+) x]]>
 	</queryString>
-	<field name="descripcion_estrategia" class="java.lang.String"/>
+	<field name="anticipacion" class="java.lang.String"/>
+	<field name="construccion" class="java.lang.String"/>
+	<field name="consolidacion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="13" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="108" height="13" uuid="3b6c771d-c016-45a1-918c-e6230b72b871"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ Anticipación:]]></text>
-			</staticText>
-		</band>
-	</title>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="108" height="12" uuid="fda7f30b-352f-42d0-a4f9-0e0644c2589c"/>
+				<reportElement x="0" y="0" width="139" height="12" uuid="8c7ad19d-0aca-45b8-90f8-2fd904f1bd5e"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{descripcion_estrategia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Anticipación:\n"+$F{anticipacion}+"\n\n Construcción: \n"+$F{construccion}
++"\n\n Consolidación: \n"+$F{consolidacion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

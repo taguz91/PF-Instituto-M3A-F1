@@ -16,9 +16,9 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="122" height="13" uuid="4a9cb9f6-e03e-4b0b-af41-94035e677ab1"/>
+				<reportElement x="0" y="0" width="142" height="13" uuid="4a9cb9f6-e03e-4b0b-af41-94035e677ab1"/>
 				<textElement>
-					<font size="8" isUnderline="false"/>
+					<font size="7" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion_estrategia}]]></textFieldExpression>
 			</textField>

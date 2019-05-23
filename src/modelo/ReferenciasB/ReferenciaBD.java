@@ -108,7 +108,5 @@ public class ReferenciaBD extends ReferenciasMD {
         return referencias;
 
     }
-    public void actualizar(){
-        
-    }
+
 }
