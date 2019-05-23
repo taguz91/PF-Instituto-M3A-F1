@@ -820,7 +820,10 @@ public class FrmPersonaCTR extends DCTR {
                 int posPr = frmPersona.getCmbParroquiaReside().getSelectedIndex();
                 if (posPr > 0 && posPr <= parroquias.size()) {
                     frmPersona.getLblErrorParroquiaReside().setVisible(false);
+                    //Editar el codigo postal
+                    
                     lugarRes = parroquias.get(posPr - 1);
+                    //
                 } else {
                     frmPersona.getLblErrorParroquiaReside().setVisible(true);
                 }
@@ -1310,6 +1313,7 @@ public class FrmPersonaCTR extends DCTR {
 
         int posPr = frmPersona.getCmbProvinciaReside().getSelectedIndex();
         int posPa = frmPersona.getCmbParroquiaReside().getSelectedIndex();
+        int codigo;
         if (posPa > 0 && posPa < parroquias.size()) {
             //cantones.get(posPa).getId();
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
@@ -1318,6 +1322,8 @@ public class FrmPersonaCTR extends DCTR {
         } else {
 //            lug.editarLugar(cantones.get(posPa).getId());
             frmPersona.getTxtCodigoPostal().setText("");
+           // codigo = frmPersona.getTxtCodigoPostal().setText(lug.editarLugar(cantones.get(posPa).getId()));
+            
         }
     }
 
