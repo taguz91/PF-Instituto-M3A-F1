@@ -166,8 +166,7 @@ public class Controlador_plan_clases {
       lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
-     lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
-        CargarEstrategiasUnidad(lista_estrategiasSilabo);
+     
         
         
       lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
@@ -224,12 +223,7 @@ public class Controlador_plan_clases {
         }
     }
     
-    private void CargarEstrategiasUnidad(List<EstrategiasUnidadMD> lista){
-        fPlanClase.getCmbxEstrategiasPC().removeAllItems();
-        for (EstrategiasUnidadMD estrategiasUnidadMD : lista) {
-            fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
-        }
-    }
+    
     
     private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
