@@ -45,9 +45,13 @@ import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
@@ -96,8 +100,6 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.usuario.VtnRol;
-import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
@@ -262,7 +264,7 @@ public class VtnPrincipalCTR {
 
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
-
+        
         /*
             SET DIRECCION IP
          */
@@ -648,13 +650,13 @@ public class VtnPrincipalCTR {
         VtnNotas vtn = new VtnNotas();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn, usuario, rolSeleccionado);
+            VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn);
             vtnCtr.Init();
         } else {
             errorNumVentanas();
         }
     }
-    
+
     private ArrayList<String> estilos;
 
     /**
