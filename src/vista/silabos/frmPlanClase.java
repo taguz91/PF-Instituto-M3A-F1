@@ -37,461 +37,231 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
        
     }
 
-   
-
     public JButton getBtmnGuardarPc() {
         return btmnGuardarPc;
-    }
-
-    public void setBtmnGuardarPc(JButton btmnGuardarPc) {
-        this.btmnGuardarPc = btmnGuardarPc;
     }
 
     public JButton getBtnAgregarPC() {
         return btnAgregarPC;
     }
 
-    public JTextField getTxt_estrategias() {
-        return txt_estrategias;
-    }
-
-    public void setTxt_estrategias(JTextField txt_estrategias) {
-        this.txt_estrategias = txt_estrategias;
-    }
-
-    public void setBtnAgregarPC(JButton btnAgregarPC) {
-        this.btnAgregarPC = btnAgregarPC;
-    }
-
     public JButton getBtnCancelarPC() {
         return btnCancelarPC;
-    }
-
-    public void setBtnCancelarPC(JButton btnCancelarPC) {
-        this.btnCancelarPC = btnCancelarPC;
     }
 
     public JButton getBtnQuitarPC() {
         return btnQuitarPC;
     }
 
-    public void setBtnQuitarPC(JButton btnQuitarPC) {
-        this.btnQuitarPC = btnQuitarPC;
-    }
-
     public JDateChooser getjDateChooserFechaFinPC() {
         return jDateChooserFechaFinPC;
-    }
-
-    public void setjDateChooserFechaFinPC(JDateChooser jDateChooserFechaFinPC) {
-        this.jDateChooserFechaFinPC = jDateChooserFechaFinPC;
     }
 
     public JDateChooser getjDateChooserFechaInicioPC() {
         return jDateChooserFechaInicioPC;
     }
 
-    public void setjDateChooserFechaInicioPC(JDateChooser jDateChooserFechaInicioPC) {
-        this.jDateChooserFechaInicioPC = jDateChooserFechaInicioPC;
-    }
-
     public JScrollPane getjScrollPane1() {
         return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
     }
 
     public JScrollPane getjScrollPane10() {
         return jScrollPane10;
     }
 
-    public void setjScrollPane10(JScrollPane jScrollPane10) {
-        this.jScrollPane10 = jScrollPane10;
-    }
-
     public JScrollPane getjScrollPane11() {
         return jScrollPane11;
-    }
-
-    public void setjScrollPane11(JScrollPane jScrollPane11) {
-        this.jScrollPane11 = jScrollPane11;
     }
 
     public JScrollPane getjScrollPane2() {
         return jScrollPane2;
     }
 
-    public void setjScrollPane2(JScrollPane jScrollPane2) {
-        this.jScrollPane2 = jScrollPane2;
-    }
-
     public JScrollPane getjScrollPane3() {
         return jScrollPane3;
-    }
-
-    public void setjScrollPane3(JScrollPane jScrollPane3) {
-        this.jScrollPane3 = jScrollPane3;
     }
 
     public JScrollPane getjScrollPane4() {
         return jScrollPane4;
     }
 
-    
-    
-    public void setjScrollPane4(JScrollPane jScrollPane4) {
-        this.jScrollPane4 = jScrollPane4;
-    }
-
     public JScrollPane getjScrollPane5() {
         return jScrollPane5;
-    }
-
-    public void setjScrollPane5(JScrollPane jScrollPane5) {
-        this.jScrollPane5 = jScrollPane5;
     }
 
     public JScrollPane getjScrollPane7() {
         return jScrollPane7;
     }
 
-    public void setjScrollPane7(JScrollPane jScrollPane7) {
-        this.jScrollPane7 = jScrollPane7;
-    }
-
     public JScrollPane getjScrollPane8() {
         return jScrollPane8;
-    }
-
-    public void setjScrollPane8(JScrollPane jScrollPane8) {
-        this.jScrollPane8 = jScrollPane8;
     }
 
     public JScrollPane getjScrollPane9() {
         return jScrollPane9;
     }
 
-    public void setjScrollPane9(JScrollPane jScrollPane9) {
-        this.jScrollPane9 = jScrollPane9;
-    }
-
-    
-
     public JList getJlisRecursos() {
         return jlisRecursos;
-    }
-
-    public void setJlisRecursos(JList<String> jlisRecursos) {
-        this.jlisRecursos = jlisRecursos;
     }
 
     public JList<String> getJlistInstrumentoEvaluacion() {
         return jlistInstrumentoEvaluacion;
     }
 
-    public void setJlistInstrumentoEvaluacion(JList<String> jlistInstrumentoEvaluacion) {
-        this.jlistInstrumentoEvaluacion = jlistInstrumentoEvaluacion;
-    }
-
-
-
     public JLabel getLbAsignatura() {
         return lbAsignatura;
-    }
-
-    public void setLbAsignatura(JLabel lbAsignatura) {
-        this.lbAsignatura = lbAsignatura;
     }
 
     public JLabel getLbCarrera() {
         return lbCarrera;
     }
 
-    public void setLbCarrera(JLabel lbCarrera) {
-        this.lbCarrera = lbCarrera;
-    }
-
     public JLabel getLbCicloparalelo() {
         return lbCicloparalelo;
-    }
-
-    public void setLbCicloparalelo(JLabel lbCicloparalelo) {
-        this.lbCicloparalelo = lbCicloparalelo;
     }
 
     public JLabel getLbCod_Asignatura() {
         return lbCod_Asignatura;
     }
 
-    public void setLbCod_Asignatura(JLabel lbCod_Asignatura) {
-        this.lbCod_Asignatura = lbCod_Asignatura;
-    }
-
     public JLabel getLbContenidosPC() {
         return lbContenidosPC;
-    }
-
-    public void setLbContenidosPC(JLabel lbContenidosPC) {
-        this.lbContenidosPC = lbContenidosPC;
     }
 
     public JLabel getLbDocente() {
         return lbDocente;
     }
 
-    public void setLbDocente(JLabel lbDocente) {
-        this.lbDocente = lbDocente;
-    }
-
     public JLabel getLbDuracion() {
         return lbDuracion;
-    }
-
-    public void setLbDuracion(JLabel lbDuracion) {
-        this.lbDuracion = lbDuracion;
     }
 
     public JLabel getLbEstrategiasPC() {
         return lbEstrategiasPC;
     }
 
-    public void setLbEstrategiasPC(JLabel lbEstrategiasPC) {
-        this.lbEstrategiasPC = lbEstrategiasPC;
-    }
-
     public JLabel getLbFechaInicioPC() {
         return lbFechaInicioPC;
-    }
-
-    public void setLbFechaInicioPC(JLabel lbFechaInicioPC) {
-        this.lbFechaInicioPC = lbFechaInicioPC;
     }
 
     public JLabel getLbFechafinPC() {
         return lbFechafinPC;
     }
 
-    public void setLbFechafinPC(JLabel lbFechafinPC) {
-        this.lbFechafinPC = lbFechafinPC;
-    }
-
     public JLabel getLbIns_Evaluacion() {
         return lbIns_Evaluacion;
-    }
-
-    public void setLbIns_Evaluacion(JLabel lbIns_Evaluacion) {
-        this.lbIns_Evaluacion = lbIns_Evaluacion;
     }
 
     public JLabel getLbNumeroPlandeClase() {
         return lbNumeroPlandeClase;
     }
 
-    public void setLbNumeroPlandeClase(JLabel lbNumeroPlandeClase) {
-        this.lbNumeroPlandeClase = lbNumeroPlandeClase;
-    }
-
     public JLabel getLbObjetivoPC() {
         return lbObjetivoPC;
-    }
-
-    public void setLbObjetivoPC(JLabel lbObjetivoPC) {
-        this.lbObjetivoPC = lbObjetivoPC;
     }
 
     public JLabel getLbObservacionesPC() {
         return lbObservacionesPC;
     }
 
-    public void setLbObservacionesPC(JLabel lbObservacionesPC) {
-        this.lbObservacionesPC = lbObservacionesPC;
-    }
-
     public JLabel getLbPlandeClase() {
         return lbPlandeClase;
-    }
-
-    public void setLbPlandeClase(JLabel lbPlandeClase) {
-        this.lbPlandeClase = lbPlandeClase;
     }
 
     public JLabel getLbRecursosPC() {
         return lbRecursosPC;
     }
 
-    public void setLbRecursosPC(JLabel lbRecursosPC) {
-        this.lbRecursosPC = lbRecursosPC;
-    }
-
     public JLabel getLbResultadosAprendizaje() {
         return lbResultadosAprendizaje;
-    }
-
-    public void setLbResultadosAprendizaje(JLabel lbResultadosAprendizaje) {
-        this.lbResultadosAprendizaje = lbResultadosAprendizaje;
     }
 
     public JLabel getLbTituloUnidad() {
         return lbTituloUnidad;
     }
 
-    public void setLbTituloUnidad(JLabel lbTituloUnidad) {
-        this.lbTituloUnidad = lbTituloUnidad;
-    }
-
     public JLabel getLbTrabajoAutonomo() {
         return lbTrabajoAutonomo;
-    }
-
-    public void setLbTrabajoAutonomo(JLabel lbTrabajoAutonomo) {
-        this.lbTrabajoAutonomo = lbTrabajoAutonomo;
     }
 
     public JLabel getLbUnidad() {
         return lbUnidad;
     }
 
-    public void setLbUnidad(JLabel lbUnidad) {
-        this.lbUnidad = lbUnidad;
-    }
-
     public JList<String> getListAnticipacionPC() {
-        return listConsolidaciónPC;
-    }
-
-    public void setListAnticipacionPC(JList<String> listAnticipacionPC) {
-        this.listConsolidaciónPC = listAnticipacionPC;
-    }
-
-    public JList<String> getListConsolidacionPC() {
-        return listConstruccionPC;
-    }
-
-    public void setListConsolidacionPC(JList<String> listConsolidacionPC) {
-        this.listConstruccionPC = listConsolidacionPC;
-    }
-
-    public JList<String> getListConstruccionPC() {
         return listAnticipacionPC;
     }
 
-    public void setListConstruccionPC(JList<String> listConstruccionPC) {
-        this.listAnticipacionPC = listConstruccionPC;
+    public JList<String> getListConsolidacionPC() {
+        return listConsolidacionPC;
+    }
+
+    public JList<String> getListConstruccionPC() {
+        return listConstruccionPC;
     }
 
     public JTabbedPane getTbpEstrategiasPC() {
         return tbpEstrategiasPC;
     }
 
-    public void setTbpEstrategiasPC(JTabbedPane tbpEstrategiasPC) {
-        this.tbpEstrategiasPC = tbpEstrategiasPC;
-    }
-
     public JTextArea getTxrContenidosPC() {
         return txrContenidosPC;
-    }
-
-    public void setTxrContenidosPC(JTextArea txrContenidosPC) {
-        this.txrContenidosPC = txrContenidosPC;
     }
 
     public JTextArea getTxrObjetivoPC() {
         return txrObjetivoPC;
     }
 
-    public void setTxrObjetivoPC(JTextArea txrObjetivoPC) {
-        this.txrObjetivoPC = txrObjetivoPC;
-    }
-
     public JTextArea getTxrObservacionesPc() {
         return txrObservacionesPc;
-    }
-
-    public void setTxrObservacionesPc(JTextArea txrObservacionesPc) {
-        this.txrObservacionesPc = txrObservacionesPc;
     }
 
     public JTextArea getTxrResultadosAprendizaje() {
         return txrResultadosAprendizaje;
     }
 
-    public void setTxrResultadosAprendizaje(JTextArea txrResultadosAprendizaje) {
-        this.txrResultadosAprendizaje = txrResultadosAprendizaje;
-    }
-
     public JTextArea getTxrTrabajoAutonomo() {
         return txrTrabajoAutonomo;
-    }
-
-    public void setTxrTrabajoAutonomo(JTextArea txrTrabajoAutonomo) {
-        this.txrTrabajoAutonomo = txrTrabajoAutonomo;
     }
 
     public JTextField getTxtAsignatura() {
         return txtAsignatura;
     }
 
-    public void setTxtAsignatura(JTextField txtAsignatura) {
-        this.txtAsignatura = txtAsignatura;
-    }
-
     public JTextField getTxtCarrera() {
         return txtCarrera;
-    }
-
-    public void setTxtCarrera(JTextField txtCarrera) {
-        this.txtCarrera = txtCarrera;
     }
 
     public JTextField getTxtCicloParalelo() {
         return txtCicloParalelo;
     }
 
-    public void setTxtCicloParalelo(JTextField txtCicloParalelo) {
-        this.txtCicloParalelo = txtCicloParalelo;
-    }
-
     public JTextField getTxtCod_Asignatura() {
         return txtCod_Asignatura;
-    }
-
-    public void setTxtCod_Asignatura(JTextField txtCod_Asignatura) {
-        this.txtCod_Asignatura = txtCod_Asignatura;
     }
 
     public JTextField getTxtDocente() {
         return txtDocente;
     }
 
-    public void setTxtDocente(JTextField txtDocente) {
-        this.txtDocente = txtDocente;
-    }
-
     public JTextField getTxtDuracion() {
         return txtDuracion;
-    }
-
-    public void setTxtDuracion(JTextField txtDuracion) {
-        this.txtDuracion = txtDuracion;
     }
 
     public JTextField getTxtTituloUnidad() {
         return txtTituloUnidad;
     }
 
-    public void setTxtTituloUnidad(JTextField txtTituloUnidad) {
-        this.txtTituloUnidad = txtTituloUnidad;
-    }
-
     public JTextField getTxtUnidad() {
         return txtUnidad;
     }
 
-    public void setTxtUnidad(JTextField txtUnidad) {
-        this.txtUnidad = txtUnidad;
+    public JTextField getTxt_estrategias() {
+        return txt_estrategias;
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -554,7 +324,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         listConstruccionPC = new javax.swing.JList<>();
         jScrollPane10 = new javax.swing.JScrollPane();
-        listConsolidaciónPC = new javax.swing.JList<>();
+        listConsolidacionPC = new javax.swing.JList<>();
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
         txt_estrategias = new javax.swing.JTextField();
@@ -699,7 +469,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         tbpEstrategiasPC.addTab("Construccion", jScrollPane9);
 
-        jScrollPane10.setViewportView(listConsolidaciónPC);
+        jScrollPane10.setViewportView(listConsolidacionPC);
 
         tbpEstrategiasPC.addTab("Consolidacion", jScrollPane10);
 
@@ -995,7 +765,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbTrabajoAutonomo;
     private javax.swing.JLabel lbUnidad;
     private javax.swing.JList<String> listAnticipacionPC;
-    private javax.swing.JList<String> listConsolidaciónPC;
+    private javax.swing.JList<String> listConsolidacionPC;
     private javax.swing.JList<String> listConstruccionPC;
     private javax.swing.JTabbedPane tbpEstrategiasPC;
     private javax.swing.JTextArea txrContenidosPC;

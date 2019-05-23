@@ -468,6 +468,7 @@ public class Controlador_plan_clases {
                              
                              System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY --------CONSTRUCCIOM");
                              }
+                             
                         }          
                          for (int j = 0; j < fPlanClase.getListConsolidacionPC().getModel().getSize(); j++) {
                              if(fPlanClase.getListConsolidacionPC().getModel().getSize()>0){

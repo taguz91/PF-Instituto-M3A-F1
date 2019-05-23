@@ -469,7 +469,8 @@ public class ControladorEditarPlanClases {
     }
     
      private void actulizarEstrategiasMetodologicas(){
-                    for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
+                   
+                         for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
                            if(fPlanClase.getListAnticipacionPC().getModel().getSize()>0){
                           String nombre=fPlanClase.getListAnticipacionPC().getModel().getElementAt(j).toString();
                           lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD("Anticipacion", nombre));
@@ -486,6 +487,7 @@ public class ControladorEditarPlanClases {
                              
                              System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY --------CONSTRUCCIOM");
                              }
+                             
                         }          
                          for (int j = 0; j < fPlanClase.getListConsolidacionPC().getModel().getSize(); j++) {
                              if(fPlanClase.getListConsolidacionPC().getModel().getSize()>0){
