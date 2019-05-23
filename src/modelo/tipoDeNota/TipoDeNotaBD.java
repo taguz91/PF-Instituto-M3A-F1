@@ -122,7 +122,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         } catch (SQLException ex) {
             Logger.getLogger(TipoDeNotaBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return Lista;
@@ -137,9 +137,11 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "FROM\n"
                 + "\"public\".\"TipoDeNota\"\n"
                 + "WHERE \n"
-                + "\"public\".\"TipoDeNota\".id_prd_lectivo = " + idPeriodo + "";
+                + "\"public\".\"TipoDeNota\".id_prd_lectivo = ?";
 
         List<TipoDeNotaBD> lista = new ArrayList<>();
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idPeriodo);
 
         conn = pool.getConnection();
         rs = pool.ejecutarQuery(SELECT, conn, null);
@@ -158,7 +160,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return lista;
