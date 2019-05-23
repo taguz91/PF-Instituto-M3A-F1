@@ -37,13 +37,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
        
     }
 
-    public JComboBox<String> getCmbxEstrategiasPC() {
-        return CmbxEstrategiasPC;
-    }
-
-    public void setCmbxEstrategiasPC(JComboBox<String> CmbxEstrategiasPC) {
-        this.CmbxEstrategiasPC = CmbxEstrategiasPC;
-    }
+   
 
     public JButton getBtmnGuardarPc() {
         return btmnGuardarPc;
