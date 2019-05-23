@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.tipoDeNota.TipoDeNotaMD;
@@ -40,15 +42,17 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"Notas\"\n"
                 + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
                 + "WHERE\n"
-                + "\"public\".\"Notas\".id_almn_curso = " + alumnnoCurso.getId();
+                + "\"public\".\"Notas\".id_almn_curso = ?" ;
 
         List<NotasBD> lista = new ArrayList<>();
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1,alumnnoCurso.getId());
 
-        System.out.println(SELECT);
 
         try {
             conn = pool.getConnection();
-            rs = pool.ejecutarQuery(SELECT, conn, null);
+            rs = pool.ejecutarQuery(SELECT, conn, parametros);
+            System.out.println(pool.getStmt().toString());
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
 
@@ -63,9 +67,7 @@ public class NotasBD extends NotasMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.closeStmt();
-            pool.close(rs);
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
 //
