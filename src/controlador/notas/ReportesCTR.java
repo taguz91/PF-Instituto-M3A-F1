@@ -55,8 +55,6 @@ public class ReportesCTR {
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
 
-        JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
-
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Menor 70", parametros);
     }
 
