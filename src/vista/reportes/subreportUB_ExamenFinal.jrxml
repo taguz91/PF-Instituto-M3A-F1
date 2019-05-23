@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="140" pageHeight="100" columnWidth="100" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="af765fad-c243-405b-bd53-0aff6d2b7165">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="140" pageHeight="100" columnWidth="100" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d7157ce6-fbfb-4b56-a65a-941bf04f9821">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,7 +14,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	ROUND("Notas".nota_valor,1) AS "EXAMEN INTERCICLO"
+	ROUND("Notas".nota_valor,1) AS "EXAMEN FINAL"
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -32,14 +32,14 @@ WHERE
 	"Alumnos".id_alumno =$P{id_alumno}
 	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre =$P{prd_lectivo_nombre})
  	AND "Materias".id_materia=$P{id_materia}
-	AND "TipoDeNota".tipo_nota_nombre = 'APORTE 1']]>
+	AND "TipoDeNota".tipo_nota_nombre = 'EXAMEN FINAL']]>
 	</queryString>
-	<field name="EXAMEN INTERCICLO" class="java.math.BigDecimal"/>
+	<field name="EXAMEN FINAL" class="java.math.BigDecimal"/>
 	<title>
-		<band height="21" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="8e634f96-63c3-47fc-889d-7404d0b0479b"/>
-				<textFieldExpression><![CDATA[$F{EXAMEN INTERCICLO}]]></textFieldExpression>
+				<reportElement x="0" y="0" width="100" height="20" uuid="162ca927-0934-4a46-8edc-cb980d65fa8f"/>
+				<textFieldExpression><![CDATA[$F{EXAMEN FINAL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

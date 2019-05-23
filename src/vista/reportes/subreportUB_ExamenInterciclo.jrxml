@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="140" pageHeight="100" columnWidth="100" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="af765fad-c243-405b-bd53-0aff6d2b7165">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="140" pageHeight="100" columnWidth="100" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5786f036-0b3c-4d8b-a64d-9d5303d02b23">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -32,13 +32,13 @@ WHERE
 	"Alumnos".id_alumno =$P{id_alumno}
 	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre =$P{prd_lectivo_nombre})
  	AND "Materias".id_materia=$P{id_materia}
-	AND "TipoDeNota".tipo_nota_nombre = 'APORTE 1']]>
+	AND "TipoDeNota".tipo_nota_nombre = 'EXAMEN INTERCICLO']]>
 	</queryString>
 	<field name="EXAMEN INTERCICLO" class="java.math.BigDecimal"/>
 	<title>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="8e634f96-63c3-47fc-889d-7404d0b0479b"/>
+				<reportElement x="0" y="0" width="100" height="20" uuid="8c8696a9-3ea1-47eb-b750-474f71f062f6"/>
 				<textFieldExpression><![CDATA[$F{EXAMEN INTERCICLO}]]></textFieldExpression>
 			</textField>
 		</band>
