@@ -44,7 +44,7 @@ public class EstrategiasMetodologicasBD extends EstrategiasMetodologicasMD {
         
          try {
              PreparedStatement st =conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasMetodologias\"(\n" +
-                     "	tipo_estrategias_metodologias, id_plan_de_clases, nombre_estrategia\n" +
+                     "	tipo_estrategias_metodologias, id_plan_de_clases, nombre_estrategia\n)" +
                      "	VALUES ( ?, "+id_plan_Clase+", ?)");
              
              st.setString(1, em.getTipo_estrategias_metodologicas());
