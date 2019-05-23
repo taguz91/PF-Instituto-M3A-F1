@@ -24,11 +24,9 @@ import modelo.persona.AlumnoMD;
 public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private ConectarDB conecta;
-    private AlumnoBD alm;
-    private CursoBD cur;
     private String nsqlMatri = "", nsqlMatriUpdate = "";
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
 
@@ -38,8 +36,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.alm = new AlumnoBD(conecta);
-        this.cur = new CursoBD(conecta);
     }
 
     public AlumnoCursoBD() {
@@ -85,6 +81,25 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         } else {
             JOptionPane.showMessageDialog(null, "No pudimos editar la matricula, revise \n"
                     + "su conexion a internet.");
+            return false;
+        }
+    }
+
+    public boolean editarNumMatricula(int idAlmnCurso, int numMatricula) {
+        String nosql = "UPDATE public.\"AlumnoCurso\"\n"
+                + "	SET almn_curso_num_matricula = ?\n"
+                + "	WHERE id_almn_curso = ?;";
+        PreparedStatement ps = conecta.getPS(nosql);
+        try {
+            ps.setInt(1, numMatricula);
+            ps.setInt(2, idAlmnCurso);
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar le statement: " + e.getMessage());
+        }
+        if (conecta.nosql(ps) == null) {
+            JOptionPane.showMessageDialog(null, "Editamos correctamente el numero de matricula.");
+            return true;
+        } else {
             return false;
         }
     }
