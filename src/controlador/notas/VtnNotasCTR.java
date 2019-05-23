@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
