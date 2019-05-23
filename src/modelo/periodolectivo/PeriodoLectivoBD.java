@@ -618,11 +618,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD car = new CarreraMD();
+                car.setId(rst.getInt("id_carrera"));
+                car.setNombre(rst.getString("carrera_nombre"));
+                car.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(car);
 
                 periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
                 periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
@@ -720,11 +720,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD car = new CarreraMD();
+                car.setId(rst.getInt("id_carrera"));
+                car.setNombre(rst.getString("carrera_nombre"));
+                car.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(car);
 
                 String key = rst.getString("prd_lectivo_nombre");
 
