@@ -66,8 +66,8 @@ public class ReferenciasCTR {
             } else if (frmBibliografia.getTxtAutor().getText().length() > 0 && frmBibliografia.getTxtAutor2().getText().length() > 0
                     && frmBibliografia.getTxtAutor3().getText().length() == 0) {
                 contenedor = autor + '&' + autor2 + '.' + año + '.' + titulo + '.' + editor + '.' + ciudad;
-            } else if (frmBibliografia.getTxtAutor().getText().length() > 0 && frmBibliografia.getTxtAutor2().getText().length() == 0
-                    && frmBibliografia.getTxtAutor3().getText().length() > 0) {
+            } else if (frmBibliografia.getTxtAutor().getText().length() > 0 || frmBibliografia.getTxtAutor2().getText().length() == 0
+                    || frmBibliografia.getTxtAutor3().getText().length() > 0) {
                 contenedor = autor + '&' + autor2 + '&' + autor3 + '.' + año + '.' + titulo + '.' + editor + '.' + ciudad;
             }
 
