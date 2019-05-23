@@ -110,35 +110,32 @@ public class ConnDBPool {
 
         stmt = conn.prepareStatement(sql);
 
-        parametros.entrySet().forEach(new Consumer<Map.Entry<Integer, Object>>() {
+        parametros.entrySet().parallelStream().forEach(new Consumer<Map.Entry<Integer, Object>>() {
             int posicion = 1;
 
             @Override
             public void accept(Map.Entry<Integer, Object> entry) {
-                new Thread(() -> {
 
-                    try {
-                        posicion = entry.getKey();
-                        if (entry.getValue() instanceof Integer) {
-                            stmt.setInt(posicion, (int) entry.getValue());
-                        } else if (entry.getValue() instanceof String) {
-                            stmt.setString(posicion, entry.getValue().toString());
-                        } else if (entry.getValue() instanceof Double) {
-                            stmt.setDouble(posicion, (double) entry.getValue());
-                        } else if (entry.getValue() instanceof LocalTime) {
-                            stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
-                        } else if (entry.getValue() instanceof LocalDate) {
-                            stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
-                        } else if (entry.getValue() instanceof Boolean) {
-                            stmt.setBoolean(posicion, (boolean) entry.getValue());
-                        } else if (entry.getValue() instanceof Boolean) {
-                            stmt.setBoolean(posicion, (boolean) entry.getValue());
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    posicion = entry.getKey();
+                    if (entry.getValue() instanceof Integer) {
+                        stmt.setInt(posicion, (int) entry.getValue());
+                    } else if (entry.getValue() instanceof String) {
+                        stmt.setString(posicion, entry.getValue().toString());
+                    } else if (entry.getValue() instanceof Double) {
+                        stmt.setDouble(posicion, (double) entry.getValue());
+                    } else if (entry.getValue() instanceof LocalTime) {
+                        stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
+                    } else if (entry.getValue() instanceof LocalDate) {
+                        stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+                    } else if (entry.getValue() instanceof Boolean) {
+                        stmt.setBoolean(posicion, (boolean) entry.getValue());
+                    } else if (entry.getValue() instanceof Boolean) {
+                        stmt.setBoolean(posicion, (boolean) entry.getValue());
                     }
-
-                }).start();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
