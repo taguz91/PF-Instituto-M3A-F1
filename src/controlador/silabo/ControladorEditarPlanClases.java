@@ -350,36 +350,56 @@ public class ControladorEditarPlanClases {
             if (fPlanClase.getTxt_estrategias().getText().equals("")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
-                for (int i = 0; i < array_Anticipacion.size(); i++) {
-                    modelo_anticipacion.addElement(array_Anticipacion.get(i));
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Anticipacion.size(); i++) {
+                       modelo_anticipacion.addElement(array_Anticipacion.get(i));
+                    }
+                    fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
                 }
-                fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
-                fPlanClase.getTxt_estrategias().setText("");
+                
             }
             
         } else if(fPlanClase.getjScrollPane11().isShowing()){//Construccion
             if (fPlanClase.getTxt_estrategias().getText().equals("")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
-                for (int i = 0; i < array_Construccion.size(); i++) {
-                   modelo_anticipacion.addElement(array_Construccion.get(i));
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Construccion.size(); i++) {
+                        modelo_anticipacion.addElement(array_Construccion.get(i));
+                    }
+                    fPlanClase.getListConstruccionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
                 }
-                fPlanClase.getListConstruccionPC().setModel(modelo_anticipacion);
-                fPlanClase.getTxt_estrategias().setText("");
             }
            
         } else if(fPlanClase.getjScrollPane9().isShowing()){//Consolidacion
             if (fPlanClase.getTxt_estrategias().getText().equals("")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                array_Consolidacion.add(fPlanClase.getTxt_estrategias().getText());
-                for (int i = 0; i < array_Consolidacion.size(); i++) {
-                   modelo_anticipacion.addElement(array_Consolidacion.get(i));
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Consolidacion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Consolidacion.size(); i++) {
+                        modelo_anticipacion.addElement(array_Consolidacion.get(i));
+                    }
+                    fPlanClase.getListConsolidacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
                 }
-                fPlanClase.getListConsolidacionPC().setModel(modelo_anticipacion);
-                fPlanClase.getTxt_estrategias().setText("");
+                
             }
         }
     }
