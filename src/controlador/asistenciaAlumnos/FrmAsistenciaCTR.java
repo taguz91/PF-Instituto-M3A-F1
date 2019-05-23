@@ -1,4 +1,4 @@
-spackage controlador.asistenciaAlumnos;
+package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
@@ -16,6 +16,7 @@ import java.util.function.BiFunction;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -65,8 +66,6 @@ public class FrmAsistenciaCTR {
     private List<SesionClaseMD> listaSesionClase;
     private List<TipoDeNotaMD> listaValidaciones;
     private VtnPrincipalCTR ctrPrin;
-    private SesionClaseBD sclase;
-    private SesionClaseMD sclaseMD;
     
     private PeriodoLectivoBD prd = new PeriodoLectivoBD();
 
@@ -84,6 +83,7 @@ public class FrmAsistenciaCTR {
     private final CursoBD cursoBD;
     private final MateriaBD materiaBD;
     private final DocenteBD docenteBD;
+    private final SesionClaseBD sesionClaseBD; 
 
     {
         periodoBD = new PeriodoLectivoBD();
@@ -91,6 +91,7 @@ public class FrmAsistenciaCTR {
         materiaBD = new MateriaBD();
         cursoBD = new CursoBD();
         docenteBD = new DocenteBD();
+        sesionClaseBD = new SesionClaseBD();
     }
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
@@ -99,7 +100,6 @@ public class FrmAsistenciaCTR {
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
         //this.ctrPrin = ctrPrin;
-        //this.sclase = new SesionClaseBD(ctrPrin.getConecta());
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -417,12 +417,11 @@ public class FrmAsistenciaCTR {
         //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
 
         try {
-            //fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            //System.out.println(fechaInicial);
+            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
+            System.out.println(fechaInicial);
         
             System.out.println("-------------------------------------->  metodo carga de semanas");
             vista.getCmbSemana().removeAllItems();
-
             listaPrdSemana = periodoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
             if (listaPrdSemana.size() > 0) {
                 PeriodoLectivoMD periodo = listaPrdSemana.get(0);
@@ -443,10 +442,10 @@ public class FrmAsistenciaCTR {
     public void CargarDiasClase() {
         String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
         String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-        listaSesionClase = sclase.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
-        sclaseMD.getNumeroDias();
+     //   listaSesionClase = sclase.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
+       // sclaseMD.getNumeroDias();
 
-        System.out.println(sclaseMD.getNumeroDias());
+    //    System.out.println(sclaseMD.getNumeroDias());
     }
 
     // Agregar Filas

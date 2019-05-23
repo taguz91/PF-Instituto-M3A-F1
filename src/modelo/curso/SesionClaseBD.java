@@ -16,12 +16,16 @@ import modelo.persona.DocenteMD;
  */
 public class SesionClaseBD extends SesionClaseMD {
 
-    private final ConectarDB conecta;
+    private  ConectarDB conecta;
     private String sql, nsql;
 
     public SesionClaseBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
+
+    public SesionClaseBD() {
+    }
+    
 
     public void ingresar() {
         nsql = "INSERT INTO public.\"SesionClase\"(\n"
