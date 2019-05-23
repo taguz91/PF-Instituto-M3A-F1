@@ -1,9 +1,12 @@
 package controlador.alumno;
 
+import controlador.Libraries.Effects;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +49,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     //Ciclos de una carrera 
     private ArrayList<Integer> ciclos;
     private final MateriaBD mat;
+    
 
     /**
      * En el constructor se inician todas las dependencias de base de datos.
@@ -103,6 +107,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         //llamar al reporte
         vtnAlmnCurso.getBtnRepAlum().addActionListener(e -> validaComboReporte());
         vtnAlmnCurso.getBtnListaCiclo().addActionListener(e -> validaComboReporteCiclo());
+        vtnAlmnCurso.getBtnRepUBE().addActionListener(e -> btnUBE(e));
 
         ctrPrin.agregarVtn(vtnAlmnCurso);
     }
@@ -341,6 +346,120 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+
+    }
+    
+     private void btnUBE(ActionEvent e) {
+        new Thread(() -> {
+
+            int r = JOptionPane.showOptionDialog(vtnAlmnCurso, "Reporte individual\n" + "¿Elegir el tipo de Reporte?",
+                    "REPORTE UBE", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{"menos de 70 hasta interciclo", "menos de 70 final de ciclo", "Nota final"
+                       },
+                    "Cancelar");
+
+            Effects.setLoadCursor(vtnAlmnCurso);
+
+            //ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
+
+            switch (r) {
+                case 0:
+
+                    llamaReporteUBEmenos70hastainterciclo();
+                    break;
+
+                case 1:
+                    llamaReporteUBEmenos70despuesinterciclo();
+
+                    break;
+
+                case 2:
+
+                   llamaReporteUBEcompleto();
+
+                    break;
+
+                
+
+                default:
+                    break;
+            }
+
+            try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            Effects.setDefaultCursor(vtnAlmnCurso);
+            //vista..setEnabled(true);
+        }).start();
+    }
+       public void llamaReporteUBEmenos70hastainterciclo() {
+        JasperReport jr;
+        String path = "/vista/reportes/repUBNotasAporte1.jasper";
+        posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+
+                Map parametro = new HashMap();
+                parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
+                parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtnAlmnCurso, "Seleecione una fila primero.");
+        }
+
+    }
+       
+     public void llamaReporteUBEmenos70despuesinterciclo() {
+        JasperReport jr;
+        String path = "/vista/reportes/repUBNotasAporte2.jasper";
+        posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+
+                Map parametro = new HashMap();
+                parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
+                parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtnAlmnCurso, "Seleecione una fila primero.");
+        }
+
+    }  
+     
+     public void llamaReporteUBEcompleto() {
+        JasperReport jr;
+        String path = "/vista/reportes/repUBcompleto.jasper";
+        posFila = vtnAlmnCurso.getTblAlumnoCurso().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+
+                Map parametro = new HashMap();
+                parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
+                parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
+                System.out.println(parametro);
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtnAlmnCurso, "Seleecione una fila primero.");
+        }
 
     }
 }

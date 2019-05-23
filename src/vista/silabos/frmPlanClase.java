@@ -37,13 +37,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
        
     }
 
-    public JComboBox<String> getCmbxEstrategiasPC() {
-        return CmbxEstrategiasPC;
-    }
-
-    public void setCmbxEstrategiasPC(JComboBox<String> CmbxEstrategiasPC) {
-        this.CmbxEstrategiasPC = CmbxEstrategiasPC;
-    }
+   
 
     public JButton getBtmnGuardarPc() {
         return btmnGuardarPc;
@@ -55,6 +49,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
     public JButton getBtnAgregarPC() {
         return btnAgregarPC;
+    }
+
+    public JTextField getTxt_estrategias() {
+        return txt_estrategias;
+    }
+
+    public void setTxt_estrategias(JTextField txt_estrategias) {
+        this.txt_estrategias = txt_estrategias;
     }
 
     public void setBtnAgregarPC(JButton btnAgregarPC) {
@@ -547,15 +549,15 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         txrResultadosAprendizaje = new javax.swing.JTextArea();
         lbResultadosAprendizaje = new javax.swing.JLabel();
         tbpEstrategiasPC = new javax.swing.JTabbedPane();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        listAnticipacionPC = new javax.swing.JList<>();
         jScrollPane11 = new javax.swing.JScrollPane();
         listConstruccionPC = new javax.swing.JList<>();
         jScrollPane9 = new javax.swing.JScrollPane();
         listConsolidacionPC = new javax.swing.JList<>();
-        CmbxEstrategiasPC = new javax.swing.JComboBox<>();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        listAnticipacionPC = new javax.swing.JList<>();
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
+        txt_estrategias = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -689,10 +691,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbResultadosAprendizaje.setText("Resultados de Aprendizaje:");
 
-        jScrollPane10.setViewportView(listAnticipacionPC);
-
-        tbpEstrategiasPC.addTab("Anticipación", jScrollPane10);
-
         jScrollPane11.setViewportView(listConstruccionPC);
 
         tbpEstrategiasPC.addTab("Construcción", jScrollPane11);
@@ -701,8 +699,9 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         tbpEstrategiasPC.addTab("Consolidación", jScrollPane9);
 
-        CmbxEstrategiasPC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CmbxEstrategiasPC.setAutoscrolls(true);
+        jScrollPane10.setViewportView(listAnticipacionPC);
+
+        tbpEstrategiasPC.addTab("Anticipación", jScrollPane10);
 
         btnAgregarPC.setText("Agregar");
 
@@ -719,7 +718,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbObjetivoPC)
                             .addComponent(lbRecursosPC)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -739,7 +738,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                             .addComponent(lbIns_Evaluacion))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -747,11 +746,19 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane7)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-                                    .addComponent(lbObservacionesPC, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbContenidosPC, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CmbxEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lbContenidosPC, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addComponent(lbObservacionesPC)))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                                            .addComponent(txt_estrategias))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAgregarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -763,7 +770,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                             .addComponent(lbDocente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCarrera)
+                            .addComponent(txtCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                             .addComponent(txtDocente))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -877,17 +884,17 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbEstrategiasPC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(CmbxEstrategiasPC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAgregarPC))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnAgregarPC)
+                                    .addComponent(txt_estrategias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnQuitarPC)
                                     .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(40, 40, 40)
                                 .addComponent(lbObservacionesPC)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnCancelarPC)
@@ -908,7 +915,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -943,7 +950,6 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarPCActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbxEstrategiasPC;
     private javax.swing.JButton btmnGuardarPc;
     private javax.swing.JButton btnAgregarPC;
     private javax.swing.JButton btnCancelarPC;
@@ -999,6 +1005,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtTituloUnidad;
     private javax.swing.JTextField txtUnidad;
+    private javax.swing.JTextField txt_estrategias;
     // End of variables declaration//GEN-END:variables
  public static class CheckListItem {
 
