@@ -109,11 +109,11 @@ public class FrmMateriasCTR extends DCTR {
                 acceso++;
                 if (acceso > 1) {
                     String nombre = frmMaterias.getCbEjeFormacion().getSelectedItem().toString();
-                    if (nombre.equals("UNIDAD BÁSICA")) {
+                    if (nombre.equals("BÁSICA")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(1);
-                    } else if (nombre.equals("UNIDAD PROFESIONAL")) {
+                    } else if (nombre.equals("PROFESIONAL")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(2);
-                    } else if (nombre.equals("UNIDAD DE TITULACIÓN")) {
+                    } else if (nombre.equals("TITULACIÓN")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(3);
                     }
                     habilitarGuardar();
@@ -137,15 +137,6 @@ public class FrmMateriasCTR extends DCTR {
 
         });
 
-        frmMaterias.getBtn_Anterior().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = true;
-                accesoPestanas();
-//                habilitarGuardar();
-            }
-        });
-
         frmMaterias.getBtnGuardar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -163,65 +154,6 @@ public class FrmMateriasCTR extends DCTR {
         iniciarCarreras();
 
     }
-
-    public void accesoPestanas() {
-        int pos = frmMaterias.getjTPMaterias().getSelectedIndex();
-        switch (pos) {
-            case 0:
-                guardar = false;
-                if (siguiente == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(1);
-                    frmMaterias.getBtn_Anterior().setEnabled(true);
-                    frmMaterias.getBtnGuardar().setText("Siguiente");
-                    frmMaterias.getBtnGuardar().setEnabled(false);
-                    habilitarGuardar();
-                }
-                break;
-            case 1:
-                guardar = false;
-                if (anterior == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(0);
-                    frmMaterias.getBtnGuardar().setText("Siguiente");
-                    frmMaterias.getBtnGuardar().setEnabled(true);
-                    frmMaterias.getBtn_Anterior().setEnabled(false);
-//                    habilitarGuardar();
-                } else if (siguiente == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(2);
-                    frmMaterias.getBtn_Anterior().setEnabled(true);
-                    frmMaterias.getBtnGuardar().setText("Siguiente");
-                    frmMaterias.getBtnGuardar().setEnabled(false);
-                    habilitarGuardar();
-                }
-                break;
-            case 2:
-                guardar = false;
-                if (anterior == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(1);
-                    frmMaterias.getBtnGuardar().setText("Siguiente");
-                    frmMaterias.getBtnGuardar().setEnabled(true);
-                    frmMaterias.getBtn_Anterior().setEnabled(true);
-//                    habilitarGuardar();
-                } else if (siguiente == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(3);
-                    frmMaterias.getBtnGuardar().setText("Guardar");
-                    frmMaterias.getBtnGuardar().setEnabled(false);
-                    frmMaterias.getBtn_Anterior().setEnabled(true);
-//                    habilitarGuardar();
-                }
-                break;
-            case 3:
-
-                if (anterior == true) {
-                    frmMaterias.getjTPMaterias().setSelectedIndex(2);
-                    frmMaterias.getBtnGuardar().setText("Siguiente");
-                    frmMaterias.getBtnGuardar().setEnabled(true);
-                    frmMaterias.getBtn_Anterior().setEnabled(true);
-//                    habilitarGuardar();
-                }
-                break;
-        }
-    }
-
     public void iniciarCarreras() {
         List<CarreraMD> carreras = materiaBD.cargarCarreras();
         for (int i = 0; i < carreras.size(); i++) {
@@ -278,7 +210,24 @@ public class FrmMateriasCTR extends DCTR {
     }
 
     public void iniciarComponentes() {
-
+        
+        frmMaterias.getCbCarrera().setToolTipText("Seleccione un Carrera");
+        frmMaterias.getCbEjeFormacion().setToolTipText("Seleccione un Eje de Formación");
+        frmMaterias.getTxt_CodMateria().setToolTipText("Escriba el Código perteneciente a la Materia, este Código debe ser único");
+        frmMaterias.getTxtNombreMateria().setToolTipText("Escriba el Nombre de la Materia");
+        frmMaterias.getCbMateriaTipo().setToolTipText("Seleccione el Tipo de la Materia de la siguiente lista");
+        frmMaterias.getCbTipoAcreditacion().setToolTipText("Seleccione un Tipo de Acreditación de la siguiente lista");
+        frmMaterias.getCbx_Ciclo().setToolTipText("Seleccione el Ciclo al que pertenece esta materia");
+        frmMaterias.getTxtCreditos().setToolTipText("Escriba el total de horas o créditos de la Materia");
+        frmMaterias.getTxtHorasDocencia().setToolTipText("Escriba el número de horas de Docencia de la materia");
+        frmMaterias.getTxtHorasAutoEstudio().setToolTipText("Escriba el número de horas Autoestudio de la materia");
+        frmMaterias.getTxtHorasPracticas().setToolTipText("Escriba el número de horas Prácticas de la materia");
+        frmMaterias.getTxtObjetivoGeneral().setToolTipText("Escriba el Objetivo General de la materia");
+        frmMaterias.getTxtObjetivoEspecifico().setToolTipText("Escriba el Objetivo Específico de la materia");
+        frmMaterias.getCbx_OrgCurricular().setToolTipText("Seleccione la Unidad de Organización Curricular de la materia");
+        frmMaterias.getTxtDescripcionMateria().setToolTipText("Escriba la Descripción de la materia");
+        frmMaterias.getCbTipoAcreditacion().setToolTipText("Seleccione la Organización Curricular de la materia");
+        
         frmMaterias.getLblErrorCarrera().setVisible(false);
         frmMaterias.getLblErrorEjeFormacion().setVisible(false);
         frmMaterias.getLblErrorCodigoMateria().setVisible(false);
@@ -300,11 +249,6 @@ public class FrmMateriasCTR extends DCTR {
         frmMaterias.getBtnGuardar().setText("Guardar");
         frmMaterias.getCbEjeFormacion().setEnabled(false);
         frmMaterias.getBtnGuardar().setEnabled(false);
-        frmMaterias.getBtn_Anterior().setEnabled(false);
-//        frmMaterias.getjTPMaterias().setEnabledAt(0, false);
-//        frmMaterias.getjTPMaterias().setEnabledAt(1, false);
-//        frmMaterias.getjTPMaterias().setEnabledAt(2, false);
-//        frmMaterias.getjTPMaterias().setEnabledAt(3, false);
     }
 
     public void borrarCampos() {
@@ -369,7 +313,9 @@ public class FrmMateriasCTR extends DCTR {
             case "Ciclo 5":
                 materiaCiclo = 5;
                 break;
-
+            case "Ciclo 6":
+                materiaCiclo = 6;
+                break;
         }
 
         materiaTipo = frmMaterias.getCbMateriaTipo().getSelectedItem().toString();
