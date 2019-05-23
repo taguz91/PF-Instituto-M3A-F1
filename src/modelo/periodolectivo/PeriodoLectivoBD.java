@@ -22,7 +22,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
 
@@ -618,11 +618,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
                 periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
@@ -720,11 +720,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 String key = rst.getString("prd_lectivo_nombre");
 
