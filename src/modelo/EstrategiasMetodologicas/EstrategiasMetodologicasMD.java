@@ -10,6 +10,8 @@ public class EstrategiasMetodologicasMD {
     private String tipo_estrategias_metodologicas;
     private  PlandeClasesMD id_plan_clases;
     private EstrategiasUnidadMD id_estrategias_unidad;
+    private String nombre_estrategia;
+    
 
     public EstrategiasMetodologicasMD() {
         this.id_plan_clases=new PlandeClasesMD();
