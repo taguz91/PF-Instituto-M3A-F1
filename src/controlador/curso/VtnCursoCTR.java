@@ -56,7 +56,7 @@ public class VtnCursoCTR extends DVtnCTR {
         cargarCmbPrdLectio();
         cargarNombreCursos();
         //Iniciamos la tabla  
-        String titulo[] = {"id", "Periodo", "Materia", "Cedula", "Docente", "Ciclo", "Curso", "Capacidad"};
+        String titulo[] = {"id", "Periodo", "Materia", "Cedula", "Docente", "Ciclo", "Curso", "Capacidad", "Matriculados"};
         String datos[][] = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnCurso.getTblCurso().setModel(mdTbl);
@@ -64,9 +64,11 @@ public class VtnCursoCTR extends DVtnCTR {
         TblEstilo.formatoTbl(vtnCurso.getTblCurso());
         TblEstilo.ocualtarID(vtnCurso.getTblCurso());
         //le pasamos un tamaño a las columnas
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 3, 100);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 5, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 6, 60);
         TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 7, 70);
+        TblEstilo.columnaMedida(vtnCurso.getTblCurso(), 8, 70);
         cargarCursos();
         vtnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         vtnCurso.getBtnEditar().addActionListener(e -> editarCurso());
@@ -247,7 +249,8 @@ public class VtnCursoCTR extends DVtnCTR {
                     + c.getDocente().getPrimerApellido(),
                     c.getCiclo(),
                     c.getNombre(),
-                    c.getCapacidad()
+                    c.getCapacidad(),
+                    c.getNumMatriculados()
                 };
                 mdTbl.addRow(valores);
             });
@@ -304,7 +307,7 @@ public class VtnCursoCTR extends DVtnCTR {
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Escriba primero un título");
             reporteListaSilabos();
