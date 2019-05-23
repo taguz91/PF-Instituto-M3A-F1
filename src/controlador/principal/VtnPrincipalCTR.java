@@ -1061,7 +1061,7 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtMatricula().setEnabled(false);
             vtnPrin.getMnCtDocenteMateria().setEnabled(false);
             vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-            vtnPrin.getMnCtPlandeClase().setEnabled(true);
+            //vtnPrin.getMnCtPlandeClase().setEnabled(true);
             vtnPrin.getMnCtUsuarios().setEnabled(false);
             vtnPrin.getMnCtRoles().setEnabled(false);
             vtnPrin.getMnCtHistorialUsers().setEnabled(false);

@@ -148,6 +148,7 @@
                   <KeyStroke key="Ctrl+K"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Plan de clase"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
