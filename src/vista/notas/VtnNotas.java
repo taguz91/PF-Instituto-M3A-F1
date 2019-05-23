@@ -1,10 +1,8 @@
 package vista.notas;
 
 import controlador.notas.ux.RowStyle;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -12,13 +10,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import modelo.CONS;
+import vista.AbstracView;
 
 /**
  *
  * @author MrRainx
  */
-public class VtnNotas extends JInternalFrame {
+public class VtnNotas extends AbstracView {
 
     public VtnNotas() {
 

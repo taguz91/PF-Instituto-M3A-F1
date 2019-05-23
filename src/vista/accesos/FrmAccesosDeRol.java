@@ -1,17 +1,16 @@
 package vista.accesos;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author CESAR
  */
-public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
+public class FrmAccesosDeRol extends AbstracView {
 
     /**
      * Creates new form FmrRoles
@@ -19,8 +18,6 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
     public FrmAccesosDeRol() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {
@@ -70,9 +67,6 @@ public class FrmAccesosDeRol extends javax.swing.JInternalFrame {
     public JTextField getTxtBuscarDados() {
         return txtBuscarDados;
     }
-    
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

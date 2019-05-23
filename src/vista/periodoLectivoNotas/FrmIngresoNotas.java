@@ -1,15 +1,15 @@
 package vista.periodoLectivoNotas;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class FrmIngresoNotas extends javax.swing.JInternalFrame {
+public class FrmIngresoNotas extends AbstracView {
 
     /**
      * Creates new form FrmIngresoNotas
@@ -17,8 +17,6 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
     public FrmIngresoNotas() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {
