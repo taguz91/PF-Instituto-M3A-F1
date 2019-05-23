@@ -70,8 +70,7 @@ DIDÁCTICA]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[ASISTIDO POR 
- EL PROFESOR]]></text>
+				<text><![CDATA[APRENDIZAJE COLABORATIVO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="312" y="0" width="75" height="31" forecolor="#FFFFFF" backcolor="#006699" uuid="38d6582a-d489-4d34-8268-a6cc4ce99d83"/>

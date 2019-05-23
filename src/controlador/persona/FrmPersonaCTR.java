@@ -1119,7 +1119,12 @@ public class FrmPersonaCTR extends DCTR {
         frmPersona.getTxtCarnetConadis().setToolTipText("Ingrese un carnet de conadis valido");
         frmPersona.getTxtCelular().setToolTipText("Ingrese su numero de celular");
         frmPersona.getTxtCodigoPostal().setToolTipText("Ingrese su codigo postal");
-
+        frmPersona.getTxtCorreo().setToolTipText("Ingrese su correo");
+        frmPersona.getTxtNumeroCasa().setToolTipText("Ingrese el numero de casa");
+        frmPersona.getTxtPorcentaje().setToolTipText("Ingrese el porcentaje de discapacidad");
+        frmPersona.getTxtReferencia().setToolTipText("Ingrese una referencia de su direccion");
+        frmPersona.getTxtSector().setToolTipText("Ingrese el sector donde vive");
+        frmPersona.getTxtTelefono().setToolTipText("Ingrese su numero convencional");
         frmPersona.getLblErrorCategoriaMigratoria().setVisible(false);
         frmPersona.getLblErrorCallePrin().setVisible(false);
         frmPersona.getLblErrorCalleSec().setVisible(false);
