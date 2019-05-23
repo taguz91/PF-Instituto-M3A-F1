@@ -1,6 +1,7 @@
 package modelo;
 
 import java.io.File;
+import java.util.concurrent.ForkJoinPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 
@@ -38,6 +39,19 @@ public class CONS {
 
     public static void setRol(RolBD ROL) {
         CONS.ROL = ROL;
+    }
+
+    private static ForkJoinPool threadPool;
+
+    public static ForkJoinPool getPool(Integer threads) {
+        if (threads == null) {
+            if (threadPool == null) {
+                threadPool = new ForkJoinPool(4);
+            }
+        } else {
+            threadPool = new ForkJoinPool(threads);
+        }
+        return threadPool;
     }
 
 }

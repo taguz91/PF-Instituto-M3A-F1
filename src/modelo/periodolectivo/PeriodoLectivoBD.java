@@ -760,8 +760,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, parametros);
 
-        System.out.println("--->" + pool.getStmt());
-
         try {
             while (rst.next()) {
 
@@ -823,6 +821,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
+            pool.closeStmt();
+            pool.close(rst);
             pool.close(conn);
         }
         return semana;
