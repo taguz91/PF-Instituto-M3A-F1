@@ -119,9 +119,6 @@ public class VtnPrincipalCTR {
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
-    //Icono de la aplicacion  
-    private ImageIcon icono;
-    private final Image ista;
     //Para hacer los accesos
     private List<AccesosMD> accesos;
     //Constantes de accesos, para las ventanas y menus
@@ -160,8 +157,7 @@ public class VtnPrincipalCTR {
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
-        this.ista = CONS.getImage();
-        vtnPrin.setIconImage(ista);
+        vtnPrin.setIconImage(CONS.getImage());
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         registroIngreso(vtnPrin);
@@ -952,30 +948,17 @@ public class VtnPrincipalCTR {
     }
 
     /**
-     * Retornamos el icono del sistema
-     *
-     * @return icono ImageIcon
-     */
-    public ImageIcon getIcono() {
-        return icono;
-    }
-
-    /**
      * Retornamos la imagen del icono.
      *
      * @return ista Image
      */
-    public Image getIsta() {
-        return ista;
-    }
-
     /**
      * Cambiamos el icono de un JInternalFrame.
      *
      * @param jif JInternalFrame
      */
     public void setIconJIFrame(JInternalFrame jif) {
-        jif.setFrameIcon(icono);
+        jif.setFrameIcon(CONS.getICONO());
     }
 
     /**
@@ -984,7 +967,7 @@ public class VtnPrincipalCTR {
      * @param jd JDialog
      */
     public void setIconJDialog(JDialog jd) {
-        jd.setIconImage(ista);
+        jd.setIconImage(CONS.getImage());
     }
 
     private void btnPrdIngrNotas(ActionEvent e) {
