@@ -18,20 +18,24 @@ import modelo.materia.MateriaMD;
 
 public class DocenteBD extends DocenteMD {
 
-    private final ConectarDB conecta;
+    private ConectarDB conecta;
     private PersonaMD p;
 
-    private static final ConnDBPool POOL;
-    private static Connection conn;
-    private static ResultSet res;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet res;
 
-    static {
-        POOL = new ConnDBPool();
+    {
+        pool = new ConnDBPool();
     }
 
     public DocenteBD(ConectarDB conecta) {
         this.conecta = conecta;
     }
+
+    public DocenteBD() {
+    }
+
 
     /* public DocenteBD(ConectarDB conecta, PersonaBD per, String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador, String tituloDocente,String abreviaturaDocente) {
         super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador, tituloDocente,abreviaturaDocente);
@@ -66,8 +70,8 @@ public class DocenteBD extends DocenteMD {
         }
 
     }
-    
-    public DocenteMD capturarIdDocente(String identificacion, int idDocente){
+
+    public DocenteMD capturarIdDocente(String identificacion, int idDocente) {
         String sql = "SELECT id_docente, docente_codigo FROM public.\"Docentes\" WHERE docente_codigo LIKE '%" + identificacion + "%'"
                 + " OR id_docente = " + idDocente + ";";
         DocenteMD d = new DocenteMD();
@@ -96,7 +100,7 @@ public class DocenteBD extends DocenteMD {
         boolean exito = false;
         CallableStatement cStmt;
         try {
-            conn = POOL.getConnection();
+            conn = pool.getConnection();
             cStmt = conn.prepareCall("SELECT reasignarMaterias(?, ?);");
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
@@ -125,7 +129,7 @@ public class DocenteBD extends DocenteMD {
         boolean exito = false;
         CallableStatement cStmt;
         try {
-            conn = POOL.getConnection();
+            conn = pool.getConnection();
             cStmt = conn.prepareCall("SELECT reasignarNotas(?, ?)");
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
@@ -766,7 +770,7 @@ public class DocenteBD extends DocenteMD {
         }
     }
 
-    public static HashMap<String, DocenteMD> selectAll() {
+    public HashMap<String, DocenteMD> selectAll() {
 
         String SELECT = "SELECT \"Docentes\".id_docente,\n"
                 + "    \"Docentes\".id_persona,\n"
@@ -783,8 +787,8 @@ public class DocenteBD extends DocenteMD {
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
 
-        conn = POOL.getConnection();
-        res = POOL.ejecutarQuery(SELECT, conn, null);
+        conn = pool.getConnection();
+        res = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
 
@@ -810,13 +814,13 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            pool.close(conn);
         }
         return lista;
 
     }
 
-    public static HashMap<String, DocenteMD> selectAll(String username) {
+    public HashMap<String, DocenteMD> selectAll(String username) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"Personas\".id_persona,\n"
@@ -838,8 +842,8 @@ public class DocenteBD extends DocenteMD {
                 + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
-        conn = POOL.getConnection();
-        res = POOL.ejecutarQuery(SELECT, conn, null);
+        conn = pool.getConnection();
+        res = pool.ejecutarQuery(SELECT, conn, null);
         try {
 
             while (res.next()) {
@@ -863,7 +867,7 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            pool.close(conn);
         }
         return lista;
     }

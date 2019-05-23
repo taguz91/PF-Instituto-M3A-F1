@@ -3,6 +3,7 @@ package modelo.curso;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
@@ -45,6 +46,9 @@ public class SesionClaseBD extends SesionClaseMD {
 
     public void ingresarHorarios(String nsql) {
         PreparedStatement ps = conecta.getPS(nsql);
+        System.out.println("----------");
+        System.out.println(nsql);
+        System.out.println("----------");
         if (conecta.nosql(ps) == null) {
             JOptionPane.showMessageDialog(null, "Se guardo correctamente el horario.");
         } else {
@@ -81,6 +85,38 @@ public class SesionClaseBD extends SesionClaseMD {
         sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
                 + "	WHERE id_sesion = " + idSesion + " ;";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CursoMD c = new CursoMD();
+                    s.setId(rs.getInt("id_sesion"));
+                    c.setId(rs.getInt("id_curso"));
+                    s.setCurso(c);
+                    s.setDia(rs.getInt("dia_sesion"));
+                    s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
+                    s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
+                }
+                ps.getConnection().close();
+                return s;
+            } catch (SQLException e) {
+                System.out.println("No se pudo consultar sesion " + e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public SesionClaseMD existeSesion(int idCurso, int dia, LocalTime horaIni, LocalTime horaFin) {
+        SesionClaseMD s = new SesionClaseMD();
+        sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
+                + "	FROM public.\"SesionClase\" \n"
+                + "	WHERE dia_sesion = " + dia + " "
+                + "AND id_curso = " + idCurso + " \n"
+                + "AND hora_inicio_sesion = '" + horaIni.toString() + "' "
+                + "AND hora_fin_sesion = '" + horaFin.toString() + "';";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         if (rs != null) {
@@ -207,7 +243,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "ORDER BY hora_inicio_sesion";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -251,7 +287,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	curso_nombre = '" + nombreCurso + "');";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -276,27 +312,27 @@ public class SesionClaseBD extends SesionClaseMD {
         }
     }
 
-    public ArrayList<SesionClaseMD> cargarDiasClase(String nombreCurso, int idPrdLectivo, int idDocente, String materiaNombre){
-        sql = "\"SELECT\n" +
-"	\"SesionClase\".dia_sesion \n" +
-"FROM\n" +
-"	\"SesionClase\"\n" +
-"	INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"SesionClase\".id_curso\n" +
-"	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n" +
-"	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n" +
-"	INNER JOIN \"Carreras\" ON \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n" +
-"	INNER JOIN \"Materias\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera \n" +
-"WHERE\n" +
-"	\"Cursos\".id_docente = " + idDocente + " \n" +
-"	AND \"Cursos\".curso_nombre = " + nombreCurso + " \n" +
-"	AND \"PeriodoLectivo\".id_prd_lectivo = " + idPrdLectivo + " \n" +
-"	AND materia_nombre = " + materiaNombre + " \n" +
-"GROUP BY\n" +
-"	\"SesionClase\".dia_sesion;\"";
-        
+    public ArrayList<SesionClaseMD> cargarDiasClase(String nombreCurso, int idPrdLectivo, int idDocente, String materiaNombre) {
+        sql = "\"SELECT\n"
+                + "	\"SesionClase\".dia_sesion \n"
+                + "FROM\n"
+                + "	\"SesionClase\"\n"
+                + "	INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"SesionClase\".id_curso\n"
+                + "	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Carreras\" ON \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n"
+                + "	INNER JOIN \"Materias\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"Cursos\".id_docente = " + idDocente + " \n"
+                + "	AND \"Cursos\".curso_nombre = " + nombreCurso + " \n"
+                + "	AND \"PeriodoLectivo\".id_prd_lectivo = " + idPrdLectivo + " \n"
+                + "	AND materia_nombre = " + materiaNombre + " \n"
+                + "GROUP BY\n"
+                + "	\"SesionClase\".dia_sesion;\"";
+
         ArrayList<SesionClaseMD> diasClase = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -304,6 +340,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     CursoMD c = new CursoMD();
                     c.setId(rs.getInt("id_curso"));
                     s.setDia(rs.getInt("dia_sesion"));
+                    s.setNumeroDias(rs.getInt(1));
                     diasClase.add(s);
                 }
                 ps.getConnection().close();

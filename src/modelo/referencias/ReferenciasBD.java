@@ -39,7 +39,7 @@ public class ReferenciasBD extends ReferenciasMD {
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
                     + "FROM public.\"Referencias\"\n"
                     + "WHERE tipo_referencia='Base'\n"
-                    + "AND existe_en_biblioteca=true AND descripcion_referencia ILIKE '%" + clave + "%'");
+                    + "AND existe_en_biblioteca=true AND (TRANSLATE(descripcion_referencia,'ÁÉÍÓÚáéíóú','AEIOUaeiou') ILIKE '%" + clave + "%' OR TRANSLATE(codigo_referencia,'ÁÉÍÓÚáéíóú','AEIOUaeiou') ILIKE '%" + clave + "%') ORDER BY codigo_referencia");
 
             ResultSet rs = st.executeQuery();
 
@@ -122,4 +122,6 @@ public class ReferenciasBD extends ReferenciasMD {
         }
 
     }
+    
+    
 }

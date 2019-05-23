@@ -24,16 +24,20 @@ public class CursoBD extends CursoMD {
 
     private final ConectarDB conecta;
 
-    private final static ConnDBPool POOL;
-    private static Connection conn;
-    private static ResultSet rst;
+    private ConnDBPool POOL;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         POOL = new ConnDBPool();
     }
 
     public CursoBD(ConectarDB conecta) {
         this.conecta = conecta;
+    }
+
+    public CursoBD() {
+        this.conecta = null;
     }
 
     private void iniciarIngresoNotas() {
@@ -263,7 +267,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursos() {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -287,7 +295,11 @@ public class CursoBD extends CursoMD {
      * @return
      */
     public ArrayList<CursoMD> cargarCursosEliminados() {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -306,7 +318,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorPeriodo(int idPrdLectivo) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -325,7 +341,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorNombre(String nombre) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -344,7 +364,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido,"
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -365,7 +389,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> buscarCursos(String aguja) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -699,6 +727,8 @@ public class CursoBD extends CursoMD {
             c.setNombre(rs.getString("curso_nombre"));
             c.setCapacidad(rs.getInt("curso_capacidad"));
             c.setCiclo(rs.getInt("curso_ciclo"));
+
+            c.setNumMatriculados(rs.getInt(1));
             return c;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener curso");
@@ -707,7 +737,7 @@ public class CursoBD extends CursoMD {
         }
     }
 
-    public static List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
+    public List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
                 + "\"public\".\"Cursos\".curso_nombre\n"

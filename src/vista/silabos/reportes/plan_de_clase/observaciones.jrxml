@@ -12,9 +12,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="29" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="29" uuid="4ef0b93c-452d-4a36-9b5b-1a059366929b"/>
+				<reportElement x="0" y="0" width="555" height="14" uuid="4ef0b93c-452d-4a36-9b5b-1a059366929b"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -22,22 +22,24 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Observaciones:]]></text>
 			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="46">
-			<textField>
-				<reportElement x="0" y="0" width="555" height="46" uuid="4a19dbfe-31c3-4360-9fb3-1a52bde931ec"/>
+		<band height="22">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="555" height="22" uuid="4a19dbfe-31c3-4360-9fb3-1a52bde931ec"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Justified"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
 		</band>

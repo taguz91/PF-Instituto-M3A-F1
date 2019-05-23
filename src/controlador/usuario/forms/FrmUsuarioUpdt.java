@@ -22,13 +22,6 @@ public class FrmUsuarioUpdt extends AbstracForm {
         this.modelo = null;
         this.modelo = modelo;
         this.Pk = modelo.getUsername();
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println(modelo);
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
         setForm();
     }
 
@@ -55,7 +48,7 @@ public class FrmUsuarioUpdt extends AbstracForm {
                 Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
                 vista.dispose();
                 destruirVariables();
-                vtnPadre.cargarTabla(UsuarioBD.selectAll());
+                vtnPadre.cargarTabla(modelo.selectAll());
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
             }

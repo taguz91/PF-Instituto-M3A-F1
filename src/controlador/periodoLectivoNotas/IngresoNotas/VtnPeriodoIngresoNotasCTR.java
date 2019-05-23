@@ -86,13 +86,6 @@ public class VtnPeriodoIngresoNotasCTR {
         vista.getBtnActualizar().addActionListener(e -> btnActualizarActionPerformance(e));
     }
 
-    private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-
-            //HACER LOS IFS DE LOS PERMISOS
-        }
-    }
-
     //Metodos de Apoyo
     public void cargarTabla(List<PeriodoIngresoNotasMD> lista) {
         if (cargarTabla) {

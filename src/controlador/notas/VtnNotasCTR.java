@@ -5,7 +5,6 @@ import controlador.Libraries.Middlewares;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -25,6 +24,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
@@ -38,7 +38,6 @@ import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
@@ -52,24 +51,43 @@ public class VtnNotasCTR {
     private final VtnNotas vista;
     private final UsuarioBD usuario;
     private final RolBD rolSeleccionado;
-    //LISTAS
+    // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
     private List<TipoDeNotaBD> listaValidaciones;
 
-    //TABLA
+    // TABLA
     private DefaultTableModel tablaTrad;
     private DefaultTableModel tablaDuales;
 
-    //JTables
+    // JTables
     private JTable jTblTrad;
     private JTable jTblDual;
 
-    //ACTIVACION DE HILOS
+    // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
 
+    private final PeriodoLectivoBD peridoBD;
+    private final AlumnoCursoBD almnCursoBD;
+    private final TipoDeNotaBD tipoNotaBD;
+    private final CarreraBD carreraBD;
+    private final CursoBD cursoBD;
+    private final MateriaBD materiaBD;
+    private final DocenteBD docenteBD;
+
+    {
+        peridoBD = new PeriodoLectivoBD();
+        almnCursoBD = new AlumnoCursoBD();
+        tipoNotaBD = new TipoDeNotaBD();
+        carreraBD = new CarreraBD();
+        cursoBD = new CursoBD();
+        materiaBD = new MateriaBD();
+        docenteBD = new DocenteBD();
+    }
+
+    // private VtnPrincipalCTR ctrPrin;
     public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
         this.desktop = desktop;
         this.vista = vista;
@@ -77,7 +95,7 @@ public class VtnNotasCTR {
         this.rolSeleccionado = rolSeleccionado;
     }
 
-    // <editor-fold defaultstate="collapsed" desc="INITS">    
+    // <editor-fold defaultstate="collapsed" desc="INITS">
     public void Init() {
         tablaTrad = (DefaultTableModel) vista.getTblTrad().getModel();
         tablaDuales = (DefaultTableModel) vista.getTblDual().getModel();
@@ -86,9 +104,9 @@ public class VtnNotasCTR {
         jTblDual = vista.getTblDual();
 
         if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
-            listaDocentes = DocenteBD.selectAll(usuario.getUsername());
+            listaDocentes = docenteBD.selectAll(usuario.getUsername());
         } else {
-            listaDocentes = DocenteBD.selectAll();
+            listaDocentes = docenteBD.selectAll();
         }
 
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
@@ -117,8 +135,6 @@ public class VtnNotasCTR {
         vista.getBtnVerNotas().addActionListener(e -> btnVerNotas(e));
 
         vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
-
-        vista.getBtnAsistencia().addActionListener(e -> btnAsistencia(e));
 
         vista.getBtnBuscar().addActionListener(e -> buscarDocente());
         vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -169,7 +185,7 @@ public class VtnNotasCTR {
 
     private void InitTablas() {
         String funcion = "";
-        //TABLA TRADICIONALES
+        // TABLA TRADICIONALES
         jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
         jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
@@ -184,7 +200,7 @@ public class VtnNotasCTR {
         items.add("Desertor");
         jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
 
-        //TABLA DUALES
+        // TABLA DUALES
         jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
         jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
         jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
@@ -193,8 +209,8 @@ public class VtnNotasCTR {
         jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
     }
 
-    // </editor-fold>  
-    // <editor-fold defaultstate="collapsed" desc="ENCABEZADO">    
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="ENCABEZADO">
     private void cargarComboDocente() {
         listaDocentes.entrySet().stream().map(c -> c.getKey()).forEach(vista.getCmbDocente()::addItem);
         tablaTrad.setRowCount(0);
@@ -205,23 +221,16 @@ public class VtnNotasCTR {
         vista.getCmbPeriodoLectivo().removeAllItems();
         vista.getLblCarrera().setText("");
 
-        listaPeriodos = PeriodoLectivoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos
-                .stream()
-                .map(c -> c.getNombre_PerLectivo())
-                .forEach(vista.getCmbPeriodoLectivo()::addItem);
+        listaPeriodos = peridoBD.selectPeriodoWhere(getIdDocente());
+        listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivo()::addItem);
         tablaTrad.setRowCount(0);
         tablaDuales.setRowCount(0);
     }
 
     private void setLblCarrera() {
-        vista.getLblCarrera().setText(listaPeriodos
-                .stream()
-                .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                .map(c -> c.getCarrera().getNombre())
-                .findFirst()
-                .orElse("")
-        );
+        vista.getLblCarrera()
+                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                        .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
 
     }
 
@@ -229,8 +238,8 @@ public class VtnNotasCTR {
         try {
             vista.getCmbCiclo().removeAllItems();
 
-            CursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo())
-                    .stream().forEach(vista.getCmbCiclo()::addItem);
+            cursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream()
+                    .forEach(vista.getCmbCiclo()::addItem);
         } catch (NullPointerException e) {
         }
         tablaTrad.setRowCount(0);
@@ -250,17 +259,14 @@ public class VtnNotasCTR {
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
-            listaMaterias = MateriaBD.selectWhere(curso);
+            listaMaterias = materiaBD.selectWhere(curso);
 
             listaMaterias.stream().map(c -> c.getNombre()).forEach(vista.getCmbAsignatura()::addItem);
             vista.getLblHoras().setText("" + listaMaterias.stream()
                     .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
-                    .map(c -> c.getHorasPresenciales())
-                    .findFirst()
-                    .orElse(-1)
-            );
+                    .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1));
 
-            listaValidaciones = TipoDeNotaBD.selectWhere(getIdPeriodoLectivo());
+            listaValidaciones = tipoNotaBD.selectWhere(getIdPeriodoLectivo());
 
             validarCombos();
         } catch (NullPointerException e) {
@@ -270,7 +276,7 @@ public class VtnNotasCTR {
         tablaDuales.setRowCount(0);
     }
 
-    // </editor-fold>  
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
     private int getIdDocente() {
         return listaDocentes.entrySet().stream()
@@ -279,14 +285,16 @@ public class VtnNotasCTR {
     }
 
     private void mensajeDeError() {
-        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", Effects.ERROR_COLOR, 2);
+        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", Effects.ERROR_COLOR,
+                2);
 
         Effects.ERROR_COLOR = null;
 
     }
 
     private void errorDeNota(TipoDeNotaMD rango) {
-        Effects.setTextInLabel(vista.getLblEstado(), "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), Effects.ERROR_COLOR, 2);
+        Effects.setTextInLabel(vista.getLblEstado(),
+                "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), Effects.ERROR_COLOR, 2);
     }
 
     private void refreshTabla(Consumer<AlumnoCursoBD> loader, DefaultTableModel tabla) {
@@ -308,12 +316,8 @@ public class VtnNotasCTR {
     private int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            return listaPeriodos
-                    .stream()
-                    .filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .map(c -> c.getId_PerioLectivo())
-                    .findAny()
-                    .orElse(-1);
+            return listaPeriodos.stream().filter(item -> item.getNombre_PerLectivo().equals(periodo))
+                    .map(c -> c.getId_PerioLectivo()).findAny().orElse(-1);
         } catch (NullPointerException e) {
         }
         return -1;
@@ -340,11 +344,8 @@ public class VtnNotasCTR {
     };
 
     private String getModalidad() {
-        return listaPeriodos.stream()
-                .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                .map(c -> c.getCarrera().getModalidad())
-                .findFirst()
-                .orElse("");
+        return listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
     }
 
     private int getHoras() {
@@ -394,8 +395,8 @@ public class VtnNotasCTR {
         return (faltas * 100) / horas;
     }
 
-    private void editarFaltas(int fila, JTable tabla, Consumer<AlumnoCursoBD> loader,
-            Function<String, Void> editar, Function<Void, Void> sumar) {
+    private void editarFaltas(int fila, JTable tabla, Consumer<AlumnoCursoBD> loader, Function<String, Void> editar,
+            Function<Void, Void> sumar) {
 
         int colFaltas = getIndex.apply(tabla, "Faltas");
         int colEstado = getIndex.apply(tabla, "Estado");
@@ -439,7 +440,8 @@ public class VtnNotasCTR {
                         tabla.setValueAt(faltas, fila, colFaltas);
                         editar.apply("");
                     } else {
-                        Effects.setTextInLabel(vista.getLblEstado(), "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
+                        Effects.setTextInLabel(vista.getLblEstado(),
+                                "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
                         refreshTabla(loader, (DefaultTableModel) tabla.getModel());
                     }
                 }
@@ -458,7 +460,7 @@ public class VtnNotasCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
-            listaNotas = AlumnoCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
             listaNotas.stream().forEach(loader);
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
@@ -466,14 +468,13 @@ public class VtnNotasCTR {
     }
 
     private double getValorNota(int index, String tipoNota) {
-        return listaNotas.get(index).getNotas()
-                .stream()
-                .filter(item -> item.getTipoDeNota().getNombre().equals(tipoNota))
-                .findFirst().map(c -> c.getNotaValor()).orElse(listaNotas.get(index).getNotaFinal());
+        return listaNotas.get(index).getNotas().stream()
+                .filter(item -> item.getTipoDeNota().getNombre().equals(tipoNota)).findFirst()
+                .map(c -> c.getNotaValor()).orElse(listaNotas.get(index).getNotaFinal());
     }
 
-    // </editor-fold> 
-    // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES"> 
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="CARRERAS TRADICIONALES">
     private void carlcularNotasTradicionales(JTable tabla) {
 
         int fila = tabla.getSelectedRow();
@@ -529,58 +530,44 @@ public class VtnNotasCTR {
 
     }
 
-    // </editor-fold>  
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
-            tablaTrad.addRow(new Object[]{
-                tablaTrad.getDataVector().size() + 1,
-                obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(),
-                obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(),
-                obj.getAlumno().getSegundoNombre(),
+            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
                 obj.getNotas().stream().filter(buscar("APORTE 1")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("EXAMEN INTERCICLO")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("NOTA INTERCICLO")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("APORTE 2")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
-                (int) Middlewares.conversor("" + obj.getNotaFinal()),
-                obj.getEstado(),
-                obj.getNumFalta(),
-                calcularPorcentaje(obj.getNumFalta(), getHoras()),
-                obj.getAsistencia()
-            });
+                (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
+                calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
         };
     }
 
     private Consumer<AlumnoCursoBD> agregarFilasDuales() {
         return (obj) -> {
 
-            tablaDuales.addRow(new Object[]{
-                tablaDuales.getDataVector().size() + 1,
-                obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(),
-                obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(),
-                obj.getAlumno().getSegundoNombre(),
+            tablaDuales
+                    .addRow(new Object[]{tablaDuales.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
                 obj.getNotas().stream().filter(buscar("G. DE AULA 1")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("G. DE AULA 2")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("TOTAL GESTION")).findAny().get().getNotaValor(),
                 obj.getNotas().stream().filter(buscar("EXAMEN FINAL")).findAny().get().getNotaValor(),
-                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
-                (int) Middlewares.conversor("" + obj.getNotaFinal()),
-                obj.getEstado(),
-                obj.getNumFalta(),
-                carcularPorcentaje(obj.getNumFalta(), getHoras()),
-                obj.getAsistencia()
-            });
+                obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get()
+                .getNotaValor(),
+                (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
+                carcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
         };
     }
 
-    // </editor-fold>  
-    // <editor-fold defaultstate="collapsed" desc="SUMA DE COLUMNAS"> 
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="SUMA DE COLUMNAS">
     private void guardarTRAD(int fila, String valueText, String tipoNota) {
         if (Validaciones.isDecimal(valueText)) {
             double value = Middlewares.conversor(valueText);
@@ -760,7 +747,7 @@ public class VtnNotasCTR {
         };
     }
 
-    // </editor-fold>  
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="CARRERAS DUALES">
     private void cacularNotasDuales(JTable tabla) {
 
@@ -794,7 +781,7 @@ public class VtnNotasCTR {
 
                 break;
 
-            case 13://FALTAS
+            case 13:// FALTAS
                 editarFaltas(fila, tabla, agregarFilasDuales(), editarDuales(), sumarDual());
                 break;
 
@@ -863,8 +850,8 @@ public class VtnNotasCTR {
         return (faltas * 100) / horas;
     }
 
-    // </editor-fold>  
-    // <editor-fold defaultstate="collapsed" desc="EVENTOS"> 
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="EVENTOS">
     private void btnVerNotas(ActionEvent e) {
         if (cargarTabla) {
 
@@ -891,14 +878,11 @@ public class VtnNotasCTR {
     private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 
-            int r = JOptionPane.showOptionDialog(vista,
-                    "Reporte de Notas por Curso\n"
-                    + "¿Elegir el tipo de Reporte?", "REPORTE NOTAS",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80",
-                        "Alumnos entre 80 a 90", "Alumnos entre 90 a 100", "Reporte Completo"}, "Cancelar");
+            int r = JOptionPane.showOptionDialog(vista, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
+                    "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
+                        "Alumnos entre 90 a 100", "Reporte Completo"},
+                    "Cancelar");
 
             Effects.setLoadCursor(vista);
 
@@ -961,21 +945,12 @@ public class VtnNotasCTR {
 
     private void buscarDocente() {
         activarForm(false);
-        vista.getCmbDocente().setSelectedItem(listaDocentes
-                .entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscar().getText()))
-                .map(c -> c.getKey())
-                .findFirst()
-                .orElse("")
-        );
+        vista.getCmbDocente()
+                .setSelectedItem(listaDocentes.entrySet().stream()
+                        .filter(entry -> entry.getValue().getIdentificacion().equals(vista.getTxtBuscar().getText()))
+                        .map(c -> c.getKey()).findFirst().orElse(""));
         activarForm(true);
     }
 
-    private void btnAsistencia(ActionEvent e) {
-        FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(desktop, new FrmAsistencia(), usuario, rolSeleccionado);
-        asistencia.Init();
-    }
-
-    // </editor-fold>  
+    // </editor-fold>
 }
