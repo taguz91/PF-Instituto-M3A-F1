@@ -5,20 +5,16 @@
  */
 package vista.periodoLectivoNotas;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import vista.AbstracView;
 
-public class FrmTipoNota extends JInternalFrame {
+public class FrmTipoNota extends AbstracView {
 
     public FrmTipoNota() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
         InitDiseño();
     }
 
