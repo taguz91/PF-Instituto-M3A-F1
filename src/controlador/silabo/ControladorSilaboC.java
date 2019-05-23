@@ -1882,6 +1882,20 @@ public class ControladorSilaboC {
         int is=insertarUnidades();
         insertarReferencias(is);
         // exportarPDF();
+        
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboNuevo.getIdSilabo(), 1);
+
+        estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboNuevo.getIdSilabo());
+
+        estrategiasAprendizaje = new ArrayList<>();
+
+        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboNuevo.getIdSilabo());
+
+        biblioteca = new ArrayList<>();
+
+        referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silaboNuevo.getIdSilabo());
+
+        tiposActividad = TipoActividadBD.consultar(conexion);
 
     }
 

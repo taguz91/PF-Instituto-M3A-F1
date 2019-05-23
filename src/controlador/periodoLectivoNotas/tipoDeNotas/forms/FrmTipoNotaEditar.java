@@ -3,8 +3,12 @@ package controlador.periodoLectivoNotas.tipoDeNotas.forms;
 import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
@@ -25,6 +29,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
     //INITS
     @Override
     public void Init() {
+        System.out.println("--------THREAD-->" + Thread.activeCount());
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
@@ -76,19 +81,29 @@ public class FrmTipoNotaEditar extends AbstracForm {
     //EVENTOS
     @Override
     protected void btnGuardar(ActionEvent e) {
-        new Thread(() -> {
 
-            Effects.setText(vtnPadre.getVista().getLblEstado(), "SE ESTA EDITANDO LAS NOTAS", 2);
+        Effects.setText(vtnPadre.getVista().getLblEstado(), "SE ESTA EDITANDO LAS NOTAS", 2);
 
-            setObjs();
+        setObjs();
 
-            listaTipos.forEach(obj -> {
-                new Thread(() -> {
-                    obj.editar(obj.getId());
-                }).start();
-            });
-            Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
-        }).start();
+        try {
+
+            CONS.getPool(10).submit(() -> listaTipos
+                    .parallelStream()
+                    .forEach(obj -> {
+                        System.out.println("---->" + obj);
+                        obj.editar(obj.getId());
+                        System.out.println("------>COMPLETED");
+                    })
+            ).get();
+            CONS.getPool(null).shutdown();
+        } catch (InterruptedException | ExecutionException ex) {
+            Logger.getLogger(FrmTipoNotaEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listaTipos = null;
+        System.out.println("--------THREAD-->" + Thread.activeCount());
+        Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
+
         vista.dispose();
     }
 
