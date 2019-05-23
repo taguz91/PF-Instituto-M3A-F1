@@ -20,18 +20,21 @@ public class ReferenciaBD extends ReferenciasMD {
         this.conectar = conectar;
     }
 
+    public ReferenciaBD() {
+    }
+    
+
     public boolean insertarReferencia() {
         String nsql = "INSERT INTO public.\"Referencias\"(\n"
-                + "codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,numero_de_paginas,codigo_koha,codigo_dewey,area_referencia)\n"
+                + "codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,numero_de_paginas,codigo_koha,codigo_dewey,area_referencia,autor2,autor3)\n"
                 + " values ('" + getCodigo_referencia() + "','" + getDescripcion_referencia() + "','" + getTipo_referencia() + "'," + isExiste_en_biblioteca() + ",'" + getObservaciones()+
-                "','" + getCodigo_isbn()+ "','" + getNumero_de_paginas()+ "','" + getCodigo_koha()+ "','" + getCodigo_dewey()+ "','" + getArea_referencias()+ "');";
+                "','" + getCodigo_isbn()+ "','" + getNumero_de_paginas()+ "','" + getCodigo_koha()+ "','" + getCodigo_dewey()+ "','" + getArea_referencias()+ "','" + getAutor2()+ "','" + getAutor3()+ "');";
         if (conectar.nosql(nsql) == null) {
             return true;
         } else {
             System.out.println("Error");
             return false;
         }
-
     }
 
     public List<ReferenciasMD> consultarBibliotecaTabla(ConexionBD conexion) {

@@ -33,6 +33,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnRepUBE() {
+        return btnRepUBE;
+    }
+
     public JLabel getLblResultados() {
         return lblResultados;
     }
@@ -86,6 +90,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         cmbCiclo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         btnListaCiclo = new javax.swing.JButton();
+        btnRepUBE = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -129,6 +134,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnListaCiclo.setText("Lista ciclo");
 
+        btnRepUBE.setText("UBE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,6 +178,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRepUBE, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRepAlum)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnListaCiclo))
@@ -204,7 +213,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(lblResultados)
                     .addComponent(btnRepAlum)
                     .addComponent(jLabel3)
-                    .addComponent(btnListaCiclo))
+                    .addComponent(btnListaCiclo)
+                    .addComponent(btnRepUBE))
                 .addContainerGap())
         );
 
@@ -217,6 +227,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnListaCiclo;
     private javax.swing.JButton btnMaterias;
     private javax.swing.JButton btnRepAlum;
+    private javax.swing.JButton btnRepUBE;
     private javax.swing.JButton btnbuscar;
     private javax.swing.JComboBox<String> cmbCiclo;
     private javax.swing.JComboBox cmbCursos;
