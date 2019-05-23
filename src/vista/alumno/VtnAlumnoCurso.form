@@ -71,6 +71,8 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnRepUBE" min="-2" pref="98" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnRepAlum" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnListaCiclo" min="-2" max="-2" attributes="0"/>
@@ -115,6 +117,7 @@
                   <Component id="btnRepAlum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnListaCiclo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRepUBE" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -225,6 +228,11 @@
     <Component class="javax.swing.JButton" name="btnListaCiclo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lista ciclo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRepUBE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="UBE"/>
       </Properties>
     </Component>
   </SubComponents>
