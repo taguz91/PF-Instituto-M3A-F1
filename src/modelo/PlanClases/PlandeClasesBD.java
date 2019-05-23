@@ -64,31 +64,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
         }
         return true;
     }
-    public boolean ActualizarPlanClases(PlandeClasesMD pl){
-        
-        try {
-            PreparedStatement st=conexion.getCon().prepareStatement(""
-                    + "UPDATE public.\"PlandeClases\"\n" +
-"	SET  id_curso=?, id_unidad=?, observaciones=?, fecha_revision=?, fecha_generacion=?, fecha_cierre=?\n" +
-"	WHERE id_plan_clases=?;");
-            
-            st.setInt(1, pl.getId_curso().getId());
-            st.setInt(2, pl.getId_unidad().getIdUnidad());
-            st.setString(3, pl.getObservaciones());
-//            st.setByte(4, null);
-            st.setDate(4, null);
-            st.setDate(5, null);
-            st.setDate(6, null);
-            st.setInt(7, pl.getId_plan_clases());
-
-              st.executeUpdate();
-              System.out.println(st);
-              st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
-    }
+   
    
    public static  List<PlandeClasesMD> consultarPlanClase(ConexionBD conexion,String [] parametros){
        List<PlandeClasesMD> lista_plan=new ArrayList<>();
