@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="924"/>
+	<property name="ireport.y" value="54"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
@@ -63,7 +63,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 	<detail>
 		<band height="226">
 			<staticText>
-				<reportElement x="10" y="96" width="163" height="20" uuid="c7abb436-2521-4d1c-9f24-5c3d6b0e1adb"/>
+				<reportElement x="10" y="96" width="168" height="20" uuid="c7abb436-2521-4d1c-9f24-5c3d6b0e1adb"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -74,7 +74,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<text><![CDATA[ Ciclo/semestre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="76" width="163" height="20" uuid="bd101f74-2e6b-45c6-8e70-16ca68190754"/>
+				<reportElement x="10" y="76" width="168" height="20" uuid="bd101f74-2e6b-45c6-8e70-16ca68190754"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -106,7 +106,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<text><![CDATA[1.DATOS DE LA ASIGNATURA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="173" y="76" width="372" height="20" uuid="ec4c82e5-0362-47c5-85fa-bb640197507d"/>
+				<reportElement x="178" y="76" width="367" height="20" uuid="ec4c82e5-0362-47c5-85fa-bb640197507d"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -114,10 +114,13 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="173" y="96" width="372" height="20" uuid="ba460eb2-ac56-4f10-94af-dd0ac5f678b6"/>
+				<reportElement x="178" y="96" width="367" height="20" uuid="ba460eb2-ac56-4f10-94af-dd0ac5f678b6"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -125,10 +128,10 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{ciclo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" "+$F{ciclo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="136" width="163" height="20" uuid="03da61b3-89ed-4ee8-b504-149b0e28ff22"/>
+				<reportElement x="10" y="136" width="168" height="20" uuid="03da61b3-89ed-4ee8-b504-149b0e28ff22"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -139,7 +142,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<text><![CDATA[ Campo de formación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="156" width="163" height="20" uuid="b8949dd4-27c7-4179-a385-77f17bcf20c3"/>
+				<reportElement x="10" y="156" width="168" height="20" uuid="b8949dd4-27c7-4179-a385-77f17bcf20c3"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -150,7 +153,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<text><![CDATA[ Modalidad:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="116" width="163" height="20" uuid="34d264a5-5cc1-4ce5-868b-0df688e3ccb1"/>
+				<reportElement x="10" y="116" width="168" height="20" uuid="34d264a5-5cc1-4ce5-868b-0df688e3ccb1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -158,10 +161,10 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<text><![CDATA[ Unidad de formación curricular:]]></text>
+				<text><![CDATA[ Unidad de organización curricular:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="173" y="156" width="372" height="20" uuid="fce43460-62dc-4819-a2e9-dec2537ffad2"/>
+				<reportElement x="178" y="156" width="367" height="20" uuid="fce43460-62dc-4819-a2e9-dec2537ffad2"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -169,7 +172,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{carrera_modalidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" "+$F{carrera_modalidad}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="283" y="189" width="262" height="37" uuid="064bafc6-eade-4c2d-8de2-e20042d910f1"/>
@@ -201,7 +204,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="173" y="136" width="372" height="20" uuid="0b023e90-0e88-417a-a734-02ab8b39e805"/>
+				<reportElement x="178" y="136" width="367" height="20" uuid="0b023e90-0e88-417a-a734-02ab8b39e805"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -209,10 +212,10 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{materia_campo_formacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" "+$F{materia_campo_formacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="173" y="116" width="372" height="20" uuid="51591c03-b1c4-4048-a743-14537224c5ca"/>
+				<reportElement x="178" y="116" width="367" height="20" uuid="51591c03-b1c4-4048-a743-14537224c5ca"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -220,7 +223,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{materia_organizacion_curricular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" "+$F{materia_organizacion_curricular}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="10" y="189" width="267" height="37" uuid="af75bce3-24ff-4c8a-8eaa-c22e269dea15"/>
