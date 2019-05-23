@@ -134,6 +134,17 @@ public class Controlador_plan_clases {
                         
             }
          });
+        
+         fPlanClase.getTxt_estrategias().addKeyListener(new KeyAdapter() {
+             @Override
+             public void keyTyped(KeyEvent e){
+                 int limite =115;
+                 if( fPlanClase.getTxt_estrategias().getText().length()==limite){
+                     e.consume();
+                     JOptionPane.showMessageDialog(null, "NO PUEDE INGRESAR MAS CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE);
+                 }
+             }
+});
         fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
