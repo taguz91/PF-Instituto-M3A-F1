@@ -7,14 +7,14 @@ package vista.usuario;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import vista.AbstracView;
 
 /**
  *
  * @author MrRainx
  */
-public class VtnSelectRol extends AbstracView {
+public class VtnSelectRol extends JFrame{
 
     /**
      * Creates new form VtnSelectRol
