@@ -134,6 +134,17 @@ public class Controlador_plan_clases {
                         
             }
          });
+        
+         fPlanClase.getTxt_estrategias().addKeyListener(new KeyAdapter() {
+             @Override
+             public void keyTyped(KeyEvent e){
+                 int limite =115;
+                 if( fPlanClase.getTxt_estrategias().getText().length()==limite){
+                     e.consume();
+                     JOptionPane.showMessageDialog(null, "NO PUEDE INGRESAR MAS CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE);
+                 }
+             }
+});
         fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,8 +182,8 @@ public class Controlador_plan_clases {
      
         
         
-      lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
-        CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
+      lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        CargarEvaluacionesInstrumento(lista_estrategiasSilabo);
         
       lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
       CargarRecursos(lista_recursoMD);
@@ -227,14 +238,13 @@ public class Controlador_plan_clases {
     
     
     
-    private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
+    private void CargarEvaluacionesInstrumento(List<EstrategiasUnidadMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
         modelo=new DefaultListModel();
-        for (EvaluacionSilaboMD evaluacionSilaboMD : lista) {
-            modelo.addElement(evaluacionSilaboMD.getInstrumento());
+        for (EstrategiasUnidadMD eu : lista) {
+            modelo.addElement(eu.getIdEstrategia().getDescripcionEstrategia());
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
-        fPlanClase.getJlistInstrumentoEvaluacion().setEnabled(false);
     }
     
     private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    

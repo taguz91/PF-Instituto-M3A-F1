@@ -5,6 +5,8 @@ package controlador.silabo;
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.ZoneId;
@@ -150,7 +152,18 @@ public class ControladorEditarPlanClases {
 
             }
             
-    });        
+    }); 
+         fPlanClase.getTxt_estrategias().addKeyListener(new KeyAdapter() {
+             @Override
+             public void keyTyped(KeyEvent e){
+                 int limite =115;
+                 if( fPlanClase.getTxt_estrategias().getText().length()==limite){
+                     e.consume();
+                     JOptionPane.showMessageDialog(null, "NO PUEDE INGRESAR MAS CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE);
+                 }
+             }
+});
+         
         iniciaPlanClase(planClaseMD, curso, silabo, unidadsilabo);
           lista_estrategias_metodologicas_antici=new ArrayList<>();
     }
@@ -168,9 +181,9 @@ public class ControladorEditarPlanClases {
         lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
-      lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
-        CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
-                
+        lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        CargarEvaluacionesInstrumento(lista_estrategiasSilabo); 
+        
        lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());
         cargarCampoObservacion(lista_plan);
         
@@ -200,14 +213,13 @@ public class ControladorEditarPlanClases {
         fPlanClase.getTxtCicloParalelo().setEnabled(false);
         }
     }
-     private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
+     private void CargarEvaluacionesInstrumento(List<EstrategiasUnidadMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
         modelo=new DefaultListModel();
-        for (EvaluacionSilaboMD evaluacionSilaboMD : lista) {
-            modelo.addElement(evaluacionSilaboMD.getInstrumento());
+        for (EstrategiasUnidadMD eu : lista) {
+            modelo.addElement(eu.getIdEstrategia().getDescripcionEstrategia());
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
-         fPlanClase.getJlistInstrumentoEvaluacion().setEnabled(false);
     }
        public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
         for (UnidadSilaboMD lista_unidad : lista_unidades) {
