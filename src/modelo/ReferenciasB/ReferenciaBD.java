@@ -108,8 +108,5 @@ public class ReferenciaBD extends ReferenciasMD {
         return referencias;
 
     }
-   /* public void Actualizar  (ConexionBD conexion, String codigo){
-        String nsql= UPDATE "Referencias" SET "descripcion_" = [nuevo valor] WHERE "condición";}
-    }*/
-           
+
 }
