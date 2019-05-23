@@ -823,7 +823,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+                KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -863,6 +863,21 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_J, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtAccesos().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_W, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnBiblioteca().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtAlmnRetirados().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        
+        vtnPrin.getMnCtListaAlumnos().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -906,6 +921,17 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtMiPerfil().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_M, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgUsuarios1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_U, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgRoles1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.ALT_MASK));
+        
+        vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        
+        
 
     }
 
