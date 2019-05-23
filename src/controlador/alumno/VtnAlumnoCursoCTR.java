@@ -96,8 +96,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         //Validacion del buscador
         vtnAlmnCurso.getTxtbuscar().addKeyListener(new TxtVBuscador(vtnAlmnCurso.getTxtbuscar(),
                 vtnAlmnCurso.getBtnbuscar()));
-        //Acciones de los botones
-        vtnAlmnCurso.getBtnIngresar().addActionListener(e -> abrirFrmCurso());
         //Acciones en los combos
         vtnAlmnCurso.getCmbPrdLectivos().addActionListener(e -> clickCmbPrd());
         vtnAlmnCurso.getCmbCursos().addActionListener(e -> clickCmbCurso());
