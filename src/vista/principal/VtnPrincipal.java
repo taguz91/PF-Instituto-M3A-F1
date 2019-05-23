@@ -771,6 +771,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
+        mnCtPlandeClase.setEnabled(false);
         mnTipoNotas.add(mnCtPlandeClase);
 
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
