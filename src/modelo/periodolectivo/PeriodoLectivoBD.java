@@ -22,7 +22,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
 
@@ -44,12 +44,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
                 + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
@@ -72,12 +67,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
@@ -85,12 +75,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean abrirPeriodo(int id) {
@@ -98,12 +83,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
@@ -618,11 +598,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
                 periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
@@ -720,11 +700,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 String key = rst.getString("prd_lectivo_nombre");
 

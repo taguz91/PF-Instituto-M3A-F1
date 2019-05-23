@@ -36,7 +36,7 @@ public class ReferenciasBD extends ReferenciasMD {
         List<ReferenciasMD> referencias = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca,autor2,autor3\n"
                     + "FROM public.\"Referencias\"\n"
                     + "WHERE tipo_referencia='Base'\n"
                     + "AND existe_en_biblioteca=true AND (TRANSLATE(descripcion_referencia,'ÁÉÍÓÚáéíóú','AEIOUaeiou') ILIKE '%" + clave + "%' OR TRANSLATE(codigo_referencia,'ÁÉÍÓÚáéíóú','AEIOUaeiou') ILIKE '%" + clave + "%') ORDER BY codigo_referencia");

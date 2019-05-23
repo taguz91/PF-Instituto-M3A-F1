@@ -2,6 +2,7 @@
 package controlador.silabo;
 
 
+import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -86,6 +87,7 @@ public class ControladorEditarPlanClases {
         principal.getDpnlPrincipal().add(fPlanClase);
         fPlanClase.setTitle("EDITAR "+silabo.getIdMateria().getNombre());
         fPlanClase.show();
+         PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su estrategia.......");
         fPlanClase.setLocation((principal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
         
@@ -238,12 +240,7 @@ public class ControladorEditarPlanClases {
         }
     }
     
-//      private void CargarEstrategiasUnidad(List<EstrategiasUnidadMD> lista){
-//        fPlanClase.getCmbxEstrategiasPC().removeAllItems();
-//        for (EstrategiasUnidadMD estrategiasUnidadMD : lista) {
-//            fPlanClase.getCmbxEstrategiasPC().addItem(estrategiasUnidadMD.getIdEstrategia().getDescripcionEstrategia());
-//        }
-//    }
+
       
      private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
@@ -281,20 +278,20 @@ public class ControladorEditarPlanClases {
         modelo_Consolidacion = new DefaultListModel(); 
          for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
              if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
-                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
-                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
                  
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
-                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
-                 array_Construccion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 array_Construccion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){
                  
-                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
-                array_Consolidacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                array_Consolidacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
              }
              
          }
@@ -328,12 +325,7 @@ public class ControladorEditarPlanClases {
         }
      }
      
-//      public EstrategiasUnidadMD estrategiaSeleccionado(){
-//        String item=fPlanClase.getCmbxEstrategiasPC().getSelectedItem().toString();
-//        Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-//                filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(item)).findFirst();
-//        return estrate_selecc.get();
-//    }
+
      
     public void recargarElemwentos(){
         modelo_anticipacion.removeAllElements();
@@ -346,7 +338,65 @@ public class ControladorEditarPlanClases {
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();        
-        
+         if (fPlanClase.getjScrollPane10().isShowing()) {//Anticipacion
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
+                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Anticipacion.size(); i++) {
+                       modelo_anticipacion.addElement(array_Anticipacion.get(i));
+                    }
+                    fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
+                }
+                
+            }
+            
+        } else if(fPlanClase.getjScrollPane11().isShowing()){//Construccion
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
+                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Construccion.size(); i++) {
+                        modelo_anticipacion.addElement(array_Construccion.get(i));
+                    }
+                    fPlanClase.getListConstruccionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
+                }
+            }
+           
+        } else if(fPlanClase.getjScrollPane9().isShowing()){//Consolidacion
+            if (fPlanClase.getTxt_estrategias().getText().equals("")
+                    || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
+                JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (array_Anticipacion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Construccion.contains(fPlanClase.getTxt_estrategias().getText())||
+                        array_Consolidacion.contains(fPlanClase.getTxt_estrategias().getText())) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Estrategia ya añadida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    array_Consolidacion.add(fPlanClase.getTxt_estrategias().getText());
+                    for (int i = 0; i < array_Consolidacion.size(); i++) {
+                        modelo_anticipacion.addElement(array_Consolidacion.get(i));
+                    }
+                    fPlanClase.getListConsolidacionPC().setModel(modelo_anticipacion);
+                    fPlanClase.getTxt_estrategias().setText("");
+                }
+                
+            }
+        }
     }
     private void eliminarEstrategiasMto(){
         
@@ -407,14 +457,11 @@ public class ControladorEditarPlanClases {
     }
     
      private void actulizarEstrategiasMetodologicas(){
-         for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
+                    for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
                            if(fPlanClase.getListAnticipacionPC().getModel().getSize()>0){
                           String nombre=fPlanClase.getListAnticipacionPC().getModel().getElementAt(j).toString();
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD----------ANTICIPACION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION--------------ANTICIPACION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Anticipacion") );
+                          lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD("Anticipacion", nombre));
+//         
                              
                              System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY LIST-------------------ANTICIPACION");
                            }
@@ -422,12 +469,8 @@ public class ControladorEditarPlanClases {
                          for (int j = 0; j < fPlanClase.getListConstruccionPC().getModel().getSize(); j++) {
                              if(fPlanClase.getListConstruccionPC().getModel().getSize()>0){
                             String nombre=fPlanClase.getListConstruccionPC().getModel().getElementAt(j).toString();
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                            
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD-----CONSTRUCCION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------CONSTRUCCION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Construccion") );
+                            lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD("Construccion", nombre));
+//                           
                              
                              System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY --------CONSTRUCCIOM");
                              }
@@ -435,16 +478,14 @@ public class ControladorEditarPlanClases {
                          for (int j = 0; j < fPlanClase.getListConsolidacionPC().getModel().getSize(); j++) {
                              if(fPlanClase.getListConsolidacionPC().getModel().getSize()>0){
                               String nombre=fPlanClase.getListConsolidacionPC().getModel().getElementAt(j).toString();
-                            Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-                             filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(nombre)).findFirst();
-                             System.out.println(estrate_selecc.get().getIdEstrategiaUnidad()+"----------------------->>>>>><ID_ESTRATEGIA UNIDAD---------CONSOLIDACION");
-                             System.out.println(estrate_selecc.get().getIdEstrategia().getDescripcionEstrategia()+"------->>>>>DESCRIPCION---------------CONSOLIDACION");
-                             lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD(estrate_selecc.get(), "Consolidacion") );
+                              lista_estrategias_metodologicas_antici.add(new EstrategiasMetodologicasMD("Consolidacion", nombre));
+//                            
                              
                              System.out.println(lista_estrategias_metodologicas_antici.size()+"---------------><<<<<<<TAMAÑO ARRAY---------CONSOLIDACION");
                              }
-                        }
-         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
+                        }          
+        
+        plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
         plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
             em.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
