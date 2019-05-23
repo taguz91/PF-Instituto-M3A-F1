@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
@@ -718,13 +720,18 @@ public class CursoBD extends CursoMD {
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + "\n"
+                + "\"public\".\"Cursos\".id_docente = ?\n"
                 + "AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
+                + "\"public\".\"Cursos\".id_prd_lectivo = ?" ;
 
         List<String> lista = new ArrayList<>();
+        
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idDocente);
+        parametros.put(2, idPeriodoLectivo);
+        
         conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        rst = POOL.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rst.next()) {
@@ -733,7 +740,7 @@ public class CursoBD extends CursoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            POOL.closeStmt().close(rst).close(conn);
         }
         return lista;
     }
