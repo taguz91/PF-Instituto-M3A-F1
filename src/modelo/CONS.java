@@ -1,13 +1,15 @@
 package modelo;
 
+import java.awt.Image;
 import java.io.File;
 import java.util.concurrent.ForkJoinPool;
+import javax.swing.ImageIcon;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 
 /**
  *
- * @author alumno
+ * @author JOHNNY, MrRainx
  */
 public class CONS {
 
@@ -41,20 +43,36 @@ public class CONS {
         CONS.ROL = ROL;
     }
 
-    private static ForkJoinPool threadPool;
+    public static ForkJoinPool THREAD_POOL;
 
     public static ForkJoinPool getPool(Integer threads) {
         if (threads == null) {
-            if (threadPool == null) {
-                threadPool = new ForkJoinPool(4);
+            if (THREAD_POOL == null) {
+                THREAD_POOL = new ForkJoinPool(4);
             } else {
-                if (threadPool.isShutdown()) {
+                if (THREAD_POOL.isShutdown()) {
                 }
             }
         } else {
-            threadPool = new ForkJoinPool(threads);
+            THREAD_POOL = new ForkJoinPool(threads);
         }
-        return threadPool;
+        return THREAD_POOL;
+    }
+
+    private static ImageIcon ICONO;
+
+    public static ImageIcon getICONO() {
+        if (ICONO == null) {
+            ICONO = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        }
+        return ICONO;
+    }
+
+    public static Image getImage() {
+        if (ICONO == null) {
+            ICONO = getICONO();
+        }
+        return ICONO.getImage();
     }
 
 }

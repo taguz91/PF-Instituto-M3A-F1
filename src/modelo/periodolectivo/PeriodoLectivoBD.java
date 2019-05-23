@@ -604,12 +604,13 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
                 + "WHERE\n"
-                + " \"public\".\"Docentes\".id_docente = " + idDocente;
+                + " \"public\".\"Docentes\".id_docente = ?";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
-
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idDocente);
         conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        rst = pool.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rst.next()) {
@@ -635,7 +636,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
         return lista;
     }
@@ -664,7 +665,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
         return lista;
     }
@@ -733,7 +734,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return map;
@@ -780,7 +781,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return map;

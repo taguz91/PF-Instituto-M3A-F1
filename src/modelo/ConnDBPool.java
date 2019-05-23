@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -21,7 +25,6 @@ public class ConnDBPool {
     private static HikariConfig config;
     private static HikariDataSource ds;
 
-    private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rs;
 
@@ -46,8 +49,8 @@ public class ConnDBPool {
             /*
                 CONFIG A PROBAR
              */
-//            config.addDataSourceProperty("allowMultiQueries", "true");
-//            config.addDataSourceProperty("useServerPrepStmts", "true");
+            config.addDataSourceProperty("allowMultiQueries", "true");
+            config.addDataSourceProperty("useServerPrepStmts", "true");
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }
@@ -108,38 +111,47 @@ public class ConnDBPool {
 
         stmt = conn.prepareStatement(sql);
 
-        for (Map.Entry<Integer, Object> entry : parametros.entrySet()) {
-
-            int posicion = entry.getKey();
-
-            if (entry.getValue() instanceof Integer) {
-                stmt.setInt(posicion, (int) entry.getValue());
+        try {
+            int threads = 4;
+            if (parametros.size() > 10) {
+                threads = 6;
             }
 
-            if (entry.getValue() instanceof String) {
-                stmt.setString(posicion, entry.getValue().toString());
-            }
+            CONS.getPool(threads).submit(() -> {
+                parametros.entrySet().parallelStream().forEach(new Consumer<Map.Entry<Integer, Object>>() {
 
-            if (entry.getValue() instanceof Double) {
-                stmt.setDouble(posicion, (double) entry.getValue());
-            }
+                    int posicion = 1;
 
-            if (entry.getValue() instanceof LocalTime) {
-                stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
-            }
+                    @Override
+                    public void accept(Map.Entry<Integer, Object> entry) {
 
-            if (entry.getValue() instanceof LocalDate) {
-                stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
-            }
-            if (entry.getValue() instanceof Boolean) {
-                stmt.setBoolean(posicion, (boolean) entry.getValue());
-            }
-            if (entry.getValue() instanceof Boolean) {
-                stmt.setBoolean(posicion, (boolean) entry.getValue());
-            }
-
+                        try {
+                            posicion = entry.getKey();
+                            if (entry.getValue() instanceof Integer) {
+                                stmt.setInt(posicion, (int) entry.getValue());
+                            } else if (entry.getValue() instanceof String) {
+                                stmt.setString(posicion, entry.getValue().toString());
+                            } else if (entry.getValue() instanceof Double) {
+                                stmt.setDouble(posicion, (double) entry.getValue());
+                            } else if (entry.getValue() instanceof LocalTime) {
+                                stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
+                            } else if (entry.getValue() instanceof LocalDate) {
+                                stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+                            } else if (entry.getValue() instanceof Boolean) {
+                                stmt.setBoolean(posicion, (boolean) entry.getValue());
+                            } else if (entry.getValue() instanceof Boolean) {
+                                stmt.setBoolean(posicion, (boolean) entry.getValue());
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+            }).get();
+            CONS.THREAD_POOL.shutdown();
+        } catch (InterruptedException | ExecutionException ex) {
+            System.out.println(ex.getMessage());
         }
-
         return stmt;
     }
 
@@ -153,9 +165,6 @@ public class ConnDBPool {
             rs = stmt.executeQuery();
 
             parametros = null;
-//            System.out.println("*******************************");
-//            System.out.println("*QUERY Ejecutado Correctamente*");
-//            System.out.println("*******************************");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -163,37 +172,33 @@ public class ConnDBPool {
         return rs;
     }
 
-    public void close(Connection conn) {
+    public ConnDBPool close(Connection conn) {
         try {
             if (conn != null) {
-//                System.out.println("*******************************");
-//                System.out.println("*EJECUTANDO CIERRE DE CONEXION*");
-//                System.out.println("*******************************");
                 conn.close();
-//                System.out.println("*******************************");
-//                System.out.println("*Conexion cerrada? " + conn.isClosed() + "*");
-//                System.out.println("*******************************");
-
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
-    public void close(ResultSet rs) {
+    public ConnDBPool close(ResultSet rs) {
         try {
             rs.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
-    public void closeStmt() {
+    public ConnDBPool closeStmt() {
         try {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
     public PreparedStatement getStmt() {

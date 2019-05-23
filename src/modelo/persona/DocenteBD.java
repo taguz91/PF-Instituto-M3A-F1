@@ -814,7 +814,7 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(res).close(conn);
         }
         return lista;
 
@@ -867,7 +867,7 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(res).close(conn);
         }
         return lista;
     }

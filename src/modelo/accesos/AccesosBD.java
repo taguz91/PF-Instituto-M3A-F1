@@ -23,12 +23,11 @@ import modelo.ConnDBPool;
  */
 public class AccesosBD extends AccesosMD {
 
-    private  ConnDBPool pool;
-    private  Connection conn;
-    private  ResultSet rs;
-    private  PreparedStatement stmt;
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
 
-     {
+    {
         pool = new ConnDBPool();
     }
 
@@ -52,7 +51,7 @@ public class AccesosBD extends AccesosMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public  List<AccesosMD> SelectAll() {
+    public List<AccesosMD> SelectAll() {
 
         String SELECT = "SELECT id_acceso, acc_nombre FROM \"Accesos\" ";
 
@@ -60,14 +59,14 @@ public class AccesosBD extends AccesosMD {
 
     }
 
-    public  List<AccesosMD> SelectWhereACCESOROLidRol(int idRol) {
+    public List<AccesosMD> SelectWhereACCESOROLidRol(int idRol) {
 
         String SELECT = "SELECT ACC.id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" ACC INNER JOIN \"AccesosDelRol\" ACC_ROL ON ACC.id_acceso = ACC_ROL.id_acceso WHERE ACC_ROL.id_rol = " + idRol;
 
         return SelectSimple(SELECT);
     }
 
-    private  List<AccesosMD> SelectSimple(String QUERY) {
+    private List<AccesosMD> SelectSimple(String QUERY) {
         List<AccesosMD> Lista = new ArrayList<>();
 
         conn = pool.getConnection();
@@ -84,27 +83,30 @@ public class AccesosBD extends AccesosMD {
         } catch (SQLException ex) {
             Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return Lista;
     }
 
-    public  List<AccesosMD> selectWhereLIKE(int idRol, String LIKE) {
+    public List<AccesosMD> selectWhereLIKE(int idRol, String LIKE) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Accesos\".acc_nombre\n"
                 + "FROM\n"
                 + "\"public\".\"Accesos\"\n"
                 + "INNER JOIN \"public\".\"AccesosDelRol\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso\n"
                 + "WHERE \n"
-                + "\"AccesosDelRol\".id_rol = " + idRol + "\n"
+                + "\"AccesosDelRol\".id_rol = ?\n"
                 + "AND \n"
                 + "\"Accesos\".acc_nombre ILIKE '%" + LIKE + "%'";
 
         List<AccesosMD> Lista = new ArrayList<>();
 
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idRol);
+
         conn = pool.getConnection();
-        rs = pool.ejecutarQuery(SELECT, conn, null);
+        rs = pool.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rs.next()) {
@@ -115,7 +117,7 @@ public class AccesosBD extends AccesosMD {
         } catch (SQLException ex) {
             Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return Lista;
