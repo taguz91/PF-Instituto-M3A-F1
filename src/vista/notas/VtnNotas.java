@@ -1,6 +1,7 @@
 package vista.notas;
 
 import controlador.notas.ux.RowStyle;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -11,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import modelo.CONS;
 
 /**
  *
@@ -24,7 +26,7 @@ public class VtnNotas extends JInternalFrame {
         InitDiseño();
     }
 
-    public void InitDiseño() {
+    private void InitDiseño() {
         tblTrad.setRowHeight(23);
         tblDual.setRowHeight(23);
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));

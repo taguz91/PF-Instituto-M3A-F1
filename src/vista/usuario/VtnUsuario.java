@@ -67,8 +67,6 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
     public void setLblEstado(JLabel lblEstado) {
         this.lblEstado = lblEstado;
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
