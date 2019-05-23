@@ -338,9 +338,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
             numMateria = 1;
             cursosSelec.forEach(c -> {
                 //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
-                almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId());
+                almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId(), c.getNumMatricula());
                 materiasMatricula = materiasMatricula + numMateria + ": " + c.getMateria().getNombre() + "   Curso: " + c.getNombre()
-                        + "    \n";
+                        + "   Matricula: " + c.getNumMatricula() + "    \n";
                 numMateria++;
             });
 
@@ -349,21 +349,23 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     + "Periodo: \n" + periodos.get(posPrd - 1).getNombre_PerLectivo() + "\n"
                     + "En las siguientes materias: \n" + materiasMatricula);
             if (r == JOptionPane.YES_OPTION) {
+
+                //Se ingresa matricula
+                MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+                        periodos.get(posPrd - 1).getId_PerioLectivo());
+
+                if (m != null) {
+                    System.out.println("Ya esta matriculado: ");
+                } else {
+                    matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
+                    matri.setPeriodo(periodos.get(posPrd - 1));
+                    matri.setTipo(frmAlmCurso.getCmbTipoMatricula().getSelectedItem().toString());
+                    matri.ingresar();
+                }
+
                 if (almnCurso.guardarAlmnCurso()) {
                     //Reiniciamos todo 
                     limpiarFrm();
-                    //Se ingresa matricula
-                    MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                            periodos.get(posPrd - 1).getId_PerioLectivo());
-
-                    if (m != null) {
-                        System.out.println("Ya esta matriculado: ");
-                    } else {
-                        matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
-                        matri.setPeriodo(periodos.get(posPrd - 1));
-                        matri.setTipo(frmAlmCurso.getCmbTipoMatricula().getSelectedItem().toString());
-                        matri.ingresar();
-                    }
                     int c = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Desea imprimir la matricula.");
                     if (c == JOptionPane.YES_OPTION) {
                         //Imprimimos el reporte de matricula
@@ -1012,8 +1014,11 @@ public class FrmAlumnoCursoCTR extends DCTR {
         mdMatPen.setRowCount(0);
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
+                c.setNumMatricula(buscarNumeroMatricula(c.getMateria().getId()));
                 Object[] valores = {c.getMateria().getNombre(), c.getCapaciadActual(),
-                    buscarNumeroMatricula(c.getMateria().getId())};
+                    c.getNumMatricula()};
+                //Le pasamos el numero de matricula
+
                 mdMatPen.addRow(valores);
             });
         }

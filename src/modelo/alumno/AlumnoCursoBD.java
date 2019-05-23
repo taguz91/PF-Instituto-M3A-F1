@@ -24,22 +24,18 @@ import modelo.persona.AlumnoMD;
 public class AlumnoCursoBD extends AlumnoCursoMD {
 
     private ConectarDB conecta;
-    private AlumnoBD alm;
-    private CursoBD cur;
     private String nsqlMatri = "", nsqlMatriUpdate = "";
 
-    private static ConnDBPool pool;
-    private static Connection conn;
-    private static ResultSet rst;
+    private final ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         pool = new ConnDBPool();
     }
 
     public AlumnoCursoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.alm = new AlumnoBD(conecta);
-        this.cur = new CursoBD(conecta);
     }
 
     public AlumnoCursoBD() {
@@ -52,10 +48,10 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         nsqlMatri = "";
     }
 
-    public void agregarMatricula(int idAlmn, int idCurso) {
+    public void agregarMatricula(int idAlmn, int idCurso, int numMatricula) {
         String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
-                + "id_alumno, id_curso)\n"
-                + "VALUES (" + idAlmn + ", " + idCurso + ");";
+                + "id_alumno, id_curso, almn_curso_num_matricula)\n"
+                + "VALUES (" + idAlmn + ", " + idCurso + ", " + numMatricula + ");";
         nsqlMatri = nsqlMatri + nsql;
     }
 
@@ -85,6 +81,25 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         } else {
             JOptionPane.showMessageDialog(null, "No pudimos editar la matricula, revise \n"
                     + "su conexion a internet.");
+            return false;
+        }
+    }
+
+    public boolean editarNumMatricula(int idAlmnCurso, int numMatricula) {
+        String nosql = "UPDATE public.\"AlumnoCurso\"\n"
+                + "	SET almn_curso_num_matricula = ?\n"
+                + "	WHERE id_almn_curso = ?;";
+        PreparedStatement ps = conecta.getPS(nosql);
+        try {
+            ps.setInt(1, numMatricula);
+            ps.setInt(2, idAlmnCurso);
+        } catch (SQLException e) {
+            System.out.println("No pudimos preparar le statement: " + e.getMessage());
+        }
+        if (conecta.nosql(ps) == null) {
+            JOptionPane.showMessageDialog(null, "Editamos correctamente el numero de matricula.");
+            return true;
+        } else {
             return false;
         }
     }
@@ -332,7 +347,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         }
     }
 
-    public static List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
+    public List<AlumnoCursoBD> selectWhere(String cursoNombre, String nombreMateria, int idDocente, int idPeriodo) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"AlumnoCurso\".id_alumno,\n"
@@ -372,6 +387,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         try {
             conn = pool.getConnection();
             rst = pool.ejecutarQuery(SELECT, conn, null);
+            NotasBD notasBD = new NotasBD();
             while (rst.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
@@ -391,7 +407,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
                 alumnoCurso.setAlumno(alumno);
 
-                List<NotasBD> notas = NotasBD.selectWhere(alumnoCurso);
+                List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
 
                 alumnoCurso.setNotas(notas);
 

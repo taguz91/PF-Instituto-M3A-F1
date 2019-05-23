@@ -20,16 +20,20 @@ public class MateriaBD extends MateriaMD {
     private final ConectarDB conecta;
     private String sqlg;
 
-    private final static ConnDBPool POOL;
-    private static Connection conn;
-    private static ResultSet rst;
+    private final ConnDBPool POOL;
+    private Connection conn;
+    private ResultSet rst;
 
-    static {
+    {
         POOL = new ConnDBPool();
     }
 
     public MateriaBD(ConectarDB conecta) {
         this.conecta = conecta;
+    }
+
+    public MateriaBD() {
+        this.conecta = null;
     }
 
     public boolean insertarMateria() {
@@ -688,7 +692,7 @@ public class MateriaBD extends MateriaMD {
         }
     }
 
-    public static List<MateriaMD> selectWhere(CursoMD curso) {
+    public List<MateriaMD> selectWhere(CursoMD curso) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"Materias\".materia_nombre,\n"

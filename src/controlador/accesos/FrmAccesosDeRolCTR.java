@@ -1,7 +1,6 @@
 package controlador.accesos;
 
 import controlador.Libraries.Effects;
-import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -40,6 +39,12 @@ public class FrmAccesosDeRolCTR {
 
     private DefaultTableModel tablaPermisos;
     private DefaultTableModel tablaPermDados;
+
+    private final AccesosBD accesosBD;
+
+    {
+        accesosBD = new AccesosBD();
+    }
 
     public FrmAccesosDeRolCTR(VtnPrincipal desktop, FrmAccesosDeRol vista, AccesosDelRolBD modelo, RolBD rol, String Funcion) {
         this.desktop = desktop;
@@ -133,7 +138,7 @@ public class FrmAccesosDeRolCTR {
     private void setListasFuncion() {
         vista.getLblRolSeleccionado().setText(rol.getNombre());
 
-        listaPermDados = AccesosBD.SelectWhereACCESOROLidRol(rol.getId());
+        listaPermDados = accesosBD.SelectWhereACCESOROLidRol(rol.getId());
 
         listaPermDados.forEach((permisoDado) -> {
             listaPermisos
@@ -342,8 +347,6 @@ public class FrmAccesosDeRolCTR {
 
             vista.dispose();
             JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
-
-
 
             Effects.setDefaultCursor(vista);
 

@@ -107,7 +107,7 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
                     + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
                     + "WHERE crr.carrera_nombre=?\n"
-                    + "AND p.id_persona=? AND pr.prd_lectivo_nombre=?");
+                    + "AND p.id_persona=? AND pr.prd_lectivo_nombre=? AND cr.id_prd_lectivo=s.id_prd_lectivo");
 
             st.setString(1, carrera);
             st.setInt(2, id_persona);

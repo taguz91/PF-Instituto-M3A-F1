@@ -23,7 +23,7 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[REVISADO]]></text>
+				<text><![CDATA[APROBADO POR ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="42" width="277" height="20" uuid="892f485a-ed77-4b81-9f1c-cc8926a8ce2f"/>

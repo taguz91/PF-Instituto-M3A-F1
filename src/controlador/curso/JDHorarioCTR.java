@@ -176,24 +176,42 @@ public class JDHorarioCTR extends DVtnCTR {
 //        }
 
         if (guardar) {
-            String nsql = "";
-//            for (int i = horaC; i < horaT; i++) {
-//                inicio = LocalTime.of(i, minutoC);
-//                fin = LocalTime.of((i + 1), minutoT);
-//                bd.setCurso(curso);
-//                bd.setDia(dia);
-//                bd.setHoraIni(inicio);
-//                bd.setHoraFin(fin);
-//                nsql += bd.obtenerInsert() + "\n";
-//            }
-
+            //Vemos si no guardamos ya ese horario
             inicio = LocalTime.of(horaC, minutoC);
             fin = LocalTime.of(horaT, minutoT);
-            bd.setCurso(curso);
-            bd.setDia(dia);
-            bd.setHoraIni(inicio);
-            bd.setHoraFin(fin);
-            nsql += bd.obtenerInsert() + "\n";
+            SesionClaseMD s = bd.existeSesion(curso.getId(), dia, inicio, fin);
+            if (s.getCurso() != null) {
+                JOptionPane.showMessageDialog(pnlCurso, "Ya ingreso este horario.");
+                guardar = false;
+            }
+        }
+
+        if (guardar && (minutoC > 0 || minutoT > 0)) {
+            
+        }
+
+        if (guardar) {
+            String nsql = "";
+
+            if (horaT > horaC && minutoC == 0 && minutoT == 0) {
+                for (int i = horaC; i < horaT; i++) {
+                    inicio = LocalTime.of(i, minutoC);
+                    fin = LocalTime.of((i + 1), minutoT);
+                    bd.setCurso(curso);
+                    bd.setDia(dia);
+                    bd.setHoraIni(inicio);
+                    bd.setHoraFin(fin);
+                    nsql += bd.obtenerInsert() + "\n";
+                }
+            } else {
+                inicio = LocalTime.of(horaC, minutoC);
+                fin = LocalTime.of(horaT, minutoT);
+                bd.setCurso(curso);
+                bd.setDia(dia);
+                bd.setHoraIni(inicio);
+                bd.setHoraFin(fin);
+                nsql += bd.obtenerInsert() + "\n";
+            }
 
             if (editar) {
                 bd.editar(idSesion);

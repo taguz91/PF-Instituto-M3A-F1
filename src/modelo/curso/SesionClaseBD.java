@@ -3,6 +3,7 @@ package modelo.curso;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
@@ -84,6 +85,38 @@ public class SesionClaseBD extends SesionClaseMD {
         sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
                 + "	WHERE id_sesion = " + idSesion + " ;";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CursoMD c = new CursoMD();
+                    s.setId(rs.getInt("id_sesion"));
+                    c.setId(rs.getInt("id_curso"));
+                    s.setCurso(c);
+                    s.setDia(rs.getInt("dia_sesion"));
+                    s.setHoraFin(rs.getTime("hora_fin_sesion").toLocalTime());
+                    s.setHoraIni(rs.getTime("hora_inicio_sesion").toLocalTime());
+                }
+                ps.getConnection().close();
+                return s;
+            } catch (SQLException e) {
+                System.out.println("No se pudo consultar sesion " + e.getMessage());
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public SesionClaseMD existeSesion(int idCurso, int dia, LocalTime horaIni, LocalTime horaFin) {
+        SesionClaseMD s = new SesionClaseMD();
+        sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
+                + "	FROM public.\"SesionClase\" \n"
+                + "	WHERE dia_sesion = " + dia + " "
+                + "AND id_curso = " + idCurso + " \n"
+                + "AND hora_inicio_sesion = '" + horaIni.toString() + "' "
+                + "AND hora_fin_sesion = '" + horaFin.toString() + "';";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         if (rs != null) {
@@ -210,7 +243,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "ORDER BY hora_inicio_sesion";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -254,7 +287,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	curso_nombre = '" + nombreCurso + "');";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -307,6 +340,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     CursoMD c = new CursoMD();
                     c.setId(rs.getInt("id_curso"));
                     s.setDia(rs.getInt("dia_sesion"));
+                    s.setNumeroDias(rs.getInt(1));
                     diasClase.add(s);
                 }
                 ps.getConnection().close();
