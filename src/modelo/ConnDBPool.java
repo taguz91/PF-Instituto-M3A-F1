@@ -46,8 +46,8 @@ public class ConnDBPool {
             /*
                 CONFIG A PROBAR
              */
-//            config.addDataSourceProperty("allowMultiQueries", "true");
-//            config.addDataSourceProperty("useServerPrepStmts", "true");
+            config.addDataSourceProperty("allowMultiQueries", "true");
+            config.addDataSourceProperty("useServerPrepStmts", "true");
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }
@@ -163,7 +163,7 @@ public class ConnDBPool {
         return rs;
     }
 
-    public void close(Connection conn) {
+    public ConnDBPool close(Connection conn) {
         try {
             if (conn != null) {
 //                System.out.println("*******************************");
@@ -178,22 +178,25 @@ public class ConnDBPool {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
-    public void close(ResultSet rs) {
+    public ConnDBPool close(ResultSet rs) {
         try {
             rs.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
-    public void closeStmt() {
+    public ConnDBPool closeStmt() {
         try {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return this;
     }
 
     public PreparedStatement getStmt() {
