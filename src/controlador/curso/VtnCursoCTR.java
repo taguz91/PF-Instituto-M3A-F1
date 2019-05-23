@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -95,6 +94,8 @@ public class VtnCursoCTR extends DVtnCTR {
         iniciarBuscador();
 
         ctrPrin.agregarVtn(vtnCurso);
+        
+        InitPermisos();
     }
 
     /**
@@ -370,6 +371,12 @@ public class VtnCursoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("Docente")) {
+            vtnCurso.getBtnIngresar().setEnabled(false);
+            vtnCurso.getBtnEditar().setEnabled(false);
+            vtnCurso.getBtnEliminar().setEnabled(false);
+            vtnCurso.getBtnHorario().setEnabled(false);
+        }
 
     }
 
