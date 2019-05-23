@@ -236,6 +236,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
@@ -654,7 +655,7 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
     }
-    
+
     private ArrayList<String> estilos;
 
     /**
@@ -880,6 +881,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_R, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_K, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
