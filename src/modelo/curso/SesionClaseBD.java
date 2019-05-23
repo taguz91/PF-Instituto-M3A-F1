@@ -1,5 +1,6 @@
 package modelo.curso;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.ConnDBPool;
 import modelo.materia.MateriaMD;
 import modelo.persona.DocenteMD;
 
@@ -17,6 +19,9 @@ import modelo.persona.DocenteMD;
 public class SesionClaseBD extends SesionClaseMD {
 
     private  ConectarDB conecta;
+     private ConnDBPool pool;
+    private ResultSet rst;
+     private Connection conn;
     private String sql, nsql;
 
     public SesionClaseBD(ConectarDB conecta) {
@@ -24,6 +29,10 @@ public class SesionClaseBD extends SesionClaseMD {
     }
 
     public SesionClaseBD() {
+    }
+    
+    {
+        pool = new ConnDBPool();
     }
     
 
@@ -317,43 +326,42 @@ public class SesionClaseBD extends SesionClaseMD {
     }
 
     public ArrayList<SesionClaseMD> cargarDiasClase(String nombreCurso, int idPrdLectivo, int idDocente, String materiaNombre) {
-        sql = "\"SELECT\n"
+        sql = "SELECT\n"
                 + "	\"SesionClase\".dia_sesion \n"
                 + "FROM\n"
-                + "	\"SesionClase\"\n"
-                + "	INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"SesionClase\".id_curso\n"
-                + "	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
-                + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                + "	INNER JOIN \"Carreras\" ON \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera\n"
-                + "	INNER JOIN \"Materias\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera \n"
+                + "	public.\"SesionClase\"\n"
+                + "	INNER JOIN public.\"Cursos\" ON public.\"Cursos\".id_curso = public.\"SesionClase\".id_curso\n"
+                + "	INNER JOIN public.\"Docentes\" ON public.\"Docentes\".id_docente = public.\"Cursos\".id_docente\n"
+                + "	INNER JOIN public.\"PeriodoLectivo\" ON public.\"Cursos\".id_prd_lectivo = public.\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN public.\"Carreras\" ON public.\"Carreras\".id_carrera = public.\"PeriodoLectivo\".id_carrera\n"
+                + "	INNER JOIN public.\"Materias\" ON public.\"Materias\".id_carrera = public.\"Carreras\".id_carrera \n"
                 + "WHERE\n"
-                + "	\"Cursos\".id_docente = " + idDocente + " \n"
-                + "	AND \"Cursos\".curso_nombre = " + nombreCurso + " \n"
-                + "	AND \"PeriodoLectivo\".id_prd_lectivo = " + idPrdLectivo + " \n"
-                + "	AND materia_nombre = " + materiaNombre + " \n"
+                + "	public.\"Cursos\".id_docente = " + idDocente + " \n"
+                + "	AND public.\"Cursos\".curso_nombre = '" + nombreCurso + "' \n"
+                + "	AND public.\"PeriodoLectivo\".id_prd_lectivo = " + idPrdLectivo + " \n"
+                + "	AND public.\"Materias\".materia_nombre = '" + materiaNombre + "' \n"
                 + "GROUP BY\n"
-                + "	\"SesionClase\".dia_sesion;\"";
+                + "	\"SesionClase\".dia_sesion;";
 
         ArrayList<SesionClaseMD> diasClase = new ArrayList<>();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(sql, conn, null);
+      
             try {
-                while (rs.next()) {
+                while (rst.next()) {
                     SesionClaseMD s = new SesionClaseMD();
-                    CursoMD c = new CursoMD();
-                    c.setId(rs.getInt("id_curso"));
-                    s.setDia(rs.getInt("dia_sesion"));
-                    s.setNumeroDias(rs.getInt(1));
+                    s.setDia(rst.getInt("dia_sesion"));
+                    s.setNumeroDias(rst.getInt(1));
                     diasClase.add(s);
                 }
-                ps.getConnection().close();
+              
                 return diasClase;
             } catch (SQLException e) {
-                return null;
-            }
-        } else {
-            return null;
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
         }
+        return diasClase;
+        
     }
 }
