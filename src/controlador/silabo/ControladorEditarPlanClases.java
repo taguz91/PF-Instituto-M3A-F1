@@ -281,20 +281,20 @@ public class ControladorEditarPlanClases {
         modelo_Consolidacion = new DefaultListModel(); 
          for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
              if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
-                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
-                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
                  
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
-                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
-                 array_Construccion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                 array_Construccion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
                  
              }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){
                  
-                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
-                array_Consolidacion.add(lista_estrategias_metodo.get(i).getId_estrategias_unidad().getIdEstrategia().getDescripcionEstrategia());
+                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                array_Consolidacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
              }
              
          }
