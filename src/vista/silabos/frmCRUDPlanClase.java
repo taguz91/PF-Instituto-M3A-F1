@@ -171,6 +171,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         });
         tlbTablaPLC.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tlbTablaPLC.getTableHeader().setResizingAllowed(false);
+        tlbTablaPLC.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tlbTablaPLC);
         if (tlbTablaPLC.getColumnModel().getColumnCount() > 0) {
             tlbTablaPLC.getColumnModel().getColumn(0).setMinWidth(0);
