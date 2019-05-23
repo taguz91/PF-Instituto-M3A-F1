@@ -56,7 +56,6 @@ FROM
 WHERE
 	"Alumnos".alumno_codigo =$P{cedulaalumno}
 	AND"PeriodoLectivo".prd_lectivo_nombre = $P{periodolectivo}
-    AND "AlumnoCurso".almn_curso_nota_final < 70
 	
 	GROUP BY "Alumnos".id_alumno,
 	p_alu.persona_identificacion,
