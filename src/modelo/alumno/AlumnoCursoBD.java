@@ -52,10 +52,10 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         nsqlMatri = "";
     }
 
-    public void agregarMatricula(int idAlmn, int idCurso) {
+    public void agregarMatricula(int idAlmn, int idCurso, int numMatricula) {
         String nsql = "\nINSERT INTO public.\"AlumnoCurso\"(\n"
-                + "id_alumno, id_curso)\n"
-                + "VALUES (" + idAlmn + ", " + idCurso + ");";
+                + "id_alumno, id_curso, almn_curso_num_matricula)\n"
+                + "VALUES (" + idAlmn + ", " + idCurso + ", " + numMatricula + ");";
         nsqlMatri = nsqlMatri + nsql;
     }
 
