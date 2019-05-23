@@ -48,7 +48,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 	<detail>
 		<band height="112">
 			<staticText>
-				<reportElement x="0" y="20" width="50" height="18" uuid="60637fbd-b449-4547-b1b5-2d0cbcb6a827"/>
+				<reportElement x="0" y="20" width="39" height="18" uuid="60637fbd-b449-4547-b1b5-2d0cbcb6a827"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -62,7 +62,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="50" y="20" width="164" height="18" uuid="8a9798d1-b03e-42b3-a1f9-98adaf59983b"/>
+				<reportElement x="39" y="20" width="152" height="18" uuid="8a9798d1-b03e-42b3-a1f9-98adaf59983b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -76,7 +76,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<textFieldExpression><![CDATA[$F{nombre_doc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="214" y="20" width="59" height="18" uuid="26a29278-ca97-465e-8da7-a4302e0725b8"/>
+				<reportElement x="191" y="20" width="39" height="18" uuid="26a29278-ca97-465e-8da7-a4302e0725b8"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -90,7 +90,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="273" y="20" width="282" height="18" uuid="5d143f84-fdec-43a7-82ad-cc6ee6697263"/>
+				<reportElement x="230" y="20" width="325" height="18" uuid="5d143f84-fdec-43a7-82ad-cc6ee6697263"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -99,7 +99,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
