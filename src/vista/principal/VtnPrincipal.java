@@ -195,6 +195,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtInscripcion;
     }
 
+    public JMenuItem getMnIgMateria() {
+        return mnIgMateria;
+    }
+
+    public void setMnIgMateria(JMenuItem mnIgMateria) {
+        this.mnIgMateria = mnIgMateria;
+    }
+
     public JMenuItem getMnIgInscripcion() {
         return mnIgInscripcion;
     }
@@ -431,6 +439,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgCarrera = new javax.swing.JMenuItem();
         mnIgCurso = new javax.swing.JMenuItem();
         mnIgPrdLectivo = new javax.swing.JMenuItem();
+        mnIgMateria = new javax.swing.JMenuItem();
         mnIgInscripcion = new javax.swing.JMenuItem();
         mnIgMatricula = new javax.swing.JMenuItem();
         mnIgDocenteMt = new javax.swing.JMenuItem();
@@ -762,6 +771,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
+        mnCtPlandeClase.setEnabled(false);
         mnTipoNotas.add(mnCtPlandeClase);
 
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
@@ -844,7 +854,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnIgPrdLectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Calendar_20px.png"))); // NOI18N
         mnIgPrdLectivo.setText("Período lectivo");
+        mnIgPrdLectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnIgPrdLectivoActionPerformed(evt);
+            }
+        });
         mnIngresar.add(mnIgPrdLectivo);
+
+        mnIgMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Course_20px.png"))); // NOI18N
+        mnIgMateria.setText("Materia");
+        mnIngresar.add(mnIgMateria);
 
         mnIgInscripcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Resume_20px.png"))); // NOI18N
         mnIgInscripcion.setText("Inscripción");
@@ -953,6 +972,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MnBibliotecaActionPerformed
 
+    private void mnIgPrdLectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnIgPrdLectivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnIgPrdLectivoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnBiblioteca;
     private javax.swing.JButton btnAlumno;
@@ -1017,6 +1040,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgDocente;
     private javax.swing.JMenuItem mnIgDocenteMt;
     private javax.swing.JMenuItem mnIgInscripcion;
+    private javax.swing.JMenuItem mnIgMateria;
     private javax.swing.JMenuItem mnIgMatricula;
     private javax.swing.JMenuItem mnIgNotas1;
     private javax.swing.JMenuItem mnIgPersona;

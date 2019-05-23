@@ -25,11 +25,9 @@ public class PnlHorarioCursoCTR {
             sesionSabado;
     private DefaultTableModel mdTbl;
     private final String[][] datos = {};
-    private final String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+    private final String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
     private final String[] tn = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
-    private final String[] hm = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00"};
-    private final String[] hv = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"};
-    private final String[] hn = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
+    private final String[] hm = {"07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
         "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
     private final String[] hmc = {
         "<html>07:00<br>08:00</html>",
@@ -37,21 +35,8 @@ public class PnlHorarioCursoCTR {
         "<html>09:00<br>10:00</html>",
         "<html>10:00<br>11:00</html>",
         "<html>11:00<br>12:00</html>",
-        "<html>12:00<br>13:00</html>"};
-    private final String[] hvc = {
-        "<html>14:00<br>15:00</html>",
-        "<html>15:00<br>16:00</html>",
-        "<html>16:00<br>17:00</html>",
-        "<html>17:00<br>18:00</html>",
-        "<html>18:00<br>19:00</html>",
-        "<html>19:00<br>20:00</html>"};
-    private final String[] hnc = {
-        "<html>08:00<br>09:00</html>",
-        "<html>09:00<br>10:00</html>",
-        "<html>10:00<br>11:00</html>",
-        "<html>11:00<br>12:00</html>",
         "<html>12:00<br>13:00</html>",
-        "--------------------------",
+        "<html>13:00<br>14:00</html>",
         "<html>14:00<br>15:00</html>",
         "<html>15:00<br>16:00</html>",
         "<html>16:00<br>17:00</html>",
@@ -82,6 +67,7 @@ public class PnlHorarioCursoCTR {
 
     public void iniciar() {
         iniciaTbl();
+        eliminarFilasSinDatos();
     }
 
     private void iniciaTbl() {
@@ -92,26 +78,31 @@ public class PnlHorarioCursoCTR {
                 llenarHoras(hmc);
                 hSelec = hm;
                 jSelec = t;
-                llenarLunesViernes();
+                llenarLunesSabado();
                 break;
             case 'V':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, t);
                 formatoTbl(pnl.getTblHorario());
-                llenarHoras(hvc);
-                hSelec = hv;
+                llenarHoras(hmc);
+                hSelec = hm;
                 jSelec = t;
-                llenarLunesViernes();
+                llenarLunesSabado();
                 break;
             case 'N':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
                 formatoTbl(pnl.getTblHorario());
-                llenarHoras(hnc);
-                hSelec = hn;
+                llenarHoras(hmc);
+                hSelec = hm;
                 jSelec = tn;
                 llenarLunesSabado();
                 break;
             default:
-
+                mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
+                formatoTbl(pnl.getTblHorario());
+                llenarHoras(hmc);
+                hSelec = hm;
+                jSelec = tn;
+                llenarLunesSabado();
                 break;
         }
     }
@@ -226,6 +217,21 @@ public class PnlHorarioCursoCTR {
         sesionSabado = bd.cargarHorarioCursoPorDia(curso.getNombre(), 6,
                 curso.getPeriodo().getId_PerioLectivo());
         llenarDia(sesionSabado, 6);
+    }
+
+    private void eliminarFilasSinDatos() {
+        boolean borrar = true;
+        for (int i = 0; i < mdTbl.getRowCount(); i++) {
+            for (int j = 1; j < mdTbl.getColumnCount(); j++) {
+                if (mdTbl.getValueAt(i, j) != null) {
+                    borrar = false;
+                }
+            }
+            if (borrar) {
+                mdTbl.removeRow(i);
+                eliminarFilasSinDatos();
+            }
+        }
     }
 
 }

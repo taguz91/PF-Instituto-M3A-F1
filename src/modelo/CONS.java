@@ -40,4 +40,35 @@ public class CONS {
         CONS.ROL = ROL;
     }
 
+    public static String getDia(int dia) {
+        String d = "";
+        switch (dia) {
+            case 1:
+                d = "Lunes";
+                break;
+            case 2:
+                d = "Martes";
+                break;
+            case 3:
+                d = "Miercoles";
+                break;
+            case 4:
+                d = "Jueves";
+                break;
+            case 5:
+                d = "Viernes";
+                break;
+            case 6:
+                d = "Sabado";
+                break;
+            case 7:
+                d = "Domingo";
+                break;
+            default:
+                d = "";
+                break;
+        }
+        return d;
+    }
+
 }

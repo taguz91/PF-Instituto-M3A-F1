@@ -1,9 +1,11 @@
 package controlador.curso;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
@@ -89,16 +91,25 @@ public class PnlHorarioClaseCTR {
     }
 
     public void iniciar() {
+        iniciaTbl();
+        System.out.println("Numero de columnas " + mdTbl.getColumnCount());
+        //llenarExtras();
+    }
+
+    private void llenarExtras() {
         sesiones = bd.cargarHorarioCurso(curso);
         if (sesiones != null) {
             System.out.println("---------");
             sesiones.forEach(s -> {
                 System.out.println("Dia: " + s.getDia() + "  Horas: " + s.getHoraIni() + "    " + s.getHoraFin());
+                Object[] v = {CONS.getDia(s.getDia()),
+                    s.getHoraIni(),
+                    s.getHoraFin(),
+                    s.getId() + "%Clase"};
+                mdTbl.addRow(v);
             });
             System.out.println("---------");
         }
-        iniciaTbl();
-        System.out.println("Numero de columnas " + mdTbl.getColumnCount());
     }
 
     private void iniciaTbl() {
@@ -109,7 +120,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hmc);
                 hSelec = hm;
                 jSelec = t;
-                llenatLunesSabado();
+                llenarLunesSabado();
                 break;
             case 'V':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, t);
@@ -117,7 +128,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hvc);
                 hSelec = hv;
                 jSelec = t;
-                llenatLunesSabado();
+                llenarLunesSabado();
                 break;
             case 'N':
                 mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
@@ -125,7 +136,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hnc);
                 hSelec = hn;
                 jSelec = tn;
-                llenatLunesSabado();
+                llenarLunesSabado();
                 break;
             default:
                 mdTbl = TblEstilo.modelTblSinEditar(datos, tn);
@@ -133,7 +144,7 @@ public class PnlHorarioClaseCTR {
                 llenarHoras(hnc);
                 hSelec = hn;
                 jSelec = tn;
-                llenatLunesSabado();
+                llenarLunesSabado();
                 break;
         }
     }
@@ -146,7 +157,7 @@ public class PnlHorarioClaseCTR {
         actualizarViernes();
     }
 
-    private void llenatLunesSabado() {
+    private void llenarLunesSabado() {
         llenarLunesViernes();
         actualizarSabado();
     }
