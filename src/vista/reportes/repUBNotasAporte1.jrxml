@@ -353,7 +353,4 @@ WHERE
 			</subreport>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 </jasperReport>

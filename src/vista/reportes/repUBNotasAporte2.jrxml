@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="86ea7fec-30a1-4c89-956e-6a4eb0b27241">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="1140"/>
+	<property name="ireport.y" value="230"/>
 	<parameter name="cedulaalumno" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -369,21 +369,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="555" y="0" width="92" height="21" uuid="bf27d257-541e-4769-b97d-1ad5134644ad"/>
-				<subreportParameter name="id_alumno">
-					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="prd_lectivo_nombre">
-					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="id_materia">
-					<subreportParameterExpression><![CDATA[$F{id_materia}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportUB_Aporte2.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="647" y="0" width="102" height="20" uuid="f4c8f124-6770-4892-acfc-ebc2a22c437f"/>
+				<reportElement x="655" y="0" width="102" height="21" uuid="f4c8f124-6770-4892-acfc-ebc2a22c437f"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -395,6 +381,20 @@ WHERE
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportUB_ExamenFinal.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="555" y="0" width="100" height="21" uuid="bf27d257-541e-4769-b97d-1ad5134644ad"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_materia">
+					<subreportParameterExpression><![CDATA[$F{id_materia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportUB_Aporte2.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
