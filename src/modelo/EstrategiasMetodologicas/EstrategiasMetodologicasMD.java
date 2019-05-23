@@ -10,6 +10,16 @@ public class EstrategiasMetodologicasMD {
     private String tipo_estrategias_metodologicas;
     private  PlandeClasesMD id_plan_clases;
     private EstrategiasUnidadMD id_estrategias_unidad;
+    private String nombre_estrategia;
+
+    public String getNombre_estrategia() {
+        return nombre_estrategia;
+    }
+
+    public void setNombre_estrategia(String nombre_estrategia) {
+        this.nombre_estrategia = nombre_estrategia;
+    }
+    
 
     public EstrategiasMetodologicasMD() {
         this.id_plan_clases=new PlandeClasesMD();
@@ -23,6 +33,12 @@ public class EstrategiasMetodologicasMD {
     public EstrategiasMetodologicasMD( EstrategiasUnidadMD id_estrategias_unidad,String tipo_estrategias_metodologicas) {
         this.id_estrategias_unidad = id_estrategias_unidad;
         this.tipo_estrategias_metodologicas = tipo_estrategias_metodologicas;
+        this.id_plan_clases=new PlandeClasesMD();
+    }
+
+    public EstrategiasMetodologicasMD(String tipo_estrategias_metodologicas, String nombre_estrategia) {
+        this.tipo_estrategias_metodologicas = tipo_estrategias_metodologicas;
+        this.nombre_estrategia = nombre_estrategia;
         this.id_plan_clases=new PlandeClasesMD();
     }
 
