@@ -226,7 +226,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 if (validarFecha() == true) {
                     frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
                 } else {
-                    frmFinContrato.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalizacion");
+                    frmFinContrato.getLblErrorFechaFinContratacion().setText("El inicio de contrato no puede ser \n mayor al de finalización");
                     frmFinContrato.getLblErrorFechaFinContratacion().setVisible(true);
                 }
                 habilitarGuardar();
@@ -296,7 +296,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             frmFinContrato.getLblErrorFechaFinContratacion().setVisible(false);
         } else {
             guardar = false;
-            frmFinContrato.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalizacion");
+            frmFinContrato.getLblErrorFechaFinContratacion().setText("La fecha de inicio de contrato no puede ser mayor a la de finalización");
             frmFinContrato.getLblErrorFechaFinContratacion().setVisible(true);
             JOptionPane.showMessageDialog(null, "No se puede guardar, revise la Fecha de Culminación de Contrato");
         }
@@ -394,7 +394,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     public void botoninformeDocente() {
         int s = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(),
                 "Registro de persona \n"
-                + "¿Dessea Imprimir el Registro realizado ?", "Informe de Retiro",
+                + "¿Desea Imprimir el Registro realizado ?", "Informe de Retiro",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,

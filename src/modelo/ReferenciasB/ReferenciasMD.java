@@ -13,13 +13,15 @@ public class ReferenciasMD {
     private String codigo_koha;
     private String codigo_dewey;
     private String area_referencias;
+    private String autor2;
+    private String autor3;
     private boolean existe_en_biblioteca;
 
     public ReferenciasMD() {
     }
 
     public ReferenciasMD(int id_referencia, String codigo_referencia, String descripcion_referencia, String tipo_referencia, boolean existe_en_biblioteca, String observaciones,
-            String codigo_ibsn, String numero_de_paginas, String codigo_koha, String codigo_dewey, String area_referencias) {
+            String codigo_ibsn, String numero_de_paginas, String codigo_koha, String codigo_dewey, String area_referencias,String autor2,String autor3) {
         this.id_referencia = id_referencia;
         this.codigo_referencia = codigo_referencia;
         this.descripcion_referencia = descripcion_referencia;
@@ -31,6 +33,24 @@ public class ReferenciasMD {
         this.codigo_koha=codigo_koha;
         this.codigo_dewey=codigo_dewey;
         this.area_referencias=area_referencias;
+        this.autor2=autor2;
+        this.autor3=autor3;
+    }
+
+    public String getAutor2() {
+        return autor2;
+    }
+
+    public void setAutor2(String autor2) {
+        this.autor2 = autor2;
+    }
+
+    public String getAutor3() {
+        return autor3;
+    }
+
+    public void setAutor3(String autor3) {
+        this.autor3 = autor3;
     }
 
     public String getCodigo_isbn() {
