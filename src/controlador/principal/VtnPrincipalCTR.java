@@ -96,8 +96,6 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.usuario.VtnRol;
-import vista.usuario.VtnUsuario;
 import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
@@ -1061,7 +1059,7 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtMatricula().setEnabled(false);
             vtnPrin.getMnCtDocenteMateria().setEnabled(false);
             vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-            //vtnPrin.getMnCtPlandeClase().setEnabled(true);
+            vtnPrin.getMnCtPlandeClase().setEnabled(true);
             vtnPrin.getMnCtUsuarios().setEnabled(false);
             vtnPrin.getMnCtRoles().setEnabled(false);
             vtnPrin.getMnCtHistorialUsers().setEnabled(false);
