@@ -239,7 +239,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorTipoAcreditacion.setText("Seleccione un Tipo de Acreditación");
         jPanel3.add(lblErrorTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, -1, -1));
 
-        Cbx_Ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Ciclo 1", "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" }));
+        Cbx_Ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Ciclo 1", "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5", "Ciclo 6" }));
         jPanel3.add(Cbx_Ciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 180, -1));
         jPanel3.add(Txt_CodMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 180, -1));
 
@@ -360,7 +360,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         lblErrorCampoFormacion.setText("Ingrese solo letras");
         jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
-        Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "UNIDAD BÁSICA", "UNIDAD PROFESIONAL", "UNIDAD DE TITULACIÓN" }));
+        Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "BÁSICA", "PROFESIONAL", "TITULACIÓN" }));
         Cbx_OrgCurricular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Cbx_OrgCurricularActionPerformed(evt);
