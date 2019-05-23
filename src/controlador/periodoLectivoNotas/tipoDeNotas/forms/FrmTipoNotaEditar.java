@@ -88,7 +88,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         try {
 
-            CONS.getPool(2).submit(() -> listaTipos
+            CONS.getPool(10).submit(() -> listaTipos
                     .parallelStream()
                     .forEach(obj -> {
                         System.out.println("---->" + obj);
@@ -96,6 +96,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
                         System.out.println("------>COMPLETED");
                     })
             ).get();
+            CONS.getPool(null).shutdown();
         } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(FrmTipoNotaEditar.class.getName()).log(Level.SEVERE, null, ex);
         }

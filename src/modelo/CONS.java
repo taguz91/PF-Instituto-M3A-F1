@@ -47,6 +47,9 @@ public class CONS {
         if (threads == null) {
             if (threadPool == null) {
                 threadPool = new ForkJoinPool(4);
+            } else {
+                if (threadPool.isShutdown()) {
+                }
             }
         } else {
             threadPool = new ForkJoinPool(threads);
