@@ -168,9 +168,9 @@ public class ControladorEditarPlanClases {
         lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
-      lista_evaluacionesSilabo=EvaluacionSilaboBD.recuperarEvaluacionesUnidadSilabo(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
-        CargarEvaluacionesInstrumento(lista_evaluacionesSilabo);
-                
+        lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        CargarEvaluacionesInstrumento(lista_estrategiasSilabo); 
+        
        lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());
         cargarCampoObservacion(lista_plan);
         
@@ -200,14 +200,13 @@ public class ControladorEditarPlanClases {
         fPlanClase.getTxtCicloParalelo().setEnabled(false);
         }
     }
-     private void CargarEvaluacionesInstrumento(List<EvaluacionSilaboMD> lista){
+     private void CargarEvaluacionesInstrumento(List<EstrategiasUnidadMD> lista){
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
         modelo=new DefaultListModel();
-        for (EvaluacionSilaboMD evaluacionSilaboMD : lista) {
-            modelo.addElement(evaluacionSilaboMD.getInstrumento());
+        for (EstrategiasUnidadMD eu : lista) {
+            modelo.addElement(eu.getIdEstrategia().getDescripcionEstrategia());
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
-         fPlanClase.getJlistInstrumentoEvaluacion().setEnabled(false);
     }
        public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
         for (UnidadSilaboMD lista_unidad : lista_unidades) {
