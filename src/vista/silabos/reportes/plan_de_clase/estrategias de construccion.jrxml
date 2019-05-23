@@ -13,20 +13,20 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch">
+		<band height="11" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="122" height="20" uuid="a5ff7adb-ea64-453d-9b57-56390767565d"/>
+				<reportElement x="0" y="0" width="122" height="11" uuid="a5ff7adb-ea64-453d-9b57-56390767565d"/>
 				<textElement>
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Construcion:]]></text>
+				<text><![CDATA[Construción:]]></text>
 			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="122" height="15" uuid="ee7556c6-40db-4c4a-bd30-f5960d1bc269"/>
+				<reportElement x="0" y="0" width="122" height="12" uuid="ee7556c6-40db-4c4a-bd30-f5960d1bc269"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

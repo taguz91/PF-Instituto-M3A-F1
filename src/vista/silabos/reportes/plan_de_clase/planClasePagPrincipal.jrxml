@@ -11,7 +11,7 @@
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select r.id_carrera,r.carrera_nombre,m.materia_nombre,m.materia_codigo, c.curso_nombre,current_date,
-concat(d.docente_abreviatura,'. ',p.persona_primer_nombre,' ' ,p.persona_primer_apellido) 
+concat(d.docente_abreviatura,p.persona_primer_nombre,' ' ,p.persona_primer_apellido) 
 as nombre_doc from"Docentes" d join "Personas" p on d.id_persona=p.id_persona join "Cursos" c 
 on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join 
 "Carreras" r on m.id_carrera=r.id_carrera where c.id_curso=$P!{id_curso}]]>
@@ -27,20 +27,20 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="66" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="32" uuid="b10505b8-bc40-47f0-b81e-b14a9c20744e"/>
+				<reportElement x="0" y="0" width="555" height="23" uuid="b10505b8-bc40-47f0-b81e-b14a9c20744e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[       INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="76" height="47" uuid="e5d328de-1d05-4005-818a-a473583611f8"/>
+				<reportElement x="0" y="0" width="76" height="37" uuid="e5d328de-1d05-4005-818a-a473583611f8"/>
 				<imageExpression><![CDATA["vista/silabos/reportes/plan_de_clase/2.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="0" y="47" width="555" height="19" uuid="214c8363-2b93-4ebc-9081-8ab7553600f6"/>
+				<reportElement x="0" y="37" width="555" height="19" uuid="214c8363-2b93-4ebc-9081-8ab7553600f6"/>
 				<imageExpression><![CDATA["vista/silabos/reportes/plan_de_clase/Captura.JPG"]]></imageExpression>
 			</image>
 		</band>
@@ -57,7 +57,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
@@ -85,7 +85,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
@@ -104,25 +104,25 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="38" width="63" height="54" uuid="eac9d39c-27a5-4199-8595-036669a9687a"/>
+				<reportElement x="0" y="38" width="191" height="13" uuid="eac9d39c-27a5-4199-8595-036669a9687a"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="63" y="38" width="99" height="54" uuid="1f4fb4fb-55b1-4e1a-8961-f1b0f509eba5"/>
+				<reportElement x="0" y="51" width="191" height="41" uuid="1f4fb4fb-55b1-4e1a-8961-f1b0f509eba5"/>
 				<box>
 					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -132,7 +132,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="162" y="38" width="111" height="29" uuid="7de18c9c-ec37-4d0d-b4fb-e12d45ec6101"/>
+				<reportElement x="191" y="38" width="82" height="19" uuid="7de18c9c-ec37-4d0d-b4fb-e12d45ec6101"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -141,12 +141,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código Asignatura:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="162" y="67" width="111" height="25" uuid="6a49e0b6-76ee-4917-a69f-759e0dbc3749"/>
+				<reportElement x="191" y="57" width="82" height="35" uuid="6a49e0b6-76ee-4917-a69f-759e0dbc3749"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -155,12 +155,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="475" y="92" width="80" height="20" uuid="0b3d7404-b0da-4452-a737-3d6347de01a6"/>
+				<reportElement x="464" y="92" width="91" height="20" uuid="0b3d7404-b0da-4452-a737-3d6347de01a6"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -169,12 +169,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="399" y="92" width="76" height="20" uuid="9fa29dea-7d02-423e-a970-37891782595e"/>
+				<reportElement x="399" y="92" width="65" height="20" uuid="9fa29dea-7d02-423e-a970-37891782595e"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -183,7 +183,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ciclo-Paralelo:]]></text>
 			</staticText>
@@ -225,8 +225,8 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SEGUNDA_PARTE_DATOS_UNIDAD.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="36"/>
-		<band height="116">
+		<band height="26"/>
+		<band height="105">
 			<staticText>
 				<reportElement x="180" y="15" width="48" height="15" uuid="50eb41f7-67bb-4a7c-854c-b55cf50ac267"/>
 				<box>
@@ -234,7 +234,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Nombre:]]></text>
 			</staticText>
@@ -250,19 +250,19 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<textFieldExpression><![CDATA[$F{nombre_doc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="180" y="86" width="181" height="15" uuid="9dd9c1b6-4fc7-4f98-a60d-fb5b5c39b6e2"/>
+				<reportElement x="180" y="75" width="181" height="15" uuid="9dd9c1b6-4fc7-4f98-a60d-fb5b5c39b6e2"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="30" width="180" height="56" uuid="8341aa72-d9dc-4517-88cf-178d46b528af"/>
+				<reportElement x="0" y="30" width="180" height="45" uuid="8341aa72-d9dc-4517-88cf-178d46b528af"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -270,7 +270,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="30" width="181" height="56" uuid="2a277619-a726-489d-ba2b-41c2246a0693"/>
+				<reportElement x="180" y="30" width="181" height="45" uuid="2a277619-a726-489d-ba2b-41c2246a0693"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -278,24 +278,26 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="101" width="38" height="15" uuid="ba2b84dc-04e9-47a8-a43a-3c43c6ae1840"/>
+				<reportElement x="180" y="90" width="38" height="15" uuid="ba2b84dc-04e9-47a8-a43a-3c43c6ae1840"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Fecha: ]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="218" y="101" width="143" height="15" uuid="517bc893-6078-46df-8e16-da67eee92009"/>
+				<reportElement x="218" y="90" width="143" height="15" uuid="517bc893-6078-46df-8e16-da67eee92009"/>
 				<box>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -308,12 +310,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="86" width="180" height="15" uuid="50ad5d34-4569-451e-9878-6525887c86e9"/>
+				<reportElement x="0" y="75" width="180" height="15" uuid="50ad5d34-4569-451e-9878-6525887c86e9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -322,12 +324,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="101" width="180" height="15" uuid="3c4cfcda-1b41-4aab-a70d-83bec1d17065"/>
+				<reportElement x="0" y="90" width="180" height="15" uuid="3c4cfcda-1b41-4aab-a70d-83bec1d17065"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -336,7 +338,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
@@ -350,7 +352,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ESTUDIANTE]]></text>
 			</staticText>
@@ -364,12 +366,12 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="361" y="0" width="194" height="116" uuid="4407e806-2d96-4cdf-a3bf-e5a8fa16cf1f"/>
+				<reportElement x="361" y="0" width="194" height="105" uuid="4407e806-2d96-4cdf-a3bf-e5a8fa16cf1f"/>
 				<subreportParameter name="ID_CARR">
 					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
 				</subreportParameter>
