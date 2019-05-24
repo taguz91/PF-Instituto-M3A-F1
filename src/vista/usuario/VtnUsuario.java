@@ -5,11 +5,11 @@
  */
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import modelo.CONS;
 
 /**
  *
@@ -19,9 +19,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
     public VtnUsuario() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
+        this.setFrameIcon(CONS.getICONO());
     }
 
     public JButton getBtnActualizar() {
