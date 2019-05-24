@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="34" pageHeight="842" columnWidth="34" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0105e84f-026e-496d-97d1-3843f596e367">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="110" pageHeight="842" columnWidth="110" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0105e84f-026e-496d-97d1-3843f596e367">
 	<property name="ireport.zoom" value="5.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -21,7 +21,7 @@
 	<queryString>
 		<![CDATA[SELECT
 	ROUND("Notas".nota_valor,1) AS "ExamenInterciclo"
-
+	
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -34,7 +34,7 @@ FROM
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
   INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
-INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota
+INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota	
 WHERE
 	"Alumnos".id_alumno = $P{id_alumno}
 	AND "Cursos".id_docente = $P{id_docente}
@@ -48,18 +48,16 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<summary>
-		<band height="10" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="34" height="10" backcolor="#99FF99" uuid="d3b246fe-e8a8-407d-b2f7-65ef5f73a4d6"/>
+				<reportElement mode="Opaque" x="0" y="0" width="110" height="20" backcolor="#99FF99" uuid="d3b246fe-e8a8-407d-b2f7-65ef5f73a4d6"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
-				</textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ExamenInterciclo}]]></textFieldExpression>
 			</textField>
 		</band>
