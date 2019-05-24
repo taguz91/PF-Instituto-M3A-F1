@@ -13,6 +13,7 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.curso.SesionClaseMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
@@ -572,8 +573,22 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT prd_lectivo_fecha_inicio \n"
                 + "FROM public.\"PeriodoLectivo\"\n"
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
-        ResultSet rs = conecta.sql(sql);
-        PreparedStatement ps = conecta.getPS(sql);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(sql, conn, null);
+            try {
+                while (rst.next()) {
+                    fi = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    System.out.println(fi);
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                }
+                return fi;
+            } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+        /*
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -583,7 +598,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             } catch (SQLException e) {
                 System.out.println("No pudimos consultar fecha inicio del periodo: " + e.getMessage());
             }
-        }
+        }*/
         return fi;
     }
 

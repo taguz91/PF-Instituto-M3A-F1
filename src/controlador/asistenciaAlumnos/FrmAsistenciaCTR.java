@@ -52,7 +52,7 @@ public class FrmAsistenciaCTR {
     private List<PeriodoLectivoMD> listaPrdSemana;
     private static LocalDate IniSemana;
     private static LocalDate FinSemana;
-    private static LocalDate fechaInicial = LocalDate.now();
+    private static LocalDate fechaInicial;
     private static int semanas;
     private static ArrayList<String> lista_fecha = new ArrayList<>();
 
@@ -132,7 +132,6 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
-        //CargarDiasClase();
     }
 
     private void InitEventos() {
@@ -241,7 +240,7 @@ public class FrmAsistenciaCTR {
     // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">
     /*Contruimos la tabla dependiendo de los dias que tiene clase */
     public void CargarDiasClase() {
-
+        jTbl.setModel(tablaTrad);
         new Thread(() -> {
 
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
@@ -249,13 +248,12 @@ public class FrmAsistenciaCTR {
             listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
 
             System.out.println("-----> tamaño de sesion en clase  " + listaSesionClase.size());
-            for (int i = 0; i <= listaSesionClase.size(); i++) {
+            for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(0);
                 dia = sesion.getNumeroDias();
 
                 System.out.println(" En el for Num de Dias  " + dia);
-                DiaDeLaSemana(dia);
 
             }
             ConstruirTabla(tablaTrad, dia);
@@ -279,48 +277,37 @@ public class FrmAsistenciaCTR {
             }
 
             vista.getTblAsistencia().setModel(modelo);
-            
-            switch (num_dias){
-                case 1 :
+
+            switch (num_dias) {
+                case 1:
                     jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 1");
                     break;
-                case 2 :
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+                case 2:
+                    jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 2");
                     break;
-                case 3 :
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+                case 3:
+                    jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 3");
                     break;
-                case 4 :
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+                case 4:
+                    jTbl.getColumnModel().getColumn(9).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 4");
                     break;
-                case 5 :
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+                case 5:
+                    jTbl.getColumnModel().getColumn(10).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 5");
                     break;
-                case 6 :
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
+                case 6:
+                    jTbl.getColumnModel().getColumn(11).setCellEditor(new ComboBoxCellEditor(true, items));
                     System.out.println("case 6");
                     break;
                 default:
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 1");
+                    System.out.println("case DEFAULT");
                     break;
             }
-            
-//           if (num_dias > 0) {
-//            
 
-//
-//            jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true,
-//                    items));
-//            jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true,
-//                    items));
-//      
-//        }
         } catch (NullPointerException e) {
 
             System.out.println("Ocurrio un problema");
@@ -417,13 +404,13 @@ public class FrmAsistenciaCTR {
     }
 
     public static void CalculoSemanaPorSemana() {
-
+        lista_fecha = new ArrayList<>();
         for (int i = 1; i <= semanas; i++) {
 
             Fecha = "Semana " + i + "    " + IniSemana.plusWeeks(i).getDayOfMonth() + " de  " + IniSemana.plusWeeks(i).getMonth() + "  -  " + FinSemana.plusWeeks(i).getDayOfMonth() + " de " + FinSemana.plusWeeks(i).getMonth();
             lista_fecha.add(Fecha);
         }
-
+        
     }
 
     // </editor-fold>
@@ -503,12 +490,11 @@ public class FrmAsistenciaCTR {
 
     private void cargarComboSemanas() {
 
-        System.out.println("Entramos en la carga de combo semana");
         //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
         try {
             System.out.println("-------------------------------------->  metodo carga de semanas");
-            //fechaInicial = periodoBD.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            //System.out.println("------------>   "+ fechaInicial);
+            fechaInicial = periodoBD.buscarFechaInicioPrd(getIdPeriodoLectivo());
+            System.out.println("------------>   "+ fechaInicial);
             vista.getCmbSemana().removeAllItems();
             listaNumSemanas = carreraBD.cargarNumdeSemanas(getIdPeriodoLectivo());
             System.out.println("------->" + listaNumSemanas.size());
@@ -518,16 +504,14 @@ public class FrmAsistenciaCTR {
                 semanas = carrera.getNumSemanas();
                 System.out.println("Semanas - - ---------->" + semanas);
                 CalculoSemana(fechaInicial.getDayOfWeek().getValue());
-
+                vista.getCmbSemana().removeAllItems();
                 lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
-
             }
 
             lista_fecha.forEach(t -> System.out.println(t));
-
         } catch (Exception e) {
             System.out.println("%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("Murio: "+e.getMessage());
+            System.out.println("Murio: " + e.getMessage());
             System.out.println("%%%%%%%%%%%%%%%%%%%%");
         }
     }
