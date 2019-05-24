@@ -159,7 +159,7 @@ public final class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return usuario;
