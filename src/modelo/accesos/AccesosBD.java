@@ -6,7 +6,6 @@
 package modelo.accesos;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class AccesosBD extends AccesosMD {
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public List<AccesosMD> SelectAll() {
+    public List<AccesosBD> SelectAll() {
 
         String SELECT = "SELECT id_acceso, acc_nombre FROM \"Accesos\" ";
 
@@ -59,22 +58,22 @@ public class AccesosBD extends AccesosMD {
 
     }
 
-    public List<AccesosMD> SelectWhereACCESOROLidRol(int idRol) {
+    public List<AccesosBD> SelectWhereACCESOROLidRol(int idRol) {
 
         String SELECT = "SELECT ACC.id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" ACC INNER JOIN \"AccesosDelRol\" ACC_ROL ON ACC.id_acceso = ACC_ROL.id_acceso WHERE ACC_ROL.id_rol = " + idRol;
 
         return SelectSimple(SELECT);
     }
 
-    private List<AccesosMD> SelectSimple(String QUERY) {
-        List<AccesosMD> Lista = new ArrayList<>();
+    private List<AccesosBD> SelectSimple(String QUERY) {
+        List<AccesosBD> Lista = new ArrayList<>();
 
         conn = pool.getConnection();
         rs = pool.ejecutarQuery(QUERY, conn, null);
 
         try {
             while (rs.next()) {
-                AccesosMD acceso = new AccesosMD();
+                AccesosBD acceso = new AccesosBD();
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
                 Lista.add(acceso);
@@ -89,7 +88,7 @@ public class AccesosBD extends AccesosMD {
         return Lista;
     }
 
-    public List<AccesosMD> selectWhereLIKE(int idRol, String LIKE) {
+    public List<AccesosBD> selectWhereLIKE(int idRol, String LIKE) {
         String SELECT = "SELECT\n"
                 + "\"public\".\"Accesos\".acc_nombre\n"
                 + "FROM\n"
@@ -100,7 +99,7 @@ public class AccesosBD extends AccesosMD {
                 + "AND \n"
                 + "\"Accesos\".acc_nombre ILIKE '%" + LIKE + "%'";
 
-        List<AccesosMD> Lista = new ArrayList<>();
+        List<AccesosBD> Lista = new ArrayList<>();
 
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, idRol);
@@ -110,7 +109,7 @@ public class AccesosBD extends AccesosMD {
 
         try {
             while (rs.next()) {
-                AccesosMD acceso = new AccesosMD();
+                AccesosBD acceso = new AccesosBD();
                 acceso.setNombre(rs.getString("acc_nombre"));
                 Lista.add(acceso);
             }

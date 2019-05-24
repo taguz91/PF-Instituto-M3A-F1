@@ -5,15 +5,15 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_unidad" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select numero_unidad,titulo_unidad,concat(fecha_inicio_unidad,' al ',fecha_fin_unidad),concat(
-horas_docencia_unidad + horas_practica_unidad,' horas') 
+		<![CDATA[select numero_unidad,titulo_unidad,concat(fecha_inicio_unidad,' al ',fecha_fin_unidad),
+horas_docencia_unidad + horas_practica_unidad 
 as duracion 
 from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 	</queryString>
 	<field name="numero_unidad" class="java.lang.Integer"/>
 	<field name="titulo_unidad" class="java.lang.String"/>
 	<field name="concat" class="java.lang.String"/>
-	<field name="duracion" class="java.lang.String"/>
+	<field name="duracion" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -28,11 +28,13 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="273" y="0" width="65" height="20" uuid="016d6a62-a087-41c1-9fd3-3532322cae53"/>
+				<reportElement x="273" y="0" width="49" height="20" uuid="016d6a62-a087-41c1-9fd3-3532322cae53"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -41,7 +43,7 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Unidad N°]]></text>
 			</staticText>
@@ -55,7 +57,7 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Duración: ]]></text>
 			</staticText>
@@ -69,10 +71,10 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{duracion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{duracion}+" horas"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="338" y="0" width="217" height="20" uuid="88d110bd-7550-4bf5-a04f-aa52acf38ca8"/>
+				<reportElement x="322" y="0" width="233" height="20" uuid="88d110bd-7550-4bf5-a04f-aa52acf38ca8"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -95,7 +97,7 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha: ]]></text>
 			</staticText>
@@ -108,7 +110,9 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{concat}]]></textFieldExpression>
 			</textField>
 		</band>

@@ -123,7 +123,7 @@ public class SesionClaseBD extends SesionClaseMD {
     }
 
     public SesionClaseMD existeSesion(int idCurso, int dia, LocalTime horaIni, LocalTime horaFin) {
-        SesionClaseMD s =new SesionClaseMD();
+        SesionClaseMD s = new SesionClaseMD();
         sql = "SELECT id_sesion, id_curso, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
                 + "	WHERE dia_sesion = " + dia + " "
@@ -256,7 +256,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "ORDER BY hora_inicio_sesion";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -300,7 +300,7 @@ public class SesionClaseBD extends SesionClaseMD {
                 + "	curso_nombre = '" + nombreCurso + "');";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        ResultSet rs = conecta.sql(ps);
         if (rs != null) {
             try {
                 while (rs.next()) {

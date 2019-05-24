@@ -269,7 +269,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursos() {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -293,7 +297,11 @@ public class CursoBD extends CursoMD {
      * @return
      */
     public ArrayList<CursoMD> cargarCursosEliminados() {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -312,7 +320,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorPeriodo(int idPrdLectivo) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -331,7 +343,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorNombre(String nombre) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -350,7 +366,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> cargarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido,"
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -371,7 +391,11 @@ public class CursoBD extends CursoMD {
     }
 
     public ArrayList<CursoMD> buscarCursos(String aguja) {
-        String sql = "SELECT id_curso, materia_nombre, \n"
+        String sql = "SELECT "
+                + " (SELECT count(*)\n"
+                + "  FROM public.\"AlumnoCurso\"\n"
+                + "  WHERE id_curso = c.id_curso),\n"
+                + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
                 + "persona_identificacion, \n"
                 + "curso_nombre, curso_capacidad, curso_ciclo, \n"
@@ -705,6 +729,8 @@ public class CursoBD extends CursoMD {
             c.setNombre(rs.getString("curso_nombre"));
             c.setCapacidad(rs.getInt("curso_capacidad"));
             c.setCiclo(rs.getInt("curso_ciclo"));
+
+            c.setNumMatriculados(rs.getInt(1));
             return c;
         } catch (SQLException e) {
             System.out.println("No pudimos obtener curso");

@@ -16,26 +16,26 @@ ORDER BY id_prd_lectivo, ac.id_alumno
 /*
 Consultamos los alumnos y el numero de veces que se an matriculado en esa materia
 */
-SELECT id_prd_lectivo, ac.id_alumno, ac.id_curso,
-persona_primer_nombre, persona_primer_apellido,
-materia_nombre, (
-	SELECT count(*)
-	FROM public."AlumnoCurso"
-	WHERE id_alumno = ac.id_alumno
-	AND id_curso IN (
-		SELECT id_curso
-		FROM public."Cursos"
-		WHERE id_materia = c.id_materia
+	SELECT id_prd_lectivo, ac.id_alumno, ac.id_curso,
+	persona_primer_nombre, persona_primer_apellido,
+	materia_nombre, (
+		SELECT count(*)
+		FROM public."AlumnoCurso"
+		WHERE id_alumno = ac.id_alumno
+		AND id_curso IN (
+			SELECT id_curso
+			FROM public."Cursos"
+			WHERE id_materia = c.id_materia
+		)
 	)
-)
-FROM public."AlumnoCurso" ac, public."Cursos" c,
-public."Alumnos" a, public."Personas" p,
-public."Materias" m
-WHERE ac.id_curso = c.id_curso
-AND a.id_alumno = ac.id_alumno
-AND p.id_persona = a.id_persona
-AND m.id_materia = c.id_materia
-ORDER BY id_prd_lectivo, ac.id_alumno;
+	FROM public."AlumnoCurso" ac, public."Cursos" c,
+	public."Alumnos" a, public."Personas" p,
+	public."Materias" m
+	WHERE ac.id_curso = c.id_curso
+	AND a.id_alumno = ac.id_alumno
+	AND p.id_persona = a.id_persona
+	AND m.id_materia = c.id_materia
+	ORDER BY id_prd_lectivo, ac.id_alumno;
 
 
 /**
@@ -210,8 +210,7 @@ BEGIN
     FROM public."AlumnoCurso" ac, public."Cursos" c
     WHERE almn_curso_num_matricula = 0
     AND ac.id_curso = c.id_curso
-    AND almn_curso_activo = true
-    GROUP BY id_alumno, c.id_materia;
+    AND almn_curso_activo = true;
 
     OPEN almns_cursos;
 
@@ -277,7 +276,6 @@ AND c.id_carrera = ac.id_carrera
 AND m.id_materia = ma.id_materia
 
 --
-
 SELECT id_alumno, ac.id_curso, c.id_materia,
 almn_curso_num_matricula, (
 	SELECT malla_almn_num_matricula
@@ -295,4 +293,136 @@ almn_curso_num_matricula, (
 FROM public."AlumnoCurso" ac, public."Cursos" c
 WHERE id_prd_lectivo IN (21, 22, 23, 24, 25, 26, 27, 28, 29)
 AND c.id_curso = ac.id_curso
+ORDER BY almn_curso_num_matricula DESC
+
+
+--Buscamos los alumno curso y en el curso en donde se matricularon
+SELECT id_malla_alumno, ma.id_materia, persona_identificacion,
+persona_primer_nombre, persona_primer_apellido,
+materia_nombre, carrera_nombre
+FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac,
+public."Alumnos" a, public."Personas" p, public."Carreras" c,
+public."Materias" m, public."AlumnoCurso" acr,
+public."Cursos" cr
+WHERE malla_almn_num_matricula = 3
+AND ac.id_almn_carrera = ma.id_almn_carrera
+AND a.id_alumno = ac.id_alumno
+AND p.id_persona = a.id_persona
+AND c.id_carrera = ac.id_carrera
+AND m.id_materia = ma.id_materia
+AND cr.id_materia = ma.id_materia
+AND acr.id_alumno = a.id_alumno
+AND acr.id_curso = cr.id_curso
+ORDER BY persona_identificacion
+
+--Buscamos en que periodo se matricularon con terceras matriculas
+SELECT id_malla_alumno, ma.id_materia, persona_identificacion,
+persona_primer_nombre, persona_primer_apellido,
+materia_nombre, carrera_nombre, prd_lectivo_nombre
+FROM public."MallaAlumno" ma, public."AlumnosCarrera" ac,
+public."Alumnos" a, public."Personas" p, public."Carreras" c,
+public."Materias" m, public."AlumnoCurso" acr,
+public."Cursos" cr, public."PeriodoLectivo" pl
+WHERE malla_almn_num_matricula = 3
+AND ac.id_almn_carrera = ma.id_almn_carrera
+AND a.id_alumno = ac.id_alumno
+AND p.id_persona = a.id_persona
+AND c.id_carrera = ac.id_carrera
+AND m.id_materia = ma.id_materia
+AND acr.id_alumno = a.id_alumno
+AND acr.id_curso = (
+	SELECT id_curso
+	FROM public."AlumnoCurso"
+	WHERE id_curso IN(
+		SELECT id_curso
+		FROM public."Cursos"
+		WHERE id_materia = ma.id_materia
+	)AND id_alumno = a.id_alumno
+	ORDER BY id_curso DESC
+	LIMIT 1
+)
+AND cr.id_curso = acr.id_curso
+AND pl.id_prd_lectivo = cr.id_prd_lectivo
+ORDER BY persona_identificacion
+
+--Actualizamos los que tienen primera matricula en este periodo
+UPDATE public."AlumnoCurso"
+SET almn_curso_num_matricula = 1
+WHERE id_almn_curso IN (
+	SELECT id_almn_curso
+	FROM public."AlumnoCurso" ac, public."Cursos" c,
+	public."Alumnos" a, public."Personas" p,
+	public."Materias" m
+	WHERE ac.id_curso = c.id_curso
+	AND a.id_alumno = ac.id_alumno
+	AND p.id_persona = a.id_persona
+	AND m.id_materia = c.id_materia
+	AND almn_curso_num_matricula = 0
+	AND c.id_prd_lectivo IN (21, 22, 23, 24, 25, 26, 27, 28, 29)
+);
+
+UPDATE public."AlumnoCurso"
+SET almn_curso_num_matricula = 1
+WHERE id_almn_curso IN (
+	SELECT ac.id_almn_curso
+	FROM public."AlumnoCurso" ac, public."Cursos" c,
+	public."Alumnos" a, public."Personas" p,
+	public."Materias" m
+	WHERE ac.id_curso = c.id_curso
+	AND a.id_alumno = ac.id_alumno
+	AND p.id_persona = a.id_persona
+	AND m.id_materia = c.id_materia
+	AND almn_curso_num_matricula = 0
+	ORDER BY id_prd_lectivo, ac.id_alumno
+);
+
+
+
+--Consultamos los que tienen matricula 0
+SELECT id_prd_lectivo, ac.id_alumno, ac.id_curso,
+persona_primer_nombre, persona_primer_apellido,
+materia_nombre, (
+	SELECT count(*)
+	FROM public."AlumnoCurso"
+	WHERE id_alumno = ac.id_alumno
+	AND id_curso IN (
+		SELECT id_curso
+		FROM public."Cursos"
+		WHERE id_materia = c.id_materia
+	)
+)
+FROM public."AlumnoCurso" ac, public."Cursos" c,
+public."Alumnos" a, public."Personas" p,
+public."Materias" m
+WHERE ac.id_curso = c.id_curso
+AND a.id_alumno = ac.id_alumno
+AND p.id_persona = a.id_persona
+AND m.id_materia = c.id_materia
+AND almn_curso_num_matricula = 0
+ORDER BY id_prd_lectivo, ac.id_alumno;
+
+
+--Comparando el numero de matricula de alumno curso y malla alumno
+SELECT ac.id_alumno, ac.id_curso, c.id_materia,
+persona_identificacion, materia_nombre,
+almn_curso_num_matricula, (
+	SELECT malla_almn_num_matricula
+	FROM public."MallaAlumno"
+	WHERE id_almn_carrera = (
+		SELECT id_almn_carrera
+		FROM public."AlumnosCarrera"
+		WHERE id_alumno = ac.id_alumno
+		AND id_carrera = (
+			SELECT id_carrera
+			FROM public."PeriodoLectivo"
+			WHERE id_prd_lectivo = c.id_prd_lectivo
+		)
+	)AND id_materia = c.id_materia)
+FROM public."AlumnoCurso" ac, public."Cursos" c,
+public."Alumnos" a, public."Personas" p,
+public."Materias" m
+WHERE c.id_curso = ac.id_curso
+AND a.id_alumno = ac.id_alumno
+AND p.id_persona = a.id_persona
+AND m.id_materia = c.id_materia
 ORDER BY almn_curso_num_matricula DESC
