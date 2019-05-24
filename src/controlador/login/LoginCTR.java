@@ -6,14 +6,14 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
 import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
-import vista.usuario.VtnSelectRol;
 
 /**
  *
@@ -23,18 +23,12 @@ public class LoginCTR {
 
     private final Login vista; //LO QUE VA A VISUALIZAR
     private UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
-    //Icono de la aplicacion
-    private final ImageIcon icono;
-    private final Image ista;
 
     private final boolean carga = true;
 
-    public LoginCTR(Login vista) {
-        this.vista = vista;
-        this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
-        this.ista = icono.getImage();
-        vista.setIconImage(ista);
-
+    public LoginCTR() {
+        this.vista = new Login();
+        vista.setIconImage(CONS.getImage());
     }
 
     //Inits
@@ -94,7 +88,7 @@ public class LoginCTR {
 
                         vista.dispose();
                         CONS.setUsuario(modelo);
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex), icono, ista);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex));
                         vtn.Init();
 
                     } else {
