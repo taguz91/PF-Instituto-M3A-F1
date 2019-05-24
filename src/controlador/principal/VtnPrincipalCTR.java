@@ -43,7 +43,6 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -51,7 +50,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -95,7 +93,6 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
@@ -589,15 +586,8 @@ public class VtnPrincipalCTR {
     }
 
     public void abrirVtnAccesos() {
-        VtnAccesos vtnAcceso = new VtnAccesos();
-        eventoInternal(vtnAcceso);
-        if (numVtns < 5) {
-            VtnAccesosCTR ctrVtnAcceso = new VtnAccesosCTR(vtnPrin, vtnAcceso, conecta, this);
-            ctrVtnAcceso.Init();
-        } else {
-            errorNumVentanas();
-        }
-
+        VtnAccesosCTR vtn = new VtnAccesosCTR(this);
+        vtn.Init();
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
