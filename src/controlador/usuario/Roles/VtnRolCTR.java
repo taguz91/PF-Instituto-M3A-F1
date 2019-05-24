@@ -74,7 +74,6 @@ public class VtnRolCTR {
     private void InitPermisos() {
 
         vista.getBtnActualizar().addActionListener(e -> cargarTabla());
-        vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
 
         vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
         vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
@@ -82,25 +81,6 @@ public class VtnRolCTR {
         vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
         vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-
-//        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-//
-//            if (obj.getNombre().equals("ROLES-Agregar")) {
-//                vista.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Ver-Permisos")) {
-//                vista.getBtnVerPermisos().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Editar-Permisos")) {
-//                vista.getBtnEditarPermisos().setEnabled(true);
-//            }
-//        }
     }
 
     //Metodos de Apoyo
