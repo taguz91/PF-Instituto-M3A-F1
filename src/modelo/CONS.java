@@ -9,7 +9,7 @@ import modelo.usuario.UsuarioBD;
 
 /**
  *
- * @author alumno
+ * @author JOHNNY, MrRainx
  */
 public class CONS {
 
@@ -63,7 +63,7 @@ public class CONS {
 
     public static ImageIcon getICONO() {
         if (ICONO == null) {
-            ICONO = new ImageIcon(getDir().getClass().getResource("/vista/img/logo.png"));
+            ICONO = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
         }
         return ICONO;
     }
