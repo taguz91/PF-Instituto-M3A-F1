@@ -101,7 +101,12 @@ public class Controlador_plan_clases {
           
       
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{
+            int limite=120;
+            if(fPlanClase.getTxt_estrategias().getText().length()>=limite){
+               JOptionPane.showMessageDialog(null, "EL TEXTO EXCEDE EL NÚMERO MÁXIMO DE CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE); 
+            } else{
             agregarEstrategiasMetologicas();
+            }
         });
         fPlanClase.getBtnQuitarPC().addActionListener(qp->{
             eliminarEstrategiasMto();
@@ -145,6 +150,7 @@ public class Controlador_plan_clases {
                  }
              }
 });
+         
         fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -299,6 +305,7 @@ public class Controlador_plan_clases {
 //    }
     
     private void agregarEstrategiasMetologicas(){
+        
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
         modelo_Consolidacion = new DefaultListModel();

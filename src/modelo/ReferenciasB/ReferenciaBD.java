@@ -36,6 +36,16 @@ public class ReferenciaBD extends ReferenciasMD {
             return false;
         }
     }
+    public void actualizar (String id) throws SQLException{
+        String editar=getDescripcion_referencia();
+        String sql="update \"Referencias\" set descripcion_referencia=editar where codigo_referencia=?" ;
+     PreparedStatement st = conexion.getCon().prepareStatement(sql);
+            st.setString(1,id );
+            st.executeUpdate();
+            st.close();
+            JOptionPane.showMessageDialog(null, "Referencia actuaizada correctamente");
+
+    }
 
     public List<ReferenciasMD> consultarBibliotecaTabla(ConexionBD conexion) {
 
@@ -108,5 +118,36 @@ public class ReferenciaBD extends ReferenciasMD {
         return referencias;
 
     }
+     public  ReferenciasMD EditarBiblioteca(ConexionBD conexion, String clave) {
+
+        List<ReferenciasMD> referencias = new ArrayList<>();
+         ReferenciasMD tmp = new ReferenciasMD();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
+                    + "FROM public.\"Referencias\"\n"
+                    + "WHERE tipo_referencia='Base'\n"
+                    + "AND descripcion_referencia ILIKE '%" + clave + "%'");
+
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                
+                tmp.setId_referencia(rs.getInt(1));
+                tmp.setCodigo_referencia(rs.getString(2));
+                tmp.setDescripcion_referencia(rs.getString(3));
+                tmp.setTipo_referencia(rs.getString(4));
+                tmp.setExiste_en_biblioteca(rs.getBoolean(5));
+
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  tmp;
+
+    }
+    
 
 }
