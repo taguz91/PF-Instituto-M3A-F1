@@ -98,7 +98,7 @@ public final class Middlewares {
 
     public static String getProjectPath() {
         String path = new File(".").getAbsolutePath();
-        return path.substring(0, path.length() - 1).replace("\\", "/");
+        return path.substring(0, path.length() - 1);
     }
 
     public static double conversor(String texto) {
