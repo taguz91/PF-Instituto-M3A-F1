@@ -37,11 +37,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="413" max="32767" attributes="0"/>
+                  <EmptySpace pref="498" max="32767" attributes="0"/>
                   <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="Btn_Anterior" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -54,7 +52,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Btn_Anterior" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
@@ -70,11 +67,6 @@
         <Component class="javax.swing.JButton" name="btnGuardar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="Btn_Anterior">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Anterior"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -408,13 +400,14 @@
             <Component class="javax.swing.JComboBox" name="Cbx_Ciclo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
+                  <StringArray count="7">
                     <StringItem index="0" value="SELECCIONE"/>
                     <StringItem index="1" value="Ciclo 1"/>
                     <StringItem index="2" value="Ciclo 2"/>
                     <StringItem index="3" value="Ciclo 3"/>
                     <StringItem index="4" value="Ciclo 4"/>
                     <StringItem index="5" value="Ciclo 5"/>
+                    <StringItem index="6" value="Ciclo 6"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -588,7 +581,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="360" y="220" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="360" y="210" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -601,7 +594,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="360" y="270" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="360" y="260" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -815,9 +808,9 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
                     <StringItem index="0" value="SELECCIONE"/>
-                    <StringItem index="1" value="UNIDAD B&#xc1;SICA"/>
-                    <StringItem index="2" value="UNIDAD PROFESIONAL"/>
-                    <StringItem index="3" value="UNIDAD DE TITULACI&#xd3;N"/>
+                    <StringItem index="1" value="B&#xc1;SICA"/>
+                    <StringItem index="2" value="PROFESIONAL"/>
+                    <StringItem index="3" value="TITULACI&#xd3;N"/>
                   </StringArray>
                 </Property>
               </Properties>

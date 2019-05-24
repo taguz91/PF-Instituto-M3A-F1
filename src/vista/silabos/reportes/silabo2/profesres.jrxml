@@ -16,7 +16,7 @@
 concat(substr(a.nombre_jornada,0,2),c.curso_ciclo,c.curso_paralelo) as curso from  "Cursos" c join "Jornadas" 
 a on c.id_jornada=a.id_jornada join "Docentes" k on k.id_docente=c.id_docente
 join "Personas" p  on k.id_persona=p.id_persona join "PeriodoLectivo" q on c.id_prd_lectivo=q.id_prd_lectivo
-where    c.id_materia=$P!{parameter1} and q.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})]]>
+where    c.id_materia=$P!{parameter1}  and c.curso_activo=true and q.id_prd_lectivo=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_silabo})]]>
 	</queryString>
 	<field name="id_docente" class="java.lang.Integer"/>
 	<field name="nombre_docente" class="java.lang.String"/>

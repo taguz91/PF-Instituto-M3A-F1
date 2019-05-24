@@ -9,17 +9,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import modelo.CONS;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class VtnUsuario extends javax.swing.JInternalFrame {
+public class VtnUsuario extends AbstracView {
 
     public VtnUsuario() {
         initComponents();
-        this.setFrameIcon(CONS.getICONO());
     }
 
     public JButton getBtnActualizar() {

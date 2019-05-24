@@ -12,22 +12,22 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="101" height="20" uuid="a81b62af-9b8f-42b0-8de6-adcbf63cffab"/>
+				<reportElement x="0" y="0" width="91" height="14" uuid="a81b62af-9b8f-42b0-8de6-adcbf63cffab"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MATERIALES:]]></text>
 			</staticText>
 		</band>
 	</title>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="101" height="20" uuid="ebd20bd2-6a89-4787-99ab-61fac10432d9"/>
+				<reportElement x="0" y="0" width="91" height="12" uuid="ebd20bd2-6a89-4787-99ab-61fac10432d9"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_recursos}]]></textFieldExpression>
 			</textField>

@@ -24,11 +24,11 @@ e.id_unidad=u.id_unidad AND e.id_unidad=$P!{id_unidad}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="24" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="112" height="24" uuid="f80d3f30-a2b1-460d-b064-f66a0a48fba3"/>
+		<band height="11" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="112" height="11" uuid="f80d3f30-a2b1-460d-b064-f66a0a48fba3"/>
 				<textElement>
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
 			</textField>
