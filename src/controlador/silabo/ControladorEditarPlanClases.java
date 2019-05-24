@@ -100,7 +100,12 @@ public class ControladorEditarPlanClases {
         });
         fPlanClase.getBtnCancelarPC().setText("Cancelar");
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{
+            int limite=120;
+            if(fPlanClase.getTxt_estrategias().getText().length()>=limite){
+               JOptionPane.showMessageDialog(null, "EL TEXTO EXCEDE EL NÚMERO MÁXIMO DE CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE); 
+            } else{
             agregarEstrategiasMetologicas();
+            }
         });
         fPlanClase.getBtnQuitarPC().addActionListener(qp->{
             eliminarEstrategiasMto();
