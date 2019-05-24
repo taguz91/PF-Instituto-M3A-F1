@@ -223,6 +223,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
@@ -876,6 +877,9 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_R, ActionEvent.ALT_MASK));
 
+        vtnPrin.getMnIgMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_K, ActionEvent.ALT_MASK));
+
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
 
@@ -1041,7 +1045,9 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtDocente().setEnabled(false);
             vtnPrin.getMnCtAlumno().setEnabled(false);
             vtnPrin.getMnCtCarrera().setEnabled(false);
-            vtnPrin.getMnCtCurso().setEnabled(false);
+            //Cursos para los listados
+            vtnPrin.getMnCtCurso().setEnabled(true);
+
             vtnPrin.getMnCtPrdLectivo().setEnabled(false);
             vtnPrin.getMnCtMateria().setEnabled(false);
             vtnPrin.getMnCtInscripcion().setEnabled(false);
@@ -1060,7 +1066,9 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
             vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
             vtnPrin.getMnCtMatricula().setEnabled(false);
-            vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+            //Listado de alumnos 
+            vtnPrin.getMnCtListaAlumnos().setEnabled(true);
+
             vtnPrin.getMnCtMallaAlumno().setEnabled(false);
             vtnPrin.getMnCtDocenteMateria().setEnabled(true);
             vtnPrin.getMnCtMateria().setEnabled(true);

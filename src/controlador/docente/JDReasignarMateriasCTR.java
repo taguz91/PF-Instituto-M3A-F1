@@ -104,7 +104,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
                 int curso_New = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), this.periodo, d.getIdDocente(), curso).getId();
                 if(dc.reasignarAlumnoCurso(cursoMD.getId(), curso_New)){
                     if(dc.reasignarNotas(cursoMD.getId(), curso_New)){
-                        JOptionPane.showMessageDialog(null, "Se reasignó con éxito as materias y notas al docente seleccionado");
+                        JOptionPane.showMessageDialog(null, "Se reasignó con éxito las materias y notas al docente seleccionado");
                         frmReasignarMateria.dispose();
                     } else{
                         JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  

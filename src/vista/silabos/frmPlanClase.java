@@ -37,459 +37,231 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
        
     }
 
-    public JComboBox<String> getCmbxEstrategiasPC() {
-        return CmbxEstrategiasPC;
-    }
-
-    public void setCmbxEstrategiasPC(JComboBox<String> CmbxEstrategiasPC) {
-        this.CmbxEstrategiasPC = CmbxEstrategiasPC;
-    }
-
     public JButton getBtmnGuardarPc() {
         return btmnGuardarPc;
-    }
-
-    public void setBtmnGuardarPc(JButton btmnGuardarPc) {
-        this.btmnGuardarPc = btmnGuardarPc;
     }
 
     public JButton getBtnAgregarPC() {
         return btnAgregarPC;
     }
 
-    public void setBtnAgregarPC(JButton btnAgregarPC) {
-        this.btnAgregarPC = btnAgregarPC;
-    }
-
     public JButton getBtnCancelarPC() {
         return btnCancelarPC;
-    }
-
-    public void setBtnCancelarPC(JButton btnCancelarPC) {
-        this.btnCancelarPC = btnCancelarPC;
     }
 
     public JButton getBtnQuitarPC() {
         return btnQuitarPC;
     }
 
-    public void setBtnQuitarPC(JButton btnQuitarPC) {
-        this.btnQuitarPC = btnQuitarPC;
-    }
-
     public JDateChooser getjDateChooserFechaFinPC() {
         return jDateChooserFechaFinPC;
-    }
-
-    public void setjDateChooserFechaFinPC(JDateChooser jDateChooserFechaFinPC) {
-        this.jDateChooserFechaFinPC = jDateChooserFechaFinPC;
     }
 
     public JDateChooser getjDateChooserFechaInicioPC() {
         return jDateChooserFechaInicioPC;
     }
 
-    public void setjDateChooserFechaInicioPC(JDateChooser jDateChooserFechaInicioPC) {
-        this.jDateChooserFechaInicioPC = jDateChooserFechaInicioPC;
-    }
-
     public JScrollPane getjScrollPane1() {
         return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
     }
 
     public JScrollPane getjScrollPane10() {
         return jScrollPane10;
     }
 
-    public void setjScrollPane10(JScrollPane jScrollPane10) {
-        this.jScrollPane10 = jScrollPane10;
-    }
-
     public JScrollPane getjScrollPane11() {
         return jScrollPane11;
-    }
-
-    public void setjScrollPane11(JScrollPane jScrollPane11) {
-        this.jScrollPane11 = jScrollPane11;
     }
 
     public JScrollPane getjScrollPane2() {
         return jScrollPane2;
     }
 
-    public void setjScrollPane2(JScrollPane jScrollPane2) {
-        this.jScrollPane2 = jScrollPane2;
-    }
-
     public JScrollPane getjScrollPane3() {
         return jScrollPane3;
-    }
-
-    public void setjScrollPane3(JScrollPane jScrollPane3) {
-        this.jScrollPane3 = jScrollPane3;
     }
 
     public JScrollPane getjScrollPane4() {
         return jScrollPane4;
     }
 
-    
-    
-    public void setjScrollPane4(JScrollPane jScrollPane4) {
-        this.jScrollPane4 = jScrollPane4;
-    }
-
     public JScrollPane getjScrollPane5() {
         return jScrollPane5;
-    }
-
-    public void setjScrollPane5(JScrollPane jScrollPane5) {
-        this.jScrollPane5 = jScrollPane5;
     }
 
     public JScrollPane getjScrollPane7() {
         return jScrollPane7;
     }
 
-    public void setjScrollPane7(JScrollPane jScrollPane7) {
-        this.jScrollPane7 = jScrollPane7;
-    }
-
     public JScrollPane getjScrollPane8() {
         return jScrollPane8;
-    }
-
-    public void setjScrollPane8(JScrollPane jScrollPane8) {
-        this.jScrollPane8 = jScrollPane8;
     }
 
     public JScrollPane getjScrollPane9() {
         return jScrollPane9;
     }
 
-    public void setjScrollPane9(JScrollPane jScrollPane9) {
-        this.jScrollPane9 = jScrollPane9;
-    }
-
-    
-
     public JList getJlisRecursos() {
         return jlisRecursos;
-    }
-
-    public void setJlisRecursos(JList<String> jlisRecursos) {
-        this.jlisRecursos = jlisRecursos;
     }
 
     public JList<String> getJlistInstrumentoEvaluacion() {
         return jlistInstrumentoEvaluacion;
     }
 
-    public void setJlistInstrumentoEvaluacion(JList<String> jlistInstrumentoEvaluacion) {
-        this.jlistInstrumentoEvaluacion = jlistInstrumentoEvaluacion;
-    }
-
-
-
     public JLabel getLbAsignatura() {
         return lbAsignatura;
-    }
-
-    public void setLbAsignatura(JLabel lbAsignatura) {
-        this.lbAsignatura = lbAsignatura;
     }
 
     public JLabel getLbCarrera() {
         return lbCarrera;
     }
 
-    public void setLbCarrera(JLabel lbCarrera) {
-        this.lbCarrera = lbCarrera;
-    }
-
     public JLabel getLbCicloparalelo() {
         return lbCicloparalelo;
-    }
-
-    public void setLbCicloparalelo(JLabel lbCicloparalelo) {
-        this.lbCicloparalelo = lbCicloparalelo;
     }
 
     public JLabel getLbCod_Asignatura() {
         return lbCod_Asignatura;
     }
 
-    public void setLbCod_Asignatura(JLabel lbCod_Asignatura) {
-        this.lbCod_Asignatura = lbCod_Asignatura;
-    }
-
     public JLabel getLbContenidosPC() {
         return lbContenidosPC;
-    }
-
-    public void setLbContenidosPC(JLabel lbContenidosPC) {
-        this.lbContenidosPC = lbContenidosPC;
     }
 
     public JLabel getLbDocente() {
         return lbDocente;
     }
 
-    public void setLbDocente(JLabel lbDocente) {
-        this.lbDocente = lbDocente;
-    }
-
     public JLabel getLbDuracion() {
         return lbDuracion;
-    }
-
-    public void setLbDuracion(JLabel lbDuracion) {
-        this.lbDuracion = lbDuracion;
     }
 
     public JLabel getLbEstrategiasPC() {
         return lbEstrategiasPC;
     }
 
-    public void setLbEstrategiasPC(JLabel lbEstrategiasPC) {
-        this.lbEstrategiasPC = lbEstrategiasPC;
-    }
-
     public JLabel getLbFechaInicioPC() {
         return lbFechaInicioPC;
-    }
-
-    public void setLbFechaInicioPC(JLabel lbFechaInicioPC) {
-        this.lbFechaInicioPC = lbFechaInicioPC;
     }
 
     public JLabel getLbFechafinPC() {
         return lbFechafinPC;
     }
 
-    public void setLbFechafinPC(JLabel lbFechafinPC) {
-        this.lbFechafinPC = lbFechafinPC;
-    }
-
     public JLabel getLbIns_Evaluacion() {
         return lbIns_Evaluacion;
-    }
-
-    public void setLbIns_Evaluacion(JLabel lbIns_Evaluacion) {
-        this.lbIns_Evaluacion = lbIns_Evaluacion;
     }
 
     public JLabel getLbNumeroPlandeClase() {
         return lbNumeroPlandeClase;
     }
 
-    public void setLbNumeroPlandeClase(JLabel lbNumeroPlandeClase) {
-        this.lbNumeroPlandeClase = lbNumeroPlandeClase;
-    }
-
     public JLabel getLbObjetivoPC() {
         return lbObjetivoPC;
-    }
-
-    public void setLbObjetivoPC(JLabel lbObjetivoPC) {
-        this.lbObjetivoPC = lbObjetivoPC;
     }
 
     public JLabel getLbObservacionesPC() {
         return lbObservacionesPC;
     }
 
-    public void setLbObservacionesPC(JLabel lbObservacionesPC) {
-        this.lbObservacionesPC = lbObservacionesPC;
-    }
-
     public JLabel getLbPlandeClase() {
         return lbPlandeClase;
-    }
-
-    public void setLbPlandeClase(JLabel lbPlandeClase) {
-        this.lbPlandeClase = lbPlandeClase;
     }
 
     public JLabel getLbRecursosPC() {
         return lbRecursosPC;
     }
 
-    public void setLbRecursosPC(JLabel lbRecursosPC) {
-        this.lbRecursosPC = lbRecursosPC;
-    }
-
     public JLabel getLbResultadosAprendizaje() {
         return lbResultadosAprendizaje;
-    }
-
-    public void setLbResultadosAprendizaje(JLabel lbResultadosAprendizaje) {
-        this.lbResultadosAprendizaje = lbResultadosAprendizaje;
     }
 
     public JLabel getLbTituloUnidad() {
         return lbTituloUnidad;
     }
 
-    public void setLbTituloUnidad(JLabel lbTituloUnidad) {
-        this.lbTituloUnidad = lbTituloUnidad;
-    }
-
     public JLabel getLbTrabajoAutonomo() {
         return lbTrabajoAutonomo;
-    }
-
-    public void setLbTrabajoAutonomo(JLabel lbTrabajoAutonomo) {
-        this.lbTrabajoAutonomo = lbTrabajoAutonomo;
     }
 
     public JLabel getLbUnidad() {
         return lbUnidad;
     }
 
-    public void setLbUnidad(JLabel lbUnidad) {
-        this.lbUnidad = lbUnidad;
-    }
-
     public JList<String> getListAnticipacionPC() {
         return listAnticipacionPC;
-    }
-
-    public void setListAnticipacionPC(JList<String> listAnticipacionPC) {
-        this.listAnticipacionPC = listAnticipacionPC;
     }
 
     public JList<String> getListConsolidacionPC() {
         return listConsolidacionPC;
     }
 
-    public void setListConsolidacionPC(JList<String> listConsolidacionPC) {
-        this.listConsolidacionPC = listConsolidacionPC;
-    }
-
     public JList<String> getListConstruccionPC() {
         return listConstruccionPC;
-    }
-
-    public void setListConstruccionPC(JList<String> listConstruccionPC) {
-        this.listConstruccionPC = listConstruccionPC;
     }
 
     public JTabbedPane getTbpEstrategiasPC() {
         return tbpEstrategiasPC;
     }
 
-    public void setTbpEstrategiasPC(JTabbedPane tbpEstrategiasPC) {
-        this.tbpEstrategiasPC = tbpEstrategiasPC;
-    }
-
     public JTextArea getTxrContenidosPC() {
         return txrContenidosPC;
-    }
-
-    public void setTxrContenidosPC(JTextArea txrContenidosPC) {
-        this.txrContenidosPC = txrContenidosPC;
     }
 
     public JTextArea getTxrObjetivoPC() {
         return txrObjetivoPC;
     }
 
-    public void setTxrObjetivoPC(JTextArea txrObjetivoPC) {
-        this.txrObjetivoPC = txrObjetivoPC;
-    }
-
     public JTextArea getTxrObservacionesPc() {
         return txrObservacionesPc;
-    }
-
-    public void setTxrObservacionesPc(JTextArea txrObservacionesPc) {
-        this.txrObservacionesPc = txrObservacionesPc;
     }
 
     public JTextArea getTxrResultadosAprendizaje() {
         return txrResultadosAprendizaje;
     }
 
-    public void setTxrResultadosAprendizaje(JTextArea txrResultadosAprendizaje) {
-        this.txrResultadosAprendizaje = txrResultadosAprendizaje;
-    }
-
     public JTextArea getTxrTrabajoAutonomo() {
         return txrTrabajoAutonomo;
-    }
-
-    public void setTxrTrabajoAutonomo(JTextArea txrTrabajoAutonomo) {
-        this.txrTrabajoAutonomo = txrTrabajoAutonomo;
     }
 
     public JTextField getTxtAsignatura() {
         return txtAsignatura;
     }
 
-    public void setTxtAsignatura(JTextField txtAsignatura) {
-        this.txtAsignatura = txtAsignatura;
-    }
-
     public JTextField getTxtCarrera() {
         return txtCarrera;
-    }
-
-    public void setTxtCarrera(JTextField txtCarrera) {
-        this.txtCarrera = txtCarrera;
     }
 
     public JTextField getTxtCicloParalelo() {
         return txtCicloParalelo;
     }
 
-    public void setTxtCicloParalelo(JTextField txtCicloParalelo) {
-        this.txtCicloParalelo = txtCicloParalelo;
-    }
-
     public JTextField getTxtCod_Asignatura() {
         return txtCod_Asignatura;
-    }
-
-    public void setTxtCod_Asignatura(JTextField txtCod_Asignatura) {
-        this.txtCod_Asignatura = txtCod_Asignatura;
     }
 
     public JTextField getTxtDocente() {
         return txtDocente;
     }
 
-    public void setTxtDocente(JTextField txtDocente) {
-        this.txtDocente = txtDocente;
-    }
-
     public JTextField getTxtDuracion() {
         return txtDuracion;
-    }
-
-    public void setTxtDuracion(JTextField txtDuracion) {
-        this.txtDuracion = txtDuracion;
     }
 
     public JTextField getTxtTituloUnidad() {
         return txtTituloUnidad;
     }
 
-    public void setTxtTituloUnidad(JTextField txtTituloUnidad) {
-        this.txtTituloUnidad = txtTituloUnidad;
-    }
-
     public JTextField getTxtUnidad() {
         return txtUnidad;
     }
 
-    public void setTxtUnidad(JTextField txtUnidad) {
-        this.txtUnidad = txtUnidad;
+    public JTextField getTxt_estrategias() {
+        return txt_estrategias;
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -547,15 +319,15 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         txrResultadosAprendizaje = new javax.swing.JTextArea();
         lbResultadosAprendizaje = new javax.swing.JLabel();
         tbpEstrategiasPC = new javax.swing.JTabbedPane();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        listAnticipacionPC = new javax.swing.JList<>();
         jScrollPane11 = new javax.swing.JScrollPane();
-        listConstruccionPC = new javax.swing.JList<>();
+        listAnticipacionPC = new javax.swing.JList<>();
         jScrollPane9 = new javax.swing.JScrollPane();
+        listConstruccionPC = new javax.swing.JList<>();
+        jScrollPane10 = new javax.swing.JScrollPane();
         listConsolidacionPC = new javax.swing.JList<>();
-        CmbxEstrategiasPC = new javax.swing.JComboBox<>();
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
+        txt_estrategias = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -643,7 +415,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbRecursosPC.setText("Recursos:");
 
-        lbIns_Evaluacion.setText("Instrumento de Evaluación:");
+        lbIns_Evaluacion.setText("Estrategias Unidad:");
 
         lbFechafinPC.setText("Fecha de fin:");
 
@@ -689,23 +461,27 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
 
         lbResultadosAprendizaje.setText("Resultados de Aprendizaje:");
 
-        jScrollPane10.setViewportView(listAnticipacionPC);
+        jScrollPane11.setViewportView(listAnticipacionPC);
 
-        tbpEstrategiasPC.addTab("Anticipación", jScrollPane10);
+        tbpEstrategiasPC.addTab("Anticipacion", jScrollPane11);
 
-        jScrollPane11.setViewportView(listConstruccionPC);
+        jScrollPane9.setViewportView(listConstruccionPC);
 
-        tbpEstrategiasPC.addTab("Construcción", jScrollPane11);
+        tbpEstrategiasPC.addTab("Construccion", jScrollPane9);
 
-        jScrollPane9.setViewportView(listConsolidacionPC);
+        jScrollPane10.setViewportView(listConsolidacionPC);
 
-        tbpEstrategiasPC.addTab("Consolidación", jScrollPane9);
-
-        CmbxEstrategiasPC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tbpEstrategiasPC.addTab("Consolidacion", jScrollPane10);
 
         btnAgregarPC.setText("Agregar");
 
         btnQuitarPC.setText("Quitar");
+
+        txt_estrategias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_estrategiasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -718,51 +494,55 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbObjetivoPC)
                             .addComponent(lbRecursosPC)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
+                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbResultadosAprendizaje)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jScrollPane8)
+                                    .addGap(19, 19, 19))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbTrabajoAutonomo)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane2))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbResultadosAprendizaje)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane8))
-                                        .addGap(19, 19, 19))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbTrabajoAutonomo)
-                                            .addComponent(lbIns_Evaluacion))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)))
+                                .addComponent(lbObservacionesPC, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(346, 346, 346)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5)
-                            .addComponent(jScrollPane7)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-                                    .addComponent(lbObservacionesPC, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbContenidosPC, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CmbxEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbContenidosPC)
+                                            .addComponent(lbEstrategiasPC))
+                                        .addGap(0, 352, Short.MAX_VALUE))
+                                    .addComponent(txt_estrategias))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAgregarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnQuitarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 5, Short.MAX_VALUE))))
+                                .addGap(5, 5, 5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbIns_Evaluacion)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbCarrera)
                             .addComponent(lbDocente))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCarrera)
+                            .addComponent(txtCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                             .addComponent(txtDocente))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -872,43 +652,42 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbEstrategiasPC)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(CmbxEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnAgregarPC))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnQuitarPC)
-                                    .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbObservacionesPC)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnCancelarPC)
-                                    .addComponent(btmnGuardarPc)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lbRecursosPC)
                                     .addComponent(lbTrabajoAutonomo))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbEstrategiasPC)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lbObservacionesPC)
+                                        .addGap(7, 7, 7)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnAgregarPC)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txt_estrategias, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                                                .addGap(3, 3, 3)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnQuitarPC)
+                                            .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
                                         .addComponent(lbIns_Evaluacion)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelarPC)
+                            .addComponent(btmnGuardarPc)))
+                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -942,8 +721,11 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarPCActionPerformed
 
+    private void txt_estrategiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_estrategiasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_estrategiasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbxEstrategiasPC;
     private javax.swing.JButton btmnGuardarPc;
     private javax.swing.JButton btnAgregarPC;
     private javax.swing.JButton btnCancelarPC;
@@ -999,6 +781,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDuracion;
     private javax.swing.JTextField txtTituloUnidad;
     private javax.swing.JTextField txtUnidad;
+    private javax.swing.JTextField txt_estrategias;
     // End of variables declaration//GEN-END:variables
  public static class CheckListItem {
 

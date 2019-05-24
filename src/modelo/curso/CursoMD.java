@@ -22,6 +22,8 @@ public class CursoMD {
     private String paralelo; 
     private int numMatriculados;
     private boolean activo;
+    //Solo para matriculas 
+    private int numMatricula; 
 
     public CursoMD() {
     }
@@ -117,5 +119,23 @@ public class CursoMD {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+    
+    /**
+     * Esto unicamente se usa en matriculas
+     * @param numMatricula
+     */
+    public void setNumMatricula(int numMatricula){
+        this.numMatricula = numMatricula;
+    }
+    
+    /**
+     * Solo se usa en numero de matriculas
+     * @return 
+     */
+    public int getNumMatricula() {
+        return numMatricula;
+    }
+    
+    
 
 }
