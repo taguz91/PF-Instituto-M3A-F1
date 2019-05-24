@@ -4,18 +4,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class VtnAccesos extends javax.swing.JInternalFrame {
+public class VtnAccesos extends AbstracView {
 
     public VtnAccesos() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -149,7 +149,7 @@ public class VtnAccesos extends javax.swing.JInternalFrame {
     public void setLblResultados(JLabel lblResultados) {
         this.lblResultados = lblResultados;
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetalles;
