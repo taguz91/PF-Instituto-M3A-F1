@@ -7,7 +7,7 @@ package controlador.accesos;
 
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
-import groovy.model.DefaultTableModel;
+import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.usuario.RolBD;
 import vista.accesos.FrmAccesosDeRol;
@@ -39,7 +39,9 @@ public abstract class AbstracForm {
 
         Effects.addInDesktopPane(vista, desktop.getVtnPrin().getDpnlPrincipal());
         tabla = (DefaultTableModel) vista.getTabPermDados().getModel();
-        //tabla.get
+        
+        
+        
     }
 
 }

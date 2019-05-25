@@ -213,6 +213,10 @@ public class ConnDBPool {
     public PreparedStatement getStmt() {
         return stmt;
     }
+
+    public ResultSet getRs() {
+        return rs;
+    }
     // </editor-fold>  
 
     public void closePool() {
