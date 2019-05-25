@@ -108,7 +108,7 @@ WHERE
 	<title>
 		<band height="120" splitType="Stretch">
 			<staticText>
-				<reportElement x="468" y="44" width="51" height="20" uuid="8c748da2-cae7-46de-af2c-94d463f2df0d"/>
+				<reportElement x="492" y="44" width="51" height="20" uuid="8c748da2-cae7-46de-af2c-94d463f2df0d"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -150,7 +150,7 @@ WHERE
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="468" y="64" width="61" height="20" uuid="09e059a2-c855-448c-9f9a-0905bd2f5cb4"/>
+				<reportElement x="492" y="64" width="61" height="20" uuid="09e059a2-c855-448c-9f9a-0905bd2f5cb4"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -164,7 +164,7 @@ WHERE
 				<reportElement x="0" y="115" width="842" height="1" uuid="1752708a-d05a-48ca-8ff3-92600e8e010a"/>
 			</line>
 			<textField>
-				<reportElement x="529" y="64" width="302" height="20" uuid="09695116-2a3f-41f2-99bb-e9b411693efa"/>
+				<reportElement x="553" y="64" width="283" height="20" uuid="09695116-2a3f-41f2-99bb-e9b411693efa"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
@@ -174,17 +174,17 @@ WHERE
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="183" y="64" width="273" height="20" uuid="690d9af5-257c-449f-8973-6b8e629b0de2"/>
+				<reportElement x="183" y="64" width="299" height="20" uuid="690d9af5-257c-449f-8973-6b8e629b0de2"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="44" width="239" height="20" uuid="98b9daf0-6ad9-456a-bf22-453829b84bc0"/>
+				<reportElement x="217" y="44" width="265" height="20" uuid="98b9daf0-6ad9-456a-bf22-453829b84bc0"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="519" y="44" width="312" height="20" uuid="11c39fce-0857-4b20-978e-3cbfa20c540d"/>
+				<reportElement x="543" y="44" width="293" height="20" uuid="11c39fce-0857-4b20-978e-3cbfa20c540d"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
