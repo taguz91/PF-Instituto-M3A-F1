@@ -146,6 +146,8 @@ public class ReferenciasCRUDCTR {
                ControladorEditar editar=new ControladorEditar(vista,modelo,vtnPrin,codigo,conexion);
                editar.inicia_vista();
                 editar.init();
+                }else{
+                    JOptionPane.showMessageDialog(null, "SELECCIONE LA REFERENCIA A EDITAR");
                 }
             
         }
