@@ -2,6 +2,7 @@ package controlador.accesos;
 
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
+import java.util.List;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
@@ -14,7 +15,7 @@ public class VtnAccesosCTR {
     private final AccesosBD modelo;
 
     private DefaultTableModel tabla;
-    private Map<String, AccesosBD> listaAccesos;
+    private List<AccesosBD> listaAccesos;
 
     public VtnAccesosCTR(VtnPrincipalCTR desktop) {
         this.desktop = desktop;
@@ -22,7 +23,7 @@ public class VtnAccesosCTR {
         this.modelo = new AccesosBD();
     }
 
-    public void setListaAccesos(Map<String, AccesosBD> listaAccesos) {
+    public void setListaAccesos(List<AccesosBD> listaAccesos) {
         this.listaAccesos = listaAccesos;
     }
 
@@ -40,7 +41,7 @@ public class VtnAccesosCTR {
     //Meotodos de Apoyo
     protected void cargarTabla() {
 
-        listaAccesos.entrySet().stream().map(c -> c.getValue()).forEach(obj -> {
+        listaAccesos.stream().forEach(obj -> {
             tabla.addRow(new Object[]{
                 tabla.getDataVector().size() + 1,
                 obj.getIdAccesos(),

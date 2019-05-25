@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,48 +37,38 @@ public class AccesosBD extends AccesosMD {
     public AccesosBD() {
     }
 
-    public boolean insertar() {
+    public List<AccesosBD> SelectAll() {
 
-        String INSERT = "INSERT INTO \"Accesos\" "
-                + " VALUES(?,?,?)";
+        String SELECT = "SELECT\n"
+                + "	\"public\".\"Accesos\".id_acceso,\n"
+                + "	\"public\".\"Accesos\".acc_nombre,\n"
+                + "	\"public\".\"Accesos\".acc_descripcion \n"
+                + "FROM\n"
+                + "	\"public\".\"Accesos\"";
 
-        Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, getIdAccesos());
-        parametros.put(2, getNombre());
-        parametros.put(3, getDescripcion());
-        conn = pool.getConnection();
-        return pool.ejecutar(INSERT, conn, parametros) == null;
-    }
-
-    public Map<String, AccesosBD> SelectAll() {
-
-        String SELECT = "SELECT id_acceso, acc_nombre FROM \"Accesos\" ";
-
-        return SelectSimple(SELECT);
-
-    }
-
-    private Map<String, AccesosBD> SelectSimple(String QUERY) {
-        Map<String, AccesosBD> map = new HashMap<>();
+        List<AccesosBD> lista = new ArrayList<>();
 
         conn = pool.getConnection();
-        rs = pool.ejecutarQuery(QUERY, conn, null);
+
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
                 AccesosBD acceso = new AccesosBD();
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
-                map.put(acceso.getNombre(), acceso);
+                acceso.setDescripcion(rs.getString("acc_descripcion"));
+                lista.add(acceso);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         } finally {
             pool.closeStmt().close(rs).close(conn);
         }
 
-        return map;
+        return lista;
+
     }
 
     public boolean editar(String pk) {

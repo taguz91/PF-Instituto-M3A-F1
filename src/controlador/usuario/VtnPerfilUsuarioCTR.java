@@ -1,7 +1,7 @@
 package controlador.usuario;
 
 import controlador.Libraries.Effects;
-import controlador.accesos.FrmAccesosDeRolCTR;
+import controlador.accesos.FrmAccesosAddCTR;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
@@ -40,7 +40,7 @@ public class VtnPerfilUsuarioCTR {
         try {
             vista.setSelected(true);
         } catch (PropertyVetoException e) {
-            Logger.getLogger(FrmAccesosDeRolCTR.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(FrmAccesosAddCTR.class.getName()).log(Level.SEVERE, null, e);
         }
 
         vista.getLblUsername().setText(modelo.getUsername());

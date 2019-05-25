@@ -98,8 +98,7 @@ public class ConnDBPool {
             close(conn);
             return e;
         } finally {
-            close(conn);
-            closeStmt();
+            closeStmt().close(conn);
         }
     }
 

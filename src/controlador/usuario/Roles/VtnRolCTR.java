@@ -2,7 +2,7 @@ package controlador.usuario.Roles;
 
 import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmRolAdd;
-import controlador.accesos.FrmAccesosDeRolCTR;
+import controlador.accesos.FrmAccesosAddCTR;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
