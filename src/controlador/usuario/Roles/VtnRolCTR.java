@@ -88,7 +88,7 @@ public class VtnRolCTR {
         if (cargarTabla) {
             new Thread(() -> {
 
-                tabla.setRowCount(0);
+                //tabla.setRowCount(0);
 
                 vista.getTxtBuscar().setEnabled(false);
 
@@ -117,7 +117,7 @@ public class VtnRolCTR {
     }
 
     private static void agregarFila(RolMD obj) {
-
+        
         tabla.addRow(new Object[]{
             tabla.getDataVector().size() + 1,
             obj.getId(),
@@ -206,10 +206,6 @@ public class VtnRolCTR {
 
         }
 
-    }
-
-    private void btnCancelarActionPerformance(ActionEvent e) {
-        vista.dispose();
     }
 
     private void btnVerPermisosActionPerformance(ActionEvent e) {

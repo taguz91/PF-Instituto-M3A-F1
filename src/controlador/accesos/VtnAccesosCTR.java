@@ -11,7 +11,7 @@ public class VtnAccesosCTR {
 
     private final VtnPrincipalCTR desktop;
     private final VtnAccesos vista;
-    private AccesosBD modelo;
+    private final AccesosBD modelo;
 
     private DefaultTableModel tabla;
     private List<AccesosBD> listaAccesos;
@@ -50,6 +50,4 @@ public class VtnAccesosCTR {
         vista.getLblResultados().setText((tabla.getDataVector().size() + 1) + "Resultados");
 
     }
-
-    //Eventos
 }
