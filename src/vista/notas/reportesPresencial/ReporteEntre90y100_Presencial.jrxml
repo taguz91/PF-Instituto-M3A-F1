@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53d62d52-505e-42a2-9bde-46dbba0fea6d">
-	<property name="ireport.zoom" value="1.0000000000000029"/>
+	<property name="ireport.zoom" value="1.1000000000000039"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
@@ -109,7 +109,7 @@ WHERE
 	<title>
 		<band height="119" splitType="Stretch">
 			<staticText>
-				<reportElement x="455" y="45" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
+				<reportElement x="479" y="45" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -123,7 +123,7 @@ WHERE
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="64" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
+				<reportElement x="479" y="64" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -161,12 +161,12 @@ WHERE
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="207" y="45" width="230" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
+				<reportElement x="207" y="45" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="177" y="64" width="260" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
+				<reportElement x="177" y="64" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
@@ -176,12 +176,12 @@ WHERE
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="513" y="45" width="309" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
+				<reportElement x="537" y="45" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="513" y="65" width="309" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
+				<reportElement x="537" y="65" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
@@ -385,10 +385,10 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="8" splitType="Stretch"/>
+		<band height="9" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="19" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="164" splitType="Stretch">

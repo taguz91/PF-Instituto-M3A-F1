@@ -109,7 +109,7 @@ WHERE
 	<title>
 		<band height="124" splitType="Stretch">
 			<staticText>
-				<reportElement x="453" y="46" width="49" height="20" uuid="462800a9-9e9e-4432-814e-4148d910267d"/>
+				<reportElement x="489" y="46" width="49" height="20" uuid="462800a9-9e9e-4432-814e-4148d910267d"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -123,7 +123,7 @@ WHERE
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="453" y="66" width="59" height="20" uuid="3096d72d-f251-4418-915d-fd135edfa6b1"/>
+				<reportElement x="489" y="66" width="59" height="20" uuid="3096d72d-f251-4418-915d-fd135edfa6b1"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -161,17 +161,17 @@ WHERE
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="214" y="46" width="239" height="20" uuid="0e42536b-795c-4c6d-a0b2-bd11e0fcfc3f"/>
+				<reportElement x="214" y="46" width="264" height="20" uuid="0e42536b-795c-4c6d-a0b2-bd11e0fcfc3f"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="502" y="46" width="324" height="20" uuid="125e77b4-cd54-4d71-b19b-169ac9a1c2de"/>
+				<reportElement x="538" y="46" width="288" height="20" uuid="125e77b4-cd54-4d71-b19b-169ac9a1c2de"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="175" y="66" width="278" height="20" uuid="c13d3f58-7d68-4ba2-a67a-24e02238ffac"/>
+				<reportElement x="175" y="66" width="303" height="20" uuid="c13d3f58-7d68-4ba2-a67a-24e02238ffac"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
@@ -181,7 +181,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="512" y="66" width="314" height="20" uuid="57b84bce-02f6-4c46-8be7-fbca8d6f73ce"/>
+				<reportElement x="548" y="66" width="278" height="20" uuid="57b84bce-02f6-4c46-8be7-fbca8d6f73ce"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
@@ -385,10 +385,10 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="7" splitType="Stretch"/>
+		<band height="9" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="24" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="172" splitType="Stretch">

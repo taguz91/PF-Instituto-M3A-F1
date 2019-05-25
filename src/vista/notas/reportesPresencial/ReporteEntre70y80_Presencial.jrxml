@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5ec8862-7f8a-4c30-81fa-eb6e01040058">
-	<property name="ireport.zoom" value="1.0245201830476105"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.99650000000001"/>
+	<property name="ireport.x" value="111"/>
+	<property name="ireport.y" value="46"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -116,7 +116,7 @@ WHERE
 	<title>
 		<band height="120" splitType="Stretch">
 			<staticText>
-				<reportElement x="484" y="44" width="48" height="20" uuid="46f7b04d-75cc-4dd2-9229-d10b6df4cf33"/>
+				<reportElement x="514" y="44" width="48" height="20" uuid="46f7b04d-75cc-4dd2-9229-d10b6df4cf33"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -158,7 +158,7 @@ WHERE
 				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 70 Y 80]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="484" y="64" width="59" height="20" uuid="a37e66da-fc54-4a64-9781-a218a87cd6dc"/>
+				<reportElement x="514" y="64" width="58" height="20" uuid="a37e66da-fc54-4a64-9781-a218a87cd6dc"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
@@ -177,22 +177,22 @@ WHERE
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="543" y="64" width="287" height="20" uuid="b7f0245c-7cd4-49e2-a91b-d658feb632ad"/>
+				<reportElement x="573" y="64" width="259" height="20" uuid="b7f0245c-7cd4-49e2-a91b-d658feb632ad"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="64" width="279" height="20" uuid="fce14c0c-1536-4778-8d4d-c7bda89943d1"/>
+				<reportElement x="190" y="64" width="303" height="20" uuid="fce14c0c-1536-4778-8d4d-c7bda89943d1"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="532" y="44" width="298" height="20" uuid="cff45805-7fe4-4a5f-9281-fcb0e59c67aa"/>
+				<reportElement x="562" y="44" width="270" height="20" uuid="cff45805-7fe4-4a5f-9281-fcb0e59c67aa"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="44" width="252" height="20" uuid="dc81ffa6-cef9-44e3-8d35-b7739ad1c392"/>
+				<reportElement x="217" y="44" width="276" height="20" uuid="dc81ffa6-cef9-44e3-8d35-b7739ad1c392"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
@@ -392,7 +392,7 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="10" splitType="Stretch"/>
+		<band height="7" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="4" splitType="Stretch"/>
