@@ -353,6 +353,9 @@ public class SesionClaseBD extends SesionClaseMD {
                     s.setDia(rst.getInt("dia_sesion"));
                     s.setNumeroDias(rst.getInt(1));
                     diasClase.add(s);
+                     System.out.println("%%%%%%%%%%%%%");
+                    System.out.println(rst.getInt(1));
+                     System.out.println("%%%%%%%%%%%%%");
                 }
               
                 return diasClase;
