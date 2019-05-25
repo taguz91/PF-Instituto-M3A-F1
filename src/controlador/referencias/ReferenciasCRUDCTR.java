@@ -18,6 +18,7 @@ import vista.principal.VtnPrincipal;
 
 import vista.silabos.frmBibliografia;
 import vista.silabos.frmCRUDBibliografia;
+import vista.silabos.frmEditarBiblioteca;
 
 
 
@@ -65,6 +66,7 @@ public class ReferenciasCRUDCTR {
 
         };
                 frmCRUDBibliografiaC.getTxtBuscarCB().addKeyListener(kl);
+                frmCRUDBibliografiaC.getBtnEditarCB().addActionListener(e->editar());
             
     }
         public void cargartabla(){
@@ -120,6 +122,31 @@ public class ReferenciasCRUDCTR {
             }
            
             
+            
+        }
+        public void editar(){
+               /*frmEditarBiblioteca vista= new  frmEditarBiblioteca();
+               ReferenciaBD modelo =new ReferenciaBD()  ;
+                int select=frmCRUDBibliografiaC.getTblTablaCB().getSelectedRow();
+                if(select>=0){
+                String codigo=frmCRUDBibliografiaC.getTblTablaCB().getValueAt(select, 0).toString();
+                
+              
+               ControladorEditar editar=new ControladorEditar(vista,modelo,vtnPrin,codigo,conexion);
+               editar.inicia_vista();
+                editar.init();
+                }*/
+               frmBibliografia vista= new  frmBibliografia();
+               ReferenciaBD modelo =new ReferenciaBD()  ;
+                int select=frmCRUDBibliografiaC.getTblTablaCB().getSelectedRow();
+                if(select>=0){
+                String codigo=frmCRUDBibliografiaC.getTblTablaCB().getValueAt(select, 0).toString();
+                
+              
+               ControladorEditar editar=new ControladorEditar(vista,modelo,vtnPrin,codigo,conexion);
+               editar.inicia_vista();
+                editar.init();
+                }
             
         }
         public void busqueda(String aguja){
