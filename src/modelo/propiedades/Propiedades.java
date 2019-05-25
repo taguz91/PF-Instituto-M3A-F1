@@ -24,17 +24,14 @@ import java.util.stream.Collectors;
  */
 public class Propiedades {
 
-    private static Properties config;
-    private static String PATH = "configuracion.properties";
-    private static File archivo;
+    private static void setDefault() {
+        Properties config;
+        String PATH = "configuracion.properties";
+        File archivo;
 
-    static {
         config = new Properties();
         PATH = Middlewares.getProjectPath() + PATH;
         archivo = new File(PATH);
-    }
-
-    private static void setDefault() {
 
         config.setProperty("ip", "35.193.226.187");
         config.setProperty("port", "5432");
@@ -49,11 +46,12 @@ public class Propiedades {
 
     public static Map<Object, Object> loadProperties() {
         try {
-            
-            return Files.lines(Paths.get("configuracion.properties"))
+            Map<Object, Object> map = Files.lines(Paths.get("configuracion.properties"))
                     .filter(item -> item.contains("="))
                     .map(c -> c.split("="))
                     .collect(Collectors.toMap(s -> s[0], s -> s[1]));
+
+            return map;
         } catch (NoSuchFileException ex) {
             setDefault();
             return loadProperties();
