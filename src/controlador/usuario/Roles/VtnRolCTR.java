@@ -75,8 +75,8 @@ public class VtnRolCTR {
 
         vista.getBtnActualizar().addActionListener(e -> cargarTabla());
 
-        vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
-        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
+//        vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
+//        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
 
         vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
         vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
@@ -206,42 +206,6 @@ public class VtnRolCTR {
 
         }
 
-    }
-
-    private void btnVerPermisosActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila != -1) {
-            getObjFromRow(fila);
-            FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Consultar");
-            permisosVtn.Init();
-
-        } else {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
-        }
-
-    }
-
-    private void btnEditarPermisosActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila != -1) {
-            getObjFromRow(fila);
-
-            if (modelo.getNombre().equals("ROOT")) {
-                JOptionPane.showMessageDialog(vista, "NO SE PUEDEN EDITAR LOS PERMISOS DEL ROL: " + " 'ROOT'");
-            } else {
-
-                FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Editar");
-                permisosVtn.Init();
-
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
-        }
     }
 
 }

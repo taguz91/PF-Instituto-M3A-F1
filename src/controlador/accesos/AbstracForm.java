@@ -7,6 +7,7 @@ package controlador.accesos;
 
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import modelo.usuario.RolBD;
@@ -25,6 +26,8 @@ public abstract class AbstracForm {
 
     private DefaultTableModel tabla;
 
+    private Map<String, AccesosBD> permisos;
+
     public AbstracForm(VtnPrincipalCTR destop) {
         this.desktop = destop;
         this.vista = new FrmAccesosDeRol();
@@ -35,13 +38,17 @@ public abstract class AbstracForm {
         this.rol = rol;
     }
 
+    //Inits
     public void Init() {
 
         Effects.addInDesktopPane(vista, desktop.getVtnPrin().getDpnlPrincipal());
         tabla = (DefaultTableModel) vista.getTabPermDados().getModel();
-        
-        
-        
+        permisos = modelo.SelectAll();
     }
 
+    //Metodos de apoyo
+    protected void cargarTabla(Map<String, AccesosBD> permisos) {
+
+    }
+    //Eventos
 }
