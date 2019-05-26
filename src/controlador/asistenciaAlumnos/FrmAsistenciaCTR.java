@@ -142,7 +142,7 @@ public class FrmAsistenciaCTR {
             cargarComboSemanas();
             CargarDiasClase();
         });
-
+        vista.getCmbSemana().addActionListener(e -> cargarTabla(tablaTrad, agregarFilasTrad()));
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> {
@@ -248,12 +248,15 @@ public class FrmAsistenciaCTR {
                System.out.println("------> "+ nombreMateria);
                System.out.println("------> "+ getIdPeriodoLectivo());
                System.out.println("------> "+ getIdDocente());
-               listadias = new ArrayList<>();
+               
+                for (int j = 6; j < jTbl.getColumnCount(); j++) {
+                     jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
+                     jTbl.getColumnModel().getColumn(j).setMinWidth(0);
+                }
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
-                SesionClaseMD sesion = listaSesionClase.get(0);
-                listaSesionClase.stream().map(c -> c.getNumeroDias()).forEach(m -> listadias.add(m));
-                listadias.add(sesion.getNumeroDias());
+                SesionClaseMD sesion = listaSesionClase.get(i);
+                dia = sesion.getNumeroDias();
                 
                  switch (dia) {
             case 1:
@@ -299,6 +302,7 @@ public class FrmAsistenciaCTR {
                 break;
 
         }
+                
                  listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
             }
         } catch (Exception e) {

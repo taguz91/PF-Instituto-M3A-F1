@@ -592,6 +592,7 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
+        JOptionPane.showMessageDialog(vtnPrin, "Este servicio estará disponible proximamente");
         FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {

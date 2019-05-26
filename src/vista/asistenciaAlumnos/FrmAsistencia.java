@@ -195,7 +195,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, "0", "0", "0", "0", "0", "0"},
+                {null, null, null, null, null, null, null, "0", "0", "0", "0", "0"}
             },
             new String [] {
                 "Nro.", "Cédula", "P.Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
