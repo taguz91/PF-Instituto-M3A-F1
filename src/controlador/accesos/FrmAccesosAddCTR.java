@@ -2,6 +2,9 @@ package controlador.accesos;
 
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -48,6 +51,16 @@ public class FrmAccesosAddCTR {
     }
 
     private void InitEventos() {
+
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cargarTablaFilter(vista.getTxtBuscar().getText().toLowerCase());
+            }
+        });
+
+        vista.getBtnDarTodos().addActionListener(e -> btnDarTodos(e));
+
         tblPermisos.addTableModelListener(new TableModelListener() {
             boolean active = false;
 
@@ -89,11 +102,11 @@ public class FrmAccesosAddCTR {
         return (item1, item2) -> item1.getAcceso().getNombre().compareTo(item2.getAcceso().getNombre());
     }
 
-    private void cargarTablaFilter() {
+    private void cargarTablaFilter(String text) {
         tblPermisos.setRowCount(0);
         listaPermisos
                 .stream()
-                .filter(item -> item.isActivo() == true)
+                .filter(item -> item.getAcceso().getNombre().toLowerCase().contains(text))
                 .sorted(sorter())
                 .forEach(agregarFilas());
     }
@@ -118,6 +131,23 @@ public class FrmAccesosAddCTR {
                 }
             }
         }).start();
+
+    }
+
+    private void btnDarTodos(ActionEvent e) {
+        if (vista.getBtnDarTodos().getText().equalsIgnoreCase("dar todos")) {
+            listaPermisos.forEach(obj -> {
+                obj.setActivo(true);
+            });
+            cargarTabla();
+            vista.getBtnDarTodos().setText("Quitar Todos");
+        } else {
+            listaPermisos.forEach(obj -> {
+                obj.setActivo(false);
+            });
+            cargarTabla();
+            vista.getBtnDarTodos().setText("Dar Todos");
+        }
 
     }
 }

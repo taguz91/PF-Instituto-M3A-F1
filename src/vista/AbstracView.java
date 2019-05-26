@@ -1,4 +1,5 @@
 package vista;
+
 import modelo.CONS;
 
 /*
@@ -8,11 +9,12 @@ import modelo.CONS;
  */
 /**
  *
- * @author ista
+ * @author Marcelo
  */
 public abstract class AbstracView extends javax.swing.JInternalFrame {
 
     {
         this.setFrameIcon(CONS.getICONO());
     }
+
 }
