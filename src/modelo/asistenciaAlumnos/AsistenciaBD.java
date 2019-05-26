@@ -7,6 +7,8 @@ package modelo.asistenciaAlumnos;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,7 @@ import modelo.alumno.AlumnoCursoMD;
  *
  * @author Yani
  */
-public class asistenciaBD extends asistenciaMD{
+public class AsistenciaBD extends AsistenciaMD{
     
     private ConnDBPool pool;
     private Connection conn;
@@ -28,14 +30,14 @@ public class asistenciaBD extends asistenciaMD{
       pool = new ConnDBPool();
     }
 
-    public asistenciaBD(int id_asistencia, int fecha_asistencia, int numero_faltas, String observaciones, AlumnoCursoMD alumnoCurso) {
-        super(id_asistencia, fecha_asistencia, numero_faltas, observaciones, alumnoCurso);
+    public AsistenciaBD(int id, LocalDate fechaAsistencia, int numeroFaltas, String observaciones, AlumnoCursoMD alumnoCurso) {
+        super(id, fechaAsistencia, numeroFaltas, observaciones, alumnoCurso);
+    }
+    
+    public AsistenciaBD() {
     }
 
-    public asistenciaBD() {
-    }
-
-    public List<asistenciaBD> selectWhere (AlumnoCursoMD alumnoCurso){
+    public List<AsistenciaBD> selectWhere (AlumnoCursoMD alumnoCurso){
         String SELECT = "SELECT\n"
                 + "\"public\".\"Asistencia\".id_asistencia,\n"
                 + "\"public\".\"Asistencia\".fecha_asistencia,\n"
@@ -47,7 +49,7 @@ public class asistenciaBD extends asistenciaMD{
                 + "WHERE\n"
                 + "\"public\".\"Asistencia\".id_almn_curso = ?" ;
         
-        List<asistenciaBD> listaAsistencia = new ArrayList<>();
+        List<AsistenciaBD> listaAsistencia = new ArrayList<>();
         Map<Integer, Object> parametrosAsis = new HashMap<>();
         parametrosAsis.put(1,alumnoCurso.getId());
         
@@ -56,16 +58,16 @@ public class asistenciaBD extends asistenciaMD{
             rs = pool.ejecutarQuery(SELECT, conn, parametrosAsis);
             System.out.println(pool.getStmt().toString());
             while(rs.next()){
-               asistenciaBD asistencia = new asistenciaBD();
-               asistencia.setId_asistencia(rs.getInt("id_asistencia"));
+               AsistenciaBD asistencia = new AsistenciaBD();
+               asistencia.setId(rs.getInt("id_asistencia"));
                // asistencia.setFecha_asistencia(0);
-               asistencia.setNumero_faltas(rs.getInt("numero_faltas"));
+               asistencia.setNumeroFaltas(rs.getInt("numero_faltas"));
                asistencia.setObservaciones(rs.getString("observacion_asistencia"));
                
                
                listaAsistencia.add(asistencia);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }finally {
             pool.closeStmt().close(rs).close(conn);
@@ -76,12 +78,12 @@ public class asistenciaBD extends asistenciaMD{
     
     private boolean ejecutarAsis = false;
     
-    private synchronized boolean editar(){
+    public synchronized boolean editar(){
         new Thread(() -> {
             String UPDATE = "UPDATE \"Asistencia\" \n"
-                    + "SET numero_faltas = " + getNumero_faltas() + " \n"
+                    + "SET numero_faltas = " + getNumeroFaltas()+ " \n"
                     + "WHERE \n"
-                    + "\"public\".\"Asistencia\".id_asistencia = " +getId_asistencia();
+                    + "\"public\".\"Asistencia\".id_asistencia = " +getId();
             System.out.println(UPDATE);
             conn = pool.getConnection();
             ejecutarAsis = pool.ejecutar(UPDATE, conn, null) == null;
