@@ -3,7 +3,6 @@ package controlador.accesos;
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.List;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
 import vista.accesos.VtnAccesos;
@@ -48,7 +47,7 @@ public class VtnAccesosCTR {
                 obj.getNombre()
             });
         });
-        vista.getLblResultados().setText((tabla.getDataVector().size() + 1) + "Resultados");
-
+        vista.getLblResultados().setText((tabla.getDataVector().size() + 1) + " Resultados");
     }
+    
 }

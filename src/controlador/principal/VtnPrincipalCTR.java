@@ -925,7 +925,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtRoles(ActionEvent e) {
-        VtnRolCTR vtn = new VtnRolCTR(vtnPrin);
+        VtnRolCTR vtn = new VtnRolCTR(this);
         vtn.Init();
     }
 
