@@ -54,7 +54,7 @@ public class FrmAsistenciaCTR {
     private static LocalDate FinSemana;
     private static LocalDate fechaInicial = LocalDate.of(2019, Month.MAY, 27);
     private static int semanas;
-    private static ArrayList<String> lista_fecha = new ArrayList<>();
+    private static ArrayList<Integer> listadias = new ArrayList<>();
 
     private static String dia_String;
     private static int dia;
@@ -248,13 +248,58 @@ public class FrmAsistenciaCTR {
                System.out.println("------> "+ nombreMateria);
                System.out.println("------> "+ getIdPeriodoLectivo());
                System.out.println("------> "+ getIdDocente());
-
+               listadias = new ArrayList<>();
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(0);
-                dia = sesion.getNumeroDias();
-                DiaDeLaSemana(dia);
-                System.out.println(" En el for DIA RECIBIDO  " + dia);
+                listaSesionClase.stream().map(c -> c.getNumeroDias()).forEach(m -> listadias.add(m));
+                listadias.add(sesion.getNumeroDias());
+                
+                 switch (dia) {
+            case 1:
+                dia_String = "LUNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                break;
+                
+            case 2:
+                dia_String = "MARTES";
+                System.out.println(dia_String);
+               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
+                break;
+            case 3:
+                dia_String = "MIERCOLES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+                break;
+            case 4:
+                dia_String = "JUEVES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                break;
+            case 5:
+                dia_String = "VIERNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                break;
+            case 6:
+                dia_String = "SABADO";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
+                break;
+            default:
+                dia_String = "Dia no Asignado";
+                System.out.println(dia_String);
+                break;
+
+        }
+                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
             }
         } catch (Exception e) {
                System.out.println("------->  Error Cargar Dias Clase "+e.getMessage());
@@ -263,89 +308,49 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-    public static String DiaDeLaSemana(int diaValue) {
+    /*public static String DiaDeLaSemana(int diaValue) {
         System.out.println("Estamos en dia de la semana");
+        
+        if (diaValue == 1 || diaValue == 2 || diaValue == 3 || diaValue == 4 || diaValue == 5 || diaValue == 6) {
+            
+        }
         switch (diaValue) {
             case 1:
                 dia_String = "LUNES";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(7).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(0);
+                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                break;
+                
             case 2:
                 dia_String = "MARTES";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(0);
+               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
                 break;
             case 3:
                 dia_String = "MIERCOLES";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(0);
+                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+                break;
             case 4:
                 dia_String = "JUEVES";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(0);
+                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                break;
             case 5:
                 dia_String = "VIERNES";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(0);
+                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                break;
             case 6:
                 dia_String = "SABADO";
                 System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(0);
-
+                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
                 break;
             default:
                 dia_String = "Dia no Asignado";
@@ -354,7 +359,7 @@ public class FrmAsistenciaCTR {
 
         }
         return dia_String;
-    }
+    }*/
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">

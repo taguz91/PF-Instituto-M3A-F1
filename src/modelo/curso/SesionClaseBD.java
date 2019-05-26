@@ -354,7 +354,7 @@ public class SesionClaseBD extends SesionClaseMD {
                     s.setNumeroDias(rst.getInt(1));
                     diasClase.add(s);
                      System.out.println("%%%%%%%%%%%%%");
-                    System.out.println(rst.getInt(1));
+                    System.out.println("Resultado Obtenido en Query  " + rst.getInt(1));
                      System.out.println("%%%%%%%%%%%%%");
                 }
               

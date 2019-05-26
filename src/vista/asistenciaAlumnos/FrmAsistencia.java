@@ -210,6 +210,26 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tblAsistencia);
+        if (tblAsistencia.getColumnModel().getColumnCount() > 0) {
+            tblAsistencia.getColumnModel().getColumn(6).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(6).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(7).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(7).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(8).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(8).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(8).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(9).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(9).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(9).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(10).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(10).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(10).setMaxWidth(0);
+            tblAsistencia.getColumnModel().getColumn(11).setMinWidth(0);
+            tblAsistencia.getColumnModel().getColumn(11).setPreferredWidth(0);
+            tblAsistencia.getColumnModel().getColumn(11).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
