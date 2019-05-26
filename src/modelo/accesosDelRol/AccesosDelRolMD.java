@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.accesosDelRol;
+
+import modelo.accesos.AccesosBD;
+import modelo.usuario.RolBD;
 
 /**
  *
@@ -11,46 +9,56 @@ package modelo.accesosDelRol;
  */
 public class AccesosDelRolMD {
 
-    private int idAccesoRol;
-    private int idRol;
-    private int idAcceso;
+    private int id;
+    private boolean activo;
+    private RolBD rol;
+    private AccesosBD acceso;
 
-    public AccesosDelRolMD(int idAccesoRol, int idRol, int idAcceso) {
-        this.idAccesoRol = idAccesoRol;
-        this.idRol = idRol;
-        this.idAcceso = idAcceso;
+    public AccesosDelRolMD(int id, boolean activo, RolBD rol, AccesosBD acceso) {
+        this.id = id;
+        this.activo = activo;
+        this.rol = rol;
+        this.acceso = acceso;
     }
 
     public AccesosDelRolMD() {
     }
 
-    public int getIdAccesoRol() {
-        return idAccesoRol;
+    public int getId() {
+        return id;
     }
 
-    public void setIdAccesoRol(int idAccesoRol) {
-        this.idAccesoRol = idAccesoRol;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdRol() {
-        return idRol;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
-    public int getIdAcceso() {
-        return idAcceso;
+    public RolBD getRol() {
+        return rol;
     }
 
-    public void setIdAcceso(int idAcceso) {
-        this.idAcceso = idAcceso;
+    public void setRol(RolBD rol) {
+        this.rol = rol;
+    }
+
+    public AccesosBD getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(AccesosBD acceso) {
+        this.acceso = acceso;
     }
 
     @Override
     public String toString() {
-        return "AccesosDelRolMD{" + "idAccesoRol=" + idAccesoRol + ", idRol=" + idRol + ", idAcceso=" + idAcceso + '}';
+        return "AccesosDelRolMD{" + "id=" + id + ", activo=" + activo + ", rol=" + rol + ", acceso=" + acceso + '}';
     }
 
 }
