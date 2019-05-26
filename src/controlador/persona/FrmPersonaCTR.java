@@ -97,7 +97,9 @@ public class FrmPersonaCTR extends DCTR {
         cargarPaises();
     }
 
-    // Metodo iniciar donde se ejecuta todos las acciones d elos botones
+    /**
+     * Metodo iniciar donde se ejecuta todos las acciones d elos botones
+     */
     public void iniciar() {
         ctrPrin.agregarVtn(frmPersona);
         //Desactivamos el campo de identificacion porque debe ingresar primero el tipo de identificacion
@@ -126,7 +128,7 @@ public class FrmPersonaCTR extends DCTR {
         // frmPersona.getBtnBuscarPersona().addActionListener(e -> buscarPersona());
 
         //Accion de buscar una persona  
-        frmPersona.getBtnBuscarPersona().addActionListener(e -> consular());
+        frmPersona.getBtnBuscarPersona().addActionListener(e -> consultar());
 
         frmPersona.getTxtIdentificacion().addFocusListener(new FocusAdapter() {
             @Override
@@ -156,7 +158,11 @@ public class FrmPersonaCTR extends DCTR {
         });
     }
 
-    //Devuelve un boolean para verificar si existen errores en el formulario
+    /**
+     *
+     * @return Devuelve un boolean para verificar si existen errores en el
+     * formulario
+     */
     public boolean confirmaError() {
         //boolean error = false;
         if (frmPersona.getLblErrorCallePrin().isVisible() == false
@@ -197,8 +203,11 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
-    //Metodo que pierde el foco al buscar una persona por su identificacion y a su vez activa 
-    //una persona cuando su cedula ya existe en la base de datos pero esta en estado inactivo. 
+    /**
+     * Metodo que pierde el foco al buscar una persona por su identificacion y a
+     * su vez activa una persona cuando su cedula ya existe en la base de datos
+     * pero esta en estado inactivo.
+     */
     public void buscarIdentificacion() {
         errorCedula = false;
         String cedula = frmPersona.getTxtIdentificacion().getText();
@@ -248,7 +257,9 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
-    //Metodo para habilitar o deshabiltar el combo TipoID
+    /**
+     * Metodo para habilitar o deshabiltar el combo TipoID
+     */
     private void tipoID() {
         int pos = frmPersona.getCmbTipoId().getSelectedIndex();
         frmPersona.getTxtIdentificacion().setEnabled(false);
@@ -272,7 +283,12 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
-    //Metodo para desactivar la discapacidad que se ejecuta dentro del metodo activarDiscapacidad()
+    /**
+     * Metodo para desactivar la discapacidad que se ejecuta dentro del metodo
+     * activarDiscapacidad()
+     *
+     * @param estado
+     */
     private void desactivarDiscapacidad(boolean estado) {
 
         if (estado) {
@@ -314,9 +330,14 @@ public class FrmPersonaCTR extends DCTR {
 //            frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(estado);
 
         }
-
     }
 
+    /**
+     * Metodo para desactivar la categoria migratoria que se ejecuta dentro del
+     * metodo activarCategoriaMigratoria()
+     *
+     * @param estado
+     */
     public void desactivarCategoriaMigratoria(boolean estado) {
         if (estado) {
             frmPersona.getCmbCategoriaMigratoria().setVisible(estado);
@@ -345,7 +366,9 @@ public class FrmPersonaCTR extends DCTR {
         desactivarDiscapacidad(discapacidad);
     }
 
-    //Metodo para ejecutar todas las validaciones 
+    /**
+     * Metodo para ejecutar todas las validaciones
+     */
     private void iniciarValidaciones() {
 
         PropertyChangeListener habilitar_Guardar = (PropertyChangeEvent evt) -> {
@@ -421,7 +444,6 @@ public class FrmPersonaCTR extends DCTR {
 //            frmPersona.getCmbCategoriaMigratoria().addActionListener(new CmbValidar(
 //                    frmPersona.getCmbCategoriaMigratoria(), frmPersona.getLblErrorCategoriaMigratoria()));
             frmPersona.getCmbCategoriaMigratoria().addPropertyChangeListener(habilitar_Guardar);
-
         }
         //Validar los txt
         frmPersona.getTxtCallePrincipal().addKeyListener(new TxtVDireccion(
@@ -486,10 +508,11 @@ public class FrmPersonaCTR extends DCTR {
         frmPersona.getTxtNumeroCasa().addKeyListener(new TxtVNumCasa(frmPersona.getTxtNumeroCasa(),
                 frmPersona.getLblErrorNumeroCasa()));
         frmPersona.getTxtNumeroCasa().addPropertyChangeListener(habilitar_Guardar);
-
     }
 
-    //Metodo para buscar la foto dentro de los archivos del equipo
+    /**
+     * Metodo para buscar la foto dentro de los archivos del equipo
+     */
     public void buscarFoto() {
         frmPersona.getLblFoto().setIcon(null);
         JFileChooser j = new JFileChooser();
@@ -516,14 +539,19 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
-    //Metodo para capturar una foto desde WebCam
+    /**
+     * Metodo para capturar una foto desde WebCam
+     */
     private void capturarFotoWebCam() {
         WebCamCTR ctrCam = new WebCamCTR(frmPersona, this, ctrPrin);
         ctrCam.iniciarCamara();
         habilitarBtnGuardar();
     }
 
-    //Metodo para habilitar el boton guardar despues de que todos los campos obligatorios estén llenos
+    /**
+     * Metodo para habilitar el boton guardar despues de que todos los campos
+     * obligatorios estén llenos
+     */
     public void habilitarBtnGuardar() {
 
         String TipoId, Identificacion, PriNombre, PriApellido, FechaNaci,
@@ -565,7 +593,10 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
-    //Metodo donde se guarda una nueva persona, validandolas y guardandolo todo en mayusculas y sin espacios
+    /**
+     * Metodo donde se guarda una nueva persona, validandolas y guardandolo todo
+     * en mayusculas y sin espacios
+     */
     public void guardarPersona() {
 
         //Fecha actual usada para validaciones  
@@ -789,7 +820,10 @@ public class FrmPersonaCTR extends DCTR {
                 int posPr = frmPersona.getCmbParroquiaReside().getSelectedIndex();
                 if (posPr > 0 && posPr <= parroquias.size()) {
                     frmPersona.getLblErrorParroquiaReside().setVisible(false);
+                    //Editar el codigo postal
+                    
                     lugarRes = parroquias.get(posPr - 1);
+                    //
                 } else {
                     frmPersona.getLblErrorParroquiaReside().setVisible(true);
                 }
@@ -904,7 +938,7 @@ public class FrmPersonaCTR extends DCTR {
         frmPersona.dispose();
     }
 
-    private void consular() {
+    private void consultar() {
         String identificacion = frmPersona.getTxtIdentificacion().getText();
         PersonaMD per = persona.buscarPersona(identificacion);
         if (per != null) {
@@ -912,6 +946,11 @@ public class FrmPersonaCTR extends DCTR {
         }
     }
 
+    /**
+     * Metodo en donde editamos una persona extrayendo sus datos por parametro
+     *
+     * @param per
+     */
     public void editar(PersonaMD per) {
         //Seteamos los datos en el formulario  
         boolean discapacidad;
@@ -1106,7 +1145,9 @@ public class FrmPersonaCTR extends DCTR {
         iniciarValidaciones();
     }
 
-    //Metodo para ocultar errores
+    /**
+     * Metodo para ocultar errores
+     */
     public void iniciarComponentes() {
         frmPersona.getCmbTipoId().setToolTipText("Seleccione un Tipo de Identificación");
         frmPersona.getTxtIdentificacion().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
@@ -1253,6 +1294,7 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblErrorParroquiaReside().setVisible(false);
             parroquias = lug.buscarPorReferencia(cantones.get(posCt - 1).getId());
             cargarCmbLugares(frmPersona.getCmbParroquiaReside(), parroquias);
+            System.out.println("Cantones " + cantones.get(posCt - 1).getId());
         } else {
             frmPersona.getLblErrorParroquiaReside().setVisible(true);
         }
@@ -1269,13 +1311,19 @@ public class FrmPersonaCTR extends DCTR {
 
     public void cargarCodigoPostal() {
 
+        int posPr = frmPersona.getCmbProvinciaReside().getSelectedIndex();
         int posPa = frmPersona.getCmbParroquiaReside().getSelectedIndex();
+        int codigo;
         if (posPa > 0 && posPa < parroquias.size()) {
-
+            //cantones.get(posPa).getId();
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
+            System.out.println("Cargar Codigo Postal " + parroquias.get(posPa - 1).getCodigo());
+            System.out.println("Cantones " + cantones.get(posPa).getId());
         } else {
-
+//            lug.editarLugar(cantones.get(posPa).getId());
             frmPersona.getTxtCodigoPostal().setText("");
+           // codigo = frmPersona.getTxtCodigoPostal().setText(lug.editarLugar(cantones.get(posPa).getId()));
+            
         }
     }
 

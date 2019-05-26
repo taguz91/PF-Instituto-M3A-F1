@@ -7,14 +7,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.principal.VtnPrincipal;
 import vista.usuario.VtnSelectRol;
 
 /**
@@ -28,26 +26,17 @@ public class VtnSelectRolCTR {
     private final UsuarioBD usuario;
 
     private final ConectarDB conexion;
-
-    List<RolBD> rolesDelUsuario;
-    //Icono de la aplicacion  
-    private final ImageIcon icono;
-    private final Image ista;
+    private List<RolBD> rolesDelUsuario;
 
     /**
      * @param conexion
-     * @param icono
-     * @param ista
      */
-    public VtnSelectRolCTR(ConectarDB conexion, ImageIcon icono, Image ista) {
+    public VtnSelectRolCTR(ConectarDB conexion) {
         this.vista = new VtnSelectRol();
         this.modelo = new RolBD();
         this.usuario = CONS.USUARIO;
         this.conexion = conexion;
-        this.icono = icono;
-        this.ista = ista;
-        vista.setIconImage(ista);
-
+        vista.setIconImage(CONS.getImage());
         registroIngreso(vista);
     }
 
@@ -139,7 +128,7 @@ public class VtnSelectRolCTR {
 
         setModelo();
         CONS.setRol(modelo);
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(conexion, icono, ista, this);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(conexion, this);
         vtn.iniciar();
         vista.dispose();
     }

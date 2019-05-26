@@ -77,6 +77,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "ORDER BY usu_username";
 
         System.out.println(SELECT);
+        
 
         return selectSimple(SELECT, null);
 

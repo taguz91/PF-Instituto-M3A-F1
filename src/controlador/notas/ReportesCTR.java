@@ -1,12 +1,8 @@
 package controlador.notas;
 
 import controlador.Libraries.Middlewares;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import vista.notas.VtnNotas;
@@ -54,8 +50,6 @@ public class ReportesCTR {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-
-        JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
 
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Menor 70", parametros);
     }

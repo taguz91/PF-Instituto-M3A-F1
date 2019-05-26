@@ -43,19 +43,13 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -74,7 +68,6 @@ import modelo.accesos.AccesosMD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.Login;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -100,7 +93,6 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.accesos.VtnAccesos;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
@@ -124,9 +116,6 @@ public class VtnPrincipalCTR {
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
-    //Icono de la aplicacion  
-    private final ImageIcon icono;
-    private final Image ista;
     //Para hacer los accesos
     private List<AccesosMD> accesos;
     //Constantes de accesos, para las ventanas y menus
@@ -153,12 +142,9 @@ public class VtnPrincipalCTR {
      * Construnctor principal del sistema.
      *
      * @param conecta ConectarDB: Coneccion a la base de datos G23
-     * @param icono ImagenIcon: Icono del sistema.
-     * @param ista Imagen: Imagen del icono del sistema.
      * @param ctrSelecRol
      */
-    public VtnPrincipalCTR(ConectarDB conecta, ImageIcon icono, Image ista,
-            VtnSelectRolCTR ctrSelecRol) {
+    public VtnPrincipalCTR(ConectarDB conecta, VtnSelectRolCTR ctrSelecRol) {
         this.vtnPrin = new VtnPrincipal();
         this.rolSeleccionado = CONS.ROL;
         this.usuario = CONS.USUARIO;
@@ -168,9 +154,7 @@ public class VtnPrincipalCTR {
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
-        this.icono = icono;
-        this.ista = ista;
-        vtnPrin.setIconImage(ista);
+        vtnPrin.setIconImage(CONS.getImage());
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         registroIngreso(vtnPrin);
@@ -178,9 +162,10 @@ public class VtnPrincipalCTR {
         //Le pasamos el icono  
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
-        //InitPermisos();
-        //InitPermisosTesterYDocente();
         InitPermisosDocente();
+
+        System.out.println("-------THREADs----->" + Thread.activeCount());
+
     }
 
     /**
@@ -238,6 +223,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
@@ -264,7 +250,7 @@ public class VtnPrincipalCTR {
 
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
-        
+
         /*
             SET DIRECCION IP
          */
@@ -601,18 +587,12 @@ public class VtnPrincipalCTR {
     }
 
     public void abrirVtnAccesos() {
-        VtnAccesos vtnAcceso = new VtnAccesos();
-        eventoInternal(vtnAcceso);
-        if (numVtns < 5) {
-            VtnAccesosCTR ctrVtnAcceso = new VtnAccesosCTR(vtnPrin, vtnAcceso, conecta, this);
-            ctrVtnAcceso.Init();
-        } else {
-            errorNumVentanas();
-        }
-
+        VtnAccesosCTR vtn = new VtnAccesosCTR(this);
+        vtn.Init();
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
+        JOptionPane.showMessageDialog(vtnPrin, "Este servicio estará disponible proximamente");
         FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {
@@ -863,19 +843,19 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_J, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtAccesos().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_W, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnBiblioteca().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtAlmnRetirados().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-        
+
         vtnPrin.getMnCtListaAlumnos().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
@@ -897,6 +877,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_R, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_K, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
@@ -921,17 +904,15 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtMiPerfil().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_M, ActionEvent.ALT_MASK));
-        
+
         vtnPrin.getMnIgUsuarios1().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_U, ActionEvent.ALT_MASK));
-        
+
         vtnPrin.getMnIgRoles1().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_M, ActionEvent.ALT_MASK));
-        
+
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_L, ActionEvent.ALT_MASK));
-        
-        
 
     }
 
@@ -952,7 +933,7 @@ public class VtnPrincipalCTR {
     private void btnCerrarSesion(ActionEvent e) {
         ctrSelecRol.cierreSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR(new Login());
+        LoginCTR login = new LoginCTR();
         login.Init();
     }
 
@@ -962,30 +943,17 @@ public class VtnPrincipalCTR {
     }
 
     /**
-     * Retornamos el icono del sistema
-     *
-     * @return icono ImageIcon
-     */
-    public ImageIcon getIcono() {
-        return icono;
-    }
-
-    /**
      * Retornamos la imagen del icono.
      *
      * @return ista Image
      */
-    public Image getIsta() {
-        return ista;
-    }
-
     /**
      * Cambiamos el icono de un JInternalFrame.
      *
      * @param jif JInternalFrame
      */
     public void setIconJIFrame(JInternalFrame jif) {
-        jif.setFrameIcon(icono);
+        jif.setFrameIcon(CONS.getICONO());
     }
 
     /**
@@ -994,7 +962,7 @@ public class VtnPrincipalCTR {
      * @param jd JDialog
      */
     public void setIconJDialog(JDialog jd) {
-        jd.setIconImage(ista);
+        jd.setIconImage(CONS.getImage());
     }
 
     private void btnPrdIngrNotas(ActionEvent e) {
@@ -1078,7 +1046,9 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtDocente().setEnabled(false);
             vtnPrin.getMnCtAlumno().setEnabled(false);
             vtnPrin.getMnCtCarrera().setEnabled(false);
-            vtnPrin.getMnCtCurso().setEnabled(false);
+            //Cursos para los listados
+            vtnPrin.getMnCtCurso().setEnabled(true);
+
             vtnPrin.getMnCtPrdLectivo().setEnabled(false);
             vtnPrin.getMnCtMateria().setEnabled(false);
             vtnPrin.getMnCtInscripcion().setEnabled(false);
@@ -1097,7 +1067,9 @@ public class VtnPrincipalCTR {
             vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
             vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
             vtnPrin.getMnCtMatricula().setEnabled(false);
-            vtnPrin.getMnCtListaAlumnos().setEnabled(false);
+            //Listado de alumnos 
+            vtnPrin.getMnCtListaAlumnos().setEnabled(true);
+
             vtnPrin.getMnCtMallaAlumno().setEnabled(false);
             vtnPrin.getMnCtDocenteMateria().setEnabled(true);
             vtnPrin.getMnCtMateria().setEnabled(true);

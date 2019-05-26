@@ -4,8 +4,6 @@ import controlador.Libraries.Effects;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
@@ -87,18 +85,15 @@ public class FrmTipoNotaEditar extends AbstracForm {
         setObjs();
 
         try {
-
             CONS.getPool(10).submit(() -> listaTipos
                     .parallelStream()
                     .forEach(obj -> {
-                        System.out.println("---->" + obj);
                         obj.editar(obj.getId());
-                        System.out.println("------>COMPLETED");
                     })
             ).get();
-            CONS.getPool(null).shutdown();
+            CONS.THREAD_POOL.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(FrmTipoNotaEditar.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         listaTipos = null;
         System.out.println("--------THREAD-->" + Thread.activeCount());

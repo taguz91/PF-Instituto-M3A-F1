@@ -1,7 +1,7 @@
 package controlador.asistenciaAlumnos;
-
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
+import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +17,17 @@ import java.util.function.BiFunction;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.carrera.CarreraBD;
+import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.notas.calendario.CalendarioBD;
+import modelo.notas.calendario.CalendarioMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
@@ -46,34 +50,32 @@ public class FrmAsistenciaCTR {
     private final RolBD rolSeleccionado;
 
     // CALCULOS SEMANAS
-    private List<PeriodoLectivoMD> listaPrdSemana;
     private static LocalDate IniSemana;
     private static LocalDate FinSemana;
-    private static LocalDate fechaInicial = LocalDate.now();
+    private static LocalDate fechaInicial = LocalDate.of(2019, Month.MAY, 27);
     private static int semanas;
-    private static List<LocalDate> items = new ArrayList<>();
-    private static ArrayList<String> lista_fecha = new ArrayList<>();
+    private static ArrayList<Integer> listadias = new ArrayList<>();
 
     private static String dia_String;
     private static int dia;
+    private static int num_dias;
     private static String Fecha;
-    
+
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
     private List<MateriaMD> listaMaterias;
-    private List<SesionClaseMD> listaSesionClase;
+    private static List<SesionClaseMD> listaSesionClase;
+    private List<CarreraMD> listaNumSemanas;
+    private List<CalendarioMD> listaSemanasActivas;
     private List<TipoDeNotaMD> listaValidaciones;
-    private VtnPrincipalCTR ctrPrin;
-    
-    private PeriodoLectivoBD prd = new PeriodoLectivoBD();
 
     // TABLA
-    private DefaultTableModel tablaTrad;
+    private static DefaultTableModel tablaTrad;
 
     // JTables
-    private JTable jTbl;
+    private static JTable jTbl;
 
     // ACTIVACION DE HILOS
     private boolean cargarTabla = true;
@@ -83,7 +85,9 @@ public class FrmAsistenciaCTR {
     private final CursoBD cursoBD;
     private final MateriaBD materiaBD;
     private final DocenteBD docenteBD;
-    private final SesionClaseBD sesionClaseBD; 
+    private final CarreraBD carreraBD;
+    private final CalendarioBD calendarioBD;
+    private final SesionClaseBD sesionClaseBD;
 
     {
         periodoBD = new PeriodoLectivoBD();
@@ -92,6 +96,8 @@ public class FrmAsistenciaCTR {
         cursoBD = new CursoBD();
         docenteBD = new DocenteBD();
         sesionClaseBD = new SesionClaseBD();
+        carreraBD = new CarreraBD();
+        calendarioBD = new CalendarioBD();
     }
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
@@ -99,7 +105,6 @@ public class FrmAsistenciaCTR {
         this.vista = vista;
         this.usuario = usuario;
         this.rolSeleccionado = rolSeleccionado;
-        //this.ctrPrin = ctrPrin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -127,7 +132,6 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
-       // CargarDiasClase();
     }
 
     private void InitEventos() {
@@ -136,11 +140,15 @@ public class FrmAsistenciaCTR {
         vista.getCmbPeriodoLectivoAsis().addActionListener(e -> {
             cargarComboCiclo();
             cargarComboSemanas();
+            CargarDiasClase();
         });
-
+        vista.getCmbSemana().addActionListener(e -> cargarTabla(tablaTrad, agregarFilasTrad()));
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
-        vista.getCmbCicloAsis().addActionListener(e -> cargarComboMaterias());
+        vista.getCmbCicloAsis().addActionListener(e -> {
+            cargarComboMaterias();
+            CargarDiasClase();
+        });
 
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
@@ -163,18 +171,8 @@ public class FrmAsistenciaCTR {
 
     private void InitTablas() {
 
-        ConstruirTabla(tablaTrad);
-        jTbl.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        List<String> items = new ArrayList<>();
-        items.add("1");
-        items.add("2");
+        CargarDiasClase();
 
-        // jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true,
-        // items));
-        // jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true,
-        // items));
-        // jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true,
-        // items));
     }
 
     // </editor-fold>
@@ -237,106 +235,135 @@ public class FrmAsistenciaCTR {
         }
         tablaTrad.setRowCount(0);
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">
+    /*Contruimos la tabla dependiendo de los dias que tiene clase */
+    public void CargarDiasClase() {
+           try {
+            String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
+            String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+            listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
+               System.out.println("------> "+ cursoNombre);
+               System.out.println("------> "+ nombreMateria);
+               System.out.println("------> "+ getIdPeriodoLectivo());
+               System.out.println("------> "+ getIdDocente());
+               
+                for (int j = 6; j < jTbl.getColumnCount(); j++) {
+                     jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
+                     jTbl.getColumnModel().getColumn(j).setMinWidth(0);
+                }
+            for (int i = 0; i < listaSesionClase.size(); i++) {
 
-    private static void CalculoSemana(int NumeroDia) {
-        switch (NumeroDia) {
-            case 1:
-                IniSemana = fechaInicial.minusDays(0);
-                FinSemana = fechaInicial.plusDays(6);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 2:
-                IniSemana = fechaInicial.minusDays(1);
-                FinSemana = fechaInicial.plusDays(5);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 3:
-                IniSemana = fechaInicial.minusDays(2);
-                FinSemana = fechaInicial.plusDays(4);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 4:
-                IniSemana = fechaInicial.minusDays(3);
-                FinSemana = fechaInicial.plusDays(3);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 5:
-                IniSemana = fechaInicial.minusDays(4);
-                FinSemana = fechaInicial.plusDays(2);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 6:
-                IniSemana = fechaInicial.minusDays(5);
-                FinSemana = fechaInicial.plusDays(1);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 7:
-                IniSemana = fechaInicial.minusDays(6);
-                FinSemana = fechaInicial.plusDays(0);
-
-                CalculoSemanaPorSemana();
-
-                break;
-
-        }
-
-    }
-
-    public static void CalculoSemanaPorSemana() {
-
-        for (int i = 1; i <= semanas; i++) {
-
-            Fecha = "Semana " + i + "    " + IniSemana.plusWeeks(i).getDayOfMonth() + " de  " + IniSemana.plusWeeks(i).getMonth() + "  a  " + FinSemana.plusWeeks(i).getDayOfMonth() + " de " + FinSemana.plusWeeks(i).getMonth();
-            lista_fecha.add(Fecha);
-        }
-
-    }
-
-    public static void ConstruirTabla(DefaultTableModel modelo) {
-        modelo = (DefaultTableModel) vista.getTblAsistencia().getModel();
-
-        for (int i = 0; i < 2; i++) {
-
-            modelo.addColumn(DiaDeLaSemana(1));
-            dia++;
-        }
-
-        vista.getTblAsistencia().setModel(modelo);
-
-    }
-
-    public static String DiaDeLaSemana(int diaValue) {
-
-        switch (diaValue) {
+                SesionClaseMD sesion = listaSesionClase.get(i);
+                dia = sesion.getNumeroDias();
+                
+                 switch (dia) {
             case 1:
                 dia_String = "LUNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
                 break;
+                
             case 2:
                 dia_String = "MARTES";
+                System.out.println(dia_String);
+               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
                 break;
             case 3:
                 dia_String = "MIERCOLES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
                 break;
             case 4:
                 dia_String = "JUEVES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
                 break;
             case 5:
                 dia_String = "VIERNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
                 break;
             case 6:
                 dia_String = "SABADO";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
                 break;
+            default:
+                dia_String = "Dia no Asignado";
+                System.out.println(dia_String);
+                break;
+
+        }
+                
+                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
+            }
+        } catch (Exception e) {
+               System.out.println("------->  Error Cargar Dias Clase "+e.getMessage());
+        }
+            
+    }
+
+    /*Se valida el dia de la semana*/
+    /*public static String DiaDeLaSemana(int diaValue) {
+        System.out.println("Estamos en dia de la semana");
+        
+        if (diaValue == 1 || diaValue == 2 || diaValue == 3 || diaValue == 4 || diaValue == 5 || diaValue == 6) {
+            
+        }
+        switch (diaValue) {
+            case 1:
+                dia_String = "LUNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                break;
+                
+            case 2:
+                dia_String = "MARTES";
+                System.out.println(dia_String);
+               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
+                break;
+            case 3:
+                dia_String = "MIERCOLES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+                break;
+            case 4:
+                dia_String = "JUEVES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                break;
+            case 5:
+                dia_String = "VIERNES";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                break;
+            case 6:
+                dia_String = "SABADO";
+                System.out.println(dia_String);
+                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
+                break;
+            default:
+                dia_String = "Dia no Asignado";
+                System.out.println(dia_String);
+                break;
+
         }
         return dia_String;
-    }
+    }*/
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
@@ -414,38 +441,27 @@ public class FrmAsistenciaCTR {
     }
 
     private void cargarComboSemanas() {
-        //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
 
         try {
-            fechaInicial = prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            System.out.println(fechaInicial);
-        
             System.out.println("-------------------------------------->  metodo carga de semanas");
+            listaSemanasActivas = calendarioBD.cargarSemanas(getIdPeriodoLectivo());
             vista.getCmbSemana().removeAllItems();
-            listaPrdSemana = periodoBD.buscarNumSemanas(getIdDocente(), getIdPeriodoLectivo());
-            if (listaPrdSemana.size() > 0) {
-                PeriodoLectivoMD periodo = listaPrdSemana.get(0);
+            listaNumSemanas = carreraBD.cargarNumdeSemanas(getIdPeriodoLectivo());
 
-                semanas = periodo.getNumSemanas();
-                CalculoSemana(fechaInicial.getDayOfWeek().getValue());
-
-                lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
-
+            if (listaNumSemanas.size() > 0  && listaSemanasActivas.size() > 0) {
+                CarreraMD carrera = listaNumSemanas.get(0);
+                CalendarioMD calen = listaSemanasActivas.get(0);
+                calen.getSemanasActivas();
+                semanas = carrera.getNumSemanas();
+                System.out.println("Semanas - - ---------->" + semanas);
+                listaSemanasActivas.forEach(t -> vista.getCmbSemana().addItem(t.getSemanasActivas()));
             }
 
-            lista_fecha.forEach(t -> System.out.println(t));
-
         } catch (Exception e) {
+            System.out.println("%%%%%%%%%%%%%%%%%%%%");
+            System.out.println("Murio: " + e.getMessage());
+            System.out.println("%%%%%%%%%%%%%%%%%%%%");
         }
-    }
-
-    public void CargarDiasClase() {
-        String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
-        String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-     //   listaSesionClase = sclase.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
-       // sclaseMD.getNumeroDias();
-
-    //    System.out.println(sclaseMD.getNumeroDias());
     }
 
     // Agregar Filas
@@ -519,4 +535,6 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
+
+    
 }

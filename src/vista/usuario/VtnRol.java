@@ -1,22 +1,20 @@
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author CESAR
  */
-public class VtnRol extends javax.swing.JInternalFrame {
+public class VtnRol extends AbstracView {
 
     public VtnRol() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {
@@ -67,7 +65,6 @@ public class VtnRol extends javax.swing.JInternalFrame {
         this.lblEstado = lblEstado;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

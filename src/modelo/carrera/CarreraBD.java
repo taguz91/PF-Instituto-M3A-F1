@@ -1,11 +1,14 @@
 package modelo.carrera;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.ConnDBPool;
+import modelo.curso.SesionClaseMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
@@ -17,6 +20,9 @@ public class CarreraBD extends CarreraMD {
 
     private final ConectarDB conecta;
     private final DocenteBD doc;
+    private ConnDBPool pool;
+    private ResultSet rst;
+      private Connection conn;
 
     public CarreraBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -27,6 +33,12 @@ public class CarreraBD extends CarreraMD {
         this.conecta = null;
         this.doc = null;
     }
+    
+    {
+        pool = new ConnDBPool();
+    }
+    
+    
 
     public boolean guardarCarrera() {
         String nsql = "INSERT INTO public.\"Carreras\"(\n"
@@ -293,5 +305,35 @@ public class CarreraBD extends CarreraMD {
             return null;
         }
     }
-
+    
+    /*Obtener num de semanas de las carreras*/
+    
+    public ArrayList<CarreraMD> cargarNumdeSemanas( int id_prd ) {
+        String sql = "SELECT\n"
+                + "\"public\".\"Carreras\".carrera_semanas\n"
+                + "FROM\n"
+                + "\"public\".\"Carreras\"\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + "WHERE \"PeriodoLectivo\".id_prd_lectivo = " + id_prd + "";
+         ArrayList<CarreraMD> semanas = new ArrayList<>();
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(sql, conn, null);
+        try {
+                while (rst.next()) {
+                    CarreraMD carrera = new CarreraMD();
+                    carrera.setNumSemanas(rst.getInt(1));
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    System.out.println(rst.getInt(1));
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    semanas.add(carrera);
+                }
+              
+                return semanas;
+            } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+        return semanas;
+    }
 }

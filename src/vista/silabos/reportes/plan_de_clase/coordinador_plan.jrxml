@@ -7,14 +7,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select concat(a.docente_abreviatura,'. ',p.persona_primer_apellido,' ',p.persona_primer_nombre) as nombreCoordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
+		<![CDATA[select concat(a.docente_abreviatura,p.persona_primer_apellido,' ',p.persona_primer_nombre) as nombreCoordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
 	</queryString>
 	<field name="nombrecoordinador" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="116">
+		<band height="105">
 			<staticText>
 				<reportElement x="0" y="0" width="196" height="15" uuid="b62181cf-7cc7-4008-bd20-c6655bc794ae"/>
 				<box>
@@ -25,12 +25,12 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COORDINADOR/A DE LA CARRERA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="48" y="15" width="148" height="15" uuid="d39d60eb-1675-46ce-9c78-589a42b8df60"/>
+				<reportElement x="37" y="15" width="159" height="15" uuid="d39d60eb-1675-46ce-9c78-589a42b8df60"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -40,18 +40,18 @@
 				<textFieldExpression><![CDATA[$F{nombrecoordinador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="15" width="48" height="15" uuid="7475e5de-d14a-4968-a501-4d8c32030b80"/>
+				<reportElement x="0" y="15" width="37" height="15" uuid="7475e5de-d14a-4968-a501-4d8c32030b80"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="30" width="196" height="56" uuid="c7faf3d3-2b35-4c40-a6c4-1b0d0c6ac037"/>
+				<reportElement x="0" y="30" width="196" height="45" uuid="c7faf3d3-2b35-4c40-a6c4-1b0d0c6ac037"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -59,19 +59,19 @@
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="86" width="196" height="15" uuid="cf3005d2-9c9a-43b1-b119-dcfd5be8d76a"/>
+				<reportElement x="0" y="75" width="196" height="15" uuid="cf3005d2-9c9a-43b1-b119-dcfd5be8d76a"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="101" width="196" height="15" uuid="fb1e4b9c-8707-419c-8619-ff65d9570088"/>
+				<reportElement x="0" y="90" width="196" height="15" uuid="fb1e4b9c-8707-419c-8619-ff65d9570088"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -80,7 +80,7 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ Fecha: ]]></text>
 			</staticText>

@@ -5,18 +5,25 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT autonomo_plan FROM "TrabajoAutonomo" where id_plan_clases=$P!{id_plan_clase}]]>
+		<![CDATA[SELECT trabajo_autonomo as autonomo_plan FROM "PlandeClases" where id_plan_clases=$P!{id_plan_clase}]]>
 	</queryString>
 	<field name="autonomo_plan" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="297" height="37" uuid="f2710b53-47b0-47b9-b5c7-1518549f9c0b"/>
+				<reportElement x="0" y="0" width="339" height="18" uuid="58157e55-e25d-49eb-88f0-6eefc4529278"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
 				<textElement verticalAlignment="Middle">
-					<font size="8"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{autonomo_plan}]]></textFieldExpression>
 			</textField>

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,35 +111,47 @@ public class ConnDBPool {
 
         stmt = conn.prepareStatement(sql);
 
-        parametros.entrySet().parallelStream().forEach(new Consumer<Map.Entry<Integer, Object>>() {
-            int posicion = 1;
-
-            @Override
-            public void accept(Map.Entry<Integer, Object> entry) {
-
-                try {
-                    posicion = entry.getKey();
-                    if (entry.getValue() instanceof Integer) {
-                        stmt.setInt(posicion, (int) entry.getValue());
-                    } else if (entry.getValue() instanceof String) {
-                        stmt.setString(posicion, entry.getValue().toString());
-                    } else if (entry.getValue() instanceof Double) {
-                        stmt.setDouble(posicion, (double) entry.getValue());
-                    } else if (entry.getValue() instanceof LocalTime) {
-                        stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
-                    } else if (entry.getValue() instanceof LocalDate) {
-                        stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
-                    } else if (entry.getValue() instanceof Boolean) {
-                        stmt.setBoolean(posicion, (boolean) entry.getValue());
-                    } else if (entry.getValue() instanceof Boolean) {
-                        stmt.setBoolean(posicion, (boolean) entry.getValue());
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        try {
+            int threads = 4;
+            if (parametros.size() > 10) {
+                threads = 6;
             }
-        });
 
+            CONS.getPool(threads).submit(() -> {
+                parametros.entrySet().parallelStream().forEach(new Consumer<Map.Entry<Integer, Object>>() {
+
+                    int posicion = 1;
+
+                    @Override
+                    public void accept(Map.Entry<Integer, Object> entry) {
+
+                        try {
+                            posicion = entry.getKey();
+                            if (entry.getValue() instanceof Integer) {
+                                stmt.setInt(posicion, (int) entry.getValue());
+                            } else if (entry.getValue() instanceof String) {
+                                stmt.setString(posicion, entry.getValue().toString());
+                            } else if (entry.getValue() instanceof Double) {
+                                stmt.setDouble(posicion, (double) entry.getValue());
+                            } else if (entry.getValue() instanceof LocalTime) {
+                                stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
+                            } else if (entry.getValue() instanceof LocalDate) {
+                                stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+                            } else if (entry.getValue() instanceof Boolean) {
+                                stmt.setBoolean(posicion, (boolean) entry.getValue());
+                            } else if (entry.getValue() instanceof Boolean) {
+                                stmt.setBoolean(posicion, (boolean) entry.getValue());
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+            }).get();
+            CONS.THREAD_POOL.shutdown();
+        } catch (InterruptedException | ExecutionException ex) {
+            System.out.println(ex.getMessage());
+        }
         return stmt;
     }
 
