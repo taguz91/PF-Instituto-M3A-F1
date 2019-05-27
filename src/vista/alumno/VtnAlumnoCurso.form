@@ -66,10 +66,12 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="lblResultados" min="-2" pref="170" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnRepUBE" min="-2" pref="98" max="-2" attributes="0"/>
+                              <Component id="btnRepUBE" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnListaPeriodo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnRepAlum" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -89,10 +91,8 @@
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnbuscar" alignment="0" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblbuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnMaterias" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnMaterias" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblbuscar" min="-2" max="-2" attributes="0"/>
                   <Component id="txtbuscar" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -115,6 +115,7 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnListaCiclo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRepUBE" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnListaPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -225,6 +226,11 @@
     <Component class="javax.swing.JButton" name="btnRepUBE">
       <Properties>
         <Property name="text" type="java.lang.String" value="UBE"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnListaPeriodo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lista Periodo"/>
       </Properties>
     </Component>
   </SubComponents>

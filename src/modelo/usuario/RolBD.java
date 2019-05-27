@@ -68,6 +68,8 @@ public class RolBD extends RolMD {
         try {
             conn = pool.getConnection();
             rs = pool.ejecutarQuery(Query, conn, null);
+
+            System.out.println("---> " + pool.getStmt().toString());
             while (rs.next()) {
                 RolBD rol = new RolBD();
 

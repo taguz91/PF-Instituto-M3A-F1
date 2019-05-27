@@ -29,6 +29,10 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnListaPeriodo() {
+        return btnListaPeriodo;
+    }
+
     public JButton getBtnRepUBE() {
         return btnRepUBE;
     }
@@ -86,6 +90,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         btnListaCiclo = new javax.swing.JButton();
         btnRepUBE = new javax.swing.JButton();
+        btnListaPeriodo = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -129,6 +134,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
         btnRepUBE.setText("UBE");
 
+        btnListaPeriodo.setText("Lista Periodo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,10 +173,12 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRepUBE, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnRepUBE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnListaPeriodo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRepAlum)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -183,9 +192,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblbuscar)
-                        .addComponent(btnMaterias))
+                    .addComponent(btnMaterias)
+                    .addComponent(lblbuscar)
                     .addComponent(txtbuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +212,8 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
                     .addComponent(btnRepAlum)
                     .addComponent(jLabel3)
                     .addComponent(btnListaCiclo)
-                    .addComponent(btnRepUBE))
+                    .addComponent(btnRepUBE)
+                    .addComponent(btnListaPeriodo))
                 .addContainerGap())
         );
 
@@ -214,6 +223,7 @@ public class VtnAlumnoCurso extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListaCiclo;
+    private javax.swing.JButton btnListaPeriodo;
     private javax.swing.JButton btnMaterias;
     private javax.swing.JButton btnRepAlum;
     private javax.swing.JButton btnRepUBE;

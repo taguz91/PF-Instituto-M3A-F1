@@ -441,6 +441,7 @@ public class FrmDocenteCTR extends DCTR {
             docente.setDocenteOtroTrabajo(docenteOtroTrabajo);
             docente.setTituloDocente(docenteTitulo);
             docente.setAbreviaturaDocente(docenteAbreviatura);
+            docente.setDocenteCapacitador(frmDocente.getCbxDocenteCapacitador().isSelected());
             if (!docenteTipoTiempo.equalsIgnoreCase("Seleccione")) {
                 docente.setDocenteTipoTiempo(docenteTipoTiempo);
                 if (editar) {
