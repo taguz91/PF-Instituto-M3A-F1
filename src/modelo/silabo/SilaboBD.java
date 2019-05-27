@@ -212,7 +212,7 @@ public class SilaboBD extends SilaboMD {
             System.out.println(st);
             st.executeUpdate();
             
-            
+            System.out.println(st);
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);

@@ -7,7 +7,8 @@ pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
 materia_codigo, materia_nombre, carrera_nombre,
 curso_ciclo, nombre_jornada, prd_lectivo_nombre,
 matricula_tipo, matricula_fecha,
-almn_curso_num_matricula
+almn_curso_num_matricula,
+curso_paralelo
 FROM public."Matricula" mt, public."AlumnoCurso" ac,
 public."Cursos" c, public."Docentes" d,
 public."Materias" m, public."Alumnos" a,
@@ -54,6 +55,7 @@ AND pl.id_prd_lectivo = c.id_prd_lectivo
 AND cr.id_carrera = pl.id_carrera
 AND ac.almn_curso_num_matricula = 1
 AND ac.almn_curso_activo = true
+AND c.curso_nombre = '';
 
 --Reporte de numero de matricula
 

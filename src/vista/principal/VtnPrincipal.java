@@ -769,8 +769,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
+<<<<<<< HEAD
+        mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        mnCtPlandeClase.setText("Plan de Clase");
+=======
         mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
         mnTipoNotas.add(mnCtPlandeClase);
 
         mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N

@@ -330,6 +330,9 @@ public class ControladorSilaboC {
 
         bibliografia = new frmReferencias();
         
+        gestion.getBtnGuardar().setEnabled(false);
+        
+        cambioSilabo=false;
 
         if (silaboAnterior == null) {
             carrerasDocente = new ArrayList<>();

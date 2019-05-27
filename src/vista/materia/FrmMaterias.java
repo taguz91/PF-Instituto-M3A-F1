@@ -307,21 +307,21 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         txtObjetivoEspecifico.setRows(5);
         jScrollPane1.setViewportView(txtObjetivoEspecifico);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 320, 220));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 320, 240));
 
         txtObjetivoGeneral.setColumns(20);
         txtObjetivoGeneral.setRows(5);
         jScrollPane2.setViewportView(txtObjetivoGeneral);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 320, 220));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 320, 240));
 
         lblErrorObjetivoGeneral.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorObjetivoGeneral.setText("Ingrese solo letras");
-        jPanel2.add(lblErrorObjetivoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        jPanel2.add(lblErrorObjetivoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         lblErrorObjetivoEspecifico.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorObjetivoEspecifico.setText("Ingrese solo letras");
-        jPanel2.add(lblErrorObjetivoEspecifico, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, -1, -1));
+        jPanel2.add(lblErrorObjetivoEspecifico, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, -1, -1));
 
         jTPMaterias.addTab("Observaciones", jPanel2);
 
