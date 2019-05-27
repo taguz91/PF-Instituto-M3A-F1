@@ -64,6 +64,8 @@ public class MateriasBDS extends MateriaMD {
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
                     + "AND s.id_prd_lectivo=?");
 
+            //Andres Ullauri
+            System.out.println(".");
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
             st.setInt(3, Integer.parseInt(clave[2]));

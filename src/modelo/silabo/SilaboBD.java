@@ -207,11 +207,12 @@ public class SilaboBD extends SilaboMD {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
                     + "	WHERE id_silabo=?");
 
+            
             st.setInt(1, s.getIdSilabo());
-
+            System.out.println(st);
             st.executeUpdate();
             
-            System.out.println(st);
+            
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
