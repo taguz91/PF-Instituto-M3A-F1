@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.accesos.AccesosMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
@@ -380,7 +381,13 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-
+        vtnAlumno.getBtnEliminar().getAccessibleContext().setAccessibleName("Alumnos-Eliminar");
+        vtnAlumno.getBtnEditar().getAccessibleContext().setAccessibleName("Alumnos-Editar");
+        vtnAlumno.getBtnIngresar().getAccessibleContext().setAccessibleName("Alumnos-Ingresar");
+        vtnAlumno.getBtnReporteAlumnos().getAccessibleContext().setAccessibleName("Alumnos-Reporte-Alumnos");
+        
+        CONS.activarBtns(vtnAlumno.getBtnEliminar(), vtnAlumno.getBtnEditar(), vtnAlumno.getBtnIngresar(), 
+                vtnAlumno.getBtnReporteAlumnos());
     }
 
 }
