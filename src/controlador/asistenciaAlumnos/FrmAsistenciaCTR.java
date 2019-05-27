@@ -1,9 +1,7 @@
 package controlador.asistenciaAlumnos;
+
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,10 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.asistenciaAlumnos.AsistenciaBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -64,7 +64,7 @@ public class FrmAsistenciaCTR {
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
-    private List<AlumnoCursoBD> listaNotas;
+    private List<AsistenciaBD> listaAsistencia;
     private List<MateriaMD> listaMaterias;
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
@@ -88,6 +88,7 @@ public class FrmAsistenciaCTR {
     private final CarreraBD carreraBD;
     private final CalendarioBD calendarioBD;
     private final SesionClaseBD sesionClaseBD;
+    private final AsistenciaBD asistenciaBD;
 
     {
         periodoBD = new PeriodoLectivoBD();
@@ -98,6 +99,7 @@ public class FrmAsistenciaCTR {
         sesionClaseBD = new SesionClaseBD();
         carreraBD = new CarreraBD();
         calendarioBD = new CalendarioBD();
+        asistenciaBD = new AsistenciaBD();
     }
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
@@ -142,7 +144,7 @@ public class FrmAsistenciaCTR {
             cargarComboSemanas();
             CargarDiasClase();
         });
-        vista.getCmbSemana().addActionListener(e -> cargarTabla(tablaTrad, agregarFilasTrad()));
+//        vista.getCmbSemana().addActionListener(e -> cargarTabla(tablaTrad, agregarFilasTrad()));
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> {
@@ -240,79 +242,79 @@ public class FrmAsistenciaCTR {
     // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">
     /*Contruimos la tabla dependiendo de los dias que tiene clase */
     public void CargarDiasClase() {
-           try {
+        try {
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
             listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
-               System.out.println("------> "+ cursoNombre);
-               System.out.println("------> "+ nombreMateria);
-               System.out.println("------> "+ getIdPeriodoLectivo());
-               System.out.println("------> "+ getIdDocente());
-               
-                for (int j = 6; j < jTbl.getColumnCount(); j++) {
-                     jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
-                     jTbl.getColumnModel().getColumn(j).setMinWidth(0);
-                }
+            System.out.println("------> " + cursoNombre);
+            System.out.println("------> " + nombreMateria);
+            System.out.println("------> " + getIdPeriodoLectivo());
+            System.out.println("------> " + getIdDocente());
+
+            for (int j = 6; j < jTbl.getColumnCount(); j++) {
+                jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
+                jTbl.getColumnModel().getColumn(j).setMinWidth(0);
+            }
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(i);
                 dia = sesion.getNumeroDias();
-                
-                 switch (dia) {
-            case 1:
-                dia_String = "LUNES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
-                break;
-                
-            case 2:
-                dia_String = "MARTES";
-                System.out.println(dia_String);
-               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
-                break;
-            case 3:
-                dia_String = "MIERCOLES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
-                break;
-            case 4:
-                dia_String = "JUEVES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
-                break;
-            case 5:
-                dia_String = "VIERNES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
-                break;
-            case 6:
-                dia_String = "SABADO";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
-                break;
-            default:
-                dia_String = "Dia no Asignado";
-                System.out.println(dia_String);
-                break;
 
-        }
-                
-                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
+                switch (dia) {
+                    case 1:
+                        dia_String = "LUNES";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                        break;
+
+                    case 2:
+                        dia_String = "MARTES";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(7).setMinWidth(100);
+                        break;
+                    case 3:
+                        dia_String = "MIERCOLES";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+                        break;
+                    case 4:
+                        dia_String = "JUEVES";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                        break;
+                    case 5:
+                        dia_String = "VIERNES";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                        break;
+                    case 6:
+                        dia_String = "SABADO";
+                        System.out.println(dia_String);
+                        jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
+                        jTbl.getColumnModel().getColumn(11).setMinWidth(100);
+                        break;
+                    default:
+                        dia_String = "Dia no Asignado";
+                        System.out.println(dia_String);
+                        break;
+
+                }
+
+                listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
             }
         } catch (Exception e) {
-               System.out.println("------->  Error Cargar Dias Clase "+e.getMessage());
+            System.out.println("------->  Error Cargar Dias Clase " + e.getMessage());
         }
-            
+
     }
 
     /*Se valida el dia de la semana*/
-    /*public static String DiaDeLaSemana(int diaValue) {
+ /*public static String DiaDeLaSemana(int diaValue) {
         System.out.println("Estamos en dia de la semana");
         
         if (diaValue == 1 || diaValue == 2 || diaValue == 3 || diaValue == 4 || diaValue == 5 || diaValue == 6) {
@@ -364,7 +366,6 @@ public class FrmAsistenciaCTR {
         }
         return dia_String;
     }*/
-
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
     private int getIdDocente() {
@@ -429,14 +430,13 @@ public class FrmAsistenciaCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-            listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            //listaAsistencia = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaAsistencia = asistenciaBD.selectWhere(getIdDocente(), getIdPeriodoLectivo(), nombreMateria, cursoNombre);
 
-            listaNotas.stream().forEach(obj -> {
-                funcionCarga.apply(obj, tabla);
-            });
+            //listaAsistencia.stream().forEach(agregarFilasTrad());
 
             cargarTabla = true;
-            vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+            vista.getLblResultados().setText(listaAsistencia.size() + " Resultados");
         }).start();
     }
 
@@ -448,7 +448,7 @@ public class FrmAsistenciaCTR {
             vista.getCmbSemana().removeAllItems();
             listaNumSemanas = carreraBD.cargarNumdeSemanas(getIdPeriodoLectivo());
 
-            if (listaNumSemanas.size() > 0  && listaSemanasActivas.size() > 0) {
+            if (listaNumSemanas.size() > 0 && listaSemanasActivas.size() > 0) {
                 CarreraMD carrera = listaNumSemanas.get(0);
                 CalendarioMD calen = listaSemanasActivas.get(0);
                 calen.getSemanasActivas();
@@ -465,14 +465,19 @@ public class FrmAsistenciaCTR {
     }
 
     // Agregar Filas
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
+    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+        return (obj) -> {
 
             // System.out.println(obj);
-            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(), obj.getNumFalta(),});
-            return null;
+            tablaTrad.addRow(new Object[]{
+                tablaTrad.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), 
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), 
+                obj.getAlumno().getSegundoNombre(), 
+                obj.getNumFalta()
+            });
         };
     }
     // </editor-fold>
@@ -508,7 +513,7 @@ public class FrmAsistenciaCTR {
             // .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            cargarTabla(tablaTrad, agregarFilasTrad());
+            //cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
@@ -535,6 +540,4 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
-
-    
 }
