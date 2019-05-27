@@ -63,7 +63,7 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_evaluacion,indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_evaluacion,indicador,id_tipo_actividad,instrumento,valoracion,fecha_envio,fecha_presentacion,numero_unidad\n"
                     + "FROM \"EvaluacionSilabo\",\"Silabo\",\"UnidadSilabo\"\n"
                     + "WHERE \"EvaluacionSilabo\".id_unidad=\"UnidadSilabo\".id_unidad\n"
                     + "AND \"UnidadSilabo\".id_silabo=\"Silabo\".id_silabo\n"
