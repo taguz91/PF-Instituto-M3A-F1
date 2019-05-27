@@ -588,7 +588,7 @@ public class ControladorEditarPlanClases {
                         principal.getLblEstado().setText("                                  Guardando su plan de clase! Espere por favor...........");
                         
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(400);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Controlador_plan_clases.class.getName()).log(Level.SEVERE, null, ex);
                     }
