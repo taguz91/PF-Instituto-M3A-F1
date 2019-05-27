@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo.asistenciaAlumnos;
 
 import java.sql.Connection;
@@ -24,7 +20,7 @@ public class AsistenciaBD extends AsistenciaMD {
 
     private ConnDBPool pool;
     private Connection conn;
-    private ResultSet rs;
+    private ResultSet rst;
 
     {
         pool = new ConnDBPool();
@@ -55,26 +51,27 @@ public class AsistenciaBD extends AsistenciaMD {
 
         try {
             conn = pool.getConnection();
-            rs = pool.ejecutarQuery(SELECT, conn, parametrosAsis);
+            rst = pool.ejecutarQuery(SELECT, conn, parametrosAsis);
             System.out.println(pool.getStmt().toString());
-            while (rs.next()) {
+            while (rst.next()) {
                 AsistenciaBD asistencia = new AsistenciaBD();
 
-                asistencia.setId(rs.getInt(1));
-                asistencia.setFechaAsistencia(rs.getDate(2).toLocalDate());
-                asistencia.setNumeroFaltas(rs.getInt(3));
-                asistencia.setObservaciones(rs.getString(4));
+                asistencia.setId(rst.getInt(1));
+                asistencia.setFechaAsistencia(rst.getDate(2).toLocalDate());
+                asistencia.setNumeroFaltas(rst.getInt(3));
+                asistencia.setObservaciones(rst.getString(4));
 
                 listaAsistencia.add(asistencia);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.closeStmt().close(rs).close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return listaAsistencia;
     }
+    
 
     private boolean ejecutarAsis = false;
 

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.asistenciaAlumnos.AsistenciaBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -58,13 +59,15 @@ public class FrmAsistenciaCTR {
 
     private static String dia_String;
     private static int dia;
-    private static int num_dias;
+    private static int num_semana;
+
     private static String Fecha;
 
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
+    private List<AsistenciaBD> listaAsistencia;
     private List<MateriaMD> listaMaterias;
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
@@ -88,6 +91,7 @@ public class FrmAsistenciaCTR {
     private final CarreraBD carreraBD;
     private final CalendarioBD calendarioBD;
     private final SesionClaseBD sesionClaseBD;
+    private final AsistenciaBD asistenciaBD;
 
     {
         periodoBD = new PeriodoLectivoBD();
@@ -98,6 +102,7 @@ public class FrmAsistenciaCTR {
         sesionClaseBD = new SesionClaseBD();
         carreraBD = new CarreraBD();
         calendarioBD = new CalendarioBD();
+        asistenciaBD = new AsistenciaBD();
     }
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
@@ -241,6 +246,8 @@ public class FrmAsistenciaCTR {
     /*Contruimos la tabla dependiendo de los dias que tiene clase */
     public void CargarDiasClase() {
            try {
+              
+            fechaInicial = calendarioBD.fechaIniSemana(getIdPeriodoLectivo(), 1);
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
             listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
@@ -264,12 +271,13 @@ public class FrmAsistenciaCTR {
                 System.out.println(dia_String);
                 jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
                 jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                
                 break;
                 
             case 2:
                 dia_String = "MARTES";
                 System.out.println(dia_String);
-               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
+                jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
                 jTbl.getColumnModel().getColumn(7).setMinWidth(100);
                 break;
             case 3:
@@ -312,49 +320,41 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-    /*public static String DiaDeLaSemana(int diaValue) {
+    public static int DiaDeLaSemana() {
         System.out.println("Estamos en dia de la semana");
         
-        if (diaValue == 1 || diaValue == 2 || diaValue == 3 || diaValue == 4 || diaValue == 5 || diaValue == 6) {
-            
-        }
-        switch (diaValue) {
+        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
+        switch (SemanaSelec) {
             case 1:
                 dia_String = "LUNES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
                 
             case 2:
                 dia_String = "MARTES";
-                System.out.println(dia_String);
-               jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(7).setMinWidth(100);
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 3:
                 dia_String = "MIERCOLES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+               num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 4:
                 dia_String = "JUEVES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 5:
                 dia_String = "VIERNES";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 6:
                 dia_String = "SABADO";
-                System.out.println(dia_String);
-                jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
-                jTbl.getColumnModel().getColumn(11).setMinWidth(100);
+               num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             default:
                 dia_String = "Dia no Asignado";
@@ -362,8 +362,8 @@ public class FrmAsistenciaCTR {
                 break;
 
         }
-        return dia_String;
-    }*/
+        return num_semana;
+    }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
@@ -437,6 +437,10 @@ public class FrmAsistenciaCTR {
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+            listaAsistencia = asistenciaBD.selectWhere(almnCursoBD);
+            listaAsistencia.stream().forEach(obj -> {
+                funcionCarga.apply(almnCursoBD, tabla);
+            });
         }).start();
     }
 
