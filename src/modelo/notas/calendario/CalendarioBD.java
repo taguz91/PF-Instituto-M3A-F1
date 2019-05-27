@@ -55,4 +55,30 @@ public class CalendarioBD extends CalendarioMD{
         }
         return semanas;
     }
+    
+     public LocalDate fechaIniSemana (int id_prd , int num_semana){
+        LocalDate fecha_ini = null;
+        String SELECT = "SELECT\n" +
+"\"public\".\"CalendarioPeriodo\".clnd_prd_fecha_ini\n" +
+"FROM\n" +
+"\"public\".\"CalendarioPeriodo\"\n" +
+"WHERE id_prd_lectivo = "+ id_prd + " AND clnd_prd_numero_semana = "+ num_semana+"";
+        
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(SELECT, conn, null);
+            try {
+                while (rst.next()) {
+                    fecha_ini = rst.getDate("prd_lectivo_fecha_ini").toLocalDate();
+                    System.out.println("*********************");
+                    System.out.println(fecha_ini);
+                    System.out.println("**********************");
+                }
+                return fecha_ini;
+            } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+        return fecha_ini;
+    }
 }
