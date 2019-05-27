@@ -547,6 +547,7 @@ public class ControladorSilaboU {
                     }
 
                 }
+                
 
                 if ((acumuladoPractica + (int) gestion.getSpnHorasPracticas().getValue()) > silabo.getIdMateria().getHorasPracticas()) {
                     gestion.getSpnHorasPracticas().setValue(silabo.getIdMateria().getHorasPracticas() - acumuladoPractica);

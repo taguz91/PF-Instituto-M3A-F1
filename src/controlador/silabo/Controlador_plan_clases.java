@@ -143,7 +143,7 @@ public class Controlador_plan_clases {
          fPlanClase.getTxt_estrategias().addKeyListener(new KeyAdapter() {
              @Override
              public void keyTyped(KeyEvent e){
-                 int limite =115;
+                 int limite =120;
                  if( fPlanClase.getTxt_estrategias().getText().length()==limite){
                      e.consume();
                      JOptionPane.showMessageDialog(null, "NO PUEDE INGRESAR MAS CARACTERES", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -162,7 +162,7 @@ public class Controlador_plan_clases {
                        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrincipal);
                         cP.iniciaControlador();
                   }else{
-                     JOptionPane.showMessageDialog(null, "Falló al guardar ", "Aviso", JOptionPane.ERROR_MESSAGE);
+                     JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo! ", "Aviso", JOptionPane.ERROR_MESSAGE);
                       fPlanClase.dispose();
                       
                   }
@@ -173,6 +173,8 @@ public class Controlador_plan_clases {
             }
             
     });
+        
+        
         lista_estrategias_metodologicas_antici=new ArrayList<>();
 
         
@@ -267,21 +269,21 @@ public class Controlador_plan_clases {
     
      
     public boolean guardar_plan_de_clase(){
-        
+        try{
         plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
         plan_claseMD.getId_curso().setId(curso.getId());
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
         plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
-        if (new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)) {
+        if (new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)==true) {
         insertarRecursosPlanClases();
         insertarEstrategiasMetodologicas();
         return true;
-         }else{
-            JOptionPane.showMessageDialog(fPlanClase, "No se guardo revise");
-            return false;
+         }
+        }catch(Exception e){
+            System.out.println("Fallo al guardar");
         }
-        
+            return false;
         }
     private void insertarRecursosPlanClases(){
         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
