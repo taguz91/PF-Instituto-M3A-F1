@@ -1958,7 +1958,6 @@ public class ControladorSilaboC {
             cambioSilabo = false;
             return false;
         }
-
     }
 
     /*public void guardarSilaboPrimera() {

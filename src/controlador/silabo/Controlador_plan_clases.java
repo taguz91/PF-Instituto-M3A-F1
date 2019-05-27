@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -154,28 +156,9 @@ public class Controlador_plan_clases {
              }
 });
          
-        fPlanClase.getBtmnGuardarPc().addActionListener(new ActionListener() { 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (validarCampos()==true) {
-                    
-                  if(guardar_plan_de_clase()==true){
-                      fPlanClase.dispose();
-                      JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
-                       ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrincipal);
-                        cP.iniciaControlador();
-                  }else{
-                     JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo! ", "Aviso", JOptionPane.ERROR_MESSAGE);
-                      fPlanClase.dispose();
-                      
-                  }
-                }else{
-                     JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
-                }
+//
 
-            }
-            
-    });
+        fPlanClase.getBtmnGuardarPc().addActionListener(e -> ejecutar(e));
         
         
         lista_estrategias_metodologicas_antici=new ArrayList<>();
@@ -430,6 +413,8 @@ public class Controlador_plan_clases {
                         array_Anticipacion.remove(i);
                     }
                 }
+                fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                recargarElemwentos();
             }
         } else if(fPlanClase.getListConsolidacionPC().isShowing()){
             if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
@@ -443,6 +428,8 @@ public class Controlador_plan_clases {
                         array_Consolidacion.remove(i);
                     }
                 }
+                fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                recargarElemwentos3();
             }
         }else if(fPlanClase.getListConstruccionPC().isShowing()){
             if (fPlanClase.getListConstruccionPC().getSelectedIndex()==-1) {
@@ -456,6 +443,8 @@ public class Controlador_plan_clases {
                         array_Construccion.remove(i);
                     }
                 }
+                fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                recargarElemwentos2();
             }
         }
     }
@@ -546,6 +535,54 @@ public class Controlador_plan_clases {
         }
 
     }
+    
+    
+
+    
+    
+    private boolean accion=true;
+     private void ejecutar(ActionEvent e) {
+
+        if (accion) {
+            new Thread(() -> {
+                accion = false;
+                if (validarCampos()==true) {
+                        boolean aux=false;
+                        fPlanClase.getBtmnGuardarPc().setEnabled(false);
+                        fPlanClase.getBtnCancelarPC().setEnabled(false);
+                        vtnPrincipal.getLblEstado().setText("                                  Guardando su plan de clase! Espere por favor...........");
+                        
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Controlador_plan_clases.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    aux=guardar_plan_de_clase();
+                    
+                    if(aux==true){
+                         JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
+                         fPlanClase.dispose();
+                         vtnPrincipal.getMnCtPlandeClase().doClick();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo! ", "Aviso", JOptionPane.ERROR_MESSAGE);
+                        fPlanClase.getBtmnGuardarPc().setEnabled(true);
+                        fPlanClase.getBtnCancelarPC().setEnabled(true);
+                    }
+                }else{
+                     JOptionPane.showMessageDialog(null, "REVISE INFORMACION INCOMPLETA", "Aviso", JOptionPane.ERROR_MESSAGE);
+                }
+
+                
+
+                vtnPrincipal.getLblEstado().setText("");
+                accion = true;
+
+            }).start();
+        }
+
+    }
 }
+
 
 
