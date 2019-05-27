@@ -456,7 +456,6 @@ public class Controlador_plan_clases {
                         array_Construccion.remove(i);
                     }
                 }
-                System.out.println(array_Construccion);
             }
         }
     }
