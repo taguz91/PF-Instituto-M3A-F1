@@ -346,7 +346,11 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
+    
+    public static int DiadelaSemana(){
+        
         int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
+        switch (SemanaSelec) {
             case 1:
                 num_semana = 1;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
@@ -451,10 +455,7 @@ public class FrmAsistenciaCTR {
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
-            listaAsistencia = asistenciaBD.selectWhere(almnCursoBD);
-            listaAsistencia.stream().forEach(obj -> {
-                funcionCarga.apply(almnCursoBD, tabla);
-            });
+          
         }).start();
     }
 
