@@ -292,8 +292,14 @@ public class VtnPersonaCTR extends DVtnCTR {
     private void InitPermisos() {
         vtnPersona.getBtnEditarIdentificacion().getAccessibleContext().setAccessibleName("Personas-Editar Identificacion");
         vtnPersona.getBtnEliminar().getAccessibleContext().setAccessibleName("Personas-Eliminar");
-
-        CONS.activarBtns(vtnPersona.getBtnEditarIdentificacion(), vtnPersona.getBtnEliminar());
+        vtnPersona.getBtnEditar().getAccessibleContext().setAccessibleName("Personas-Editar");
+        vtnPersona.getBtnIngresar().getAccessibleContext().setAccessibleName("Personas-Ingresar");
+        vtnPersona.getChBx_PerEliminada().getAccessibleContext().setAccessibleName("Personas-Ver Personas Eliminadas");
+        vtnPersona.getBtnReportePersona().getAccessibleContext().setAccessibleName("Personas-Reporte-Persona");
+        
+        CONS.activarBtns(vtnPersona.getBtnEditarIdentificacion(), vtnPersona.getBtnEliminar(), 
+                vtnPersona.getBtnEditar(), vtnPersona.getBtnIngresar(), vtnPersona.getChBx_PerEliminada(),
+                vtnPersona.getBtnReportePersona());
 
     }
 
