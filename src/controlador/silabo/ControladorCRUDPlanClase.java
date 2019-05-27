@@ -102,6 +102,7 @@ public class ControladorCRUDPlanClase {
                 }
             }
         });
+        
 
         fCrud_plan_Clases.getBtnEliminarPLC().addActionListener((ActionEvent ae) -> {
             int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
