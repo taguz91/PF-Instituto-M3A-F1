@@ -5,23 +5,20 @@
  */
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class VtnUsuario extends javax.swing.JInternalFrame {
+public class VtnUsuario extends AbstracView {
 
     public VtnUsuario() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {
@@ -67,8 +64,6 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
     public void setLblEstado(JLabel lblEstado) {
         this.lblEstado = lblEstado;
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,7 +134,12 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
         lblResultados.setText("0 Resultados obtenidos");
 
-        btnAsignarRoles.setText("Asignar un Roles");
+        btnAsignarRoles.setText("Asignar un Rol");
+        btnAsignarRoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarRolesActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Cancelar");
 
@@ -168,7 +168,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnVerRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVerRoles)
                         .addGap(18, 18, 18)
                         .addComponent(btnAsignarRoles)
                         .addGap(18, 18, 18)
@@ -200,7 +200,7 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
                         .addComponent(btnAsignarRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnVerRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,6 +211,10 @@ public class VtnUsuario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAsignarRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarRolesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAsignarRolesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,4 +1,3 @@
-
 package controlador.referencias;
 
 import java.sql.PreparedStatement;
@@ -13,58 +12,115 @@ import modelo.ConexionBD;
 import modelo.ReferenciasB.ReferenciaBD;
 import modelo.ReferenciasB.ReferenciasMD;
 import vista.principal.VtnPrincipal;
+import vista.silabos.frmBibliografia;
 import vista.silabos.frmEditarBiblioteca;
-
+import vista.silabos.frmReferencias;
 
 public class ControladorEditar {
+
     private frmEditarBiblioteca vista;
-    private ReferenciaBD modelo ;
-    private  VtnPrincipal vtnPrin;
- private ConectarDB conecta;
- private String clave;
-    public ControladorEditar(frmEditarBiblioteca vista, ReferenciaBD modelo) {
+    private frmBibliografia vista1;
+    private ReferenciaBD modelo;
+    private VtnPrincipal vtnPrin;
+    private ConexionBD conexion;
+    private String clave;
+
+    public ControladorEditar(frmEditarBiblioteca vista, ReferenciaBD modelo, String Clave) {
         this.vista = vista;
         this.modelo = modelo;
+        this.clave = clave;
         vista.setVisible(true);
     }
 
-    public ControladorEditar(frmEditarBiblioteca vista, ReferenciaBD modelo, VtnPrincipal vtnPrin,String clave, ConectarDB conecta) {
+    public ControladorEditar(frmBibliografia vista1, ReferenciaBD modelo, VtnPrincipal vtnPrin, String clave, ConexionBD conexion) {
+        this.vista1 = vista1;
+        this.modelo = modelo;
+        this.vtnPrin = vtnPrin;
+        this.vtnPrin.getDpnlPrincipal().add(vista1);
+        this.conexion = conexion;
+        this.clave = clave;
+        conexion.conectar();
+        vista1.show();
+        vista1.getLbldescripcion_referecnia().setVisible(true);
+        vista1.getTxtdescripcionreferencia().setVisible(true);
+
+    }
+
+    public ControladorEditar(frmEditarBiblioteca vista, ReferenciaBD modelo, VtnPrincipal vtnPrin, String clave, ConexionBD conexion) {
         this.vista = vista;
         this.modelo = modelo;
         this.vtnPrin = vtnPrin;
-        this.conecta = conecta;
-        this.clave=clave;
+        this.vtnPrin.getDpnlPrincipal().add(vista);
+        this.conexion = conexion;
+        this.clave = clave;
+        conexion.conectar();
+        vista.show();
     }
-    
-    public  ReferenciasMD EditarBiblioteca(ConexionBD conexion, String clave) {
 
-        List<ReferenciasMD> referencias = new ArrayList<>();
-         ReferenciasMD tmp = new ReferenciasMD();
+    public void inicia_vista() {
+        List<ReferenciasMD> r = modelo.obtenerdatos(conexion, clave);
+        modelo.setId_referencia(r.get(0).getId_referencia());
+        modelo.setCodigo_referencia(r.get(0).getCodigo_referencia());
+        modelo.setDescripcion_referencia(r.get(0).getDescripcion_referencia());
+        modelo.setTipo_referencia(r.get(0).getTipo_referencia());
+        modelo.setExiste_en_biblioteca(r.get(0).isExiste_en_biblioteca());
+        modelo.setObservaciones(r.get(0).getObservaciones());
+        modelo.setCodigo_isbn(r.get(0).getCodigo_isbn());
+        modelo.setNumero_de_paginas(r.get(0).getNumero_de_paginas());
+        modelo.setCodigo_koha(r.get(0).getCodigo_koha());
+        modelo.setCodigo_dewey(r.get(0).getCodigo_dewey());
+        modelo.setArea_referencias(r.get(0).getArea_referencias());
+        modelo.setAutor2(r.get(0).getAutor2());
+        modelo.setAutor3(r.get(0).getAutor3());
+        clave = modelo.getCodigo_referencia();
+        vista1.getTxtArea().setText(modelo.getArea_referencias());
+        vista1.getTxtAutor2().setText(modelo.getAutor2());
+        vista1.getTxtObservaciones1().setText(modelo.getObservaciones());
+        vista1.getTxtAutor3().setText(modelo.getAutor3());
+        vista1.getTxtCodigoDewey().setText(modelo.getCodigo_dewey());
+        vista1.getTxtCodigoISBM().setText(modelo.getCodigo_isbn());
+        vista1.getTxtCodigoKoha().setText(modelo.getCodigo_koha());
+        vista1.getTxtCodigoLibro().setText(modelo.getCodigo_referencia());
+        vista1.getTxtNumeroPaginas().setText(modelo.getNumero_de_paginas());
+        vista1.getCbxExistenciaBiblioteca().setSelected(modelo.isExiste_en_biblioteca());
+        // vista1.getLbldescripcion_referecnia().setVisible(true);
+        vista1.getTxtdescripcionreferencia().setText(modelo.getDescripcion_referencia());
+    }
+
+    public void actualizar() {
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
-                    + "FROM public.\"Referencias\"\n"
-                    + "WHERE tipo_referencia='Base'\n"
-                    + "AND descripcion_referencia ILIKE '%" + clave + "%'");
-
-            ResultSet rs = st.executeQuery();
-            
-            while (rs.next()) {
-                
-                tmp.setId_referencia(rs.getInt(1));
-                tmp.setCodigo_referencia(rs.getString(2));
-                tmp.setDescripcion_referencia(rs.getString(3));
-                tmp.setTipo_referencia(rs.getString(4));
-                tmp.setExiste_en_biblioteca(rs.getBoolean(5));
-
-                
+            modelo.setDescripcion_referencia(vista1.getTxtdescripcionreferencia().getText());
+            modelo.setArea_referencias(vista1.getTxtArea().getText());
+            modelo.setAutor2(vista1.getTxtAutor2().getText());
+            modelo.setObservaciones(vista1.getTxtObservaciones1().getText());
+            modelo.setAutor3(vista1.getTxtAutor3().getText());
+            modelo.setCodigo_isbn(vista1.getTxtCodigoISBM().getText());
+            modelo.setCodigo_dewey(vista1.getTxtCodigoDewey().getText());
+            modelo.setCodigo_koha(vista1.getTxtCodigoKoha().getText());
+            modelo.setCodigo_referencia(vista1.getTxtCodigoLibro().getText());
+            modelo.setNumero_de_paginas(vista1.getTxtNumeroPaginas().getText());
+             boolean existe;
+            if (vista1.getCbxExistenciaBiblioteca().isSelected() == true) {
+                existe = true;
+            } else {
+                existe = false;
             }
-
+            modelo.setExiste_en_biblioteca(existe);
+            modelo.actualizar(conexion, clave);
+            vista1.dispose();
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControladorEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  tmp;
+    }
+     public void bottonCancelar() {
+        this.vista1.dispose();
 
     }
-}
 
+    public void init() {
+        vista1.getGuardarB().setText("Actualizar");
+        vista1.getGuardarB().addActionListener(e -> actualizar());
+        vista1.getBtnCancelarB().addActionListener(e->bottonCancelar());
+    }
+
+}

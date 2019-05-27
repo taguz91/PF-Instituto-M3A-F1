@@ -4,14 +4,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class FrmAccesosEditar extends javax.swing.JInternalFrame {
+public class FrmAccesosEditar extends AbstracView {
 
-    
     public FrmAccesosEditar() {
         initComponents();
     }
@@ -56,7 +56,6 @@ public class FrmAccesosEditar extends javax.swing.JInternalFrame {
         this.txtNombreRol = txtNombreRol;
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -131,7 +130,6 @@ public class FrmAccesosEditar extends javax.swing.JInternalFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

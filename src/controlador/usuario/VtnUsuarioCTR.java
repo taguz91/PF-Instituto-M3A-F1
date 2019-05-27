@@ -51,8 +51,8 @@ public class VtnUsuarioCTR {
         Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
 
         tablaUsuarios = (DefaultTableModel) vista.getTblUsuario().getModel();
-        listaUsuarios = modelo.selectAll();
-        cargarTabla(listaUsuarios);
+
+        cargarTabla(listaUsuarios = CONS.USUARIO.selectAll());
         //InitPermisos();
         InitEventos();
 
@@ -65,8 +65,7 @@ public class VtnUsuarioCTR {
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
         vista.getBtnActualizar().addActionListener(e -> {
-            listaUsuarios = modelo.selectAll();
-            cargarTabla(listaUsuarios);
+            cargarTabla(listaUsuarios = CONS.USUARIO.selectAll());
         });
         vista.getBtnAsignarRoles().addActionListener(e -> btnAsignarRoles(e));
         vista.getBtnVerRoles().addActionListener(e -> btnVerRoles(e));

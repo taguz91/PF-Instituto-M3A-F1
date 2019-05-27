@@ -5,27 +5,24 @@
  */
 package vista.periodoLectivoNotas;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
+public class VtnPeriodoIngresoNotas extends AbstracView {
 
     /**
      * Creates new form VtnPerdioIngresoNotas
      */
     public VtnPeriodoIngresoNotas() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnEditar() {
@@ -71,8 +68,6 @@ public class VtnPeriodoIngresoNotas extends javax.swing.JInternalFrame {
     public void setLblEstado(JLabel lblEstado) {
         this.lblEstado = lblEstado;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

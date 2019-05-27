@@ -876,7 +876,7 @@ public class PersonaBD extends PersonaMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return map;

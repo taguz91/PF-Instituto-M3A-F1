@@ -5,18 +5,18 @@
  */
 package vista.notas;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class VtnActivarNotas extends javax.swing.JInternalFrame {
+public class VtnActivarNotas extends AbstracView {
 
     /**
      * Creates new form FrmActivarNotas
@@ -24,8 +24,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public VtnActivarNotas() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JComboBox<String> getCmbPeriodoLectivo() {
@@ -51,8 +49,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public void setLblDatosIncorrectos(JLabel lblDatosIncorrectos) {
         this.lblDatosIncorrectos = lblDatosIncorrectos;
     }
-    
-    
 
     public JButton getBtnActualizar() {
         return btnActualizar;
@@ -93,8 +89,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public void setLblEstado(JLabel lblEstado) {
         this.lblEstado = lblEstado;
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
