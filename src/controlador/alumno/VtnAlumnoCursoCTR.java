@@ -105,6 +105,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         //llamar al reporte
         vtnAlmnCurso.getBtnRepAlum().addActionListener(e -> validaComboReporte());
         vtnAlmnCurso.getBtnListaCiclo().addActionListener(e -> validaComboReporteCiclo());
+         vtnAlmnCurso.getBtnListaPeriodo().addActionListener(e -> ListaAlumnosPeriodo());
         vtnAlmnCurso.getBtnRepUBE().addActionListener(e -> btnUBE(e));
 
         ctrPrin.agregarVtn(vtnAlmnCurso);
@@ -324,12 +325,29 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             parametro.put("ciclo", vtnAlmnCurso.getCmbCiclo().getSelectedIndex());
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
     }
-
+ public void ListaAlumnosPeriodo() {
+        JasperReport jr;
+        String path = "/vista/reportes/repListaAlumPeriodo.jasper";
+        int posCMB= vtnAlmnCurso.getCmbPrdLectivos().getSelectedIndex();
+        if(posCMB<=0){
+            JOptionPane.showMessageDialog(null, "Seleccione un periodo");
+        }else{
+           try {
+            Map parametro = new HashMap();
+            parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
+            System.out.println(parametro);
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        } 
+        }
+    }
     /**
      * Validamos para que se pueda abrir el reporte por periodo y ciclo
      */

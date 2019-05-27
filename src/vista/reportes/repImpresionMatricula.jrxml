@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cedula" class="java.lang.String">
@@ -16,41 +16,35 @@
 		<defaultValueExpression><![CDATA["vista/reportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT distinct p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
-||' '|| p.persona_primer_nombre ||' '|| p.persona_segundo_nombre as alumno,
-pd.persona_primer_apellido ||' '|| pd.persona_segundo_apellido
-||' '|| pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
-materia_codigo, materia_nombre, p.persona_identificacion, c.carrera_nombre,
-mall.malla_almn_num_matricula, m.id_materia, g.curso_ciclo,
-g.curso_paralelo, nombre_jornada, pl.prd_lectivo_nombre,acur.almn_curso_fecha_registro, 
-mt.matricula_tipo
-FROM public."Alumnos" a, public."Personas" p,
-public."Materias" m, public."Carreras" c, public."Cursos" g,
-public."AlumnoCurso" acur, public."PeriodoLectivo" pl,
-public."Jornadas" j, public."Docentes" d, public."Personas" pd,
-public."MallaAlumno" mall, public."AlumnosCarrera" ac,
-public."Matricula" mt
-WHERE  a.id_alumno = acur.id_alumno
-AND c.id_carrera =pl.id_carrera
-AND  p.id_persona = a.id_persona
-AND carrera_activo = true
-AND acur.id_alumno = a.id_alumno
-AND acur.id_curso = g.id_curso
-AND g.id_materia=m.id_materia
-AND g.id_prd_lectivo=pl.id_prd_lectivo
-AND acur.id_curso=g.id_curso
-AND p.persona_identificacion=$P{cedula}
-AND j.id_jornada = g.id_jornada
-AND d.id_docente = g.id_docente
+		<![CDATA[SELECT pa.persona_primer_apellido ||' '|| pa.persona_segundo_apellido ||' '||
+pa.persona_primer_nombre ||' '|| pa.persona_segundo_nombre as alumno,
+pa.persona_identificacion,
+pd.persona_primer_apellido ||' '|| pd.persona_segundo_apellido ||' '||
+pd.persona_primer_nombre ||' '|| pd.persona_segundo_nombre as docente,
+materia_codigo, materia_nombre, carrera_nombre,
+curso_ciclo, nombre_jornada, prd_lectivo_nombre,
+matricula_tipo, matricula_fecha,
+almn_curso_num_matricula, curso_paralelo
+FROM public."Matricula" mt, public."AlumnoCurso" ac,
+public."Cursos" c, public."Docentes" d,
+public."Materias" m, public."Alumnos" a,
+public."Carreras" cr, public."PeriodoLectivo" pl,
+public."Personas" pa, public."Personas" pd,
+public."Jornadas" j
+WHERE pa.persona_identificacion = $P{cedula}
+AND a.id_persona = pa.id_persona
+AND mt.id_alumno = a.id_alumno
+AND mt.id_prd_lectivo = $P{idPeriodo}
+AND ac.id_alumno = mt.id_alumno
+AND c.id_prd_lectivo = mt.id_prd_lectivo
+AND ac.id_curso = c.id_curso
+AND pl.id_prd_lectivo = mt.id_prd_lectivo
+AND cr.id_carrera = pl.id_carrera
+AND d.id_docente = c.id_docente
 AND pd.id_persona = d.id_persona
-AND mall.id_materia =  g.id_materia
-AND g.id_prd_lectivo = $P{idPeriodo}
-AND ac.id_carrera = c.id_carrera
-AND ac.id_alumno = a.id_alumno
-AND mall.id_almn_carrera = ac.id_almn_carrera
-AND acur.almn_curso_estado <> 'RETIRADO'
-AND mt.id_alumno = acur.id_alumno
-AND mt.id_prd_lectivo = $P{idPeriodo};]]>
+AND j.id_jornada = c.id_jornada
+AND m.id_materia = c.id_materia
+AND ac.almn_curso_activo = true;]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
@@ -58,14 +52,13 @@ AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
-	<field name="malla_almn_num_matricula" class="java.lang.Integer"/>
-	<field name="id_materia" class="java.lang.Integer"/>
+	<field name="almn_curso_num_matricula" class="java.lang.Integer"/>
 	<field name="curso_ciclo" class="java.lang.Integer"/>
 	<field name="curso_paralelo" class="java.lang.String"/>
 	<field name="nombre_jornada" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
 	<field name="matricula_tipo" class="java.lang.String"/>
-	<field name="almn_curso_fecha_registro" class="java.sql.Timestamp"/>
+	<field name="matricula_fecha" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -101,7 +94,7 @@ AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Matriculado por:]]></text>
+				<text><![CDATA[Impreso por:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="417" y="43" width="138" height="20"/>
@@ -164,7 +157,7 @@ AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 			<textField pattern="EEE, d MMM yyyy HH:mm:ss ">
 				<reportElement x="91" y="11" width="306" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.util.Date"><![CDATA[$F{almn_curso_fecha_registro}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{matricula_fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="111" width="53" height="20"/>
@@ -310,7 +303,7 @@ AND mt.id_prd_lectivo = $P{idPeriodo};]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[' '+$F{malla_almn_num_matricula}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[' '+$F{almn_curso_num_matricula}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="21" y="0" width="1" height="20"/>

@@ -6,6 +6,7 @@
 
 package modelo.evaluacionSilabo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import modelo.tipoActividad.TipoActividadMD;
@@ -15,7 +16,7 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  * 
  * @author Andres Ullauri
  */
-public class EvaluacionSilaboMD {
+public class EvaluacionSilaboMD implements Serializable {
 
     private String indicador;
 
