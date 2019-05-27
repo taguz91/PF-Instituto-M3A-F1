@@ -53,7 +53,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      */
     public void iniciar() {
         //Iniciamos la tabla
-        String[] t = {"Periodo", "Cedula", "Alumno", "Fecha",};
+        String[] t = {"Periodo", "Cedula", "Alumno", "Fecha"};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
         //Tamaño de columnas 
