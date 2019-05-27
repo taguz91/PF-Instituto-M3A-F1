@@ -314,6 +314,8 @@ public class FrmAlumnoCTR extends DCTR {
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
+        
+       
     }
 
     /**

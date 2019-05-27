@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -89,6 +90,7 @@ public class VtnCarreraCTR extends DVtnCTR {
                 vtnCarrera.getBtnBuscar()));
 
         ctrPrin.agregarVtn(vtnCarrera);
+        InitPermisos();
     }
 
     /**
@@ -268,7 +270,14 @@ public class VtnCarreraCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        vtnCarrera.getBtnEliminar().getAccessibleContext().setAccessibleName("Carreras-Eliminar");
+        vtnCarrera.getBtnEditar().getAccessibleContext().setAccessibleName("Carreras-Editar");
+        vtnCarrera.getBtnIngresar().getAccessibleContext().setAccessibleName("Carreras-Ingresar");
+        vtnCarrera.getBtnReporteAlumnoCarrera().getAccessibleContext().setAccessibleName("Carreras-Reporte-Alumno");
+        vtnCarrera.getBtnReporteDocente().getAccessibleContext().setAccessibleName("Carreras-Reporte-Docente");
         
+        CONS.activarBtns(vtnCarrera.getBtnEliminar(), vtnCarrera.getBtnEditar(), vtnCarrera.getBtnIngresar(), 
+                vtnCarrera.getBtnReporteAlumnoCarrera(), vtnCarrera.getBtnReporteDocente());
     }
 
     public void validarBotonesReportes() {

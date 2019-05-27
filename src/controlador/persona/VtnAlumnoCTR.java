@@ -66,6 +66,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
             public void actionPerformed(ActionEvent e) {
                 vtnAlumno.dispose();
             }
+            
 
         };
 
@@ -123,6 +124,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
 //            }
 //        });
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
+        InitPermisos();
     }
 
     //Muestra el Formulario de Registro de Alumno

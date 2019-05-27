@@ -118,6 +118,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnDocente);
         vtnDocente.getCmbTipoDocente().addActionListener(e -> cargarTipoDocentes());
+        InitPermisos();
     }
 
     private void cargarCmbTipoDocentes() {
