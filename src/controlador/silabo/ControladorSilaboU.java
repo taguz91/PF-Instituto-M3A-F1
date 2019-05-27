@@ -1338,30 +1338,18 @@ public class ControladorSilaboU {
         switch (p) {
             case 1:
 
-                for (int j = gestion.getTblAsistidaDocente().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
                 break;
             case 2:
-                for (int j = gestion.getTblAprendizajeColaborativo().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
             case 3:
-                for (int j = gestion.getTblPractica().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
             case 4:
-                for (int j = gestion.getTblAutonoma().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
         }

@@ -164,8 +164,6 @@ public class ControladorEditarPlanClases {
         lista_curso=CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
         cargarCamposCursoCarreraDocente(lista_curso);
         
-//         lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
-//        CargarEstrategiasUnidad(lista_estrategiasSilabo);
         
         
         lista_estrategias_metodologicas_antici=EstrategiasMetodologicasBD.consultarEstrategiasMetologicas(conexion, planclase.getId_plan_clases());
@@ -467,6 +465,8 @@ public class ControladorEditarPlanClases {
                         array_Anticipacion.remove(i);
                     }
                 }
+                fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                recargarElemwentos();
             }
         } else if(fPlanClase.getListConsolidacionPC().isShowing()){
             if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
@@ -480,6 +480,8 @@ public class ControladorEditarPlanClases {
                         array_Consolidacion.remove(i);
                     }
                 }
+                fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                recargarElemwentos3();
             }
         }else if(fPlanClase.getListConstruccionPC().isShowing()){
             if (fPlanClase.getListConstruccionPC().getSelectedIndex()==-1) {
@@ -493,6 +495,8 @@ public class ControladorEditarPlanClases {
                         array_Construccion.remove(i);
                     }
                 }
+                fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                recargarElemwentos2();
             }
         }
     }
