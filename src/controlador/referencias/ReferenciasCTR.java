@@ -15,7 +15,9 @@ public class ReferenciasCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnPrincipalCTR ctrPrin;
     private String autor, autor2, autor3, autorCorporativo, titulo, año, ciudad, editor;
-
+    
+    
+    
     public ReferenciasCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmBibliografia frmBibliografia) {
         this.frmBibliografia = frmBibliografia;
         this.BDbibliografia = new ReferenciaBD(conecta);
@@ -84,7 +86,12 @@ public class ReferenciasCTR {
             BDbibliografia.setCodigo_koha(frmBibliografia.getTxtCodigoKoha().getText());
             BDbibliografia.setCodigo_dewey(frmBibliografia.getTxtCodigoDewey().getText());
             BDbibliografia.setArea_referencias(frmBibliografia.getTxtArea().getText());
-
+            BDbibliografia.setAutor1(autor);
+            BDbibliografia.setTitulo(titulo);
+            BDbibliografia.setEditor(editor);
+            BDbibliografia.setAño(año);
+            BDbibliografia.setCiudad(ciudad);
+              
             if (BDbibliografia.insertarReferencia()) {
                 JOptionPane.showMessageDialog(null, "Los Datos se guardaron Correctamente");
                 frmBibliografia.getTxtAutor().setText("");
