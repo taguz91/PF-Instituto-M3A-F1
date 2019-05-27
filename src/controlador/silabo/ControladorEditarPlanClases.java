@@ -148,7 +148,7 @@ public class ControladorEditarPlanClases {
                        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
                        cP.iniciaControlador();
                   }else{
-                      JOptionPane.showMessageDialog(null, "Falló al guardar", "Aviso", JOptionPane.ERROR_MESSAGE); 
+                      JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo!", "Aviso", JOptionPane.ERROR_MESSAGE); 
                       fPlanClase.dispose();
                   }
                 }else{
@@ -318,6 +318,7 @@ public class ControladorEditarPlanClases {
      }
      
      public boolean actualizarPlanClase(){
+         try{
         new PlandeClasesBD(conexion).eliminarPlanClase(planClaseMD);
         
         plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
@@ -325,10 +326,14 @@ public class ControladorEditarPlanClases {
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
         plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
-        new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD);  
+       if(new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)==true);  
         actualizarRecusosPlanClases();
         actulizarEstrategiasMetodologicas();
         return true;
+         }catch(Exception e){
+            System.out.println("Fallo al guardar");
+        }
+         return false;
      }
      
      
@@ -424,7 +429,7 @@ public class ControladorEditarPlanClases {
             
             if (fPlanClase.getListConsolidacionPC().isShowing()) {
                  if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
-                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemento a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
                     indice=fPlanClase.getListConsolidacionPC().getSelectedValue();
                     modelo_Consolidacion.removeElement(indice);
