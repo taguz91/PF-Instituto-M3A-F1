@@ -211,7 +211,7 @@ public class SilaboBD extends SilaboMD {
                         + "	WHERE id_silabo=?");
 
                 st.setInt(1, s.getIdSilabo());
-                System.out.println(st);
+              
                 st.executeUpdate();
 
                 System.out.println(st);
