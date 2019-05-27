@@ -32,156 +32,178 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="CbxAutorCorporativo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtAutorCorporativo" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="txtAnio" pref="403" max="32767" attributes="0"/>
-                  <Component id="txtCiudad" pref="403" max="32767" attributes="0"/>
-                  <Component id="txtEditor" alignment="0" pref="403" max="32767" attributes="0"/>
-                  <Component id="txtTitulo" alignment="0" pref="403" max="32767" attributes="0"/>
-                  <Component id="txtAutor" alignment="0" pref="403" max="32767" attributes="0"/>
-                  <Component id="txtCodigoLibro" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbxExistenciaBiblioteca" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbAutor" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCodigoLibro" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbEditor" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbCiudad" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbAnio" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lbTitulo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="206" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtCodigoISBM" alignment="0" min="-2" pref="393" max="-2" attributes="0"/>
-                          <Component id="lbCodigoISBM" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumeroPaginas" min="-2" pref="393" max="-2" attributes="0"/>
-                          <Component id="lbNumeroPaginas" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCodigoKoha" alignment="0" min="-2" pref="393" max="-2" attributes="0"/>
-                          <Component id="lbCodigokoha" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="btnCancelarB" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="GuardarB" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbAutor" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbCodigoLibro" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbAutor1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbAutor2" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbTitulo" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbAnio" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbCiudad" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbEditor" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                              <Component id="cbxExistenciaBiblioteca" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                              <Component id="lbTituloVentanaCBApa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="354" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtArea" min="-2" pref="393" max="-2" attributes="0"/>
-                              <Component id="txtCodigoDewey" min="-2" pref="393" max="-2" attributes="0"/>
-                              <Component id="txtObservaciones1" alignment="0" min="-2" pref="393" max="-2" attributes="0"/>
-                              <Component id="lbCodigoDewey" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbArea" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbObeservaciones" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtCiudad" alignment="0" min="-2" pref="304" max="-2" attributes="0"/>
+                                  <Component id="txtEditor" alignment="0" min="-2" pref="304" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="txtAnio" min="-2" pref="304" max="-2" attributes="0"/>
+                                              <EmptySpace pref="37" max="32767" attributes="0"/>
+                                              <Component id="lbObeservaciones" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="txtAutor2" min="-2" pref="304" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="lbCodigokoha" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="txtTitulo" alignment="0" min="-2" pref="304" max="-2" attributes="0"/>
+                                                  <Component id="txtAutor3" alignment="0" min="-2" pref="304" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lbArea" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lbCodigoDewey" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="txtCodigoLibro" max="32767" attributes="0"/>
+                                                  <Component id="txtAutor" pref="304" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="16" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lbCodigoISBM" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lbNumeroPaginas" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txtNumeroPaginas" max="32767" attributes="0"/>
+                                              <Component id="txtCodigoISBM" max="32767" attributes="0"/>
+                                              <Component id="txtCodigoKoha" min="-2" pref="393" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="txtCodigoDewey" alignment="1" min="-2" pref="393" max="-2" attributes="0"/>
+                                          <Component id="txtArea" min="-2" pref="393" max="-2" attributes="0"/>
+                                          <Component id="txtObservaciones1" min="-2" pref="393" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Txtdescripcionreferencia" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
-              <Component id="lbTituloVentanaCBApa" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
+              <Component id="btnCancelarB" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="GuardarB" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="1" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="lbTituloVentanaCBApa" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
-              <Component id="cbxExistenciaBiblioteca" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lbTituloVentanaCBApa" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="cbxExistenciaBiblioteca" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbCodigoLibro" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbNumeroPaginas" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtCodigoLibro" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbNumeroPaginas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtNumeroPaginas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lbAutor" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="lbCodigoISBM" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtAutor" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbAutor" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtAutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbCodigoISBM" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCodigoISBM" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                      <Component id="CbxAutorCorporativo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtAutorCorporativo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbAutor1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtAutor2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbCodigokoha" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCodigoKoha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="txtCodigoISBM" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbCodigokoha" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCodigoKoha" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbAnio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbAutor2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAutor3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbCodigoDewey" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtAnio" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtCodigoDewey" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbCiudad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbArea" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtCiudad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtArea" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbAnio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAnio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbObeservaciones" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtObservaciones1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbCiudad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCiudad" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbEditor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbObeservaciones" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtEditor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtObservaciones1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Txtdescripcionreferencia" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelarB" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="GuardarB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -207,11 +229,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAutorActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtAutorCorporativo">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
@@ -245,6 +262,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCiudad">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCiudadActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
@@ -261,11 +281,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="CbxAutorCorporativo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Autor Corporativo"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarB">
       <Properties>
@@ -384,6 +399,45 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Area"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAutor2">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAutor2ActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbAutor1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autor 2"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbAutor2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autor 3"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtAutor3">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAutor3ActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Referencia:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="Txtdescripcionreferencia">
     </Component>
   </SubComponents>
 </Form>

@@ -13,6 +13,7 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.curso.SesionClaseMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
@@ -22,7 +23,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     private CarreraMD carrera;
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
 
@@ -44,12 +45,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
                 + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
@@ -72,12 +68,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
@@ -85,12 +76,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = false"
                 + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean abrirPeriodo(int id) {
@@ -98,12 +84,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + " prd_lectivo_estado = true"
                 + " WHERE id_prd_lectivo = " + id + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
@@ -572,8 +553,22 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         String sql = "SELECT prd_lectivo_fecha_inicio \n"
                 + "FROM public.\"PeriodoLectivo\"\n"
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
-        ResultSet rs = conecta.sql(sql);
-        PreparedStatement ps = conecta.getPS(sql);
+        conn = pool.getConnection();
+        rst = pool.ejecutarQuery(sql, conn, null);
+            try {
+                while (rst.next()) {
+                    fi = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    System.out.println(fi);
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                }
+                return fi;
+            } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.close(conn);
+        }
+        /*
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -583,7 +578,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             } catch (SQLException e) {
                 System.out.println("No pudimos consultar fecha inicio del periodo: " + e.getMessage());
             }
-        }
+        }*/
         return fi;
     }
 
@@ -604,12 +599,13 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
                 + "WHERE\n"
-                + " \"public\".\"Docentes\".id_docente = " + idDocente;
+                + " \"public\".\"Docentes\".id_docente = ?";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
-
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idDocente);
         conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
+        rst = pool.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rst.next()) {
@@ -618,11 +614,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
                 periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
@@ -635,7 +631,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
         return lista;
     }
@@ -664,7 +660,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
         return lista;
     }
@@ -720,11 +716,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
 
-                CarreraMD carrera = new CarreraMD();
-                carrera.setId(rst.getInt("id_carrera"));
-                carrera.setNombre(rst.getString("carrera_nombre"));
-                carrera.setModalidad(rst.getString("carrera_modalidad"));
-                periodo.setCarrera(carrera);
+                CarreraMD c = new CarreraMD();
+                c.setId(rst.getInt("id_carrera"));
+                c.setNombre(rst.getString("carrera_nombre"));
+                c.setModalidad(rst.getString("carrera_modalidad"));
+                periodo.setCarrera(c);
 
                 String key = rst.getString("prd_lectivo_nombre");
 
@@ -733,7 +729,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return map;
@@ -760,8 +756,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, parametros);
 
-        System.out.println("--->" + pool.getStmt());
-
         try {
             while (rst.next()) {
 
@@ -782,7 +776,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rst).close(conn);
         }
 
         return map;
@@ -823,6 +817,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 System.out.println(e.getMessage());
             }
         } finally {
+            pool.closeStmt();
+            pool.close(rst);
             pool.close(conn);
         }
         return semana;

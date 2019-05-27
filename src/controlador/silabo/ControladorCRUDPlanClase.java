@@ -77,6 +77,10 @@ public class ControladorCRUDPlanClase {
         principal.getDpnlPrincipal().add(fCrud_plan_Clases);
         fCrud_plan_Clases.setTitle("PLANES DE CLASE");
         fCrud_plan_Clases.show();
+        CARGAR_COMBO_CARRERAS();
+        CARGAR_COMBO_PERIODOS_CARRERA();
+        CARGAR_JORNADAS();
+        cargarPlanesDeClaseProfesor();
 
         fCrud_plan_Clases.setLocation((principal.getDpnlPrincipal().getSize().width - fCrud_plan_Clases.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - fCrud_plan_Clases.getSize().height) / 2);
@@ -118,14 +122,6 @@ public class ControladorCRUDPlanClase {
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
-        
-    
-        
-            
-        CARGAR_COMBO_CARRERAS();
-        CARGAR_JORNADAS();
-        cargarPlanesDeClaseProfesor();
-        CARGAR_COMBO_PERIODOS_CARRERA();
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
         fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
     }

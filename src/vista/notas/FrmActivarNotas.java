@@ -5,22 +5,20 @@
  */
 package vista.notas;
 
-import javax.swing.ImageIcon;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class FrmActivarNotas extends javax.swing.JInternalFrame {
+public class FrmActivarNotas extends AbstracView {
 
     /**
      * Creates new form FrmActivarNotas
      */
     public FrmActivarNotas() {
         initComponents();
-        
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
+
     }
 
     /**

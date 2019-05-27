@@ -8,12 +8,13 @@ package vista.usuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Sebastian
  */
-public class VtnPerfilUsuario extends javax.swing.JInternalFrame {
+public class VtnPerfilUsuario extends AbstracView {
 
     /**
      * Creates new form VtnPerfilUsuario
@@ -78,9 +79,6 @@ public class VtnPerfilUsuario extends javax.swing.JInternalFrame {
         this.btnCambiarContrasena = btnCambiarContrasena;
     }
 
-    
-   
-
     public JTextField getTxtContrasena() {
         return txtContrasena;
     }
@@ -88,8 +86,6 @@ public class VtnPerfilUsuario extends javax.swing.JInternalFrame {
     public void setTxtContrasena(JTextField txtContrasena) {
         this.txtContrasena = txtContrasena;
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

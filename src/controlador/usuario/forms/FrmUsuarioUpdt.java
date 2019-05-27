@@ -19,7 +19,6 @@ public class FrmUsuarioUpdt extends AbstracForm {
     }
 
     public void setModelo(UsuarioBD modelo) {
-        this.modelo = null;
         this.modelo = modelo;
         this.Pk = modelo.getUsername();
         setForm();

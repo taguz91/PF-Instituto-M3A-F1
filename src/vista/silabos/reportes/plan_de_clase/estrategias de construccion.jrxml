@@ -5,8 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT ea.descripcion_estrategia FROM "EstrategiasMetodologias" em join "EstrategiasUnidad" eu on eu.id_estrategia_unidad=em.id_estrategias_unidad join "EstrategiasAprendizaje"
- ea on ea.id_estrategia=eu.id_estrategia where em.tipo_estrategias_metodologias='Construccion' and em.id_plan_de_clases=$P!{id_plan_clase}]]>
+		<![CDATA[SELECT nombre_estrategia as descripcion_estrategia FROM "EstrategiasMetodologias"  where tipo_estrategias_metodologias='Construccion' and id_plan_de_clases=$P!{id_plan_clase}]]>
 	</queryString>
 	<field name="descripcion_estrategia" class="java.lang.String"/>
 	<background>

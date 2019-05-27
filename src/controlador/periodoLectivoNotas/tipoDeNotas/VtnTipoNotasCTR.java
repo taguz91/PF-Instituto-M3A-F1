@@ -106,7 +106,7 @@ public class VtnTipoNotasCTR {
 //                oderBy(e);
 //            }
 //        });
-        vista.getCmbPeriodos().addItemListener(e -> {
+        vista.getCmbPeriodos().addActionListener(e -> {
             if (vista.getCmbPeriodos().getSelectedIndex() != 0) {
                 cargarTabla(listaTiposNotas
                         .stream()

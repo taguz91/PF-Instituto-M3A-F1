@@ -23,8 +23,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.carrera.CarreraBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
@@ -50,7 +50,7 @@ public class VtnNotasCTR {
     private final VtnPrincipal desktop;
     private final VtnNotas vista;
     private final UsuarioBD usuario;
-    private final RolBD rolSeleccionado;
+    private final RolBD ROL;
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
@@ -72,7 +72,6 @@ public class VtnNotasCTR {
     private final PeriodoLectivoBD peridoBD;
     private final AlumnoCursoBD almnCursoBD;
     private final TipoDeNotaBD tipoNotaBD;
-    private final CarreraBD carreraBD;
     private final CursoBD cursoBD;
     private final MateriaBD materiaBD;
     private final DocenteBD docenteBD;
@@ -81,18 +80,17 @@ public class VtnNotasCTR {
         peridoBD = new PeriodoLectivoBD();
         almnCursoBD = new AlumnoCursoBD();
         tipoNotaBD = new TipoDeNotaBD();
-        carreraBD = new CarreraBD();
         cursoBD = new CursoBD();
         materiaBD = new MateriaBD();
         docenteBD = new DocenteBD();
     }
 
     // private VtnPrincipalCTR ctrPrin;
-    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista, UsuarioBD usuario, RolBD rolSeleccionado) {
+    public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista) {
         this.desktop = desktop;
         this.vista = vista;
-        this.usuario = usuario;
-        this.rolSeleccionado = rolSeleccionado;
+        this.usuario = CONS.USUARIO;
+        this.ROL = CONS.ROL;
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -103,7 +101,7 @@ public class VtnNotasCTR {
         jTblTrad = vista.getTblTrad();
         jTblDual = vista.getTblDual();
 
-        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+        if (ROL.getNombre().toLowerCase().contains("docente")) {
             listaDocentes = docenteBD.selectAll(usuario.getUsername());
         } else {
             listaDocentes = docenteBD.selectAll();
@@ -372,7 +370,7 @@ public class VtnNotasCTR {
 
     private void activarForm(boolean estado) {
 
-        if (rolSeleccionado.getNombre().toLowerCase().contains("docente")) {
+        if (ROL.getNombre().toLowerCase().contains("docente")) {
             vista.getTxtBuscar().setVisible(false);
             vista.getBtnBuscar().setVisible(false);
             vista.getCmbDocente().setEnabled(false);

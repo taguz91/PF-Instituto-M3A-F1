@@ -7,13 +7,14 @@ package vista.usuario;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
  *
  * @author MrRainx
  */
-public class VtnSelectRol extends javax.swing.JFrame {
+public class VtnSelectRol extends JFrame{
 
     /**
      * Creates new form VtnSelectRol

@@ -77,6 +77,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "ORDER BY usu_username";
 
         System.out.println(SELECT);
+        
 
         return selectSimple(SELECT, null);
 
@@ -159,7 +160,7 @@ public final class UsuarioBD extends UsuarioMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return usuario;

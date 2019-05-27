@@ -67,7 +67,10 @@ public class FrmAlumnoCTR extends DCTR {
         this.sectorE = new SectorEconomicoBD(ctrPrin.getConecta());
         bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
-
+    
+    /**
+     * Este método inicia los eventos de los componentes así como sus Validaciones correspondientes
+     */
     public void iniciar() {
         ctrPrin.agregarVtn(frmAlumno);
         //Validaciones de los Combo Box
@@ -138,15 +141,7 @@ public class FrmAlumnoCTR extends DCTR {
             }
         };
 
-        KeyListener titulo_Superior = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
+        KeyListener titulo_Superior = new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 1;
@@ -155,15 +150,7 @@ public class FrmAlumnoCTR extends DCTR {
             }
         };
 
-        KeyListener ocupacion = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
+        KeyListener ocupacion = new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 2;
@@ -178,15 +165,7 @@ public class FrmAlumnoCTR extends DCTR {
             }
         };
 
-        KeyListener nombre_Contacto = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
+        KeyListener nombre_Contacto = new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 3;
@@ -195,15 +174,7 @@ public class FrmAlumnoCTR extends DCTR {
             }
         };
 
-        KeyListener num_Contacto = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
+        KeyListener num_Contacto = new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 validar = 4;
@@ -212,7 +183,7 @@ public class FrmAlumnoCTR extends DCTR {
             }
         };
 
-        KeyListener cedula = new KeyListener() {
+        KeyListener cedula = new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (identificacion == true) {
@@ -233,14 +204,6 @@ public class FrmAlumnoCTR extends DCTR {
                     }
                     habilitarGuardar();
                 }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
             }
         };
 
@@ -353,20 +316,27 @@ public class FrmAlumnoCTR extends DCTR {
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
     }
 
-    //Muestra la ventana para visualizar los Alumnos registrado
+    /**
+     * Muestra la ventana para visualizar los Alumnos registrados
+     */
     public void buscarPersona() {
         VtnAlumno alumno = new VtnAlumno();
         VtnAlumnoCTR c = new VtnAlumnoCTR(alumno, ctrPrin);
         c.iniciar();
     }
 
-    //Captura los datos de Sectores en la Base de Datos
+    /**
+     * Captura los datos de Sectores en la Base de Datos
+     */
     public void iniciaDatos() {
         //Alumnos = bdAlumno.filtrarAlumno();
         Sectores = sectorE.capturarSectores();
     }
 
-    //Devuelve un boolean para verificar si existen errores en el formulario
+    /**
+     * Devuelve un boolean para verificar si existen errores en el formulario
+     * @return Regresa un Boolean para determinar el error
+     */
     public boolean confirmarErrores() {
         boolean error = false;
         if (frmAlumno.getChkBx_EdcSuperior().isSelected() == true) {
@@ -452,7 +422,9 @@ public class FrmAlumnoCTR extends DCTR {
         return error;
     }
 
-    //Este método busca al estudiante ingresado por medio de la Cédula en el formulario
+    /**
+     * Este método busca al estudiante ingresado por medio de la Cédula en el formulario
+     */
     public void buscarCedula() {
         if (cont == 1) {
 
@@ -566,7 +538,10 @@ public class FrmAlumnoCTR extends DCTR {
         }
     }
 
-    //Muestra un mensaje de error de ingreso dependiendo del componente
+    /**
+     * Muestra un mensaje de error de ingreso dependiendo del componente
+     * @param texto Se pasa el texto ingresado para su correspondiente validación
+     */
     public void validarComponentes(String texto) {
         if (validar == 1) {
             if (modelo.validaciones.Validar.esLetras(texto) == false && texto.equals("") == false) {
@@ -607,7 +582,9 @@ public class FrmAlumnoCTR extends DCTR {
         }
     }
 
-    //Habilita el boton Guardar cuando los siguientes componentes NO estan vacios
+    /**
+     * Habilita el boton Guardar cuando los siguientes componentes NO estan vacios
+     */
     public void habilitarGuardar() {
 
         String titulo_Bachiller, nombre_Contacto, contacto_Emergencia, cedula, nombre, titulo_Superior;
@@ -695,7 +672,9 @@ public class FrmAlumnoCTR extends DCTR {
         }
     }
 
-    //La visibilidad de los errores permanecen ocultos
+    /**
+     * La visibilidad de los errores permanecen ocultos
+     */
     public void iniciarComponentes() {
         frmAlumno.getCbx_Identificacion().setToolTipText("Seleccione un Tipo de Identificación");
         frmAlumno.getTxt_Cedula().setToolTipText("Ingrese una Identificación válida y espere la respuesta del Sistema");
@@ -737,11 +716,18 @@ public class FrmAlumnoCTR extends DCTR {
         frmAlumno.getLbl_ErrAnio().setVisible(false);
     }
 
+    /**
+     * Este método pasa al siguiente método un Boolean para la activación de los componentes
+     */
     private void activarSuperior() {
         boolean superior = frmAlumno.getChkBx_EdcSuperior().isSelected();
         desactivarSuperior(superior);
     }
 
+    /**
+     * Este método actica o desactiva según el Boolean enviado
+     * @param estado Se pasa un boolean para dar funcionalidad al Checkbox
+     */
     private void desactivarSuperior(boolean estado) {
         frmAlumno.getLbl_TSuperior().setVisible(estado);
         frmAlumno.getTxt_TituloSuperior().setVisible(estado);
@@ -749,11 +735,18 @@ public class FrmAlumnoCTR extends DCTR {
         frmAlumno.getTxt_Abreviatura().setVisible(estado);
     }
 
+    /**
+     * Este método pasa al siguiente método un Boolean para la activación de los componentes
+     */
     private void activarSectores() {
         boolean esSector = frmAlumno.getChkBx_Trabaja().isSelected();
         desactivarSectores(esSector);
     }
 
+    /**
+     * Este método actica o desactiva según el Boolean enviado
+     * @param estado Se pasa un boolean para dar funcionalidad al Checkbox
+     */
     private void desactivarSectores(boolean estado) {
         frmAlumno.getCmBx_SecEconomico().setEnabled(estado);
         frmAlumno.getLbl_ErrSecEconomico().setVisible(false);
@@ -768,7 +761,9 @@ public class FrmAlumnoCTR extends DCTR {
         }
     }
 
-    //Guarda o Edita al Alumno insertado dependiendo el boolean
+    /**
+     * Guarda o Edita al Alumno insertado dependiendo el boolean
+     */
     public void guardarAlumno() {
 
         if (editar == false && editar_2 == false) {
@@ -836,7 +831,10 @@ public class FrmAlumnoCTR extends DCTR {
         }
     }
 
-    //Inserta los datos extraídos del objeto personas en los componentes para su Edición
+    /**
+     * Inserta los datos extraídos del objeto personas en los componentes para su Edición
+     * @param persona Se pasa un objeto de Persona para la respectiva colocación de datos en el Sistema
+     */
     public void editar(AlumnoMD persona) {
         editar = true;
         //El alumno que nos pasamos lo llenamos en el formulario  
@@ -890,6 +888,7 @@ public class FrmAlumnoCTR extends DCTR {
         habilitarGuardar();
     }
 
+    
     //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
         //frmAlumno.getTxt_Cedula().setText("");

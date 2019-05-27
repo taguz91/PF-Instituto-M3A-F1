@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
@@ -702,16 +704,22 @@ public class MateriaBD extends MateriaMD {
                 + "\"public\".\"Cursos\"\n"
                 + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
                 + "WHERE\n"
-                + "\"Cursos\".id_docente = " + curso.getDocente().getIdDocente() + " AND\n"
-                + "\"Cursos\".id_prd_lectivo = '" + curso.getPeriodo().getId_PerioLectivo() + "' AND \n"
-                + "\"Cursos\".curso_nombre = '" + curso.getNombre() + "'";
+                + "\"Cursos\".id_docente = ? AND\n"
+                + "\"Cursos\".id_prd_lectivo = ?AND \n"
+                + "\"Cursos\".curso_nombre = ?";
 
         System.out.println(SELECT);
 
         List<MateriaMD> lista = new ArrayList<>();
+        
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, curso.getDocente().getIdDocente());
+        parametros.put(2, curso.getPeriodo().getId_PerioLectivo());
+        parametros.put(3, curso.getNombre());
+        
 
         conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        rst = POOL.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rst.next()) {
@@ -724,7 +732,7 @@ public class MateriaBD extends MateriaMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            POOL.closeStmt().close(rst).close(conn);
         }
         return lista;
 

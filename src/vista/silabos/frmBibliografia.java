@@ -9,6 +9,22 @@ import javax.swing.JTextField;
 
 public class frmBibliografia extends javax.swing.JInternalFrame {
 
+    public JTextField getTxtAutor3() {
+        return txtAutor3;
+    }
+
+    public void setTxtAutor3(JTextField txtAutor3) {
+        this.txtAutor3 = txtAutor3;
+    }
+
+    public JTextField getTxtAutor2() {
+        return txtAutor2;
+    }
+
+    public void setTxtAutor2(JTextField txtAutor2) {
+        this.txtAutor2 = txtAutor2;
+    }
+
     public JTextField getTxtArea() {
         return txtArea;
     }
@@ -106,13 +122,6 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         return txtCodigoLibro;
     }
 
-    public JCheckBox getCbxAutorCorporativo() {
-        return CbxAutorCorporativo;
-    }
-
-    public void setCbxAutorCorporativo(JCheckBox CbxAutorCorporativo) {
-        this.CbxAutorCorporativo = CbxAutorCorporativo;
-    }
 
     public JButton getGuardarB() {
         return GuardarB;
@@ -194,14 +203,6 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         this.txtAutor = txtAutor;
     }
 
-    public JTextField getTxtAutorCorporativo() {
-        return txtAutorCorporativo;
-    }
-
-    public void setTxtAutorCorporativo(JTextField txtAutorCorporativo) {
-        this.txtAutorCorporativo = txtAutorCorporativo;
-    }
-
     public JTextField getTxtCiudad() {
         return txtCiudad;
     }
@@ -226,6 +227,30 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         this.txtTitulo = txtTitulo;
     }
 
+    public JTextField getTxtdescripcionreferencia() {
+        return Txtdescripcionreferencia;
+    }
+
+    public void setTxtdescripcionreferencia(JTextField Txtdescripcionreferencia) {
+        this.Txtdescripcionreferencia = Txtdescripcionreferencia;
+    }
+
+    public JLabel getLbldescripcion_referecnia() {
+        return jLabel1;
+    }
+
+    public void setLbldescripcion_referecnia(JLabel lbldescripcion_referecnia) {
+        this.jLabel1 = lbldescripcion_referecnia;
+    }
+
+    public JTextField getTxtObservaciones1() {
+        return txtObservaciones1;
+    }
+
+    public void setTxtObservaciones1(JTextField txtObservaciones1) {
+        this.txtObservaciones1 = txtObservaciones1;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -239,7 +264,6 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         lbTituloVentanaCBApa = new javax.swing.JLabel();
         lbAutor = new javax.swing.JLabel();
         txtAutor = new javax.swing.JTextField();
-        txtAutorCorporativo = new javax.swing.JTextField();
         lbTitulo = new javax.swing.JLabel();
         txtAnio = new javax.swing.JTextField();
         lbAnio = new javax.swing.JLabel();
@@ -248,7 +272,6 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         txtCiudad = new javax.swing.JTextField();
         lbEditor = new javax.swing.JLabel();
         txtEditor = new javax.swing.JTextField();
-        CbxAutorCorporativo = new javax.swing.JCheckBox();
         btnCancelarB = new javax.swing.JButton();
         GuardarB = new javax.swing.JButton();
         lbCodigoLibro = new javax.swing.JLabel();
@@ -266,6 +289,12 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         lbCodigokoha = new javax.swing.JLabel();
         lbCodigoDewey = new javax.swing.JLabel();
         lbArea = new javax.swing.JLabel();
+        txtAutor2 = new javax.swing.JTextField();
+        lbAutor1 = new javax.swing.JLabel();
+        lbAutor2 = new javax.swing.JLabel();
+        txtAutor3 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        Txtdescripcionreferencia = new javax.swing.JTextField();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -296,6 +325,12 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
 
         lbCiudad.setText("Ciudad");
 
+        txtCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCiudadActionPerformed(evt);
+            }
+        });
+
         lbEditor.setText("Editor");
 
         txtEditor.addActionListener(new java.awt.event.ActionListener() {
@@ -303,8 +338,6 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
                 txtEditorActionPerformed(evt);
             }
         });
-
-        CbxAutorCorporativo.setText("Autor Corporativo");
 
         btnCancelarB.setText("Cancelar");
 
@@ -373,130 +406,164 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
 
         lbArea.setText("Area");
 
+        txtAutor2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAutor2ActionPerformed(evt);
+            }
+        });
+
+        lbAutor1.setText("Autor 2");
+
+        lbAutor2.setText("Autor 3");
+
+        txtAutor3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAutor3ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Referencia:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(CbxAutorCorporativo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtAutorCorporativo))
-                    .addComponent(txtAnio, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(txtCiudad, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(txtEditor, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(txtAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                    .addComponent(txtCodigoLibro)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxExistenciaBiblioteca)
-                            .addComponent(lbAutor)
-                            .addComponent(lbCodigoLibro)
-                            .addComponent(lbEditor)
-                            .addComponent(lbCiudad)
-                            .addComponent(lbAnio)
-                            .addComponent(lbTitulo))
-                        .addGap(0, 206, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigoISBM, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbCodigoISBM)
-                            .addComponent(txtNumeroPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbNumeroPaginas)
-                            .addComponent(txtCodigoKoha, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbCodigokoha))
-                        .addContainerGap(40, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbAutor)
+                            .addComponent(lbCodigoLibro)
+                            .addComponent(lbAutor1)
+                            .addComponent(lbAutor2)
+                            .addComponent(lbTitulo)
+                            .addComponent(lbAnio)
+                            .addComponent(lbCiudad)
+                            .addComponent(lbEditor))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCancelarB)
-                                .addGap(10, 10, 10)
-                                .addComponent(GuardarB))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtArea, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCodigoDewey, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtObservaciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbCodigoDewey)
-                                .addComponent(lbArea)
-                                .addComponent(lbObeservaciones)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(331, 331, 331)
-                .addComponent(lbTituloVentanaCBApa)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(5, 5, 5)
+                                .addComponent(cbxExistenciaBiblioteca)
+                                .addGap(63, 63, 63)
+                                .addComponent(lbTituloVentanaCBApa)
+                                .addContainerGap(354, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                                .addComponent(lbObeservaciones))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtAutor2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lbCodigokoha))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtAutor3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbArea, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(lbCodigoDewey, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(txtCodigoLibro)
+                                                    .addComponent(txtAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbCodigoISBM, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(lbNumeroPaginas, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtNumeroPaginas)
+                                                .addComponent(txtCodigoISBM)
+                                                .addComponent(txtCodigoKoha, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtCodigoDewey, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtArea, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtObservaciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Txtdescripcionreferencia)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelarB)
+                .addGap(18, 18, 18)
+                .addComponent(GuardarB)
+                .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lbTituloVentanaCBApa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(cbxExistenciaBiblioteca)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTituloVentanaCBApa)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(cbxExistenciaBiblioteca)))
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCodigoLibro)
-                    .addComponent(lbNumeroPaginas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCodigoLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbNumeroPaginas)
                     .addComponent(txtNumeroPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbAutor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(lbCodigoISBM))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                    .addComponent(lbAutor)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbCodigoISBM)
+                        .addComponent(txtCodigoISBM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(CbxAutorCorporativo)
-                        .addComponent(txtAutorCorporativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtCodigoISBM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTitulo)
-                    .addComponent(lbCodigokoha))
+                    .addComponent(lbAutor1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAutor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbCodigokoha)
+                        .addComponent(txtCodigoKoha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigoKoha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbAnio)
-                    .addComponent(lbCodigoDewey))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbAutor2)
+                    .addComponent(txtAutor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCodigoDewey)
                     .addComponent(txtCodigoDewey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbCiudad)
-                    .addComponent(lbArea))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTitulo)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbArea)
                     .addComponent(txtArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbAnio)
+                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbObeservaciones)
+                    .addComponent(txtObservaciones1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCiudad)
+                    .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbEditor)
-                    .addComponent(lbObeservaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtObservaciones1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addComponent(Txtdescripcionreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarB)
                     .addComponent(GuardarB))
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -546,16 +613,31 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoDeweyActionPerformed
 
+    private void txtAutor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAutor2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAutor2ActionPerformed
+
+    private void txtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCiudadActionPerformed
+
+    private void txtAutor3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAutor3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAutor3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox CbxAutorCorporativo;
     public javax.swing.JButton GuardarB;
+    private javax.swing.JTextField Txtdescripcionreferencia;
     public javax.swing.JButton btnCancelarB;
     private javax.swing.JCheckBox cbxExistenciaBiblioteca;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JLabel lbAnio;
     private javax.swing.JLabel lbArea;
     public javax.swing.JLabel lbAutor;
+    public javax.swing.JLabel lbAutor1;
+    public javax.swing.JLabel lbAutor2;
     private javax.swing.JLabel lbCiudad;
     private javax.swing.JLabel lbCodigoDewey;
     private javax.swing.JLabel lbCodigoISBM;
@@ -569,7 +651,8 @@ public class frmBibliografia extends javax.swing.JInternalFrame {
     public javax.swing.JTextField txtAnio;
     public javax.swing.JTextField txtArea;
     public javax.swing.JTextField txtAutor;
-    public javax.swing.JTextField txtAutorCorporativo;
+    public javax.swing.JTextField txtAutor2;
+    public javax.swing.JTextField txtAutor3;
     public javax.swing.JTextField txtCiudad;
     public javax.swing.JTextField txtCodigoDewey;
     public javax.swing.JTextField txtCodigoISBM;
