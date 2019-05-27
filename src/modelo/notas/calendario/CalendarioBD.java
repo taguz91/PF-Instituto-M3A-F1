@@ -68,10 +68,10 @@ public class CalendarioBD extends CalendarioMD{
         rst = pool.ejecutarQuery(SELECT, conn, null);
             try {
                 while (rst.next()) {
-                    fecha_ini = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
-                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    fecha_ini = rst.getDate("prd_lectivo_fecha_ini").toLocalDate();
+                    System.out.println("*********************");
                     System.out.println(fecha_ini);
-                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                    System.out.println("**********************");
                 }
                 return fecha_ini;
             } catch (SQLException e) {
