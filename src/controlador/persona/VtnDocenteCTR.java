@@ -213,7 +213,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                     ctrFrmPersona.iniciar();
                     perEditar = per.buscarPersona(docentesMD.get(posFila).getIdPersona());
                     ctrFrmPersona.editar(perEditar);
-                    vtnDocente.dispose();
+                    //vtnDocente.dispose();
                     ctrPrin.cerradoJIF();
                 } else {
                     if (seleccion == 1) {
@@ -237,7 +237,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
                         ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                         //vtnDocente.getTblDocente().setVisible(false);
-                        vtnDocente.dispose();
+                       // vtnDocente.dispose();
                         ctrPrin.cerradoJIF();
                     }
                 }
