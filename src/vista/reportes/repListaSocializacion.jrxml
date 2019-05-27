@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="37"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,7 +15,7 @@ p.persona_primer_nombre || ' ' || p.persona_segundo_nombre AS alumno, c.curso_no
 ,mat.materia_nombre,p.persona_identificacion,
 per.persona_primer_nombre || ' ' || per.persona_segundo_nombre || ' ' ||
 per.persona_primer_apellido || ' ' || per.persona_segundo_apellido AS docente,
-pl.prd_lectivo_nombre
+pl.prd_lectivo_nombre, doc.docente_abreviatura
 FROM public."AlumnoCurso" ac, public."Alumnos" a, public."Personas" p, public."Cursos" c,
 public."Materias" mat, public."Docentes" doc, public."Personas" per, public."PeriodoLectivo" pl
 WHERE ac.id_alumno = a.id_alumno
@@ -31,9 +31,10 @@ order by p.persona_primer_apellido;]]>
 	<field name="alumno" class="java.lang.String"/>
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="docente" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
-	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="docente_abreviatura" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -58,7 +59,7 @@ order by p.persona_primer_apellido;]]>
 			<textField>
 				<reportElement x="0" y="99" width="555" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{titulo}]]></textFieldExpression>
 			</textField>
@@ -75,12 +76,12 @@ order by p.persona_primer_apellido;]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="316" y="129" width="125" height="20"/>
+				<reportElement x="398" y="128" width="125" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="274" y="129" width="42" height="20"/>
+				<reportElement x="356" y="128" width="42" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -106,7 +107,7 @@ order by p.persona_primer_apellido;]]>
 				<text><![CDATA[Periodo Lectivo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="92" y="129" width="122" height="20"/>
+				<reportElement x="92" y="129" width="264" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
@@ -203,6 +204,22 @@ order by p.persona_primer_apellido;]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="185" splitType="Stretch">
+			<textField>
+				<reportElement x="145" y="114" width="286" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente_abreviatura}+' '+'.'+' '+$F{docente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="145" y="113" width="286" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="145" y="134" width="286" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>
