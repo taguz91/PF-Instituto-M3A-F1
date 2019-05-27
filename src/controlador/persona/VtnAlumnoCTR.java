@@ -121,7 +121,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
 //               }
 //            }
 //        });
-        vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
+        vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> ListaDeAlumnos());
     }
 
     //Muestra el Formulario de Registro de Alumno
@@ -367,16 +367,15 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     //Muestra los reportes con todos los Alumnos registrados
-    public void llamaReporteAlumno() {
+   public void ListaDeAlumnos() {
         JasperReport jr;
-        String path = "/vista/reportes/repAlumnos.jasper";
-        try {
-            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, null, "Reporte de Alumnos");
-
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex);
-        }
+        String path = "/vista/reportes/repListaAlumnos.jasper";
+            try {
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
     }
 
     private void InitPermisos() {

@@ -107,6 +107,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnhorasAsignadas().addActionListener(e -> botonReporteHorasAsignadas());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnListaDocente().addActionListener(e -> ListaDeDocentes());
         vtnDocente.getBtnAsignarRol().addActionListener(e -> asignarRolDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
@@ -317,7 +318,16 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
-
+ public void ListaDeDocentes() {
+        JasperReport jr;
+        String path = "/vista/reportes/repListaDocentes.jasper";
+            try {
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+    }
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentesCarrera.jasper";
