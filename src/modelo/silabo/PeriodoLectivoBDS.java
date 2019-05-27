@@ -39,7 +39,11 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
         try {
 
+<<<<<<< HEAD
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin\n"
+=======
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT p.id_prd_lectivo, p.prd_lectivo_nombre , p.prd_lectivo_fecha_inicio, p.prd_lectivo_fecha_fin\n"
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
                     + "FROM \"PeriodoLectivo\" AS p\n"
                     + "JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n"
                     + "WHERE c.id_carrera=?  AND  p.prd_lectivo_fecha_inicio>='2018-11-12' ORDER BY p.id_prd_lectivo DESC");
@@ -52,6 +56,8 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
+<<<<<<< HEAD
+=======
                 tmp.setId_PerioLectivo(rs.getInt(1));
                 tmp.setNombre_PerLectivo(rs.getString(2));
                 tmp.setFecha_Inicio(rs.getDate(3).toLocalDate());
@@ -81,6 +87,7 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
             st.setString(1, carrera);
 
             ResultSet rs = st.executeQuery();
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
             System.out.println(st);
             while (rs.next()) {
 
@@ -88,7 +95,12 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 tmp.setId_PerioLectivo(rs.getInt(1));
                 tmp.setNombre_PerLectivo(rs.getString(2));
+<<<<<<< HEAD
+                tmp.setFecha_Inicio(rs.getDate(3).toLocalDate());
+                tmp.setFecha_Fin(rs.getDate(4).toLocalDate());
+=======
                 
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
                 periodos.add(tmp);
             }

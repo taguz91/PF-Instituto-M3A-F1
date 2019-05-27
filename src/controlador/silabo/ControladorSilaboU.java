@@ -96,6 +96,8 @@ public class ControladorSilaboU {
 
     private static Integer idEvaluacionSig = 0;
     private Integer idEvaluacion;
+    
+    private boolean retroceso=false;
 
     private boolean retroceso = false;
 
@@ -774,6 +776,26 @@ public class ControladorSilaboU {
 
         });
 
+<<<<<<< HEAD
+        gestion.getBtnSiguiente().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+               gestion.setVisible(false);
+
+                if (retroceso) {
+                    bibliografia.setVisible(true);
+                } else if (validarCampos()) {
+                    citarReferencias(silabo, bibliografia);
+                    retroceso=true;
+                }
+
+            }
+
+        });
+
+=======
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
         gestion.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -1022,7 +1044,24 @@ public class ControladorSilaboU {
 
         });
 
+<<<<<<< HEAD
+        bibliografia.getBtnFinalizar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                new SilaboBD(conexion).eliminar(silabo);
+                guardarSilabo();
+                JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
+                gestion.dispose();
+                bibliografia.dispose();
+                principal.getMnCtSilabos().doClick();
+
+            }
+
+        });
+=======
         bibliografia.getBtnFinalizar().addActionListener(e -> ejecutar2(e));
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
         bibliografia.getBtnCancelar().addActionListener(new ActionListener() {
             @Override
@@ -1450,6 +1489,11 @@ public class ControladorSilaboU {
             if (rsm.getIdReferencia().getTipoReferencia().equals("Base")) {
                 b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
             }
+<<<<<<< HEAD
+
+        });
+=======
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
         });
         modeloBase = new DefaultListModel<>();
@@ -1464,8 +1508,14 @@ public class ControladorSilaboU {
 
     public void agregarBibliografiaNoBase() {
 
+<<<<<<< HEAD
+        referenciasSilabo.removeIf(r->r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
+        
+        
+=======
         referenciasSilabo.removeIf(r -> r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
 
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
         ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
         ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
@@ -1570,6 +1620,14 @@ public class ControladorSilaboU {
 
         List<EstrategiasUnidadMD> estrategiasSilaboBD = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
 
+<<<<<<< HEAD
+        /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
+        
+
+        List<EstrategiasUnidadMD> estrategiasSilaboBD = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
+
+=======
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
     
 
         List<EvaluacionSilaboMD> evaluacionesSilaboBD = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
@@ -1613,10 +1671,15 @@ public class ControladorSilaboU {
         return silabo.getIdSilabo();
     }
 
+<<<<<<< HEAD
+    public void insertarReferencias() {
+=======
     public void insertarReferencias(int is) {
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
         agregarBibliografiaNoBase();
-
+        
+        
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
             //System.out.println("============>"+referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
@@ -1636,7 +1699,11 @@ public class ControladorSilaboU {
         rbd1.insertar(referenciasSilabo.get(referenciasSilabo.size() - 2),is,0);
 
         ReferenciasBD r2 = new ReferenciasBD(conexion);
+<<<<<<< HEAD
+        r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia());
+=======
         r2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1).getIdReferencia(), 0);
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
         ReferenciaSilaboBD rbd2 = new ReferenciaSilaboBD(conexion);
         rbd2.insertar(referenciasSilabo.get(referenciasSilabo.size() - 1),is,0);
 
@@ -1743,6 +1810,63 @@ public class ControladorSilaboU {
 
             if (rsd.getIdReferencia().getTipoReferencia().equals("Base")) {
                 control = true;
+            }
+
+        }
+
+        return control;
+
+    }
+
+    public void guardarSilabo() {
+
+        new SilaboBD(conexion).insertar(silabo);
+        insertarUnidades();
+
+        insertarReferencias();
+
+    }
+    
+    public boolean validarCampos() {
+
+        boolean control = true;
+
+        int contador = 0;
+
+        for (int i = 0; i < unidadesSilabo.size(); i++) {
+
+            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaInicioUnidad()==null){
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaFinUnidad()==null){
+                control = false;
+            }
+
+            for (int j = 0; j < estrategiasSilabo.size(); j++) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                    contador++;
+                }
+            }
+
+            if (contador == 0) {
+                control = false;
             }
 
         }
