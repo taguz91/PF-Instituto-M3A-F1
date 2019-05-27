@@ -39,33 +39,37 @@ public class MateriasBDS extends MateriaMD {
         List<MateriaMD> materias = new ArrayList<>();
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT \n"
+                    + "m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio\n"
                     + "FROM \"Materias\" AS m\n"
                     + "JOIN \"Cursos\" AS crs ON m.id_materia=crs.id_materia\n"
                     + "JOIN \"Docentes\" AS d ON d.id_docente=crs.id_docente\n"
                     + "JOIN \"Personas\" AS p ON p.id_persona=d.id_persona\n"
                     + "JOIN \"Usuarios\" AS u ON u.id_persona=p.id_persona\n"
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
+                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "AND pr.prd_lectivo_fecha_fin > current_date\n"
+                    + "AND pr.id_prd_lectivo=?\n"
                     + "EXCEPT\n"
-                    + "SELECT  DISTINCT m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio \n"
+                    + "SELECT DISTINCT \n"
+                    + "m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio\n"
                     + "FROM \"Materias\" AS m\n"
                     + "JOIN \"Cursos\" AS crs ON m.id_materia=crs.id_materia\n"
                     + "JOIN \"Docentes\" AS d ON d.id_docente=crs.id_docente\n"
                     + "JOIN \"Personas\" AS p ON p.id_persona=d.id_persona\n"
                     + "JOIN \"Usuarios\" AS u ON u.id_persona=p.id_persona\n"
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                    + "JOIN \"Silabo\" AS s ON s.id_materia=m.id_materia\n"
-                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_carrera=crr.id_carrera\n"
+                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
+                    + "JOIN \"Silabo\" AS s ON s.id_materia = m.id_materia\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-                    + "AND pr.prd_lectivo_fecha_fin > current_date");
+                    + "AND pr.id_prd_lectivo=?");
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
-            st.setString(3, clave[0]);
-            st.setInt(4, Integer.parseInt(clave[1]));
+            st.setInt(3, Integer.parseInt(clave[2]));
+            st.setString(4, clave[0]);
+            st.setInt(5, Integer.parseInt(clave[1]));
+            st.setInt(6, Integer.parseInt(clave[2]));
 
             ResultSet rs = st.executeQuery();
             System.out.println(st);

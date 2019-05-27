@@ -2273,6 +2273,14 @@ public class ControladorSilaboCRUD {
             if (unidades.get(i).getContenidosUnidad() == null) {
                 control = false;
             }
+            
+            if (unidades.get(i).getFechaInicioUnidad()==null){
+                control = false;
+            }
+            
+            if (unidades.get(i).getFechaFinUnidad()==null){
+                control = false;
+            }
 
             for (int j = 0; j < estrategiasUnidad.size(); j++) {
                 if (estrategiasUnidad.get(j).getIdUnidad().getIdUnidad() == unidades.get(i).getIdUnidad()) {

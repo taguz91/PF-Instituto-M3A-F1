@@ -760,7 +760,7 @@ public class ControladorSilaboU {
 
                 if (retroceso) {
                     bibliografia.setVisible(true);
-                } else {
+                } else if (validarCampos()) {
                     citarReferencias(silabo, bibliografia);
                     retroceso=true;
                 }
@@ -1441,6 +1441,54 @@ public class ControladorSilaboU {
         insertarUnidades();
 
         insertarReferencias();
+
+    }
+    
+    public boolean validarCampos() {
+
+        boolean control = true;
+
+        int contador = 0;
+
+        for (int i = 0; i < unidadesSilabo.size(); i++) {
+
+            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaInicioUnidad()==null){
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaFinUnidad()==null){
+                control = false;
+            }
+
+            for (int j = 0; j < estrategiasSilabo.size(); j++) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                    contador++;
+                }
+            }
+
+            if (contador == 0) {
+                control = false;
+            }
+
+        }
+
+        return control;
 
     }
 

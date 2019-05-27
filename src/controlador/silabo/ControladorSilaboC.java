@@ -103,8 +103,10 @@ public class ControladorSilaboC {
 
     private DefaultListModel modeloBase;
 
-    private static Integer idEvaluacionSig=0;
+    private static Integer idEvaluacionSig = 0;
     private Integer idEvaluacion;
+
+    private boolean retroceso = false;
 
     public ControladorSilaboC(VtnPrincipal principal, UsuarioBD usuario, ConexionBD conexion) {
         this.principal = principal;
@@ -130,25 +132,48 @@ public class ControladorSilaboC {
         configuracion.setLocation((principal.getDpnlPrincipal().getSize().width - configuracion.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - configuracion.getSize().height) / 2);
 
-        carrerasDocente = cargarComboCarreras();
+        cargarComboCarreras();
 
         configuracion.getCmbCarrera().addActionListener((ActionEvent ae) -> {
             Optional<CarreraMD> carreraSeleccionada = carrerasDocente.stream().
                     filter(c -> c.getNombre().equals(configuracion.getCmbCarrera().getSelectedItem().toString())).
                     findFirst();
 
-            periodosCarrera = cargarComboPeriodos(carreraSeleccionada.get().getId());
-            materiasDocente = cargarComboMaterias(carreraSeleccionada.get().getId());
+            cargarComboPeriodos(carreraSeleccionada.get().getId());
+
+        });
+
+        configuracion.getCmbPeriodo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                Optional<CarreraMD> carreraSeleccionada = carrerasDocente.stream().
+                        filter(c -> c.getNombre().equals(configuracion.getCmbCarrera().getSelectedItem().toString())).
+                        findFirst();
+
+                Optional<PeriodoLectivoMD> periodoSeleccionado = periodosCarrera.stream().
+                        filter(p -> (p.getNombre_PerLectivo()).equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        findFirst();
+
+                System.out.println(carreraSeleccionada.get().getId());
+                System.out.println(periodoSeleccionado.get().getId_PerioLectivo());
+                cargarComboMaterias(carreraSeleccionada.get().getId(), periodoSeleccionado.get().getId_PerioLectivo());
+
+            }
 
         });
 
         configuracion.getBtnSiguiente().addActionListener((ActionEvent ae) -> {
+            Optional<CarreraMD> carreraSeleccionada = carrerasDocente.stream().
+                    filter(c -> c.getNombre().equals(configuracion.getCmbCarrera().getSelectedItem().toString())).
+                    findFirst();
+
             Optional<MateriaMD> materiaSeleccionada = materiasDocente.stream().
                     filter(m -> m.getNombre().equals(configuracion.getCmbAsignatura().getSelectedItem().toString())).
                     findFirst();
 
             Optional<PeriodoLectivoMD> periodoSeleccionado = periodosCarrera.stream().
-                    filter(p -> (p.getFecha_Inicio() + " / " + p.getFecha_Fin()).equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                    filter(p -> (p.getNombre_PerLectivo()).equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                     findFirst();
 
             silabo = new SilaboBD(conexion, materiaSeleccionada.get(), periodoSeleccionado.get());
@@ -159,47 +184,46 @@ public class ControladorSilaboC {
         configuracion.getCmbCarrera().setSelectedIndex(0);
 
     }
-     
-    public List<CarreraMD> cargarComboCarreras() {
 
-        List<CarreraMD> carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+    public void cargarComboCarreras() {
+
+        carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
 
         carrerasDocente.forEach((cmd) -> {
             configuracion.getCmbCarrera().addItem(cmd.getNombre());
         });
 
-        return carrerasDocente;
     }
 
-    public List<MateriaMD> cargarComboMaterias(int idMateria) {
+    public void cargarComboMaterias(int idCarrera, int idPeriodo) {
 
         configuracion.getCmbAsignatura().removeAllItems();
 
-        String[] parametros = {usuario.getUsername(), String.valueOf(idMateria)};
+        String[] parametros = {usuario.getUsername(), String.valueOf(idCarrera), String.valueOf(idPeriodo)};
 
-        List<MateriaMD> materiasDocente = MateriasBDS.consultar(conexion, parametros);
+        materiasDocente = MateriasBDS.consultar(conexion, parametros);
 
         materiasDocente.forEach((cmd) -> {
             configuracion.getCmbAsignatura().addItem(cmd.getNombre());
         });
 
-        return materiasDocente;
     }
 
-    public List<PeriodoLectivoMD> cargarComboPeriodos(int carrera) {
+    public void cargarComboPeriodos(int carrera) {
 
         configuracion.getCmbPeriodo().removeAllItems();
 
-        List<PeriodoLectivoMD> periodosLectivos = PeriodoLectivoBDS.consultar(conexion, carrera);
+        periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera);
 
-        periodosLectivos.forEach((prd) -> {
-            configuracion.getCmbPeriodo().addItem(prd.getFecha_Inicio() + " / " + prd.getFecha_Fin());
+        periodosCarrera.forEach((prd) -> {
+            configuracion.getCmbPeriodo().addItem(prd.getNombre_PerLectivo());
         });
 
-        return periodosLectivos;
     }
 
     public void iniciarSilabo(SilaboBD silabo, int numUnidades) {
+
+        configuracion.dispose();
 
         carrerasDocente = new ArrayList<>();
 
@@ -297,7 +321,6 @@ public class ControladorSilaboC {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
                 unidadSeleccionada.setResultadosAprendizajeUnidad(gestion.getTxrResultados().getText());
                 actualizarUnidad(unidadSeleccionada);
-            //Prueba CHACON
             }
 
         });
@@ -318,15 +341,31 @@ public class ControladorSilaboC {
             @Override
             public void mouseClicked(MouseEvent me) {
 
+                boolean existe = false;
+
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
 
-                if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
-                    JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+                List<EstrategiasAprendizajeMD> estrategias = EstrategiasAprendizajeBD.consultar(conexion);
 
-                } else {
-                    nuevaEstrategia.insertar();
-                    JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+                for (EstrategiasAprendizajeMD e : estrategias) {
 
+                    
+                    if (e.getDescripcionEstrategia().toUpperCase().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase())) {
+                        existe = true;
+                        
+                    }
+
+                }
+
+                if (!existe) {
+                    if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
+                        JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                    } else {
+                        nuevaEstrategia.insertar();
+                        JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+
+                    }
                 }
 
                 gestion.getTxtNuevaEstrategia().setText("");
@@ -386,7 +425,7 @@ public class ControladorSilaboC {
                         unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio)) {
+                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio.minus(1, ChronoUnit.DAYS))) {
                             unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                             actualizarUnidad(unidadSeleccionada);
                         } else {
@@ -862,7 +901,13 @@ public class ControladorSilaboC {
             public void actionPerformed(ActionEvent ae) {
 
                 gestion.setVisible(false);
-                citarReferencias(silabo, bibliografia);
+
+                if (retroceso) {
+                    bibliografia.setVisible(true);
+                } else if (validarCampos()) {
+                    citarReferencias(silabo, bibliografia);
+                    retroceso = true;
+                }
 
             }
 
@@ -950,6 +995,7 @@ public class ControladorSilaboC {
                 guardarSilabo();
                 JOptionPane.showMessageDialog(null, "Silabo guardado exitosamente");
 
+                configuracion.dispose();
                 gestion.dispose();
                 bibliografia.dispose();
 
@@ -1273,8 +1319,7 @@ public class ControladorSilaboC {
             }
 
         }
-        
-      
+
     }
 
     public void limpiarEvaluacionesAD() {
@@ -1490,6 +1535,54 @@ public class ControladorSilaboC {
         insertarUnidades();
 
         insertarReferencias();
+
+    }
+    
+    public boolean validarCampos() {
+
+        boolean control = true;
+
+        int contador = 0;
+
+        for (int i = 0; i < unidadesSilabo.size(); i++) {
+
+            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+                control = false;
+            }
+
+            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaInicioUnidad()==null){
+                control = false;
+            }
+            
+            if (unidadesSilabo.get(i).getFechaFinUnidad()==null){
+                control = false;
+            }
+
+            for (int j = 0; j < estrategiasSilabo.size(); j++) {
+                if (estrategiasSilabo.get(j).getIdUnidad().getIdUnidad() == unidadesSilabo.get(i).getIdUnidad()) {
+                    contador++;
+                }
+            }
+
+            if (contador == 0) {
+                control = false;
+            }
+
+        }
+
+        return control;
 
     }
 
