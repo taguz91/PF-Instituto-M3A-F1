@@ -418,9 +418,16 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private void llamarReporteNumMatricula(int numMatricula) {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
-            System.out.println("Parametros: ");
-            System.out.println("Numero de matricula: " + numMatricula);
-            System.out.println("Periodo: " + periodos.get(posPrd - 1).getId_PerioLectivo());
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repNumMatriculaPeriodo.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("matricula", numMatricula);
+                parametro.put("periodo", periodos.get(posPrd - 1).getId_PerioLectivo());
+                System.out.println("Parametros: " + parametro);
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
         }
