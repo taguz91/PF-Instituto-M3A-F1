@@ -1,13 +1,11 @@
-
 package modelo.persona;
-
 
 import java.awt.Image;
 import java.time.LocalDate;
 import modelo.lugar.LugarBD;
 
-public class AlumnoMD extends PersonaMD{
-    
+public class AlumnoMD extends PersonaMD {
+
     private String nombre;
     private String tipo_Colegio, tipo_Bachillerato, nivel_Academico, titulo_Superior, ocupacion, anio_graduacion, observacion;
     private String formacion_Padre, formacion_Madre, nom_Contacto, parentesco_Contacto, contacto_Emergencia;
@@ -18,8 +16,8 @@ public class AlumnoMD extends PersonaMD{
     public AlumnoMD() {
     }
 
-    public AlumnoMD(String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_Alumno, SectorEconomicoMD sectorEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, boolean personaActiva) {
-        super(idPersona, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, personaActiva);
+    public AlumnoMD(String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_Alumno, SectorEconomicoMD sectorEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, String categoriaMigratoria, boolean personaActiva) {
+        super(idPersona, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, categoriaMigratoria, personaActiva);
         this.nombre = nombre;
         this.tipo_Colegio = tipo_Colegio;
         this.tipo_Bachillerato = tipo_Bachillerato;
@@ -193,5 +191,4 @@ public class AlumnoMD extends PersonaMD{
         this.sectorEconomico = sectorEconomico;
     }
 
-    
 }

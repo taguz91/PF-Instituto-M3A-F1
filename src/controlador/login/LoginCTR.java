@@ -1,22 +1,19 @@
 package controlador.login;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.ImageIcon;
+import modelo.CONS;
 import modelo.ConectarDB;
-import modelo.usuario.RolBD;
+import modelo.ConnDBPool;
 import modelo.usuario.UsuarioBD;
-import modelo.usuario.UsuarioMD;
 import vista.Login;
-import vista.usuario.VtnSelectRol;
 
 /**
  *
@@ -24,56 +21,28 @@ import vista.usuario.VtnSelectRol;
  */
 public class LoginCTR {
 
-    public static String USERNAME = "";
-    public static String PASSWORD = "";
-
     private final Login vista; //LO QUE VA A VISUALIZAR
-    private final UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
-    //Icono de la aplicacion
-    private final ImageIcon icono;
-    private final Image ista;
+    private UsuarioBD modelo; // CON LO QUE VA A TRABAJAR
 
-    public LoginCTR(Login vista, UsuarioBD modelo) {
-        this.vista = vista;
-        this.modelo = modelo;
-        this.icono = new ImageIcon(getClass().getResource("/vista/img/logo.png"));
-        this.ista = icono.getImage();
-        vista.setIconImage(ista);
+    private final boolean carga = true;
+
+    public LoginCTR() {
+        this.vista = new Login();
+        vista.setIconImage(CONS.getImage());
     }
 
     //Inits
     public void Init() {
-        btnHover();
-        //Ocultamos el boton que ya no se usa
-        vista.getBtnIngSU().setEnabled(false);
-        vista.getLblAvisos().setText("");
-
         InitEventos();
-
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
-        //ocusltamos el error
-        vista.getLblAvisos().setVisible(false);
     }
 
     private void InitEventos() {
-        vista.getBtnIngresar().addActionListener(e -> btnIngresarActionPerformance(e));
-
-        vista.getTxtPassword().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
-        vista.getTxtUsername().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                txtOnKeyRelessed(e);
-            }
-        });
-
-        vista.getBtnIngSU().addActionListener(e -> btnIngSUActionPerformance(e));
-
+        vista.getBtnIngresar().addActionListener(e -> login());
+        Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
+        vista.getTxtPassword().addKeyListener(eventoText());
+        vista.getTxtUsername().addKeyListener(eventoText());
         //Evento para ingresar rapido como JHONNY
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
@@ -86,103 +55,83 @@ public class LoginCTR {
         });
     }
 
+    //METODOS DE APOYO
+    private void activarForm(boolean estado) {
+        vista.getTxtUsername().setEnabled(estado);
+        vista.getTxtPassword().setEnabled(estado);
+        vista.getBtnIngresar().setEnabled(estado);
+    }
+
+    private void login() {
+
+        if (carga) {
+
+            new Thread(() -> {
+                ConnDBPool conex = null;
+                try {
+
+                    Effects.setLoadCursor(vista);
+                    String USERNAME = vista.getTxtUsername().getText();
+                    String PASSWORD = vista.getTxtPassword().getText();
+
+                    activarForm(false);
+                    conex = new ConnDBPool(USERNAME, PASSWORD);
+
+                    modelo = new UsuarioBD();
+
+                    modelo.setUsername(USERNAME);
+                    modelo.setPassword(PASSWORD);
+
+                    modelo = modelo.selectWhereUsernamePassword();
+
+                    if (modelo != null) {
+
+                        vista.dispose();
+                        CONS.setUsuario(modelo);
+                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex));
+                        vtn.Init();
+
+                    } else {
+                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                        Effects.setDefaultCursor(vista);
+                        conex.closePool();
+                    }
+
+                } catch (NullPointerException e) {
+                    Effects.setDefaultCursor(vista);
+                    Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+
+                    if (conex != null) {
+                        conex.closePool();
+                    }
+                } finally {
+
+                    Effects.setDefaultCursor(vista);
+                    activarForm(true);
+                }
+
+            }).start();
+        }
+    }
+
+    //EVENTOS
+    private KeyAdapter eventoText() {
+        return new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == 10) {
+                    login();
+                }
+            }
+        };
+    }
+
     private void ingresoVeloz(String c) {
         if (c.length() > 1 && c.length() <= 2) {
             if (c.equalsIgnoreCase("J.")) {
                 vista.getTxtUsername().setText("JOHNNY");
-                vista.getTxtPassword().setText("ROOT");
-            } else if (c.equalsIgnoreCase("R.")) {
-                vista.getTxtUsername().setText("ROOT");
-                vista.getTxtPassword().setText("ROOT");
-            } else if (c.equalsIgnoreCase("P.")) {
-                vista.getTxtUsername().setText("postgres");
-                vista.getTxtPassword().setText("Holapostgres");
             }
         }
-    }
-
-    //Metodos de Apoyo
-    private void Login() {
-        new Thread(() -> {
-
-            Middlewares.setLoadCursorInWindow(vista);
-
-            USERNAME = vista.getTxtUsername().getText();
-            PASSWORD = vista.getTxtPassword().getText();
-
-            modelo.setUsername(vista.getTxtUsername().getText());
-            modelo.setPassword(vista.getTxtPassword().getText());
-
-            try {
-                List<UsuarioMD> Lista = modelo.SelectWhereUsernamePassword();
-
-                if (!Lista.isEmpty()) {
-
-                    modelo.setPersona(Lista.get(0).getPersona());
-
-                    vista.dispose();
-
-                    VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), modelo, new ConectarDB("Login"), icono, ista);
-                    vtn.Init();
-
-                } else {
-                    vista.getLblAvisos().setVisible(true);
-                    vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-                }
-
-            } catch (NullPointerException e) {
-                vista.getLblAvisos().setVisible(true);
-                vista.getLblAvisos().setText("Revise la Informacion Ingresada");
-            }
-            Middlewares.setDefaultCursorInWindow(vista);
-
-        }).start();
-
-    }
-
-    private void LoginGenerico() {
-
-//        USERNAME = "ROOT";
-//        PASSWORD = "ROOT";
-//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("postgres", vista.getTxtPassword().getText(), "LoginGenerico"), icono, ista);
-//        VtnPrincipalCTR ventanaPrincipal = new VtnPrincipalCTR(new VtnPrincipal(), new RolBD(), new UsuarioBD(), new ConectarDB("ROOT", "ROOT", "LoginGenerico"), icono, ista);
-//
-//        ventanaPrincipal.iniciar();
-//        vista.setVisible(false);
-    }
-
-    //Procesadores de eventos
-    private void btnIngresarActionPerformance(ActionEvent e) {
-        Login();
-    }
-
-    private void txtOnKeyRelessed(KeyEvent e) {
-
-        if (e.getKeyCode() == 10) {
-            Login();
-        }
-
-    }
-
-    private void btnIngSUActionPerformance(ActionEvent e) {
-        LoginGenerico();
-    }
-
-    /**
-     * Animacion de hover en el boton
-     */
-    private void btnHover() {
-        vista.getBtnIngresar().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(139, 195, 74));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                vista.getLblBtnHover().setBackground(new Color(235, 192, 36));
-            }
-        });
     }
 
 }

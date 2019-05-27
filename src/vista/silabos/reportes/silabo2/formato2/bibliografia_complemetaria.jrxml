@@ -38,9 +38,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="79" splitType="Stretch">
+		<band height="94" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="555" height="79" uuid="718320b8-1524-4e05-9fe6-3c21bdb12bf1"/>
+				<reportElement x="0" y="0" width="555" height="94" uuid="718320b8-1524-4e05-9fe6-3c21bdb12bf1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

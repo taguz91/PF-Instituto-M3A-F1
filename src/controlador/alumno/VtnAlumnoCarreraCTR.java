@@ -1,37 +1,29 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.alumno.VtnAlumnoCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnAlumnoCarreraCTR {
+public class VtnAlumnoCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnAlumnoCarrera vtnAlmCar;
     private final AlumnoCarreraBD almnCar;
-    private final ConectarDB conecta;
-    private final RolMD permisos;
-    private final VtnPrincipalCTR ctrPrin;
 
     private ArrayList<AlumnoCarreraMD> almnsCarr;
 
@@ -40,37 +32,22 @@ public class VtnAlumnoCarreraCTR {
 
     private final CarreraBD carr;
     private ArrayList<CarreraMD> carreras;
-    
+
     /**
      * Se visualizan todos los alumnos por carrera respectivamente.
-     * @param vtnPrin
+     *
      * @param vtnAlmCar
-     * @param conecta
-     * @param permisos
-     * @param ctrPrin 
+     * @param ctrPrin
      */
-    public VtnAlumnoCarreraCTR(VtnPrincipal vtnPrin, VtnAlumnoCarrera vtnAlmCar,
-            ConectarDB conecta, RolMD permisos, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public VtnAlumnoCarreraCTR(VtnAlumnoCarrera vtnAlmCar, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnAlmCar = vtnAlmCar;
-        this.almnCar = new AlumnoCarreraBD(conecta);
-        this.conecta = conecta;
-        this.carr = new CarreraBD(conecta);
-        this.permisos = permisos;
-        this.ctrPrin = ctrPrin;
-
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos por carrera");
-        ctrPrin.setIconJIFrame(vtnAlmCar);
-        vtnPrin.getDpnlPrincipal().add(vtnAlmCar);
-        vtnAlmCar.show();
+        this.almnCar = new AlumnoCarreraBD(ctrPrin.getConecta());
+        this.carr = new CarreraBD(ctrPrin.getConecta());
     }
-    
+
     /**
-     * Iniciamos las dependencias de la ventana.
-     * Eventos
-     * Formato de tabla 
+     * Iniciamos las dependencias de la ventana. Eventos Formato de tabla
      * Llamamos metodos
      */
     public void iniciar() {
@@ -79,21 +56,21 @@ public class VtnAlumnoCarreraCTR {
         String[] titulo = {"Carrera", "Alumno", "Cédula", "Fecha inscripción"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        //Le damos unos toques a la tabla  
+        //Le damos unos toques a la tabla
         TblEstilo.formatoTbl(vtnAlmCar.getTblAlmnCarrera());
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 0, 70);
         TblEstilo.columnaMedida(vtnAlmCar.getTblAlmnCarrera(), 2, 120);
         vtnAlmCar.getTblAlmnCarrera().setModel(mdTbl);
         //Llenamos la tabla
         cargarAlmnsCarrera();
-        //acciones 
+        //acciones
         vtnAlmCar.getCmbCarrera().addActionListener(e -> clickCmbCarreras());
-        //Buscador 
+        //Buscador
         vtnAlmCar.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 String b = vtnAlmCar.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
                     cargarAlmnsCarrera();
@@ -102,28 +79,27 @@ public class VtnAlumnoCarreraCTR {
         });
         vtnAlmCar.getBtnBuscar().addActionListener(e -> buscar(vtnAlmCar.getTxtBuscar().getText().trim()));
         vtnAlmCar.getBtnIngresar().addActionListener(e -> abrirFrmAlumnoCarrera());
+        vtnAlmCar.getCbxEliminados().addActionListener(e -> verEliminados());
         //Validacion buscar
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos por carrera");
-        //ctrPrin.carga.detener();
+        ctrPrin.agregarVtn(vtnAlmCar);
     }
-    
+
     /**
      * Abrimos el formulario de ingreso y cerramos esta ventana,
      */
-    private void abrirFrmAlumnoCarrera(){
+    private void abrirFrmAlumnoCarrera() {
         ctrPrin.abrirFrmInscripcion();
         vtnAlmCar.dispose();
         ctrPrin.cerradoJIF();
     }
-    
+
     /**
-     * Buscamos y rellenamos la tabla, unicamente se buscara
-     * si ingreso letras o numeros, no seran adminitods caracteres especiales.
-     * @param b 
+     * Buscamos y rellenamos la tabla, unicamente se buscara si ingreso letras o
+     * numeros, no seran adminitods caracteres especiales.
+     *
+     * @param b
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
@@ -133,19 +109,20 @@ public class VtnAlumnoCarreraCTR {
             System.out.println("No ingrese caracteres especiales");
         }
     }
-    
+
     /**
-     * Se cargan todos los alumnos por carrera por defecto.
-     * Y se llenaran en la tabla.
+     * Se cargan todos los alumnos por carrera por defecto. Y se llenaran en la
+     * tabla.
      */
     private void cargarAlmnsCarrera() {
         almnsCarr = almnCar.cargarAlumnoCarrera();
         llenarTblAlmnCarreras(almnsCarr);
     }
-    
+
     /**
      * Llenamos la tabla, con los alumnos que nos pasen.
-     * @param almns 
+     *
+     * @param almns
      */
     private void llenarTblAlmnCarreras(ArrayList<AlumnoCarreraMD> almns) {
         mdTbl.setRowCount(0);
@@ -165,9 +142,9 @@ public class VtnAlumnoCarreraCTR {
             vtnAlmCar.getLblResultados().setText(almns.size() + " Resultados obtenidos.");
         }
     }
-    
+
     /**
-     * Cargamos todas las carreras que esten abiertas en la institucion. 
+     * Cargamos todas las carreras que esten abiertas en la institucion.
      */
     private void cargarCmbCarreras() {
         carreras = carr.cargarCarrerasCmb();
@@ -179,11 +156,10 @@ public class VtnAlumnoCarreraCTR {
             });
         }
     }
-    
+
     /**
-     * Evento al hacer click en el combo de carreras, si se selecciona
-     * una carrera se consultaran los alumnos de esta carrera y se
-     * llenara la tabla.
+     * Evento al hacer click en el combo de carreras, si se selecciona una
+     * carrera se consultaran los alumnos de esta carrera y se llenara la tabla.
      */
     private void clickCmbCarreras() {
         int posCar = vtnAlmCar.getCmbCarrera().getSelectedIndex();
@@ -195,24 +171,25 @@ public class VtnAlumnoCarreraCTR {
         }
     }
 
-    private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
+    /**
+     * Evento que se ejecuta al dar click en el check box Si esta seleccionado
+     * se cargan todos los eliminados, case contrario se cargan los activos
+     */
+    private void verEliminados() {
+        if (vtnAlmCar.getCbxEliminados().isSelected()) {
+            almnsCarr = almnCar.cargarAlumnoCarreraEliminados();
+            llenarTblAlmnCarreras(almnsCarr);
+            vtnAlmCar.getCmbCarrera().setEnabled(false);
+        } else {
+            almnsCarr = almnCar.cargarAlumnoCarrera();
+            llenarTblAlmnCarreras(almnsCarr);
+            vtnAlmCar.getCmbCarrera().setEnabled(true);
         }
+
+    }
+
+    private void InitPermisos() {
+
     }
 
 }

@@ -1,16 +1,24 @@
 package modelo.usuario;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import modelo.ResourceManager;
+import java.util.HashMap;
+import java.util.Map;
+import modelo.ConnDBPool;
 
 /**
  *
  * @author MrRainx
  */
 public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
+
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
+
+    {
+        pool = new ConnDBPool();
+    }
 
     public RolesDelUsuarioBD(int id, int idRol, String username) {
         super(id, idRol, username);
@@ -19,78 +27,31 @@ public class RolesDelUsuarioBD extends RolesDelUsuarioMD {
     public RolesDelUsuarioBD() {
     }
 
-    private static String TABLA = " \"RolesDelUsuario\" ";
-    private static String ATRIBUTOS = " id_roles_usuarios, id_rol, usu_username ";
-    private static String PRIMARY_KEY = " id_roles_usuarios ";
-
     public boolean insertar() {
 
-        String INSERTAR = "INSERT INTO " + TABLA
-                + " (id_rol, usu_username)"
-                + " VALUES"
-                + "("
-                + " " + getIdRol()
-                + ", '" + getUsername() + "'"
-                + ")"
-                + "";
+        String INSERTAR = "INSERT INTO \"RolesDelUsuario\" ( id_rol, usu_username )\n"
+                + "VALUES ( ?, ? );";
 
-        return ResourceManager.Statement(INSERTAR) == null;
-    }
-
-    public static List<RolesDelUsuarioMD> SelectAll() {
-        String QUERY = "SELECT " + ATRIBUTOS + " FROM " + TABLA;
-
-        return SelectSimple(QUERY);
-    }
-
-    public static List<RolesDelUsuarioMD> SelectWhereUsername(String Aguja) {
-        String QUERY = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE usu_username = '" + Aguja + "'";
-        return SelectSimple(QUERY);
-    }
-
-    private static List<RolesDelUsuarioMD> SelectSimple(String QUERY) {
-        List<RolesDelUsuarioMD> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(QUERY);
-
-        try {
-
-            while (rs.next()) {
-                RolesDelUsuarioMD roles = new RolesDelUsuarioMD();
-
-                roles.setId(rs.getInt("id_roles_usuarios"));
-                roles.setIdRol(rs.getInt("id_rol"));
-                roles.setUsername(rs.getString("usu_username"));
-
-                lista.add(roles);
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println(e);
-
-        }
-
-        return lista;
-    }
-
-    public boolean eliminar(int primaryKey) {
-
-        String ELIMINAR = "DELETE FROM " + TABLA + " WHERE " + PRIMARY_KEY + " = " + primaryKey;
-
-        return ResourceManager.Statement(ELIMINAR) == null;
-
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getIdRol());
+        parametros.put(2, getUsername());
+        conn = pool.getConnection();
+        return pool.ejecutar(INSERTAR, conn, parametros) == null;
     }
 
     public boolean eliminarWhere(int idRol, String username) {
-        String ELIMINAR = "DELETE FROM " + TABLA + ""
-                + " WHERE "
-                + " id_rol = " + idRol
-                + " AND "
-                + " usu_username = '" + username + "'"
-                + "";
+        String ELIMINAR = "DELETE \n"
+                + "FROM\n"
+                + "	\"RolesDelUsuario\" \n"
+                + "WHERE\n"
+                + "	id_rol = ? \n"
+                + "	AND usu_username = ?";
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idRol);
+        parametros.put(2, username);
 
-        return ResourceManager.Statement(ELIMINAR) == null;
+        conn = pool.getConnection();
+        return pool.ejecutar(ELIMINAR, conn, parametros) == null;
     }
 
 }

@@ -42,9 +42,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="86" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="555" height="86" uuid="ba0fb161-e40a-428f-aff1-eaa66bb77f38"/>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="555" height="20" uuid="ba0fb161-e40a-428f-aff1-eaa66bb77f38"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

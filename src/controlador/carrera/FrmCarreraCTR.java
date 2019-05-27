@@ -1,7 +1,7 @@
 package controlador.carrera;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -19,20 +18,17 @@ import modelo.persona.DocenteMD;
 import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.TxtVLetras;
+import modelo.validaciones.TxtVNumeros;
 import modelo.validaciones.Validar;
 import vista.carrera.FrmCarrera;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class FrmCarreraCTR {
+public class FrmCarreraCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmCarrera frmCarrera;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
     private boolean editar = false;
     private int idCarrera = 0;
     //Para cargar el combo de coordinador  
@@ -43,22 +39,17 @@ public class FrmCarreraCTR {
     private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
 
     //Modelo de la tabla 
-    DefaultTableModel mdTbl;
+    private DefaultTableModel mdTbl;
 
-    public FrmCarreraCTR(VtnPrincipal vtnPrin, FrmCarrera frmCarrera, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmCarreraCTR(FrmCarrera frmCarrera, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmCarrera = frmCarrera;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaFrm("Carrera");
-        ctrPrin.setIconJIFrame(frmCarrera);
-        this.docen = new DocenteBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(frmCarrera);
-        frmCarrera.show();
+        this.docen = new DocenteBD(ctrPrin.getConecta());
     }
-
+    
+    /**
+     * Iniciamos todas las dependencias de este formulario
+     */
     public void iniciar() {
         ocultarErrores();
         cargarCmbModalidades();
@@ -74,7 +65,7 @@ public class FrmCarreraCTR {
             @Override
             public void keyReleased(KeyEvent e) {
                 String a = frmCarrera.getTxtBuscar().getText().trim();
-                if (a.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscarDocentes(a);
                 }
             }
@@ -85,11 +76,13 @@ public class FrmCarreraCTR {
 
         frmCarrera.getBtnGuardar().addActionListener(e -> guardarYSalir());
         frmCarrera.getBtnGuardarContinuar().addActionListener(e -> guardarYContinuar());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaFrmFin("Carrera");
-    }
 
+        ctrPrin.agregarVtn(frmCarrera);
+    }
+    
+    /**
+     * Todas las validaciones del formulario
+     */
     private void validaciones() {
         frmCarrera.getTxtBuscar().addKeyListener(new TxtVBuscador(frmCarrera.getTxtBuscar()));
         frmCarrera.getCmbModalidad().addActionListener(new CmbValidar(frmCarrera.getCmbModalidad()));
@@ -97,26 +90,43 @@ public class FrmCarreraCTR {
                 frmCarrera.getLblErrorNombre()));
         frmCarrera.getTxtCodigo().addKeyListener(new TxtVLetras(frmCarrera.getTxtCodigo(),
                 frmCarrera.getLblErrorCodigo()));
+        frmCarrera.getTxtSemanas().addKeyListener(new TxtVNumeros(frmCarrera.getTxtSemanas()));
     }
-
+    
+    /**
+     * Ocultamos todos los errores de este formulario
+     */
     private void ocultarErrores() {
         frmCarrera.getLblErrorCodigo().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
     
-    private void guardarYSalir(){
-        guardar();
-        frmCarrera.dispose();
-        ctrPrin.cerradoJIF();
-        ctrPrin.abrirVtnCarrera();
+    /**
+     * Guardamos y salimos de este formulario
+     */
+    private void guardarYSalir() {
+        if (guardar()) {
+            frmCarrera.dispose();
+            ctrPrin.cerradoJIF();
+        }
+
     }
     
-    private void guardarYContinuar(){
-        guardar();
-        borrarCampos();
+    /**
+     * Solo receteamos los campos 
+     */
+    private void guardarYContinuar() {
+        if (guardar()) {
+            borrarCampos();
+        }
     }
-
-    private void guardar() {
+    
+    /**
+     * AL darle a guardar, validamos todo el formulario si existen errores 
+     * no permitimos guardar
+     * @return 
+     */
+    private boolean guardar() {
         boolean guardar = true;
         SimpleDateFormat formFecha = new SimpleDateFormat("dd/MM/yyyy");
         Date fecha = frmCarrera.getJdFechaInicio().getDate();
@@ -127,6 +137,7 @@ public class FrmCarreraCTR {
 
         String nombre = frmCarrera.getTxtNombre().getText();
         String codigo = frmCarrera.getTxtCodigo().getText();
+        String semanas = frmCarrera.getTxtSemanas().getText();
 
         String modalidad = frmCarrera.getCmbModalidad().getSelectedItem().toString();
         int posCoord = frmCarrera.getTblDocentes().getSelectedRow();
@@ -136,10 +147,14 @@ public class FrmCarreraCTR {
                 fechaInicio = LocalDate.of(Integer.parseInt(anio), Integer.parseInt(mes),
                         Integer.parseInt(dia));
             } catch (NumberFormatException e) {
-                System.out.println("No es fecha.");
+                System.out.println("No es fecha. " + e.getMessage());
                 guardar = false;
             }
         } else {
+            guardar = false;
+        }
+
+        if (!Validar.esNumeros(semanas)) {
             guardar = false;
         }
 
@@ -148,28 +163,41 @@ public class FrmCarreraCTR {
         }
 
         if (guardar) {
-            CarreraBD car = new CarreraBD(conecta);
+            CarreraBD car = new CarreraBD(ctrPrin.getConecta());
             car.setCodigo(codigo);
             car.setFechaInicio(fechaInicio);
             car.setModalidad(modalidad);
             car.setNombre(nombre);
             car.setCoordinador(docentes.get(posCoord));
+            car.setNumSemanas(Integer.parseInt(semanas));
             if (editar) {
-                car.editarCarrera(idCarrera);
-                editar = false;
+                guardar = car.editarCarrera(idCarrera);
+                if (guardar) {
+                    editar = false;
+                    return true;
+                }
             } else {
-                car.guardarCarrera();
+                guardar = car.guardarCarrera();
             }
         }
+        return guardar;
     }
-
+    
+    /**
+     * Buscamos en docentes para poderlo asignar como coordinador
+     * @param aguja 
+     */
     private void buscarDocentes(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             docentes = docen.buscar(aguja);
             llenarTblDocentes(docentes);
         }
     }
-
+    
+    /**
+     * Llenamos la tabla de docentes para poderlos seleecionar
+     * @param docentes 
+     */
     private void llenarTblDocentes(ArrayList<DocenteMD> docentes) {
         mdTbl.setRowCount(0);
         if (docentes != null) {
@@ -185,7 +213,13 @@ public class FrmCarreraCTR {
 
     //Usada para el validar  
     private final Calendar fechaIni = Calendar.getInstance();
-
+    
+    /**
+     * Para editar la carrera, 
+     * Recibe una carrera desde la ventana  
+     * Cagramos todos los datos 
+     * @param carrera 
+     */
     public void editar(CarreraMD carrera) {
         frmCarrera.getTxtNombre().setText(carrera.getNombre());
         frmCarrera.getTxtCodigo().setText(carrera.getCodigo());
@@ -194,7 +228,9 @@ public class FrmCarreraCTR {
         frmCarrera.getJdFechaInicio().setCalendar(fechaIni);
 
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
-        if (carrera.getCoordinador().getPrimerApellido() != null) {
+        frmCarrera.getTxtSemanas().setText(carrera.getNumSemanas() + "");
+        System.out.println("Coordinador: " + carrera.getCoordinador().getIdentificacion());
+        if (carrera.getCoordinador().getIdentificacion() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
             frmCarrera.getTblDocentes().selectAll();
@@ -202,22 +238,27 @@ public class FrmCarreraCTR {
 
         editar = true;
         idCarrera = carrera.getId();
-        //frmCarrera.getCmbCoordinador().setSelectedItem(carrera.getCoordinador()); 
     }
-
+    
+    /**
+     * Borramos todos los campos de este formulario
+     */
     private void borrarCampos() {
         frmCarrera.getTxtNombre().setText("");
         frmCarrera.getTxtCodigo().setText("");
         frmCarrera.getJdFechaInicio().setCalendar(null);
-        frmCarrera.getCmbModalidad().setSelectedItem("Seleccioné");
+        frmCarrera.getCmbModalidad().setSelectedItem("Seleccione");
         frmCarrera.getTxtBuscar().setText("");
         mdTbl.setRowCount(0);
 
     }
-
+    
+    /**
+     * Cargamos el combo de modalidades, con todas las que tiene el instituto
+     */
     private void cargarCmbModalidades() {
         frmCarrera.getCmbModalidad().removeAllItems();
-        frmCarrera.getCmbModalidad().addItem("Seleccioné");
+        frmCarrera.getCmbModalidad().addItem("Seleccione");
         for (String m : MODALIDADES) {
             frmCarrera.getCmbModalidad().addItem(m);
         }

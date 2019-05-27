@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCarrera" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT c.carrera_nombre, persona_primer_nombre, 
+persona_segundo_nombre, persona_primer_apellido, 
+persona_segundo_apellido, docente_abreviatura
+FROM public."Carreras" c,
+public."Docentes" d, public."Personas" p 
+WHERE d.id_docente = c.id_docente_coordinador 
+AND p.id_persona = d.id_persona 
+AND c.id_carrera = $P{idCarrera};]]>
+	</queryString>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="docente_abreviatura" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="32" y="47" width="242" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="67" width="242" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente_abreviatura}+" "+$F{persona_primer_apellido}+" "+$F{persona_segundo_apellido}+" "+$F{persona_primer_nombre}+" "+$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="48" y="46" width="203" height="1"/>
+			</line>
+			<line>
+				<reportElement x="343" y="48" width="165" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="343" y="49" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABLE]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

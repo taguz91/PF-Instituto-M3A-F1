@@ -3,9 +3,9 @@
 	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="ID_MATERIA" class="java.lang.String"/>
+	<parameter name="id_silabo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select prd_lectivo_nombre from "PeriodoLectivo" where now()>prd_lectivo_fecha_inicio  and now()< prd_lectivo_fecha_fin and id_carrera=$P!{ID_MATERIA}]]>
+		<![CDATA[select p.prd_lectivo_nombre from "PeriodoLectivo" p,"Silabo" s where p.id_prd_lectivo=s.id_prd_lectivo and s.id_silabo=$P!{id_silabo}]]>
 	</queryString>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
 	<background>
@@ -14,7 +14,7 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="140" height="20" uuid="c52baa7f-6e0b-434f-8e74-2ce7f57bb7c0"/>
+				<reportElement x="0" y="0" width="216" height="20" uuid="c52baa7f-6e0b-434f-8e74-2ce7f57bb7c0"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

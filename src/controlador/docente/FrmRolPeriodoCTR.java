@@ -1,55 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.docente;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
-import modelo.ConectarDB;
-import modelo.docente.RolDocenteBD;
+import javax.swing.JOptionPane;
+import modelo.docente.RolPeriodoBD;
+import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.validaciones.TxtVDireccion;
 import modelo.validaciones.TxtVLetras;
+import modelo.validaciones.Validar;
 import vista.docente.FrmRolesPeriodos;
-import vista.docente.VtnRolesPeriodos;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author arman
  */
-public class FrmRolPeriodoCTR {
+public class FrmRolPeriodoCTR extends DCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final FrmRolesPeriodos frmRolPer;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolDocenteBD rolDoc;
+    private final RolPeriodoBD rolDoc;
     private ArrayList<PeriodoLectivoMD> periodos;
     private final PeriodoLectivoBD prd;
+    private boolean editar = false;
+    private int idRolPrd;
 
-    public FrmRolPeriodoCTR(VtnPrincipal vtnPrin, FrmRolesPeriodos frmRolPer, ConectarDB conecta, VtnPrincipalCTR ctrPrin) {
-        this.vtnPrin = vtnPrin;
+    public FrmRolPeriodoCTR(FrmRolesPeriodos frmRolPer, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.frmRolPer = frmRolPer;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.rolDoc = new RolDocenteBD(conecta);
-        this.prd = new PeriodoLectivoBD(conecta);
-        vtnPrin.getDpnlPrincipal().add(frmRolPer);
-        frmRolPer.show();
-    }
-
-    public FrmRolPeriodoCTR(VtnPrincipal vtnPrin, VtnRolesPeriodos vtnRolprd, ConectarDB conecta, VtnPrincipalCTR aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.rolDoc = new RolPeriodoBD(ctrPrin.getConecta());
+        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
         cargarCmbPrdLectivo();
         frmRolPer.getLbl_error_roles().setVisible(false);
         iniciarValidaciones();
+        frmRolPer.getBtnGuardar().addActionListener(e -> insertarRolesPeriodos());
+
+        ctrPrin.agregarVtn(frmRolPer);
     }
 
     private void cargarCmbPrdLectivo() {
@@ -62,8 +51,44 @@ public class FrmRolPeriodoCTR {
             });
         }
     }
-    public void iniciarValidaciones(){
+
+    public void insertarRolesPeriodos() {
+        int posFila = frmRolPer.getCmbPeriodoLectivo().getSelectedIndex();
+        boolean guardar = true;
+        if (posFila == 0) {
+            guardar = false;
+        }
+        if (!Validar.esLetras(frmRolPer.getTxtNombreRol().getText().trim())) {
+            guardar = false;
+        }
+        rolDoc.setPeriodo(periodos.get(posFila - 1));
+        rolDoc.setNombre_rol(frmRolPer.getTxtNombreRol().getText());
+        if (guardar) {
+            if (editar) {
+                rolDoc.editarRolPeriodo(idRolPrd);
+                JOptionPane.showMessageDialog(null, "Datos editados correctamente");
+            } else {
+                if (rolDoc.InsertarRol() == true) {
+                    JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+                    System.out.println(rolDoc.getPeriodo());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+                }
+            }
+            frmRolPer.dispose();
+            ctrPrin.abrirVtnRolesPeriodos();
+        }
+    }
+
+    public void iniciarValidaciones() {
         frmRolPer.getTxtNombreRol().addKeyListener(new TxtVLetras(
                 frmRolPer.getTxtNombreRol(), frmRolPer.getLbl_error_roles()));
+    }
+
+    public void editarRolesPeriodos(RolPeriodoMD rp) {
+        idRolPrd = rp.getId_rol();
+        editar = true;
+        frmRolPer.getTxtNombreRol().setText(rp.getNombre_rol());
+        frmRolPer.getCmbPeriodoLectivo().setSelectedItem(rp.getPeriodo().getNombre_PerLectivo());
     }
 }

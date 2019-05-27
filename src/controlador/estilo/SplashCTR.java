@@ -11,14 +11,6 @@ import vista.principal.Splash;
  */
 public class SplashCTR {
 
-    //Cargamoslas imagenes para el splash
-//    private final ImageIcon estados[] = {
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP1.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP2.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP3.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP4.png")),
-//        new ImageIcon(getClass().getResource("/vista/img/animacion/SP5.png"))
-//    };
     private final ImageIcon estados[] = {
         new ImageIcon(getClass().getResource("/vista/img/animacion/SPL1.png")),
         new ImageIcon(getClass().getResource("/vista/img/animacion/SPL2.png")),

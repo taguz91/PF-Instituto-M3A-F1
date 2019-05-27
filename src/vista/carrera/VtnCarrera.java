@@ -30,6 +30,10 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         return btnEditar;
     }
 
+    public JButton getBtnReporteDocente() {
+        return btnReporteDocente;
+    }
+
     public JButton getBtnEliminar() {
         return btnEliminar;
     }
@@ -74,6 +78,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         btnReporteAlumnoCarrera = new javax.swing.JButton();
+        btnReporteDocente = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -108,10 +113,17 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Reportes:");
 
-        btnReporteAlumnoCarrera.setText("Alumnos por Carreras");
+        btnReporteAlumnoCarrera.setText("Aumnos");
         btnReporteAlumnoCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReporteAlumnoCarreraActionPerformed(evt);
+            }
+        });
+
+        btnReporteDocente.setText("Docentes");
+        btnReporteDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteDocenteActionPerformed(evt);
             }
         });
 
@@ -127,8 +139,11 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReporteAlumnoCarrera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReporteAlumnoCarrera))
+                        .addComponent(btnReporteDocente)
+                        .addGap(9, 9, 9))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -157,13 +172,14 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados)
                     .addComponent(btnReporteAlumnoCarrera)
-                    .addComponent(jLabel3))
-                .addGap(4, 4, 4))
+                    .addComponent(jLabel3)
+                    .addComponent(btnReporteDocente))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -173,6 +189,10 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReporteAlumnoCarreraActionPerformed
 
+    private void btnReporteDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteDocenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteDocenteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -180,6 +200,7 @@ public class VtnCarrera extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnReporteAlumnoCarrera;
+    private javax.swing.JButton btnReporteDocente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

@@ -1,6 +1,8 @@
 package modelo.tipoDeNota;
 
 import java.time.LocalDate;
+import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
  *
@@ -14,24 +16,26 @@ public class TipoDeNotaMD {
     private double valorMaximo;
     private LocalDate fechaCreacion;
     private boolean estado;
+    private PeriodoLectivoMD periodoLectivo;
 
-    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado) {
+    public TipoDeNotaMD(int idTipoNota, String nombre, double valorMinimo, double valorMaximo, LocalDate fechaCreacion, boolean estado, PeriodoLectivoMD periodoLectivo) {
         this.idTipoNota = idTipoNota;
         this.nombre = nombre;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
+        this.periodoLectivo = periodoLectivo;
     }
 
     public TipoDeNotaMD() {
     }
 
-    public int getIdTipoNota() {
+    public int getId() {
         return idTipoNota;
     }
 
-    public void setIdTipoNota(int idTipoNota) {
+    public void setId(int idTipoNota) {
         this.idTipoNota = idTipoNota;
     }
 
@@ -75,9 +79,17 @@ public class TipoDeNotaMD {
         this.estado = estado;
     }
 
+    public PeriodoLectivoMD getPeriodoLectivo() {
+        return periodoLectivo;
+    }
+
+    public void setPeriodoLectivo(PeriodoLectivoMD periodoLectivo) {
+        this.periodoLectivo = periodoLectivo;
+    }
+
     @Override
     public String toString() {
-        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + '}';
+        return "TipoDeNotaMD{" + "idTipoNota=" + idTipoNota + ", nombre=" + nombre + ", valorMinimo=" + valorMinimo + ", valorMaximo=" + valorMaximo + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + ", periodoLectivo=" + periodoLectivo + '}';
     }
 
 }

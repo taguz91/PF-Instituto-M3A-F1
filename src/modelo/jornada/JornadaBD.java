@@ -3,9 +3,7 @@ package modelo.jornada;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import modelo.ConectarDB;
-import modelo.ResourceManager;
 
 /**
  *
@@ -81,34 +79,5 @@ public class JornadaBD extends JornadaMD {
         }
     }
 
-    public static List<String> selectJornadasWhere(int idDocente, int idPeriodoLectivo) {
-
-        String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"Jornadas\".nombre_jornada\n"
-                + "FROM\n"
-                + "\"public\".\"Cursos\"\n"
-                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
-                + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + "\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
-        
-        List<String> lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(SELECT);
-
-        try {
-            while (rs.next()) {
-
-                String paralelo = rs.getString("nombre_jornada");
-
-                lista.add(paralelo);
-
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return lista;
-    }
 
 }

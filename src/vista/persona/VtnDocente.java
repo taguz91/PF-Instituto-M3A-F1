@@ -2,6 +2,7 @@ package vista.persona;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -20,6 +21,14 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnListaDocente() {
+        return btnListaDocente;
+    }
+
+    public JButton getBtnAsignarRol() {
+        return btnAsignarRol;
+    }
+
     public JButton getBtnReporteDocente() {
         return btnReporteDocente;
     }
@@ -30,6 +39,14 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
     public JButton getBtnReporteDocenteMateria() {
         return btnReporteDocenteMateria;
+    }
+
+    public JComboBox<String> getCmbTipoDocente() {
+        return cmbTipoDocente;
+    }
+
+    public void setCmbTipoDocente(JComboBox<String> cmbTipoDocente) {
+        this.cmbTipoDocente = cmbTipoDocente;
     }
 
     public void setBtnReporteDocenteMateria(JButton btnReporteDocenteMateria) {
@@ -54,6 +71,10 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
     public JLabel getLblResultados() {
         return lblResultados;
+    }
+
+    public JButton getBtnhorasAsignadas() {
+        return btnhorasAsignadas;
     }
 
     public JButton getBtnFinContratacion() {
@@ -107,6 +128,11 @@ public class VtnDocente extends javax.swing.JInternalFrame {
         btnReporteDocenteMateria = new javax.swing.JButton();
         cbxDocentesEliminados = new javax.swing.JCheckBox();
         btnFinContratacion = new javax.swing.JButton();
+        btnAsignarRol = new javax.swing.JButton();
+        btnhorasAsignadas = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        cmbTipoDocente = new javax.swing.JComboBox<>();
+        btnListaDocente = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -162,6 +188,16 @@ public class VtnDocente extends javax.swing.JInternalFrame {
 
         btnFinContratacion.setText("Fin de Contratación");
 
+        btnAsignarRol.setText("Asignar rol");
+
+        btnhorasAsignadas.setText("horas asignacion ");
+
+        jLabel2.setText("Filtrar");
+
+        cmbTipoDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnListaDocente.setText("Lista Docentes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,32 +205,46 @@ public class VtnDocente extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cbxDocentesEliminados))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                        .addGap(294, 294, 294)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(188, 188, 188)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnListaDocente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnhorasAsignadas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReporteDocente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReporteDocenteMateria, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReporteDocenteMateria))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbTipoDocente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFinContratacion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAsignarRol, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFinContratacion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cbxDocentesEliminados)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -202,7 +252,6 @@ public class VtnDocente extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -210,19 +259,27 @@ public class VtnDocente extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
                         .addComponent(btnEliminar)
-                        .addComponent(btnFinContratacion)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(cbxDocentesEliminados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnFinContratacion)
+                        .addComponent(btnAsignarRol))
+                    .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(cmbTipoDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxDocentesEliminados))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblResultados)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnReporteDocenteMateria)
+                        .addComponent(btnReporteDocente)
                         .addComponent(jLabel6)
-                        .addComponent(btnReporteDocente))
-                    .addComponent(btnReporteDocenteMateria)
-                    .addComponent(lblResultados, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(5, 5, 5))
+                        .addComponent(btnhorasAsignadas)
+                        .addComponent(btnListaDocente)))
+                .addContainerGap())
         );
 
         pack();
@@ -234,15 +291,20 @@ public class VtnDocente extends javax.swing.JInternalFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAsignarRol;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFinContratacion;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnListaDocente;
     private javax.swing.JButton btnReporteDocente;
     private javax.swing.JButton btnReporteDocenteMateria;
+    private javax.swing.JButton btnhorasAsignadas;
     private javax.swing.JCheckBox cbxDocentesEliminados;
+    private javax.swing.JComboBox<String> cmbTipoDocente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;

@@ -1,45 +1,49 @@
 package controlador.alumno;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import vista.alumno.JDMateriasCurso;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class JDMateriasCursoCTR {
+public class JDMateriasCursoCTR extends DCTR {
 
     private final JDMateriasCurso jdMat;
     private final CursoBD cur;
-    private final VtnPrincipal vtnPrin;
-    private final VtnPrincipalCTR ctrPrin;
     private final AlumnoCursoMD almCurso;
-    private final ConectarDB conecta;
     //Guardaremos los cursos que consultamos
     private ArrayList<CursoMD> cursos;
     private DefaultTableModel mdTbl;
-
-    public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin, ConectarDB conecta) {
+    
+    /**
+     * Un jd de informacion en el que indicamos 
+     * las materias y profesores que tienen en este curso.
+     * @param almCurso
+     * @param ctrPrin 
+     */
+    public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.almCurso = almCurso;
-        this.vtnPrin = vtnPrin;
-        this.ctrPrin = ctrPrin;
-        this.conecta = conecta;
-        this.cur = new CursoBD(conecta);
-        this.jdMat = new JDMateriasCurso(vtnPrin, false);
+        this.cur = new CursoBD(ctrPrin.getConecta());
+        this.jdMat = new JDMateriasCurso(ctrPrin.getVtnPrin(), false);
     }
-
+    
+    /**
+     * Iniciamos todas las dependecias de esta ventana 
+     * Agregamos el jd a la ventana
+     */
     public void iniciar() {
-        jdMat.setLocationRelativeTo(vtnPrin);
+        jdMat.setLocationRelativeTo(ctrPrin.getVtnPrin());
         jdMat.setVisible(true);
-        
+
         String[] titulo = {"Materia", "Docente"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -49,21 +53,28 @@ public class JDMateriasCursoCTR {
         buscar();
         ctrPrin.eventoJDCerrar(jdMat);
     }
-
+    
+    /**
+     * Buscamos todos los cursos de este alumno 
+     * por nombre de curso
+     */
     private void buscar() {
         cursos = cur.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
-                almCurso.getCurso().getCurso_nombre());
-        System.out.println("Numero de cursos devuletos "+cursos.size());
+                almCurso.getCurso().getNombre());
         llenarTbl(cursos);
     }
-
+    
+    /**
+     * Llenamos la tabla con la info que nos devuelve.
+     * @param cursos 
+     */
     private void llenarTbl(ArrayList<CursoMD> cursos) {
         mdTbl.setRowCount(0);
         if (!cursos.isEmpty()) {
             cursos.forEach(c -> {
-                Object[] v = {c.getId_materia().getNombre(),
-                    c.getId_docente().getPrimerNombre() + " "
-                    + c.getId_docente().getPrimerApellido()};
+                Object[] v = {c.getMateria().getNombre(),
+                    c.getDocente().getPrimerNombre() + " "
+                    + c.getDocente().getPrimerApellido()};
                 mdTbl.addRow(v);
             });
         }

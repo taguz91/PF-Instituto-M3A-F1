@@ -1,6 +1,6 @@
 package controlador.accesos;
 
-import controlador.Libraries.Middlewares;
+import controlador.Libraries.Effects;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.accesos.AccesosBD;
-import modelo.accesos.AccesosMD;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.accesosDelRol.AccesosDelRolMD;
 import modelo.usuario.RolBD;
@@ -33,12 +32,18 @@ public class FrmAccesosDeRolCTR {
 
     private final String Funcion;
 
-    private List<AccesosMD> listaPermisos;
-    private List<AccesosMD> listaPermDados;
+    private List<AccesosBD> listaPermisos;
+    private List<AccesosBD> listaPermDados;
     private List<AccesosDelRolMD> listaBorrar;
 
     private DefaultTableModel tablaPermisos;
     private DefaultTableModel tablaPermDados;
+
+    private final AccesosBD accesosBD;
+
+    {
+        accesosBD = new AccesosBD();
+    }
 
     public FrmAccesosDeRolCTR(VtnPrincipal desktop, FrmAccesosDeRol vista, AccesosDelRolBD modelo, RolBD rol, String Funcion) {
         this.desktop = desktop;
@@ -55,7 +60,7 @@ public class FrmAccesosDeRolCTR {
 
         tablaPermDados = (DefaultTableModel) vista.getTabPermDados().getModel();
 
-        Middlewares.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
 
         InitFuncion();
 
@@ -132,7 +137,7 @@ public class FrmAccesosDeRolCTR {
     private void setListasFuncion() {
         vista.getLblRolSeleccionado().setText(rol.getNombre());
 
-        listaPermDados = AccesosBD.SelectWhereACCESOROLidRol(rol.getId());
+        listaPermDados = accesosBD.SelectWhereACCESOROLidRol(rol.getId());
 
         listaPermDados.forEach((permisoDado) -> {
             listaPermisos
@@ -145,7 +150,7 @@ public class FrmAccesosDeRolCTR {
         cargarTabla(listaPermDados, tablaPermDados);
     }
 
-    private void cargarTabla(List<AccesosMD> lista, DefaultTableModel tabla) {
+    private void cargarTabla(List<AccesosBD> lista, DefaultTableModel tabla) {
         tabla.setRowCount(0);
         lista.stream()
                 .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))
@@ -156,7 +161,7 @@ public class FrmAccesosDeRolCTR {
 
     }
 
-    private void cargarTablaFilter(List<AccesosMD> lista, DefaultTableModel tabla, String Aguja) {
+    private void cargarTablaFilter(List<AccesosBD> lista, DefaultTableModel tabla, String Aguja) {
 
         tabla.setRowCount(0);
 
@@ -169,7 +174,7 @@ public class FrmAccesosDeRolCTR {
                 });
     }
 
-    private void agregarFila(AccesosMD obj, DefaultTableModel tabla) {
+    private void agregarFila(AccesosBD obj, DefaultTableModel tabla) {
 
         tabla.addRow(new Object[]{
             obj.getNombre()
@@ -177,8 +182,8 @@ public class FrmAccesosDeRolCTR {
 
     }
 
-    private void moverTodos(List<AccesosMD> listaAgregar, List<AccesosMD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar) {
-        List<AccesosMD> listaTemporal = new ArrayList<>(listaQuitar);
+    private void moverTodos(List<AccesosBD> listaAgregar, List<AccesosBD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar) {
+        List<AccesosBD> listaTemporal = new ArrayList<>(listaQuitar);
 
         listaTemporal.stream().forEach(obj -> {
             listaAgregar.add(obj);
@@ -193,8 +198,8 @@ public class FrmAccesosDeRolCTR {
         vista.getTxtBuscarDados().setText("");
     }
 
-    private void moverUno(String permiso, List<AccesosMD> listaAgregar, List<AccesosMD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar, boolean isArray) {
-        List<AccesosMD> listaTemporal = new ArrayList<>(listaQuitar);
+    private void moverUno(String permiso, List<AccesosBD> listaAgregar, List<AccesosBD> listaQuitar, DefaultTableModel tablaAgregar, DefaultTableModel tablaQuitar, boolean isArray) {
+        List<AccesosBD> listaTemporal = new ArrayList<>(listaQuitar);
 
         listaTemporal.stream()
                 .filter(item -> item.getNombre().equals(permiso))
@@ -326,7 +331,7 @@ public class FrmAccesosDeRolCTR {
 
     private void btnGuardar(ActionEvent e) {
         new Thread(() -> {
-            Middlewares.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
             listaBorrar.stream().forEach(obj -> {
                 modelo.eliminarWhere(rol.getId(), obj.getIdAcceso());
             });
@@ -342,9 +347,7 @@ public class FrmAccesosDeRolCTR {
             vista.dispose();
             JOptionPane.showMessageDialog(vista, "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase());
 
-            Middlewares.setTextInLabel(desktop.getLblEstado(), "SE HAN EDITADO LOS PERMISOS DEL ROL: " + rol.getNombre().toUpperCase(), 2);
-
-            Middlewares.setDefaultCursor(vista);
+            Effects.setDefaultCursor(vista);
 
         }).start();
     }

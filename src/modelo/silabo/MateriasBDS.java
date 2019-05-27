@@ -29,9 +29,11 @@ public class MateriasBDS extends MateriaMD {
         this.conexion = conexion;
     }
 
-    public MateriasBDS(ConexionBD conexion, int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion) {
-        super(id, carrera, eje, codigo, nombre, ciclo, creditos, tipo, categoria, tipoAcreditacion, horasDocencia, horasPracticas, horasAutoEstudio, horasPresenciales, totalHoras, objetivo, descripcion, objetivoespecifico, organizacioncurricular, materiacampoformacion);
-        this.conexion = conexion;
+    public MateriasBDS() {
+    }
+
+    public MateriasBDS(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion, boolean materiaNucleo, boolean materiaActiva) {
+        super(id, carrera, eje, codigo, nombre, ciclo, creditos, tipo, categoria, tipoAcreditacion, horasDocencia, horasPracticas, horasAutoEstudio, horasPresenciales, totalHoras, objetivo, descripcion, objetivoespecifico, organizacioncurricular, materiacampoformacion, materiaNucleo, materiaActiva);
     }
 
     public static List<MateriaMD> consultar(ConexionBD conexion, String[] clave) {
@@ -49,7 +51,11 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
+<<<<<<< HEAD
                     + "AND pr.id_prd_lectivo=?\n"
+=======
+                    + "AND crs.id_prd_lectivo=? "
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
                     + "EXCEPT\n"
                     + "SELECT DISTINCT \n"
                     + "m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio\n"
@@ -62,7 +68,11 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
                     + "JOIN \"Silabo\" AS s ON s.id_materia = m.id_materia\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
+<<<<<<< HEAD
                     + "AND pr.id_prd_lectivo=?");
+=======
+                    + "AND s.id_prd_lectivo=?");
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
@@ -92,5 +102,40 @@ public class MateriasBDS extends MateriaMD {
         return materias;
 
     }
+    public static List<MateriaMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona,String periodo_nombe ) {
 
+        List<MateriaMD> materias = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
+                    + "m.materia_nombre\n"
+                    + "FROM \"Silabo\" AS s\n"
+                    + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
+                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
+                    + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
+                    + "JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
+                    + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
+                    + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
+                    + "WHERE crr.carrera_nombre=?\n"
+                    + "AND p.id_persona=? AND pr.prd_lectivo_nombre=? AND cr.id_prd_lectivo=s.id_prd_lectivo");
+
+            st.setString(1, carrera);
+            st.setInt(2, id_persona);
+            st.setString(3, periodo_nombe);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+               MateriaMD tmp=new MateriaMD();
+               tmp.setNombre(rs.getString(2));
+
+                materias.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return materias;
+    }
 }

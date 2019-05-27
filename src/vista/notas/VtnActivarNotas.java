@@ -5,18 +5,18 @@
  */
 package vista.notas;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class VtnActivarNotas extends javax.swing.JInternalFrame {
+public class VtnActivarNotas extends AbstracView {
 
     /**
      * Creates new form FrmActivarNotas
@@ -24,8 +24,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public VtnActivarNotas() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JComboBox<String> getCmbPeriodoLectivo() {
@@ -51,8 +49,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
     public void setLblDatosIncorrectos(JLabel lblDatosIncorrectos) {
         this.lblDatosIncorrectos = lblDatosIncorrectos;
     }
-    
-    
 
     public JButton getBtnActualizar() {
         return btnActualizar;
@@ -94,8 +90,6 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         this.lblEstado = lblEstado;
     }
 
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,7 +114,7 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Activacion Notas");
+        setTitle("Activacion notas");
 
         btnActualizar.setText("Actualizar");
 
@@ -136,9 +130,16 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                 "No.", "ID", "Prd Lectivo", "Curso", "Materia", "Nombre", "Apellido", "Aporte 1", "Examen Interciclo", "Aporte 2", "Examen Final", "Examen Supletorio"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false, false, false, false, true, true, true, true, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -152,7 +153,15 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
             tblCursoTipoNotas.getColumnModel().getColumn(0).setPreferredWidth(25);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setResizable(false);
             tblCursoTipoNotas.getColumnModel().getColumn(1).setPreferredWidth(30);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMinWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(2).setMaxWidth(110);
             tblCursoTipoNotas.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblCursoTipoNotas.getColumnModel().getColumn(4).setMinWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(4).setMaxWidth(110);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(5).setMaxWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMinWidth(140);
+            tblCursoTipoNotas.getColumnModel().getColumn(6).setMaxWidth(140);
             tblCursoTipoNotas.getColumnModel().getColumn(7).setResizable(false);
         }
 
@@ -166,10 +175,10 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
 
         cmbPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblPeriodoLectivo.setText("Período Lectivo");
+        lblPeriodoLectivo.setText("Período lectivo");
 
+        lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));
-        lblEstado.setText("Estado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,13 +205,13 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -218,17 +227,15 @@ public class VtnActivarNotas extends javax.swing.JInternalFrame {
                     .addComponent(cmbPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPeriodoLectivo))
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblDatosIncorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDatosCorrectos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 

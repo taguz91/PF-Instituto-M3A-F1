@@ -1,75 +1,55 @@
 package controlador.usuario;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
+import javax.swing.JOptionPane;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.HistorialUsuarioBD;
 import modelo.usuario.HistorialUsuarioMD;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
-import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 
 /**
  *
  * @author Johnny
  */
-public class VtnHistorialUserCTR {
+public class VtnHistorialUserCTR extends DVtnCTR {
 
-    private final ConectarDB conecta;
     private final VtnHistorialUsuarios vtnH;
-    private final VtnPrincipal vtnPrin;
-    private final VtnPrincipalCTR ctrPrin;
     private final HistorialUsuarioBD his;
     private ArrayList<HistorialUsuarioMD> historial;
-    //Para cargar los combos 
+    //Para cargar los combos
     private ArrayList<String> tablas;
     private ArrayList<String> acciones;
     private ArrayList<String> usuarios;
     private ArrayList<String> fechaIni;
     private ArrayList<String> fechaFin;
 
-    //Modelo de la tabla 
-    private DefaultTableModel mdTbl;
     //Para guardar las posiciones de los combos seleccionados
     private int posTbl, posAcc, posUser, posFI, posFF;
     //Para el buscador
     private String b;
-    //Sentencias sql que se ejecuto la ultima vez 
+    //Sentencias sql que se ejecuto la ultima vez
     private String sql;
 
     /**
      * Iniciamos las clases de base de datos.
      *
-     * @param conecta
-     * @param vtnPrin
      * @param ctrPrin
      */
-    public VtnHistorialUserCTR(ConectarDB conecta, VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {
-        this.conecta = conecta;
-        this.vtnPrin = vtnPrin;
-        this.ctrPrin = ctrPrin;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Historial usuarios.");
-
+    public VtnHistorialUserCTR(VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
+        //Cambiamos el estado del cursos
         this.vtnH = new VtnHistorialUsuarios();
-        vtnPrin.getDpnlPrincipal().add(vtnH);
-        vtnH.show();
-        this.his = new HistorialUsuarioBD(conecta);
-        ctrPrin.setIconJIFrame(vtnH);
+        this.his = new HistorialUsuarioBD(ctrPrin.getConecta());
     }
 
     /**
@@ -80,7 +60,7 @@ public class VtnHistorialUserCTR {
         cargarCmbUsuarios();
         cargarCmbTablas();
         cargarCmbFechas();
-        //Le damos el modelo a la tabla  
+        //Le damos el modelo a la tabla
         String[] titulo = {"Usuario", "Tabla", "Acción", "PK", "Fecha"};
         String[][] datos = {};
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
@@ -88,33 +68,31 @@ public class VtnHistorialUserCTR {
         TblEstilo.formatoTbl(vtnH.getTblHistorial());
         TblEstilo.columnaMedida(vtnH.getTblHistorial(), 2, 80);
         TblEstilo.columnaMedida(vtnH.getTblHistorial(), 3, 50);
-        //Buscamos el historial de hoy  
+        //Buscamos el historial de hoy
         cargarHistorialHoy();
-        //Acciones de los combos 
+        //Acciones de los combos
         vtnH.getCmbUsers().addActionListener(e -> clickCmbUsers());
         vtnH.getCmbTablas().addActionListener(e -> clickCmbTbl());
         vtnH.getCmbAccion().addActionListener(e -> clickCmbAccion());
         vtnH.getCmbFechaIni().addActionListener(e -> clickFechaIni());
         vtnH.getCmbFechaFin().addActionListener(e -> clickFechaFin());
 
-        //Iniciamos el buscados 
+        //Iniciamos el buscados
         vtnH.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 b = vtnH.getTxtBuscar().getText().trim();
-                if (b.length() > 2) {
+                if (e.getKeyCode() == 10) {
                     buscar(b);
                 } else if (b.length() == 0) {
-                    mdTbl.setRowCount(0);
+                    cargarHistorialHoy();
                 }
             }
         });
         vtnH.getBtnBuscar().addActionListener(e -> buscar(vtnH.getTxtBuscar().getText().trim()));
-        //Accion para el reporte  
+        //Accion para el reporte
         vtnH.getBtnReporte().addActionListener(e -> llamaReporteHistorialUser());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Historial usuarios.");
+        ctrPrin.agregarVtn(vtnH);
     }
 
     /**
@@ -198,7 +176,7 @@ public class VtnHistorialUserCTR {
                 fechaFin.add(fechaIni.get(i));
             }
         }
-        //Al final removemos el ultimo porque se carga desde el seleecionado 
+        //Al final removemos el ultimo porque se carga desde el seleecionado
         fechaFin.remove(fechaIni.get(posFI - 1));
 
         if (!fechaFin.isEmpty()) {
@@ -260,7 +238,7 @@ public class VtnHistorialUserCTR {
 
     private void llenarCmbAcciones(ArrayList<String> acciones) {
         vtnH.getCmbAccion().removeAllItems();
-        if (!acciones.isEmpty()) {
+        if (acciones != null) {
             vtnH.getCmbAccion().addItem("Seleccione");
             acciones.forEach(a -> {
                 vtnH.getCmbAccion().addItem(a);
@@ -268,7 +246,6 @@ public class VtnHistorialUserCTR {
             });
             vtnH.getCmbAccion().setSelectedIndex(0);
         }
-        System.out.println("Se cargaron acciones");
     }
 
     private void cmbCombinados() {
@@ -311,12 +288,12 @@ public class VtnHistorialUserCTR {
         } else if (posUser > 0 && posTbl == 0
                 && posAcc == 0 && posFI > 0
                 && posFF == 0) {
-            //Consultamos por usuario y fecha 
+            //Consultamos por usuario y fecha
             historial = his.cargarHistorialUserPorFecha(usuarios.get(posUser - 1), fechaIni.get(posFI - 1));
         } else if (posUser > 0 && posTbl == 0
                 && posAcc == 0 && posFI > 0
                 && posFF > 0) {
-            //Consultamos por usuario y fecha de inicio y fin 
+            //Consultamos por usuario y fecha de inicio y fin
             historial = his.cargarHistorialUserEntreFechas(usuarios.get(posUser - 1),
                     fechaIni.get(posFI - 1), fechaFin.get(posFF - 1));
         } else if (posUser > 0 && posTbl > 0
@@ -352,8 +329,8 @@ public class VtnHistorialUserCTR {
         } else if (posUser == 0 && posTbl > 0
                 && posAcc == 0 && posFI == 0
                 && posFF == 0) {
-            //Consultamos por tabla 
-            historial = his.cargarHistorialAccion(acciones.get(posAcc - 1));
+            //Consultamos por tabla
+            historial = his.cargarHistorialTbl(tablas.get(posTbl - 1));
         } else if (posUser == 0 && posTbl > 0
                 && posAcc > 0 && posFI == 0
                 && posFF == 0) {
@@ -404,10 +381,11 @@ public class VtnHistorialUserCTR {
         sql = his.getSql();
         llenarTbl(historial);
     }
-    
+
     /**
      * Llenamos la tabla
-     * @param historial 
+     *
+     * @param historial
      */
     private void llenarTbl(ArrayList<HistorialUsuarioMD> historial) {
         mdTbl.setRowCount(0);
@@ -429,22 +407,12 @@ public class VtnHistorialUserCTR {
         JasperReport jr;
         String path = "./src/vista/reportes/repHistorialUser.jasper";
         try {
-            System.out.println("Cargando reporte");
-            vtnH.setCursor(new Cursor(3));
             Map parametro = new HashMap();
-            System.out.println(sql);
             parametro.put("consulta", sql);
-            //System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, parametro, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Historial Usuario");
-            System.out.println("Reporte cargado");
-            vtnH.setCursor(new Cursor(0));
-
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Hisotorial Usuario");
         } catch (JRException ex) {
-            System.out.println("No se pudo realizar el reporte.");
+            JOptionPane.showMessageDialog(vtnH, "Error: " + ex.getMessage());
         }
     }
 

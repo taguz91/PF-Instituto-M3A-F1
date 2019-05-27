@@ -30,34 +30,30 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblAsignatura" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblPeriodo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="cmbPeriodo" min="-2" pref="336" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                                      <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="cmbCarrera" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
+                                  <Component id="cmbAsignatura" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Component id="lblUnidades" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="spnUnidades" min="-2" pref="81" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblPeriodo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAsignatura" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="cmbCarrera" alignment="0" pref="336" max="32767" attributes="0"/>
-                                          <Component id="cmbAsignatura" max="32767" attributes="0"/>
-                                          <Component id="cmbPeriodo" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -80,25 +76,25 @@
                   <Component id="lblCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cmbAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmbAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblUnidades" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="spnUnidades" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnSiguiente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
@@ -148,7 +144,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblPeriodo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Periodo"/>
+        <Property name="text" type="java.lang.String" value="Periodo de Referencia"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbCarrera">

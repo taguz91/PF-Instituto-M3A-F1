@@ -1,12 +1,20 @@
 #Archivos privados
 /nbproject/private/
-#Proyecto ejecutable 
+#Proyecto ejecutable
 /dist
 #Codigo compilado
 /build/
+#Librerias al compilar
+/lib/
+#Txt readme
+README.TXT
+
 
 #Foto creada temporalmente
 foto.png
+
+#Para pdfs de silabo
+*.pdf
 
 # Compiled class file
 *.class
@@ -33,3 +41,6 @@ hs_err_pid*
 *.class
 /dist/
 /src/vista/silabos/reportes/silabo2/nbproject/private/
+user.properties
+build/built-jar.properties
+configuracion.properties

@@ -4,6 +4,11 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="btngEstilo">
     </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem1"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuCrud">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mnTipoNotas">
@@ -83,6 +88,22 @@
                 <Property name="text" type="java.lang.String" value="Matricula"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlmnRetirados">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Delete_File_20px_1.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Matriculas Anuladas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtListaAlumnos">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lista alumnos"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -101,7 +122,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtRolesPeriodo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtRolesPeriodoActionPerformed"/>
@@ -121,9 +145,15 @@
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+<<<<<<< HEAD
                   <KeyStroke key="Ctrl+Q"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+=======
+                  <KeyStroke key="Ctrl+K"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Plan de clase"/>
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
@@ -139,7 +169,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Roles Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Roles usuarios"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
@@ -150,7 +180,7 @@
                 <Property name="text" type="java.lang.String" value="Historial usuarios"/>
               </Properties>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="jMenu1">
+            <Menu class="javax.swing.JMenu" name="mnNotas">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
@@ -160,26 +190,57 @@
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtPrdIngrNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Periodos de Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar per&#xed;odos de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Tipos de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Tipos de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Ingreso Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Activar Ingreso de Notas"/>
+                    <Property name="text" type="java.lang.String" value="Consultar activaci&#xf3;n de notas"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtActivarNotasActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtRendimientoAcademico">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Rendimiento Acad&#xe9;mico"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Biblioteca"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnBibliotecaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAccesos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Accesos"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtMiPerfil">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mi Perfil"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAsistencia">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Asistencia"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">
@@ -234,6 +295,17 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Per&#xed;odo lectivo"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnIgPrdLectivoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgMateria">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Course_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Materia"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgInscripcion">
               <Properties>
@@ -261,7 +333,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgRolesPeriodo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Roles Periodo"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Permanent_Job_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgSilabo">
@@ -280,9 +355,50 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+Q"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+                <Property name="text" type="java.lang.String" value="Plan de clase"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgUsuarios1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_User_Groups_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Usuarios"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgRoles1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Roles usuarios"/>
+              </Properties>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="mnNotas1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Notas"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgPrdIngrNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Periodos de ingreso de notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ingreso notas"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnIgActivarNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Activar ingreso de notas"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnOpciones">
@@ -294,33 +410,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Estilo"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnWindows">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" value="Windows"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnNimbus">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Nimbus"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="mnRbtnMetal">
-                  <Properties>
-                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="btngEstilo"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Metal"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
             </Menu>
           </SubComponents>
         </Menu>
@@ -370,15 +459,15 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="pnlMenu" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="pnlMenu" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="dpnlPrincipal" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel1" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
@@ -423,13 +512,13 @@
                   <Component id="btnConsultarSilabo" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnIngresarRol" min="-2" pref="45" max="-2" attributes="0"/>
-                  <EmptySpace pref="60" max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnAlumno" max="32767" attributes="0"/>
                       <Component id="btnDocente" max="32767" attributes="0"/>
@@ -445,7 +534,7 @@
                       <Component id="btnConsultarSilabo" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnIngresarRol" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -564,6 +653,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnIngresarRol">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/vista/img/icons8_Permanent_Job_25px.png"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Ingresar Roles"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
@@ -610,13 +702,8 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="btnEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="lblEstado" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Component id="btnEstado" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -734,7 +821,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblIP" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="lblIP" min="-2" pref="180" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnConsola" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -778,7 +865,6 @@
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor Por defecto"/>
             </Property>
-            <Property name="opaque" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnConsola">

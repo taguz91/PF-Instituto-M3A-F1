@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="64e8e16f-77ea-4d8d-8f86-3b7f2497589b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="203" splitType="Stretch">
+			<staticText>
+				<reportElement x="-193" y="-70" width="1520" height="45" forecolor="#006699" uuid="b2b57e99-51de-4879-9de3-165ff4d1dc62"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="39f00e44-6a43-4024-ac55-4196e4130ec7"/>
+				<textElement textAlignment="Center">
+					<font size="32" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="113" width="54" height="20" uuid="d4024ff9-9bad-4f59-b8c6-a5062297e8d1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="148" width="56" height="20" uuid="dd029049-f408-49b5-a051-d0d73201144c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Jornada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="672" y="56" width="199" height="20" uuid="18c1d3aa-914b-4555-b910-7b2f35a72581"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="148" width="41" height="20" uuid="1db75315-f0de-463c-9665-ca61b28ed4af"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="81" width="97" height="20" uuid="ecebfaca-ef26-4d13-97f1-bb44cf7304e1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="113" width="72" height="20" uuid="9f9f5cc9-7e46-4a9a-a4e9-3a8addd5de35"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="148" width="52" height="20" uuid="07c25dac-b3f3-4172-be72-07a2c129b7bf"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Paralelo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1042" y="81" width="56" height="20" uuid="5c3bb1e1-7d8f-407e-973f-3a941f4c8e25"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="39" y="56" width="147" height="124" uuid="16c73d95-f455-40f5-84c6-0d6a737fd5e7"/>
+				<imageExpression><![CDATA["vista/notas/Reportes/logo.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="191" width="1520" height="1" uuid="2db00ce6-949b-4ff9-ae3b-93235998fb06"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,13 +1,11 @@
 package controlador.docente;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
-import modelo.accesos.AccesosBD;
+import javax.swing.JOptionPane;
 import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -16,23 +14,17 @@ import modelo.docente.DocenteMateriaMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
-import modelo.usuario.RolMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.docente.VtnDocenteMateria;
-import vista.principal.VtnPrincipal;
 
 /**
  *
  * @author Johnny
  */
-public class VtnDocenteMateriaCTR {
+public class VtnDocenteMateriaCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnDocenteMateria vtnDm;
-    private final ConectarDB conecta;
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos;
 
     private final DocenteMateriaBD dm;
     private final CarreraBD car;
@@ -43,26 +35,13 @@ public class VtnDocenteMateriaCTR {
     private ArrayList<DocenteMateriaMD> dms;
     private ArrayList<Integer> ciclos;
 
-    DefaultTableModel mdTbl;
-
-    public VtnDocenteMateriaCTR(VtnPrincipal vtnPrin, VtnDocenteMateria vtnDm,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnDocenteMateriaCTR(VtnDocenteMateria vtnDm, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnDm = vtnDm;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Docentes Materia");
-        ctrPrin.setIconJIFrame(vtnDm);
-        //Mostramos el formulario
-        vtnPrin.getDpnlPrincipal().add(vtnDm);
-        vtnDm.show();
         //Inciamos todos las clases para realizar las consultas
-        this.dm = new DocenteMateriaBD(conecta);
-        this.car = new CarreraBD(conecta);
-        this.mat = new MateriaBD(conecta);
+        this.dm = new DocenteMateriaBD(ctrPrin.getConecta());
+        this.car = new CarreraBD(ctrPrin.getConecta());
+        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -72,16 +51,19 @@ public class VtnDocenteMateriaCTR {
         mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         vtnDm.getTblDocentesMateria().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDm.getTblDocentesMateria());
+        TblEstilo.columnaMedida(vtnDm.getTblDocentesMateria(), 0, 100);
         //Desabilitamos el combo de materia y ciclo, se activaran al escoger una carrera
         estadoCmbCicloYMateria(false);
         llenarCmbCarrera();
-        //Buscador 
+        //Buscador
         vtnDm.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String a = vtnDm.getTxtBuscar().getText().trim();
-                if (a.length() > 2) {
-                    buscar(a);
+                String b = vtnDm.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscar(b);
+                } else if (b.length() == 0) {
+                    cargarDocenteMaterias();
                 }
             }
         });
@@ -95,11 +77,26 @@ public class VtnDocenteMateriaCTR {
         //Acciones de los botones
         vtnDm.getBtnBuscar().addActionListener(e -> buscar(vtnDm.getTxtBuscar().getText().trim()));
         vtnDm.getBtnIngresar().addActionListener(e -> ingresar());
+        vtnDm.getBtnEliminar().addActionListener(e -> eliminar());
 
         cargarDocenteMaterias();
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Docentes materia");
+
+        ctrPrin.agregarVtn(vtnDm);
+    }
+
+    /**
+     * Eliminamos el docente materia
+     *
+     * @param aguja
+     */
+    private void eliminar() {
+        int pos = vtnDm.getTblDocentesMateria().getSelectedRow();
+        if (pos >= 0) {
+            dm.eliminar(dms.get(pos).getId());
+            buscar(vtnDm.getTxtBuscar().getText().trim());
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila primero.");
+        }
     }
 
     //Buscador
@@ -129,14 +126,14 @@ public class VtnDocenteMateriaCTR {
         vtnDm.getCmbMateria().removeAllItems();
     }
 
-    //Al seleecionar una carrera se llenara los combos de ciclos y materias 
+    //Al seleecionar una carrera se llenara los combos de ciclos y materias
     private void clickCarreras() {
         int posCar = vtnDm.getCmbCarrera().getSelectedIndex();
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-            materias = mat.cargarMateriasCarreraCmb(idCar);
-            llenarCmbMaterias(materias);
+//            materias = mat.cargarMateriasCarreraCmb(idCar);
+//            llenarCmbMaterias(materias);
             ciclos = mat.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
 
@@ -163,7 +160,7 @@ public class VtnDocenteMateriaCTR {
         }
     }
 
-    //Al hacer click en una materia 
+    //Al hacer click en una materia
     private void clickMateria() {
         int posMat = vtnDm.getCmbMateria().getSelectedIndex();
         if (posMat > 0) {
@@ -221,24 +218,7 @@ public class VtnDocenteMateriaCTR {
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
+        
     }
 
 }

@@ -1,18 +1,29 @@
 package modelo.usuario;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ResourceManager;
+import modelo.ConnDBPool;
 
 /**
  *
  * @author MrRainx
  */
 public class RolBD extends RolMD {
+
+    private ConnDBPool pool;
+    private Connection conn;
+    private ResultSet rs;
+
+    {
+        pool = new ConnDBPool();
+    }
 
     public RolBD(int id, String nombre, String observaciones, boolean estado) {
         super(id, nombre, observaciones, estado);
@@ -21,42 +32,46 @@ public class RolBD extends RolMD {
     public RolBD() {
     }
 
-    private static String TABLA = " \"Roles\" ";
-    private static String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
-    private static String PRIMARY_KEY = " id_rol ";
+    private String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
 
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO " + TABLA + "(rol_nombre,rol_observaciones) VALUES('" + getNombre() + "', '" + getObservaciones() + "')";
+        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES(?, ?)";
 
-        return ResourceManager.Statement(INSERT) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getNombre());
+        parametros.put(2, getObservaciones());
+        conn = pool.getConnection();
+        return pool.ejecutar(INSERT, conn, parametros) == null;
     }
 
-    public static List<RolMD> SelectAll() {
+    public List<RolBD> selectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre != 'ROOT'";
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
 
         return SelectSimple(SELECT);
     }
 
-    public static List<RolMD> SelectWhereNombreLike(String Aguja) {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM " + TABLA + " WHERE rol_nombre LIKE '%" + Aguja + "%'";
+    public List<RolBD> SelectWhereNombreLike(String Aguja) {
+        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
-    public static List<RolMD> SelectWhereUSUARIOusername(String username) {
-        String SELECT = "SELECT  " + ATRIBUTOS + " FROM " + TABLA + " JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
+    public List<RolBD> SelectWhereUSUARIOusername(String username) {
+        String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
         return SelectSimple(SELECT);
     }
 
-    private static List<RolMD> SelectSimple(String Query) {
-        List<RolMD> Lista = new ArrayList<>();
-
-        ResultSet rs = ResourceManager.Query(Query);
+    private List<RolBD> SelectSimple(String Query) {
+        List<RolBD> Lista = new ArrayList<>();
 
         try {
+            conn = pool.getConnection();
+            rs = pool.ejecutarQuery(Query, conn, null);
+
+            System.out.println("---> " + pool.getStmt().toString());
             while (rs.next()) {
-                RolMD rol = new RolMD();
+                RolBD rol = new RolBD();
 
                 rol.setId(rs.getInt("id_rol"));
                 rol.setNombre(rs.getString("rol_nombre"));
@@ -66,9 +81,10 @@ public class RolBD extends RolMD {
                 Lista.add(rol);
 
             }
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.close(conn);
         }
 
         return Lista;
@@ -76,40 +92,36 @@ public class RolBD extends RolMD {
 
     public boolean editar(int Pk) {
 
-        String UPDATE = "UPDATE " + TABLA
-                + " SET "
-                + " id_rol = " + getId()
-                + ",rol_nombre = '" + getNombre() + "'"
-                + " WHERE"
-                + "	" + PRIMARY_KEY + " = '" + Pk + "'";
+        String UPDATE = "UPDATE \"Roles\" \n"
+                + "SET \n"
+                + " id_rol = ?,\n"
+                + " rol_nombre = ?\n"
+                + " WHERE\n"
+                + " id_rol = ?";
 
-        return ResourceManager.Statement(UPDATE) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, getId());
+        parametros.put(2, getNombre());
+        parametros.put(3, Pk);
+
+        return pool.ejecutar(UPDATE, conn, parametros) == null;
 
     }
 
     public boolean eliminar(int Pk) {
 
-        String DELETE = "UPDATE " + TABLA
-                + " SET "
-                + " rol_estado = " + false
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
-                + "";
+        String DELETE = "UPDATE \"Roles\" "
+                + "SET "
+                + " rol_estado = ?\n"
+                + "WHERE "
+                + " id_rol = ?";
 
-        return ResourceManager.Statement(DELETE) == null;
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, false);
+        parametros.put(2, Pk);
 
-    }
-
-    public boolean reactivar(int Pk) {
-
-        String REACTIVAR = "UPDATE " + TABLA
-                + " SET "
-                + " rol_estado = " + false
-                + " WHERE "
-                + " " + PRIMARY_KEY + " = " + Pk
-                + "";
-
-        return ResourceManager.Statement(REACTIVAR) == null;
+        return pool.ejecutar(DELETE, conn, parametros) == null;
 
     }
+
 }

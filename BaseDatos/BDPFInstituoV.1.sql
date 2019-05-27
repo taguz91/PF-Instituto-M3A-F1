@@ -9,6 +9,7 @@ CREATE TABLE "PeriodoLectivo"(
  "prd_lectivo_fecha_inicio" date NOT NULL,
  "prd_lectivo_fecha_fin" date NOT NULL,
  "prd_lectivo_observacion" character varying(200) DEFAULT 'SN',
+ "prd_lectivo_num_cierre" integer NOT NULL DEFAULT '0',
  "prd_lectivo_estado" boolean NOT NULL DEFAULT 'true',
  "prd_lectivo_activo" boolean NOT NULL DEFAULT 'true',
  CONSTRAINT periodolectivo_pk PRIMARY KEY ("id_prd_lectivo")
@@ -51,6 +52,7 @@ CREATE TABLE "Personas"(
   "persona_tipo_residencia" character varying(30),
   "persona_fecha_nacimiento" date,
   "persona_activa" BOOLEAN DEFAULT 'true',
+  "persona_categoria_migratoria" character varying(50),
   CONSTRAINT persona_pk PRIMARY KEY ("id_persona")
 ) WITH (OIDS = FALSE);
 
@@ -81,6 +83,7 @@ CREATE TABLE "Materias"(
 	"materia_objetivo_especifico" TEXT,
 	"materia_organizacion_curricular" TEXT,
 	"materia_campo_formacion" character varying(200),
+	"materia_nucleo" boolean DEFAULT 'false',
 	CONSTRAINT materia_pk PRIMARY KEY ("id_materia")
 ) WITH (OIDS = FALSE);
 
@@ -119,6 +122,7 @@ CREATE TABLE "Carreras"(
   "carrera_fecha_fin" DATE,
   "carrera_modalidad" character varying(20) NOT NULL,
   "carrera_activo" boolean DEFAULT 'true',
+  "carrera_semanas" smallint DEFAULT 0,
   CONSTRAINT carrera_pk PRIMARY KEY ("id_carrera")
 )WITH(OIDS = false);
 
@@ -134,7 +138,7 @@ CREATE TABLE "Docentes"(
   "docente_fecha_fin" date,
   "docente_tipo_tiempo" character varying(20),
   "docente_activo" boolean NOT NULL DEFAULT 'true',
-  "docente_observacion" character varying(20),
+  "docente_observacion" character varying(200),
   "docente_capacitador" boolean NOT NULL DEFAULT 'false',
 	"docente_titulo" character varying(200),
 	"docente_abreviatura" character varying(20),
@@ -150,6 +154,25 @@ CREATE TABLE "Lugares"(
   "lugar_nivel" integer NOT NULL,
   "id_lugar_referencia" integer,
   CONSTRAINT lugar_pk PRIMARY KEY ("id_lugar")
+) WITH (OIDS = FALSE);
+
+--Profesiones
+CREATE TABLE "Profesiones"(
+  "id_titulo" serial NOT NULL,
+  "titulo_nombre" character varying(75) NOT NULL,
+  "titulo_abrev" character varying(20) NOT NULL,
+  "titulo_institucion" character varying(75),
+  "titulo_estado" boolean,
+  CONSTRAINT profesion_pk PRIMARY KEY ("id_titulo")
+) WITH (OIDS = FALSE);
+
+--PersonaProfesiones
+CREATE TABLE "PersonaProfesiones"(
+  "id_persona_profesion" serial NOT NULL,
+  "id_persona" integer NOT NULL,
+  "id_titulo" integer NOT NULL UNIQUE,
+  "id_persona_profesion_observacion" character varying(100),
+  CONSTRAINT persona_profesion_pk PRIMARY KEY ("id_persona_profesion")
 ) WITH (OIDS = FALSE);
 
 --Cursos
@@ -173,11 +196,6 @@ CREATE TABLE "AlumnoCurso"(
   "id_alumno" integer NOT NULL,
   "id_curso" integer NOT NULL,
   "almn_curso_fecha_registro" DATE default now();
-  "almn_curso_nt_1_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_interciclo" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_2_parcial" numeric(6, 2) DEFAULT '0',
-  "almn_curso_nt_examen_final" numeric(6, 2) DEFAULT '0' ,
-  "almn_curso_nt_examen_supletorio" numeric(6, 2) DEFAULT '0',
   "almn_curso_asistencia" character varying(30) DEFAULT 'Asiste',
   "almn_curso_nota_final" numeric(6 ,2) DEFAULT '0',
   "almn_curso_estado" character varying(30) DEFAULT 'Reprobado',
@@ -208,6 +226,7 @@ CREATE TABLE "EjesFormacion"(
 	"id_carrera" integer NOT NULL,
 	"eje_codigo" character varying(10) NOT NULL,
 	"eje_nombre" character varying(100) NOT NULL,
+	"eje_estado" BOOLEAN DEFAULT TRUE,
 	CONSTRAINT eje_formacion_pk PRIMARY KEY ("id_eje")
 ) WITH (OIDS = FALSE);
 
@@ -242,18 +261,18 @@ CREATE TABLE "DocentesMateria"(
 --Modificaciones 15/4/2019
 
 CREATE TABLE "RolesPeriodo"(
-	"id_rol_prd" serial NOT NULL, 
-	"id_prd_lectivo" integer NOT NULL, 
-	"rol_prd" character varying(200) NOT NULL, 
-	"rol_activo" boolean DEFAULT 'true', 
+	"id_rol_prd" serial NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"rol_prd" character varying(200) NOT NULL,
+	"rol_activo" boolean DEFAULT 'true',
 	CONSTRAINT rol_prd_pk PRIMARY KEY ("id_rol_prd")
 ) WITH (OIDS = FALSE);
 
 CREATE TABLE "RolesDocente"(
-	"id_rol_docente" serial NOT NULL, 
+	"id_rol_docente" serial NOT NULL,
 	"id_docente" integer NOT NULL,
-	"id_rol_prd" integer NOT NULL, 
-	"rol_docente_activo" boolean default 'true',  
+	"id_rol_prd" integer NOT NULL,
+	"rol_docente_activo" boolean default 'true',
 	CONSTRAINT id_rol_docente PRIMARY KEY("id_rol_docente")
 ) WITH (OIDS = FALSE);
 
@@ -269,6 +288,40 @@ ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "RolesDocente" ADD CONSTRAINT "rol_docente_fk2"
 FOREIGN KEY ("id_docente") REFERENCES "Docentes"("id_docente")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+--Para matricula
+
+CREATE TABLE "Matricula"(
+	"id_matricula" serial NOT NULL,
+	"id_alumno" integer NOT NULL,
+	"id_prd_lectivo" integer NOT NULL,
+	"matricula_fecha" TIMESTAMP DEFAULT now(),
+	"matricula_activa" boolean NOT NULL DEFAULT 'true',
+	CONSTRAINT id_matricula_pk PRIMARY KEY("id_matricula")
+) WITH (OIDS = FALSE);
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk1"
+FOREIGN KEY ("id_alumno") REFERENCES "Alumnos"("id_alumno")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE "Matricula" ADD CONSTRAINT "matricula_fk2"
+FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+ON UPDATE CASCADE ON DELETE CASCADE;
+
+--Para retirar un alumno
+CREATE TABLE "AlumnoCursoRetirados"(
+	"id_retirado" serial NOT NULL,
+	"id_almn_curso" integer NOT NULL,
+	"retiro_fecha" TIMESTAMP DEFAULT now(),
+	"retiro_observacion" text,
+  	"retiro_activo" boolean DEFAULT 'true',
+	CONSTRAINT id_retirado_pk PRIMARY KEY("id_retirado")
+) WITH (OIDS = FALSE);
+
+
+ALTER TABLE "AlumnoCursoRetirados" ADD CONSTRAINT "retirado_fk1"
+FOREIGN KEY ("id_almn_curso") REFERENCES "AlumnoCurso"("id_almn_curso")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -332,6 +385,7 @@ CREATE TABLE "TipoDeNota"(
 	"tipo_nota_valor_maximo" NUMERIC(6,2) NOT NULL,
 	"tipo_nota_fecha_creacion" DATE DEFAULT CURRENT_DATE,
 	"tipo_nota_estado" BOOLEAN DEFAULT TRUE,
+	"id_prd_lectivo" INTEGER,
 
 
 	CONSTRAINT tipo_de_nota_pk PRIMARY KEY("id_tipo_nota")
@@ -369,7 +423,8 @@ CREATE TABLE "HistorialUsuarios"(
 	"historial_tipo_accion" character varying(30) NOT NULL,
 	"historial_nombre_tabla" character varying(30) NOT NULL,
 	"historial_pk_tabla" integer NOT NULL,
-  "historial_observacion" character varying(200),
+  	"historial_observacion" character varying(200),
+  	"historial_ip" character varying (200) NOT NULL DEFAULT '000.00.000.000',
 	CONSTRAINT historial_user_pk PRIMARY KEY ("id_historial_user")
 ) WITH (OIDS = FALSE);
 
@@ -498,8 +553,9 @@ CREATE TABLE "Silabo" (
 	id_silabo serial NOT NULL,
 	id_materia integer NOT NULL,
   id_prd_lectivo integer NOT NULL,
-  --estado_silabo character varying (50) NOT NULL,
 	estado_silabo integer NOT NULL,
+	documento_silabo bytea,
+	documento_analitico bytea,
 
 	PRIMARY KEY(id_silabo),
 
@@ -562,7 +618,6 @@ CREATE TABLE "UnidadSilabo" (
   titulo_unidad TEXT NOT NULL,
 
 	PRIMARY KEY(id_unidad),
-	--Aumentar en la base
 	FOREIGN KEY (id_silabo)
         REFERENCES "Silabo" (id_silabo)
         ON UPDATE CASCADE
@@ -597,6 +652,152 @@ ALTER TABLE "Silabo" ADD CONSTRAINT "fk_silabo_prd_lectivo"
     FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
         ON DELETE CASCADE ON UPDATE CASCADE;
 
+--Actualizaciones 16/4/2019
+
+CREATE SEQUENCE public."PlandeClases_id_plan_clases_seq";
+
+ALTER SEQUENCE public."PlandeClases_id_plan_clases_seq"
+    OWNER TO postgres;
+
+
+
+CREATE TABLE public."PlandeClases"
+(
+    id_plan_clases integer NOT NULL DEFAULT nextval('"PlandeClases_id_plan_clases_seq"'::regclass),
+
+    id_curso integer NOT NULL,
+    id_unidad integer NOT NULL,
+    observaciones text COLLATE pg_catalog."default",
+    documento_plan_clases bytea,
+    fecha_revision date,
+    fecha_generacion date,
+    fecha_cierre date,
+    CONSTRAINT "PlandeClases_pkey" PRIMARY KEY (id_plan_clases),
+    CONSTRAINT id_curso FOREIGN KEY (id_curso)
+        REFERENCES public."Cursos" (id_curso) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT id_unidad FOREIGN KEY (id_unidad)
+        REFERENCES public."UnidadSilabo" (id_unidad) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."PlandeClases"
+    OWNER to postgres;
+
+
+
+CREATE TABLE public."TrabajoAutonomo"
+(
+    id_evaluacion integer NOT NULL,
+    id_plan_clases integer NOT NULL,
+    CONSTRAINT "Trabajo_autonomo_pkey" PRIMARY KEY (id_evaluacion),
+    CONSTRAINT id_evaluacion FOREIGN KEY (id_evaluacion)
+        REFERENCES public."EvaluacionSilabo" (id_evaluacion) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."TrabajoAutonomo"
+    OWNER to postgres;
+
+
+
+CREATE SEQUENCE public."Recursos_id_recurso_seq";
+
+ALTER SEQUENCE public."Recursos_id_recurso_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."Recursos"
+(
+    id_recurso integer NOT NULL DEFAULT nextval('"Recursos_id_recurso_seq"'::regclass),
+    nombre_recursos text COLLATE pg_catalog."default",
+    tipo_recurso character(1) COLLATE pg_catalog."default",
+    CONSTRAINT "Recursos_pkey" PRIMARY KEY (id_recurso)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."Recursos"
+    OWNER to postgres;
+
+
+
+CREATE SEQUENCE public."RecursosPlanClases_id_recursos_plan_clases_seq";
+
+ALTER SEQUENCE public."RecursosPlanClases_id_recursos_plan_clases_seq"
+    OWNER TO postgres;
+
+CREATE TABLE public."RecursosPlanClases"
+(
+    id_recursos_plan_clases integer NOT NULL DEFAULT nextval('"RecursosPlanClases_id_recursos_plan_clases_seq"'::regclass),
+    id_plan_clases integer NOT NULL,
+    id_recurso integer NOT NULL,
+    CONSTRAINT "RecursosPlanClases_pkey" PRIMARY KEY (id_recursos_plan_clases),
+    CONSTRAINT id_plan_clases FOREIGN KEY (id_plan_clases)
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_recurso FOREIGN KEY (id_recurso)
+        REFERENCES public."Recursos" (id_recurso) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."RecursosPlanClases"
+    OWNER to postgres;
+
+
+
+CREATE SEQUENCE public."EstrategiasMetodologias_id_estrategias_metodologias_seq";
+
+ALTER SEQUENCE public."EstrategiasMetodologias_id_estrategias_metodologias_seq"
+    OWNER TO postgres;
+
+
+CREATE TABLE public."EstrategiasMetodologias"
+(
+    id_estrategias_metodologias integer NOT NULL DEFAULT nextval('"EstrategiasMetodologias_id_estrategias_metodologias_seq"'::regclass),
+    tipo_estrategias_metodologias text COLLATE pg_catalog."default",
+    id_plan_de_clases integer NOT NULL,
+    id_estrategias_unidad integer NOT NULL,
+    CONSTRAINT "EstrategiasMetodologias_pkey" PRIMARY KEY (id_estrategias_metodologias),
+    CONSTRAINT id_estrategias_unidad FOREIGN KEY (id_estrategias_metodologias)
+        REFERENCES public."EstrategiasUnidad" (id_estrategia_unidad) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT id_plan_de_clases FOREIGN KEY (id_plan_de_clases)
+        REFERENCES public."PlandeClases" (id_plan_clases) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."EstrategiasMetodologias"
+    OWNER to postgres;
 
 /*
 FK G 23
@@ -646,7 +847,13 @@ ALTER TABLE "Alumnos" ADD CONSTRAINT "alumnos_fk2"
 FOREIGN KEY ("id_sec_economico") REFERENCES "SectorEconomico"("id_sec_economico")
 ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk1"
+FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE "PersonaProfesiones" ADD CONSTRAINT "persona_profesion_pk2"
+FOREIGN KEY ("id_titulo") REFERENCES "Profesiones"("id_titulo")
+ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE "Docentes" ADD CONSTRAINT "docentes_fk1"
 FOREIGN KEY ("id_persona") REFERENCES "Personas"("id_persona")
@@ -756,6 +963,11 @@ ALTER TABLE "IngresoNotas" ADD CONSTRAINT "fk_cursos_ingreso_notas"
     FOREIGN KEY ("id_curso") REFERENCES "Cursos"("id_curso")
         ON DELETE CASCADE ON UPDATE CASCADE;
 
+--AGREGADA EL 16/Abril/2019
+ALTER TABLE "TipoDeNota" ADD CONSTRAINT "periodo_lectivo_tipo_de_nota__fk"
+    FOREIGN KEY ("id_prd_lectivo") REFERENCES "PeriodoLectivo"("id_prd_lectivo")
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
 --Tablas nuevas de G
 
 CREATE SEQUENCE public."EstrategiasSilabo_id_estrategia_seq";
@@ -806,6 +1018,20 @@ TABLESPACE pg_default;
 ALTER TABLE public."EstrategiasUnidad"
     OWNER to postgres;
 
+--CREANDO TABLA SESION_NO_CLASE
+
+CREATE TABLE "SesionNoClase"(
+	"id_sesion_no_clase" serial NOT NULL,
+	"id_rol_docente" INTEGER NOT NULL,
+	"hora_inicio_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"hora_fin_sesionnoclase" TIMESTAMP DEFAULT now(),
+	"dia_sesionnoclase" DATE NOT NULL,
+	CONSTRAINT pk_sesion_no_clase PRIMARY KEY("id_sesion_no_clase"),
+	CONSTRAINT fk_sesion_no_clase FOREIGN KEY ("id_rol_docente")
+        REFERENCES public."RolesDocente"("id_rol_docente") MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)WITH(OIDS = FALSE);
 
 /*VALORES POR DEFECTO EN LA BASE DE DATOS*/
 

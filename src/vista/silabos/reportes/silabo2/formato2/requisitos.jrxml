@@ -5,10 +5,11 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select id_materia,materia_nombre from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='P' and id_materia=$P!{parameter1})]]>
+		<![CDATA[select id_materia,materia_nombre,materia_codigo from "Materias" m where id_materia in (select id_materia_requisito from "MateriaRequisitos" c where tipo_requisito='P' and id_materia=$P!{parameter1})]]>
 	</queryString>
 	<field name="id_materia" class="java.lang.Integer"/>
 	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="materia_codigo" class="java.lang.String"/>
 	<variable name="variable1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -55,10 +56,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Código]]></text>
+				<text><![CDATA[Codigo]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="40" width="273" height="16" uuid="0f4fbf19-69d3-4b97-829b-f7b676a77c1c"/>
+				<reportElement x="0" y="40" width="273" height="16" uuid="05ef27c7-4f5e-43b2-bae5-c3143fb2526a"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -92,7 +93,7 @@
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{id_materia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_codigo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

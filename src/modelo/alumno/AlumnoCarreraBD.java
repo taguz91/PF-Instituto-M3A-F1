@@ -1,8 +1,10 @@
 package modelo.alumno;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -33,13 +35,39 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
                 + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
                 + " now() );";
-        if (conecta.nosql(nsql) == null) {
-            System.out.println("Guardamos correctamente el alumno en la carrera");
-            
+        PreparedStatement ps = conecta.getPS(nsql);
+        if (conecta.nosql(ps) == null) {
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente los campos.");
             return true;
         } else {
             return false;
         }
+    }
+
+    public String estaMatriculadoEn(int idAlm) {
+        String carrera = "";
+        String sql = "SELECT DISTINCT carrera_nombre\n"
+                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, \n"
+                + "public.\"Carreras\" c\n"
+                + "WHERE ma.id_almn_carrera = ac.id_almn_carrera\n"
+                + "AND ac.id_alumno = " + idAlm + " \n"
+                + "AND c.id_carrera = ac.id_carrera\n"
+                + "AND malla_almn_estado <> 'C';";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    carrera = carrera + rs.getString("carrera_nombre") + "\n";
+                }
+            }
+            ps.getConnection().close();
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+
+        }
+        return carrera;
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarrera() {
@@ -50,14 +78,28 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "public.\"Carreras\" c\n"
                 + "WHERE  a.id_alumno = ac.id_alumno AND \n"
                 + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND carrera_activo = true;";
+                + "c.id_carrera = ac.id_carrera AND carrera_activo = true \n"
+                + "AND almn_carrera_activo = true;";
         return consultarAlumnoCarrera(sql);
     }
-    
+
+    public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraEliminados() {
+        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
+                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
+                + "persona_identificacion, carrera_codigo\n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
+                + "public.\"Carreras\" c\n"
+                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
+                + "p.id_persona = a.id_persona AND \n"
+                + "c.id_carrera = ac.id_carrera AND almn_carrera_activo = false;";
+        return consultarAlumnoCarrera(sql);
+    }
+
     /**
      * Consultamos todos los alumnos filtrandolos por una carrera.
+     *
      * @param idCarrera
-     * @return 
+     * @return
      */
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
         String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
@@ -108,31 +150,22 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         return consultarAlumnoCarreraTbl(sql);
     }
 
-    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
+    public ArrayList<AlumnoCarreraMD> buscarAlumnoCarreraParaFrm(int idCarrera, String aguja) {
+        String sql = "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
+                + "persona_primer_nombre, persona_segundo_nombre,\n"
+                + "persona_primer_apellido, persona_segundo_apellido, persona_identificacion \n"
+                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
+                + "WHERE a.id_alumno = ac.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "ac.id_carrera = " + idCarrera + " AND (\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
+                + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' OR \n"
+                + "	persona_identificacion ILIKE '%" + aguja + "%') "
+                + "AND persona_activa = true;";
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    AlumnoCarreraMD ac = obtenerAlumnoCarreraTbl(rs);
-                    if (ac != null) {
-                        alms.add(ac);
-                    }
-                }
-                return alms;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraTbl(String sql) {
-        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
         try {
             if (rs != null) {
 
@@ -149,13 +182,14 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                     al.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                     al.setIdentificacion(rs.getString("persona_identificacion"));
-                    
+
                     ac.setCarrera(c);
                     ac.setAlumno(al);
 
                     alms.add(ac);
                 }
                 rs.close();
+                ps.getConnection().close();
                 return alms;
             } else {
                 return null;
@@ -166,11 +200,75 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             return null;
         }
     }
-    
+
+    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
+        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    AlumnoCarreraMD ac = obtenerAlumnoCarreraTbl(rs);
+                    if (ac != null) {
+                        alms.add(ac);
+                    }
+                }
+                ps.getConnection().close();
+                return alms;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraTbl(String sql) {
+        ArrayList<AlumnoCarreraMD> alms = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+
+                while (rs.next()) {
+                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                    ac.setId(rs.getInt("id_almn_carrera"));
+                    AlumnoMD al = new AlumnoMD();
+                    CarreraMD c = new CarreraMD();
+                    c.setId(rs.getInt("id_carrera"));
+                    al.setId_Alumno(rs.getInt("id_alumno"));
+                    al.setIdPersona(rs.getInt("id_persona"));
+                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                    al.setIdentificacion(rs.getString("persona_identificacion"));
+
+                    ac.setCarrera(c);
+                    ac.setAlumno(al);
+
+                    alms.add(ac);
+                }
+                rs.close();
+                ps.getConnection().close();
+                return alms;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * Obtenemos el alumno consultado para cargarlo en una arraylist
+     *
      * @param rs
-     * @return 
+     * @return
      */
     private AlumnoCarreraMD obtenerAlumnoCarreraTbl(ResultSet rs) {
         AlumnoCarreraMD ac = new AlumnoCarreraMD();

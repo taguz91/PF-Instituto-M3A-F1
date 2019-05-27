@@ -1,21 +1,16 @@
 package controlador.Libraries;
 
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.File;
-import static java.lang.Thread.sleep;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import modelo.ResourceManager;
+import java.util.function.BiFunction;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import modelo.ConnDBPool;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -27,30 +22,13 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author MrRainx
  */
-public class Middlewares {
+public final class Middlewares {
 
-    private static final Cursor LOAD_CURSOR;
-    private static final Cursor DEFAULT_CURSOR;
+    private static ConnDBPool pool;
+    private static Connection conn;
 
     static {
-        LOAD_CURSOR = new Cursor(Cursor.WAIT_CURSOR);
-        DEFAULT_CURSOR = new Cursor(Cursor.DEFAULT_CURSOR);
-    }
-
-    public static void setLoadCursor(JComponent view) {
-        view.setCursor(LOAD_CURSOR);
-    }
-
-    public static void setDefaultCursor(JComponent view) {
-        view.setCursor(DEFAULT_CURSOR);
-    }
-
-    public static void setLoadCursorInWindow(Container view) {
-        view.setCursor(LOAD_CURSOR);
-    }
-
-    public static void setDefaultCursorInWindow(Container view) {
-        view.setCursor(DEFAULT_CURSOR);
+        pool = new ConnDBPool();
     }
 
     /**
@@ -68,7 +46,8 @@ public class Middlewares {
 
             JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
 
-            JasperPrint print = JasperFillManager.fillReport(jasper, parameter, ResourceManager.getConnection());
+            conn = pool.getConnection();
+            JasperPrint print = JasperFillManager.fillReport(jasper, parameter, conn);
 
             JasperViewer view = new JasperViewer(print, false);
 
@@ -76,8 +55,10 @@ public class Middlewares {
 
             view.setVisible(true);
 
-        } catch (JRException | SQLException ex) {
+        } catch (JRException ex) {
             System.out.println(ex.getMessage());
+        } finally {
+            pool.close(conn);
         }
     }
 
@@ -87,12 +68,17 @@ public class Middlewares {
      * @param tituloVentana Titulo de la ventana del ReporViewer
      * @param parametros
      */
-    public static void generarReporte(String path, String tituloVentana, Map parametros) {
+    static JasperReport prueba;
+
+    public static void generarReporte(URL path, String tituloVentana, Map parametros) {
         try {
+//            (JasperReport) JRLoader.loadObject();
 
-            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperReport jasper = (JasperReport) JRLoader.loadObject(path);
 
-            JasperPrint print = JasperFillManager.fillReport(jasper, parametros, ResourceManager.getConnection());
+            System.out.println("PATH ---------->" + path);
+            conn = pool.getConnection();
+            JasperPrint print = JasperFillManager.fillReport(jasper, parametros, conn);
 
             JasperViewer view = new JasperViewer(print, false);
 
@@ -100,34 +86,14 @@ public class Middlewares {
 
             view.setVisible(true);
 
-        } catch (JRException | SQLException ex) {
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "PATH\n" + path);
+            JOptionPane.showMessageDialog(null, "PATH PROYECTO" + getProjectPath());
             System.out.println(ex.getMessage());
+        } finally {
+            pool.close(conn);
         }
-    }
-
-    public static void setTextInLabel(JLabel component, String text, int time) {
-
-        new Thread(() -> {
-            try {
-                component.setText(text);
-                sleep(time * 1000);
-                component.setText("");
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }).start();
-
-    }
-
-    public static void centerFrame(JInternalFrame view, JDesktopPane desktop) {
-
-        int deskWidth = (desktop.getWidth() / 2) - (view.getWidth() / 2);
-        int deskHeight = (desktop.getHeight() / 2) - (view.getHeight() / 2);
-
-        if (desktop.getHeight() < 500) {
-            deskHeight = 0;
-        }
-        view.setLocation(deskWidth, deskHeight);
     }
 
     public static String getProjectPath() {
@@ -135,28 +101,39 @@ public class Middlewares {
         return path.substring(0, path.length() - 1);
     }
 
-    public static void placeHolder(JLabel component, String placeholderText) {
+    public static double conversor(String texto) {
+        if (texto.isEmpty()) {
+            texto = "99999";
+        }
+        if (texto.equalsIgnoreCase(".") || texto.equalsIgnoreCase(",")) {
+            texto = "0";
+        }
+        return Math.round(Double.valueOf(texto) * 10) / 10d;
+    }
 
-        component.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
+    public static String capitalize(String texto) {
+        if (texto.length() > 1) {
+            return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+        } else {
+            return texto.toUpperCase();
+        }
+    }
 
-                if (component.getText().equalsIgnoreCase(placeholderText)) {
-                    component.setText("");
-                }
+    public static BiFunction<JTable, String, Integer> getNombre = (tabla, nombre) -> {
+        return tabla.getColumnModel().getColumnIndex(nombre);
+    };
 
-            }
+    public static boolean isConnected() {
+        try {
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (placeholderText.equalsIgnoreCase(component.getText())) {
-                    //AGREGAR COLORES
-                }
-            }
-        });
+            URL ruta = new URL("http://www.google.es");
+            URLConnection rutaC = ruta.openConnection();
+            rutaC.connect();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
 
     }
-    
-    
 
 }

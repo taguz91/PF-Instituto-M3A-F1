@@ -5,47 +5,32 @@
  */
 package modelo.docente;
 
-import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteMD;
+import modelo.persona.PersonaMD;
 
 /**
  *
- * @author arman
+ * @author DAVICHO
  */
 public class RolDocenteMD {
-    private int id_rol;
-    private String nombre_rol;
-    private PeriodoLectivoMD periodo;
+    private RolPeriodoMD idRolPeriodo;
+    private DocenteMD idDocente;    
 
-    public RolDocenteMD() {
+    public RolPeriodoMD getIdRolPeriodo() {
+        return idRolPeriodo;
     }
 
-    public int getId_rol() {
-        return id_rol;
+    public void setIdRolPeriodo(RolPeriodoMD idRolPeriodo) {
+        this.idRolPeriodo = idRolPeriodo;
     }
 
-    public void setId_rol(int id_rol) {
-        this.id_rol = id_rol;
+    public DocenteMD getIdDocente() {
+        return idDocente;
     }
 
-    public String getNombre_rol() {
-        return nombre_rol;
+    public void setIdDocente(DocenteMD idDocente) {
+        this.idDocente = idDocente;
     }
-
-    public void setNombre_rol(String nombre_rol) {
-        this.nombre_rol = nombre_rol;
-    }
-
-    public PeriodoLectivoMD getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(PeriodoLectivoMD periodo) {
-        this.periodo = periodo;
-    }
-
-    @Override
-    public String toString() {
-        return "RolDocenteMD{" + "id_rol=" + id_rol + ", nombre_rol=" + nombre_rol + '}';
-    }
+    
     
 }

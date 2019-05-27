@@ -24,6 +24,8 @@ public class SilaboMD {
 
     private MateriaMD idMateria;
     
+    
+    
     private int estadoSilabo;
     
     private PeriodoLectivoMD idPeriodoLectivo;
@@ -44,9 +46,6 @@ public class SilaboMD {
 
     
 
-    
-    
-    
 
     public Integer getIdSilabo() {
         return idSilabo;

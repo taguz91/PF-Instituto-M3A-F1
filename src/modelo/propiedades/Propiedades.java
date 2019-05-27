@@ -7,10 +7,11 @@ package modelo.propiedades;
 
 import controlador.Libraries.Middlewares;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -23,17 +24,14 @@ import java.util.stream.Collectors;
  */
 public class Propiedades {
 
-    private static final Properties config;
-    private static String PATH = "configuracion.properties";
-    private static final File archivo;
+    private static void setDefault() {
+        Properties config;
+        String PATH = "configuracion.properties";
+        File archivo;
 
-    static {
         config = new Properties();
         PATH = Middlewares.getProjectPath() + PATH;
         archivo = new File(PATH);
-    }
-
-    private static void setDefault() {
 
         config.setProperty("ip", "35.193.226.187");
         config.setProperty("port", "5432");
@@ -47,42 +45,32 @@ public class Propiedades {
     }
 
     public static Map<Object, Object> loadProperties() {
-        if (archivo.exists()) {
-            try {
-                config.load(new FileReader(archivo));
-                if (config.size() != 3) {
-                    setDefault();
-                    config.load(new FileReader(archivo));
-                }
-            } catch (FileNotFoundException ex) {
-                setDefault();
-                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                setDefault();
-                Logger.getLogger(Propiedades.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
+        try {
+            Map<Object, Object> map = Files.lines(Paths.get("configuracion.properties"))
+                    .filter(item -> item.contains("="))
+                    .map(c -> c.split("="))
+                    .collect(Collectors.toMap(s -> s[0], s -> s[1]));
+
+            return map;
+        } catch (NoSuchFileException ex) {
             setDefault();
-            Map<Object, Object> properties = loadProperties();
-            return properties;
+            return loadProperties();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
 
-        return config;
+        return null;
     }
 
     public static String getPropertie(String propertie) {
-        String IP = "";
-
-        Map<Object, Object> map = loadProperties().entrySet()
+        return loadProperties().entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().equals(propertie.toLowerCase()))
-                .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
-
-        for (Map.Entry<Object, Object> entry : map.entrySet()) {
-            IP = (String) entry.getValue();
-        }
-
-        return IP;
+                .collect(Collectors.toMap(c -> c.getKey().toString(), c -> c.getValue().toString()))
+                .entrySet()
+                .stream()
+                .filter(item -> item.getKey().equalsIgnoreCase(propertie))
+                .map(c -> c.getValue())
+                .findFirst()
+                .orElse("");
     }
-
 }

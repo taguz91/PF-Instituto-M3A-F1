@@ -35,12 +35,12 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
 
     
 
-    public void insertar(EstrategiasUnidadMD e) {
+    public void insertar(EstrategiasUnidadMD e, int iu) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasUnidad\"(\n"
                     + "	 id_unidad, id_estrategia)\n"
-                    + "	VALUES ((SELECT MAX(id_unidad) FROM \"UnidadSilabo\"), ?)");
+                    + "	VALUES ("+iu+", ?)");
 
            
             st.setInt(1, e.getIdEstrategia().getIdEstrategia());
@@ -68,6 +68,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             while (rs.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
 
+                eu.getIdUnidad().setIdUnidad(rs.getInt(1));
                 eu.getIdUnidad().setNumeroUnidad(rs.getInt(4));
                 eu.getIdEstrategia().setIdEstrategia(rs.getInt(2));
                 eu.getIdEstrategia().setDescripcionEstrategia(rs.getString(3));
@@ -78,7 +79,36 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             
 
         } catch (SQLException ex) {
-            Logger.getLogger(dbEstrategiasUnidad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        return lista;
+    }
+    public static List<EstrategiasUnidadMD> cargarEstrategiasPlanClae(ConexionBD conexion, int id_silabo,int numero_unidad)  {
+        
+        List<EstrategiasUnidadMD> lista = new ArrayList<>();
+        try {
+            
+             PreparedStatement st = conexion.getCon().prepareStatement("SELECT distinct \"EstrategiasAprendizaje\".descripcion_estrategia\n" +
+"                     FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n" +
+"                     WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n" +
+"                     AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n" +
+"                    AND id_silabo=? AND numero_unidad=?");
+             st.setInt(1, id_silabo);
+            st.setInt(2, numero_unidad);
+            ResultSet rs = st.executeQuery();
+            System.out.println(st);
+            while (rs.next()) {
+                EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
+                eu.getIdEstrategia().setDescripcionEstrategia(rs.getString(1));
+                lista.add(eu);
+            }
+           
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
             
         }
         

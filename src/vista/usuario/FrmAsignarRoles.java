@@ -5,23 +5,22 @@
  */
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author MrRainx
  */
-public class FrmAsignarRoles extends javax.swing.JInternalFrame {
+public class FrmAsignarRoles extends AbstracView {
 
     public FrmAsignarRoles() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
+        
     }
 
     public JButton getBtnCancelar() {
@@ -112,7 +111,7 @@ public class FrmAsignarRoles extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Buscar:");
 
-        btnReset.setText("Resetear");
+        btnReset.setText("Reset");
         btnReset.setEnabled(false);
 
         btnCancelar.setText("Cancelar");

@@ -1,23 +1,19 @@
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class FrmUsuario extends javax.swing.JInternalFrame {
+public class FrmUsuario extends AbstracView {
 
     public FrmUsuario() {
         initComponents();
-
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnBuscarPer() {
@@ -52,11 +48,6 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         return cmbPersona;
     }
 
-    public JCheckBox getChxDefinido() {
-        return chxDefinido;
-    }
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,16 +67,12 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         cmbPersona = new javax.swing.JComboBox<>();
         lblBuscarPer1 = new javax.swing.JLabel();
         btnResetear = new javax.swing.JButton();
-        chxDefinido = new javax.swing.JCheckBox();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setTitle("Crear Usuarios");
 
         lblUsername.setText("Username");
-
-        txtUsername.setEditable(false);
 
         lblPassword.setText("Password");
 
@@ -97,13 +84,9 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
 
         btnBuscarPer.setText("Buscar");
 
-        cmbPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una Persona" }));
-
         lblBuscarPer1.setText("Filtrar Persona");
 
         btnResetear.setText("Reset");
-
-        chxDefinido.setText("Definir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,8 +107,6 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                         .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chxDefinido)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -156,8 +137,7 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chxDefinido))
+                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,7 +168,6 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnResetear;
-    private javax.swing.JCheckBox chxDefinido;
     private javax.swing.JComboBox<String> cmbPersona;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

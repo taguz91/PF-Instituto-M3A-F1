@@ -1,6 +1,8 @@
 package controlador.principal;
 
-import controlador.Libraries.Middlewares;
+import controlador.version.JDVersionCTR;
+import controlador.Libraries.Effects;
+import controlador.accesos.VtnAccesosCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
@@ -9,18 +11,21 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
+import controlador.alumno.VtnMatriculaCTR;
+import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
-import controlador.docente.VtnRolDocenteCTR;
+import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
 import controlador.login.LoginCTR;
+import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
-import controlador.notas.VtnActivarNotasCTR;
-import controlador.notas.VtnNotasAlumnoCursoCTR;
-import controlador.periodoLectivoNotas.VtnPeriodoIngresoNotasCTR;
-import controlador.periodoLectivoNotas.VtnTipoNotasCTR;
+import controlador.notas.VtnControlUBCTR;
+import controlador.notas.VtnNotasCTR;
+import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
 import controlador.persona.FrmPersonaCTR;
@@ -29,43 +34,40 @@ import controlador.persona.VtnDocenteCTR;
 import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
+import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
-import controlador.silabo.ControladorSilabos;
 import controlador.usuario.VtnHistorialUserCTR;
-import controlador.usuario.VtnRolCTR;
+import controlador.usuario.Roles.VtnRolCTR;
+import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
-import modelo.ResourceManager;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
-import modelo.alumno.AlumnoCursoBD;
-import modelo.periodoIngresoNotas.PeriodoIngresoNotasBD;
 import modelo.propiedades.Propiedades;
-import modelo.tipoDeNota.IngresoNotasBD;
-import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import vista.Login;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -80,10 +82,7 @@ import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnDocenteMateria;
 import vista.docente.VtnRolesPeriodos;
 import vista.materia.VtnMateria;
-import vista.notas.VtnActivarNotas;
-import vista.notas.VtnNotasAlumnoCurso;
-import vista.periodoLectivoNotas.VtnPeriodoIngresoNotas;
-import vista.periodoLectivoNotas.VtnTipoNotas;
+import vista.notas.VtnNotas;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmDocente;
 import vista.persona.FrmPersona;
@@ -92,12 +91,14 @@ import vista.persona.VtnDocente;
 import vista.persona.VtnPersona;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
-import vista.principal.VtnBienvenida;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.usuario.VtnRol;
-import vista.usuario.VtnSelectRol;
-import vista.usuario.VtnUsuario;
+import vista.alumno.VtnAlumnosRetirados;
+import vista.alumno.VtnMatricula;
+import vista.asistenciaAlumnos.FrmAsistencia;
+import vista.materia.FrmMaterias;
+import vista.notas.VtnControlUB;
+import vista.silabos.frmCRUDBibliografia;
 
 /**
  *
@@ -109,14 +110,12 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final ConectarDB conecta;
+    private final ConexionBD conexion;
+    private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
-    //Icono de la aplicacion  
-    private final ImageIcon icono;
-    private final Image ista;
-    private final VtnBienvenida vtnBienvenida;
     //Para hacer los accesos
     private List<AccesosMD> accesos;
     //Constantes de accesos, para las ventanas y menus
@@ -125,7 +124,6 @@ public class VtnPrincipalCTR {
             ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
             ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
     //Matriz de permisos
-
     private final String[][] ACCESOS = {
         {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
         {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
@@ -143,32 +141,31 @@ public class VtnPrincipalCTR {
     /**
      * Construnctor principal del sistema.
      *
-     * @param vtnPrin VtnPrincipal: Ventana principal del sistema
-     * @param rolSeleccionado RolBD: Rol seleccionado.
-     * @param usuario UsuarioBD: Usuario que se conecto.
      * @param conecta ConectarDB: Coneccion a la base de datos G23
-     * @param icono ImagenIcon: Icono del sistema.
-     * @param ista Imagen: Imagen del icono del sistema.
+     * @param ctrSelecRol
      */
-    public VtnPrincipalCTR(VtnPrincipal vtnPrin, RolBD rolSeleccionado,
-            UsuarioBD usuario, ConectarDB conecta, ImageIcon icono, Image ista) {
-        this.vtnPrin = vtnPrin;
-        this.rolSeleccionado = rolSeleccionado;
-        this.usuario = usuario;
+    public VtnPrincipalCTR(ConectarDB conecta, VtnSelectRolCTR ctrSelecRol) {
+        this.vtnPrin = new VtnPrincipal();
+        this.rolSeleccionado = CONS.ROL;
+        this.usuario = CONS.USUARIO;
         this.conecta = conecta;
-        this.vtnBienvenida = new VtnBienvenida();
+        this.ctrSelecRol = ctrSelecRol;
+        this.conexion = new ConexionBD(conecta);
+
         //Inciamos la carga pero la detenemos
-        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
-        this.icono = icono;
-        this.ista = ista;
-        vtnPrin.setIconImage(ista);
+        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
+        vtnPrin.setIconImage(CONS.getImage());
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        registroIngreso(vtnPrin);
         //carga.iniciar();
         //Le pasamos el icono  
-        vtnPrin.setTitle("PF M3A");
+        vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
-        //InitPermisos();
+        InitPermisosDocente();
+
+        System.out.println("-------THREADs----->" + Thread.activeCount());
+
     }
 
     /**
@@ -176,27 +173,14 @@ public class VtnPrincipalCTR {
      * animaciones.
      */
     public void iniciar() {
-        //Agregamos el panel de bienvenida  
-        vtnPrin.getDpnlPrincipal().add(vtnBienvenida);
-        //Se le pasa el nombre de usuario que inicio sesio  
-//        vtnBienvenida.getLblUser().setText(usuario.getUsername());
-//        vtnBienvenida.show();
-//        //Lo ponemos en pantalla completa
-//        try {
-//            vtnBienvenida.setMaximum(true);
-//        } catch (PropertyVetoException e) {
-//            System.out.println("No se maximiso");
-//        }
+        //Le pasamos dependencias a conectar
+        conecta.setVtnPrin(vtnPrin);
         //Iniciamos los shortcuts 
-
         iniciarAtajosTeclado();
 
+        agregarEstilos();
         //Acciones de las ventanas de consulta
         //Para el estilo 
-        vtnPrin.getMnRbtnMetal().addActionListener(e -> estiloVtn());
-        vtnPrin.getMnRbtnNimbus().addActionListener(e -> estiloVtn());
-        vtnPrin.getMnRbtnWindows().addActionListener(e -> estiloVtn());
-
         //Para abrir las ventanas consulta
         vtnPrin.getMnCtPersona().addActionListener(e -> abrirVtnPersona());
         vtnPrin.getMnCtAlumno().addActionListener(e -> abrirVtnAlumno());
@@ -208,10 +192,13 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtInscripcion().addActionListener(e -> abrirVtnAlumnoCarrera());
         vtnPrin.getMnCtMallaAlumno().addActionListener(e -> abrirVtnMallaAlumnos());
         vtnPrin.getMnCtDocenteMateria().addActionListener(e -> abrirVtnDocenteMateria());
-        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnAlumnoCurso());
+        vtnPrin.getMnCtMatricula().addActionListener(e -> abrirVtnMatricula());
+        vtnPrin.getMnCtListaAlumnos().addActionListener(e -> abrirVtnAlumnoCurso());
         vtnPrin.getMnCtHistorialUsers().addActionListener(e -> abrirVtnHistorialUser());
         vtnPrin.getMnCtRolesPeriodo().addActionListener(e -> abrirVtnRolesPeriodos());
-        vtnPrin.getBtnMateria().addActionListener(e -> abrirVtnMateria());
+        vtnPrin.getMnCtAlmnRetirados().addActionListener(e -> abrirVtnAlmnRetirados());
+        vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
+        vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -236,6 +223,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMatricula().addActionListener(e -> abrirFrmMatricula());
         vtnPrin.getMnIgDocenteMt().addActionListener(e -> abrirFrmDocenteMateria());
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
+        vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
+        vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -245,10 +234,13 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
+        vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
+        vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         vtnPrin.getMnCtSilabos().addActionListener(al -> controladorCRUD());
+        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
 
@@ -262,39 +254,13 @@ public class VtnPrincipalCTR {
         /*
             SET DIRECCION IP
          */
-        vtnPrin.getLblIP().setText(Propiedades.getPropertie("ip"));
+        String IP = Propiedades.getPropertie("ip");
+        String database = Propiedades.getPropertie("database");
 
-    }
+        vtnPrin.getLblIP().setText(IP + "/" + database);
 
-    private void iniciandoBtns() {
-        accesos = AccesosBD.SelectWhereACCESOROLidRol(rolSeleccionado.getId());
-        accesos.forEach(a -> {
+        vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
 
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS][1])) {
-                vtnPrin.getBtnAlumno().setEnabled(true);
-                vtnPrin.getMnIgAlumno().setEnabled(true);
-            } else {
-                vtnPrin.getBtnAlumno().setEnabled(false);
-                vtnPrin.getMnIgAlumno().setEnabled(false);
-            }
-
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_PERIODO_LECTIVO][3])) {
-                vtnPrin.getBtnPrdLectivo().setEnabled(true);
-                vtnPrin.getMnIgPrdLectivo().setEnabled(true);
-            } else {
-                vtnPrin.getBtnPrdLectivo().setEnabled(false);
-                vtnPrin.getMnIgPrdLectivo().setEnabled(false);
-            }
-
-            if (a.getNombre().equalsIgnoreCase(ACCESOS[ACCESOS_ALUMNOS_CARRERA][1])) {
-                vtnPrin.getBtnInscripcion().setEnabled(true);
-                vtnPrin.getMnIgInscripcion().setEnabled(true);
-            } else {
-                vtnPrin.getBtnInscripcion().setEnabled(false);
-                vtnPrin.getMnIgInscripcion().setEnabled(false);
-            }
-
-        });
     }
 
     public void abrirVtnPersona() {
@@ -302,7 +268,7 @@ public class VtnPrincipalCTR {
         eventoInternal(vtnPersona);
         if (numVtns < 5) {
             carga.iniciar();
-            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPrin, vtnPersona, conecta, this, rolSeleccionado);
+            VtnPersonaCTR ctrVtnPersona = new VtnPersonaCTR(vtnPersona, this);
             ctrVtnPersona.iniciar();
         } else {
             errorNumVentanas();
@@ -312,8 +278,8 @@ public class VtnPrincipalCTR {
     public void abrirVtnDocente() {
         VtnDocente vtnDocente = new VtnDocente();
         eventoInternal(vtnDocente);
-        if (numVtns < 5) {
-            VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnPrin, vtnDocente, conecta, this, rolSeleccionado);
+        if (numVtns < 6) {
+            VtnDocenteCTR ctrVtnDocente = new VtnDocenteCTR(vtnDocente, this);
             ctrVtnDocente.iniciar();
         } else {
             errorNumVentanas();
@@ -325,19 +291,32 @@ public class VtnPrincipalCTR {
         VtnAlumno vtnAlumno = new VtnAlumno();
         eventoInternal(vtnAlumno);
         if (numVtns < 5) {
-            VtnAlumnoCTR ctrVtnAlumno = new VtnAlumnoCTR(vtnPrin, vtnAlumno, conecta, this, rolSeleccionado);
+            VtnAlumnoCTR ctrVtnAlumno = new VtnAlumnoCTR(vtnAlumno, this);
             ctrVtnAlumno.iniciar();
         } else {
             errorNumVentanas();
+
         }
 
+    }
+
+    public void abrirVentanaBiblioteca() {
+        frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
+        eventoInternal(frmCRUDBibliografiaV);
+        if (numVtns < 5) {
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conexion, conecta, this, vtnPrin, frmCRUDBibliografiaV);
+            ReferenciasCRUDCTRV.iniciarControlador();
+
+        } else {
+            errorNumVentanas();
+        }
     }
 
     public void abrirVtnCarrera() {
         VtnCarrera vtnCarrera = new VtnCarrera();
         eventoInternal(vtnCarrera);
         if (numVtns < 5) {
-            VtnCarreraCTR ctrVtnCarrera = new VtnCarreraCTR(vtnPrin, vtnCarrera, conecta, this, rolSeleccionado);
+            VtnCarreraCTR ctrVtnCarrera = new VtnCarreraCTR(vtnCarrera, this);
             ctrVtnCarrera.iniciar();
         } else {
             errorNumVentanas();
@@ -350,7 +329,7 @@ public class VtnPrincipalCTR {
         eventoInternal(vtnCurso);
         if (numVtns < 5) {
             carga.iniciar();
-            VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnPrin, vtnCurso, conecta, this, rolSeleccionado);
+            VtnCursoCTR ctrVtnCurso = new VtnCursoCTR(vtnCurso, this);
             ctrVtnCurso.iniciar();
         } else {
             errorNumVentanas();
@@ -362,7 +341,7 @@ public class VtnPrincipalCTR {
         VtnPrdLectivo vtnPrdLectivo = new VtnPrdLectivo();
         eventoInternal(vtnPrdLectivo);
         if (numVtns < 5) {
-            VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrin, vtnPrdLectivo, conecta, this, rolSeleccionado);
+            VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrdLectivo, this);
             ctrVtnPrdLectivo.iniciar();
         } else {
             errorNumVentanas();
@@ -374,8 +353,30 @@ public class VtnPrincipalCTR {
         VtnAlumnoCurso vtnAlmnCurso = new VtnAlumnoCurso();
         eventoInternal(vtnAlmnCurso);
         if (numVtns < 5) {
-            VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnPrin, vtnAlmnCurso, conecta, this, rolSeleccionado);
+            VtnAlumnoCursoCTR ctrVtnAlmnCurso = new VtnAlumnoCursoCTR(vtnAlmnCurso, this);
             ctrVtnAlmnCurso.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
+    private void abrirVtnControlUB(ActionEvent e) {
+        VtnControlUB vtn = new VtnControlUB();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnControlUBCTR vtnCtr = new VtnControlUBCTR(vtnPrin, vtn, usuario, rolSeleccionado);
+            vtnCtr.Init();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
+    public void abrirVtnMatricula() {
+        VtnMatricula vtnMatri = new VtnMatricula();
+        eventoInternal(vtnMatri);
+        if (numVtns < 5) {
+            VtnMatriculaCTR ctr = new VtnMatriculaCTR(this, vtnMatri);
+            ctr.iniciar();
         } else {
             errorNumVentanas();
         }
@@ -385,7 +386,7 @@ public class VtnPrincipalCTR {
         VtnMateria vtnMateria = new VtnMateria();
         eventoInternal(vtnMateria);
         if (numVtns < 5) {
-            VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnPrin, vtnMateria, conecta, this, rolSeleccionado);
+            VtnMateriaCTR ctrVtnMateria = new VtnMateriaCTR(vtnMateria, this);
             ctrVtnMateria.iniciar();
         } else {
             errorNumVentanas();
@@ -398,7 +399,7 @@ public class VtnPrincipalCTR {
         eventoInternal(vtnAlmnCarrera);
         if (numVtns < 5) {
             carga.iniciar();
-            VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnPrin, vtnAlmnCarrera, conecta, rolSeleccionado, this);
+            VtnAlumnoCarreraCTR ctrAlmn = new VtnAlumnoCarreraCTR(vtnAlmnCarrera, this);
             ctrAlmn.iniciar();
         } else {
             errorNumVentanas();
@@ -407,17 +408,35 @@ public class VtnPrincipalCTR {
 
     public void abrirVtnMallaAlumnos() {
         VtnMallaAlumno vtnMallaAlm = new VtnMallaAlumno();
+        eventoInternal(vtnMallaAlm);
+        if (numVtns < 5) {
+            VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnMallaAlm, this);
+            ctrMalla.iniciar();
+        } else {
+            errorNumVentanas();
+        }
 
-        VtnMallaAlumnoCTR ctrMalla = new VtnMallaAlumnoCTR(vtnPrin, vtnMallaAlm, conecta, this, rolSeleccionado);
-        ctrMalla.iniciar();
     }
 
     public void abrirVtnDocenteMateria() {
         VtnDocenteMateria vtn = new VtnDocenteMateria();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtnPrin, vtn, conecta, this, rolSeleccionado);
+            VtnDocenteMateriaCTR ctrVtn = new VtnDocenteMateriaCTR(vtn, this);
             ctrVtn.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
+    public void abrirVtnAlmnRetirados() {
+        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(this, vtn);
+            ctr.iniciar();
+        } else {
+            errorNumVentanas();
         }
     }
 
@@ -430,7 +449,7 @@ public class VtnPrincipalCTR {
         VtnHistorialUsuarios vtn = new VtnHistorialUsuarios();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnHistorialUserCTR ctr = new VtnHistorialUserCTR(conecta, vtnPrin, this);
+            VtnHistorialUserCTR ctr = new VtnHistorialUserCTR(this);
             ctr.iniciar();
         }
     }
@@ -440,7 +459,7 @@ public class VtnPrincipalCTR {
         FrmPersona frmPersona = new FrmPersona();
         eventoInternal(frmPersona);
         if (numVtns < 5) {
-            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, this);
+            FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(frmPersona, this);
             ctrFrmPersona.iniciar();
         } else {
             errorNumVentanas();
@@ -451,7 +470,7 @@ public class VtnPrincipalCTR {
         FrmRolesPeriodos frmRolPeriodo = new FrmRolesPeriodos();
         eventoInternal(frmRolPeriodo);
         if (numVtns < 5) {
-            FrmRolPeriodoCTR rol = new FrmRolPeriodoCTR(vtnPrin, frmRolPeriodo, conecta, this);
+            FrmRolPeriodoCTR rol = new FrmRolPeriodoCTR(frmRolPeriodo, this);
             rol.iniciar();
         } else {
             errorNumVentanas();
@@ -462,7 +481,7 @@ public class VtnPrincipalCTR {
         VtnRolesPeriodos vtnRolprd = new VtnRolesPeriodos();
         eventoInternal(vtnRolprd);
         if (numVtns < 5) {
-            VtnRolDocenteCTR vtnRol = new VtnRolDocenteCTR(vtnPrin, vtnRolprd, conecta, this);
+            VtnRolPeriodosCTR vtnRol = new VtnRolPeriodosCTR(vtnRolprd, this);
             vtnRol.iniciar();
         } else {
             errorNumVentanas();
@@ -474,7 +493,7 @@ public class VtnPrincipalCTR {
         eventoInternal(frmDocente);
         if (numVtns < 5) {
             frmDocente.getBtnRegistrarPersona().setVisible(false);
-            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(vtnPrin, frmDocente, conecta, this);
+            FrmDocenteCTR ctrFrmDocente = new FrmDocenteCTR(frmDocente, this);
             ctrFrmDocente.iniciar();
         } else {
             errorNumVentanas();
@@ -486,7 +505,7 @@ public class VtnPrincipalCTR {
         FrmAlumno frmAlumno = new FrmAlumno();
         eventoInternal(frmAlumno);
         if (numVtns < 5) {
-            FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, this, rolSeleccionado);
+            FrmAlumnoCTR ctrFrmAlumno = new FrmAlumnoCTR(frmAlumno, this);
             ctrFrmAlumno.iniciar();
         } else {
             errorNumVentanas();
@@ -494,11 +513,22 @@ public class VtnPrincipalCTR {
 
     }
 
+    public void abrirFrmMateria() {
+        FrmMaterias frmMaterias = new FrmMaterias();
+        eventoInternal(frmMaterias);
+        if (numVtns < 5) {
+            FrmMateriasCTR ctrFrmMaterias = new FrmMateriasCTR(frmMaterias, this);
+            ctrFrmMaterias.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
     public void abrirFrmCarrera() {
         FrmCarrera frmCarrera = new FrmCarrera();
         eventoInternal(frmCarrera);
         if (numVtns < 5) {
-            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(vtnPrin, frmCarrera, conecta, this);
+            FrmCarreraCTR ctrFrmCarrera = new FrmCarreraCTR(frmCarrera, this);
             ctrFrmCarrera.iniciar();
         } else {
             errorNumVentanas();
@@ -510,7 +540,7 @@ public class VtnPrincipalCTR {
         FrmCurso frmCurso = new FrmCurso();
         eventoInternal(frmCurso);
         if (numVtns < 5) {
-            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(vtnPrin, frmCurso, conecta, this);
+            FrmCursoCTR ctrFrmCurso = new FrmCursoCTR(frmCurso, this);
             ctrFrmCurso.iniciar();
         } else {
             errorNumVentanas();
@@ -521,7 +551,7 @@ public class VtnPrincipalCTR {
         FrmPrdLectivo frmPrdLectivo = new FrmPrdLectivo();
         eventoInternal(frmPrdLectivo);
         if (numVtns < 5) {
-            FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(vtnPrin, frmPrdLectivo, conecta, this);
+            FrmPrdLectivoCTR ctrFrmPrdLectivo = new FrmPrdLectivoCTR(frmPrdLectivo, this);
             ctrFrmPrdLectivo.iniciar();
         } else {
             errorNumVentanas();
@@ -533,7 +563,7 @@ public class VtnPrincipalCTR {
         FrmAlumnoCarrera frmMatricula = new FrmAlumnoCarrera();
         eventoInternal(frmMatricula);
         if (numVtns < 5) {
-            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(vtnPrin, frmMatricula, conecta, this);
+            FrmAlumnoCarreraCTR ctrFrmAlumn = new FrmAlumnoCarreraCTR(frmMatricula, this);
             ctrFrmAlumn.iniciar();
         }
     }
@@ -542,7 +572,7 @@ public class VtnPrincipalCTR {
         FrmAlumnoCurso frmAlmCurso = new FrmAlumnoCurso();
         eventoInternal(frmAlmCurso);
         if (numVtns < 5) {
-            FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(vtnPrin, frmAlmCurso, conecta, this);
+            FrmAlumnoCursoCTR ctrFrmMatri = new FrmAlumnoCursoCTR(frmAlmCurso, this);
             ctrFrmMatri.iniciar();
         }
     }
@@ -551,46 +581,85 @@ public class VtnPrincipalCTR {
         FrmDocenteMateria frm = new FrmDocenteMateria();
         eventoInternal(frm);
         if (numVtns < 5) {
-            FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(vtnPrin, frm, conecta, this);
+            FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(frm, this);
             ctrFrm.iniciar();
         }
     }
 
+    public void abrirVtnAccesos() {
+        VtnAccesosCTR vtn = new VtnAccesosCTR(this);
+        vtn.Init();
+    }
+
+    private void abrirFrmAsistencia(ActionEvent e) {
+        FrmAsistencia frm = new FrmAsistencia();
+        eventoInternal(frm);
+        if (numVtns < 5) {
+            FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
+            asistencia.Init();
+        } else {
+            errorNumVentanas();
+        }
+
+    }
+
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin);
+        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin, conexion);
 
         c.iniciarControlador();
 
     }
 
+    private void controladorCONFIGURACION_PLAN_DE_CLASES() {
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        cP.iniciaControlador();
+
+    }
+
     private void controladorIngreso() {
 
-        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD());
+        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD(conecta));
 
         c.iniciarControlador();
 
     }
 
     private void abrirVtnNotasAlumnoCurso(ActionEvent e) {
+        VtnNotas vtn = new VtnNotas();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnNotasCTR vtnCtr = new VtnNotasCTR(vtnPrin, vtn);
+            vtnCtr.Init();
+        } else {
+            errorNumVentanas();
+        }
+    }
 
-        VtnNotasAlumnoCursoCTR vtnNotas = new VtnNotasAlumnoCursoCTR(vtnPrin, new VtnNotasAlumnoCurso(), new AlumnoCursoBD(conecta), usuario);
-        vtnNotas.Init();
+    private ArrayList<String> estilos;
+
+    /**
+     * Iniciamos todos los tipos de estilo del sistema
+     */
+    private void agregarEstilos() {
+        estilos = new ArrayList();
+        ButtonGroup btnsEstilo = new ButtonGroup();
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            JRadioButtonMenuItem mi = new JRadioButtonMenuItem(info.getName());
+            mi.addActionListener(e -> estiloVtn(info.getName()));
+            estilos.add(info.getName());
+            vtnPrin.getMnEstilo().add(mi);
+            btnsEstilo.add(mi);
+        }
+
     }
 
     /**
      * Se ejecuta al seleccionar un estilo en el menu de opciones. Obtendra el
      * nombre del estilo elejido y actualizara la ventana, para mostrarlo.
      */
-    private void estiloVtn() {
-        String estilo = "Windows";
-
-        if (vtnPrin.getMnRbtnMetal().isSelected()) {
-            estilo = "Metal";
-        } else if (vtnPrin.getMnRbtnNimbus().isSelected()) {
-            estilo = "Nimbus";
-        }
-
+    private void estiloVtn(String estilo) {
+        System.out.println(estilo);
         try {
             VtnPrincipal.setDefaultLookAndFeelDecorated(true);
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -599,11 +668,7 @@ public class VtnPrincipalCTR {
                     break;
                 }
             }
-            //Actualizamos la ventana para que cargue el nuevo look an field
             SwingUtilities.updateComponentTreeUI(vtnPrin);
-            //Ocultamos el borde de internal de bienvenida
-//            ((javax.swing.plaf.basic.BasicInternalFrameUI) vtnBienvenida.getUI()).setNorthPane(null);
-//            vtnBienvenida.setBorder(null);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("No se pudo cambiar el estilo de la ventana");
             System.out.println(e.getMessage());
@@ -618,13 +683,15 @@ public class VtnPrincipalCTR {
      * @see errorNumVentanas()
      */
     public void eventoInternal(JInternalFrame internal) {
-        Middlewares.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        Effects.centerFrame(internal, vtnPrin.getDpnlPrincipal());
+        setIconJIFrame(internal);
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
                 numVtns++;
                 if (numVtns > 5) {
                     errorNumVentanas();
+                    internal.dispose();
                 }
             }
 
@@ -651,6 +718,10 @@ public class VtnPrincipalCTR {
         });
     }
 
+    /**
+     * Indicamos que cerramos la ventana para que merme el numero de ventanas
+     * abiertas.
+     */
     public void cerradoJIF() {
         numVtns--;
         if (numVtns < 0) {
@@ -731,7 +802,7 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+                KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.CTRL_MASK));
@@ -753,8 +824,39 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtHistorialUsers().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_H, ActionEvent.CTRL_MASK));
-//        vtnPrin.getMnCtPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-//                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtPrdIngrNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_J, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtAccesos().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_W, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnBiblioteca().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtAlmnRetirados().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+
+        vtnPrin.getMnCtListaAlumnos().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
         //Acciones de los formularios de ingreso
         vtnPrin.getMnIgAlumno().setAccelerator(KeyStroke.getKeyStroke(
@@ -773,7 +875,10 @@ public class VtnPrincipalCTR {
                 KeyEvent.VK_P, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_V, ActionEvent.ALT_MASK));
+                KeyEvent.VK_R, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgMateria().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_K, ActionEvent.ALT_MASK));
 
         vtnPrin.getMnIgInscripcion().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_I, ActionEvent.ALT_MASK));
@@ -783,8 +888,31 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnIgDocenteMt().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_O, ActionEvent.ALT_MASK));
-//        vtnPrin.getMnIgPlandeClase().setAccelerator(KeyStroke.getKeyStroke(
-//                KeyEvent.VK_Q, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPrdIngrNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_C, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_E, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_F, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgActivarNotas1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_G, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnCtMiPerfil().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgUsuarios1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_U, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgRoles1().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_M, ActionEvent.ALT_MASK));
+
+        vtnPrin.getMnIgPrdLectivo().setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_L, ActionEvent.ALT_MASK));
+
     }
 
     public int getNumVtns() {
@@ -792,34 +920,25 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtUsuarios(ActionEvent e) {
-        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin, new VtnUsuario(), rolSeleccionado, conecta);
+        VtnUsuarioCTR vtn = new VtnUsuarioCTR(vtnPrin);
         vtn.Init();
     }
 
     private void mnCtRoles(ActionEvent e) {
-        VtnRolCTR vtn = new VtnRolCTR(vtnPrin, new VtnRol(), new RolBD(), rolSeleccionado);
+        VtnRolCTR vtn = new VtnRolCTR(vtnPrin);
         vtn.Init();
     }
 
     private void btnCerrarSesion(ActionEvent e) {
-        ResourceManager.cerrarSesion();
+        ctrSelecRol.cierreSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR(new Login(), new UsuarioBD());
+        LoginCTR login = new LoginCTR();
         login.Init();
     }
 
     private void btnTipoNotas(ActionEvent e) {
-        VtnTipoNotasCTR vtn = new VtnTipoNotasCTR(vtnPrin, new VtnTipoNotas(), new TipoDeNotaBD(), rolSeleccionado);
+        VtnTipoNotasCTR vtn = new VtnTipoNotasCTR(vtnPrin);
         vtn.Init();
-    }
-
-    /**
-     * Retornamos el icono del sistema
-     *
-     * @return icono ImageIcon
-     */
-    public ImageIcon getIcono() {
-        return icono;
     }
 
     /**
@@ -827,17 +946,13 @@ public class VtnPrincipalCTR {
      *
      * @return ista Image
      */
-    public Image getIsta() {
-        return ista;
-    }
-
     /**
      * Cambiamos el icono de un JInternalFrame.
      *
      * @param jif JInternalFrame
      */
     public void setIconJIFrame(JInternalFrame jif) {
-        jif.setFrameIcon(icono);
+        jif.setFrameIcon(CONS.getICONO());
     }
 
     /**
@@ -846,15 +961,14 @@ public class VtnPrincipalCTR {
      * @param jd JDialog
      */
     public void setIconJDialog(JDialog jd) {
-        jd.setIconImage(ista);
+        jd.setIconImage(CONS.getImage());
     }
 
     private void btnPrdIngrNotas(ActionEvent e) {
 
-        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-
-        vtn.Init();
-
+//        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
+//
+//        vtn.Init();
     }
 
     /**
@@ -869,12 +983,28 @@ public class VtnPrincipalCTR {
         pass.setFocusable(true);
         pass.requestFocus();
         pass.selectAll();
+        //Para comprobar si puede entrar o no 
+        boolean entrar = true;
 
         if (o == JOptionPane.OK_OPTION) {
             String c = new String(pass.getPassword());
-            if (c.equals("estaesunacontra")) {
-                JDConsolaBDCTR ctr = new JDConsolaBDCTR(vtnPrin, conecta, this);
-                ctr.iniciar();
+            if (c.length() > 3) {
+                if (c.charAt(c.length() - 1) != c.charAt(0)) {
+                    entrar = false;
+                }
+
+                if (c.charAt(c.length() - 3) != c.charAt(2)) {
+                    entrar = false;
+                }
+
+                if (entrar) {
+                    JDVersionCTR ctr = new JDVersionCTR(vtnPrin, this);
+                    ctr.iniciar();
+                } else {
+                    JOptionPane.showMessageDialog(vtnPrin, "Entrar aqui es peligroso.\n"
+                            + "Es mejor que corras esponja!!!", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             } else if (c.length() == 0) {
                 JOptionPane.showMessageDialog(vtnPrin, "Debe ingresar una contraseña", "Error",
                         JOptionPane.WARNING_MESSAGE);
@@ -883,102 +1013,101 @@ public class VtnPrincipalCTR {
                 JOptionPane.showMessageDialog(vtnPrin, "Quieto ahi esponja.", "Error",
                         JOptionPane.WARNING_MESSAGE);
             }
+
         }
 
     }
 
     private void btnActivarNotas(ActionEvent e) {
 
-        VtnActivarNotasCTR vtn = new VtnActivarNotasCTR(vtnPrin, new VtnActivarNotas(), new IngresoNotasBD(), rolSeleccionado);
+    }
+
+    private void btnMiperfilActionPerformance(ActionEvent e) {
+
+        VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(vtnPrin);
         vtn.Init();
     }
 
     private void btnCambiarRol(ActionEvent e) {
 
-        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new VtnSelectRol(), new RolBD(), usuario, conecta, icono, ista);
+        VtnSelectRolCTR vtn = ctrSelecRol;
         vtn.Init();
         vtnPrin.setVisible(false);
         System.gc();
     }
 
-    private void InitPermisos() {
-        List<AccesosMD> listaPermisos = AccesosBD.selectWhereLIKE(rolSeleccionado.getId(), "CONSULTAR");
+    private void InitPermisosDocente() {
+        if (rolSeleccionado.getNombre().equalsIgnoreCase("Docente")) {
 
-        for (AccesosMD acceso : listaPermisos) {
+            vtnPrin.getMnIngresar().setEnabled(false);
+            vtnPrin.getPnlMenu().setVisible(false);
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtCarrera().setEnabled(false);
+            //Cursos para los listados
+            vtnPrin.getMnCtCurso().setEnabled(true);
 
-            if (acceso.getNombre().equalsIgnoreCase("PERSONAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("DOCENTES-CONSULTAR")) {
-                vtnPrin.getMnCtDocente().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtDocente().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("ALUMNOS-CONSULTAR")) {
-                vtnPrin.getMnCtAlumno().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtAlumno().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("CARRERAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("CURSOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("PERIODOS-LECTIVOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATERIAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("INSCRIPCIONES-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATRICULAS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MALLA-ALUMNOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("MATERIAS-DOCENTES-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("SILABOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("HISTORIAL-USUARIOS-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
-            if (acceso.getNombre().equalsIgnoreCase("INGRESO-NOTAS-ACTIVAR-CONSULTAR")) {
-                vtnPrin.getMnCtPersona().setEnabled(true);
-            } else {
-                vtnPrin.getMnCtPersona().setEnabled(false);
-            }
+            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
+            vtnPrin.getMnCtMateria().setEnabled(false);
+            vtnPrin.getMnCtInscripcion().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
+            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
+            vtnPrin.getMnCtPlandeClase().setEnabled(true);
+            vtnPrin.getMnCtUsuarios().setEnabled(false);
+            vtnPrin.getMnCtRoles().setEnabled(false);
+            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
+            vtnPrin.getMnCtAccesos().setEnabled(false);
+            vtnPrin.getMnCtMiPerfil().setEnabled(false);
 
+            vtnPrin.getMnCtPersona().setEnabled(false);
+            vtnPrin.getMnCtAlumno().setEnabled(false);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
+            vtnPrin.getMnCtMatricula().setEnabled(false);
+            //Listado de alumnos 
+            vtnPrin.getMnCtListaAlumnos().setEnabled(true);
+
+            vtnPrin.getMnCtMallaAlumno().setEnabled(false);
+            vtnPrin.getMnCtDocenteMateria().setEnabled(true);
+            vtnPrin.getMnCtMateria().setEnabled(true);
+            vtnPrin.getMnCtDocente().setEnabled(false);
+            vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
+            vtnPrin.getMnCtTipoNotas().setEnabled(false);
+            vtnPrin.getMnCtActivarNotas().setEnabled(false);
         }
+    }
 
+    private void registroIngreso(JFrame vtn) {
+        vtn.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ctrSelecRol.cierreSesion();
+            }
+
+        });
+    }
+
+    public UsuarioBD getUsuario() {
+        return usuario;
+    }
+
+    public VtnPrincipal getVtnPrin() {
+        return vtnPrin;
+    }
+
+    public ConectarDB getConecta() {
+        return conecta;
+    }
+
+    public void agregarVtn(JInternalFrame ji) {
+        vtnPrin.getDpnlPrincipal().add(ji);
+        ji.show();
+    }
+
+    public RolBD getRolSeleccionado() {
+        return rolSeleccionado;
     }
 
 }

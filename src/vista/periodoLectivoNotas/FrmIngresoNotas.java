@@ -1,16 +1,15 @@
 package vista.periodoLectivoNotas;
 
 import com.toedter.calendar.JDateChooser;
-import datechooser.beans.DateChooserCombo;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class FrmIngresoNotas extends javax.swing.JInternalFrame {
+public class FrmIngresoNotas extends AbstracView {
 
     /**
      * Creates new form FrmIngresoNotas
@@ -18,8 +17,6 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
     public FrmIngresoNotas() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnCancelar() {
@@ -54,8 +51,6 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
         this.jdcFechaIni = jdcFechaIni;
     }
 
-   
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,17 +77,17 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        lblFechaInicio.setText("Fecha Inicio");
+        lblFechaInicio.setText("Fecha inicio");
 
-        lblFechaCierre.setText("Fecha Cierre");
+        lblFechaCierre.setText("Fecha cierre");
 
         btnCancelar.setText("Cancelar");
 
         btnGuardar.setText("Guardar");
 
-        lblPeriodoLectivo.setText("Período Lectivo");
+        lblPeriodoLectivo.setText("Período lectivo");
 
-        lblTipoNota.setText("Tipo Nota");
+        lblTipoNota.setText("Tipo nota");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +101,7 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblFechaCierre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jdcFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jdcFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,10 +114,9 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
                                     .addComponent(lblPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblTipoNota, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbTipoNota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbPeriodoLec, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbPeriodoLec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbTipoNota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -162,7 +156,7 @@ public class FrmIngresoNotas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="53d62d52-505e-42a2-9bde-46dbba0fea6d">
+	<property name="ireport.zoom" value="1.1000000000000039"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Aprobado">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#006600" backcolor="#99FF99"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("REPROBADO")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#990000" backcolor="#FF9999"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("RETIRADO")]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="id_docente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prd_lectivo_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curso_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="materia_nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "Apellidos_al",
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "Nombres_al",
+	ROUND("AlumnoCurso".almn_curso_nota_final,0) AS "NotaFinal",
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido AS "PROFESOR",
+	"upper"("AlumnoCurso".almn_curso_estado) AS "Estado",
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
+	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
+	
+
+	
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
+	INNER JOIN "Jornadas" ON "Cursos".id_jornada = "Jornadas".id_jornada
+	INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "Alumnos" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "Personas" p_alu ON "Alumnos".id_persona = p_alu.id_persona
+	INNER JOIN "Docentes" ON "public"."Cursos".id_docente = "public"."Docentes".id_docente
+	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
+	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
+	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
+	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
+	
+WHERE
+	"Cursos".id_docente = $P{id_docente}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
+	AND "Cursos".curso_nombre= $P{curso_nombre}
+	AND "public"."Materias".materia_nombre = $P{materia_nombre}
+	AND "AlumnoCurso".almn_curso_nota_final >= 90
+	AND "AlumnoCurso".almn_curso_nota_final < 101
+
+	GROUP BY "Alumnos".id_alumno,
+	p_alu.persona_identificacion,
+	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido,
+	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre,
+	ROUND("AlumnoCurso".almn_curso_nota_final,0),
+	"Materias".materia_nombre,
+	"Cursos".curso_nombre,
+	"Carreras".carrera_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre  ||' '||
+	"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido,
+  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
+	"AlumnoCurso".almn_curso_estado
+	
+	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
+	</queryString>
+	<field name="id_alumno" class="java.lang.Integer"/>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="Apellidos_al" class="java.lang.String"/>
+	<field name="Nombres_al" class="java.lang.String"/>
+	<field name="NotaFinal" class="java.math.BigDecimal"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="PROFESOR" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.String"/>
+	<field name="COORDINADOR" class="java.lang.String"/>
+	<field name="N° Matricula" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement x="479" y="45" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="842" height="25" forecolor="#006699" uuid="d02b93e7-c08e-4cc8-bd05-0acafa9e867e"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="64" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="64" width="53" height="20" uuid="382793f5-30cc-4722-8a77-ccb11af825b8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="25" width="293" height="20" uuid="bdefef97-60d2-472b-be14-fa648fe5dc63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 90 Y 100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="45" width="83" height="20" uuid="49daa8a0-afb9-4d68-8a78-744bbf711e79"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="114" width="842" height="1" uuid="a316d234-fe6b-40c8-b832-c8246b6d44ae"/>
+			</line>
+			<staticText>
+				<reportElement x="124" y="84" width="41" height="20" uuid="43653b2c-95ec-495b-916f-4f536123fdc8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="10"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="207" y="45" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="177" y="64" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="84" width="43" height="20" uuid="5eca4a66-5a51-4f50-ad15-fb9586093722"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="537" y="45" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="537" y="65" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="14" y="24" width="108" height="80" uuid="8dd9a48d-d97f-4e7f-ab44-72a439478b31"/>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="165" y="0" width="25" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="4f1666f7-cada-4dd5-ba9f-9b3bf27fe6c1"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="524" y="0" width="36" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="8f62bb10-856d-4abc-a80e-c7076934c924"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nota F.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="190" y="0" width="76" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="9d47f52a-118a-4f64-b534-e9c62dbbe199"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="622" y="0" width="28" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="3235aa89-11f6-4bbc-8476-de97e12a63e7"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[N° M]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="266" y="0" width="129" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="8d047c99-82f1-4c28-8774-ea81754b98de"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="560" y="0" width="62" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="81b3cc0b-3398-4376-8272-34737840e0ee"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="395" y="0" width="129" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="b265c1a0-b77b-4f9b-8a7f-a1a79aaee770"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="165" y="0" width="25" height="10" uuid="54630dd2-af4d-404a-b3a5-4b4064a1f643"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="76" height="10" uuid="6f81e06c-4f90-4eaa-8bd2-d9fa8c26219b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="129" height="10" uuid="b8259153-0a8e-4313-a9f0-70fb7c523f66"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Apellidos_al}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="524" y="0" width="36" height="10" backcolor="#FFEB9B" uuid="41d8814f-5ff3-4f4b-8796-0f6c21d5a33c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NotaFinal}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Aprobado" x="560" y="0" width="62" height="10" uuid="fca79b27-4e51-4615-bba5-7789cb8bdb7c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="622" y="0" width="28" height="10" uuid="b5772e25-0fac-4e11-8d08-0d64ce4bfb4c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{N° Matricula}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="0" width="129" height="10" uuid="747bd064-1434-49d9-8dc9-bb9d6f38247f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombres_al}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="4" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="164" splitType="Stretch">
+			<line>
+				<reportElement x="435" y="84" width="234" height="1" uuid="23a5f1ae-f2c9-4de0-819e-290cf0376961"/>
+			</line>
+			<staticText>
+				<reportElement x="124" y="115" width="234" height="20" uuid="7cc3bb4d-5d07-45d9-b43d-af0f5448da39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="115" width="234" height="20" uuid="df2fd3d5-651a-4852-9752-911e08b757fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="669" y="115" width="153" height="20" uuid="b7ceba3e-e27a-4343-9d4d-95aa362f61d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="124" y="83" width="234" height="1" uuid="1bc28f95-a45d-46fd-9f09-65fb6524440c"/>
+			</line>
+			<textField>
+				<reportElement x="124" y="95" width="234" height="20" uuid="513e85b6-ec93-4ff8-9cd7-2321a13b9910"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="95" width="234" height="20" uuid="576c1621-4328-4be2-8d28-cec5f31dd865"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

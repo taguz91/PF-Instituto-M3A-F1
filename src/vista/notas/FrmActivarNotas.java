@@ -5,22 +5,20 @@
  */
 package vista.notas;
 
-import javax.swing.ImageIcon;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class FrmActivarNotas extends javax.swing.JInternalFrame {
+public class FrmActivarNotas extends AbstracView {
 
     /**
      * Creates new form FrmActivarNotas
      */
     public FrmActivarNotas() {
         initComponents();
-        
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
+
     }
 
     /**
@@ -54,7 +52,7 @@ public class FrmActivarNotas extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Activar Notas Por Curso");
+        setTitle("Activar notas por curso");
 
         btnGuardar.setText("Guardar");
 
@@ -66,11 +64,11 @@ public class FrmActivarNotas extends javax.swing.JInternalFrame {
 
         lblAporte1.setText("Aporte 1");
 
-        jLabel4.setText("Examen Interciclo");
+        jLabel4.setText("Examen interciclo");
 
         jLabel5.setText("Aporte 2");
 
-        jLabel6.setText("Examen Final");
+        jLabel6.setText("Examen final");
 
         jLabel7.setText("Examen Supletorio");
 

@@ -1,22 +1,20 @@
 package vista.usuario;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author CESAR
  */
-public class VtnRol extends javax.swing.JInternalFrame {
+public class VtnRol extends AbstracView {
 
     public VtnRol() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {
@@ -67,7 +65,6 @@ public class VtnRol extends javax.swing.JInternalFrame {
         this.lblEstado = lblEstado;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -94,13 +91,10 @@ public class VtnRol extends javax.swing.JInternalFrame {
         jLabel1.setText("Buscar");
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.setEnabled(false);
 
         btnEditar.setText("Editar");
-        btnEditar.setEnabled(false);
 
         btnIngresar.setText("Ingresar");
-        btnIngresar.setEnabled(false);
 
         tabRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,13 +130,11 @@ public class VtnRol extends javax.swing.JInternalFrame {
         btnCancelar.setText("Cancelar");
 
         btnVerPermisos.setText("Ver Permisos ");
-        btnVerPermisos.setEnabled(false);
 
         btnEditarPermisos.setText("Editar Permisos ");
-        btnEditarPermisos.setEnabled(false);
 
+        lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblEstado.setForeground(new java.awt.Color(153, 255, 153));
-        lblEstado.setText("Estado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,9 +145,9 @@ public class VtnRol extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -164,7 +156,7 @@ public class VtnRol extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))

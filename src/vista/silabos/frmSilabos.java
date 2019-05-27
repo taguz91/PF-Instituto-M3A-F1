@@ -47,7 +47,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     public void setLblCarrera(JLabel lblCarrera) {
         this.lblCarrera = lblCarrera;
     }
-    
+
     
    
 
@@ -151,14 +151,14 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Asignatura", "Periodo", "Estado"
+                "Asignatura", "Periodo", "Estado", "Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -169,6 +169,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSilabos.setShowHorizontalLines(false);
         srcSilabos.setViewportView(tblSilabos);
         if (tblSilabos.getColumnModel().getColumnCount() > 0) {
             tblSilabos.getColumnModel().getColumn(1).setPreferredWidth(220);
@@ -176,6 +177,9 @@ public class frmSilabos extends javax.swing.JInternalFrame {
             tblSilabos.getColumnModel().getColumn(2).setMinWidth(140);
             tblSilabos.getColumnModel().getColumn(2).setPreferredWidth(140);
             tblSilabos.getColumnModel().getColumn(2).setMaxWidth(140);
+            tblSilabos.getColumnModel().getColumn(3).setMinWidth(0);
+            tblSilabos.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tblSilabos.getColumnModel().getColumn(3).setMaxWidth(0);
         }
 
         lblBuscar.setText("Buscar:");
@@ -195,9 +199,14 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
         btnGenerar.setText("Generar");
 
-        chbSilabo.setText("Silabo");
+        chbSilabo.setText("Silabo tradicionales");
+        chbSilabo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbSilaboActionPerformed(evt);
+            }
+        });
 
-        chbProgramaAnalitico.setText("Programa Analítico");
+        chbProgramaAnalitico.setText("Silabo Duales");
         chbProgramaAnalitico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbProgramaAnaliticoActionPerformed(evt);
@@ -228,6 +237,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnNuevo)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -235,16 +245,19 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                                         .addGap(12, 12, 12)
                                         .addComponent(btnEliminar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnImprimir))
-                                    .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblSeleccionDocumento)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnGenerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chbSilabo)))
-                .addGap(37, 37, 37))
+                                        .addComponent(btnImprimir)))))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chbSilabo)
+                            .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSeleccionDocumento)
+                        .addGap(41, 41, 41))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,11 +265,17 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
                         .addComponent(lblSeleccionDocumento)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chbProgramaAnalitico)
-                        .addGap(6, 6, 6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chbSilabo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCarrera)
+                            .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblBuscar)
@@ -264,21 +283,12 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                     .addComponent(btnEditar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnImprimir)
-                        .addComponent(btnEliminar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCarrera)
-                            .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGenerar)
-                        .addContainerGap(242, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
+                        .addComponent(btnEliminar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGenerar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -291,6 +301,10 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     private void chbProgramaAnaliticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbProgramaAnaliticoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chbProgramaAnaliticoActionPerformed
+
+    private void chbSilaboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbSilaboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbSilaboActionPerformed
 
     public JButton getBtnGenerar() {
         return btnGenerar;
@@ -322,44 +336,6 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
     public void setLblSeleccionDocumento(JLabel lblSeleccionDocumento) {
         this.lblSeleccionDocumento = lblSeleccionDocumento;
-    }
-
-    
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmSilabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmSilabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmSilabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmSilabos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmSilabos().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

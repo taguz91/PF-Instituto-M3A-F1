@@ -1,70 +1,46 @@
 package controlador.persona;
 
+import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
-import modelo.accesos.AccesosBD;
 import modelo.accesos.AccesosMD;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
-import modelo.usuario.RolMD;
-import modelo.validaciones.CmbValidar;
 import modelo.validaciones.TxtVBuscador;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.persona.FrmAlumno;
 import vista.persona.FrmPersona;
 import vista.persona.VtnAlumno;
 import vista.persona.VtnMatRetiradas;
-import vista.principal.VtnPrincipal;
 
-public class VtnAlumnoCTR {
+public class VtnAlumnoCTR extends DVtnCTR {
 
-    private final VtnPrincipal vtnPrin;
     private final VtnAlumno vtnAlumno;
-    private final ConectarDB conecta; //Conexión con la Base de Datos
-    private final VtnPrincipalCTR ctrPrin;
-    private final RolMD permisos; //Rol que tiene el Usuario
 
-    private DefaultTableModel mdTbl;
     private FrmAlumno frmAlumno;
     private final AlumnoBD bdAlumno;
     public static AlumnoMD mdAlumno;
 
-    public VtnAlumnoCTR(VtnPrincipal vtnPrin, VtnAlumno vtnAlumno,
-            ConectarDB conecta, VtnPrincipalCTR ctrPrin, RolMD permisos) {
-        this.vtnPrin = vtnPrin;
+    public VtnAlumnoCTR(VtnAlumno vtnAlumno, VtnPrincipalCTR ctrPrin) {
+        super(ctrPrin);
         this.vtnAlumno = vtnAlumno;
-        this.conecta = conecta;
-        this.ctrPrin = ctrPrin;
-        this.permisos = permisos;
-        //Cambiamos el estado del cursos  
-        vtnPrin.setCursor(new Cursor(3));
-        ctrPrin.estadoCargaVtn("Alumnos");
-        ctrPrin.setIconJIFrame(vtnAlumno);
-        vtnPrin.getDpnlPrincipal().add(vtnAlumno);
-        vtnAlumno.show();
-        //Inicializamos la clase de alumno  
-        bdAlumno = new AlumnoBD(conecta);
+        //Cambiamos el estado del cursos
+        //Inicializamos la clase de alumno
+        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
+        ctrPrin.agregarVtn(vtnAlumno);
         KeyListener kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -76,7 +52,11 @@ public class VtnAlumnoCTR {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
+
+                if (e.getKeyCode() == 10) {
+
+                    buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
+                }
             }
         };
 
@@ -97,32 +77,38 @@ public class VtnAlumnoCTR {
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
         vtnAlumno.getBtn_Materias().addActionListener(e -> abrirVtnMaterias());
-        vtnAlumno.getCbx_Filtrar().addActionListener(new ActionListener(){
+        vtnAlumno.getCbx_Filtrar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String palabra = vtnAlumno.getCbx_Filtrar().getSelectedItem().toString();
-                switch(palabra){
+                switch (palabra) {
                     case "ALUMNOS ELMINADOS":
                         llenarElimanados();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(false);
+                        vtnAlumno.getBtnEditar().setEnabled(false);
                         break;
                     case "ALUMNOS RETIRADOS":
                         llenarRetirados();
                         vtnAlumno.getBtn_Materias().setVisible(true);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
+                        vtnAlumno.getBtnEditar().setEnabled(true);
                         break;
                     default:
                         llenarTabla();
                         vtnAlumno.getBtn_Materias().setVisible(false);
+                        vtnAlumno.getBtnEliminar().setEnabled(true);
+                        vtnAlumno.getBtnEditar().setEnabled(true);
                         break;
                 }
             }
         });
 
         //Cuando termina de cargar todo se le vuelve a su estado normal.
-        //Validacion del buscador  
+        //Validacion del buscador
         vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(),
                 vtnAlumno.getBtnBuscar()));
-        
+
 //        vtnAlumno.getChBx_Alumnos().addActionListener(new ActionListener(){
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -135,11 +121,7 @@ public class VtnAlumnoCTR {
 //               }
 //            }
 //        });
-
-        vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno());
-        //Cuando termina de cargar todo se le vuelve a su estado normal.
-        vtnPrin.setCursor(new Cursor(0));
-        ctrPrin.estadoCargaVtnFin("Alumnos");
+        vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> ListaDeAlumnos());
     }
 
     //Muestra el Formulario de Registro de Alumno
@@ -149,20 +131,20 @@ public class VtnAlumnoCTR {
         vtnAlumno.dispose();
         ctrPrin.cerradoJIF();
     }
-    
-    public void abrirVtnMaterias(){
+
+    public void abrirVtnMaterias() {
         //AlumnoMD al = capturarFila();
         mdAlumno = capturarFila();
-        if(mdAlumno == null){
+        if (mdAlumno == null) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
-        } else{
-            VtnMatRetiradas m = new VtnMatRetiradas(vtnPrin, false);
-            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(vtnPrin, this, vtnAlumno, conecta);
+        } else {
+            VtnMatRetiradas m = new VtnMatRetiradas(ctrPrin.getVtnPrin(), false);
+            VtnMatReprobadasCTR materias = new VtnMatReprobadasCTR(this, vtnAlumno, ctrPrin);
             materias.iniciarVentana();
         }
     }
-    
-    public void iniciarComponentes(){
+
+    public void iniciarComponentes() {
         vtnAlumno.getBtn_Materias().setVisible(false);
         //vtnAlumno.getCbx_Filtrar().setVisible(false);
     }
@@ -193,8 +175,8 @@ public class VtnAlumnoCTR {
         }
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-    
-    public void llenarElimanados(){
+
+    public void llenarElimanados() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
         for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
@@ -214,8 +196,8 @@ public class VtnAlumnoCTR {
         }
         vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
-    
-    public void llenarRetirados(){
+
+    public void llenarRetirados() {
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
         for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
@@ -330,18 +312,18 @@ public class VtnAlumnoCTR {
                     new Object[]{"Editar Datos Personales", "Editar Datos de Alumno"}, "Editar Datos de Alumno");
             if (seleccion == 1) {
                 frmAlumno = new FrmAlumno();
-                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(vtnPrin, frmAlumno, conecta, ctrPrin, permisos);
+                FrmAlumnoCTR ctrFrm = new FrmAlumnoCTR(frmAlumno, ctrPrin);
                 ctrFrm.iniciar();
                 ctrFrm.editar(al);
                 vtnAlumno.dispose();
                 ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
-                PersonaBD extraer = new PersonaBD(conecta);
+                PersonaBD extraer = new PersonaBD(ctrPrin.getConecta());
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona;
                 persona = extraer.buscarPersona(al.getIdPersona());
-                FrmPersonaCTR ctrPers = new FrmPersonaCTR(vtnPrin, frmPersona, conecta, ctrPrin);
+                FrmPersonaCTR ctrPers = new FrmPersonaCTR(frmPersona, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
                 if (modelo.validaciones.Validar.esNumeros(persona.getIdentificacion()) == true) {
@@ -385,42 +367,19 @@ public class VtnAlumnoCTR {
     }
 
     //Muestra los reportes con todos los Alumnos registrados
-    public void llamaReporteAlumno() {
+   public void ListaDeAlumnos() {
         JasperReport jr;
-        String path = "./src/vista/reportes/repAlumnos.jasper";
-        File dir = new File("./");
-        System.out.println("Direccion: " + dir.getAbsolutePath());
-        try {
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint print = JasperFillManager.fillReport(jr, null, conecta.getConecction());
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Reporte de Alumnos");
-
-        } catch (JRException ex) {
-            Logger.getLogger(VtnAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String path = "/vista/reportes/repListaAlumnos.jasper";
+            try {
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
     }
 
     private void InitPermisos() {
-        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
 
-//            if (obj.getNombre().equals("USUARIOS-Agregar")) {
-//                vtnCarrera.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-AsignarRoles")) {
-//                vista.getBtnAsignarRoles().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("USUARIOS-VerRoles")) {
-//                vista.getBtnVerRoles().setEnabled(true);
-//            }
-        }
     }
 
 }

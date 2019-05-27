@@ -6,12 +6,12 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -19,30 +19,28 @@ import java.util.logging.Logger;
  */
 public class ConexionBD {
 
-    private final String url = "jdbc:postgresql://localhost:5432/baseFinal";
+    private String url = "jdbc:postgresql://localhost:5432/baseFinal";
 
-    private final String usuario = "postgres";
+    private String usuario = "postgres";
 
-    private final String contrasena = "qwerty79";
+    private String contrasena = "qwerty79";
+    private final ConectarDB conecta; 
 
-    private  Connection con = null;
+    private Connection con = null;
 
-    private  Statement stm = null;
+    private Statement stm = null;
 
     private ResultSet rs = null;
 
-    public ConexionBD() {
+    public ConexionBD(ConectarDB conecta) {
+        this.conecta = conecta; 
     }
 
-    public void conectar()  {
+    public void conectar() {
 
-        try {
-            con = ResourceManager.getConnection();
-            
-            System.out.println("Establecida la conexión con la base de datos");
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        con = conecta.getConecction("Clase conexion de andres");
+        url = generarURL();
+        System.out.println("Establecida la conexión con la base de datos");
 
     }
 
@@ -62,6 +60,19 @@ public class ConexionBD {
     }
 
     public Connection getCon() {
+        // Comprobar conexion
+        try {
+            if (con != null) {
+                if (con.isClosed()) {
+                    System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
+                    con = conecta.getConecction("Funcion getCon de andresss");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al comprobar la conexion");
+            System.out.println(ex.getMessage());
+        }
+
         return con;
     }
 
@@ -85,8 +96,13 @@ public class ConexionBD {
         this.rs = rs;
     }
 
-  
-    
-    
+    public static String generarURL() {
+
+        String ip = Propiedades.getPropertie("ip");
+        String port = Propiedades.getPropertie("port");
+        String database = Propiedades.getPropertie("database");
+
+        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
+    }
 
 }
