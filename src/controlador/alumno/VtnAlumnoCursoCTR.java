@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
@@ -108,6 +108,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         vtnAlmnCurso.getBtnRepUBE().addActionListener(e -> btnUBE(e));
 
         ctrPrin.agregarVtn(vtnAlmnCurso);
+        InitPermisos();
     }
 
     /**
@@ -344,7 +345,13 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-
+       vtnAlmnCurso.getBtnMaterias().getAccessibleContext().setAccessibleName("Lista-Alumnos-Materias");
+       vtnAlmnCurso.getBtnRepUBE().getAccessibleContext().setAccessibleName("Lista-Alumnos-Reporte-UBE");
+       vtnAlmnCurso.getBtnListaCiclo().getAccessibleContext().setAccessibleName("Lista-Alumnos-Reporte-Lista Ciclo");
+       vtnAlmnCurso.getBtnRepAlum().getAccessibleContext().setAccessibleName("Lista-Alumnos-Reporte-Lista Curso");
+       
+        CONS.activarBtns(vtnAlmnCurso.getBtnMaterias(), vtnAlmnCurso.getBtnRepUBE(),
+                vtnAlmnCurso.getBtnListaCiclo(), vtnAlmnCurso.getBtnRepAlum());
     }
     
      private void btnUBE(ActionEvent e) {
