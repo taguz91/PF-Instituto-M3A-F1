@@ -73,7 +73,7 @@ public class FrmAsistenciaCTR {
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
     private List<CalendarioMD> listaSemanasActivas;
-    private List<String> DiasClase;
+    private List<String> DiasClase = null;
     private List<TipoDeNotaMD> listaValidaciones;
 
     // TABLA
@@ -265,10 +265,10 @@ public class FrmAsistenciaCTR {
             System.out.println("------> " + getIdPeriodoLectivo());
             System.out.println("------> " + getIdDocente());
 
-            for (int j = 6; j < jTbl.getColumnCount(); j++) {
-                jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
-                jTbl.getColumnModel().getColumn(j).setMinWidth(0);
-            }
+//            for (int j = 6; j < jTbl.getColumnCount(); j++) {
+//                jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
+//                jTbl.getColumnModel().getColumn(j).setMinWidth(0);
+//            }
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(i);
@@ -279,8 +279,7 @@ public class FrmAsistenciaCTR {
                     case 1:
                         dia_String = "LUNES";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(6).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(6).setMinWidth(100);
+                        
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini);
                         break;
@@ -288,40 +287,35 @@ public class FrmAsistenciaCTR {
                     case 2:
                         dia_String = "MARTES";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(7).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(7).setMinWidth(100);
+                        
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(1));
                         break;
                     case 3:
                         dia_String = "MIERCOLES";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(8).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(8).setMinWidth(100);
+                       
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(2));
                         break;
                     case 4:
                         dia_String = "JUEVES";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(9).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(9).setMinWidth(100);
+                       
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(3));
                         break;
                     case 5:
                         dia_String = "VIERNES";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(10).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(10).setMinWidth(100);
+                       
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
                         break;
                     case 6:
                         dia_String = "SABADO";
                         System.out.println(dia_String);
-                        jTbl.getColumnModel().getColumn(11).setMaxWidth(100);
-                        jTbl.getColumnModel().getColumn(11).setMinWidth(100);
+                      
                         DiasClase.add(dia_String);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
                         break;
@@ -333,6 +327,8 @@ public class FrmAsistenciaCTR {
                 }
 
                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
+                DiasClase.stream().forEach(d -> System.out.println("Dias Clase " + d));
+                DiasClase.stream().forEach(d -> vista.getCmbDiaClase().addItem(d));
                
             }
             
@@ -359,23 +355,23 @@ public class FrmAsistenciaCTR {
                 break;
 
             case 2:
-                num_semana = 1;
+                num_semana = 2;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 3:
-                num_semana = 1;
+                num_semana = 3;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 4:
-                num_semana = 1;
+                num_semana = 4;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 5:
-                num_semana = 1;
+                num_semana = 5;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             case 6:
-                num_semana = 1;
+                num_semana = 6;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
                 break;
             default:
