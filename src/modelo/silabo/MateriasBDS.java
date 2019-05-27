@@ -51,11 +51,9 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-<<<<<<< HEAD
-                    + "AND pr.id_prd_lectivo=?\n"
-=======
+
                     + "AND crs.id_prd_lectivo=? "
->>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
+
                     + "EXCEPT\n"
                     + "SELECT DISTINCT \n"
                     + "m.id_materia, m.materia_nombre, m.materia_horas_docencia, m.materia_horas_practicas, m.materia_horas_auto_estudio\n"
@@ -68,12 +66,11 @@ public class MateriasBDS extends MateriaMD {
                     + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=crs.id_prd_lectivo\n"
                     + "JOIN \"Silabo\" AS s ON s.id_materia = m.id_materia\n"
                     + "WHERE usu_username=? AND crr.id_carrera=?\n"
-<<<<<<< HEAD
-                    + "AND pr.id_prd_lectivo=?");
-=======
-                    + "AND s.id_prd_lectivo=?");
->>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
 
+                    + "AND s.id_prd_lectivo=?");
+
+            //Andres Ullauri
+            System.out.println(".");
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
             st.setInt(3, Integer.parseInt(clave[2]));

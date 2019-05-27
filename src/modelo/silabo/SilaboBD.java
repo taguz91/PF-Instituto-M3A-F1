@@ -207,8 +207,9 @@ public class SilaboBD extends SilaboMD {
             PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
                     + "	WHERE id_silabo=?");
 
+            
             st.setInt(1, s.getIdSilabo());
-
+            System.out.println(st);
             st.executeUpdate();
             
             System.out.println(st);
@@ -237,24 +238,6 @@ public class SilaboBD extends SilaboMD {
 
     }
 
-    public void insertar(SilaboMD s) {
-
-        try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Silabo\"(\n"
-                    + "	 id_materia, id_prd_lectivo)\n"
-                    + "	VALUES (?, ?)");
-
-            st.setInt(1, s.getIdMateria().getId());
-            st.setInt(2, s.getIdPeriodoLectivo().getId_PerioLectivo());
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-    
     public void insertar(SilaboMD s) {
 
         try {

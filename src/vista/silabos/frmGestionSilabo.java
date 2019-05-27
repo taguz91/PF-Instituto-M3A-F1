@@ -1425,6 +1425,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 430, -1));
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
         pnlUnidad.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 570, -1, -1));
 
         lblTotalGestion.setText("Total de Gestion de  Aula:");

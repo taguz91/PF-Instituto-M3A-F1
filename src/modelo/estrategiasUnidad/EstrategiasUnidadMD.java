@@ -6,7 +6,7 @@
 package modelo.estrategiasUnidad;
 
 
-import modelo.estrategiasAprendizaje.EstrategiasAprendizajeBD;
+import java.io.Serializable;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -14,7 +14,7 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  *
  * @author Andres Ullauri
  */
-public class EstrategiasUnidadMD {
+public class EstrategiasUnidadMD  implements Serializable{
 
     private Integer idEstrategiaUnidad;
     private EstrategiasAprendizajeMD idEstrategia;
