@@ -211,62 +211,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
         frmAlmCurso.getBtnHorarioAlmn().addActionListener(e -> horarioAlmn());
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
 
-        //Para informe 
-        frmAlmCurso.getBtnSegunda().addActionListener(e -> clickSegundaMatricula());
-        frmAlmCurso.getBtnCarta().addActionListener(e -> clickCarta());
-    }
-
-    private void clickCarta() {
-        int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
-        int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
-        int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
-        if (posAl >= 0 && posCurso > 0) {
-            System.out.println("Podemos imprimir: ");
-            System.out.println("Curso: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString());
-            System.out.println("Periodo: " + periodos.get(posPrd - 1).getId_PerioLectivo());
-            System.out.println("Carrera: " + periodos.get(posPrd - 1).getCarrera().getId());
-            System.out.println("Alumno carrera: " + alumnosCarrera.get(posAl).getId());
-            System.out.println("Ciclo: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString().charAt(1));
-            try {
-                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/actaExtra.jasper"));
-                Map parametro = new HashMap();
-                parametro.put("curso", frmAlmCurso.getCmbCurso().getSelectedItem().toString());
-                parametro.put("idAlumCurso", alumnosCarrera.get(posAl).getId());
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "error" + ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No podemos imprimir selecione todos los campos");
-        }
-    }
-
-    private void clickSegundaMatricula() {
-        int posAl = frmAlmCurso.getTblAlumnos().getSelectedRow();
-        int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
-        int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
-        if (posAl >= 0 && posPrd > 0 && posCurso > 0) {
-            System.out.println("Podemos imprimir: ");
-            System.out.println("Curso: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString());
-            System.out.println("Periodo: " + periodos.get(posPrd - 1).getId_PerioLectivo());
-            System.out.println("Carrera: " + periodos.get(posPrd - 1).getCarrera().getId());
-            System.out.println("Alumno carrera: " + alumnosCarrera.get(posAl).getId());
-            System.out.println("Ciclo: " + frmAlmCurso.getCmbCurso().getSelectedItem().toString().charAt(1));
-            try {
-                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/actaNumeroMatricula.jasper"));
-                Map parametro = new HashMap();
-                parametro.put("curso", frmAlmCurso.getCmbCurso().getSelectedItem().toString());
-                parametro.put("ciclo", Integer.parseInt(frmAlmCurso.getCmbCurso().getSelectedItem().toString().charAt(1) + ""));
-                parametro.put("idAlmCarrera", alumnosCarrera.get(posAl).getId());
-                parametro.put("idPrd", periodos.get(posPrd - 1).getId_PerioLectivo());
-                //parametro.put("numMatricula", 1); 
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "error" + ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No podemos imprimir.");
-        }
     }
 
     /**
