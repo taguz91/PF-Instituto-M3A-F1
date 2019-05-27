@@ -234,6 +234,8 @@ public class VtnPersona extends javax.swing.JInternalFrame {
                 .addGap(8, 8, 8))
         );
 
+        btnEditarIdentificacion.getAccessibleContext().setAccessibleName("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

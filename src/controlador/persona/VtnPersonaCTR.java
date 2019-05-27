@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
@@ -107,6 +108,8 @@ public class VtnPersonaCTR extends DVtnCTR {
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
         vtnPersona.getBtnEditarIdentificacion().addActionListener(e -> editarIdentificacion());
+
+        InitPermisos();
 
     }
 
@@ -287,6 +290,10 @@ public class VtnPersonaCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        vtnPersona.getBtnEditarIdentificacion().getAccessibleContext().setAccessibleName("Personas-Editar Identificacion");
+        vtnPersona.getBtnEliminar().getAccessibleContext().setAccessibleName("Personas-Eliminar");
+
+        CONS.activarBtns(vtnPersona.getBtnEditarIdentificacion(), vtnPersona.getBtnEliminar());
 
     }
 

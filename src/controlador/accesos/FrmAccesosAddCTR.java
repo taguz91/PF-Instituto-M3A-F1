@@ -2,6 +2,8 @@ package controlador.accesos;
 
 import controlador.Libraries.Effects;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -61,6 +63,14 @@ public class FrmAccesosAddCTR {
 
             }
         });
+
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cargarTablaFilter(vista.getTxtBuscar().getText());
+            }
+        });
+
     }
 
     //Metodos de apoyo
@@ -89,11 +99,11 @@ public class FrmAccesosAddCTR {
         return (item1, item2) -> item1.getAcceso().getNombre().compareTo(item2.getAcceso().getNombre());
     }
 
-    private void cargarTablaFilter() {
+    private void cargarTablaFilter(String aguja) {
         tblPermisos.setRowCount(0);
         listaPermisos
                 .stream()
-                .filter(item -> item.isActivo() == true)
+                .filter(item -> item.getAcceso().getNombre().toLowerCase().contains(aguja.toLowerCase()))
                 .sorted(sorter())
                 .forEach(agregarFilas());
     }

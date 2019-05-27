@@ -2,8 +2,12 @@ package modelo;
 
 import java.awt.Image;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 
@@ -73,6 +77,22 @@ public class CONS {
             ICONO = getICONO();
         }
         return ICONO.getImage();
+    }
+
+    public static List<String> permisos;
+
+    public static List<String> getPermisos() {
+        if (permisos == null) {
+            permisos = new AccesosDelRolBD().selectWhere(CONS.ROL.getId(), true);
+        }
+        return permisos;
+    }
+
+    public static void activarBtns(JComponent... components) {
+        Arrays.stream(components)
+                .forEach(obj -> {
+                    obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName()));
+                });
     }
 
     public static String getDia(int dia) {
