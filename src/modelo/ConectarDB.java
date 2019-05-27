@@ -186,7 +186,7 @@ public class ConectarDB {
                 return ct;
             }
         } catch (SQLException | NullPointerException ex) {
-            System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
+            System.out.println("No pudimos comprobar el estado de la conexion: " + ex.getMessage());
             ctrCt.matarHilo();
             return null;
         }
