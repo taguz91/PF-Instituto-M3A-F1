@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import modelo.CONS;
 import modelo.version.DitoolBD;
 import modelo.version.VersionMD;
-import vista.Login;
 import vista.version.VtnDitool;
 
 /**
