@@ -145,9 +145,15 @@
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+<<<<<<< HEAD
+                  <KeyStroke key="Ctrl+Q"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Plan de Clase"/>
+=======
                   <KeyStroke key="Ctrl+K"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Plan de clase"/>
+>>>>>>> 7667623484ec9f33dfd13d720ba97e20babdb9c0
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
