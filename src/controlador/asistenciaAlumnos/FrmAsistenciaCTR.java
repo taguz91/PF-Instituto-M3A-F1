@@ -3,7 +3,6 @@ package controlador.asistenciaAlumnos;
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.Libraries.cellEditor.TextFieldCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -17,7 +16,7 @@ import java.util.function.BiFunction;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
+import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -132,6 +131,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
+        InitPermisos();
     }
 
     private void InitEventos() {
@@ -587,4 +587,12 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
+
+    private void InitPermisos() {
+        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Asistencia-Imprimir");
+       vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
+   
+       
+        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
+    }
 }
