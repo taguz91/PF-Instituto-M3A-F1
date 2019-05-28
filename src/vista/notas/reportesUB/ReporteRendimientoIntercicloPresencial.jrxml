@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ecb44066-bc3a-4ed1-8656-fb675a44bfa3">
-	<property name="ireport.zoom" value="2.848123751874333"/>
-	<property name="ireport.x" value="1243"/>
-	<property name="ireport.y" value="248"/>
+	<property name="ireport.zoom" value="3.132936127061767"/>
+	<property name="ireport.x" value="1456"/>
+	<property name="ireport.y" value="346"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -294,7 +294,7 @@ WHERE
 				<text><![CDATA[Apellidos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="801" y="2" width="25" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="f14d2f75-173f-49e4-9cd3-d2706dd14d89"/>
+				<reportElement mode="Opaque" x="789" y="2" width="25" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="f14d2f75-173f-49e4-9cd3-d2706dd14d89"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -307,7 +307,7 @@ WHERE
 				<text><![CDATA[% F]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="688" y="2" width="30" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="4237f2cb-f397-4edb-9a19-6f68e3f6fd1c"/>
+				<reportElement mode="Opaque" x="688" y="2" width="33" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="4237f2cb-f397-4edb-9a19-6f68e3f6fd1c"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -320,7 +320,7 @@ WHERE
 				<text><![CDATA[AP 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="762" y="2" width="39" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="c2152ee9-c7ab-4242-b779-23c693f37f02"/>
+				<reportElement mode="Opaque" x="755" y="2" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="c2152ee9-c7ab-4242-b779-23c693f37f02"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -331,19 +331,6 @@ WHERE
 					<font fontName="DejaVu Sans" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nota Int.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="718" y="2" width="44" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="ebafc533-1146-409b-a446-2c546bebaa79"/>
-				<box>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Examen Int.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="487" y="2" width="85" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="972b41f8-371c-4e04-acef-6c074e326168"/>
@@ -383,6 +370,20 @@ WHERE
 					<font fontName="DejaVu Sans" size="7" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Correo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="721" y="2" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="6f480da2-8731-479f-b13c-9fb679366f91"/>
+				<box>
+					<topPen lineWidth="0.75" lineColor="#070707"/>
+					<leftPen lineWidth="0.75" lineColor="#070707"/>
+					<bottomPen lineWidth="0.75" lineColor="#070707"/>
+					<rightPen lineWidth="0.75" lineColor="#070707"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ex. Int.]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -460,26 +461,6 @@ WHERE
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
 			</subreport>
-			<subreport>
-				<reportElement x="718" y="0" width="44" height="10" uuid="87919996-11be-4641-a844-4bb7e0130738"/>
-				<subreportParameter name="id_alumno">
-					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="id_docente">
-					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="prd_lectivo_nombre">
-					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="curso_nombre">
-					<subreportParameterExpression><![CDATA[$F{curso_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="materia_nombre">
-					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
 				<reportElement x="371" y="0" width="116" height="10" uuid="85d8e17b-58cb-4a86-afda-64ff304672b2"/>
 				<box>
@@ -520,7 +501,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{persona_correo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="801" y="0" width="25" height="10" uuid="d42d8e45-6873-40ff-9693-da46fb35b01a"/>
+				<reportElement x="789" y="0" width="25" height="10" uuid="d42d8e45-6873-40ff-9693-da46fb35b01a"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -533,7 +514,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="762" y="0" width="39" height="10" uuid="b05e6046-dce4-4a36-8eed-6bdd27be3bba"/>
+				<reportElement x="721" y="0" width="37" height="10" uuid="0414b2fd-9123-4354-b33b-f3608f3e0a72"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -541,13 +522,33 @@ WHERE
 					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="prd_lectivo_nombre">
-					<subreportParameterExpression><![CDATA[$F{prd_lectivo_nombre}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="curso_nombre">
-					<subreportParameterExpression><![CDATA[$F{curso_nombre}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="materia_nombre">
-					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="755" y="0" width="33" height="10" uuid="1b7bd1c4-c8f2-44ae-8765-9854c80b5260"/>
+				<subreportParameter name="id_alumno">
+					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_docente">
+					<subreportParameterExpression><![CDATA[$P{id_docente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="prd_lectivo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="curso_nombre">
+					<subreportParameterExpression><![CDATA[$P{curso_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="materia_nombre">
+					<subreportParameterExpression><![CDATA[$P{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
