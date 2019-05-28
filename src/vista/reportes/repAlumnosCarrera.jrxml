@@ -13,7 +13,8 @@ p.persona_primer_apellido ||' '|| p.persona_segundo_apellido
 as Alumno,p.persona_identificacion,p.persona_correo,p.persona_telefono
 from ((public."AlumnosCarrera" a join public."Alumnos" al using(id_alumno))
 join  public."Personas" p using(id_persona))join  public."Carreras" c using(id_carrera)
-where a.id_carrera=$P{alumnoCarrera} order by Alumno;]]>
+where a.id_carrera=$P{alumnoCarrera}
+AND alumno_activo=true order by Alumno;]]>
 	</queryString>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="alumno" class="java.lang.String"/>
