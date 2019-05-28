@@ -63,12 +63,12 @@ public class VtnRolCTR {
     }
 
     private void InitPermisos() {
-           vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Usuarios-Ingresar");
-       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Usuarios-Actualizar");
-       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Usuarios-Editar");
-       vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Usuarios-Asignar Roles");
-       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Usuarios-Eliminar");
-       vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Usuarios-Ver Roles");
+           vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ingresar");
+       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Actualizar");
+       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar");
+       vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ver Permisos");
+       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Eliminar");
+       vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar Permisos");
        
         CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
                 vista.getBtnEditar(), vista.getBtnVerPermisos(),
