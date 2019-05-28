@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="100" pageHeight="842" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="60" pageHeight="842" columnWidth="60" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b833b6e1-ec54-4de3-bc80-9d67b99ae568">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -16,10 +16,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 
+		<![CDATA[SELECT
 
 	count("AlumnoCurso".almn_curso_estado) AS "ESTADO"
-	
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -29,11 +29,11 @@ FROM
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
 	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
-  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
-	
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
+
 WHERE
 	"Cursos".id_docente =  $P{id_docente}
-	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre} 
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre=  $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	AND UPPER("AlumnoCurso".almn_curso_estado) = 'REPROBADO']]>
@@ -42,7 +42,7 @@ WHERE
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="60" height="20"/>
+				<reportElement x="0" y="0" width="60" height="20" uuid="2dae1207-995b-4a21-bf5e-de4d51a7c70b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -51,7 +51,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{ESTADO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
