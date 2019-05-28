@@ -298,12 +298,19 @@ public class VtnPersonaCTR extends DVtnCTR {
     }
 
     public void validarBotonesReportes() {
-        int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
-        if (selecTabl >= 0) {
-            vtnPersona.getBtnReportePersona().setEnabled(true);
-        } else {
-            vtnPersona.getBtnReportePersona().setEnabled(false);
+        
+        if (CONS.getPermisos().contains("Personas-Reporte-Persona")) {
+            
+            int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
+            if (selecTabl >= 0) {
+                vtnPersona.getBtnReportePersona().setEnabled(true);
+            } else {
+                vtnPersona.getBtnReportePersona().setEnabled(false);
+            }            
+            
         }
+        
+        
     }
 
 }

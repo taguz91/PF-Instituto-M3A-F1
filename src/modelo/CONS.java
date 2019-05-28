@@ -83,9 +83,13 @@ public class CONS {
 
     public static List<String> getPermisos() {
         if (permisos == null) {
-            permisos = new AccesosDelRolBD().selectWhere(CONS.ROL.getId(), true);
+            refreshPermisos();
         }
         return permisos;
+    }
+
+    public static void refreshPermisos() {
+        permisos = new AccesosDelRolBD().selectWhere(CONS.ROL.getId(), true);
     }
 
     public static void activarBtns(JComponent... components) {
