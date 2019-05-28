@@ -346,39 +346,43 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-//        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
-//            case 1:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//
-//            case 2:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//            case 3:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//            case 4:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//            case 5:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//            case 6:
-//                num_semana = 1;
-//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-//                break;
-//            default:
-//                System.out.println(dia_String);
-//                break;
-//
-//        }
-//        return num_semana;
-//    }
+    
+    public static int DiadelaSemana(){
+        
+        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
+        switch (SemanaSelec) {
+            case 1:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+
+            case 2:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+            case 3:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+            case 4:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+            case 5:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+            case 6:
+                num_semana = 1;
+                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+                break;
+            default:
+                System.out.println(dia_String);
+                break;
+
+        }
+        return num_semana;
+    }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
@@ -451,10 +455,7 @@ public class FrmAsistenciaCTR {
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
-            listaAsistencia = asistenciaBD.selectWhere(almnCursoBD);
-            listaAsistencia.stream().forEach(obj -> {
-                funcionCarga.apply(almnCursoBD, tabla);
-            });
+          
         }).start();
     }
 
