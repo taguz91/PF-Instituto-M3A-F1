@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="60" pageHeight="842" columnWidth="60" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b833b6e1-ec54-4de3-bc80-9d67b99ae568">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="6.115909044841465"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_docente" class="java.lang.Integer">
@@ -40,9 +40,9 @@ WHERE
 	</queryString>
 	<field name="ESTADO" class="java.lang.Long"/>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="10" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="60" height="20" uuid="2dae1207-995b-4a21-bf5e-de4d51a7c70b"/>
+				<reportElement x="0" y="0" width="60" height="10" uuid="2dae1207-995b-4a21-bf5e-de4d51a7c70b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -50,7 +50,9 @@ WHERE
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
 			</textField>
 		</band>
