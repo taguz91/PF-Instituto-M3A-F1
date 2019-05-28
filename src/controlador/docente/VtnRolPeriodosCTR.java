@@ -5,6 +5,7 @@ import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.estilo.TblEstilo;
@@ -51,6 +52,7 @@ public class VtnRolPeriodosCTR extends DVtnCTR {
         llenarTabla();
 
         ctrPrin.agregarVtn(vtnRolPe);
+        InitPermisos();
     }
 
     private void abrirFRM() {
@@ -101,5 +103,13 @@ public class VtnRolPeriodosCTR extends DVtnCTR {
 
         }
         vtnRolPe.getLblResultados().setText(String.valueOf(roles.size()) + " Resultados obtenidos.");
+    }
+
+    private void InitPermisos() {
+        vtnRolPe.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Periodo-Ingresar");
+       vtnRolPe.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Periodo-Eliminar ");
+       vtnRolPe.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Periodo-Editar");
+
+        CONS.activarBtns(vtnRolPe.getBtnIngresar(), vtnRolPe.getBtnEditar(), vtnRolPe.getBtnEliminar());
     }
 }
