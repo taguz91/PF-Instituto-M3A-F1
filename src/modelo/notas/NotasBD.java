@@ -42,12 +42,11 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"Notas\"\n"
                 + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
                 + "WHERE\n"
-                + "\"public\".\"Notas\".id_almn_curso = ?" ;
+                + "\"public\".\"Notas\".id_almn_curso = ?";
 
         List<NotasBD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1,alumnnoCurso.getId());
-
+        parametros.put(1, alumnnoCurso.getId());
 
         try {
             conn = pool.getConnection();

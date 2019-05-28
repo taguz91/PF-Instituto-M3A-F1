@@ -33,10 +33,10 @@ public class CalendarioBD extends CalendarioMD{
 "                public.\"CalendarioPeriodo\"\n" +
 "                INNER JOIN public.\"PeriodoLectivo\" ON public.\"CalendarioPeriodo\".id_prd_lectivo = public.\"PeriodoLectivo\".id_prd_lectivo\n" +
 "                WHERE public.\"PeriodoLectivo\".id_prd_lectivo =  "+ prd_lec +" ";
-        ArrayList<CalendarioMD> semanas = new ArrayList<>();
-        conn = pool.getConnection();
-        rst = pool.ejecutarQuery(SELECT, conn, null);
-        System.out.println("Query: \n" + SELECT);
+            ArrayList<CalendarioMD> semanas = new ArrayList<>();
+            conn = pool.getConnection();
+            rst = pool.ejecutarQuery(SELECT, conn, null);
+            System.out.println("Query: \n" + SELECT);
         try {
             while (rst.next()) {
                 CalendarioMD calendario = new CalendarioMD();

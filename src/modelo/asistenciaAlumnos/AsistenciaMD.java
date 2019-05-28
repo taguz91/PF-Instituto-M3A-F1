@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo.asistenciaAlumnos;
 
 import java.time.LocalDate;
@@ -19,7 +15,9 @@ public class AsistenciaMD {
     private int numeroFaltas;
     private String observaciones;
     private AlumnoCursoMD alumnoCurso;
+    private int num_horas;
 
+   
     public AsistenciaMD(int id, LocalDate fechaAsistencia, int numeroFaltas, String observaciones, AlumnoCursoMD alumnoCurso) {
         this.id = id;
         this.fechaAsistencia = fechaAsistencia;
@@ -70,6 +68,15 @@ public class AsistenciaMD {
     public void setAlumnoCurso(AlumnoCursoMD alumnoCurso) {
         this.alumnoCurso = alumnoCurso;
     }
+    
+     public int getNum_horas() {
+        return num_horas;
+    }
+
+    public void setNum_horas(int num_horas) {
+        this.num_horas = num_horas;
+    }
+
 
     @Override
     public String toString() {
