@@ -605,7 +605,7 @@ public class VtnPrincipalCTR {
 
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin, conexion);
+        ControladorCRUD c = new ControladorCRUD(usuario,rolSeleccionado, vtnPrin, conexion);
 
         c.iniciarControlador();
 
