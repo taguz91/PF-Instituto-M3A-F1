@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.asistenciaAlumnos.AsistenciaBD;
+import modelo.asistencia.AsistenciaBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -346,39 +346,39 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
-            case 1:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-
-            case 2:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 3:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 4:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 5:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 6:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            default:
-                System.out.println(dia_String);
-                break;
-
-        }
-        return num_semana;
-    }
+//        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
+//            case 1:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//
+//            case 2:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//            case 3:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//            case 4:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//            case 5:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//            case 6:
+//                num_semana = 1;
+//                System.out.println("dia " + dia_String + "num_semana " + num_semana);
+//                break;
+//            default:
+//                System.out.println(dia_String);
+//                break;
+//
+//        }
+//        return num_semana;
+//    }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
@@ -483,7 +483,8 @@ public class FrmAsistenciaCTR {
         }
     }
 
-    // Agregar Filas
+    // Agregar Filas 
+    // agregar a la tabla asistencia
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
 

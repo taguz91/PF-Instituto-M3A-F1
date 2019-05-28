@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo.asistenciaAlumnos;
+package modelo.asistencia;
 
 import java.time.LocalDate;
 import modelo.alumno.AlumnoCursoMD;
