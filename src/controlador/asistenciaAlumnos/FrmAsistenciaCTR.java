@@ -149,10 +149,9 @@ public class FrmAsistenciaCTR {
             cargarComboSemanas();
             CargarDiasClase();
         });
-//        vista.getCmbSemana().addActionListener(e -> {
-//            cargarTabla(tablaTrad, agregarFilasTrad());
-//           
-//                });
+    vista.getCmbSemana().addActionListener(e -> {
+      CargarDiasClase();
+                });
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> {
@@ -238,8 +237,6 @@ public class FrmAsistenciaCTR {
 
             String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
 
-            vista.getLblHorasAsis().setText(listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
-                    .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1) + "");
         } catch (NullPointerException e) {
             vista.getCmbAsignaturaAsis().removeAllItems();
         }
@@ -265,10 +262,8 @@ public class FrmAsistenciaCTR {
             System.out.println("------> " + getIdPeriodoLectivo());
             System.out.println("------> " + getIdDocente());
 
-//            for (int j = 6; j < jTbl.getColumnCount(); j++) {
-//                jTbl.getColumnModel().getColumn(j).setMaxWidth(0);
-//                jTbl.getColumnModel().getColumn(j).setMinWidth(0);
-//            }
+
+                vista.getCmbDiaClase().removeAllItems();
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(i);
@@ -277,46 +272,29 @@ public class FrmAsistenciaCTR {
 
                 switch (dia) {
                     case 1:
-                        dia_String = "LUNES";
-                        System.out.println(dia_String);
-                        
-                        DiasClase.add(dia_String);
+                       vista.getCmbDiaClase().addItem("LUNES " + ini);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini);
+        
                         break;
 
                     case 2:
-                        dia_String = "MARTES";
-                        System.out.println(dia_String);
-                        
-                        DiasClase.add(dia_String);
+                       vista.getCmbDiaClase().addItem("MARTES " + ini.plusDays(1));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(1));
                         break;
                     case 3:
-                        dia_String = "MIERCOLES";
-                        System.out.println(dia_String);
-                       
-                        DiasClase.add(dia_String);
+                        vista.getCmbDiaClase().addItem("MIERCOLES " + ini.plusDays(2));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(2));
                         break;
                     case 4:
-                        dia_String = "JUEVES";
-                        System.out.println(dia_String);
-                       
-                        DiasClase.add(dia_String);
+                        vista.getCmbDiaClase().addItem("JUEVES " + ini.plusDays(3) );
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(3));
                         break;
                     case 5:
-                        dia_String = "VIERNES";
-                        System.out.println(dia_String);
-                       
-                        DiasClase.add(dia_String);
+                       vista.getCmbDiaClase().addItem("VIERNES " + ini.plusDays(4));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
                         break;
                     case 6:
-                        dia_String = "SABADO";
-                        System.out.println(dia_String);
-                      
-                        DiasClase.add(dia_String);
+                       vista.getCmbDiaClase().addItem("SÁBADO " + ini.plusDays(5));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
                         break;
                     default:
@@ -327,8 +305,8 @@ public class FrmAsistenciaCTR {
                 }
 
                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
-                DiasClase.stream().forEach(d -> System.out.println("Dias Clase " + d));
-                DiasClase.stream().forEach(d -> vista.getCmbDiaClase().addItem(d));
+//                DiasClase.stream().forEach(d -> System.out.println("Dias Clase " + d));
+//                DiasClase.stream().forEach(d -> vista.getCmbDiaClase().addItem(d));
                
             }
             
