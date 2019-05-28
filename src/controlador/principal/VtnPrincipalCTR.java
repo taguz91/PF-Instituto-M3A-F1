@@ -1015,9 +1015,42 @@ public class VtnPrincipalCTR {
 
     private void InitPermisos() {
 
-        vtnPrin.getMnCtPersona().getAccessibleContext().setAccessibleName("");
+        vtnPrin.getMnCtPersona().getAccessibleContext().setAccessibleName("Personas-Consular");
+        vtnPrin.getMnCtDocente().getAccessibleContext().setAccessibleName("Docente-Consultar");
+        vtnPrin.getMnCtCarrera().getAccessibleContext().setAccessibleName("Carreras-Consultar");
+        vtnPrin.getMnCtCurso().getAccessibleContext().setAccessibleName("Cursos-Consultar");
+        vtnPrin.getMnCtPrdLectivo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Consultar");
+        vtnPrin.getMnCtMateria().getAccessibleContext().setAccessibleName("Materias-Consultar");
+        vtnPrin.getMnCtInscripcion().getAccessibleContext().setAccessibleName("Inscripcion-Consultar");
+        vtnPrin.getMnCtMatricula().getAccessibleContext().setAccessibleName("Matricula-Consultar");
+        vtnPrin.getMnCtListaAlumnos().getAccessibleContext().setAccessibleName("Lista-Alumnos-Consultar");
+        vtnPrin.getMnCtMallaAlumno().getAccessibleContext().setAccessibleName("Malla-Alumnos-Consultar");
+        vtnPrin.getMnCtDocenteMateria().getAccessibleContext().setAccessibleName("Materia-Docentes-Consultar");
+        vtnPrin.getMnCtRolesPeriodo().getAccessibleContext().setAccessibleName("Roles-Periodo-Consultar");
+        vtnPrin.getMnCtSilabos().getAccessibleContext().setAccessibleName("Silabos-Consultar");
+        vtnPrin.getMnCtPlandeClase().getAccessibleContext().setAccessibleName("Plan-De-Clase-Consultar");
+        vtnPrin.getMnCtUsuarios().getAccessibleContext().setAccessibleName("Usuarios-Consultar");
+        vtnPrin.getMnCtRoles().getAccessibleContext().setAccessibleName("Roles-Usuarios-Consultar");
+        vtnPrin.getMnCtHistorialUsers().getAccessibleContext().setAccessibleName("Historial-Usuarios-Consultar");
+        vtnPrin.getMnCtNotas().getAccessibleContext().setAccessibleName("Notas-Consultar");
+        //vtnPrin.getMnCt.getAccessibleContext().setAccessibleName("Biblioteca-Consultar");
+        vtnPrin.getMnCtAccesos().getAccessibleContext().setAccessibleName("Accesos-Consultar");
+        vtnPrin.getMnCtMiPerfil().getAccessibleContext().setAccessibleName("Mi-Perfil-Consultar");
+        vtnPrin.getMnCtAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Consultar");
+        
+        
 
-        CONS.activarBtns(vtnPrin.getMnCtPersona());
+        CONS.activarBtns(vtnPrin.getMnCtPersona(), vtnPrin.getMnCtDocente(), 
+                vtnPrin.getMnCtCarrera(), vtnPrin.getMnCtCurso(),
+                vtnPrin.getMnCtPrdLectivo(), vtnPrin.getMnCtMateria(),
+                vtnPrin.getMnCtInscripcion(), vtnPrin.getMnCtMatricula(),
+                vtnPrin.getMnCtListaAlumnos(), vtnPrin.getMnCtMallaAlumno(),
+                vtnPrin.getMnCtDocenteMateria(), vtnPrin.getMnCtRolesPeriodo(),
+                vtnPrin.getMnCtSilabos(), vtnPrin.getMnCtPlandeClase(),
+                vtnPrin.getMnCtUsuarios(), vtnPrin.getMnCtRoles(),
+                vtnPrin.getMnCtHistorialUsers(), vtnPrin.getMnCtNotas(),
+                vtnPrin.getMnCtAccesos(), vtnPrin.getMnCtMiPerfil(),
+                vtnPrin.getMnCtAsistencia());
 
     }
 
