@@ -35,8 +35,6 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-        //JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
-        // System.out.println("-----------"+ parametros);
           
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Estado Estudiantil", parametros);
 
@@ -56,7 +54,6 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-        // JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Rendimiento Interciclo", parametros);
 
     }
@@ -75,7 +72,6 @@ public class Reportes_ubCRT {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-        // JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Rendimiento Ciclo", parametros);
 
     }
