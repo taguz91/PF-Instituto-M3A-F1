@@ -6,6 +6,7 @@
 package modelo.referenciasSilabo;
 
 
+import java.io.Serializable;
 import modelo.referencias.ReferenciasMD;
 import modelo.silabo.SilaboMD;
 
@@ -13,7 +14,7 @@ import modelo.silabo.SilaboMD;
  *
  * @author Andres Ullauri
  */
-public class ReferenciaSilaboMD {
+public class ReferenciaSilaboMD implements Serializable {
 
     private Integer idReferenciaSilabo;
 

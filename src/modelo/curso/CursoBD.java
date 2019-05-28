@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
@@ -246,7 +248,8 @@ public class CursoBD extends CursoMD {
         int num = 0;
         String sql = "SELECT count(id_curso) "
                 + "FROM public.\"AlumnoCurso\" "
-                + "WHERE id_curso =" + idCurso + ";";
+                + "WHERE id_curso =" + idCurso + ""
+                + "AND almn_curso_activo = true;";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         try {
@@ -270,7 +273,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "  AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
@@ -298,7 +302,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
@@ -321,7 +326,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
@@ -344,7 +350,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, "
                 + "persona_identificacion, \n"
@@ -367,7 +374,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido,"
                 + "persona_identificacion, \n"
@@ -392,7 +400,8 @@ public class CursoBD extends CursoMD {
         String sql = "SELECT "
                 + " (SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso),\n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true),\n"
                 + "id_curso, materia_nombre, \n"
                 + "persona_primer_nombre, persona_primer_apellido, \n"
                 + "persona_identificacion, \n"
@@ -427,7 +436,8 @@ public class CursoBD extends CursoMD {
                 + "curso_capacidad, curso_ciclo, "
                 + "( SELECT count(*)\n"
                 + "  FROM public.\"AlumnoCurso\"\n"
-                + "  WHERE id_curso = c.id_curso) \n"
+                + "  WHERE id_curso = c.id_curso "
+                + "AND almn_curso_activo = true) \n"
                 + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
                 + "WHERE curso_nombre = '" + nombre + "' AND\n"
                 + "m.id_materia = c.id_materia AND\n"
@@ -744,13 +754,18 @@ public class CursoBD extends CursoMD {
                 + "FROM\n"
                 + "\"public\".\"Cursos\"\n"
                 + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = " + idDocente + "\n"
+                + "\"public\".\"Cursos\".id_docente = ?\n"
                 + "AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = " + idPeriodoLectivo;
+                + "\"public\".\"Cursos\".id_prd_lectivo = ?";
 
         List<String> lista = new ArrayList<>();
+
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idDocente);
+        parametros.put(2, idPeriodoLectivo);
+
         conn = POOL.getConnection();
-        rst = POOL.ejecutarQuery(SELECT, conn, null);
+        rst = POOL.ejecutarQuery(SELECT, conn, parametros);
 
         try {
             while (rst.next()) {
@@ -759,7 +774,7 @@ public class CursoBD extends CursoMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            POOL.close(conn);
+            POOL.closeStmt().close(rst).close(conn);
         }
         return lista;
     }

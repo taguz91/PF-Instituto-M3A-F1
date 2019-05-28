@@ -247,7 +247,7 @@ public class VtnDitoolCTR {
         cerrarTodo();
         EventQueue.invokeLater(() -> {
 
-            LoginCTR login = new LoginCTR(new Login());
+            LoginCTR login = new LoginCTR();
             login.Init();
 
         });

@@ -181,7 +181,7 @@ public class FrmPersonaCTR extends DCTR {
                 && frmPersona.getLblErrorNacionalidad().isVisible() == false
                 && frmPersona.getLblErrorPaisReside().isVisible() == false
                 && frmPersona.getLblErrorPaisReside().isVisible() == false
-                && frmPersona.getLblErrorParroquiaReside().isVisible() == false
+                //&& frmPersona.getLblErrorParroquiaReside().isVisible() == false
                 //                && frmPersona.getLblErrorEspecifiqueDiscapacidad().isVisible() == false
                 && frmPersona.getLblErrorCategoriaMigratoria().isVisible() == false
                 && frmPersona.getLblErrorPorcentaje().isVisible() == false
@@ -825,7 +825,7 @@ public class FrmPersonaCTR extends DCTR {
                     lugarRes = parroquias.get(posPr - 1);
                     //
                 } else {
-                    frmPersona.getLblErrorParroquiaReside().setVisible(true);
+                    //frmPersona.getLblErrorParroquiaReside().setVisible(true);
                 }
             } else {
                 frmPersona.getLblErrorCantonReside().setVisible(true);
@@ -1317,8 +1317,7 @@ public class FrmPersonaCTR extends DCTR {
         if (posPa > 0 && posPa < parroquias.size()) {
             //cantones.get(posPa).getId();
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
-            System.out.println("Cargar Codigo Postal " + parroquias.get(posPa - 1).getCodigo());
-            System.out.println("Cantones " + cantones.get(posPa).getId());
+        
         } else {
 //            lug.editarLugar(cantones.get(posPa).getId());
             frmPersona.getTxtCodigoPostal().setText("");

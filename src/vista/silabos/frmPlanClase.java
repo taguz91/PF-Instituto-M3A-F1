@@ -37,6 +37,14 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
        
     }
 
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public void setBtnEditar(JButton btnEditar) {
+        this.btnEditar = btnEditar;
+    }
+
     public JButton getBtmnGuardarPc() {
         return btmnGuardarPc;
     }
@@ -328,10 +336,12 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
         btnAgregarPC = new javax.swing.JButton();
         btnQuitarPC = new javax.swing.JButton();
         txt_estrategias = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
+        setMaximizable(true);
 
         txrObjetivoPC.setEditable(false);
         txrObjetivoPC.setColumns(20);
@@ -483,6 +493,8 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEditar.setText("Editar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -530,7 +542,9 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAgregarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnQuitarPC, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnQuitarPC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)))
                                 .addGap(5, 5, 5))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbIns_Evaluacion)
@@ -676,7 +690,10 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
                                                 .addComponent(txt_estrategias, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                                                 .addGap(3, 3, 3)))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btnQuitarPC)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnQuitarPC)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btnEditar))
                                             .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addComponent(lbIns_Evaluacion)
@@ -729,6 +746,7 @@ public class frmPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JButton btmnGuardarPc;
     private javax.swing.JButton btnAgregarPC;
     private javax.swing.JButton btnCancelarPC;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnQuitarPC;
     private com.toedter.calendar.JDateChooser jDateChooserFechaFinPC;
     private com.toedter.calendar.JDateChooser jDateChooserFechaInicioPC;

@@ -5,11 +5,13 @@
  */
 package vista.notas;
 
+import vista.AbstracView;
+
 /**
  *
  * @author MrRainx
  */
-public class VtnPTI extends javax.swing.JInternalFrame {
+public class VtnPTI extends AbstracView {
 
     /**
      * Creates new form VtnPTI

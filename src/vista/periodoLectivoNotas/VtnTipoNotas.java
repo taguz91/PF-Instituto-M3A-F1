@@ -5,19 +5,18 @@
  */
 package vista.periodoLectivoNotas;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author USUARIO
  */
-public class VtnTipoNotas extends javax.swing.JInternalFrame {
+public class VtnTipoNotas extends AbstracView {
 
     /**
      * Creates new form VtnTipoNotas
@@ -25,8 +24,6 @@ public class VtnTipoNotas extends javax.swing.JInternalFrame {
     public VtnTipoNotas() {
         initComponents();
 
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
-        this.setFrameIcon(icon);
     }
 
     public JButton getBtnActualizar() {

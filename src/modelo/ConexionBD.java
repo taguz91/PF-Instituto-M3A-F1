@@ -67,9 +67,12 @@ public class ConexionBD {
                     System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
                     con = conecta.getConecction("Funcion getCon de andresss");
                 }
+            }else{
+                con = conecta.devolverConexion();
             }
         } catch (SQLException ex) {
             System.out.println("Error al comprobar la conexion");
+            con = null;
             System.out.println(ex.getMessage());
         }
 

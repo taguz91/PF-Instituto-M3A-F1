@@ -143,6 +143,7 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Silabo Duales");
 
+             existeCarpeta();
             //EXPORTACION A PDF
             File f = new File(("../PF-Instituto-M3A-F1/pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             OutputStream output = new FileOutputStream(f);

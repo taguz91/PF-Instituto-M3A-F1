@@ -489,8 +489,11 @@ public class DocenteBD extends DocenteMD {
                 + "docente_otro_trabajo, docente_categoria, "
                 + "docente_fecha_contrato,docente_fecha_fin, "
                 + " docente_tipo_tiempo, docente_activo,"
-                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura, docente_en_funcion, "
-                + " p.persona_primer_nombre, p.persona_primer_apellido, p.persona_identificacion\n"
+                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura, "
+                + " docente_en_funcion, "
+                + " p.persona_primer_nombre, p.persona_primer_apellido, "
+                + " p.persona_segundo_nombre, p.persona_segundo_apellido, \n"
+                + " p.persona_identificacion \n"
                 + "FROM public.\"Docentes\" d JOIN public.\"Personas\" p USING(id_persona) "
                 + "WHERE d.id_docente = " + idDocente + " AND docente_activo = true;";
         PreparedStatement ps = conecta.getPS(sql);
@@ -552,6 +555,8 @@ public class DocenteBD extends DocenteMD {
             persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
             persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
             persona.setIdentificacion(rs.getString("persona_identificacion"));
+            persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+            persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
             d.setPersona(persona);
             if (!rs.wasNull()) {
                 d.setCodigo(rs.getString("docente_codigo"));
@@ -601,17 +606,21 @@ public class DocenteBD extends DocenteMD {
     //Sentencia para editar una Persona
     public boolean editarDocente(int aguja) {
         String sql = "UPDATE public.\"Docentes\" SET\n"
-                + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", docente_categoria=" + this.getDocenteCategoria() + ","
+                + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", "
+                + " docente_categoria=" + this.getDocenteCategoria() + ","
                 + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "',  "
-                + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
+                + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', "
+                + " docente_activo=TRUE, docente_observacion=NULL, "
                 + "docente_capacitador= " + this.isDocenteCapacitador()
                 + ", docente_titulo= '" + this.getTituloDocente() + "',"
                 + " docente_abreviatura= '" + this.getAbreviaturaDocente() + "'  \n"
                 + "WHERE id_docente= " + aguja + ";";
         if (getFechaFinContratacion() != null) {
             sql = "UPDATE public.\"Docentes\" SET\n"
-                    + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", docente_categoria=" + this.getDocenteCategoria() + ","
-                    + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "', docente_fecha_fin='" + this.getFechaFinContratacion() + "', "
+                    + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", "
+                    + "docente_categoria=" + this.getDocenteCategoria() + ","
+                    + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "', "
+                    + "docente_fecha_fin='" + this.getFechaFinContratacion() + "', "
                     + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
                     + "docente_capacitador= " + this.isDocenteCapacitador()
                     + ", docente_titulo= '" + this.getTituloDocente() + "',"
@@ -814,7 +823,7 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(res).close(conn);
         }
         return lista;
 
@@ -867,7 +876,7 @@ public class DocenteBD extends DocenteMD {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(res).close(conn);
         }
         return lista;
     }

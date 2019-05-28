@@ -1,62 +1,75 @@
 package vista.accesos;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import vista.AbstracView;
 
 /**
  *
- * @author Alejandro
+ * @author MrRainx
  */
-public class VtnAccesos extends javax.swing.JInternalFrame {
+public class VtnAccesos extends AbstracView {
 
     public VtnAccesos() {
         initComponents();
+        tblAccesos.setRowHeight(23);
+        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblAccesos.getTableHeader().getDefaultRenderer();
+        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblAccesosDeRol = new javax.swing.JTable();
+        tblAccesos = new javax.swing.JTable();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        btnEditar = new javax.swing.JButton();
-        btnDetalles = new javax.swing.JButton();
-        lblEstado = new javax.swing.JLabel();
         lblResultados = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
 
-        tblAccesosDeRol.setModel(new javax.swing.table.DefaultTableModel(
+        tblAccesos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No.", "ID Acceso", "Nombre Acceso"
+                "No.", "ID", "Nombre Acceso"
             }
-        ));
-        jScrollPane1.setViewportView(tblAccesosDeRol);
-        if (tblAccesosDeRol.getColumnModel().getColumnCount() > 0) {
-            tblAccesosDeRol.getColumnModel().getColumn(1).setResizable(false);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblAccesos);
+        if (tblAccesos.getColumnModel().getColumnCount() > 0) {
+            tblAccesos.getColumnModel().getColumn(0).setMinWidth(50);
+            tblAccesos.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblAccesos.getColumnModel().getColumn(1).setMinWidth(50);
+            tblAccesos.getColumnModel().getColumn(1).setMaxWidth(50);
         }
 
         lblBuscar.setText("Buscar:");
 
-        btnEditar.setText("Editar");
-
-        btnDetalles.setText("Detalles");
-
-        lblEstado.setForeground(new java.awt.Color(153, 255, 153));
-        lblEstado.setText("Estado");
-
         lblResultados.setText("0 Resultados Obtenidos");
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,100 +78,61 @@ public class VtnAccesos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBuscar)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDetalles)
-                        .addGap(0, 11, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblBuscar)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBuscar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBuscar)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar)
-                    .addComponent(btnDetalles))
+                    .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public JButton getBtnDetalles() {
-        return btnDetalles;
-    }
-
-    public void setBtnDetalles(JButton btnDetalles) {
-        this.btnDetalles = btnDetalles;
-    }
-
-    public JButton getBtnEditar() {
-        return btnEditar;
-    }
-
-    public void setBtnEditar(JButton btnEditar) {
-        this.btnEditar = btnEditar;
-    }
-
-    public JTable getTblAccesosDeRol() {
-        return tblAccesosDeRol;
-    }
-
-    public void setTblAccesosDeRol(JTable tblAccesosDeRol) {
-        this.tblAccesosDeRol = tblAccesosDeRol;
-    }
-
-    public JTextField getTxtBuscar() {
-        return txtBuscar;
-    }
-
-    public void setTxtBuscar(JTextField txtBuscar) {
-        this.txtBuscar = txtBuscar;
-    }
-
-    public JLabel getLblEstado() {
-        return lblEstado;
-    }
-
-    public void setLblEstado(JLabel lblEstado) {
-        this.lblEstado = lblEstado;
+    public JLabel getLblBuscar() {
+        return lblBuscar;
     }
 
     public JLabel getLblResultados() {
         return lblResultados;
     }
 
-    public void setLblResultados(JLabel lblResultados) {
-        this.lblResultados = lblResultados;
+    public JTable getTblAccesosDeRol() {
+        return tblAccesos;
     }
-   
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDetalles;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblBuscar;
-    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblResultados;
-    private javax.swing.JTable tblAccesosDeRol;
+    private javax.swing.JTable tblAccesos;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

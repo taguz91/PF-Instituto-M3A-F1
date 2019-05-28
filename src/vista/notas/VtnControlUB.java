@@ -5,12 +5,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import vista.AbstracView;
 
 /**
  *
  * @author Alejandro
  */
-public class VtnControlUB extends javax.swing.JInternalFrame {
+public class VtnControlUB extends AbstracView {
 
     /**
      * Creates new form VtnControlUB
@@ -51,7 +52,7 @@ public class VtnControlUB extends javax.swing.JInternalFrame {
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
 
-        btnReportesUB.setText("Reportes UB");
+        btnReportesUB.setText("Reportes UBE");
 
         btnBuscar.setText("Buscar");
 
