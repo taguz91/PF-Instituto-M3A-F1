@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dc7a7094-d1eb-480c-a970-19cf262f7cbe">
-	<property name="ireport.zoom" value="2.9230756500000137"/>
-	<property name="ireport.x" value="1824"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6934217901613333"/>
+	<property name="ireport.x" value="311"/>
+	<property name="ireport.y" value="61"/>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -117,7 +117,7 @@ WHERE
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="580" y="72" width="59" height="20" uuid="150082d0-cc06-4b40-a8cb-53c13ca06d74"/>
+				<reportElement x="512" y="72" width="59" height="20" uuid="150082d0-cc06-4b40-a8cb-53c13ca06d74"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -142,7 +142,7 @@ WHERE
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="580" y="52" width="48" height="20" uuid="448bfc89-21f1-402b-9fd9-68fbc0bf3dd6"/>
+				<reportElement x="512" y="52" width="48" height="20" uuid="448bfc89-21f1-402b-9fd9-68fbc0bf3dd6"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -158,6 +158,46 @@ WHERE
 			<line>
 				<reportElement x="0" y="114" width="842" height="1" uuid="82440ff3-3a13-48ef-a750-042bdf582188"/>
 			</line>
+			<textField>
+				<reportElement mode="Transparent" x="229" y="52" width="272" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="acd8723f-9a2c-4ea7-beb5-ace9d0d8875a"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="195" y="72" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3d1bca3a-8a27-431e-af1f-8315419304d7"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="177" y="92" width="63" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="88e7da80-9df7-4358-ad76-85213446d437"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="560" y="52" width="264" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f6a4bc95-3c7d-4890-8867-efbccc6abb9b"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="571" y="72" width="253" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9a8cc355-9ca0-44da-80aa-cbf293857cdd"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
