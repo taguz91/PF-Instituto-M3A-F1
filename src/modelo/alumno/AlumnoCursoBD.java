@@ -455,8 +455,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
 
     }
 
-    public List<AlumnoCursoBD> selectParaAsistencia(String cursoNombre, String nombreMateria, 
-            int idDocente, int idPeriodo, int dia) {
+    public List<AlumnoCursoBD> selectParaAsistencia(String cursoNombre, String nombreMateria,
+            int idDocente, int idPeriodo, String fecha) {
 
         String SELECT = "SELECT\n"
                 + "\"public\".\"AlumnoCurso\".id_alumno,\n"
@@ -473,7 +473,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
                 + "\"public\".\"AlumnoCurso\".id_curso, \n"
                 + "(SELECT COUNT(*) FROM public.\"Asistencia\"  "
-                + " WHERE public.\"Asistencia\".id_almn_curso = public.\"AlumnoCurso\".id_almn_curso)"
+                + " WHERE public.\"Asistencia\".id_almn_curso = public.\"AlumnoCurso\".id_almn_curso "
+                + "AND fecha_asistencia = '" + fecha + "')"
                 + "FROM\n"
                 + "\"public\".\"AlumnoCurso\"\n"
                 + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso\".id_curso = \"public\".\"Cursos\".id_curso\n"

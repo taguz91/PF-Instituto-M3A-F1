@@ -103,12 +103,13 @@ public class AsistenciaBD extends AsistenciaMD {
 
     private boolean ejecutarAsis = false;
 
-    public synchronized boolean editar(int falta) {
+    public synchronized boolean editar(int id_almn_curso, String fecha, int falta) {
         new Thread(() -> {
-            String UPDATE = "UPDATE \"Asistencia\" \n"
-                    + "SET numero_faltas = " + falta + " \n"
-                    + "WHERE \n"
-                    + "\"public\".\"Asistencia\".id_asistencia = " + getId();
+            String UPDATE = " UPDATE public.\"Asistencia\" \n"
+                    + "  SET numero_faltas = " + falta + " \n"
+                    + " WHERE \n"
+                    + " public.\"Asistencia\".id_almn_curso = " + id_almn_curso+" \n"
+                    + " AND public.\"Asistencia\".fecha_asistencia = '" + fecha + "';";
             System.out.println(UPDATE);
             conn = pool.getConnection();
             ejecutarAsis = pool.ejecutar(UPDATE, conn, null) == null;

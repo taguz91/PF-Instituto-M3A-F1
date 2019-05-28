@@ -395,9 +395,11 @@ public class FrmAsistenciaCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+            String fecha = vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2];
 
             //listaAsistencia = asistenciaBD.selectWhere(almnCursoBD);
-            listaNotas = almnCursoBD.selectParaAsistencia(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaNotas = almnCursoBD.selectParaAsistencia(cursoNombre, nombreMateria,
+                    getIdDocente(), getIdPeriodoLectivo(), fecha);
 
             listaNotas.forEach(la -> {
                 Object[] v = {1,
@@ -409,10 +411,6 @@ public class FrmAsistenciaCTR {
                     la.getFaltas()};
                 tabla.addRow(v);
             });
-//            
-//            listaNotas.stream().forEach(obj -> {
-//                funcionCarga.apply(obj, tabla);
-//            });
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
@@ -465,7 +463,15 @@ public class FrmAsistenciaCTR {
                 System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
                 if (faltas > 0) {
-                    asistenciaBD.insertar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+
+                    if (listaNotas.get(i).getFaltas() == 0) {
+                        asistenciaBD.insertar(listaNotas.get(i).getId(),
+                                vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
+                        asistenciaBD.editar(listaNotas.get(i).getId(),vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas );
+                    }
+
                 }
 
                 //asistenciaBD.editar(faltas);
