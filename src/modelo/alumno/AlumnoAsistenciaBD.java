@@ -34,10 +34,10 @@ public class AlumnoAsistenciaBD extends AlumnoAsistenciaMD{
     public AlumnoAsistenciaBD() {
     }
     
-    public List<AlumnoAsistenciaBD> selectWhere (int idDocente, int idperiodoLectivo, String materiaNombre, String cursoNombre) {
-        String SELECT = "SELECT \"Asistencia\".id_asistencia, \"Asistencia\".fecha_asistencia, \"              Asistencia\".numero_faltas\n" +
-        "FROM \"Asistencia\"\n" +
-        "WHERE\n" +
-        "\"Asistencia\".id_almn_curso = 1";
-    
+//    public List<AlumnoAsistenciaBD> selectWhere (int idDocente, int idperiodoLectivo, String materiaNombre, String cursoNombre) {
+//        String SELECT = "SELECT \"Asistencia\".id_asistencia, \"Asistencia\".fecha_asistencia, \"              Asistencia\".numero_faltas\n" +
+//        "FROM \"Asistencia\"\n" +
+//        "WHERE\n" +
+//        "\"Asistencia\".id_almn_curso = 1";
+//    
 }
