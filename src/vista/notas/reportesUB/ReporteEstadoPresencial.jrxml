@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./src/vista/notas/reportesUB/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["vista/notas/reportesUB/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT

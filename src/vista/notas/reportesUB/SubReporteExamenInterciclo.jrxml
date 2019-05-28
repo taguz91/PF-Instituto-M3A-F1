@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="37" pageHeight="842" columnWidth="37" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4485bf81-59b6-4650-849a-899de06bac06">
-	<property name="ireport.zoom" value="6.050000000000026"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="34" pageHeight="842" columnWidth="34" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4485bf81-59b6-4650-849a-899de06bac06">
+	<property name="ireport.zoom" value="5.000000000000024"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_alumno" class="java.lang.Integer">
@@ -50,7 +50,7 @@ WHERE
 	<summary>
 		<band height="10" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="37" height="10" backcolor="#99FF99" uuid="d8caed4d-81b0-42c6-866b-f7354609f55c"/>
+				<reportElement mode="Opaque" x="0" y="0" width="34" height="10" backcolor="#99FF99" uuid="d8caed4d-81b0-42c6-866b-f7354609f55c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

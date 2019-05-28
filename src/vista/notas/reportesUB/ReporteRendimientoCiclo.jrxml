@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="18ff65d3-bb6a-4b34-a7a6-f61a406bf11f">
 	<property name="ireport.zoom" value="1.2100000000000224"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="14"/>
+	<property name="ireport.y" value="27"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./src/vista/notas/reportesPresencial/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["vista/notas/reportesUB/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT

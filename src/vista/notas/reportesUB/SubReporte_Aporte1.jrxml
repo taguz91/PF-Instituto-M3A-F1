@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="30" pageHeight="842" columnWidth="30" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cc295323-42a7-44e0-8c13-b99d698c3152">
-	<property name="ireport.zoom" value="4.59497298635723"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="33" pageHeight="842" columnWidth="33" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cc295323-42a7-44e0-8c13-b99d698c3152">
+	<property name="ireport.zoom" value="4.594972986357231"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="20"/>
+	<property name="ireport.y" value="22"/>
 	<parameter name="id_alumno" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -47,7 +47,7 @@ WHERE
 	<title>
 		<band height="10" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="25" height="10" backcolor="#99CCFF" uuid="93158551-959f-4a04-a052-8b495a1b67d7"/>
+				<reportElement mode="Opaque" x="0" y="0" width="33" height="10" backcolor="#99CCFF" uuid="93158551-959f-4a04-a052-8b495a1b67d7"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
