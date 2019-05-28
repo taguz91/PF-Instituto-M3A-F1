@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d90d4b3c-8ecd-4a6a-8e50-715d66c9f1a2">
-	<property name="ireport.zoom" value="2.8531167061100278"/>
-	<property name="ireport.x" value="697"/>
-	<property name="ireport.y" value="424"/>
+	<property name="ireport.zoom" value="1.610510000000016"/>
+	<property name="ireport.x" value="63"/>
+	<property name="ireport.y" value="22"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>

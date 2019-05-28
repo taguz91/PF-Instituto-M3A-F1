@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="18ff65d3-bb6a-4b34-a7a6-f61a406bf11f">
-	<property name="ireport.zoom" value="1.7715610000000324"/>
-	<property name="ireport.x" value="315"/>
-	<property name="ireport.y" value="111"/>
+	<property name="ireport.zoom" value="1.2100000000000224"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="14"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -135,7 +135,7 @@ WHERE
 				<text><![CDATA[RENDIMIENTO FIN DE CICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="524" y="44" width="64" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="812c993a-6b81-4541-920e-6aae431a2d76"/>
+				<reportElement mode="Transparent" x="524" y="44" width="52" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="812c993a-6b81-4541-920e-6aae431a2d76"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
 					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -221,7 +221,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="588" y="44" width="241" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bdb31243-3d7b-4f1a-9817-6ef22a69a06b"/>
+				<reportElement mode="Transparent" x="576" y="44" width="253" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bdb31243-3d7b-4f1a-9817-6ef22a69a06b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
 					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -229,11 +229,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="700" y="96" width="142" height="20" uuid="8301f32b-2b08-4c56-96e0-e27f848e94b2"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+				<reportElement x="685" y="97" width="157" height="20" uuid="f5c0eaba-c404-4598-b19e-693a004d85d9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
