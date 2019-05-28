@@ -23,6 +23,7 @@ AND c.id_docente = doc.id_docente
 AND doc.id_persona=per.id_persona
 AND c.id_prd_lectivo=pl.id_prd_lectivo
 AND c.id_curso = $P{curso}
+AND almn_curso_activo=true
 order by p.persona_primer_apellido;]]>
 	</queryString>
 	<field name="alumno" class="java.lang.String"/>

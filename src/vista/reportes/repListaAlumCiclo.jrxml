@@ -22,6 +22,7 @@
                c.curso_ciclo = $P{ciclo} AND
                pr.prd_lectivo_nombre = $P{periodo} AND
                ac.id_curso = c.id_curso 
+AND almn_curso_activo=true
                ORDER BY Alumno;]]>
 	</queryString>
 	<field name="curso_ciclo" class="java.lang.Integer"/>
