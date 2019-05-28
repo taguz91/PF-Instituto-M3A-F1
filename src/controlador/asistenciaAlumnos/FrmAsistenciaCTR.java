@@ -2,9 +2,6 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -348,11 +346,7 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-    public static int DiaDeLaSemana() {
-        System.out.println("Estamos en dia de la semana");
-
         int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
-        switch (SemanaSelec) {
             case 1:
                 num_semana = 1;
                 System.out.println("dia " + dia_String + "num_semana " + num_semana);
@@ -450,11 +444,10 @@ public class FrmAsistenciaCTR {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-            listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            //listaAsistencia = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            listaAsistencia = asistenciaBD.selectWhere(getIdDocente(), getIdPeriodoLectivo(), nombreMateria, cursoNombre);
 
-            listaNotas.stream().forEach(obj -> {
-                funcionCarga.apply(obj, tabla);
-            });
+            //listaAsistencia.stream().forEach(agregarFilasTrad());
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
@@ -491,14 +484,19 @@ public class FrmAsistenciaCTR {
     }
 
     // Agregar Filas
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
+    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+        return (obj) -> {
 
             // System.out.println(obj);
-            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(), obj.getNumFalta(),});
-            return null;
+            tablaTrad.addRow(new Object[]{
+                tablaTrad.getDataVector().size() + 1,
+                obj.getAlumno().getIdentificacion(),
+                obj.getAlumno().getPrimerApellido(), 
+                obj.getAlumno().getSegundoApellido(),
+                obj.getAlumno().getPrimerNombre(), 
+                obj.getAlumno().getSegundoNombre(), 
+                obj.getNumFalta()
+            });
         };
     }
 
@@ -541,7 +539,7 @@ public class FrmAsistenciaCTR {
             // .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            cargarTabla(tablaTrad, agregarFilasTrad());
+            //cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
