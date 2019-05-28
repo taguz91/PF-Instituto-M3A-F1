@@ -147,9 +147,11 @@ public class FrmAsistenciaCTR {
             cargarComboSemanas();
             CargarDiasClase();
         });
-    vista.getCmbSemana().addActionListener(e -> {
-      CargarDiasClase();
-                });
+
+        vista.getBtnGuardar().addActionListener(e -> GuardarFaltas());
+        vista.getCmbSemana().addActionListener(e -> {
+            CargarDiasClase();
+        });
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> {
@@ -247,12 +249,12 @@ public class FrmAsistenciaCTR {
     /*Contruimos la tabla dependiendo de los dias que tiene clase */
     public void CargarDiasClase() {
         try {
-            
+
             String inicioSemana = vista.getCmbSemana().getSelectedItem().toString();
             String[] diaArray = inicioSemana.split(" / ", 2);
-            
-            LocalDate ini = LocalDate.parse(diaArray [0]);
-          
+
+            LocalDate ini = LocalDate.parse(diaArray[0]);
+
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
             listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
@@ -261,39 +263,37 @@ public class FrmAsistenciaCTR {
             System.out.println("------> " + getIdPeriodoLectivo());
             System.out.println("------> " + getIdDocente());
 
-
-                vista.getCmbDiaClase().removeAllItems();
+            vista.getCmbDiaClase().removeAllItems();
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
                 SesionClaseMD sesion = listaSesionClase.get(i);
                 dia = sesion.getNumeroDias();
-                
 
                 switch (dia) {
                     case 1:
-                       vista.getCmbDiaClase().addItem("LUNES " + ini);
+                        vista.getCmbDiaClase().addItem("LUNES | " + ini);
                         System.out.println("dia de la semana en la que tiene clases:  " + ini);
-        
+
                         break;
 
                     case 2:
-                       vista.getCmbDiaClase().addItem("MARTES " + ini.plusDays(1));
+                        vista.getCmbDiaClase().addItem("MARTES | " + ini.plusDays(1));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(1));
                         break;
                     case 3:
-                        vista.getCmbDiaClase().addItem("MIERCOLES " + ini.plusDays(2));
+                        vista.getCmbDiaClase().addItem("MIERCOLES | " + ini.plusDays(2));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(2));
                         break;
                     case 4:
-                        vista.getCmbDiaClase().addItem("JUEVES " + ini.plusDays(3) );
+                        vista.getCmbDiaClase().addItem("JUEVES | " + ini.plusDays(3));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(3));
                         break;
                     case 5:
-                       vista.getCmbDiaClase().addItem("VIERNES " + ini.plusDays(4));
+                        vista.getCmbDiaClase().addItem("VIERNES | " + ini.plusDays(4));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
                         break;
                     case 6:
-                       vista.getCmbDiaClase().addItem("SÁBADO " + ini.plusDays(5));
+                        vista.getCmbDiaClase().addItem("SÁBADO | " + ini.plusDays(5));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
                         break;
                     default:
@@ -305,13 +305,12 @@ public class FrmAsistenciaCTR {
 
                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
 
-               
             }
-            
+
             if (jTbl.getColumnModel().getColumn(6).getMaxWidth() == 100) {
-                
+
             }
-            
+
             System.out.println("Numero de columnas ---->" + jTbl.getColumnCount());
         } catch (Exception e) {
             System.out.println("------->  Error Cargar Dias Clase " + e.getMessage());
@@ -325,7 +324,7 @@ public class FrmAsistenciaCTR {
         for (int i = 0; i < jTbl.getRowCount(); i++) {
             jTbl.setValueAt(0, i, 6);
         }
-       
+
     }
 
     // </editor-fold>
@@ -446,13 +445,22 @@ public class FrmAsistenciaCTR {
 
     private void GuardarFaltas() {
         for (int i = 0; i < jTbl.getRowCount(); i++) {
-            jTbl.getValueAt(i, 6);
+            int faltas = (int) jTbl.getValueAt(i, 6);
+            System.out.println("Id alumo curso: " + listaNotas.get(i).getId());
+            System.out.println("Fecha" + vista.getCmbDiaClase().getSelectedItem().toString());
+            System.out.println("Solo fecha: "
+                    + vista.getCmbDiaClase().getSelectedItem().toString().split("|").toString());
+            System.out.println("Tamaño fecha: "
+                    + vista.getCmbDiaClase().getSelectedItem().toString().split("|").length);
             System.out.println("num faltas ----->" + jTbl.getValueAt(i, 6));
+            asistenciaBD.insertar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" ")[0], faltas);
         }
+
+        JOptionPane.showMessageDialog(vista, "Asistencia Guardada Exitosamente");
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
-
     private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 

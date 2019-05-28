@@ -114,4 +114,17 @@ public class AsistenciaBD extends AsistenciaMD {
 
         return ejecutarAsis;
     }
+    
+    public synchronized boolean insertar(int id_alumno, String fecha, int falta ){
+        new Thread (()->{
+            String INSERT = "INSERT INTO \"Asistencia\" (id_almn_curso, fecha_asistencia, numero_faltas)\n" +
+            "VALUES ("+id_alumno+", '"+fecha+"',"+falta+");";
+            System.out.println(INSERT);
+            conn = pool.getConnection();
+            ejecutarAsis = pool.ejecutar(INSERT, conn, null) == null;
+            
+        }).start();
+        return ejecutarAsis;
+        
+    }
 }
