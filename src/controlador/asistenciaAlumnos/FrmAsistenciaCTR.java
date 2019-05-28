@@ -73,8 +73,6 @@ public class FrmAsistenciaCTR {
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
     private List<CalendarioMD> listaSemanasActivas;
-    private List<String> DiasClase = null;
-    private List<TipoDeNotaMD> listaValidaciones;
 
     // TABLA
     private static DefaultTableModel tablaTrad;
@@ -181,6 +179,7 @@ public class FrmAsistenciaCTR {
     private void InitTablas() {
 
         CargarDiasClase();
+        DiaDeLaSemana();
 
     }
 
@@ -305,8 +304,7 @@ public class FrmAsistenciaCTR {
                 }
 
                 listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
-//                DiasClase.stream().forEach(d -> System.out.println("Dias Clase " + d));
-//                DiasClase.stream().forEach(d -> vista.getCmbDiaClase().addItem(d));
+
                
             }
             
@@ -322,42 +320,12 @@ public class FrmAsistenciaCTR {
     }
 
     /*Se valida el dia de la semana*/
-    public static int DiaDeLaSemana() {
+    public static void DiaDeLaSemana() {
         System.out.println("Estamos en dia de la semana");
-
-        int SemanaSelec = vista.getCmbSemana().getSelectedIndex();
-        switch (SemanaSelec) {
-            case 1:
-                num_semana = 1;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-
-            case 2:
-                num_semana = 2;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 3:
-                num_semana = 3;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 4:
-                num_semana = 4;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 5:
-                num_semana = 5;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            case 6:
-                num_semana = 6;
-                System.out.println("dia " + dia_String + "num_semana " + num_semana);
-                break;
-            default:
-                System.out.println(dia_String);
-                break;
-
+        for (int i = 0; i < jTbl.getRowCount(); i++) {
+            jTbl.setValueAt(0, i, 6);
         }
-        return num_semana;
+       
     }
 
     // </editor-fold>
