@@ -175,7 +175,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnReportesUB">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reportes UB"/>
+        <Property name="text" type="java.lang.String" value="Reportes UBE"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
