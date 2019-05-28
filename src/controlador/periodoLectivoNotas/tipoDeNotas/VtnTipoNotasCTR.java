@@ -66,6 +66,7 @@ public class VtnTipoNotasCTR {
         listaTiposNotas = modelo.selectAllWhereEstadoIs(true);
         cargarTabla(listaTiposNotas);
         cargarCmbPeriodos();
+        InitPermisos();
     }
 
     private void InitEventos() {
@@ -205,4 +206,15 @@ public class VtnTipoNotasCTR {
 //                .sorted((item, item2) -> item.getPeriodoLectivo().getCarrera().getNombre().compareToIgnoreCase(item2.getPeriodoLectivo().getCarrera().getNombre()))
 //                .forEach(VtnTipoNotasCTR::agregarFila);
 //    }
-}
+
+    private void InitPermisos() {
+        vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Notas-Tipos-de-Notas-Ingresar");
+       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Notas-Tipos-de-Notas-Actualizar");
+       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Notas-Tipos-de-Notas-Editar");
+       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Notas-Tipos-de-Notas-Eliminar");
+        CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
+                vista.getBtnEditar(), vista.getBtnEliminar());
+    }
+    }
+
+  
