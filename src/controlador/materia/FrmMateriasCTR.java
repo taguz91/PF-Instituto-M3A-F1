@@ -249,6 +249,12 @@ public class FrmMateriasCTR extends DCTR {
         frmMaterias.getBtnGuardar().setText("Guardar");
         frmMaterias.getCbEjeFormacion().setEnabled(false);
         frmMaterias.getBtnGuardar().setEnabled(false);
+        frmMaterias.getTxtObjetivoGeneral().setLineWrap(true);
+        frmMaterias.getTxtObjetivoGeneral().setWrapStyleWord(true);
+        frmMaterias.getTxtObjetivoEspecifico().setLineWrap(true);
+        frmMaterias.getTxtObjetivoEspecifico().setWrapStyleWord(true);
+        frmMaterias.getTxtDescripcionMateria().setLineWrap(true);
+        frmMaterias.getTxtDescripcionMateria().setWrapStyleWord(true); 
     }
 
     public void borrarCampos() {

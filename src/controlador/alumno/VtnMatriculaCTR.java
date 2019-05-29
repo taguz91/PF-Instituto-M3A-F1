@@ -54,7 +54,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      */
     public void iniciar() {
         //Iniciamos la tabla
-        String[] t = {"Periodo", "Cedula", "Alumno", "Fecha",};
+        String[] t = {"Periodo", "Cedula", "Alumno", "Fecha"};
         String[][] d = {};
         iniciarTbl(t, d, vtnMatri.getTblMatricula());
         //Tamaño de columnas 
@@ -68,7 +68,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
         iniciarBuscador();
         ctrPrin.agregarVtn(vtnMatri);
         InitPermisos();
-        
+
     }
 
     /**
@@ -155,6 +155,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
         vtnMatri.getBtnEditar().addActionListener(e -> clickEditar());
         vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
         vtnMatri.getBtnCartaCompromiso().addActionListener(e -> clickCartaCompromiso());
+        vtnMatri.getBtnNumMatricula().addActionListener(e -> clickNumMatricula());
     }
 
     /**
@@ -268,14 +269,44 @@ public class VtnMatriculaCTR extends DVtnCTR {
                     llamaReporteActa();
                     break;
                 case 1:
-                    llamaReporteNumMatricula(2, "SEGUNDA MATRÍCULA");
+                    llamaReporteCartaNumMatricula(2, "SEGUNDA MATRÍCULA");
                     break;
                 case 2:
-                    llamaReporteNumMatricula(3,"TERCERA MATRÍCULA");
+                    llamaReporteCartaNumMatricula(3, "TERCERA MATRÍCULA");
                     break;
             }
         } else {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar una persona antes.");
+        }
+    }
+
+    private void clickNumMatricula() {
+        posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
+        if (posPrd > 0) {
+            int s = JOptionPane.showOptionDialog(vtnMatri,
+                    "Reporte de  numero de matricula\n"
+                    + "Elija el numero de matricula", "Numero de matricula",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Primera Matricula", "Segunda Matricula", "Tercera Matricula",
+                        "Completo", "Cancelar"}, "Completo");
+            switch (s) {
+                case 0:
+                    llamarReporteNumMatricula(1);
+                    break;
+                case 1:
+                    llamarReporteNumMatricula(2);
+                    break;
+                case 2:
+                    llamarReporteNumMatricula(3);
+                    break;
+                case 3:
+                    llamarReporteMatriculados(posPrd);
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un periodo lectivo.");
         }
     }
 
@@ -369,9 +400,8 @@ public class VtnMatriculaCTR extends DVtnCTR {
         }
     }
 
-    private void llamaReporteNumMatricula(int numMatricula,String matricula) {
+    private void llamaReporteCartaNumMatricula(int numMatricula, String matricula) {
         String curso = selecCurso();
-        System.out.println("SELECIONE: " + curso);
         if (curso != null) {
             try {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/cartaNumMatricula.jasper"));
@@ -392,16 +422,46 @@ public class VtnMatriculaCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-       vtnMatri.getBtnIngresar().getAccessibleContext().setAccessibleName("Matricula-Ingresar");
-       vtnMatri.getBtnAnular().getAccessibleContext().setAccessibleName("Matricula-Anular");
-       vtnMatri.getBtnEditar().getAccessibleContext().setAccessibleName("Matricula-Editar");
-       vtnMatri.getBtnCartaCompromiso().getAccessibleContext().setAccessibleName("Matricula-Reporte-Carta");
-       vtnMatri.getBtnHistoria().getAccessibleContext().setAccessibleName("Matricula-Reporte-Historial");
-       vtnMatri.getBtnImprimirFicha().getAccessibleContext().setAccessibleName("Matricula-Imprimir");
-       
+        vtnMatri.getBtnIngresar().getAccessibleContext().setAccessibleName("Matricula-Ingresar");
+        vtnMatri.getBtnAnular().getAccessibleContext().setAccessibleName("Matricula-Anular");
+        vtnMatri.getBtnEditar().getAccessibleContext().setAccessibleName("Matricula-Editar");
+        vtnMatri.getBtnCartaCompromiso().getAccessibleContext().setAccessibleName("Matricula-Reporte-Carta");
+        vtnMatri.getBtnHistoria().getAccessibleContext().setAccessibleName("Matricula-Reporte-Historial");
+        vtnMatri.getBtnImprimirFicha().getAccessibleContext().setAccessibleName("Matricula-Imprimir");
+
         CONS.activarBtns(vtnMatri.getBtnIngresar(), vtnMatri.getBtnAnular(),
                 vtnMatri.getBtnEditar(), vtnMatri.getBtnCartaCompromiso(),
                 vtnMatri.getBtnHistoria(), vtnMatri.getBtnImprimirFicha());
+    }
+
+    private void llamarReporteNumMatricula(int numMatricula) {
+        posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
+        if (posPrd > 0) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repNumMatriculaPeriodo.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("matricula", numMatricula);
+                parametro.put("periodo", periodos.get(posPrd - 1).getId_PerioLectivo());
+                System.out.println("Parametros: " + parametro);
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
+        }
+    }
+
+    private void llamarReporteMatriculados(int posPrd) {
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculasPeriodo.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("periodo", periodos.get(posPrd - 1).getId_PerioLectivo());
+            System.out.println("Parametros: " + parametro);
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
     }
 
 }

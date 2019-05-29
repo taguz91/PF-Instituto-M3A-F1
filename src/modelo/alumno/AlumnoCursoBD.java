@@ -410,6 +410,12 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumno.setPrimerNombre(rst.getString("persona_primer_nombre"));
                 alumno.setSegundoNombre(rst.getString("persona_segundo_nombre"));
 
+                //Agrego esto el Yoni  
+                CursoMD c = new CursoMD();
+                c.setId(rst.getInt("id_curso"));
+
+                alumnoCurso.setCurso(c);
+
                 alumnoCurso.setAlumno(alumno);
 
                 List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
@@ -444,6 +450,100 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
         conn = pool.getConnection();
 
         return pool.ejecutar(UPDATE, conn, null) == null;
+
+    }
+
+    public List<AlumnoCursoBD> selectParaAsistencia(String cursoNombre, String nombreMateria,
+            int idDocente, int idPeriodo, String fecha) {
+
+        String SELECT = "SELECT\n"
+                + "\"public\".\"AlumnoCurso\".id_alumno,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_asistencia,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_estado,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_num_faltas,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_activo,\n"
+                + "\"public\".\"Personas\".persona_identificacion,\n"
+                + "\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
+                + "\"public\".\"Personas\".persona_primer_nombre,\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_nota_final,\n"
+                + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
+                + "\"public\".\"AlumnoCurso\".id_curso, \n"
+                + "(SELECT COUNT(*) FROM public.\"Asistencia\"  "
+                + " WHERE public.\"Asistencia\".id_almn_curso = public.\"AlumnoCurso\".id_almn_curso "
+                + "AND fecha_asistencia = '" + fecha + "')"
+                + "FROM\n"
+                + "\"public\".\"AlumnoCurso\"\n"
+                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"AlumnoCurso\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"public\".\"Jornadas\" ON \"public\".\"Cursos\".id_jornada = \"public\".\"Jornadas\".id_jornada\n"
+                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
+                + "INNER JOIN \"public\".\"Alumnos\" ON \"public\".\"AlumnoCurso\".id_alumno = \"public\".\"Alumnos\".id_alumno\n"
+                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Alumnos\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "WHERE\n"
+                + "\"public\".\"Cursos\".id_docente = ? AND\n"
+                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = ? AND\n"
+                + "\"public\".\"Cursos\".curso_nombre = ? AND\n"
+                + "\"public\".\"Materias\".materia_nombre = ?\n"
+                //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"
+                + "ORDER BY\n"
+                + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
+
+        System.out.println(SELECT);
+
+        List<AlumnoCursoBD> lista = new ArrayList();
+        Map<Integer, Object> parametros = new HashMap<>();
+        parametros.put(1, idDocente);
+        parametros.put(2, idPeriodo);
+        parametros.put(3, cursoNombre);
+        parametros.put(4, nombreMateria);
+
+        try {
+            conn = pool.getConnection();
+            rst = pool.ejecutarQuery(SELECT, conn, parametros);
+            NotasBD notasBD = new NotasBD();
+            while (rst.next()) {
+                AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
+
+                alumnoCurso.setId(rst.getInt("id_almn_curso"));
+                alumnoCurso.setAsistencia(rst.getString("almn_curso_asistencia"));
+                alumnoCurso.setEstado(rst.getString("almn_curso_estado"));
+                alumnoCurso.setNumFalta(rst.getInt("almn_curso_num_faltas"));
+                alumnoCurso.setNotaFinal(rst.getDouble("almn_curso_nota_final"));
+
+                AlumnoMD alumno = new AlumnoMD();
+                alumno.setId_Alumno(rst.getInt("id_alumno"));
+                alumno.setIdentificacion(rst.getString("persona_identificacion"));
+                alumno.setPrimerApellido(rst.getString("persona_primer_apellido"));
+                alumno.setSegundoApellido(rst.getString("persona_segundo_apellido"));
+                alumno.setPrimerNombre(rst.getString("persona_primer_nombre"));
+                alumno.setSegundoNombre(rst.getString("persona_segundo_nombre"));
+
+                //Agrego esto el Yoni  
+                CursoMD c = new CursoMD();
+                c.setId(rst.getInt("id_curso"));
+
+                alumnoCurso.setCurso(c);
+
+                alumnoCurso.setAlumno(alumno);
+
+                alumnoCurso.setFaltas(rst.getInt(14));
+
+                List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
+
+                alumnoCurso.setNotas(notas);
+
+                lista.add(alumnoCurso);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            pool.closeStmt().close(rst).close(conn);
+        }
+        return lista;
 
     }
 

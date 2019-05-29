@@ -2,8 +2,6 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -13,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.asistencia.AsistenciaBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -26,11 +26,12 @@ import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
+import modelo.notas.calendario.CalendarioBD;
+import modelo.notas.calendario.CalendarioMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.asistenciaAlumnos.FrmAsistencia;
@@ -48,32 +49,24 @@ public class FrmAsistenciaCTR {
     private final RolBD rolSeleccionado;
 
     // CALCULOS SEMANAS
-    private List<PeriodoLectivoMD> listaPrdSemana;
-    private static LocalDate IniSemana;
-    private static LocalDate FinSemana;
-    private static LocalDate fechaInicial;
     private static int semanas;
-    private static ArrayList<String> lista_fecha = new ArrayList<>();
-
+    private static ArrayList<Integer> listadias = new ArrayList<>();
+    private static int num_horas;
     private static String dia_String;
     private static int dia;
-    private static int num_dias;
-    private static String Fecha;
 
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
     private List<AlumnoCursoBD> listaNotas;
+    private List<AsistenciaBD> listaHoras;
     private List<MateriaMD> listaMaterias;
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
-    private List<TipoDeNotaMD> listaValidaciones;
-    private VtnPrincipalCTR ctrPrin;
-
-    private PeriodoLectivoBD prd = new PeriodoLectivoBD();
+    private List<CalendarioMD> listaSemanasActivas;
 
     // TABLA
-    private DefaultTableModel tablaTrad;
+    private static DefaultTableModel tablaTrad;
 
     // JTables
     private static JTable jTbl;
@@ -87,7 +80,9 @@ public class FrmAsistenciaCTR {
     private final MateriaBD materiaBD;
     private final DocenteBD docenteBD;
     private final CarreraBD carreraBD;
+    private final CalendarioBD calendarioBD;
     private final SesionClaseBD sesionClaseBD;
+    private final AsistenciaBD asistenciaBD;
 
     {
         periodoBD = new PeriodoLectivoBD();
@@ -97,6 +92,8 @@ public class FrmAsistenciaCTR {
         docenteBD = new DocenteBD();
         sesionClaseBD = new SesionClaseBD();
         carreraBD = new CarreraBD();
+        calendarioBD = new CalendarioBD();
+        asistenciaBD = new AsistenciaBD();
     }
 
     public FrmAsistenciaCTR(VtnPrincipal desktop, FrmAsistencia vista, UsuarioBD usuario, RolBD rolSeleccionado) {
@@ -143,6 +140,10 @@ public class FrmAsistenciaCTR {
             CargarDiasClase();
         });
 
+        vista.getBtnGuardar().addActionListener(e -> GuardarFaltas());
+        vista.getCmbSemana().addActionListener(e -> {
+            CargarDiasClase();
+        });
         vista.getCmbPeriodoLectivoAsis().addItemListener(e -> setLblCarrera());
 
         vista.getCmbCicloAsis().addActionListener(e -> {
@@ -172,7 +173,6 @@ public class FrmAsistenciaCTR {
     private void InitTablas() {
 
         CargarDiasClase();
-
     }
 
     // </editor-fold>
@@ -228,8 +228,6 @@ public class FrmAsistenciaCTR {
 
             String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
 
-            vista.getLblHorasAsis().setText(listaMaterias.stream().filter(item -> item.getNombre().equals(materia))
-                    .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1) + "");
         } catch (NullPointerException e) {
             vista.getCmbAsignaturaAsis().removeAllItems();
         }
@@ -240,177 +238,92 @@ public class FrmAsistenciaCTR {
     // <editor-fold defaultstate="collapsed" desc="METODOS DE APOYO">
     /*Contruimos la tabla dependiendo de los dias que tiene clase */
     public void CargarDiasClase() {
-        jTbl.setModel(tablaTrad);
-        new Thread(() -> {
+        try {
+
+            String inicioSemana = vista.getCmbSemana().getSelectedItem().toString();
+            String[] diaArray = inicioSemana.split(" / ", 2);
+
+            LocalDate ini = LocalDate.parse(diaArray[0]);
 
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
             listaSesionClase = sesionClaseBD.cargarDiasClase(cursoNombre, getIdPeriodoLectivo(), getIdDocente(), nombreMateria);
+            System.out.println("------> " + cursoNombre);
+            System.out.println("------> " + nombreMateria);
+            System.out.println("------> " + getIdPeriodoLectivo());
+            System.out.println("------> " + getIdDocente());
 
-            System.out.println("-----> tamaño de sesion en clase  " + listaSesionClase.size());
+            vista.getCmbDiaClase().removeAllItems();
             for (int i = 0; i < listaSesionClase.size(); i++) {
 
-                SesionClaseMD sesion = listaSesionClase.get(0);
+                SesionClaseMD sesion = listaSesionClase.get(i);
                 dia = sesion.getNumeroDias();
 
-                System.out.println(" En el for Num de Dias  " + dia);
+                switch (dia) {
+                    case 1:
+                        vista.getCmbDiaClase().addItem("LUNES | " + ini);
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini);
+
+                        break;
+                    case 2:
+                        vista.getCmbDiaClase().addItem("MARTES | " + ini.plusDays(1));
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(1));
+                        break;
+                    case 3:
+                        vista.getCmbDiaClase().addItem("MIERCOLES | " + ini.plusDays(2));
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(2));
+                        break;
+                    case 4:
+                        vista.getCmbDiaClase().addItem("JUEVES | " + ini.plusDays(3));
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(3));
+                        break;
+                    case 5:
+                        vista.getCmbDiaClase().addItem("VIERNES | " + ini.plusDays(4));
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
+                        break;
+                    case 6:
+                        vista.getCmbDiaClase().addItem("SÁBADO | " + ini.plusDays(5));
+                        System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
+                        break;
+                    default:
+                        dia_String = "Dia no Asignado";
+                        System.out.println(dia_String);
+                        break;
+
+                }
+
+                listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
 
             }
-            ConstruirTabla(tablaTrad, dia);
 
-        }).start();
-
-    }
-
-    public static void ConstruirTabla(DefaultTableModel modelo, int dia_valor) {
-        try {
-            List<String> items = new ArrayList<>();
-            items.add("1");
-            items.add("2");
-            modelo = (DefaultTableModel) vista.getTblAsistencia().getModel();
-            num_dias = listaSesionClase.size();
-            System.out.println("-----> Size de lista sesion clase " + num_dias);
-            for (int i = 0; i < num_dias; i++) {
-
-                modelo.addColumn(DiaDeLaSemana(dia_valor));
-
-            }
-
-            vista.getTblAsistencia().setModel(modelo);
-
-            switch (num_dias) {
-                case 1:
-                    jTbl.getColumnModel().getColumn(6).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 1");
-                    break;
-                case 2:
-                    jTbl.getColumnModel().getColumn(7).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 2");
-                    break;
-                case 3:
-                    jTbl.getColumnModel().getColumn(8).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 3");
-                    break;
-                case 4:
-                    jTbl.getColumnModel().getColumn(9).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 4");
-                    break;
-                case 5:
-                    jTbl.getColumnModel().getColumn(10).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 5");
-                    break;
-                case 6:
-                    jTbl.getColumnModel().getColumn(11).setCellEditor(new ComboBoxCellEditor(true, items));
-                    System.out.println("case 6");
-                    break;
-                default:
-                    System.out.println("case DEFAULT");
-                    break;
-            }
-
-        } catch (NullPointerException e) {
-
-            System.out.println("Ocurrio un problema");
+            System.out.println("Numero de columnas ---->" + jTbl.getColumnCount());
+        } catch (Exception e) {
+            System.out.println("------->  Error Cargar Dias Clase " + e.getMessage());
         }
 
     }
 
     /*Se valida el dia de la semana*/
-    public static String DiaDeLaSemana(int diaValue) {
-        System.out.println("Estamos en dia de la semana");
-        switch (diaValue) {
-            case 1:
-                dia_String = "LUNES";
-                System.out.println(dia_String);
-                break;
-            case 2:
-                dia_String = "MARTES";
-                System.out.println(dia_String);
-                break;
-            case 3:
-                dia_String = "MIERCOLES";
-                System.out.println(dia_String);
-                break;
-            case 4:
-                dia_String = "JUEVES";
-                System.out.println(dia_String);
-                break;
-            case 5:
-                dia_String = "VIERNES";
-                System.out.println(dia_String);
-                break;
-            case 6:
-                dia_String = "SABADO";
-                System.out.println(dia_String);
-
-                break;
-            default:
-                dia_String = "Dia no Asignado";
-                System.out.println(dia_String);
-                break;
-
-        }
-        return dia_String;
-    }
-
-    private static void CalculoSemana(int NumeroDia) {
-        switch (NumeroDia) {
-            case 1:
-                IniSemana = fechaInicial.minusDays(0);
-                FinSemana = fechaInicial.plusDays(6);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 2:
-                IniSemana = fechaInicial.minusDays(1);
-                FinSemana = fechaInicial.plusDays(5);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 3:
-                IniSemana = fechaInicial.minusDays(2);
-                FinSemana = fechaInicial.plusDays(4);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 4:
-                IniSemana = fechaInicial.minusDays(3);
-                FinSemana = fechaInicial.plusDays(3);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 5:
-                IniSemana = fechaInicial.minusDays(4);
-                FinSemana = fechaInicial.plusDays(2);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 6:
-                IniSemana = fechaInicial.minusDays(5);
-                FinSemana = fechaInicial.plusDays(1);
-
-                CalculoSemanaPorSemana();
-                break;
-            case 7:
-                IniSemana = fechaInicial.minusDays(6);
-                FinSemana = fechaInicial.plusDays(0);
-
-                CalculoSemanaPorSemana();
-
-                break;
-
+    public static void DiaDeLaSemana() {
+        for (int i = 0; i < jTbl.getRowCount(); i++) {
+            jTbl.setValueAt(0, i, 6);
         }
 
     }
 
-    public static void CalculoSemanaPorSemana() {
-        lista_fecha = new ArrayList<>();
-        for (int i = 1; i <= semanas; i++) {
+    public boolean Validar() {
+        boolean correcto = false;
+        int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
+        int numero = asistenciaBD.numHorasPorDia(listaNotas.get(0).getCurso().getId(), d);
+        for (int i = 0; i < jTbl.getRowCount(); i++) {
 
-            Fecha = "Semana " + i + "    " + IniSemana.plusWeeks(i).getDayOfMonth() + " de  " + IniSemana.plusWeeks(i).getMonth() + "  -  " + FinSemana.plusWeeks(i).getDayOfMonth() + " de " + FinSemana.plusWeeks(i).getMonth();
-            lista_fecha.add(Fecha);
+            int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
+            if (faltas > numero) {
+                correcto = true;
+                break;
+            }
         }
-        
+        return correcto;
     }
 
     // </editor-fold>
@@ -474,41 +387,52 @@ public class FrmAsistenciaCTR {
 
     private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
         new Thread(() -> {
+            int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
+
             cargarTabla = false;
             String cursoNombre = vista.getCmbCicloAsis().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-            listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            String fecha = vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2];
 
-            listaNotas.stream().forEach(obj -> {
-                funcionCarga.apply(obj, tabla);
+            //listaAsistencia = asistenciaBD.selectWhere(almnCursoBD);
+            listaNotas = almnCursoBD.selectParaAsistencia(cursoNombre, nombreMateria,
+                    getIdDocente(), getIdPeriodoLectivo(), fecha);
+
+            listaNotas.forEach(la -> {
+                Object[] v = {1,
+                    la.getAlumno().getIdentificacion(),
+                    la.getAlumno().getPrimerApellido(),
+                    la.getAlumno().getSegundoApellido(),
+                    la.getAlumno().getPrimerNombre(),
+                    la.getAlumno().getSegundoNombre(),
+                    la.getFaltas()};
+                tabla.addRow(v);
             });
 
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
+            //DiaDeLaSemana();
         }).start();
     }
 
     private void cargarComboSemanas() {
 
-        //prd.buscarFechaInicioPrd(getIdPeriodoLectivo());
         try {
             System.out.println("-------------------------------------->  metodo carga de semanas");
-            fechaInicial = periodoBD.buscarFechaInicioPrd(getIdPeriodoLectivo());
-            System.out.println("------------>   "+ fechaInicial);
+            listaSemanasActivas = calendarioBD.cargarSemanas(getIdPeriodoLectivo());
             vista.getCmbSemana().removeAllItems();
             listaNumSemanas = carreraBD.cargarNumdeSemanas(getIdPeriodoLectivo());
-            System.out.println("------->" + listaNumSemanas.size());
 
-            if (listaNumSemanas.size() > 0) {
+            if (listaNumSemanas.size() > 0 && listaSemanasActivas.size() > 0) {
                 CarreraMD carrera = listaNumSemanas.get(0);
+                CalendarioMD calen = listaSemanasActivas.get(0);
+
+                calen.getSemanasActivas();
                 semanas = carrera.getNumSemanas();
                 System.out.println("Semanas - - ---------->" + semanas);
-                CalculoSemana(fechaInicial.getDayOfWeek().getValue());
-                vista.getCmbSemana().removeAllItems();
-                lista_fecha.forEach(t -> vista.getCmbSemana().addItem(t));
+                listaSemanasActivas.forEach(t -> vista.getCmbSemana().addItem(t.getSemanasActivas()));
             }
 
-            lista_fecha.forEach(t -> System.out.println(t));
         } catch (Exception e) {
             System.out.println("%%%%%%%%%%%%%%%%%%%%");
             System.out.println("Murio: " + e.getMessage());
@@ -516,20 +440,51 @@ public class FrmAsistenciaCTR {
         }
     }
 
-    // Agregar Filas
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
+    // Agregar Filas 
+    // agregar a la tabla asistencia
+    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+        return (obj) -> {
 
             // System.out.println(obj);
-            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(), obj.getNumFalta(),});
-            return null;
+                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
         };
     }
+
+    private void GuardarFaltas() {
+        if (Validar()) {
+            for (int i = 0; i < jTbl.getRowCount(); i++) {
+                String fecha_insert = vista.getCmbDiaClase().getSelectedItem().toString();
+                String[] diaArray = fecha_insert.split(" | ");
+                System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
+                int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
+                if (faltas > 0) {
+
+                    if (listaNotas.get(i).getFaltas() == 0) {
+                        asistenciaBD.insertar(listaNotas.get(i).getId(),
+                                vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
+                        asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                    }
+
+                }
+
+                //asistenciaBD.editar(faltas);
+            }
+
+            JOptionPane.showMessageDialog(vista, "Los datos se han guardado exitosamente");
+        } else {
+            JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
+                    + " Verifique el numero de Faltas insertado"
+                    + "\n");
+        }
+
+    }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
-
     private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 
@@ -558,9 +513,10 @@ public class FrmAsistenciaCTR {
             // // String modalidad = listaPeriodos.stream()
             // .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
             // .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
+
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            cargarTabla(tablaTrad, agregarFilasTrad());
+            //cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");

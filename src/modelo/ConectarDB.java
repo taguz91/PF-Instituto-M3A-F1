@@ -186,11 +186,24 @@ public class ConectarDB {
                 return ct;
             }
         } catch (SQLException | NullPointerException ex) {
-            System.out.println("No pudimos comprobar el estado de la conexion." + ex.getMessage());
+            System.out.println("No pudimos comprobar el estado de la conexion: " + ex.getMessage());
             ctrCt.matarHilo();
             return null;
         }
+    }
 
+    public Connection devolverConexion() {
+        try {
+            System.out.println("La conexion fue cerrada no podemos retornarla. Debemos abrir una nueva");
+            ctrCt = new ConexionesCTR(ct);
+            ctrCt.iniciar("Get Connection Clase: ConectarBD");
+            ctrCt.agregarSegundos(60);
+            ct = DriverManager.getConnection(url, user, pass);
+            return ct;
+        } catch (SQLException e) {
+            System.out.println("No pudimos devolver la conexion: " + e.getMessage());
+            return null;
+        }
     }
 
     /*
@@ -217,7 +230,6 @@ public class ConectarDB {
             }
         }).start();
     }*/
-
     //Mostramos el reporte con el pool
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         new Thread(() -> {

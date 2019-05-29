@@ -100,7 +100,7 @@ public class CONS {
     }
 
     public static String getDia(int dia) {
-        String d = "";
+        String d;
         switch (dia) {
             case 1:
                 d = "Lunes";
@@ -125,6 +125,38 @@ public class CONS {
                 break;
             default:
                 d = "";
+                break;
+        }
+        return d;
+
+    }
+    
+    public static int getDia(String dia) {
+        int d;
+        switch (dia) {
+            case "Lunes":
+                d = 1;
+                break;
+            case "Martes":
+                d = 2;
+                break;
+            case "Miercoles":
+                d = 3;
+                break;
+            case "Jueves":
+                d = 4;
+                break;
+            case "Viernes":
+                d = 5;
+                break;
+            case "Sabado":
+                d = 6;
+                break;
+            case "Domingo":
+                d = 7;
+                break;
+            default:
+                d = 0;
                 break;
         }
         return d;

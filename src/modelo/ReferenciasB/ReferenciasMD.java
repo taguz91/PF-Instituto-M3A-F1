@@ -16,12 +16,18 @@ public class ReferenciasMD {
     private String autor2;
     private String autor3;
     private boolean existe_en_biblioteca;
+    private String titulo;
+    private String año;
+    private String editor;
+    private String ciudad;
+    private String autor1;
 
     public ReferenciasMD() {
     }
 
     public ReferenciasMD(int id_referencia, String codigo_referencia, String descripcion_referencia, String tipo_referencia, boolean existe_en_biblioteca, String observaciones,
-            String codigo_ibsn, String numero_de_paginas, String codigo_koha, String codigo_dewey, String area_referencias,String autor2,String autor3) {
+            String codigo_ibsn, String numero_de_paginas, String codigo_koha, String codigo_dewey, String area_referencias,String autor2,String autor3
+            ,String titulo, String autor1, String año, String editor,String ciudad) {
         this.id_referencia = id_referencia;
         this.codigo_referencia = codigo_referencia;
         this.descripcion_referencia = descripcion_referencia;
@@ -35,6 +41,50 @@ public class ReferenciasMD {
         this.area_referencias=area_referencias;
         this.autor2=autor2;
         this.autor3=autor3;
+        this.titulo=titulo;
+        this.año=año;
+        this.editor=editor;
+        this.ciudad=ciudad;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAño() {
+        return año;
+    }
+
+    public void setAño(String año) {
+        this.año = año;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getAutor1() {
+        return autor1;
+    }
+
+    public void setAutor1(String autor1) {
+        this.autor1 = autor1;
     }
 
     public String getAutor2() {

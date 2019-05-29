@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
@@ -60,7 +61,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
               System.out.println(st);
               st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Falló al guardar");
         }
         return true;
     }
@@ -146,7 +147,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             System.out.println(st);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Falló al eliminar antes de guardar");
         }
        
    }

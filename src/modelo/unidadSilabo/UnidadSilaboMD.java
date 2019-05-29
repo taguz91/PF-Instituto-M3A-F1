@@ -5,6 +5,7 @@
  */
 package modelo.unidadSilabo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import modelo.evaluacionSilabo.EvaluacionSilabo;
@@ -14,7 +15,7 @@ import modelo.silabo.SilaboMD;
  *
  * @author Andres Ullauri
  */
-public class UnidadSilaboMD {
+public class UnidadSilaboMD implements Serializable {
 
     private Integer idUnidad;
 
@@ -41,9 +42,12 @@ public class UnidadSilaboMD {
     private List<EvaluacionSilabo> evaluacionSilaboList;
 
     private SilaboMD idSilabo;
+    
+    private boolean bandera;
 
     public UnidadSilaboMD() {
         this.idSilabo=new SilaboMD();
+        this.bandera=false;
     }
 
     public UnidadSilaboMD( int numeroUnidad, String tituloUnidad, LocalDate fechaInicioUnidad, LocalDate fechaFinUnidad, String objetivoEspecificoUnidad, String resultadosAprendizajeUnidad, String contenidosUnidad, int horasDocenciaUnidad, int horasPracticaUnidad, int horasAutonomoUnidad) {
@@ -58,8 +62,18 @@ public class UnidadSilaboMD {
         this.horasDocenciaUnidad = horasDocenciaUnidad;
         this.horasPracticaUnidad = horasPracticaUnidad;
         this.horasAutonomoUnidad = horasAutonomoUnidad;
-
+        this.bandera=false;
     }
+
+    public boolean isBandera() {
+        return bandera;
+    }
+
+    public void setBandera(boolean bandera) {
+        this.bandera = bandera;
+    }
+    
+    
 
     public Integer getIdUnidad() {
         return idUnidad;

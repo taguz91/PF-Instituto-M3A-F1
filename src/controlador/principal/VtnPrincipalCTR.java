@@ -569,6 +569,7 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
+        JOptionPane.showMessageDialog(vtnPrin, "¡¡Sube de Nivel!!...Actualiza tu cuenta a PREMIUM");
         FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {
@@ -582,7 +583,7 @@ public class VtnPrincipalCTR {
 
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario, vtnPrin, conexion);
+        ControladorCRUD c = new ControladorCRUD(usuario,rolSeleccionado, vtnPrin, conexion);
 
         c.iniciarControlador();
 
