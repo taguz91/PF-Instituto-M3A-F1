@@ -24,6 +24,7 @@ public class AlumnoCursoMD {
     private String estado;
     private int numFalta;
     private int totalHoras;
+    private int faltas;
 
     private List<NotasBD> notas;
 
@@ -142,6 +143,14 @@ public class AlumnoCursoMD {
         this.notas = notas;
     }
 
+    public int getFaltas() {
+        return faltas;
+    }
+
+    public void setFaltas(int faltas) {
+        this.faltas = faltas;
+    }
+    
     @Override
     public String toString() {
         return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", nota1Parcial=" + nota1Parcial + ", notaExamenInter=" + notaExamenInter + ", nota2Parcial=" + nota2Parcial + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenSupletorio=" + notaExamenSupletorio + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + ", totalHoras=" + totalHoras + ", notas=" + notas + '}';

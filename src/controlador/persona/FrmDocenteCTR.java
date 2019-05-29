@@ -391,7 +391,7 @@ public class FrmDocenteCTR extends DCTR {
         codigo = (frmDocente.getTxtIdentificacion().getText());
         docenteCategoria = Integer.parseInt(frmDocente.getSpnCategoria().getValue().toString());
         docenteTipoTiempo = frmDocente.getCmbTipoTiempo().getSelectedItem().toString();
-        System.out.println("docente tipo timepo guardar docente " + docenteTipoTiempo);
+        System.out.println("docente tipo tiempo guardar docente " + docenteTipoTiempo);
         if (frmDocente.getCbxDocenteCapacitador().isSelected()) {
             docenteCapacitador = true;
         } else {
@@ -490,7 +490,7 @@ public class FrmDocenteCTR extends DCTR {
         frmDocente.getTxtIdentificacion().setText(doc.getCodigo());
         frmDocente.getSpnCategoria().setValue(doc.getDocenteCategoria());
         frmDocente.getCmbTipoTiempo().setSelectedItem(doc.getDocenteTipoTiempo());
-        System.out.println("docente tipo timepo guardar docente " + doc.getDocenteTipoTiempo());
+        System.out.println("docente tipo tiempo guardar docente " + doc.getDocenteTipoTiempo());
         frmDocente.getCbxDocenteCapacitador().setSelected(doc.isDocenteCapacitador());
         frmDocente.getCbxOtroTrabajo().setSelected(doc.isDocenteOtroTrabajo());
         frmDocente.getTxtTituloDocente().setText(doc.getTituloDocente());

@@ -1541,12 +1541,20 @@ public class ControladorSilaboU {
     }
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
-
+        System.out.println("ANTESSS ");
+        evaluacionesSilabo.forEach(es -> {
+            System.out.println(es.getInstrumento());
+        });
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
+        System.out.println("DESPUESSSS ");
+        evaluacionesSilabo.forEach(es -> {
+            System.out.println(es.getInstrumento());
+        });
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
         gestion.getBtnGuardar().setEnabled(true);
+        
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
@@ -1650,6 +1658,7 @@ public class ControladorSilaboU {
 
                 //if (aux.equals(silabo.getIdSilabo())) {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENRTRAMOS "+umd.getNumeroUnidad());
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                     esd.insertar(evd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
                 }

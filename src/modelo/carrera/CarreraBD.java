@@ -336,7 +336,4 @@ public class CarreraBD extends CarreraMD {
         }
         return semanas;
     }
-    
-    
-
 }
