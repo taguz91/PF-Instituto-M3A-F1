@@ -327,10 +327,10 @@ public class ControladorCRUDPlanClase {
     }
 
     private void InitPermisos() {
-        fCrud_plan_Clases.getBtnNuevoPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
-        fCrud_plan_Clases.getBtnEditarPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
-        fCrud_plan_Clases.getBtnEliminarPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
-        fCrud_plan_Clases.getBtnImplimirPlan().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        fCrud_plan_Clases.getBtnNuevoPLC().getAccessibleContext().setAccessibleName("Plan-De-Clase-Nuevo");
+        fCrud_plan_Clases.getBtnEditarPLC().getAccessibleContext().setAccessibleName("Plan-De-Clase-Editar");
+        fCrud_plan_Clases.getBtnEliminarPLC().getAccessibleContext().setAccessibleName("Plan-De-Clase-Eliminar");
+        fCrud_plan_Clases.getBtnImplimirPlan().getAccessibleContext().setAccessibleName("Plan-De-Clase-Imprimir");
         
         CONS.activarBtns(fCrud_plan_Clases.getBtnNuevoPLC(), fCrud_plan_Clases.getBtnEditarPLC(), 
                 fCrud_plan_Clases.getBtnEliminarPLC(), fCrud_plan_Clases.getBtnImplimirPlan());
