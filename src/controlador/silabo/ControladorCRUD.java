@@ -6,14 +6,13 @@
 package controlador.silabo;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
+import modelo.CONS;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -148,6 +147,7 @@ public class ControladorCRUD {
         cargarComboCarreras();
 
         cargarSilabosDocente();
+        InitPermisos();
 
     }
 
@@ -254,6 +254,19 @@ public class ControladorCRUD {
                
         }
 
+    }
+
+    private void InitPermisos() {
+           crud.getBtnNuevo().getAccessibleContext().setAccessibleName("Personas-Consular");
+        crud.getBtnEditar().getAccessibleContext().setAccessibleName("Docente-Consultar");
+        crud.getBtnEliminar().getAccessibleContext().setAccessibleName("Carreras-Consultar");
+        crud.getBtnImprimir().getAccessibleContext().setAccessibleName("Cursos-Consultar");
+       
+        
+        CONS.activarBtns(crud.getBtnNuevo(), crud.getBtnEditar(), 
+                crud.getBtnEliminar(), crud.getBtnImprimir());
+                
+    
     }
 
 }
