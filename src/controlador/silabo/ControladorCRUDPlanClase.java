@@ -5,7 +5,6 @@
  */
 package controlador.silabo;
 
-import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.ConexionBD;
 import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;
@@ -27,7 +27,6 @@ import modelo.curso.CursoMD;
 import modelo.jornada.JornadaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.CarrerasBDS;
-import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
 import modelo.silabo.PeriodoLectivoBDS;
 import modelo.silabo.SilaboBD;
@@ -125,7 +124,10 @@ public class ControladorCRUDPlanClase {
         });
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
         fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
+        InitPermisos();
     }
+    
+    
 
     private void cargarPlanesDeClaseProfesor() {
         try {
@@ -319,5 +321,17 @@ public class ControladorCRUDPlanClase {
 
         }
 
+    }
+
+    private void InitPermisos() {
+        fCrud_plan_Clases.getBtnNuevoPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        fCrud_plan_Clases.getBtnEditarPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        fCrud_plan_Clases.getBtnEliminarPLC().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        fCrud_plan_Clases.getBtnImplimirPlan().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        
+        CONS.activarBtns(fCrud_plan_Clases.getBtnNuevoPLC(), fCrud_plan_Clases.getBtnEditarPLC(), 
+                fCrud_plan_Clases.getBtnEliminarPLC(), fCrud_plan_Clases.getBtnImplimirPlan());
+        
+        
     }
 }
