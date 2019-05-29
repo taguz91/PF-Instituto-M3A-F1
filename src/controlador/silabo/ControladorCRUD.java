@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ import modelo.silabo.PeriodoLectivoBDS;
 
 import modelo.silabo.SilaboMD;
 import modelo.silabo.SilaboBD;
+import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 
@@ -36,22 +38,27 @@ public class ControladorCRUD {
     private SilaboBD silabo;
 
     private final UsuarioBD usuario;
+     
+    
 
+    
     private frmSilabos crud;
 
     //private frmGestionSilabo gestion;
     //private frmConfiguracionSilabo configuracion;
     private ConexionBD conexion;
+    
+    private RolBD rol;
 
     private final VtnPrincipal principal;
 
     private List<SilaboMD> silabosDocente;
 
-    public ControladorCRUD(UsuarioBD usuario, VtnPrincipal principal, ConexionBD conexion) {
+    public ControladorCRUD(UsuarioBD usuario, RolBD rol, VtnPrincipal principal, ConexionBD conexion) {
         this.usuario = usuario;
         this.principal = principal;
         this.conexion = conexion;
-
+        this.rol=rol;
     }
 
     public void iniciarControlador() {
@@ -70,6 +77,15 @@ public class ControladorCRUD {
                 (principal.getDpnlPrincipal().getSize().height - crud.getSize().height) / 2);
 
         opcionesImpresion(false);
+        
+        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")){
+            System.out.println("?????????????? Funciona como cordinador");
+        }else{
+            
+            System.out.println("?????????????? Funciona como docente");
+        }
+         
+        
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
 

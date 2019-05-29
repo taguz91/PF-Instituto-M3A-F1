@@ -17,7 +17,7 @@ import modelo.tipoDeNota.TipoDeNotaMD;
  */
 public class NotasBD extends NotasMD {
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rs;
 
@@ -69,60 +69,6 @@ public class NotasBD extends NotasMD {
             pool.closeStmt().close(rs).close(conn);
         }
 
-//
-//        if (lista.isEmpty()) {
-//            String SELECT_COMPROBACION = "SELECT\n"
-//                    + "\"public\".\"Cursos\".id_curso,\n"
-//                    + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-//                    + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
-//                    + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
-//                    + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
-//                    + "\"public\".\"Carreras\".carrera_modalidad,\n"
-//                    + "\"public\".\"Cursos\".id_curso,\n"
-//                    + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-//                    + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
-//                    + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
-//                    + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
-//                    + "\"public\".\"Carreras\".carrera_modalidad\n"
-//                    + "FROM\n"
-//                    + "\"public\".\"Cursos\"\n"
-//                    + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-//                    + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-//                    + "INNER JOIN \"public\".\"AlumnoCurso\" ON \"public\".\"AlumnoCurso\".id_curso = \"public\".\"Cursos\".id_curso\n"
-//                    + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
-//                    + "WHERE\n"
-//                    + "\"AlumnoCurso\".id_almn_curso = " + alumnnoCurso.getId() + " AND\n"
-//                    + "\"TipoDeNota\".tipo_nota_nombre <> 'NOTA FINAL'";
-//            ResultSet info = ResourceManager.Query(SELECT_COMPROBACION);
-//
-//            //System.out.println(SELECT_COMPROBACION);
-//
-//            try {
-//
-//                while (info.next()) {
-//                    String modalidad = info.getString("carrera_modalidad");
-//
-//                    if (modalidad.equalsIgnoreCase("PRESENCIAL")) {
-//
-//                        int id_tipo_nota = info.getInt("id_tipo_nota");
-//
-//                        String INSERT_NOTAS = "INSERT INTO \"Notas\" "
-//                                + " ( id_tipo_nota, id_almn_curso )\n"
-//                                + "VALUES\n"
-//                                + "	(" + id_tipo_nota + "," + alumnnoCurso.getId() + ");";
-//
-//                        System.out.println(INSERT_NOTAS);
-//
-//                        ResourceManager.Statements(INSERT_NOTAS);
-//                    }
-//
-//                }
-//                info.close();
-//            } catch (SQLException e) {
-//                System.out.println(e.getMessage());
-//            }
-//            lista = selectWhere(alumnnoCurso);
-//        }
         return lista;
     }
     private boolean ejecutar = false;

@@ -15,7 +15,9 @@ public class ReferenciasCTR {
     private final VtnPrincipal vtnPrin;
     private final VtnPrincipalCTR ctrPrin;
     private String autor, autor2, autor3, autorCorporativo, titulo, año, ciudad, editor;
-
+    
+    
+    
     public ReferenciasCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmBibliografia frmBibliografia) {
         this.frmBibliografia = frmBibliografia;
         this.BDbibliografia = new ReferenciaBD(conecta);
@@ -25,8 +27,9 @@ public class ReferenciasCTR {
         this.vtnPrin.getDpnlPrincipal().add(frmBibliografia);
         frmBibliografia.show();
         frmBibliografia.getCbxExistenciaBiblioteca().setSelected(true);
-        frmBibliografia.getTxtCodigoKoha().setEnabled(false);
         frmBibliografia.getTxtCodigoKoha().setText("S/N");
+        frmBibliografia.getLbldescripcion_referecnia().setVisible(false);
+        frmBibliografia.getTxtdescripcionreferencia().setVisible(false);
 
     }
 
@@ -48,7 +51,7 @@ public class ReferenciasCTR {
             } else {
                 existe = false;
             }
-            String observaciones = frmBibliografia.getTxtObservaciones().getText();
+            String observaciones = frmBibliografia.getTxtObservaciones1().getText();
             String tipoD = "Base";
             String contenedor = "";
 
@@ -62,13 +65,13 @@ public class ReferenciasCTR {
             editor = frmBibliografia.getTxtEditor().getText();
             if (frmBibliografia.getTxtAutor().getText().length() > 0 && frmBibliografia.getTxtAutor2().getText().length() == 0
                     && frmBibliografia.getTxtAutor3().getText().length() == 0) {
-                contenedor = autor + '.' + año + '.' + titulo + '.' + editor + '.' + ciudad;
+                contenedor = autor + " . " + año + " . " + titulo + " . " + editor + " , " + ciudad;
             } else if (frmBibliografia.getTxtAutor().getText().length() > 0 && frmBibliografia.getTxtAutor2().getText().length() > 0
                     && frmBibliografia.getTxtAutor3().getText().length() == 0) {
-                contenedor = autor + '&' + autor2 + '.' + año + '.' + titulo + '.' + editor + '.' + ciudad;
+                contenedor = autor + " & " + autor2 + " . " + año + " . " + titulo + " . " + editor + " , " + ciudad;
             } else if (frmBibliografia.getTxtAutor().getText().length() > 0 || frmBibliografia.getTxtAutor2().getText().length() == 0
                     || frmBibliografia.getTxtAutor3().getText().length() > 0) {
-                contenedor = autor + '&' + autor2 + '&' + autor3 + '.' + año + '.' + titulo + '.' + editor + '.' + ciudad;
+                contenedor = autor + " & " + autor2 + " & " + autor3 + " . " + año + " . " + titulo + " , " + editor + " . " + ciudad;
             }
 
             BDbibliografia.setCodigo_referencia(frmBibliografia.getTxtCodigoLibro().getText());
@@ -83,7 +86,12 @@ public class ReferenciasCTR {
             BDbibliografia.setCodigo_koha(frmBibliografia.getTxtCodigoKoha().getText());
             BDbibliografia.setCodigo_dewey(frmBibliografia.getTxtCodigoDewey().getText());
             BDbibliografia.setArea_referencias(frmBibliografia.getTxtArea().getText());
-
+            BDbibliografia.setAutor1(autor);
+            BDbibliografia.setTitulo(titulo);
+            BDbibliografia.setEditor(editor);
+            BDbibliografia.setAño(año);
+            BDbibliografia.setCiudad(ciudad);
+              
             if (BDbibliografia.insertarReferencia()) {
                 JOptionPane.showMessageDialog(null, "Los Datos se guardaron Correctamente");
                 frmBibliografia.getTxtAutor().setText("");
@@ -93,7 +101,7 @@ public class ReferenciasCTR {
                 frmBibliografia.getTxtAnio().setText("");
                 frmBibliografia.getTxtCiudad().setText("");
                 frmBibliografia.getTxtEditor().setText("");
-                frmBibliografia.getTxtObservaciones().setText("");
+                frmBibliografia.getTxtObservaciones1().setText("");
                 frmBibliografia.getTxtCodigoLibro().setText("");
                 frmBibliografia.getTxtCodigoISBM().setText("");
                 frmBibliografia.getTxtNumeroPaginas().setText("");

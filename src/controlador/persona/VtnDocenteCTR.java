@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.estilo.TblEstilo;
-import modelo.accesos.AccesosMD;
 import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
@@ -80,10 +79,8 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getTblDocente().setModel(mdTbl);
         TblEstilo.formatoTbl(vtnDocente.getTblDocente());
         TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 0, 100);
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 1, 250);
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 90);
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 3, 230);
-        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 4, 125);
+        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 2, 100);
+        TblEstilo.columnaMedida(vtnDocente.getTblDocente(), 4, 130);
         cargarDocentes();
         vtnDocente.getBtnEditar().addActionListener(e -> editar());
         vtnDocente.getBtnIngresar().addActionListener(e -> abrirFrmDocente());
@@ -107,6 +104,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 vtnDocente.getBtnBuscar()));
         vtnDocente.getBtnhorasAsignadas().addActionListener(e -> botonReporteHorasAsignadas());
         vtnDocente.getBtnReporteDocente().addActionListener(e -> llamaReporteDocente());
+        vtnDocente.getBtnListaDocente().addActionListener(e -> ListaDeDocentes());
         vtnDocente.getBtnAsignarRol().addActionListener(e -> asignarRolDocente());
         vtnDocente.getBtnReporteDocenteMateria().addActionListener(e -> botonReporteMateria());
         vtnDocente.getTblDocente().addMouseListener(new MouseAdapter() {
@@ -213,7 +211,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                     ctrFrmPersona.iniciar();
                     perEditar = per.buscarPersona(docentesMD.get(posFila).getIdPersona());
                     ctrFrmPersona.editar(perEditar);
-                    vtnDocente.dispose();
+                    //vtnDocente.dispose();
                     ctrPrin.cerradoJIF();
                 } else {
                     if (seleccion == 1) {
@@ -237,7 +235,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
                         ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                         //vtnDocente.getTblDocente().setVisible(false);
-                        vtnDocente.dispose();
+                       // vtnDocente.dispose();
                         ctrPrin.cerradoJIF();
                     }
                 }
@@ -317,7 +315,16 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
-
+ public void ListaDeDocentes() {
+        JasperReport jr;
+        String path = "/vista/reportes/repListaDocentes.jasper";
+            try {
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+    }
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentesCarrera.jasper";

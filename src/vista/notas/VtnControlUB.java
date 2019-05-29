@@ -52,7 +52,7 @@ public class VtnControlUB extends AbstracView {
         lbl_periodolectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_periodolectivo.setText("Período lectivo:");
 
-        btnReportesUB.setText("Reportes UB");
+        btnReportesUB.setText("Reportes UBE");
 
         btnBuscar.setText("Buscar");
 

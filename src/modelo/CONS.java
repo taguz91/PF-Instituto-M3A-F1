@@ -76,7 +76,7 @@ public class CONS {
     }
 
     public static String getDia(int dia) {
-        String d = "";
+        String d;
         switch (dia) {
             case 1:
                 d = "Lunes";

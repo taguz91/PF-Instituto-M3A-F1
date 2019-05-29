@@ -68,10 +68,6 @@ public class ConnDBPool {
     }
 
     // <editor-fold defaultstate="collapsed" desc="METODOS DE MANEJO DE DATOS"> 
-    /*
-        Este metodo lee el archivo "configuracion.properties" de la raiz del proyecto
-        y genera una URL con los valores que toma del archivo
-     */
     private String generarURL() {
 
         String ip = Propiedades.getPropertie("ip");
@@ -127,19 +123,32 @@ public class ConnDBPool {
 
                         try {
                             posicion = entry.getKey();
-                            if (entry.getValue() instanceof Integer) {
-                                stmt.setInt(posicion, (int) entry.getValue());
-                            } else if (entry.getValue() instanceof String) {
+                            if (entry.getValue() instanceof String) {
+
                                 stmt.setString(posicion, entry.getValue().toString());
+
+                            } else if (entry.getValue() instanceof Integer) {
+
+                                stmt.setInt(posicion, (int) entry.getValue());
+
                             } else if (entry.getValue() instanceof Double) {
+
                                 stmt.setDouble(posicion, (double) entry.getValue());
+
                             } else if (entry.getValue() instanceof LocalTime) {
+
                                 stmt.setTime(posicion, java.sql.Time.valueOf((LocalTime) entry.getValue()));
+
                             } else if (entry.getValue() instanceof LocalDate) {
+
                                 stmt.setDate(posicion, java.sql.Date.valueOf((LocalDate) entry.getValue()));
+
                             } else if (entry.getValue() instanceof Boolean) {
+
                                 stmt.setBoolean(posicion, (boolean) entry.getValue());
+
                             } else if (entry.getValue() instanceof Boolean) {
+
                                 stmt.setBoolean(posicion, (boolean) entry.getValue());
                             }
                         } catch (SQLException ex) {
