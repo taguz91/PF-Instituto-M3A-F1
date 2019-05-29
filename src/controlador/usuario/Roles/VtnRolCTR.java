@@ -5,6 +5,8 @@ import controlador.usuario.Roles.forms.FrmRolAdd;
 import controlador.accesos.FrmAccesosAddCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,24 +58,36 @@ public class VtnRolCTR {
 
         tabla = (DefaultTableModel) vista.getTabRoles().getModel();
 
+        InitEventos();
         InitPermisos();
         cargarTabla();
-        InitPermisos();
+
+    }
+
+    private void InitEventos() {
+
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cargarTablaFilter(vista.getTxtBuscar().getText());
+            }
+        });
+        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisos(e));
 
     }
 
     private void InitPermisos() {
-           vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ingresar");
-       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Actualizar");
-       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar");
-       vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ver Permisos");
-       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Eliminar");
-       vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar Permisos");
-       
+        vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ingresar");
+        vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Actualizar");
+        vista.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar");
+        vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ver Permisos");
+        vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Eliminar");
+        vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar Permisos");
+
         CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
                 vista.getBtnEditar(), vista.getBtnVerPermisos(),
                 vista.getBtnEliminar(), vista.getBtnEditarPermisos());
-        
+
     }
 
     //Metodos de Apoyo
