@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
 import modelo.estilo.TblEstilo;
@@ -66,6 +67,8 @@ public class VtnMatriculaCTR extends DVtnCTR {
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
         ctrPrin.agregarVtn(vtnMatri);
+        InitPermisos();
+        
     }
 
     /**
@@ -386,6 +389,19 @@ public class VtnMatriculaCTR extends DVtnCTR {
         } else {
             JOptionPane.showMessageDialog(null, "No selecciono un curso.");
         }
+    }
+
+    private void InitPermisos() {
+       vtnMatri.getBtnIngresar().getAccessibleContext().setAccessibleName("Matricula-Ingresar");
+       vtnMatri.getBtnAnular().getAccessibleContext().setAccessibleName("Matricula-Anular");
+       vtnMatri.getBtnEditar().getAccessibleContext().setAccessibleName("Matricula-Editar");
+       vtnMatri.getBtnCartaCompromiso().getAccessibleContext().setAccessibleName("Matricula-Reporte-Carta");
+       vtnMatri.getBtnHistoria().getAccessibleContext().setAccessibleName("Matricula-Reporte-Historial");
+       vtnMatri.getBtnImprimirFicha().getAccessibleContext().setAccessibleName("Matricula-Imprimir");
+       
+        CONS.activarBtns(vtnMatri.getBtnIngresar(), vtnMatri.getBtnAnular(),
+                vtnMatri.getBtnEditar(), vtnMatri.getBtnCartaCompromiso(),
+                vtnMatri.getBtnHistoria(), vtnMatri.getBtnImprimirFicha());
     }
 
 }

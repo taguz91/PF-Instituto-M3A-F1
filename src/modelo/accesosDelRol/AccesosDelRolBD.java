@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.accesos.AccesosBD;
 import modelo.usuario.RolBD;
@@ -68,6 +70,35 @@ public class AccesosDelRolBD extends AccesosDelRolMD {
 
         return lista;
 
+    }
+
+    public List<String> selectWhere(int idRol, boolean estado) {
+        String SELECT = "SELECT\n"
+                + "	\"public\".\"Accesos\".acc_nombre \n"
+                + "FROM\n"
+                + "	\"public\".\"AccesosDelRol\"\n"
+                + "	INNER JOIN \"public\".\"Accesos\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso \n"
+                + "WHERE\n"
+                + "	\"AccesosDelRol\".id_rol = " + idRol + " \n"
+                + "	AND \"AccesosDelRol\".acc_activo IS " + estado;
+
+        List<String> lista = new ArrayList<>();
+
+        conn = pool.getConnection();
+
+        ResultSet rs = pool.ejecutarQuery(SELECT, conn, null);
+
+        try {
+            while (rs.next()) {
+                lista.add(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            pool.closeStmt().close(rs).close(conn);
+        }
+
+        return lista;
     }
 
     public boolean editar() {

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.estilo.TblEstilo;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
@@ -107,6 +107,8 @@ public class VtnPersonaCTR extends DVtnCTR {
         vtnPersona.getBtnReportePersona().addActionListener(e -> llamaReportePersona());
         vtnPersona.getCmbTipoPersona().addActionListener(e -> cargarTipoPersona());
         vtnPersona.getBtnEditarIdentificacion().addActionListener(e -> editarIdentificacion());
+
+        InitPermisos();
 
     }
 
@@ -287,16 +289,33 @@ public class VtnPersonaCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        vtnPersona.getBtnEditarIdentificacion().getAccessibleContext().setAccessibleName("Personas-Editar Identificacion");
+        vtnPersona.getBtnEliminar().getAccessibleContext().setAccessibleName("Personas-Eliminar");
+        vtnPersona.getBtnEditar().getAccessibleContext().setAccessibleName("Personas-Editar");
+        vtnPersona.getBtnIngresar().getAccessibleContext().setAccessibleName("Personas-Ingresar");
+        vtnPersona.getChBx_PerEliminada().getAccessibleContext().setAccessibleName("Personas-Ver Personas Eliminadas");
+        vtnPersona.getBtnReportePersona().getAccessibleContext().setAccessibleName("Personas-Reporte-Persona");
+        
+        CONS.activarBtns(vtnPersona.getBtnEditarIdentificacion(), vtnPersona.getBtnEliminar(), 
+                vtnPersona.getBtnEditar(), vtnPersona.getBtnIngresar(), vtnPersona.getChBx_PerEliminada(),
+                vtnPersona.getBtnReportePersona());
 
     }
 
     public void validarBotonesReportes() {
-        int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
-        if (selecTabl >= 0) {
-            vtnPersona.getBtnReportePersona().setEnabled(true);
-        } else {
-            vtnPersona.getBtnReportePersona().setEnabled(false);
+        
+        if (CONS.getPermisos().contains("Personas-Reporte-Persona")) {
+            
+            int selecTabl = vtnPersona.getTblPersona().getSelectedRow();
+            if (selecTabl >= 0) {
+                vtnPersona.getBtnReportePersona().setEnabled(true);
+            } else {
+                vtnPersona.getBtnReportePersona().setEnabled(false);
+            }            
+            
         }
+        
+        
     }
 
 }

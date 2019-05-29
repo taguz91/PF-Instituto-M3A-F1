@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -112,6 +112,7 @@ public class VtnMateriaCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnMateria);
         vtnMateria.getBtnEliminarMateria().setVisible(false);
+        InitPermisos();
     }
 
     /**
@@ -227,6 +228,18 @@ public class VtnMateriaCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        vtnMateria.getBtnIngresarMateria().getAccessibleContext().setAccessibleName("Materias-Ingresar");
+        vtnMateria.getBtnRequisitos().getAccessibleContext().setAccessibleName("Materias-Requisitos");
+        vtnMateria.getBtnInfo().getAccessibleContext().setAccessibleName("Materias-Informacion");
+        vtnMateria.getBtnEditarMateria().getAccessibleContext().setAccessibleName("Materias-Editar");
+        vtnMateria.getBtnEliminarMateria().getAccessibleContext().setAccessibleName("Materias-Eliminar");
+        vtnMateria.getBtnReporteMaterias().getAccessibleContext().setAccessibleName("Materias-Reporte");
+        
+        
+        
+        CONS.activarBtns(vtnMateria.getBtnIngresarMateria(), vtnMateria.getBtnRequisitos(),
+                vtnMateria.getBtnInfo(), vtnMateria.getBtnEditarMateria(), 
+                vtnMateria.getBtnEliminarMateria(), vtnMateria.getBtnReporteMaterias());
         
     }
 

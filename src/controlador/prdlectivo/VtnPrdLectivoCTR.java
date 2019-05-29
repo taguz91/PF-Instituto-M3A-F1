@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -70,6 +70,7 @@ public class VtnPrdLectivoCTR extends DCTR {
         //Llenamos la tabla 
         cargarPeriodos();
         cargarCarreras();
+        InitPermisos();
     }
 
     //Permite visualizar el Formulario de Período Lectivo
@@ -260,6 +261,15 @@ public class VtnPrdLectivoCTR extends DCTR {
 
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
+        
+        vtnPrdLectivo.getBtnCerrarPeriodo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Cerrar Periodo");
+        vtnPrdLectivo.getBtnEditar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Editar");
+        vtnPrdLectivo.getBtnIngresar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Ingresar");
+        
+        
+        
+        CONS.activarBtns(vtnPrdLectivo.getBtnCerrarPeriodo(), vtnPrdLectivo.getBtnEditar(),
+                vtnPrdLectivo.getBtnIngresar());
 
     }
 

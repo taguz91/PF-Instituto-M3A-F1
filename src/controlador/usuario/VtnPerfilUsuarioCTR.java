@@ -47,12 +47,14 @@ public class VtnPerfilUsuarioCTR {
         vista.getLblNombres().setText(modelo.getPersona().getPrimerNombre() + "  " + modelo.getPersona().getSegundoNombre());
         vista.getLblApellidos().setText(modelo.getPersona().getPrimerApellido() + "  " + modelo.getPersona().getSegundoApellido());
 
+        vista.getBtnPermisos().addActionListener(e -> CONS.refreshPermisos());
+
         InitEventos();
     }
 
     private void InitEventos() {
 
-        vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
         vista.getBtnGuardar().addActionListener(e -> btnGuardarActionPerformance(e));
         vista.getBtnCambiarContrasena().addActionListener(e -> btnCambiarContrasenaActionPerformance(e));
 
@@ -64,7 +66,6 @@ public class VtnPerfilUsuarioCTR {
     private void btnCambiarContrasenaActionPerformance(ActionEvent e) {
         vista.getTxtContrasena().setEnabled(true);
         vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
-
     }
 
     private void btnGuardarActionPerformance(ActionEvent e) {
@@ -92,10 +93,6 @@ public class VtnPerfilUsuarioCTR {
 
         }
 
-    }
-
-    private void btnCancelarActionPerformance(ActionEvent e) {
-        vista.dispose();
     }
 
 }

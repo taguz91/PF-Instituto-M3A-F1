@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
@@ -59,19 +58,22 @@ public class VtnRolCTR {
 
         InitPermisos();
         cargarTabla();
+        InitPermisos();
 
     }
 
     private void InitPermisos() {
-
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla());
-
-//        vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
-        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisos(e));
-
-        vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop.getVtnPrin(), this).Init());
-//        vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
-//        vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
+           vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ingresar");
+       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Actualizar");
+       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar");
+       vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ver Permisos");
+       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Eliminar");
+       vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar Permisos");
+       
+        CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
+                vista.getBtnEditar(), vista.getBtnVerPermisos(),
+                vista.getBtnEliminar(), vista.getBtnEditarPermisos());
+        
     }
 
     //Metodos de Apoyo

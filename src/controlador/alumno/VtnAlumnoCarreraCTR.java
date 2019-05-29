@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
@@ -84,6 +84,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
         vtnAlmCar.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlmCar.getTxtBuscar(),
                 vtnAlmCar.getBtnBuscar()));
         ctrPrin.agregarVtn(vtnAlmCar);
+        InitPermisos();
     }
 
     /**
@@ -189,7 +190,9 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     }
 
     private void InitPermisos() {
-
+       vtnAlmCar.getBtnIngresar().getAccessibleContext().setAccessibleName("Inscripcion-Ingresar");
+       vtnAlmCar.getCbxEliminados().getAccessibleContext().setAccessibleName("Inscripcion-Ver Elimandos");
+        CONS.activarBtns(vtnAlmCar.getBtnIngresar(), vtnAlmCar.getCbxEliminados());
     }
 
 }

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.estilo.TblEstilo;
-import modelo.accesos.AccesosMD;
 import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
@@ -118,6 +118,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
         ctrPrin.agregarVtn(vtnDocente);
         vtnDocente.getCmbTipoDocente().addActionListener(e -> cargarTipoDocentes());
+        InitPermisos();
     }
 
     private void cargarCmbTipoDocentes() {
@@ -271,6 +272,20 @@ public class VtnDocenteCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
+        vtnDocente.getBtnAsignarRol().getAccessibleContext().setAccessibleName("Docente-Asignar Rol");
+        vtnDocente.getBtnFinContratacion().getAccessibleContext().setAccessibleName("Docente-Fin de Contratacion");
+        vtnDocente.getBtnEliminar().getAccessibleContext().setAccessibleName("Docente-Eliminar");
+        vtnDocente.getBtnEditar().getAccessibleContext().setAccessibleName("Docente-Editar");
+        vtnDocente.getBtnIngresar().getAccessibleContext().setAccessibleName("Docente-Ingresar");
+        vtnDocente.getCbxDocentesEliminados().getAccessibleContext().setAccessibleName("Docente-Ver Docentes Eliminados");
+        vtnDocente.getBtnhorasAsignadas().getAccessibleContext().setAccessibleName("Docente-Reporte-Horas Asignacion");
+        vtnDocente.getBtnReporteDocente().getAccessibleContext().setAccessibleName("Docente-Reporte-Docente");
+        vtnDocente.getBtnReporteDocenteMateria().getAccessibleContext().setAccessibleName("Docente-Reporte-Materia Docente");
+        
+        CONS.activarBtns(vtnDocente.getBtnAsignarRol(), vtnDocente.getBtnFinContratacion(),
+                vtnDocente.getBtnEliminar(), vtnDocente.getBtnEditar(), vtnDocente.getBtnIngresar(),
+                vtnDocente.getCbxDocentesEliminados(), vtnDocente.getBtnhorasAsignadas(), 
+                vtnDocente.getBtnReporteDocente(), vtnDocente.getBtnReporteDocenteMateria());
 
     }
 
