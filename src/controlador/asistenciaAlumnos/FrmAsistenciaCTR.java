@@ -441,13 +441,23 @@ public class FrmAsistenciaCTR {
 
     // Agregar Filas 
     // agregar a la tabla asistencia
-    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
-        return (obj) -> {
+//    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+//        return (obj) -> {
+//
+//            // System.out.println(obj);
+//            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+//                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+//                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
+//        };
+//    }
+     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+        return (obj, tabla) -> {
 
             // System.out.println(obj);
-            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
+            return null;
         };
     }
 
@@ -515,7 +525,7 @@ public class FrmAsistenciaCTR {
 
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            //cargarTabla(tablaTrad, agregarFilasTrad());
+            cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
