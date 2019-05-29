@@ -2,25 +2,22 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.Libraries.cellEditor.ComboBoxCellEditor;
-import controlador.Libraries.cellEditor.TextFieldCellEditor;
-import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.asistenciaAlumnos.AsistenciaBD;
+import modelo.asistencia.AsistenciaBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -35,7 +32,6 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.tipoDeNota.TipoDeNotaMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.asistenciaAlumnos.FrmAsistencia;
@@ -443,15 +439,15 @@ public class FrmAsistenciaCTR {
         }
     }
 
-    // Agregar Filas
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
-        return (obj, tabla) -> {
+    // Agregar Filas 
+    // agregar a la tabla asistencia
+    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+        return (obj) -> {
 
             // System.out.println(obj);
-            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
-            return null;
         };
     }
 
@@ -469,7 +465,7 @@ public class FrmAsistenciaCTR {
                                 vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
                     } else {
                         JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
-                        asistenciaBD.editar(listaNotas.get(i).getId(),vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas );
+                        asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
                     }
 
                 }
@@ -519,7 +515,7 @@ public class FrmAsistenciaCTR {
 
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            cargarTabla(tablaTrad, agregarFilasTrad());
+            //cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");

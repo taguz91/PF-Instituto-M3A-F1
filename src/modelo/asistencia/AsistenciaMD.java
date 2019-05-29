@@ -1,5 +1,4 @@
-
-package modelo.asistenciaAlumnos;
+package modelo.asistencia;
 
 import java.time.LocalDate;
 import modelo.alumno.AlumnoCursoMD;
@@ -9,7 +8,7 @@ import modelo.alumno.AlumnoCursoMD;
  * @author Yani
  */
 public class AsistenciaMD {
-    
+
     private int id;
     private LocalDate fechaAsistencia;
     private int numeroFaltas;
@@ -17,7 +16,6 @@ public class AsistenciaMD {
     private AlumnoCursoMD alumnoCurso;
     private int num_horas;
 
-   
     public AsistenciaMD(int id, LocalDate fechaAsistencia, int numeroFaltas, String observaciones, AlumnoCursoMD alumnoCurso) {
         this.id = id;
         this.fechaAsistencia = fechaAsistencia;
@@ -52,7 +50,7 @@ public class AsistenciaMD {
     public void setNumeroFaltas(int numeroFaltas) {
         this.numeroFaltas = numeroFaltas;
     }
-    
+
     public String getObservaciones() {
         return observaciones;
     }
@@ -68,15 +66,14 @@ public class AsistenciaMD {
     public void setAlumnoCurso(AlumnoCursoMD alumnoCurso) {
         this.alumnoCurso = alumnoCurso;
     }
-    
-     public int getNum_horas() {
+
+    public int getNum_horas() {
         return num_horas;
     }
 
     public void setNum_horas(int num_horas) {
         this.num_horas = num_horas;
     }
-
 
     @Override
     public String toString() {
