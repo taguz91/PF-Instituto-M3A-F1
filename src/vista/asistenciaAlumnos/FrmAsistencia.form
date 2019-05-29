@@ -37,14 +37,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="lblResultados" min="-2" pref="184" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -78,37 +74,46 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="cmbDocenteAsis" max="32767" attributes="0"/>
                                           <Component id="cmbAsignaturaAsis" pref="269" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace type="separate" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="lblHorasPresencialesAsis" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="lblDiaClase" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblHorasAsis" min="-2" pref="93" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                                      <Component id="cmbDiaClase" min="-2" pref="145" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtBuscarAsis" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="btnImprimir" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnVerAsistencia" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnVerAsistencia" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtBuscarAsis" min="-2" pref="151" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Component id="btnBuscarAsis" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblResultados" min="-2" pref="184" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -126,9 +131,9 @@
                   <Component id="btnBuscarAsis" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtBuscarAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -140,29 +145,30 @@
                               <Component id="cmbAsignaturaAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCicloAsis" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbCicloAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="lblSemana" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbSemana" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDiaClase" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbDiaClase" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Component id="btnVerAsistencia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCicloAsis" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblHorasPresencialesAsis" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblHorasAsis" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="cmbCicloAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="lblSemana" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmbSemana" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="btnImprimir" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="335" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Component id="jScrollPane2" pref="323" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lblResultados" min="-2" pref="24" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblResultados" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -221,11 +227,6 @@
         <Property name="text" type="java.lang.String" value="Asignatura:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblHorasPresencialesAsis">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Horas Presenciales:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="cmbDocenteAsis">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -252,8 +253,6 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblHorasAsis">
-    </Component>
     <Component class="javax.swing.JButton" name="btnBuscarAsis">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
@@ -278,7 +277,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblSemana">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Semana"/>
+        <Property name="text" type="java.lang.String" value="Semana: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbSemana">
@@ -301,17 +300,26 @@
         <Component class="javax.swing.JTable" name="tblAsistencia">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="0">
+              <Table columnCount="7" rowCount="2">
                 <Column editable="false" title="Nro." type="java.lang.Object"/>
                 <Column editable="false" title="C&#xe9;dula" type="java.lang.Object"/>
                 <Column editable="false" title="P.Apellido" type="java.lang.Object"/>
                 <Column editable="false" title="S.Apellido" type="java.lang.Object"/>
                 <Column editable="false" title="P.Nombre" type="java.lang.Object"/>
                 <Column editable="false" title="S.Nombre" type="java.lang.Object"/>
+                <Column editable="true" title="Faltas" type="java.lang.Object">
+                  <Data value="0"/>
+                  <Data value="null"/>
+                </Column>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -354,5 +362,25 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblDiaClase">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dia Clase:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbDiaClase">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGuardar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar "/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

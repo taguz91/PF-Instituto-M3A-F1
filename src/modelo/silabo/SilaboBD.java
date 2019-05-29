@@ -59,7 +59,8 @@ public class SilaboBD extends SilaboMD {
 
         List<SilaboMD> silabos = new ArrayList<>();
         try {
-
+            
+            
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
                     + "s.id_materia, m.materia_nombre, m.materia_horas_docencia,m.materia_horas_practicas,m.materia_horas_auto_estudio, estado_silabo,\n"
                     + "pr.id_prd_lectivo, pr.prd_lectivo_fecha_inicio, pr.prd_lectivo_fecha_fin\n"
@@ -413,4 +414,10 @@ public class SilaboBD extends SilaboMD {
 
         return silabo;
     }
+    
+//    SELECT * FROM "Carreras" c 
+//JOIN "Docentes" d ON c.id_docente_coordinador=d.id_docente
+//JOIN "Personas" p ON p.id_persona=d.id_persona
+//JOIN "Usuarios" u ON u.id_persona=p.id_persona
+//WHERE u.usu_username='0103156675'
 }
