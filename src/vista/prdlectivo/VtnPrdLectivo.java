@@ -20,6 +20,10 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public JButton getBtnListaDocentesPeriodos() {
+        return btnListaDocentesPeriodos;
+    }
+
     public JTextField getTxt_Buscar() {
         return Txt_Buscar;
     }
@@ -128,6 +132,8 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         Lbl_Filtrar = new javax.swing.JLabel();
         Cmbx_Filtrar = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        btnListaDocentesPeriodos = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -174,6 +180,10 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
         Cmbx_Filtrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
 
+        jLabel2.setText("Reporte:");
+
+        btnListaDocentesPeriodos.setText("Lista Docentes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,7 +194,10 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 998, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 828, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnListaDocentesPeriodos))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -217,15 +230,18 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
                         .addComponent(btnCerrarPeriodo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_Filtrar)
                     .addComponent(Cmbx_Filtrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(lblResultados)
-                .addGap(9, 9, 9))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblResultados)
+                    .addComponent(jLabel2)
+                    .addComponent(btnListaDocentesPeriodos))
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -244,7 +260,9 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCerrarPeriodo;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnListaDocentesPeriodos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JTable tblPrdLectivo;
