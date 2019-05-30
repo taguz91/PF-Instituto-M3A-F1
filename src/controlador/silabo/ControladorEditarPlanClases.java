@@ -91,7 +91,7 @@ public class ControladorEditarPlanClases {
         principal.getDpnlPrincipal().add(fPlanClase);
         fPlanClase.setTitle("EDITAR "+silabo.getIdMateria().getNombre());
         fPlanClase.show();
-         PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su estrategia.......");
+         PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su descripcion.......");
         fPlanClase.setLocation((principal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
         
