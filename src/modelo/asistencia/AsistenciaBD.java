@@ -108,7 +108,7 @@ public class AsistenciaBD extends AsistenciaMD {
                 + "GROUP BY \"SesionClase\".dia_sesion; ";
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
-        System.out.println("Query: \n" + SELECT);
+        System.out.println("Numero de semanas: \n" + SELECT);
         try {
             while (rst.next()) {
                 d = rst.getInt(1);
@@ -125,19 +125,16 @@ public class AsistenciaBD extends AsistenciaMD {
         return d;
     }
 
-    public synchronized boolean editar() {
+    
+     public synchronized boolean eliminar(int id_almn_curso, String fecha) {
         new Thread(() -> {
-            String UPDATE = "UPDATE \"Asistencia\" \n"
-                    + "SET id_almn_curso = " + getAlumnoCurso() + ", \n"
-                    + "fecha_asistencia = " + getFechaAsistencia() + ", \n"
-                    + "numero_faltas = " + getNumeroFaltas() + ", \n"
-                    + "WHERE \n"
-                    + "\"public\".\"Asistencia\".id_almn_curso = " + getId() + " \n"
-                    + "\"Asistencia\".fecha_asistencia = " + getFechaAsistencia();
-
-            System.out.println(UPDATE);
+            String DELETE = "DELETE \n"
+                    + "FROM \"public\".\"Asistencia\"\n"
+                    + "WHERE \"public\".\"Asistencia\".id_almn_curso = " + id_almn_curso + "\n"
+                    + "AND \"public\".\"Asistencia\".fecha_asistencia = '" + fecha + "'";
+            System.out.println(DELETE);
             conn = pool.getConnection();
-            ejecutarAsis = pool.ejecutar(UPDATE, conn, null) == null;
+            ejecutarAsis = pool.ejecutar(DELETE, conn, null) == null;
         }).start();
 
         return ejecutarAsis;
