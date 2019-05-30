@@ -59,8 +59,7 @@ public class SilaboBD extends SilaboMD {
 
         List<SilaboMD> silabos = new ArrayList<>();
         try {
-            
-            
+
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
                     + "s.id_materia, m.materia_nombre, m.materia_horas_docencia,m.materia_horas_practicas,m.materia_horas_auto_estudio, estado_silabo,\n"
                     + "pr.id_prd_lectivo, pr.prd_lectivo_fecha_inicio, pr.prd_lectivo_fecha_fin\n"
@@ -77,6 +76,78 @@ public class SilaboBD extends SilaboMD {
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[2]));
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                SilaboMD tmp = new SilaboMD();
+                tmp.setIdSilabo(rs.getInt(1));
+                tmp.getIdMateria().setId(rs.getInt(2));
+                tmp.getIdMateria().setNombre(rs.getString(3));
+                tmp.getIdMateria().setHorasDocencia(rs.getInt(4));
+                tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
+                tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
+                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
+                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(9).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(10).toLocalDate());
+
+                silabos.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return silabos;
+    }
+    
+    public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, int clave, String parametro) {
+
+        List<SilaboMD> silabos = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo, s.id_materia, m.materia_nombre, pr.id_prd_lectivo, pr.prd_lectivo_fecha_inicio, pr.prd_lectivo_fecha_fin, s.estado_silabo FROM \"Silabo\" s\n"
+                    + "JOIN \"Materias\" m ON s.id_materia=m.id_materia\n"
+                    + "JOIN \"PeriodoLectivo\" pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
+                    + "WHERE m.id_carrera=? "
+                    + "AND m.materia_nombre ILIKE '%" + parametro + "%'\n"
+                    + "ORDER BY pr.id_prd_lectivo DESC ");
+
+            st.setInt(1, clave);
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                SilaboMD tmp = new SilaboMD();
+                tmp.setIdSilabo(rs.getInt(1));
+                tmp.getIdMateria().setId(rs.getInt(2));
+                tmp.getIdMateria().setNombre(rs.getString(3));
+                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(4));
+                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(5).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(6).toLocalDate());
+                tmp.setEstadoSilabo(rs.getInt(7));
+                silabos.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return silabos;
+    }
+
+    public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, String clave) {
+
+        List<SilaboMD> silabos = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_silabo, m.materia_nombre  FROM \"Silabo\" s\n"
+                    + "JOIN \"Materias\" m ON s.id_materia=m.id_materia\n"
+                    + "WHERE m.id_carrera=2");
+
+            st.setString(1, clave);
 
             System.out.println(st);
             ResultSet rs = st.executeQuery();
@@ -212,7 +283,7 @@ public class SilaboBD extends SilaboMD {
                         + "	WHERE id_silabo=?");
 
                 st.setInt(1, s.getIdSilabo());
-              
+
                 st.executeUpdate();
 
                 System.out.println(st);
@@ -225,11 +296,11 @@ public class SilaboBD extends SilaboMD {
 
     }
 
-    public void eliminarLogico(SilaboMD s) {
+    public void aprobar(SilaboMD s) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
-                    + "	SET estado_silabo=-1"
+                    + "	SET estado_silabo=1"
                     + "	WHERE id_silabo=?");
 
             st.setInt(1, s.getIdSilabo());
@@ -414,7 +485,7 @@ public class SilaboBD extends SilaboMD {
 
         return silabo;
     }
-    
+
 //    SELECT * FROM "Carreras" c 
 //JOIN "Docentes" d ON c.id_docente_coordinador=d.id_docente
 //JOIN "Personas" p ON p.id_persona=d.id_persona

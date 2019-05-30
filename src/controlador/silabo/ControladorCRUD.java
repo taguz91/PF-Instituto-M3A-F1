@@ -38,19 +38,18 @@ public class ControladorCRUD {
     private SilaboBD silabo;
 
     private final UsuarioBD usuario;
-     
-    
 
-    
     private frmSilabos crud;
 
     //private frmGestionSilabo gestion;
     //private frmConfiguracionSilabo configuracion;
     private ConexionBD conexion;
-    
+
     private RolBD rol;
 
     private final VtnPrincipal principal;
+
+    private boolean esCoordinador = false;
 
     private List<SilaboMD> silabosDocente;
 
@@ -58,7 +57,7 @@ public class ControladorCRUD {
         this.usuario = usuario;
         this.principal = principal;
         this.conexion = conexion;
-        this.rol=rol;
+        this.rol = rol;
     }
 
     public void iniciarControlador() {
@@ -77,15 +76,14 @@ public class ControladorCRUD {
                 (principal.getDpnlPrincipal().getSize().height - crud.getSize().height) / 2);
 
         opcionesImpresion(false);
-        
-        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")){
-            System.out.println("?????????????? Funciona como cordinador");
-        }else{
-            
-            System.out.println("?????????????? Funciona como docente");
+
+        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
+            esCoordinador = true;
+            crud.getBtnNuevo().setEnabled(false);
+            crud.getBtnEditar().setEnabled(false);
+            crud.getBtnEliminar().setEnabled(false);
         }
-         
-        
+
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
 
@@ -134,8 +132,7 @@ public class ControladorCRUD {
 
             //VALIDA QUE SELECCIONE UN SILABO E IMPRIMA
             int row = crud.getTblSilabos().getSelectedRow();
-            
-             
+
             if (row != -1) {
 
                 opcionesImpresion(true);
@@ -146,7 +143,7 @@ public class ControladorCRUD {
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
-             
+
         });
 
         crud.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -169,7 +166,14 @@ public class ControladorCRUD {
 
     public List<CarreraMD> cargarComboCarreras() {
 
-        List<CarreraMD> carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        List<CarreraMD> carrerasDocente = new ArrayList<>();
+        if (esCoordinador) {
+
+            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
+        } else {
+            carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+
+        }
 
         carrerasDocente.forEach((cmd) -> {
             crud.getCmbCarrera().addItem(cmd.getNombre());
@@ -188,7 +192,13 @@ public class ControladorCRUD {
             String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
             //
 
-            silabosDocente = SilaboBD.consultar(conexion, parametros);
+            if (esCoordinador) {
+                int idCarrera = new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()).getId();
+                silabosDocente = SilaboBD.consultarCoordinador(conexion, idCarrera,  crud.getTxtBuscar().getText());
+            } else {
+
+                silabosDocente = SilaboBD.consultar(conexion, parametros);
+            }
 
             for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -236,18 +246,17 @@ public class ControladorCRUD {
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
 
         if (silaboSeleccionado.get().getIdPeriodoLectivo().getId_PerioLectivo() != ultimo.getId_PerioLectivo()) {
-           
-            if (p==1){
-                 return silaboSeleccionado.get();
+
+            if (p == 1) {
+                return silaboSeleccionado.get();
             }
             return null;
-            
+
         }
 
         return silaboSeleccionado.get();
     }
 
-    
     public void opcionesImpresion(boolean estado) {
 
         crud.getLblSeleccionDocumento().setVisible(estado);
@@ -267,7 +276,7 @@ public class ControladorCRUD {
             }
         } else {
             JOptionPane.showMessageDialog(null, "No puede eliminar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
-               
+
         }
 
     }
