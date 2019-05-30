@@ -93,10 +93,12 @@ public class CONS {
     }
 
     public static void activarBtns(JComponent... components) {
-        Arrays.stream(components)
-                .forEach(obj -> {
-                    obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName()));
-                });
+        if (!ROL.getNombre().equalsIgnoreCase("ROOT") && !ROL.getNombre().equalsIgnoreCase("DEV")) {
+            Arrays.stream(components)
+                    .forEach(obj -> {
+                        obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName()));
+                    });
+        }
     }
 
     public static String getDia(int dia) {
@@ -130,7 +132,7 @@ public class CONS {
         return d;
 
     }
-    
+
     public static int getDia(String dia) {
         int d;
         switch (dia) {
