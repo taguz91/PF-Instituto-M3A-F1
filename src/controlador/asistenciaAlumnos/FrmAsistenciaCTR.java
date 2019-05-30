@@ -311,14 +311,16 @@ public class FrmAsistenciaCTR {
     }
 
     public boolean Validar() {
-        boolean correcto = false;
+        boolean correcto = true;
         int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
+        System.out.println("dia obtenido de parte de cons " + d);
         int numero = asistenciaBD.numHorasPorDia(listaNotas.get(0).getCurso().getId(), d);
+        System.out.println("######################### " + numero);
         for (int i = 0; i < jTbl.getRowCount(); i++) {
 
             int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
             if (faltas > numero) {
-                correcto = true;
+                correcto = false;
                 break;
             }
         }
@@ -398,7 +400,7 @@ public class FrmAsistenciaCTR {
                     getIdDocente(), getIdPeriodoLectivo(), fecha);
 
             listaNotas.forEach(la -> {
-                Object[] v = {1,
+                Object[] v = {tabla.getRowCount() + 1,
                     la.getAlumno().getIdentificacion(),
                     la.getAlumno().getPrimerApellido(),
                     la.getAlumno().getSegundoApellido(),
@@ -450,7 +452,7 @@ public class FrmAsistenciaCTR {
 //                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
 //        };
 //    }
-     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
 
             // System.out.println(obj);
@@ -463,27 +465,32 @@ public class FrmAsistenciaCTR {
 
     private void GuardarFaltas() {
         if (Validar()) {
+            System.out.println("Las faltas estan correctas");
             for (int i = 0; i < jTbl.getRowCount(); i++) {
-                String fecha_insert = vista.getCmbDiaClase().getSelectedItem().toString();
-                String[] diaArray = fecha_insert.split(" | ");
                 System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
                 if (faltas > 0) {
-
+                    System.out.println("Hay faltas");
+                    System.out.println("num faltas getFaltas() " + listaNotas.get(i).getFaltas());
                     if (listaNotas.get(i).getFaltas() == 0) {
                         asistenciaBD.insertar(listaNotas.get(i).getId(),
-                                vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                                vista.getCmbDiaClase().getSelectedItem().
+                                        toString().split(" | ")[2], faltas);
+                         desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
                     } else {
-                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
                         asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                        desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
                     }
-
+                } else {
+                    if (listaNotas.get(i).getFaltas() > 0) {
+                        System.out.println("Se elimina los registros ");
+                        //Eliminamossss la que se pone 0 
+                        asistenciaBD.eliminar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2]);
+                       desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
+                    }
                 }
-
-                //asistenciaBD.editar(faltas);
             }
 
-            JOptionPane.showMessageDialog(vista, "Los datos se han guardado exitosamente");
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
                     + " Verifique el numero de Faltas insertado"
