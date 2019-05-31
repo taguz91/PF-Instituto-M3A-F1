@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
@@ -30,8 +31,6 @@ public class VtnRolCTR {
 
     private final RolBD modelo;
 
-    private final RolBD permisos;
-
     private List<RolBD> listaRoles;
 
     private static DefaultTableModel tabla;
@@ -42,7 +41,6 @@ public class VtnRolCTR {
         this.desktop = desktop;
         this.vista = new VtnRol();
         this.modelo = new RolBD();
-        this.permisos = CONS.ROL;
     }
 
     public VtnRol getVista() {
@@ -94,7 +92,8 @@ public class VtnRolCTR {
     private void cargarTabla() {
         if (cargarTabla) {
 
-            //tabla.setRowCount(0);
+            tabla.setRowCount(0);
+
             vista.getTxtBuscar().setEnabled(false);
 
             Effects.setLoadCursor(vista);
@@ -103,9 +102,7 @@ public class VtnRolCTR {
 
             listaRoles = modelo.selectAll();
 
-            listaRoles.stream().forEach(VtnRolCTR::agregarFila);
-
-            vista.getLblResultados().setText(listaRoles.size() + " Resultados Obtenidos");
+            listaRoles.stream().forEach(agregarFila());
 
             cargarTabla = true;
 
@@ -119,29 +116,25 @@ public class VtnRolCTR {
 
     }
 
-    private static void agregarFila(RolMD obj) {
+    private Consumer<RolMD> agregarFila() {
 
-        tabla.addRow(new Object[]{
-            tabla.getDataVector().size() + 1,
-            obj.getId(),
-            obj.getNombre()
-        });
+        return obj -> {
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getId(),
+                obj.getNombre()
+            });
+            vista.getLblResultados().setText(tabla.getDataVector().size() + " Resultados");
+        };
 
     }
 
     private void cargarTablaFilter(String Aguja) {
+        
         if (cargarTabla) {
-            JOptionPane.showMessageDialog(vista, "ESPERE QUE TERMINE LA CARGA PENDIENTE!!");
-        } else {
-            List<RolMD> lista = listaRoles
-                    .stream()
-                    .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
-                    .collect(Collectors.toList());
-
-//            lista.forEach(VtnRolCTR::agregarFila);
-            vista.getLblResultados().setText(lista.size() + " Resultados Obtenidos");
+            
         }
-
+        
     }
 
     private List<RolBD> getSeleccionados() {
@@ -165,6 +158,8 @@ public class VtnRolCTR {
                 form.setRol(obj);
                 form.Init();
             });
+        } else {
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
         }
     }
 
