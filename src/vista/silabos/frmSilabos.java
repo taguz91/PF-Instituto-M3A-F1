@@ -151,14 +151,14 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Asignatura", "Periodo", "Estado", "Id"
+                "Asignatura", "Periodo", "Estado", "Id", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -172,6 +172,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         tblSilabos.setShowHorizontalLines(false);
         srcSilabos.setViewportView(tblSilabos);
         if (tblSilabos.getColumnModel().getColumnCount() > 0) {
+            tblSilabos.getColumnModel().getColumn(0).setResizable(false);
             tblSilabos.getColumnModel().getColumn(1).setPreferredWidth(220);
             tblSilabos.getColumnModel().getColumn(1).setMaxWidth(220);
             tblSilabos.getColumnModel().getColumn(2).setMinWidth(140);
@@ -180,6 +181,8 @@ public class frmSilabos extends javax.swing.JInternalFrame {
             tblSilabos.getColumnModel().getColumn(3).setMinWidth(0);
             tblSilabos.getColumnModel().getColumn(3).setPreferredWidth(0);
             tblSilabos.getColumnModel().getColumn(3).setMaxWidth(0);
+            tblSilabos.getColumnModel().getColumn(4).setResizable(false);
+            tblSilabos.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
         lblBuscar.setText("Buscar:");

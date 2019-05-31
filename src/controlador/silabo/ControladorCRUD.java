@@ -9,10 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
@@ -66,6 +69,14 @@ public class ControladorCRUD {
 
         crud = new frmSilabos();
 
+        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
+
+            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(2));
+        } else {
+            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(4));
+
+        }
+
         principal.getDpnlPrincipal().add(crud);
 
         crud.setTitle("Silabos");
@@ -84,6 +95,26 @@ public class ControladorCRUD {
             crud.getBtnEliminar().setEnabled(false);
         }
 
+        crud.getTblSilabos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                int fila = crud.getTblSilabos().getSelectedRow();
+                int columna = crud.getTblSilabos().getSelectedColumn();
+
+                if (esCoordinador && columna == 3) {
+                    System.out.println(crud.getTblSilabos().getValueAt(fila, columna));
+                    if (crud.getTblSilabos().getValueAt(fila, columna).equals(true)) {
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna-1).toString()), 1);
+                    } else {
+
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna-1).toString()), 0);
+                    }
+                }
+            }
+
+        });
+
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
 
@@ -99,14 +130,14 @@ public class ControladorCRUD {
             int row = crud.getTblSilabos().getSelectedRow();
             if (row != -1) {
 
-                if (seleccionarSilabo(0) != null) {
+                if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(row, 2).equals("Aprobado")) {
                     crud.dispose();
 
                     ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(0), principal, conexion);
 
                     csu.iniciarControlador();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No puede editar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No puede editar silabos  aprobados y/o correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
 
             } else {
@@ -194,7 +225,7 @@ public class ControladorCRUD {
 
             if (esCoordinador) {
                 int idCarrera = new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()).getId();
-                silabosDocente = SilaboBD.consultarCoordinador(conexion, idCarrera,  crud.getTxtBuscar().getText());
+                silabosDocente = SilaboBD.consultarCoordinador(conexion, idCarrera, crud.getTxtBuscar().getText());
             } else {
 
                 silabosDocente = SilaboBD.consultar(conexion, parametros);
@@ -208,15 +239,26 @@ public class ControladorCRUD {
             for (SilaboMD smd : silabosDocente) {
 
                 String estado = null;
+                Boolean estado2=null;
                 if (smd.getEstadoSilabo() == 0) {
                     estado = "Por aprobar";
+                    estado2 = false;
+                }else{
+                    estado = "Aprobado";
+                    estado2=true;
                 }
 
-                modeloTabla.addRow(new Object[]{
+                
+                
+                    modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
                     smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
                     estado,
-                    smd.getIdSilabo()});
+                    smd.getIdSilabo(),
+                    estado2
+                });
+                
+                
 
             }
 
@@ -268,14 +310,14 @@ public class ControladorCRUD {
 
     public void eliminarSilabo() {
 
-        if (seleccionarSilabo(0) != null) {
+        if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(crud.getTblSilabos().getSelectedRow(), 2).equals("Aprobado"))  {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 new SilaboBD(conexion).eliminar(seleccionarSilabo(0));
                 JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No puede eliminar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No puede eliminar silabos aprobados y/o correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
 
         }
 

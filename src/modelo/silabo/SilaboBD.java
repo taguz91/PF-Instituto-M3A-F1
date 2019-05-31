@@ -296,14 +296,16 @@ public class SilaboBD extends SilaboMD {
 
     }
 
-    public void aprobar(SilaboMD s) {
+    public void aprobar(int silabo, int estado) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
-                    + "	SET estado_silabo=1"
+                    + "	SET estado_silabo=?"
                     + "	WHERE id_silabo=?");
 
-            st.setInt(1, s.getIdSilabo());
+            st.setInt(1, estado);
+            st.setInt(2, silabo);
+            
 
             st.executeUpdate();
             System.out.println(st);

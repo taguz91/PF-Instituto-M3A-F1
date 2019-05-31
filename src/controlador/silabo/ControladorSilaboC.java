@@ -473,7 +473,7 @@ public class ControladorSilaboC {
             @Override
             public void mouseClicked(MouseEvent me) {
                 
-                 int  limite=110;
+               int  limite=110;
                if(gestion.getTxtNuevaEstrategia().getText().length()<=limite){
                 
                 boolean existe = false;
