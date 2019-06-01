@@ -469,7 +469,7 @@ public class FrmAsistenciaCTR {
             for (int i = 0; i < jTbl.getRowCount(); i++) {
                 System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
-                if (faltas > 0) {
+                
                     System.out.println("Hay faltas");
                     System.out.println("num faltas getFaltas() " + listaNotas.get(i).getFaltas());
                     if (listaNotas.get(i).getFaltas() == 0) {
@@ -481,14 +481,7 @@ public class FrmAsistenciaCTR {
                         asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
                         desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
                     }
-                } else {
-                    if (listaNotas.get(i).getFaltas() > 0) {
-                        System.out.println("Se elimina los registros ");
-                        //Eliminamossss la que se pone 0 
-                        asistenciaBD.eliminar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2]);
-                       desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
-                    }
-                }
+              
             }
 
         } else {

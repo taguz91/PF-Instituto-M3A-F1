@@ -472,7 +472,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"AlumnoCurso\".almn_curso_nota_final,\n"
                 + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
                 + "\"public\".\"AlumnoCurso\".id_curso, \n"
-                + "(SELECT COUNT(*) FROM public.\"Asistencia\"  "
+                + "(SELECT SUM(public.\"Asistencia\".numero_faltas) FROM public.\"Asistencia\"  "
                 + " WHERE public.\"Asistencia\".id_almn_curso = public.\"AlumnoCurso\".id_almn_curso "
                 + "AND fecha_asistencia = '" + fecha + "')"
                 + "FROM\n"
