@@ -98,7 +98,7 @@ public class Controlador_plan_clases {
            cp.iniciarControlaador();
             
          });
-          PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su estrategia.......");
+          PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su descripción.......");
            IniciaPlanClase(silabo, curso, unidadsilabo);
           
       

@@ -465,29 +465,23 @@ public class FrmAsistenciaCTR {
 
     private void GuardarFaltas() {
         if (Validar()) {
+            System.out.println("Las faltas estan correctas");
             for (int i = 0; i < jTbl.getRowCount(); i++) {
-                String fecha_insert = vista.getCmbDiaClase().getSelectedItem().toString();
-                String[] diaArray = fecha_insert.split(" | ");
                 System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
-                if (faltas > 0) {
-
+                
+                    System.out.println("Hay faltas");
+                    System.out.println("num faltas getFaltas() " + listaNotas.get(i).getFaltas());
                     if (listaNotas.get(i).getFaltas() == 0) {
                         asistenciaBD.insertar(listaNotas.get(i).getId(),
                                 vista.getCmbDiaClase().getSelectedItem().
                                         toString().split(" | ")[2], faltas);
-                        JOptionPane.showMessageDialog(vista, "Los datos se han guardado exitosamente");
+                         desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
                     } else {
-                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
                         asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                        desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
                     }
-                } else {
-                    if (listaNotas.get(i).getFaltas() > 0) {
-                        //Eliminamossss la que se pone 0 
-                        asistenciaBD.eliminar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2]);
-                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente E");
-                    }
-                }
+              
             }
 
         } else {
