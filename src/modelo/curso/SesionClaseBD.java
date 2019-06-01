@@ -18,10 +18,10 @@ import modelo.persona.DocenteMD;
  */
 public class SesionClaseBD extends SesionClaseMD {
 
-    private  ConectarDB conecta;
-     private ConnDBPool pool;
+    private ConectarDB conecta;
+    private ConnDBPool pool;
     private ResultSet rst;
-     private Connection conn;
+    private Connection conn;
     private String sql, nsql;
 
     public SesionClaseBD(ConectarDB conecta) {
@@ -30,11 +30,10 @@ public class SesionClaseBD extends SesionClaseMD {
 
     public SesionClaseBD() {
     }
-    
+
     {
         pool = new ConnDBPool();
     }
-    
 
     public void ingresar() {
         nsql = "INSERT INTO public.\"SesionClase\"(\n"
@@ -199,7 +198,8 @@ public class SesionClaseBD extends SesionClaseMD {
     public ArrayList<SesionClaseMD> cargarHorarioCurso(CursoMD curso) {
         sql = "SELECT id_sesion, dia_sesion, hora_inicio_sesion, hora_fin_sesion \n"
                 + "	FROM public.\"SesionClase\" \n"
-                + "	WHERE id_curso = " + curso.getId() + ";";
+                + "	WHERE id_curso = " + curso.getId() + " "
+                + " ORDER BY dia_sesion;";
         ArrayList<SesionClaseMD> sesiones = new ArrayList<>();
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
@@ -346,25 +346,25 @@ public class SesionClaseBD extends SesionClaseMD {
         ArrayList<SesionClaseMD> diasClase = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(sql, conn, null);
-      
-            try {
-                while (rst.next()) {
-                    SesionClaseMD s = new SesionClaseMD();
-                    s.setDia(rst.getInt("dia_sesion"));
-                    s.setNumeroDias(rst.getInt(1));
-                    diasClase.add(s);
-                     System.out.println("%%%%%%%%%%%%%");
-                    System.out.println("Resultado Obtenido en Query  " + rst.getInt(1));
-                     System.out.println("%%%%%%%%%%%%%");
-                }
-              
-                return diasClase;
-            } catch (SQLException e) {
+
+        try {
+            while (rst.next()) {
+                SesionClaseMD s = new SesionClaseMD();
+                s.setDia(rst.getInt("dia_sesion"));
+                s.setNumeroDias(rst.getInt(1));
+                diasClase.add(s);
+                System.out.println("%%%%%%%%%%%%%");
+                System.out.println("Resultado Obtenido en Query  " + rst.getInt(1));
+                System.out.println("%%%%%%%%%%%%%");
+            }
+
+            return diasClase;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             pool.close(conn);
         }
         return diasClase;
-        
+
     }
 }
