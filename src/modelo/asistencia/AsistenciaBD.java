@@ -125,8 +125,7 @@ public class AsistenciaBD extends AsistenciaMD {
         return d;
     }
 
-    
-     public synchronized boolean eliminar(int id_almn_curso, String fecha) {
+    public synchronized boolean eliminar(int id_almn_curso, String fecha) {
         new Thread(() -> {
             String DELETE = "DELETE \n"
                     + "FROM \"public\".\"Asistencia\"\n"
@@ -138,5 +137,23 @@ public class AsistenciaBD extends AsistenciaMD {
         }).start();
 
         return ejecutarAsis;
+    }
+
+    public synchronized boolean eliminarACursoDia(int idCurso, String fecha) {
+        String DELETE = "DELETE FROM public.\"Asistencia\"\n"
+                + "WHERE id_almn_curso IN (\n"
+                + "	SELECT id_almn_curso\n"
+                + "	FROM public.\"AlumnoCurso\"\n"
+                + "	WHERE id_curso = " + idCurso + "\n"
+                + ") AND fecha_asistencia = '" + fecha + "';";
+
+        System.out.println("------------------------------------");
+        System.out.println("D E L E T E ");
+        System.out.println(DELETE);
+        System.out.println("------------------------------------");
+
+        conn = pool.getConnection();
+
+        return pool.ejecutar(DELETE, conn, null) == null;
     }
 }

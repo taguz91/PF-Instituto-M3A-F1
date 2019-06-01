@@ -487,8 +487,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Cursos\".id_docente = ? AND\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = ? AND\n"
                 + "\"public\".\"Cursos\".curso_nombre = ? AND\n"
-                + "\"public\".\"Materias\".materia_nombre = ?\n"
-                //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"
+                + "\"public\".\"Materias\".materia_nombre = ? AND \n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_activo = TRUE \n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
 
