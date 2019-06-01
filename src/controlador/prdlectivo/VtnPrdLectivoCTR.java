@@ -4,7 +4,9 @@ import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
@@ -15,6 +17,9 @@ import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 
@@ -59,6 +64,7 @@ public class VtnPrdLectivoCTR extends DCTR {
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
         vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());
+        vtnPrdLectivo.getBtnListaDocentesPeriodos().addActionListener(e -> ListaDocentesPeriodos());
         //Validacion del buscador
         vtnPrdLectivo.getTxt_Buscar().addKeyListener(new TxtVBuscador(vtnPrdLectivo.getTxt_Buscar(),
                 vtnPrdLectivo.getBtnBuscar()));
@@ -90,7 +96,7 @@ public class VtnPrdLectivoCTR extends DCTR {
     public void filtrarCarreras() {
         String nombre;
         int idCarrera = 0;
-        List<PeriodoLectivoMD> lista;
+//        List<PeriodoLectivoMD> periodos;
         if (vtnPrdLectivo.getCmbx_Filtrar().getSelectedIndex() > 0) {
             nombre = vtnPrdLectivo.getCmbx_Filtrar().getSelectedItem().toString();
             for (int i = 0; i < carreras.size(); i++) {
@@ -98,8 +104,8 @@ public class VtnPrdLectivoCTR extends DCTR {
                     idCarrera = carreras.get(i).getId();
                 }
             }
-            lista = bdPerLectivo.llenarPeriodosxCarreras(idCarrera);
-            llenarTabla(lista);
+            periodos = bdPerLectivo.llenarPeriodosxCarreras(idCarrera);
+            llenarTabla(periodos);
         } else {
             llenarTabla(periodos);
         }
@@ -258,7 +264,25 @@ public class VtnPrdLectivoCTR extends DCTR {
             }
         }
     }
-
+ public void ListaDocentesPeriodos() {
+        JasperReport jr;
+        String path = "/vista/reportes/repListaDocentesPeriodos.jasper";
+       int posFila = vtnPrdLectivo.getTblPrdLectivo().getSelectedRow();
+        if (posFila >= 0) {
+            try {
+                Map parametro = new HashMap();
+                parametro.put("periodo", periodos.get(posFila).getId_PerioLectivo());
+                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Lista de Docente por Periodo Lectivo");
+                System.out.println(parametro);
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "error" + ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione primero una fila de la tabla");
+        }
+            
+        }
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
         

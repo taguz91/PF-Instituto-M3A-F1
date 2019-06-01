@@ -66,4 +66,32 @@ public class CarrerasBDS extends CarreraMD {
 
     }
 
+    public CarreraMD retornaCarreraCoordinador(String username) {
+        CarreraMD carrera = null;
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT c.id_carrera, c.carrera_nombre FROM \"Carreras\" c \n"
+                    + "JOIN \"Docentes\" d ON c.id_docente_coordinador=d.id_docente\n"
+                    + "JOIN \"Personas\" p ON p.id_persona=d.id_persona\n"
+                    + "JOIN \"Usuarios\" u ON u.id_persona=p.id_persona\n"
+                    + "WHERE u.usu_username=?");
+            
+            st.setString(1, username);
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                carrera = new CarreraMD();
+                
+                carrera.setId(rs.getInt(1));
+                carrera.setNombre(rs.getString(2));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CarrerasBDS.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return carrera;
+    }
+
 }

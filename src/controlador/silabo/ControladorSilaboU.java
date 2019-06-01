@@ -232,7 +232,8 @@ public class ControladorSilaboU {
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-
+               int  limite=110;
+               if(gestion.getTxtNuevaEstrategia().getText().length()<=limite){
                 boolean existe = false;
 
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
@@ -264,7 +265,9 @@ public class ControladorSilaboU {
                 gestion.getLblGuardarEstrategia().setEnabled(false);
 
                 cargarEstrategias(seleccionarUnidad());
-
+               }else{
+                    JOptionPane.showMessageDialog(null, "El texto excede el numero máximo de caracteres! Ingrese de nuevo");
+               }
             }
 
         });

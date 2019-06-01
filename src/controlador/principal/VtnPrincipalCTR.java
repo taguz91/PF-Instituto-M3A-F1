@@ -569,7 +569,6 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
-        JOptionPane.showMessageDialog(vtnPrin, "¡¡Sube de Nivel!!...Actualiza tu cuenta a PREMIUM");
         FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {

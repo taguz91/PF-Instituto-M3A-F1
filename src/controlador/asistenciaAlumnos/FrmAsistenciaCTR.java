@@ -312,14 +312,16 @@ public class FrmAsistenciaCTR {
     }
 
     public boolean Validar() {
-        boolean correcto = false;
+        boolean correcto = true;
         int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
+        System.out.println("dia obtenido de parte de cons " + d);
         int numero = asistenciaBD.numHorasPorDia(listaNotas.get(0).getCurso().getId(), d);
+        System.out.println("######################### " + numero);
         for (int i = 0; i < jTbl.getRowCount(); i++) {
 
             int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
             if (faltas > numero) {
-                correcto = true;
+                correcto = false;
                 break;
             }
         }
@@ -399,7 +401,7 @@ public class FrmAsistenciaCTR {
                     getIdDocente(), getIdPeriodoLectivo(), fecha);
 
             listaNotas.forEach(la -> {
-                Object[] v = {1,
+                Object[] v = {tabla.getRowCount() + 1,
                     la.getAlumno().getIdentificacion(),
                     la.getAlumno().getPrimerApellido(),
                     la.getAlumno().getSegundoApellido(),
@@ -442,39 +444,47 @@ public class FrmAsistenciaCTR {
 
     // Agregar Filas 
     // agregar a la tabla asistencia
-    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
-        return (obj) -> {
+//    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+//        return (obj) -> {
+//
+//            // System.out.println(obj);
+//            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+//                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
+//                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
+//        };
+//    }
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+        return (obj, tabla) -> {
 
             // System.out.println(obj);
-            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
+            tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
+            return null;
         };
     }
 
     private void GuardarFaltas() {
         if (Validar()) {
+            System.out.println("Las faltas estan correctas");
             for (int i = 0; i < jTbl.getRowCount(); i++) {
-                String fecha_insert = vista.getCmbDiaClase().getSelectedItem().toString();
-                String[] diaArray = fecha_insert.split(" | ");
                 System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
-                if (faltas > 0) {
-
+                
+                    System.out.println("Hay faltas");
+                    System.out.println("num faltas getFaltas() " + listaNotas.get(i).getFaltas());
                     if (listaNotas.get(i).getFaltas() == 0) {
                         asistenciaBD.insertar(listaNotas.get(i).getId(),
-                                vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                                vista.getCmbDiaClase().getSelectedItem().
+                                        toString().split(" | ")[2], faltas);
+                         desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
                     } else {
-                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
                         asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
+                        desktop.getLblEstado().setText("Los datos se han actualizado exitosamente");
                     }
-
-                }
-
-                //asistenciaBD.editar(faltas);
+              
             }
 
-            JOptionPane.showMessageDialog(vista, "Los datos se han guardado exitosamente");
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
                     + " Verifique el numero de Faltas insertado"
@@ -516,7 +526,7 @@ public class FrmAsistenciaCTR {
 
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
-            //cargarTabla(tablaTrad, agregarFilasTrad());
+            cargarTabla(tablaTrad, agregarFilasTrad());
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
