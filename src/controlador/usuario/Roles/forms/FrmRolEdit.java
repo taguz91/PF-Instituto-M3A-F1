@@ -5,23 +5,34 @@ import controlador.principal.VtnPrincipalCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import modelo.usuario.RolBD;
 
 /**
  *
  * @author MrRainx
  */
-public class FrmRolAdd extends AbstractForm {
+public class FrmRolEdit extends AbstractForm {
 
-    public FrmRolAdd(VtnPrincipalCTR desktop, VtnRolCTR vtnPadre) {
+    private int pk;
+
+    public FrmRolEdit(VtnPrincipalCTR desktop, VtnRolCTR vtnPadre) {
         super(desktop, vtnPadre);
+    }
+
+    public void setModelo(RolBD modelo) {
+        vista.setTitle("Editar Rol");
+        this.modelo = modelo;
+        this.pk = modelo.getId();
+        vista.getTxtNombre().setText(modelo.getNombre());
+        vista.getTxtObservaciones().setText(modelo.getObservaciones());
     }
 
     @Override
     protected void btnGuardar(ActionEvent e) {
-        if (!vista.getTxtNombre().getText().isEmpty()) {
 
-            if (setObj().insertar()) {
-                String message = "SE HA AGREGADO EL ROL: " + modelo.getNombre();
+        if (!vista.getTxtNombre().getText().isEmpty()) {
+            if (setObj().editar(pk)) {
+                String message = "SE HA EDITADO EL ROL: " + modelo.getNombre();
                 Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
                 vtnPadre.cargarTabla();
                 vista.dispose();
@@ -32,5 +43,7 @@ public class FrmRolAdd extends AbstractForm {
         } else {
             JOptionPane.showMessageDialog(vista, "RELLENE EL CAMPO DE NOMBRE!!");
         }
+
     }
+
 }

@@ -4,6 +4,7 @@ import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmRolAdd;
 import controlador.accesos.FrmAccesosAddCTR;
 import controlador.principal.VtnPrincipalCTR;
+import controlador.usuario.Roles.forms.FrmRolEdit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -71,6 +72,8 @@ public class VtnRolCTR {
             }
         });
         vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisos(e));
+        vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
+        vista.getBtnEditar().addActionListener(e -> btnEditar(e));
 
     }
 
@@ -89,7 +92,7 @@ public class VtnRolCTR {
     }
 
     //Metodos de Apoyo
-    private void cargarTabla() {
+    public void cargarTabla() {
         if (cargarTabla) {
 
             tabla.setRowCount(0);
@@ -102,7 +105,7 @@ public class VtnRolCTR {
 
             listaRoles = modelo.selectAll();
 
-            listaRoles.stream().forEach(agregarFila());
+            listaRoles.stream().forEach(agregarFilas());
 
             cargarTabla = true;
 
@@ -116,7 +119,7 @@ public class VtnRolCTR {
 
     }
 
-    private Consumer<RolMD> agregarFila() {
+    private Consumer<RolMD> agregarFilas() {
 
         return obj -> {
             tabla.addRow(new Object[]{
@@ -130,11 +133,13 @@ public class VtnRolCTR {
     }
 
     private void cargarTablaFilter(String Aguja) {
-        
-        if (cargarTabla) {
-            
-        }
-        
+
+        listaRoles.stream()
+                .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
+                .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))
+                .collect(Collectors.toList())
+                .forEach(agregarFilas());
+
     }
 
     private List<RolBD> getSeleccionados() {
@@ -156,6 +161,20 @@ public class VtnRolCTR {
             listaSeleccionados.forEach(obj -> {
                 FrmAccesosAddCTR form = new FrmAccesosAddCTR(desktop);
                 form.setRol(obj);
+                form.Init();
+            });
+        } else {
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
+        }
+    }
+
+    private void btnEditar(ActionEvent e) {
+        List<RolBD> listaSeleccionados = getSeleccionados();
+        if (!listaSeleccionados.isEmpty()) {
+            listaSeleccionados.forEach(obj -> {
+                FrmRolEdit form = new FrmRolEdit(desktop, this);
+                System.out.println("------->" + obj.getId());
+                form.setModelo(obj);
                 form.Init();
             });
         } else {

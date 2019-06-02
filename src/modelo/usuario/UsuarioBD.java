@@ -1,12 +1,15 @@
 package modelo.usuario;
 
+import controlador.Libraries.ImgLib;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import modelo.ConnDBPool;
 import modelo.persona.PersonaMD;
 
@@ -77,7 +80,6 @@ public final class UsuarioBD extends UsuarioMD {
                 + "ORDER BY usu_username";
 
         System.out.println(SELECT);
-        
 
         return selectSimple(SELECT, null);
 
@@ -123,7 +125,8 @@ public final class UsuarioBD extends UsuarioMD {
                 + "\"public\".\"Personas\".persona_primer_apellido,\n"
                 + "\"public\".\"Personas\".persona_segundo_apellido,\n"
                 + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre\n"
+                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
+                + "\"public\".\"Personas\".persona_foto\n"
                 + "FROM\n"
                 + "\"public\".\"Usuarios\"\n"
                 + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
@@ -142,6 +145,7 @@ public final class UsuarioBD extends UsuarioMD {
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
 
             while (rs.next()) {
+                
                 usuario = new UsuarioBD();
                 usuario.setUsername(getUsername());
 
@@ -153,6 +157,8 @@ public final class UsuarioBD extends UsuarioMD {
                 persona.setSegundoApellido(rs.getString("persona_segundo_apellido"));
                 persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
                 persona.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+
+                persona.setFoto(ImgLib.byteToImage(rs.getBytes("persona_foto")));
 
                 usuario.setPersona(persona);
 

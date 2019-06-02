@@ -36,19 +36,16 @@ public class Effects {
     }
 
     public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
-        new Thread(() -> {
-            try {
-                centerFrame(component, desktop);
-                desktop.add(component);
-                component.setSelected(true);
-                component.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            centerFrame(component, desktop);
+            desktop.add(component);
+            component.setSelected(true);
+            component.setVisible(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            System.out.println("-------THREADS-------->" + Thread.activeCount());
-        }).start();
-
+        System.out.println("-------THREADS-------->" + Thread.activeCount());
     }
 
     public static synchronized void eliminarThread(Thread thread) {
