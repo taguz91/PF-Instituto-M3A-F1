@@ -3,20 +3,15 @@ package controlador.Libraries;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReadParam;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -89,33 +84,6 @@ public class ImgLib {
         return JfileChooser.getSelectedFile().toPath().toString();
     }
 
-    public static Image getImage(byte[] bytes, boolean isThumbnail) {
-
-        try {
-            ByteArrayInputStream byteAIS = new ByteArrayInputStream(bytes);
-            Iterator readers = ImageIO.getImageReadersByFormatName("PNG");
-            ImageReader reader = (ImageReader) readers.next();
-
-            Object souce = byteAIS;
-
-            ImageInputStream iIS = ImageIO.createImageInputStream(souce);
-
-            reader.setInput(iIS, true);
-
-            ImageReadParam param = reader.getDefaultReadParam();
-
-            if (isThumbnail) {
-                param.setSourceSubsampling(4, 4, 0, 0);
-            }
-
-            return reader.read(0, param);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-
-    }
-
     private static BufferedImage toBufferedImage(Image image) {
         if (image instanceof BufferedImage) {
             return (BufferedImage) image;
@@ -125,22 +93,6 @@ public class ImgLib {
         g2D.drawImage(image, 0, 0, null);
         g2D.dispose();
         return buffImage;
-
-    }
-
-    public static Image getImageFromFileInputStrem(FileInputStream file) {
-
-        BufferedImage bffImage = null;
-        ImageIcon image = null;
-        try {
-            bffImage = ImageIO.read(file);
-            image = new ImageIcon(bffImage);
-
-        } catch (IOException ex) {
-            Logger.getLogger(ImgLib.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return image.getImage();
 
     }
 
@@ -157,9 +109,7 @@ public class ImgLib {
 
                 ImageIO.write(img, "PNG", byteAOS);
 
-                byte[] imagByte = byteAOS.toByteArray();
-
-                base = Base64.encodeBytes(imagByte);
+                base = Base64.encodeBytes(byteAOS.toByteArray());
 
             } catch (IOException e) {
                 System.out.println(e.getMessage());
