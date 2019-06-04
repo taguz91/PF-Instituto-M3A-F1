@@ -261,7 +261,7 @@ BEGIN
       ELSIF materia ILIKE '%FASE PRACTICA%' THEN
         RAISE NOTICE 'Es FASE PRACTICA';
         RAISE NOTICE 'Tiene tres notas ';
-        IF 
+        IF
         reg_n.tipo_nota_nombre SIMILAR TO '%(N. TUTOR EMPRESARIAL|N. TUTOR ACADEMICO|DESEMPEÑO GENERAL EN LA INSTITUCION FORMADORA)%' THEN
           RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
           ingresados := ingresados + 1;
@@ -270,7 +270,7 @@ BEGIN
       ELSE
         RAISE NOTICE 'Tiene TODAS LAS NOTAS';
         IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL',
-        'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL', 
+        'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL',
         'DESEMPEÑO GENERAL EN LA INSTITUCION FORMADORA')
         AND COALESCE(materia, '') NOT SIMILAR TO '%(PTI|FASE PRACTICA)%' THEN
             RAISE NOTICE 'Tiene todas las notas, %', reg_n.id_tipo_nota;
@@ -299,7 +299,7 @@ $detalle_notas$ LANGUAGE plpgsql;
 
 
 
---INGRESANDO Notas  
+--INGRESANDO Notas
 
 --Iniciamos las notas al matricular
 CREATE OR REPLACE FUNCTION probar_notas(periodo INTEGER)
@@ -400,21 +400,21 @@ BEGIN
       ELSIF materia ILIKE '%FASE PRACTICA%' THEN
         RAISE NOTICE 'Es FASE PRACTICA';
         RAISE NOTICE 'Tiene tres notas ';
-        IF 
+        IF
         reg_n.tipo_nota_nombre SIMILAR TO '%(N. TUTOR EMPRESARIAL|N. TUTOR ACADEMICO|DESEMPEÑO GENERAL EN LA INSTITUCION FORMADORA)%' THEN
           RAISE NOTICE 'Es fase practica, %', reg_n.id_tipo_nota;
           INSERT INTO public."Notas"(id_almn_curso, id_tipo_nota)
           SELECT id_almn_curso, reg_n.id_tipo_nota
           FROM public."AlumnoCurso"
           WHERE id_curso = curso;
-          
+
           ingresados := ingresados + 1;
         END IF;
 
       ELSE
         RAISE NOTICE 'Tiene TODAS LAS NOTAS';
         IF reg_n.tipo_nota_nombre NOT IN('NOTA FINAL',
-        'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL', 
+        'PTI', 'SUBTOTAL FASE PRACTICA', 'NOTA FINAL TOTAL',
         'DESEMPEÑO GENERAL EN LA INSTITUCION FORMADORA')
         AND COALESCE(materia, '') NOT SIMILAR TO '%(PTI|FASE PRACTICA)%' THEN
             RAISE NOTICE 'Tiene todas las notas, %', reg_n.id_tipo_nota;
