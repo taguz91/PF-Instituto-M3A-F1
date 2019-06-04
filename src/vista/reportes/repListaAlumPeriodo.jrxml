@@ -18,6 +18,7 @@
               pr.id_prd_lectivo = c.id_prd_lectivo AND
                pr.prd_lectivo_nombre = $P{periodo} AND
                ac.id_curso = c.id_curso 
+AND almn_curso_activo=true
                ORDER BY  apellidos;]]>
 	</queryString>
 	<field name="apellidos" class="java.lang.String"/>

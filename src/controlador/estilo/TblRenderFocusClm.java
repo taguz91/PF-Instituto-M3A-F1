@@ -29,12 +29,14 @@ public class TblRenderFocusClm extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
             boolean focused, int row, int column) {
         super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-        
+
         this.lbl = new JLabel();
         iniciaLbl();
 
         if (value != null) {
-            lbl.setText(value.toString().split("%")[1]);
+            if (value.toString().contains("%")) {
+                lbl.setText(value.toString().split("%")[1]);
+            }
         }
 
         if (focused) {

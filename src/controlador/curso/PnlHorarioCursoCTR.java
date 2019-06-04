@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
@@ -68,6 +70,7 @@ public class PnlHorarioCursoCTR {
     public void iniciar() {
         iniciaTbl();
         eliminarFilasSinDatos();
+        eliminarColumnasSinDatos();
     }
 
     private void iniciaTbl() {
@@ -220,8 +223,9 @@ public class PnlHorarioCursoCTR {
     }
 
     private void eliminarFilasSinDatos() {
-        boolean borrar = true;
+        boolean borrar;
         for (int i = 0; i < mdTbl.getRowCount(); i++) {
+            borrar = true;
             for (int j = 1; j < mdTbl.getColumnCount(); j++) {
                 if (mdTbl.getValueAt(i, j) != null) {
                     borrar = false;
@@ -230,6 +234,24 @@ public class PnlHorarioCursoCTR {
             if (borrar) {
                 mdTbl.removeRow(i);
                 eliminarFilasSinDatos();
+            }
+        }
+    }
+
+    private void eliminarColumnasSinDatos() {
+        boolean borrar;
+        for (int i = 1; i < pnl.getTblHorario().getColumnCount(); i++) {
+            borrar = true;
+            for (int j = 0; j < mdTbl.getRowCount(); j++) {
+                if (mdTbl.getValueAt(j, i) != null) {
+                    borrar = false;
+                }
+            }
+            if (borrar) {
+                TableColumnModel tcm = pnl.getTblHorario().getColumnModel();
+                TableColumn cb = tcm.getColumn(i);
+                pnl.getTblHorario().removeColumn(cb);
+                eliminarColumnasSinDatos();
             }
         }
     }

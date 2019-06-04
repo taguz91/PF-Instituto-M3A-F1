@@ -232,7 +232,8 @@ public class ControladorSilaboU {
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-
+               int  limite=110;
+               if(gestion.getTxtNuevaEstrategia().getText().length()<=limite){
                 boolean existe = false;
 
                 EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
@@ -264,7 +265,9 @@ public class ControladorSilaboU {
                 gestion.getLblGuardarEstrategia().setEnabled(false);
 
                 cargarEstrategias(seleccionarUnidad());
-
+               }else{
+                    JOptionPane.showMessageDialog(null, "El texto excede el numero máximo de caracteres! Ingrese de nuevo");
+               }
             }
 
         });
@@ -1338,30 +1341,18 @@ public class ControladorSilaboU {
         switch (p) {
             case 1:
 
-                for (int j = gestion.getTblAsistidaDocente().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
                 break;
             case 2:
-                for (int j = gestion.getTblAprendizajeColaborativo().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
             case 3:
-                for (int j = gestion.getTblPractica().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
             case 4:
-                for (int j = gestion.getTblAutonoma().getRowCount() - 1; j >= 0; j--) {
-
-                    modeloTabla.removeRow(j);
-                }
+                  modeloTabla.setRowCount(0);
 
                 break;
         }
@@ -1553,12 +1544,20 @@ public class ControladorSilaboU {
     }
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
-
+        System.out.println("ANTESSS ");
+        evaluacionesSilabo.forEach(es -> {
+            System.out.println(es.getInstrumento());
+        });
         evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
+        System.out.println("DESPUESSSS ");
+        evaluacionesSilabo.forEach(es -> {
+            System.out.println(es.getInstrumento());
+        });
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
         gestion.getBtnGuardar().setEnabled(true);
+        
     }
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
@@ -1662,6 +1661,7 @@ public class ControladorSilaboU {
 
                 //if (aux.equals(silabo.getIdSilabo())) {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENRTRAMOS "+umd.getNumeroUnidad());
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                     esd.insertar(evd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
                 }

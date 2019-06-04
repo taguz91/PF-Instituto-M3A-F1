@@ -287,7 +287,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     new Object[]{"Primera Matricula", "Segunda Matricula", "Tercera Matricula",
-                        "Cancelar"}, "Segunda Matricula");
+                        "Completo", "Cancelar"}, "Completo");
             switch (s) {
                 case 0:
                     llamarReporteNumMatricula(1);
@@ -297,6 +297,9 @@ public class VtnMatriculaCTR extends DVtnCTR {
                     break;
                 case 2:
                     llamarReporteNumMatricula(3);
+                    break;
+                case 3:
+                    llamarReporteMatriculados(posPrd);
                     break;
             }
         } else {
@@ -430,6 +433,18 @@ public class VtnMatriculaCTR extends DVtnCTR {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un periodo lectivo.");
+        }
+    }
+
+    private void llamarReporteMatriculados(int posPrd) {
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculasPeriodo.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("periodo", periodos.get(posPrd - 1).getId_PerioLectivo());
+            System.out.println("Parametros: " + parametro);
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
     }
 
