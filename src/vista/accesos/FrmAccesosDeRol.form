@@ -46,8 +46,11 @@
                               <Component id="jLabel1" min="-2" pref="68" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtBuscar" min="-2" pref="240" max="-2" attributes="0"/>
+<<<<<<< HEAD
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnDarTodos" min="-2" max="-2" attributes="0"/>
+=======
+>>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -66,10 +69,16 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="txtBuscar" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="btnDarTodos" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane2" pref="488" max="32767" attributes="0"/>
+=======
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane2" pref="495" max="32767" attributes="0"/>
+>>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="lblResultados" min="-2" pref="25" max="-2" attributes="0"/>
@@ -157,11 +166,14 @@
           <Font name="Dialog" size="14" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
+<<<<<<< HEAD
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnDarTodos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Dar todos"/>
+=======
+>>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
       </Properties>
     </Component>
   </SubComponents>
