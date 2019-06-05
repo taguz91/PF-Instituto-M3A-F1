@@ -7,14 +7,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import vista.accesos.FrmAccesosDeRol;
@@ -62,8 +59,6 @@ public class FrmAccesosAddCTR {
                 cargarTablaFilter(vista.getTxtBuscar().getText().toLowerCase());
             }
         });
-
-        vista.getBtnDarTodos().addActionListener(e -> btnDarTodos(e));
 
         tblPermisos.addTableModelListener(new TableModelListener() {
             boolean active = false;
@@ -144,38 +139,6 @@ public class FrmAccesosAddCTR {
             }
         }).start();
 
-    }
-
-    private void btnDarTodos(ActionEvent e) {
-        if (vista.getBtnDarTodos().getText().equalsIgnoreCase("dar todos")) {
-            listaPermisos.forEach(obj -> {
-                obj.setActivo(true);
-            });
-            editarPermisos();
-            cargarTabla();
-            vista.getBtnDarTodos().setText("Quitar Todos");
-        } else {
-            listaPermisos.forEach(obj -> {
-                obj.setActivo(false);
-            });
-            editarPermisos();
-            cargarTabla();
-            vista.getBtnDarTodos().setText("Dar Todos");
-        }
-
-    }
-
-    private void editarPermisos() {
-        new Thread(() -> {
-            vista.getBtnDarTodos().setEnabled(false);
-            try {
-                CONS.getPool(10).submit(() -> listaPermisos.parallelStream().forEach(obj -> obj.editar())).get();
-                CONS.THREAD_POOL.shutdown();
-            } catch (InterruptedException | ExecutionException ex) {
-                Logger.getLogger(FrmAccesosAddCTR.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            vista.getBtnDarTodos().setEnabled(true);
-        }).start();
     }
 
 }
