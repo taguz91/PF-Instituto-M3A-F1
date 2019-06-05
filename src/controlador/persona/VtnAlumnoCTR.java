@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.PersonaBD;
@@ -121,7 +121,11 @@ public class VtnAlumnoCTR extends DVtnCTR {
 //               }
 //            }
 //        });
+        //vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno()); EN ESTA LINEA DABA ERROR
+        InitPermisos();
+
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> ListaDeAlumnos());
+
     }
 
     //Muestra el Formulario de Registro de Alumno
@@ -367,19 +371,25 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     //Muestra los reportes con todos los Alumnos registrados
-   public void ListaDeAlumnos() {
+    public void ListaDeAlumnos() {
         JasperReport jr;
         String path = "/vista/reportes/repListaAlumnos.jasper";
-            try {
-                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "error" + ex);
-            }
+        try {
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
     }
 
     private void InitPermisos() {
+        vtnAlumno.getBtnEliminar().getAccessibleContext().setAccessibleName("Alumnos-Eliminar");
+        vtnAlumno.getBtnEditar().getAccessibleContext().setAccessibleName("Alumnos-Editar");
+        vtnAlumno.getBtnIngresar().getAccessibleContext().setAccessibleName("Alumnos-Ingresar");
+        vtnAlumno.getBtnReporteAlumnos().getAccessibleContext().setAccessibleName("Alumnos-Reporte-Alumnos");
 
+        CONS.activarBtns(vtnAlumno.getBtnEliminar(), vtnAlumno.getBtnEditar(), vtnAlumno.getBtnIngresar(),
+                vtnAlumno.getBtnReporteAlumnos());
     }
 
 }

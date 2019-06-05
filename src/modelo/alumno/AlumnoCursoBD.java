@@ -11,12 +11,10 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.notas.NotasBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
 /**
@@ -472,7 +470,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"AlumnoCurso\".almn_curso_nota_final,\n"
                 + "\"public\".\"AlumnoCurso\".id_almn_curso,\n"
                 + "\"public\".\"AlumnoCurso\".id_curso, \n"
-                + "(SELECT COUNT(*) FROM public.\"Asistencia\"  "
+                + "(SELECT SUM(public.\"Asistencia\".numero_faltas) FROM public.\"Asistencia\"  "
                 + " WHERE public.\"Asistencia\".id_almn_curso = public.\"AlumnoCurso\".id_almn_curso "
                 + "AND fecha_asistencia = '" + fecha + "')"
                 + "FROM\n"
@@ -487,8 +485,8 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Cursos\".id_docente = ? AND\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = ? AND\n"
                 + "\"public\".\"Cursos\".curso_nombre = ? AND\n"
-                + "\"public\".\"Materias\".materia_nombre = ?\n"
-                //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"
+                + "\"public\".\"Materias\".materia_nombre = ? AND \n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_activo = TRUE \n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
 

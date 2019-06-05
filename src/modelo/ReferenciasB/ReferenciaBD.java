@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 
 public class ReferenciaBD extends ReferenciasMD {
 
@@ -175,5 +176,80 @@ public class ReferenciaBD extends ReferenciasMD {
         return referencias;
 
     }
+public List<PeriodoLectivoMD> mostrarDatos1(ConexionBD conexion) {
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        try {
 
+            String sql = "select id_prd_lectivo,prd_lectivo_nombre from \"PeriodoLectivo\" where current_date<prd_lectivo_fecha_fin;";
+            PreparedStatement st = conexion.getCon().prepareStatement(sql);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                PeriodoLectivoMD m = new PeriodoLectivoMD();
+                m.setId_PerioLectivo(rs.getInt(1));
+                m.setNombre_PerLectivo(rs.getString(2));
+                lista.add(m);
+            }
+            // rs.close();//cerrar conexion cn la bd 
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return lista;
+    }
+  public List<ReferenciasMD> consultarBporperiodo(ConexionBD conexion, int clave) {
+
+        List<ReferenciasMD> referencias = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  distinct r.codigo_referencia,r.descripcion_referencia FROM \"ReferenciaSilabo\" rs join \"Referencias\" r on r.id_referencia=rs.id_referencia \n" +
+"join \"Silabo\" s on rs.id_silabo=s.id_silabo join \"PeriodoLectivo\" pl on pl.id_prd_lectivo=s.id_prd_lectivo where r.tipo_referencia='Base' and \n" +
+"r.existe_en_biblioteca=true and s.id_prd_lectivo=?");
+            st.setInt(1, clave);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                ReferenciasMD tmp = new ReferenciasMD();
+               // tmp.setId_referencia(rs.getInt(1));
+                tmp.setCodigo_referencia(rs.getString(1));
+                tmp.setDescripcion_referencia(rs.getString(2));
+                
+                referencias.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return referencias;
+
+    }
+  public PeriodoLectivoMD retornaPRDlectivo(ConexionBD conexion, String nombre) {
+        int id_periodo = 0;
+        PeriodoLectivoMD m = new PeriodoLectivoMD();
+        try {
+
+            String sql = "select id_prd_lectivo from \"PeriodoLectivo\" where prd_lectivo_nombre=?;";
+            PreparedStatement st = conexion.getCon().prepareStatement(sql);
+            st.setString(1, nombre);
+
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                m.setId_PerioLectivo(rs.getInt(1));
+                //return m;
+            }
+            // rs.close();//cerrar conexion cn la bd 
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return m;
+    }
 }

@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConnDBPool;
 
 /**
@@ -37,89 +35,38 @@ public class AccesosBD extends AccesosMD {
     public AccesosBD() {
     }
 
-    public boolean insertar() {
-
-        String INSERT = "INSERT INTO \"Accesos\" "
-                + " VALUES(?,?,?)";
-
-        Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, getIdAccesos());
-        parametros.put(2, getNombre());
-        parametros.put(3, getDescripcion());
-        conn = pool.getConnection();
-        return pool.ejecutar(INSERT, conn, parametros) == null;
-    }
-
     public List<AccesosBD> SelectAll() {
 
-        String SELECT = "SELECT id_acceso, acc_nombre FROM \"Accesos\" ";
+        String SELECT = "SELECT\n"
+                + "	\"public\".\"Accesos\".id_acceso,\n"
+                + "	\"public\".\"Accesos\".acc_nombre,\n"
+                + "	\"public\".\"Accesos\".acc_descripcion \n"
+                + "FROM\n"
+                + "	\"public\".\"Accesos\"";
 
-        return SelectSimple(SELECT);
-
-    }
-
-    public List<AccesosBD> SelectWhereACCESOROLidRol(int idRol) {
-
-        String SELECT = "SELECT ACC.id_acceso, acc_nombre, acc_descripcion FROM \"Accesos\" ACC INNER JOIN \"AccesosDelRol\" ACC_ROL ON ACC.id_acceso = ACC_ROL.id_acceso WHERE ACC_ROL.id_rol = " + idRol;
-
-        return SelectSimple(SELECT);
-    }
-
-    private List<AccesosBD> SelectSimple(String QUERY) {
-        List<AccesosBD> Lista = new ArrayList<>();
+        List<AccesosBD> lista = new ArrayList<>();
 
         conn = pool.getConnection();
-        rs = pool.ejecutarQuery(QUERY, conn, null);
+
+        rs = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rs.next()) {
                 AccesosBD acceso = new AccesosBD();
                 acceso.setIdAccesos(rs.getInt("id_acceso"));
                 acceso.setNombre(rs.getString("acc_nombre"));
-                Lista.add(acceso);
+                acceso.setDescripcion(rs.getString("acc_descripcion"));
+                lista.add(acceso);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         } finally {
             pool.closeStmt().close(rs).close(conn);
         }
 
-        return Lista;
-    }
+        return lista;
 
-    public List<AccesosBD> selectWhereLIKE(int idRol, String LIKE) {
-        String SELECT = "SELECT\n"
-                + "\"public\".\"Accesos\".acc_nombre\n"
-                + "FROM\n"
-                + "\"public\".\"Accesos\"\n"
-                + "INNER JOIN \"public\".\"AccesosDelRol\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso\n"
-                + "WHERE \n"
-                + "\"AccesosDelRol\".id_rol = ?\n"
-                + "AND \n"
-                + "\"Accesos\".acc_nombre ILIKE '%" + LIKE + "%'";
-
-        List<AccesosBD> Lista = new ArrayList<>();
-
-        Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, idRol);
-
-        conn = pool.getConnection();
-        rs = pool.ejecutarQuery(SELECT, conn, parametros);
-
-        try {
-            while (rs.next()) {
-                AccesosBD acceso = new AccesosBD();
-                acceso.setNombre(rs.getString("acc_nombre"));
-                Lista.add(acceso);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AccesosBD.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            pool.closeStmt().close(rs).close(conn);
-        }
-
-        return Lista;
     }
 
     public boolean editar(String pk) {

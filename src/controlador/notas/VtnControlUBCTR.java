@@ -9,6 +9,7 @@ import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
@@ -82,6 +83,7 @@ public class VtnControlUBCTR {
         cargarComboMaterias();
         InitEventos();
         activarForm(true);
+        InitPermisos();
     }
 
     private void InitEventos() {
@@ -326,4 +328,9 @@ public class VtnControlUBCTR {
     }
 
     // </editor-fold>
+
+    private void InitPermisos() {
+        vista.getBtnReportesUB().getAccessibleContext().setAccessibleName("Notas-Rendimiento-Academico-Reporte UB");
+        CONS.activarBtns(vista.getBtnReportesUB());
+    }
 }

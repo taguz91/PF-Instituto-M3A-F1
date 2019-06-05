@@ -12,8 +12,6 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.propiedades.Propiedades;
 
 /**
@@ -92,14 +90,15 @@ public class ConnDBPool {
 //            System.out.println("*******************************************");
 //            System.out.println("*PreparedStatement ejecutado correctamente*");
 //            System.out.println("*******************************************");
+
+            System.out.println("---->" + stmt.toString());
             return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             close(conn);
             return e;
         } finally {
-            close(conn);
-            closeStmt();
+            closeStmt().close(conn);
         }
     }
 
@@ -150,9 +149,14 @@ public class ConnDBPool {
                             } else if (entry.getValue() instanceof Boolean) {
 
                                 stmt.setBoolean(posicion, (boolean) entry.getValue());
+
+                            } else if (entry.getValue() instanceof Byte[]) {
+
+                                stmt.setBytes(posicion, (byte[]) entry.getValue());
+
                             }
                         } catch (SQLException ex) {
-                            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(ex.getMessage());
                         }
                     }
                 });
@@ -212,6 +216,10 @@ public class ConnDBPool {
 
     public PreparedStatement getStmt() {
         return stmt;
+    }
+
+    public ResultSet getRs() {
+        return rs;
     }
     // </editor-fold>  
 

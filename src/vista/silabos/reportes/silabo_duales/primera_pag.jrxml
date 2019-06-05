@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="683"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
@@ -508,7 +508,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<textFieldExpression><![CDATA[$F{materia_descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="241">
+		<band height="267">
 			<staticText>
 				<reportElement x="10" y="0" width="211" height="20" forecolor="#006699" uuid="609fef1d-d32d-4c0f-a2f0-bfb221a7feea"/>
 				<textElement verticalAlignment="Middle">
@@ -517,7 +517,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<text><![CDATA[5.OBJETIVO DE LA ASIGNATURA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="21" y="20" width="524" height="72" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
+				<reportElement x="21" y="20" width="524" height="98" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -525,17 +525,20 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_objetivo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="39" y="92" width="168" height="20" forecolor="#006699" uuid="88f37a7b-4666-4fc0-8567-eb308c548ea9"/>
+				<reportElement x="37" y="118" width="168" height="20" forecolor="#006699" uuid="88f37a7b-4666-4fc0-8567-eb308c548ea9"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[5.1. OBJETIVOS ESPECÍFICOS]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="21" y="112" width="524" height="129" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
+				<reportElement x="21" y="138" width="524" height="129" uuid="97d4969c-263a-4d49-a2d4-0e86f5b32ad7"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -543,6 +546,9 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
 			</textField>
 		</band>

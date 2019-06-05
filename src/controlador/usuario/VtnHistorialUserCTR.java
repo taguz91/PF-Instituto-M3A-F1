@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.estilo.TblEstilo;
 import modelo.usuario.HistorialUsuarioBD;
 import modelo.usuario.HistorialUsuarioMD;
@@ -93,6 +94,7 @@ public class VtnHistorialUserCTR extends DVtnCTR {
         //Accion para el reporte
         vtnH.getBtnReporte().addActionListener(e -> llamaReporteHistorialUser());
         ctrPrin.agregarVtn(vtnH);
+        InitPermisos();
     }
 
     /**
@@ -414,6 +416,13 @@ public class VtnHistorialUserCTR extends DVtnCTR {
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(vtnH, "Error: " + ex.getMessage());
         }
+    }
+
+    private void InitPermisos() {
+        vtnH.getBtnReporte().getAccessibleContext().setAccessibleName("Historial-Usuarios-Reporte");
+   
+       
+        CONS.activarBtns(vtnH.getBtnReporte());
     }
 
 }

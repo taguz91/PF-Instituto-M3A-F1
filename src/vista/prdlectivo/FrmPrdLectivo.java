@@ -6,7 +6,6 @@
 package vista.prdlectivo;
 
 import com.toedter.calendar.JDateChooser;
-import datechooser.beans.DateChooserCombo;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;

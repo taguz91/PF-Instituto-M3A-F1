@@ -28,7 +28,7 @@ public class FrmUsuarioUpdt extends AbstracForm {
         if (Pk.equals("ROOT")) {
             vista.getTxtUsername().setEnabled(false);
         }
-        vista.setTitle("EDITAR USUARIOS");
+        vista.setTitle("EDITAR USUARIO");
         vista.getTxtUsername().setText(modelo.getUsername());
         vista.getCmbPersona().setSelectedItem(listaPersonas
                 .entrySet()
@@ -47,7 +47,7 @@ public class FrmUsuarioUpdt extends AbstracForm {
                 Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
                 vista.dispose();
                 destruirVariables();
-                vtnPadre.cargarTabla(modelo.selectAll());
+                //vtnPadre.cargarTabla(modelo.selectAll());
             } else {
                 JOptionPane.showMessageDialog(vista, "HA OCURRIDO UN ERROR");
             }

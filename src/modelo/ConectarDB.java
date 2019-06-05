@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.propiedades.Propiedades;
 import net.sf.jasperreports.engine.JRException;
@@ -69,7 +67,6 @@ public class ConectarDB {
     }
 
     private String generarURL() {
-
         String ip = Propiedades.getPropertie("ip");
         String port = Propiedades.getPropertie("port");
         String database = Propiedades.getPropertie("database");
@@ -170,17 +167,13 @@ public class ConectarDB {
 
     public Connection getConecction(String mensaje) {
         try {
-            System.out.println("~$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$~");
-            System.out.println("OBTENEMOS CONEXION " + mensaje);
             if (ct.isClosed()) {
-                System.out.println("La conexion fue cerrada no podemos retornarla. Debemos abrir una nueva");
                 ctrCt = new ConexionesCTR(ct);
                 ctrCt.iniciar("Get Connection Clase: ConectarBD");
                 ctrCt.agregarSegundos(60);
                 ct = DriverManager.getConnection(url, user, pass);
                 return ct;
             } else {
-                System.out.println("Esta abierta la conexion.");
                 ctrCt.recetear("Se recetea al devolver la conexion.");
                 ctrCt.agregarSegundos(60);
                 return ct;
@@ -206,30 +199,6 @@ public class ConectarDB {
         }
     }
 
-    /*
-    public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
-        new Thread(() -> {
-            try {
-                vtnPrin.getLblEstado().setText("Ejecutando reporte: " + titulo);
-                if (ct.isClosed()) {
-                    ct = DriverManager.getConnection(url, user, pass);
-                    ctrCt = new ConexionesCTR(ct);
-                    ctrCt.iniciar("Mostrar reporte desde ConectarBD");
-                }
-                JasperPrint print = JasperFillManager.fillReport(jr, parametro, ct);
-                JasperViewer view = new JasperViewer(print, false);
-                view.setVisible(true);
-                view.setTitle(titulo);
-            } catch (SQLException ex) {
-                ctrCt.matarHilo();
-                JOptionPane.showMessageDialog(null, "Error en consulta: " + ex.getMessage());
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "Error en reporte: " + ex);
-            } finally {
-                ctrCt.recetear("Terminando de imprimir un reporte.");
-            }
-        }).start();
-    }*/
     //Mostramos el reporte con el pool
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         new Thread(() -> {
@@ -309,11 +278,14 @@ public class ConectarDB {
 
     public ResultSet sql(PreparedStatement ps) {
         try {
+            cursorCarga();
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
             System.out.println("No se pudo ejecutar el sql: " + e.getMessage());
             return null;
+        } finally {
+            cursorNormal();
         }
     }
 
@@ -328,7 +300,7 @@ public class ConectarDB {
                 callStmt.close();
                 callStmt.getConnection().close();
             } catch (SQLException ex) {
-                Logger.getLogger(ConectarDB.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("No pudimos cerrar el callable statement. " + ex.getMessage());
             }
         }
     }

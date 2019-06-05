@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.alumno.AlumnoCarreraBD;
 import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
@@ -146,6 +146,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         InitPermisosTester();
 
         ctrPrin.agregarVtn(vtnMallaAlm);
+        InitPermisos();
     }
 
     /**
@@ -428,7 +429,13 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-
+        vtnMallaAlm.getBtnActualizarNota().getAccessibleContext().setAccessibleName("Malla-Alumnos-Actualizar Nota");
+       vtnMallaAlm.getBtnIngNota().getAccessibleContext().setAccessibleName("Malla-Alumnos-Ingresar Nota");
+       vtnMallaAlm.getBtnReporteMallaAlumno().getAccessibleContext().setAccessibleName("Malla-Alumno-Reporte-Malla de Alumno");
+       
+       
+        CONS.activarBtns(vtnMallaAlm.getBtnActualizarNota(), vtnMallaAlm.getBtnIngNota(),
+                vtnMallaAlm.getBtnReporteMallaAlumno());
     }
 
     /**
