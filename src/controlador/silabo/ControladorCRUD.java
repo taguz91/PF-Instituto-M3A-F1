@@ -327,7 +327,6 @@ public class ControladorCRUD {
     }
 
     private void InitPermisos() {
-<<<<<<< HEAD
         crud.getBtnNuevo().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
         crud.getBtnEditar().getAccessibleContext().setAccessibleName("Silabos-Editar");
         crud.getBtnEliminar().getAccessibleContext().setAccessibleName("Silabos-Eliminar");
@@ -335,19 +334,6 @@ public class ControladorCRUD {
 
         CONS.activarBtns(crud.getBtnNuevo(), crud.getBtnEditar(),
                 crud.getBtnEliminar(), crud.getBtnImprimir());
-
-=======
-           crud.getBtnNuevo().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
-        crud.getBtnEditar().getAccessibleContext().setAccessibleName("Silabos-Editar");
-        crud.getBtnEliminar().getAccessibleContext().setAccessibleName("Silabos-Eliminar");
-        crud.getBtnImprimir().getAccessibleContext().setAccessibleName("Silabos-Imprimir");
-       
-        
-        CONS.activarBtns(crud.getBtnNuevo(), crud.getBtnEditar(), 
-                crud.getBtnEliminar(), crud.getBtnImprimir());
-                
-    
->>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
     }
 
 }

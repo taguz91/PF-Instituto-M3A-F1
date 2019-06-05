@@ -7,22 +7,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Comparator;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
-=======
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
->>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import vista.accesos.FrmAccesosDeRol;
@@ -71,11 +63,8 @@ public class FrmAccesosAddCTR {
             }
         });
 
-<<<<<<< HEAD
         vista.getBtnDarTodos().addActionListener(e -> btnDarTodos(e));
-
-=======
->>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
+        
         tblPermisos.addTableModelListener(new TableModelListener() {
             boolean active = false;
 
@@ -157,7 +146,6 @@ public class FrmAccesosAddCTR {
 
     }
 
-<<<<<<< HEAD
     private void btnDarTodos(ActionEvent e) {
         if (vista.getBtnDarTodos().getText().equalsIgnoreCase("dar todos")) {
             listaPermisos.forEach(obj -> {
@@ -189,7 +177,4 @@ public class FrmAccesosAddCTR {
             vista.getBtnDarTodos().setEnabled(true);
         }).start();
     }
-
-=======
->>>>>>> 1ce38a8679f2e095385e66ed8b09b965e508fb05
 }
