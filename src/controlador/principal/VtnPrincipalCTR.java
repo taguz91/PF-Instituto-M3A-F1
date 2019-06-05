@@ -48,7 +48,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -64,7 +63,6 @@ import javax.swing.event.InternalFrameEvent;
 import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
-import modelo.accesos.AccesosMD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -116,27 +114,6 @@ public class VtnPrincipalCTR {
     public AnimacionCarga carga;
     //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
-    //Para hacer los accesos
-    private List<AccesosMD> accesos;
-    //Constantes de accesos, para las ventanas y menus
-    public final int ACCESOS_ALUMNOS = 0, ACCESOS_PERIODO_LECTIVO = 1,
-            ACCESOS_DOCENTES = 2, ACCESOS_PERSONAS = 3, ACCESOS_CARRERAS = 4,
-            ACCESOS_CURSOS = 5, ACCESOS_MATERIAS = 6, ACCESOS_ALUMNOS_CARRERA = 7,
-            ACCESOS_ALUMNO_CURSO = 8, ACCESOS_CURSO = 9, ACCESOS_DOCENTE_MATERIA = 10;
-    //Matriz de permisos
-    private final String[][] ACCESOS = {
-        {"Alumnos", "Alumnos-Ingresar", "Alumnos-Editar", "Alumnos-Eliminar", "Alumnos-Estado"},
-        {"PeriodoLectivo", "PeriodoLectivo-Cerrar-Periodo", "PeriodoLectivo-Editar", "PeriodoLectivo-Ingresar", "PeriodoLectivo-Eliminar", "PeriodoLectivo-Estado"},
-        {"Docentes", "Docentes-Ingresar", "Docentes-Editar", "Docentes-Eliminar", "Docentes-Materias-Docente", "Docentes-Estado"},
-        {"Personas", "Personas-Ingresar", "Personas-Editar", "Personas-Eliminar", "Personas-Estado"},
-        {"Carreras", "Carreras-Eliminar", "Carreras-Editar", "Carreras-Ingresar", "Carreras-Estado"},
-        {"Cursos", "Cursos-Editar", "Cursos-Ingresar"},
-        {"Materias", "Materias-Informacion", "Materias-Estado"},
-        {"AlumnosCarrera", "AlumnosCarrera-Ingresar"},
-        {"AlumnosCursoPorPeriodo", "AlumnosCursoPorPeriodo-Ingresar"},
-        {"AlumnosCurso", "AlumnosCurso-Ingresar", "AlumnosCurso-Eliminar", "AlumnosCurso-Editar"},
-        {"DocenteMateria", "DocenteMateria-Ingresar"}
-    };
 
     /**
      * Construnctor principal del sistema.
@@ -162,7 +139,7 @@ public class VtnPrincipalCTR {
         //Le pasamos el icono  
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
-        InitPermisosDocente();
+        InitPermisos();
 
         System.out.println("-------THREADs----->" + Thread.activeCount());
 
@@ -605,7 +582,7 @@ public class VtnPrincipalCTR {
 
     private void controladorCRUD() {
 
-        ControladorCRUD c = new ControladorCRUD(usuario,rolSeleccionado, vtnPrin, conexion);
+        ControladorCRUD c = new ControladorCRUD(usuario, rolSeleccionado, vtnPrin, conexion);
 
         c.iniciarControlador();
 
@@ -925,7 +902,7 @@ public class VtnPrincipalCTR {
     }
 
     private void mnCtRoles(ActionEvent e) {
-        VtnRolCTR vtn = new VtnRolCTR(vtnPrin);
+        VtnRolCTR vtn = new VtnRolCTR(this);
         vtn.Init();
     }
 
@@ -1024,7 +1001,7 @@ public class VtnPrincipalCTR {
 
     private void btnMiperfilActionPerformance(ActionEvent e) {
 
-        VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(vtnPrin);
+        VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(this);
         vtn.Init();
     }
 
@@ -1036,47 +1013,78 @@ public class VtnPrincipalCTR {
         System.gc();
     }
 
-    private void InitPermisosDocente() {
-        if (rolSeleccionado.getNombre().equalsIgnoreCase("Docente")) {
+    private void InitPermisos() {
 
-            vtnPrin.getMnIngresar().setEnabled(false);
-            vtnPrin.getPnlMenu().setVisible(false);
-            vtnPrin.getMnCtPersona().setEnabled(false);
-            vtnPrin.getMnCtDocente().setEnabled(false);
-            vtnPrin.getMnCtAlumno().setEnabled(false);
-            vtnPrin.getMnCtCarrera().setEnabled(false);
-            //Cursos para los listados
-            vtnPrin.getMnCtCurso().setEnabled(true);
+        //CONSULTAR 
+        vtnPrin.getMnCtPersona().getAccessibleContext().setAccessibleName("Personas-Consular");
+        vtnPrin.getMnCtDocente().getAccessibleContext().setAccessibleName("Docente-Consultar");
+        vtnPrin.getMnCtAlumno().getAccessibleContext().setAccessibleName("Alumnos-Consultar");
+        vtnPrin.getMnCtCarrera().getAccessibleContext().setAccessibleName("Carreras-Consultar");
+        vtnPrin.getMnCtCurso().getAccessibleContext().setAccessibleName("Cursos-Consultar");
+        vtnPrin.getMnCtPrdLectivo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Consultar");
+        vtnPrin.getMnCtMateria().getAccessibleContext().setAccessibleName("Materias-Consultar");
+        vtnPrin.getMnCtInscripcion().getAccessibleContext().setAccessibleName("Inscripcion-Consultar");
+        vtnPrin.getMnCtMatricula().getAccessibleContext().setAccessibleName("Matricula-Consultar");
+        vtnPrin.getMnCtAlmnRetirados().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Consultar");
+        vtnPrin.getMnCtListaAlumnos().getAccessibleContext().setAccessibleName("Lista-Alumnos-Consultar");
+        vtnPrin.getMnCtMallaAlumno().getAccessibleContext().setAccessibleName("Malla-Alumnos-Consultar");
+        vtnPrin.getMnCtDocenteMateria().getAccessibleContext().setAccessibleName("Materia-Docentes-Consultar");
+        vtnPrin.getMnCtRolesPeriodo().getAccessibleContext().setAccessibleName("Roles-Periodo-Consultar");
+        vtnPrin.getMnCtSilabos().getAccessibleContext().setAccessibleName("Silabos-Consultar");
+        vtnPrin.getMnCtPlandeClase().getAccessibleContext().setAccessibleName("Plan-De-Clase-Consultar");
+        vtnPrin.getMnCtUsuarios().getAccessibleContext().setAccessibleName("Usuarios-Consultar");
+        vtnPrin.getMnCtRoles().getAccessibleContext().setAccessibleName("Roles-Usuarios-Consultar");
+        vtnPrin.getMnCtHistorialUsers().getAccessibleContext().setAccessibleName("Historial-Usuarios-Consultar");
+        vtnPrin.getMnCtTipoNotas().getAccessibleContext().setAccessibleName("Notas-Tipos-de-Notas-Consultar");
+        vtnPrin.getMnCtNotas().getAccessibleContext().setAccessibleName("Notas-Consultar");
+        vtnPrin.getMnBiblioteca().getAccessibleContext().setAccessibleName("Biblioteca-Consultar");
+        vtnPrin.getMnCtAccesos().getAccessibleContext().setAccessibleName("Accesos-Consultar");
+        vtnPrin.getMnCtMiPerfil().getAccessibleContext().setAccessibleName("Mi-Perfil-Consultar");
+        vtnPrin.getMnCtAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Consultar");
 
-            vtnPrin.getMnCtPrdLectivo().setEnabled(false);
-            vtnPrin.getMnCtMateria().setEnabled(false);
-            vtnPrin.getMnCtInscripcion().setEnabled(false);
-            vtnPrin.getMnCtMatricula().setEnabled(false);
-            vtnPrin.getMnCtDocenteMateria().setEnabled(false);
-            vtnPrin.getMnCtRolesPeriodo().setEnabled(false);
-            vtnPrin.getMnCtPlandeClase().setEnabled(true);
-            vtnPrin.getMnCtUsuarios().setEnabled(false);
-            vtnPrin.getMnCtRoles().setEnabled(false);
-            vtnPrin.getMnCtHistorialUsers().setEnabled(false);
-            vtnPrin.getMnCtAccesos().setEnabled(false);
-            vtnPrin.getMnCtMiPerfil().setEnabled(false);
+        //INGRESAR 
+        vtnPrin.getMnIgPersona().getAccessibleContext().setAccessibleName("Persona-Ingresar");
+        vtnPrin.getMnIgDocente().getAccessibleContext().setAccessibleName("Docente-Ingresar");
+        vtnPrin.getMnIgAlumno().getAccessibleContext().setAccessibleName("Alumno-Ingresar");
+        vtnPrin.getMnIgCarrera().getAccessibleContext().setAccessibleName("Carrera-Ingresar");
+        vtnPrin.getMnIgCurso().getAccessibleContext().setAccessibleName("Curso-Ingresar");
+        vtnPrin.getMnIgPrdLectivo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Ingresar");
+        vtnPrin.getMnIgMateria().getAccessibleContext().setAccessibleName("Materia-Ingresar");
+        vtnPrin.getMnIgInscripcion().getAccessibleContext().setAccessibleName("Inscripcion-Ingresar");
+        vtnPrin.getMnIgMatricula().getAccessibleContext().setAccessibleName("Matricula-Ingresar");
+        vtnPrin.getMnIgDocenteMt().getAccessibleContext().setAccessibleName("Materia-Docente-Ingresar");
+        vtnPrin.getMnIgRolesPeriodo().getAccessibleContext().setAccessibleName("Roles-Periodo-Ingresar");
+        vtnPrin.getMnIgSilabo().getAccessibleContext().setAccessibleName("Silabo-Ingresar");
+        vtnPrin.getMnIgPlandeClase().getAccessibleContext().setAccessibleName("Plan-Clase-Ingresar");
+        vtnPrin.getMnIgUsuarios1().getAccessibleContext().setAccessibleName("Usuario-Ingresar");
+        vtnPrin.getMnIgRoles1().getAccessibleContext().setAccessibleName("Roles-Usuario-Ingresar");
+        vtnPrin.getMnIgNotas1().getAccessibleContext().setAccessibleName("Notas-Ingresar");
 
-            vtnPrin.getMnCtPersona().setEnabled(false);
-            vtnPrin.getMnCtAlumno().setEnabled(false);
-            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
-            vtnPrin.getMnCtAlmnRetirados().setEnabled(false);
-            vtnPrin.getMnCtMatricula().setEnabled(false);
-            //Listado de alumnos 
-            vtnPrin.getMnCtListaAlumnos().setEnabled(true);
+        CONS.activarBtns(
+                vtnPrin.getMnCtPersona(), vtnPrin.getMnCtDocente(),
+                vtnPrin.getMnCtAlumno(),
+                vtnPrin.getMnCtCarrera(), vtnPrin.getMnCtCurso(),
+                vtnPrin.getMnCtPrdLectivo(), vtnPrin.getMnCtMateria(),
+                vtnPrin.getMnCtInscripcion(), vtnPrin.getMnCtMatricula(),
+                vtnPrin.getMnCtListaAlumnos(), vtnPrin.getMnCtMallaAlumno(),
+                vtnPrin.getMnCtDocenteMateria(), vtnPrin.getMnCtRolesPeriodo(),
+                vtnPrin.getMnCtAlmnRetirados(),
+                vtnPrin.getMnCtSilabos(), vtnPrin.getMnCtPlandeClase(),
+                vtnPrin.getMnCtUsuarios(), vtnPrin.getMnCtRoles(),
+                vtnPrin.getMnCtHistorialUsers(), vtnPrin.getMnCtNotas(),
+                vtnPrin.getMnCtTipoNotas(),
+                vtnPrin.getMnCtAccesos(), vtnPrin.getMnCtMiPerfil(),
+                vtnPrin.getMnCtAsistencia(), vtnPrin.getMnBiblioteca(),
+                // ingresar
+                vtnPrin.getMnIgPersona(), vtnPrin.getMnIgDocente(),
+                vtnPrin.getMnIgAlumno(), vtnPrin.getMnIgCarrera(),
+                vtnPrin.getMnIgCurso(), vtnPrin.getMnIgPrdLectivo(),
+                vtnPrin.getMnIgMateria(), vtnPrin.getMnIgInscripcion(),
+                vtnPrin.getMnIgMatricula(), vtnPrin.getMnIgDocenteMt(),
+                vtnPrin.getMnIgRolesPeriodo(), vtnPrin.getMnIgSilabo(),
+                vtnPrin.getMnIgPlandeClase(), vtnPrin.getMnIgUsuarios1(),
+                vtnPrin.getMnIgRoles1(), vtnPrin.getMnIgNotas1());
 
-            vtnPrin.getMnCtMallaAlumno().setEnabled(false);
-            vtnPrin.getMnCtDocenteMateria().setEnabled(true);
-            vtnPrin.getMnCtMateria().setEnabled(true);
-            vtnPrin.getMnCtDocente().setEnabled(false);
-            vtnPrin.getMnCtPrdIngrNotas().setEnabled(false);
-            vtnPrin.getMnCtTipoNotas().setEnabled(false);
-            vtnPrin.getMnCtActivarNotas().setEnabled(false);
-        }
     }
 
     private void registroIngreso(JFrame vtn) {

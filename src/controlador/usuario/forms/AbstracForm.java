@@ -30,22 +30,17 @@ public abstract class AbstracForm {
 
     private final PersonaBD personaBD;
 
-    {
-        personaBD = new PersonaBD();
-    }
-
     public AbstracForm(VtnPrincipal desktop, VtnUsuarioCTR vtnPadre) {
         this.desktop = desktop;
         this.vtnPadre = vtnPadre;
         this.vista = new FrmUsuario();
+        this.personaBD = new PersonaBD();
     }
 
     public synchronized void Init() {
 
-        new Thread(() -> {
-            Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
-            InitEventos();
-        }).start();
+        Effects.addInDesktopPane(vista, desktop.getDpnlPrincipal());
+        InitEventos();
         activarFormulario(false);
         listaPersonas = personaBD.selectAll();
         cargarComoPersonas();

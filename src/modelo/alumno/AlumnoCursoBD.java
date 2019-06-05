@@ -11,12 +11,10 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.notas.NotasBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
 /**

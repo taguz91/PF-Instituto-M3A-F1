@@ -2,20 +2,22 @@ package controlador.usuario.Roles;
 
 import controlador.Libraries.Effects;
 import controlador.usuario.Roles.forms.FrmRolAdd;
-import controlador.accesos.FrmAccesosDeRolCTR;
+import controlador.accesos.FrmAccesosAddCTR;
+import controlador.principal.VtnPrincipalCTR;
+import controlador.usuario.Roles.forms.FrmRolEdit;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyVetoException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javax.swing.ImageIcon;
+import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
-import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolMD;
-import vista.accesos.FrmAccesosDeRol;
-import vista.principal.VtnPrincipal;
 import vista.usuario.VtnRol;
 
 /**
@@ -24,13 +26,11 @@ import vista.usuario.VtnRol;
  */
 public class VtnRolCTR {
 
-    private final VtnPrincipal desktop;
+    private final VtnPrincipalCTR desktop;
 
     private final VtnRol vista;
 
     private final RolBD modelo;
-
-    private final RolBD permisos;
 
     private List<RolBD> listaRoles;
 
@@ -38,11 +38,10 @@ public class VtnRolCTR {
 
     private boolean cargarTabla = true;
 
-    public VtnRolCTR(VtnPrincipal desktop) {
+    public VtnRolCTR(VtnPrincipalCTR desktop) {
         this.desktop = desktop;
         this.vista = new VtnRol();
         this.modelo = new RolBD();
-        this.permisos = CONS.ROL;
     }
 
     public VtnRol getVista() {
@@ -52,83 +51,67 @@ public class VtnRolCTR {
     //Inits
     public void Init() {
 
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
+        Effects.addInDesktopPane(vista, desktop.getVtnPrin().getDpnlPrincipal());
 
         vista.setTitle("Lista de Roles");
 
         tabla = (DefaultTableModel) vista.getTabRoles().getModel();
 
+        InitEventos();
         InitPermisos();
         cargarTabla();
 
-        try {
-            vista.setSelected(true);
-            vista.show();
-            desktop.getDpnlPrincipal().add(vista);
-        } catch (PropertyVetoException ex) {
-            System.out.println(ex.getMessage());
-        }
+    }
+
+    private void InitEventos() {
+
+        vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                cargarTablaFilter(vista.getTxtBuscar().getText());
+            }
+        });
+        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisos(e));
+        vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
+        vista.getBtnEditar().addActionListener(e -> btnEditar(e));
 
     }
 
     private void InitPermisos() {
+        vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ingresar");
+        vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Actualizar");
+        vista.getBtnEditar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar");
+        vista.getBtnVerPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Ver Permisos");
+        vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Roles-Usuarios-Eliminar");
+        vista.getBtnEditarPermisos().getAccessibleContext().setAccessibleName("Roles-Usuarios-Editar Permisos");
 
-        vista.getBtnActualizar().addActionListener(e -> cargarTabla());
-        vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
+        CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
+                vista.getBtnEditar(), vista.getBtnVerPermisos(),
+                vista.getBtnEliminar(), vista.getBtnEditarPermisos());
 
-        vista.getBtnVerPermisos().addActionListener(e -> btnVerPermisosActionPerformance(e));
-        vista.getBtnEditarPermisos().addActionListener(e -> btnEditarPermisosActionPerformance(e));
-
-        vista.getBtnIngresar().addActionListener(e -> new FrmRolAdd(desktop, this).Init());
-        vista.getBtnEditar().addActionListener(e -> btnEditarActionPerformance(e));
-        vista.getBtnEliminar().addActionListener(e -> btnEliminarActionPerformance(e));
-
-//        for (AccesosMD obj : AccesosBD.SelectWhereACCESOROLidRol(permisos.getId())) {
-//
-//            if (obj.getNombre().equals("ROLES-Agregar")) {
-//                vista.getBtnIngresar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Editar")) {
-//                vista.getBtnEditar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Eliminar")) {
-//                vista.getBtnEliminar().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Ver-Permisos")) {
-//                vista.getBtnVerPermisos().setEnabled(true);
-//            }
-//            if (obj.getNombre().equals("ROLES-Editar-Permisos")) {
-//                vista.getBtnEditarPermisos().setEnabled(true);
-//            }
-//        }
     }
 
     //Metodos de Apoyo
-    private void cargarTabla() {
+    public void cargarTabla() {
         if (cargarTabla) {
-            new Thread(() -> {
 
-                tabla.setRowCount(0);
+            tabla.setRowCount(0);
 
-                vista.getTxtBuscar().setEnabled(false);
+            vista.getTxtBuscar().setEnabled(false);
 
-                Effects.setLoadCursor(vista);
+            Effects.setLoadCursor(vista);
 
-                cargarTabla = false;
+            cargarTabla = false;
 
-                listaRoles = modelo.selectAll();
+            listaRoles = modelo.selectAll();
 
-                listaRoles.stream().forEach(VtnRolCTR::agregarFila);
+            listaRoles.stream().forEach(agregarFilas());
 
-                vista.getLblResultados().setText(listaRoles.size() + " Resultados Obtenidos");
+            cargarTabla = true;
 
-                cargarTabla = true;
+            Effects.setDefaultCursor(vista);
 
-                Effects.setDefaultCursor(vista);
-
-                vista.getTxtBuscar().setEnabled(true);
-
-            }).start();
+            vista.getTxtBuscar().setEnabled(true);
 
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!!");
@@ -136,135 +119,66 @@ public class VtnRolCTR {
 
     }
 
-    private static void agregarFila(RolMD obj) {
+    private Consumer<RolMD> agregarFilas() {
 
-        tabla.addRow(new Object[]{
-            tabla.getDataVector().size() + 1,
-            obj.getId(),
-            obj.getNombre()
-        });
+        return obj -> {
+            tabla.addRow(new Object[]{
+                tabla.getDataVector().size() + 1,
+                obj.getId(),
+                obj.getNombre()
+            });
+            vista.getLblResultados().setText(tabla.getDataVector().size() + " Resultados");
+        };
 
     }
 
     private void cargarTablaFilter(String Aguja) {
-        if (cargarTabla) {
-            JOptionPane.showMessageDialog(vista, "ESPERE QUE TERMINE LA CARGA PENDIENTE!!");
-        } else {
-            List<RolMD> lista = listaRoles
-                    .stream()
-                    .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
-                    .collect(Collectors.toList());
 
-//            lista.forEach(VtnRolCTR::agregarFila);
-            vista.getLblResultados().setText(lista.size() + " Resultados Obtenidos");
-        }
+        listaRoles.stream()
+                .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
+                .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))
+                .collect(Collectors.toList())
+                .forEach(agregarFilas());
 
     }
 
-    private void getObjFromRow(int fila) {
-
-        modelo.setId((Integer) vista.getTabRoles().getValueAt(fila, 1));
-        modelo.setNombre((String) vista.getTabRoles().getValueAt(fila, 2));
-
-    }
-
-    private void btnEditarActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila != -1) {
-
-            getObjFromRow(fila);
-
-            if (modelo.getNombre().equals("ROOT")) {
-
-                JOptionPane.showMessageDialog(vista, "NO SE PUEDE EDITAR EL ROL: " + " 'ROOT'");
-
-            } else {
-
-//                FrmRolAdd editar = new FrmRolAdd(desktop, new FrmRol(), modelo, "Editar");
-//                editar.Init();
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA DE LA TABLA!!");
-        }
-
-    }
-
-    private void btnEliminarActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
-        } else {
-            getObjFromRow(fila);
-            int Pk = modelo.getId();
-
-            ImageIcon icon = new ImageIcon();
-
-            int opcion = JOptionPane.showConfirmDialog(null,
-                    modelo.getNombre(),
-                    "ESTA SEGURO DE ELIMINAR ESTE ROL?",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    icon
+    private List<RolBD> getSeleccionados() {
+        List<RolBD> lista = new ArrayList<>();
+        int[] rows = vista.getTabRoles().getSelectedRows();
+        IntStream.of(rows).forEach(i -> {
+            int id = (Integer) vista.getTabRoles().getValueAt(i, 1);
+            lista.add(
+                    listaRoles.stream().filter(item -> item.getId() == id).findFirst().get()
             );
-
-            if (opcion == 0) {
-
-                modelo.eliminar(Pk);
-
-                JOptionPane.showMessageDialog(null, "ROL ELIMINADO");
-
-                cargarTabla();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "ROL NO ELIMINADO");
-            }
-
-        }
-
+        });
+        return lista;
     }
 
-    private void btnCancelarActionPerformance(ActionEvent e) {
-        vista.dispose();
-    }
-
-    private void btnVerPermisosActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila != -1) {
-            getObjFromRow(fila);
-            FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Consultar");
-            permisosVtn.Init();
-
+    //EVENTOS
+    private void btnEditarPermisos(ActionEvent e) {
+        List<RolBD> listaSeleccionados = getSeleccionados();
+        if (!listaSeleccionados.isEmpty()) {
+            listaSeleccionados.forEach(obj -> {
+                FrmAccesosAddCTR form = new FrmAccesosAddCTR(desktop);
+                form.setRol(obj);
+                form.Init();
+            });
         } else {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
         }
-
     }
 
-    private void btnEditarPermisosActionPerformance(ActionEvent e) {
-
-        int fila = vista.getTabRoles().getSelectedRow();
-
-        if (fila != -1) {
-            getObjFromRow(fila);
-
-            if (modelo.getNombre().equals("ROOT")) {
-                JOptionPane.showMessageDialog(vista, "NO SE PUEDEN EDITAR LOS PERMISOS DEL ROL: " + " 'ROOT'");
-            } else {
-
-                FrmAccesosDeRolCTR permisosVtn = new FrmAccesosDeRolCTR(desktop, new FrmAccesosDeRol(), new AccesosDelRolBD(), modelo, "Editar");
-                permisosVtn.Init();
-
-            }
-
+    private void btnEditar(ActionEvent e) {
+        List<RolBD> listaSeleccionados = getSeleccionados();
+        if (!listaSeleccionados.isEmpty()) {
+            listaSeleccionados.forEach(obj -> {
+                FrmRolEdit form = new FrmRolEdit(desktop, this);
+                System.out.println("------->" + obj.getId());
+                form.setModelo(obj);
+                form.Init();
+            });
         } else {
-            JOptionPane.showMessageDialog(desktop, "SELECCIONE UNA FILA!!");
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
         }
     }
 

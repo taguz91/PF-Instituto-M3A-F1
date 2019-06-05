@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -371,12 +372,18 @@ public class VtnCursoCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("Docente")) {
-            vtnCurso.getBtnIngresar().setEnabled(false);
-            vtnCurso.getBtnEditar().setEnabled(false);
-            vtnCurso.getBtnEliminar().setEnabled(false);
-            vtnCurso.getBtnHorario().setEnabled(false);
-        }
+        vtnCurso.getBtnHorario().getAccessibleContext().setAccessibleName("Cursos-Horarios");
+        vtnCurso.getCbxEliminados().getAccessibleContext().setAccessibleName("Cursos-Ver Eliminados");
+        vtnCurso.getBtnEliminar().getAccessibleContext().setAccessibleName("Cursos-Eliminar");
+        vtnCurso.getBtnEditar().getAccessibleContext().setAccessibleName("Cursos-Editar");
+        vtnCurso.getBtnIngresar().getAccessibleContext().setAccessibleName("Cursos-Ingresar");
+        vtnCurso.getBtnListaSilabos().getAccessibleContext().setAccessibleName("Cursos-Reporte-Lista para silabos");
+        vtnCurso.getBtnListaAlumnos().getAccessibleContext().setAccessibleName("Cursos-Reporte-Lista de alumnos");
+        
+        CONS.activarBtns(vtnCurso.getBtnHorario(), vtnCurso.getCbxEliminados(),
+                vtnCurso.getBtnEliminar(), vtnCurso.getBtnEditar(), vtnCurso.getBtnIngresar(),
+                vtnCurso.getBtnListaAlumnos(), vtnCurso.getBtnListaSilabos());
+        
 
     }
 

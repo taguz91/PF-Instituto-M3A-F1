@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.accesos.AccesosMD;
+import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.docente.DocenteMateriaBD;
@@ -82,6 +82,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
         cargarDocenteMaterias();
 
         ctrPrin.agregarVtn(vtnDm);
+        InitPermisos();
     }
 
     /**
@@ -218,7 +219,10 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-        
+        vtnDm.getBtnIngresar().getAccessibleContext().setAccessibleName("Materia-Docentes-Ingresar");
+       vtnDm.getBtnEliminar().getAccessibleContext().setAccessibleName("Materia-Docentes-Eliminar");
+
+        CONS.activarBtns(vtnDm.getBtnIngresar(), vtnDm.getBtnEliminar());
     }
 
 }

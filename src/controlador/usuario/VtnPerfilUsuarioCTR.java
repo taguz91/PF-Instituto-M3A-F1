@@ -1,26 +1,25 @@
 package controlador.usuario;
 
 import controlador.Libraries.Effects;
-import controlador.accesos.FrmAccesosDeRolCTR;
+import controlador.Libraries.ImgLib;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.CONS;
 import modelo.usuario.UsuarioBD;
-import vista.principal.VtnPrincipal;
 import vista.usuario.VtnPerfilUsuario;
 
 public class VtnPerfilUsuarioCTR {
 
     private VtnPerfilUsuario vista;
     private UsuarioBD modelo;
-    private VtnPrincipal desktop;
+    private VtnPrincipalCTR desktop;
 
-    public VtnPerfilUsuarioCTR(VtnPrincipal desktop) {
+    public VtnPerfilUsuarioCTR(VtnPrincipalCTR desktop) {
         this.vista = new VtnPerfilUsuario();
         this.modelo = CONS.USUARIO;
         this.desktop = desktop;
@@ -33,28 +32,27 @@ public class VtnPerfilUsuarioCTR {
         INIT
      */
     public void Init() {
-        vista.show();
-        desktop.getDpnlPrincipal().add(vista);
-        Effects.centerFrame(vista, desktop.getDpnlPrincipal());
-        System.out.println(modelo.getUsername());
-        try {
-            vista.setSelected(true);
-        } catch (PropertyVetoException e) {
-            Logger.getLogger(FrmAccesosDeRolCTR.class.getName()).log(Level.SEVERE, null, e);
-        }
+
+        Effects.addInDesktopPane(vista, desktop.getVtnPrin().getDpnlPrincipal());
 
         vista.getLblUsername().setText(modelo.getUsername());
         vista.getLblNombres().setText(modelo.getPersona().getPrimerNombre() + "  " + modelo.getPersona().getSegundoNombre());
         vista.getLblApellidos().setText(modelo.getPersona().getPrimerApellido() + "  " + modelo.getPersona().getSegundoApellido());
 
+        vista.getLblRol().setText(CONS.ROL.getNombre());
+
+        ImgLib.setImageInLabel(CONS.USUARIO.getPersona().getFoto(), vista.getLblFoto());
+
         InitEventos();
+
     }
 
     private void InitEventos() {
 
-        vista.getBtnCancelar().addActionListener(e -> btnCancelarActionPerformance(e));
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
         vista.getBtnGuardar().addActionListener(e -> btnGuardarActionPerformance(e));
         vista.getBtnCambiarContrasena().addActionListener(e -> btnCambiarContrasenaActionPerformance(e));
+        vista.getBtnPermisos().addActionListener(e -> CONS.refreshPermisos());
 
     }
 
@@ -62,9 +60,10 @@ public class VtnPerfilUsuarioCTR {
         EVENTOS
      */
     private void btnCambiarContrasenaActionPerformance(ActionEvent e) {
+        System.out.println("------>" + vista.getLblFoto().getHeight());
+        System.out.println("------>" + vista.getLblFoto().getWidth());
         vista.getTxtContrasena().setEnabled(true);
         vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
-
     }
 
     private void btnGuardarActionPerformance(ActionEvent e) {
@@ -74,15 +73,15 @@ public class VtnPerfilUsuarioCTR {
         modelo.setPassword(password);
 
         if (vista.getTxtContrasena().getText().isEmpty()) {
-            JOptionPane.showMessageDialog(desktop, "Campo Vacio...");
+            JOptionPane.showMessageDialog(vista, "Campo Vacio...");
         } else {
 
             if (password.length() < 4) {
-                JOptionPane.showMessageDialog(desktop, "La contraseña debe ser mayor o igual a 4 caracteres");
+                JOptionPane.showMessageDialog(vista, "La contraseña debe ser mayor o igual a 4 caracteres");
             } else {
 
                 if (modelo.editar(modelo.getUsername())) {
-                    JOptionPane.showMessageDialog(desktop, "Contraseña Editada correctamente");
+                    JOptionPane.showMessageDialog(vista, "Contraseña Editada correctamente");
                     vista.getTxtContrasena().setText("");
                     vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.GRAY));
                     vista.getTxtContrasena().setEnabled(false);
@@ -92,10 +91,6 @@ public class VtnPerfilUsuarioCTR {
 
         }
 
-    }
-
-    private void btnCancelarActionPerformance(ActionEvent e) {
-        vista.dispose();
     }
 
 }

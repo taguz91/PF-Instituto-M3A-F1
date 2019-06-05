@@ -127,6 +127,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
+        InitPermisos();
     }
 
     private void InitEventos() {
@@ -560,4 +561,12 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
+
+    private void InitPermisos() {
+        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Asistencia-Imprimir");
+       vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
+   
+       
+        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
+    }
 }
