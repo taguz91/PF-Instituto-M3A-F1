@@ -278,7 +278,7 @@ public class ControladorCRUD {
                     filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
                     findFirst();
         }else{
-            
+
             silaboSeleccionado = silabosDocente.stream().
                     filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                     findFirst();
