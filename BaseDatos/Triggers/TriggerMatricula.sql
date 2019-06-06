@@ -301,6 +301,10 @@ $detalle_notas$ LANGUAGE plpgsql;
 
 --INGRESANDO Notas  
 
+
+
+
+
 --Iniciamos las notas al matricular
 CREATE OR REPLACE FUNCTION probar_notas(periodo INTEGER)
 RETURNS VOID AS $probar_notas$
