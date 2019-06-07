@@ -178,7 +178,7 @@ public class VtnNotasCTR {
             }
         });
         vista.getTxtBuscar().addKeyListener(Validaciones.validarNumeros());
-
+        InitPermisos();
     }
 
     private void InitTablas() {
@@ -951,4 +951,12 @@ public class VtnNotasCTR {
     }
 
     // </editor-fold>
+
+    private void InitPermisos() {
+        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Imprimir");
+       vista.getBtnVerNotas().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Ver Notas");
+   
+       
+        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerNotas());
+    }
 }

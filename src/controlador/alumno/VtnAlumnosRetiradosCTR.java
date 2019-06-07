@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.alumno.AlumnoCursoRetiradoBD;
 import modelo.alumno.AlumnoCursoRetiradoMD;
 import modelo.estilo.TblEstilo;
@@ -52,6 +53,7 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
         formatoTbl();
         cargarAnulados();
         ctrPrin.agregarVtn(vtnAR);
+        InitPermisos();
     }
 
     /**
@@ -256,6 +258,14 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
             });
             vtnAR.getCmbPrdLectivos().setSelectedIndex(0);
         }
+    }
+
+    private void InitPermisos() {
+       vtnAR.getBtnEliminar().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Eliminar");
+       vtnAR.getCbxEliminados().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Ver Eliminados");
+       
+       
+        CONS.activarBtns(vtnAR.getBtnEliminar(), vtnAR.getCbxEliminados() );
     }
 
 }

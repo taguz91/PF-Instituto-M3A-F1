@@ -6,15 +6,17 @@
 package controlador.silabo;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
+import modelo.CONS;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -38,19 +40,18 @@ public class ControladorCRUD {
     private SilaboBD silabo;
 
     private final UsuarioBD usuario;
-     
-    
 
-    
     private frmSilabos crud;
 
     //private frmGestionSilabo gestion;
     //private frmConfiguracionSilabo configuracion;
     private ConexionBD conexion;
-    
+
     private RolBD rol;
 
     private final VtnPrincipal principal;
+
+    private boolean esCoordinador = false;
 
     private List<SilaboMD> silabosDocente;
 
@@ -58,7 +59,7 @@ public class ControladorCRUD {
         this.usuario = usuario;
         this.principal = principal;
         this.conexion = conexion;
-        this.rol=rol;
+        this.rol = rol;
     }
 
     public void iniciarControlador() {
@@ -66,6 +67,14 @@ public class ControladorCRUD {
         conexion.conectar();
 
         crud = new frmSilabos();
+
+        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
+
+            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(2));
+        } else {
+            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(4));
+
+        }
 
         principal.getDpnlPrincipal().add(crud);
 
@@ -77,15 +86,34 @@ public class ControladorCRUD {
                 (principal.getDpnlPrincipal().getSize().height - crud.getSize().height) / 2);
 
         opcionesImpresion(false);
-        
-        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")){
-            System.out.println("?????????????? Funciona como cordinador");
-        }else{
-            
-            System.out.println("?????????????? Funciona como docente");
+
+        if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
+            esCoordinador = true;
+            crud.getBtnNuevo().setEnabled(false);
+            crud.getBtnEditar().setEnabled(false);
+            crud.getBtnEliminar().setEnabled(false);
         }
-         
-        
+
+        crud.getTblSilabos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+
+                int fila = crud.getTblSilabos().getSelectedRow();
+                int columna = crud.getTblSilabos().getSelectedColumn();
+
+                if (esCoordinador && columna == 3) {
+                    System.out.println(crud.getTblSilabos().getValueAt(fila, columna));
+                    if (crud.getTblSilabos().getValueAt(fila, columna).equals(true)) {
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna - 1).toString()), 1);
+                    } else {
+
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna - 1).toString()), 0);
+                    }
+                }
+            }
+
+        });
+
         // Boton NUEVO Silabo
         crud.getBtnNuevo().addActionListener((ActionEvent ae) -> {
 
@@ -101,14 +129,14 @@ public class ControladorCRUD {
             int row = crud.getTblSilabos().getSelectedRow();
             if (row != -1) {
 
-                if (seleccionarSilabo(0) != null) {
+                if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(row, 2).equals("Aprobado")) {
                     crud.dispose();
 
                     ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(0), principal, conexion);
 
                     csu.iniciarControlador();
                 } else {
-                    JOptionPane.showMessageDialog(null, "No puede editar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No puede editar silabos  aprobados y/o correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
 
             } else {
@@ -134,8 +162,7 @@ public class ControladorCRUD {
 
             //VALIDA QUE SELECCIONE UN SILABO E IMPRIMA
             int row = crud.getTblSilabos().getSelectedRow();
-            
-             
+
             if (row != -1) {
 
                 opcionesImpresion(true);
@@ -146,7 +173,7 @@ public class ControladorCRUD {
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
-             
+
         });
 
         crud.getTxtBuscar().addKeyListener(new KeyAdapter() {
@@ -164,12 +191,20 @@ public class ControladorCRUD {
         cargarComboCarreras();
 
         cargarSilabosDocente();
+        InitPermisos();
 
     }
 
     public List<CarreraMD> cargarComboCarreras() {
 
-        List<CarreraMD> carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        List<CarreraMD> carrerasDocente = new ArrayList<>();
+        if (esCoordinador) {
+
+            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
+        } else {
+            carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+
+        }
 
         carrerasDocente.forEach((cmd) -> {
             crud.getCmbCarrera().addItem(cmd.getNombre());
@@ -188,7 +223,13 @@ public class ControladorCRUD {
             String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
             //
 
-            silabosDocente = SilaboBD.consultar(conexion, parametros);
+            if (esCoordinador) {
+                int idCarrera = new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()).getId();
+                silabosDocente = SilaboBD.consultarCoordinador(conexion, idCarrera, crud.getTxtBuscar().getText());
+            } else {
+
+                silabosDocente = SilaboBD.consultar(conexion, parametros);
+            }
 
             for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
 
@@ -198,15 +239,22 @@ public class ControladorCRUD {
             for (SilaboMD smd : silabosDocente) {
 
                 String estado = null;
+                Boolean estado2 = null;
                 if (smd.getEstadoSilabo() == 0) {
                     estado = "Por aprobar";
+                    estado2 = false;
+                } else {
+                    estado = "Aprobado";
+                    estado2 = true;
                 }
 
                 modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
                     smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
                     estado,
-                    smd.getIdSilabo()});
+                    smd.getIdSilabo(),
+                    estado2
+                });
 
             }
 
@@ -224,10 +272,17 @@ public class ControladorCRUD {
     public SilaboMD seleccionarSilabo(int p) {
 
         int seleccion = crud.getTblSilabos().getSelectedRow();
+        Optional<SilaboMD>  silaboSeleccionado;
+        if (esCoordinador) {
+            silaboSeleccionado = silabosDocente.stream().
+                    filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
+                    findFirst();
+        }else{
 
-        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
-                findFirst();
+            silaboSeleccionado = silabosDocente.stream().
+                    filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
+                    findFirst();
+        }
 
         CarreraMD carrera = CarrerasBDS.consultar(conexion, usuario.getUsername()).stream().
                 filter(c -> c.getNombre().equals(crud.getCmbCarrera().getSelectedItem().toString())).findFirst().get();
@@ -236,18 +291,17 @@ public class ControladorCRUD {
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
 
         if (silaboSeleccionado.get().getIdPeriodoLectivo().getId_PerioLectivo() != ultimo.getId_PerioLectivo()) {
-           
-            if (p==1){
-                 return silaboSeleccionado.get();
+
+            if (p == 1) {
+                return silaboSeleccionado.get();
             }
             return null;
-            
+
         }
 
         return silaboSeleccionado.get();
     }
 
-    
     public void opcionesImpresion(boolean estado) {
 
         crud.getLblSeleccionDocumento().setVisible(estado);
@@ -259,17 +313,27 @@ public class ControladorCRUD {
 
     public void eliminarSilabo() {
 
-        if (seleccionarSilabo(0) != null) {
+        if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(crud.getTblSilabos().getSelectedRow(), 2).equals("Aprobado")) {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 new SilaboBD(conexion).eliminar(seleccionarSilabo(0));
                 JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No puede eliminar silabos correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
-               
+            JOptionPane.showMessageDialog(null, "No puede eliminar silabos aprobados y/o correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
+
         }
 
+    }
+
+    private void InitPermisos() {
+        crud.getBtnNuevo().getAccessibleContext().setAccessibleName("Silabos-Nuevo");
+        crud.getBtnEditar().getAccessibleContext().setAccessibleName("Silabos-Editar");
+        crud.getBtnEliminar().getAccessibleContext().setAccessibleName("Silabos-Eliminar");
+        crud.getBtnImprimir().getAccessibleContext().setAccessibleName("Silabos-Imprimir");
+
+        CONS.activarBtns(crud.getBtnNuevo(), crud.getBtnEditar(),
+                crud.getBtnEliminar(), crud.getBtnImprimir());
     }
 
 }

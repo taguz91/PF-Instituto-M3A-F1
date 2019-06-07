@@ -187,7 +187,7 @@ public class JDHorarioCTR extends DVtnCTR {
         }
 
         if (guardar && (minutoC > 0 || minutoT > 0)) {
-            
+
         }
 
         if (guardar) {
@@ -300,32 +300,35 @@ public class JDHorarioCTR extends DVtnCTR {
                 posColum = pnl.getTblHorario().getSelectedColumn();
                 //Si tiene algun dato se busca la sesion y se pregunta si quiere 
                 //Eliminar o editar este horario
-                if (pnl.getTblHorario().getValueAt(posFil, posColum) != null) {
-                    idSesion = Integer.parseInt(
-                            pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
-                    sesion = bd.buscarSesion(idSesion);
-                    int r = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(), "Selecciono: " + idSesion + " "
-                            + jd.getCmbDia().getItemAt(sesion.getDia()) + "\nHora inicio: " + sesion.getHoraIni() + "\n"
-                            + "Hora fin: " + sesion.getHoraFin(), "Sesion Clase",
-                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                            null, new Object[]{"Editar", "Eliminar", "Cancelar"}, "Cancelar");
-                    switch (r) {
-                        case 0:
-                            jd.getCmbDia().setSelectedIndex(sesion.getDia());
-                            jd.getTxtHoraInicio().setText(sesion.getHoraIni().toString());
-                            jd.getTxtHoraFin().setText(sesion.getHoraFin().toString());
-                            editar = true;
-                            jd.getBtnCancelar().setVisible(true);
-                            break;
-                        case 1:
-                            idSesion = sesion.getId();
-                            bd.eliminar(idSesion);
-                            pnl.getTblHorario().setValueAt(null, posFil, posColum);
-                            ctrHClase.actualizar(sesion.getDia());
-                            break;
-                        default:
-                            System.out.println("Desidio cancelar");
-                            break;
+                //Esta accion unicamente se puede hacer en la columna 3 de esta tabla
+                if (posColum == 3) {
+                    if (pnl.getTblHorario().getValueAt(posFil, posColum) != null) {
+                        idSesion = Integer.parseInt(
+                                pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
+                        sesion = bd.buscarSesion(idSesion);
+                        int r = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(), "Selecciono: " + idSesion + " "
+                                + jd.getCmbDia().getItemAt(sesion.getDia()) + "\nHora inicio: " + sesion.getHoraIni() + "\n"
+                                + "Hora fin: " + sesion.getHoraFin(), "Sesion Clase",
+                                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                                null, new Object[]{"Editar", "Eliminar", "Cancelar"}, "Cancelar");
+                        switch (r) {
+                            case 0:
+                                jd.getCmbDia().setSelectedIndex(sesion.getDia());
+                                jd.getTxtHoraInicio().setText(sesion.getHoraIni().toString());
+                                jd.getTxtHoraFin().setText(sesion.getHoraFin().toString());
+                                editar = true;
+                                jd.getBtnCancelar().setVisible(true);
+                                break;
+                            case 1:
+                                idSesion = sesion.getId();
+                                bd.eliminar(idSesion);
+                                pnl.getTblHorario().setValueAt(null, posFil, posColum);
+                                ctrHClase.actualizar(sesion.getDia());
+                                break;
+                            default:
+                                System.out.println("Desidio cancelar");
+                                break;
+                        }
                     }
                 }
             }

@@ -14,11 +14,6 @@ public class AlumnoCursoMD {
     private int id;
     private AlumnoMD alumno;
     private CursoMD curso;
-    private double nota1Parcial;
-    private double notaExamenInter;
-    private double nota2Parcial;
-    private double notaExamenFinal;
-    private double notaExamenSupletorio;
     private String asistencia;
     private double notaFinal;
     private String estado;
@@ -53,46 +48,6 @@ public class AlumnoCursoMD {
 
     public void setCurso(CursoMD curso) {
         this.curso = curso;
-    }
-
-    public double getNota1Parcial() {
-        return nota1Parcial;
-    }
-
-    public void setNota1Parcial(double nota1Parcial) {
-        this.nota1Parcial = nota1Parcial;
-    }
-
-    public double getNotaExamenInter() {
-        return notaExamenInter;
-    }
-
-    public void setNotaExamenInter(double notaExamenInter) {
-        this.notaExamenInter = notaExamenInter;
-    }
-
-    public double getNota2Parcial() {
-        return nota2Parcial;
-    }
-
-    public void setNota2Parcial(double nota2Parcial) {
-        this.nota2Parcial = nota2Parcial;
-    }
-
-    public double getNotaExamenFinal() {
-        return notaExamenFinal;
-    }
-
-    public void setNotaExamenFinal(double notaExamenFinal) {
-        this.notaExamenFinal = notaExamenFinal;
-    }
-
-    public double getNotaExamenSupletorio() {
-        return notaExamenSupletorio;
-    }
-
-    public void setNotaExamenSupletorio(double notaExamenSupletorio) {
-        this.notaExamenSupletorio = notaExamenSupletorio;
     }
 
     public String getAsistencia() {
@@ -153,7 +108,7 @@ public class AlumnoCursoMD {
     
     @Override
     public String toString() {
-        return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", nota1Parcial=" + nota1Parcial + ", notaExamenInter=" + notaExamenInter + ", nota2Parcial=" + nota2Parcial + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenSupletorio=" + notaExamenSupletorio + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + ", totalHoras=" + totalHoras + ", notas=" + notas + '}';
+        return "AlumnoCursoMD{" + "id=" + id + ", alumno=" + alumno + ", curso=" + curso + ", asistencia=" + asistencia + ", notaFinal=" + notaFinal + ", estado=" + estado + ", numFalta=" + numFalta + ", totalHoras=" + totalHoras + ", notas=" + notas + '}';
     }
 
 }

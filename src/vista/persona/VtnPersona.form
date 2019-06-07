@@ -225,6 +225,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar Identificaci&#xf3;n"/>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+      </AccessibilityProperties>
     </Component>
   </SubComponents>
 </Form>

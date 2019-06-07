@@ -128,6 +128,7 @@ public class VtnSelectRolCTR {
 
         setModelo();
         CONS.setRol(modelo);
+        CONS.refreshPermisos();
         VtnPrincipalCTR vtn = new VtnPrincipalCTR(conexion, this);
         vtn.iniciar();
         vista.dispose();

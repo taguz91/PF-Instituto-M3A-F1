@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -128,6 +127,7 @@ public class FrmAsistenciaCTR {
         InitTablas();
         activarForm(true);
         cargarComboSemanas();
+        InitPermisos();
     }
 
     private void InitEventos() {
@@ -311,14 +311,16 @@ public class FrmAsistenciaCTR {
     }
 
     public boolean Validar() {
-        boolean correcto = false;
+        boolean correcto = true;
         int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
+        System.out.println("dia obtenido de parte de cons " + d);
         int numero = asistenciaBD.numHorasPorDia(listaNotas.get(0).getCurso().getId(), d);
+        System.out.println("######################### " + numero);
         for (int i = 0; i < jTbl.getRowCount(); i++) {
 
             int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
             if (faltas > numero) {
-                correcto = true;
+                correcto = false;
                 break;
             }
         }
@@ -398,7 +400,7 @@ public class FrmAsistenciaCTR {
                     getIdDocente(), getIdPeriodoLectivo(), fecha);
 
             listaNotas.forEach(la -> {
-                Object[] v = {1,
+                Object[] v = {tabla.getRowCount() + 1,
                     la.getAlumno().getIdentificacion(),
                     la.getAlumno().getPrimerApellido(),
                     la.getAlumno().getSegundoApellido(),
@@ -450,7 +452,7 @@ public class FrmAsistenciaCTR {
 //                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
 //        };
 //    }
-     private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
 
             // System.out.println(obj);
@@ -462,34 +464,41 @@ public class FrmAsistenciaCTR {
     }
 
     private void GuardarFaltas() {
+        String fecha = vista.getCmbDiaClase().getSelectedItem().
+                toString().split(" | ")[2];
+
         if (Validar()) {
+            //Eliminamos todos los datos anteriores. 
+            asistenciaBD.eliminarACursoDia(obtenerIDCurso(), fecha);
+            //Luego insertamos todo
             for (int i = 0; i < jTbl.getRowCount(); i++) {
-                String fecha_insert = vista.getCmbDiaClase().getSelectedItem().toString();
-                String[] diaArray = fecha_insert.split(" | ");
-                System.out.println("->>>>>>>>>>>> " + jTbl.getValueAt(i, 6).toString());
                 int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
-                if (faltas > 0) {
 
-                    if (listaNotas.get(i).getFaltas() == 0) {
-                        asistenciaBD.insertar(listaNotas.get(i).getId(),
-                                vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
-                    } else {
-                        JOptionPane.showMessageDialog(vista, "Los datos se han actualizado exitosamente");
-                        asistenciaBD.editar(listaNotas.get(i).getId(), vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2], faltas);
-                    }
-
-                }
-
-                //asistenciaBD.editar(faltas);
+                asistenciaBD.insertar(listaNotas.get(i).getId(),
+                        vista.getCmbDiaClase().getSelectedItem().
+                                toString().split(" | ")[2], faltas);
+                desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
             }
-
-            JOptionPane.showMessageDialog(vista, "Los datos se han guardado exitosamente");
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
                     + " Verifique el numero de Faltas insertado"
                     + "\n");
         }
+    }
 
+    /**
+     * Obtenemos el id del curso al que pertenecen todos los alumnos
+     *
+     * @return
+     */
+    private int obtenerIDCurso() {
+        int id = 0;
+        if (listaNotas != null) {
+            for (int i = 0; i < listaNotas.size(); i++) {
+                id = listaNotas.get(i).getCurso().getId();
+            }
+        }
+        return id;
     }
 
     // </editor-fold>
@@ -552,4 +561,12 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
+
+    private void InitPermisos() {
+        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Asistencia-Imprimir");
+       vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
+   
+       
+        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
+    }
 }

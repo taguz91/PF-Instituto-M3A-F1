@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8a74ee9-03f6-419f-82ac-af93037e3935">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="19"/>
 	<parameter name="cedula" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -33,123 +33,119 @@ where d.id_docente=$P{cedula} or d.docente_codigo=$P{cedulaverificacion};]]>
 	<title>
 		<band height="135" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="0" width="555" height="99"/>
-				<imageExpression class="java.lang.String"><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="99" uuid="6daa3355-99f2-48bd-9321-0c7ada757958"/>
+				<imageExpression><![CDATA["vista/reportes/ISTA.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="0" y="79" width="555" height="20"/>
+				<reportElement x="0" y="79" width="555" height="20" uuid="aef4df37-8afd-4733-9b8c-3280251cbea7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instituto Superior Tecnológico del Azuay]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="109" width="555" height="20"/>
+				<reportElement x="0" y="109" width="555" height="20" uuid="1c95c59c-9f4c-4f55-ac69-1c39ff03fea2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte de Docentes]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="417" y="41" width="138" height="20"/>
+				<reportElement x="417" y="41" width="138" height="20" uuid="c612f893-490b-42f1-83bf-d09ad6cdfcbc"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
 		<band height="321" splitType="Stretch">
 			<textField>
-				<reportElement x="131" y="10" width="135" height="20"/>
+				<reportElement x="131" y="10" width="135" height="20" uuid="49085685-a6b3-49c2-981a-420ffd68757f"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="271" y="254" width="117" height="20"/>
+				<reportElement x="271" y="254" width="117" height="20" uuid="3971416b-fd70-4495-8dad-f12194e88af4"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha fin de Contrato:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="131" y="102" width="262" height="20"/>
+				<reportElement x="131" y="102" width="262" height="20" uuid="c70f7f9f-9b66-46ce-8645-6aa26b639edb"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="205" width="71" height="20"/>
+				<reportElement x="10" y="205" width="71" height="20" uuid="641d9d7e-f148-4448-99a4-3b7491ebd596"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Correo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="411" y="254" width="120" height="20"/>
+				<reportElement x="411" y="254" width="120" height="20" uuid="66530f0a-2054-4258-a401-4b047a894e03"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente_fecha_fin}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docente_fecha_fin}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="420" y="10" width="116" height="170"/>
-				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="10" y="152" width="71" height="20"/>
+				<reportElement x="10" y="152" width="71" height="20" uuid="c774d6bd-a4a3-4cd9-85f9-8bea866ec44e"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Celular:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="131" y="53" width="262" height="20"/>
+				<reportElement x="131" y="53" width="262" height="20" uuid="dcfa417f-649a-4894-915d-b955e009efe2"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellidos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="10" width="71" height="20"/>
+				<reportElement x="10" y="10" width="71" height="20" uuid="3195d9bd-488e-4155-b2b0-9332a7a44c5d"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Identificación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="131" y="205" width="262" height="20"/>
+				<reportElement x="131" y="205" width="262" height="20" uuid="772a63f4-2e4b-4975-96c3-45ef8f8b5ba9"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_correo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_correo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="53" width="71" height="20"/>
+				<reportElement x="10" y="53" width="71" height="20" uuid="e22e145f-4d47-4af4-921f-6f33e6f539e6"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellidos:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="131" y="152" width="262" height="20"/>
+				<reportElement x="131" y="152" width="262" height="20" uuid="8a976199-ae37-44a9-af84-c882226fec78"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_celular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_celular}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="131" y="254" width="112" height="20"/>
+				<reportElement x="131" y="254" width="112" height="20" uuid="8d4cd13f-c537-413a-bdd4-d3a935e8582e"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{docente_fecha_contrato}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{docente_fecha_contrato}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="102" width="71" height="20"/>
+				<reportElement x="10" y="102" width="71" height="20" uuid="c42f4983-e37e-46b4-9cfc-c058ddd9fab5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombres:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="254" width="80" height="20"/>
+				<reportElement x="10" y="254" width="80" height="20" uuid="9126c70f-396b-4604-bef3-d1627f059d37"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha Contrato:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="426" y="10" width="117" height="126"/>
-				<imageExpression class="java.io.InputStream"><![CDATA[$F{persona_foto}]]></imageExpression>
+				<reportElement x="426" y="10" width="117" height="126" uuid="8a2017d6-ec12-40da-8389-2a1e536427f3"/>
+				<imageExpression><![CDATA[$F{persona_foto}]]></imageExpression>
 			</image>
 		</band>
 	</detail>

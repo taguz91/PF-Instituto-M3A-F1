@@ -3,12 +3,9 @@ package controlador.Libraries;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -16,7 +13,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -40,19 +36,16 @@ public class Effects {
     }
 
     public static void addInDesktopPane(JInternalFrame component, JDesktopPane desktop) {
-        new Thread(() -> {
-            try {
-                centerFrame(component, desktop);
-                desktop.add(component);
-                component.setSelected(true);
-                component.setVisible(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            centerFrame(component, desktop);
+            desktop.add(component);
+            component.setSelected(true);
+            component.setVisible(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Middlewares.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            //System.out.println("--------------->" + Thread.activeCount());
-        }).start();
-
+        System.out.println("-------THREADS-------->" + Thread.activeCount());
     }
 
     public static synchronized void eliminarThread(Thread thread) {
@@ -93,20 +86,6 @@ public class Effects {
 
     public static void setDefaultCursor(Container view) {
         view.setCursor(DEFAULT_CURSOR);
-    }
-
-    public static void pressEnter(JTextComponent component, Function<Void, Void> funcion) {
-        component.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == 10) {
-                    String texto = component.getText();
-                    if (texto.length() >= 10) {
-                        funcion.apply(null);
-                    }
-                }
-            }
-        });
     }
 
     public static void btnHover(JButton btnIngresar, JLabel lblBtnHover, Color enterColor, Color exitColor) {

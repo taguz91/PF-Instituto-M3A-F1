@@ -11,7 +11,7 @@ public class VtnAccesosCTR {
 
     private final VtnPrincipalCTR desktop;
     private final VtnAccesos vista;
-    private AccesosBD modelo;
+    private final AccesosBD modelo;
 
     private DefaultTableModel tabla;
     private List<AccesosBD> listaAccesos;
@@ -40,16 +40,14 @@ public class VtnAccesosCTR {
     //Meotodos de Apoyo
     protected void cargarTabla() {
 
-        listaAccesos.forEach(obj -> {
+        listaAccesos.stream().forEach(obj -> {
             tabla.addRow(new Object[]{
                 tabla.getDataVector().size() + 1,
                 obj.getIdAccesos(),
                 obj.getNombre()
             });
         });
-        vista.getLblResultados().setText((tabla.getDataVector().size() + 1) + "Resultados");
-
+        vista.getLblResultados().setText((tabla.getDataVector().size() + 1) + " Resultados");
     }
-
-    //Eventos
+    
 }

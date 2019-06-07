@@ -4,13 +4,11 @@ import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
 import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
 import vista.materia.FrmRequisitos;
-import vista.principal.VtnPrincipal;
 
 /**
  *

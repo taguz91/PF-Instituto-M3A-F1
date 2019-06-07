@@ -55,6 +55,7 @@ public class VtnUsuarioCTR {
         cargarTabla(listaUsuarios = CONS.USUARIO.selectAll());
         //InitPermisos();
         InitEventos();
+        InitPermisos();
 
     }
 
@@ -75,6 +76,7 @@ public class VtnUsuarioCTR {
                 cargarTablaFilter(vista.getTxtBuscar().getText());
             }
         });
+        
 
     }
 
@@ -246,6 +248,19 @@ public class VtnUsuarioCTR {
 
         }
 
+    }
+
+    private void InitPermisos() {
+        vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Usuarios-Ingresar");
+       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Usuarios-Actualizar");
+       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Usuarios-Editar");
+       vista.getBtnAsignarRoles().getAccessibleContext().setAccessibleName("Usuarios-Asignar Roles");
+       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Usuarios-Eliminar");
+       vista.getBtnVerRoles().getAccessibleContext().setAccessibleName("Usuarios-Ver Roles");
+       
+        CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
+                vista.getBtnEditar(), vista.getBtnAsignarRoles(),
+                vista.getBtnEliminar(), vista.getBtnVerRoles());
     }
 
 }

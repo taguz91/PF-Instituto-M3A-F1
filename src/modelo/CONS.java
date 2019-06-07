@@ -2,8 +2,12 @@ package modelo;
 
 import java.awt.Image;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 
@@ -75,6 +79,29 @@ public class CONS {
         return ICONO.getImage();
     }
 
+    public static List<String> permisos;
+
+    public static List<String> getPermisos() {
+        if (permisos == null) {
+            refreshPermisos();
+        }
+        return permisos;
+    }
+
+    public static void refreshPermisos() {
+        permisos = new AccesosDelRolBD().selectWhere(CONS.ROL.getId(), true);
+    }
+
+    public static void activarBtns(JComponent... components) {
+        if (!ROL.getNombre().equalsIgnoreCase("ROOT") && !ROL.getNombre().equalsIgnoreCase("DEV")
+                && !ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+            Arrays.stream(components)
+                    .forEach(obj -> {
+                        obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName()));
+                    });
+        }
+    }
+
     public static String getDia(int dia) {
         String d;
         switch (dia) {
@@ -106,29 +133,30 @@ public class CONS {
         return d;
 
     }
-    
+
     public static int getDia(String dia) {
         int d;
+        dia = dia.toUpperCase();
         switch (dia) {
-            case "Lunes":
+            case "LUNES":
                 d = 1;
                 break;
-            case "Martes":
+            case "MARTES":
                 d = 2;
                 break;
-            case "Miercoles":
+            case "MIERCOLES":
                 d = 3;
                 break;
-            case "Jueves":
+            case "JUEVES":
                 d = 4;
                 break;
-            case "Viernes":
+            case "VIERNES":
                 d = 5;
                 break;
-            case "Sabado":
+            case "SABADO":
                 d = 6;
                 break;
-            case "Domingo":
+            case "DOMINGO":
                 d = 7;
                 break;
             default:

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.ConnDBPool;
 
 /**
@@ -32,11 +30,11 @@ public class RolBD extends RolMD {
     public RolBD() {
     }
 
-    private String ATRIBUTOS = " id_rol, rol_nombre, rol_observaciones, rol_estado ";
-
     public boolean insertar() {
 
-        String INSERT = "INSERT INTO \"Roles\"(rol_nombre,rol_observaciones) VALUES(?, ?)";
+        String INSERT = "INSERT INTO \"Roles\" ( rol_nombre, rol_observaciones )\n"
+                + "VALUES\n"
+                + "	( ?, ? );";
 
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, getNombre());
@@ -47,18 +45,30 @@ public class RolBD extends RolMD {
 
     public List<RolBD> selectAll() {
 
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre != 'ROOT'";
+        String SELECT = "SELECT\n"
+                + "	\"public\".\"Roles\".id_rol,\n"
+                + "	\"public\".\"Roles\".rol_nombre,\n"
+                + "	\"public\".\"Roles\".rol_observaciones,\n"
+                + "	\"public\".\"Roles\".rol_estado \n"
+                + "FROM\n"
+                + "	\"public\".\"Roles\" \n"
+                + "WHERE\n"
+                + "	rol_nombre NOT IN ( 'ROOT', 'DEV' );";
 
-        return SelectSimple(SELECT);
-    }
-
-    public List<RolBD> SelectWhereNombreLike(String Aguja) {
-        String SELECT = "SELECT " + ATRIBUTOS + " FROM \"Roles\" WHERE rol_nombre LIKE '%" + Aguja + "%'";
         return SelectSimple(SELECT);
     }
 
     public List<RolBD> SelectWhereUSUARIOusername(String username) {
-        String SELECT = "SELECT  " + ATRIBUTOS + " FROM \"Roles\" JOIN \"RolesDelUsuario\" USING(id_rol) WHERE usu_username = '" + username + "'";
+        String SELECT = "SELECT\n"
+                + "\"public\".\"Roles\".id_rol,\n"
+                + "\"public\".\"Roles\".rol_nombre,\n"
+                + "\"public\".\"Roles\".rol_observaciones,\n"
+                + "\"public\".\"Roles\".rol_estado\n"
+                + "FROM\n"
+                + "\"public\".\"Roles\"\n"
+                + "INNER JOIN \"public\".\"RolesDelUsuario\" ON \"public\".\"RolesDelUsuario\".id_rol = \"public\".\"Roles\".id_rol\n"
+                + "WHERE\n"
+                + "\"public\".\"RolesDelUsuario\".usu_username = '" + username + "';";
         return SelectSimple(SELECT);
     }
 
@@ -69,7 +79,6 @@ public class RolBD extends RolMD {
             conn = pool.getConnection();
             rs = pool.ejecutarQuery(Query, conn, null);
 
-            System.out.println("---> " + pool.getStmt().toString());
             while (rs.next()) {
                 RolBD rol = new RolBD();
 
@@ -82,9 +91,9 @@ public class RolBD extends RolMD {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RolBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } finally {
-            pool.close(conn);
+            pool.closeStmt().close(rs).close(conn);
         }
 
         return Lista;
@@ -94,16 +103,16 @@ public class RolBD extends RolMD {
 
         String UPDATE = "UPDATE \"Roles\" \n"
                 + "SET \n"
-                + " id_rol = ?,\n"
-                + " rol_nombre = ?\n"
+                + " rol_nombre = ?,\n"
+                + " rol_observaciones = ?\n"
                 + " WHERE\n"
                 + " id_rol = ?";
 
         Map<Integer, Object> parametros = new HashMap<>();
-        parametros.put(1, getId());
-        parametros.put(2, getNombre());
+        parametros.put(1, getNombre());
+        parametros.put(2, getObservaciones());
         parametros.put(3, Pk);
-
+        conn = pool.getConnection();
         return pool.ejecutar(UPDATE, conn, parametros) == null;
 
     }
@@ -119,7 +128,7 @@ public class RolBD extends RolMD {
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, false);
         parametros.put(2, Pk);
-
+        conn = pool.getConnection();
         return pool.ejecutar(DELETE, conn, parametros) == null;
 
     }

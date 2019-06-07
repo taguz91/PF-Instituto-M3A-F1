@@ -3,12 +3,8 @@ package controlador.login;
 import controlador.Libraries.Effects;
 import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import javax.swing.ImageIcon;
 import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
@@ -66,55 +62,57 @@ public class LoginCTR {
 
         if (carga) {
 
-            new Thread(() -> {
-                ConnDBPool conex = null;
-                try {
+            if (!vista.getTxtUsername().getText().isEmpty() && !vista.getTxtPassword().getText().isEmpty()) {
 
-                    Effects.setLoadCursor(vista);
-                    String USERNAME = vista.getTxtUsername().getText();
-                    String PASSWORD = vista.getTxtPassword().getText();
+                new Thread(() -> {
+                    ConnDBPool conex = null;
+                    try {
 
-                    activarForm(false);
-                    conex = new ConnDBPool(USERNAME, PASSWORD);
+                        Effects.setLoadCursor(vista);
+                        String USERNAME = vista.getTxtUsername().getText().trim();
+                        String PASSWORD = vista.getTxtPassword().getText().trim();
 
-                    modelo = new UsuarioBD();
+                        activarForm(false);
+                        conex = new ConnDBPool(USERNAME, PASSWORD);
+                        modelo = new UsuarioBD();
+                        modelo.setUsername(USERNAME);
+                        modelo.setPassword(PASSWORD);
+                        modelo = modelo.selectWhereUsernamePassword();
 
-                    modelo.setUsername(USERNAME);
-                    modelo.setPassword(PASSWORD);
+                        if (modelo != null) {
 
-                    modelo = modelo.selectWhereUsernamePassword();
+                            vista.dispose();
+                            CONS.setUsuario(modelo);
+                            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex));
+                            vtn.Init();
 
-                    if (modelo != null) {
+                        } else {
+                            Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                            Effects.setDefaultCursor(vista);
+                            conex.closePool();
+                        }
 
-                        vista.dispose();
-                        CONS.setUsuario(modelo);
-                        VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex));
-                        vtn.Init();
-
-                    } else {
-                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                    } catch (NullPointerException e) {
                         Effects.setDefaultCursor(vista);
-                        conex.closePool();
+                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+
+                        if (conex != null) {
+                            conex.closePool();
+                        }
+                    } finally {
+
+                        Effects.setDefaultCursor(vista);
+                        activarForm(true);
                     }
 
-                } catch (NullPointerException e) {
-                    Effects.setDefaultCursor(vista);
-                    Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
-
-                    if (conex != null) {
-                        conex.closePool();
-                    }
-                } finally {
-
-                    Effects.setDefaultCursor(vista);
-                    activarForm(true);
-                }
-
-            }).start();
+                }).start();
+            } else {
+                Effects.setTextInLabel(vista.getLblAvisos(), "RELLENE BIEN LA INFORMACION!!", Effects.ERROR_COLOR, 2);
+            }
         }
     }
-
     //EVENTOS
+
     private KeyAdapter eventoText() {
         return new KeyAdapter() {
             @Override
@@ -130,6 +128,8 @@ public class LoginCTR {
         if (c.length() > 1 && c.length() <= 2) {
             if (c.equalsIgnoreCase("J.")) {
                 vista.getTxtUsername().setText("JOHNNY");
+            } else if (c.equalsIgnoreCase("M.")) {
+                vista.getTxtUsername().setText("MrRainx");
             }
         }
     }

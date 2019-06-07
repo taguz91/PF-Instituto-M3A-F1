@@ -108,7 +108,7 @@ public class AsistenciaBD extends AsistenciaMD {
                 + "GROUP BY \"SesionClase\".dia_sesion; ";
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
-        System.out.println("Query: \n" + SELECT);
+        System.out.println("Numero de semanas: \n" + SELECT);
         try {
             while (rst.next()) {
                 d = rst.getInt(1);
@@ -125,21 +125,35 @@ public class AsistenciaBD extends AsistenciaMD {
         return d;
     }
 
-    public synchronized boolean editar() {
+    public synchronized boolean eliminar(int id_almn_curso, String fecha) {
         new Thread(() -> {
-            String UPDATE = "UPDATE \"Asistencia\" \n"
-                    + "SET id_almn_curso = " + getAlumnoCurso() + ", \n"
-                    + "fecha_asistencia = " + getFechaAsistencia() + ", \n"
-                    + "numero_faltas = " + getNumeroFaltas() + ", \n"
-                    + "WHERE \n"
-                    + "\"public\".\"Asistencia\".id_almn_curso = " + getId() + " \n"
-                    + "\"Asistencia\".fecha_asistencia = " + getFechaAsistencia();
-
-            System.out.println(UPDATE);
+            String DELETE = "DELETE \n"
+                    + "FROM \"public\".\"Asistencia\"\n"
+                    + "WHERE \"public\".\"Asistencia\".id_almn_curso = " + id_almn_curso + "\n"
+                    + "AND \"public\".\"Asistencia\".fecha_asistencia = '" + fecha + "'";
+            System.out.println(DELETE);
             conn = pool.getConnection();
-            ejecutarAsis = pool.ejecutar(UPDATE, conn, null) == null;
+            ejecutarAsis = pool.ejecutar(DELETE, conn, null) == null;
         }).start();
 
         return ejecutarAsis;
+    }
+
+    public synchronized boolean eliminarACursoDia(int idCurso, String fecha) {
+        String DELETE = "DELETE FROM public.\"Asistencia\"\n"
+                + "WHERE id_almn_curso IN (\n"
+                + "	SELECT id_almn_curso\n"
+                + "	FROM public.\"AlumnoCurso\"\n"
+                + "	WHERE id_curso = " + idCurso + "\n"
+                + ") AND fecha_asistencia = '" + fecha + "';";
+
+        System.out.println("------------------------------------");
+        System.out.println("D E L E T E ");
+        System.out.println(DELETE);
+        System.out.println("------------------------------------");
+
+        conn = pool.getConnection();
+
+        return pool.ejecutar(DELETE, conn, null) == null;
     }
 }
