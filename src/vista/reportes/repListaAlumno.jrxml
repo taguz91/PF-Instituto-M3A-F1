@@ -9,7 +9,7 @@
 	<queryString>
 		<![CDATA[SELECT p.persona_primer_apellido || ' ' || p.persona_segundo_apellido || ' ' ||
 p.persona_primer_nombre || ' ' || p.persona_segundo_nombre AS alumno, c.curso_nombre
-,mat.materia_nombre,
+,mat.materia_nombre,almn_curso_num_matricula,
 per.persona_primer_nombre || ' ' || per.persona_segundo_nombre || ' ' ||
 per.persona_primer_apellido || ' ' || per.persona_segundo_apellido AS docente, p.persona_identificacion,
 p.persona_telefono,p.persona_correo,pl.prd_lectivo_nombre
@@ -34,6 +34,7 @@ order by p.persona_primer_apellido;]]>
 	<field name="persona_telefono" class="java.lang.String"/>
 	<field name="persona_correo" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="almn_curso_num_matricula" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -126,7 +127,7 @@ order by p.persona_primer_apellido;]]>
 				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="92" y="0" width="244" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="92" y="0" width="198" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -156,6 +157,13 @@ order by p.persona_primer_apellido;]]>
 			<line>
 				<reportElement x="0" y="20" width="555" height="1"/>
 			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="290" y="0" width="46" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -168,7 +176,7 @@ order by p.persona_primer_apellido;]]>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="0" width="243" height="20"/>
+				<reportElement x="92" y="0" width="200" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -205,11 +213,21 @@ order by p.persona_primer_apellido;]]>
 				<reportElement x="91" y="0" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement x="335" y="0" width="1" height="20"/>
-			</line>
-			<line>
 				<reportElement x="403" y="0" width="1" height="20"/>
 			</line>
+			<line>
+				<reportElement x="292" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="335" y="0" width="1" height="20"/>
+			</line>
+			<textField>
+				<reportElement x="293" y="0" width="42" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{almn_curso_num_matricula}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
