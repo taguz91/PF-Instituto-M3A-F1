@@ -23,8 +23,8 @@ public class VtnEstadosCTR {
 
     private final VtnPrincipalCTR desktop;
     private final VtnEstadosR vista;
-    private PeriodoLectivoBD modelo;
-    private CarreraBD carrera;
+    private final PeriodoLectivoBD modelo;
+    private final CarreraBD carrera;
     private List<PeriodoLectivoBD> periodos;
     private DefaultTableModel tabla;
 
