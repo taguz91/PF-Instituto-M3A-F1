@@ -235,6 +235,11 @@
                 <Property name="text" type="java.lang.String" value="Asistencia"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtReportesEstado">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Reportes Desertores"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">

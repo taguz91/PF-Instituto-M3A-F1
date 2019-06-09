@@ -15,10 +15,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
-import modelo.usuario.RolBD;
 import vista.periodoLectivoNotas.FrmTipoNota;
 import vista.periodoLectivoNotas.VtnTipoNotas;
 import vista.principal.VtnPrincipal;
@@ -32,10 +30,9 @@ public class VtnTipoNotasCTR {
     private final VtnPrincipal desktop;
     private VtnTipoNotas vista;
     private TipoDeNotaBD modelo;
-    private final RolBD permisos;
 
     private List<TipoDeNotaBD> listaTiposNotas;
-    private List<PeriodoLectivoMD> listaPeriodos;
+    private List<PeriodoLectivoBD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
     private final PeriodoLectivoBD periodo;
@@ -48,7 +45,6 @@ public class VtnTipoNotasCTR {
         this.desktop = desktop;
         this.vista = new VtnTipoNotas();
         this.modelo = new TipoDeNotaBD();
-        this.permisos = CONS.ROL;
     }
 
     public VtnTipoNotas getVista() {

@@ -43,6 +43,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
+import controlador.vistaReportes.VtnEstadosCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -213,6 +214,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
         vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
+        vtnPrin.getMnCtReportesEstado().addActionListener(e -> mnctReportesEstado(e));
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
@@ -1161,6 +1163,13 @@ public class VtnPrincipalCTR {
 
     public RolBD getRolSeleccionado() {
         return rolSeleccionado;
+    }
+
+    private void mnctReportesEstado(ActionEvent e) {
+
+        VtnEstadosCTR vtn = new VtnEstadosCTR(this);
+        vtn.Init();
+
     }
 
 }
