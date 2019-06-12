@@ -47,6 +47,7 @@ public class VtnEstadosCTR {
     private void InitEventos() {
         vista.getBtnVer().addActionListener(e -> btnVer(e));
         vista.getCmbPeriodos().addItemListener(e -> setCarrera());
+        vista.getBtnReporte().addActionListener(e -> btnImprimir(e));
     }
 
     //Metodos de Apoyo
@@ -81,5 +82,13 @@ public class VtnEstadosCTR {
     //Eventos
     private void btnVer(ActionEvent e) {
         cargarTabla();
+    }
+
+    private void btnImprimir(ActionEvent e) {
+        Effects.setLoadCursor(vista);
+        ReporteEstadoAlumCTR reportes = new ReporteEstadoAlumCTR(vista, getIdPeriodo());
+       // desktop.getLblEstado().setText("CARGANDO REPORTE....");
+        reportes.generarReporteEstadoAlumno();
+       // desktop.getLblEstado().setText("COMPLETADO");
     }
 }
