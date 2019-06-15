@@ -10,6 +10,7 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.querys.Querys;
@@ -42,12 +43,18 @@ public class VtnEstadosCTR {
         cargarPeriodos();
 
         InitEventos();
+        InitPermisos();
     }
 
     private void InitEventos() {
         vista.getBtnVer().addActionListener(e -> btnVer(e));
         vista.getCmbPeriodos().addItemListener(e -> setCarrera());
         vista.getBtnReporte().addActionListener(e -> btnImprimir(e));
+    }
+
+    private void InitPermisos() {
+        vista.getBtnReporte().getAccessibleContext().setAccessibleName("Asistencia-Estado-Reportes");
+        CONS.activarBtns(vista.getBtnReporte());
     }
 
     //Metodos de Apoyo
@@ -86,9 +93,10 @@ public class VtnEstadosCTR {
 
     private void btnImprimir(ActionEvent e) {
         Effects.setLoadCursor(vista);
+
         ReporteEstadoAlumCTR reportes = new ReporteEstadoAlumCTR(vista, getIdPeriodo());
-       // desktop.getLblEstado().setText("CARGANDO REPORTE....");
+
         reportes.generarReporteEstadoAlumno();
-       // desktop.getLblEstado().setText("COMPLETADO");
+        Effects.setDefaultCursor(vista);
     }
 }

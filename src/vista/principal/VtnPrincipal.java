@@ -829,7 +829,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAsistencia.setText("Asistencia");
         mnTipoNotas.add(mnCtAsistencia);
 
-        mnCtReportesEstado.setText("Reportes Desertores");
+        mnCtReportesEstado.setText("Estado Asistencia");
         mnTipoNotas.add(mnCtReportesEstado);
 
         menuCrud.add(mnTipoNotas);

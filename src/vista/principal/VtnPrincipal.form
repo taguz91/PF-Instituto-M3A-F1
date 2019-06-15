@@ -237,7 +237,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtReportesEstado">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Reportes Desertores"/>
+                <Property name="text" type="java.lang.String" value="Estado Asistencia"/>
               </Properties>
             </MenuItem>
           </SubComponents>

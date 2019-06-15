@@ -1044,6 +1044,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtMiPerfil().getAccessibleContext().setAccessibleName("Mi-Perfil-Consultar");
         vtnPrin.getMnCtAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Consultar");
         vtnPrin.getMnCtRendimientoAcademico().getAccessibleContext().setAccessibleName("Rendimiento-Academico-Consultar");
+        vtnPrin.getMnCtReportesEstado().getAccessibleContext().setAccessibleName("Asistencia-Estado-Consultar");
 
         //INGRESAR 
         vtnPrin.getMnIgPersona().getAccessibleContext().setAccessibleName("Persona-Ingresar");
@@ -1080,12 +1081,18 @@ public class VtnPrincipalCTR {
 
         CONS.activarBtns(
                 //Accesos Directos
-                vtnPrin.getBtnPersona(), vtnPrin.getBtnDocente(),
-                vtnPrin.getBtnAlumno(), vtnPrin.getBtnCarrera(),
-                vtnPrin.getBtnCurso(), vtnPrin.getBtnPrdLectivo(),
-                vtnPrin.getBtnInscripcion(), vtnPrin.getBtnMatricula(),
-                vtnPrin.getBtnDocenteMateria(), vtnPrin.getBtnMateria(),
-                vtnPrin.getBtnIngresarSilabo(), vtnPrin.getBtnConsultarSilabo(),
+                vtnPrin.getBtnPersona(),
+                vtnPrin.getBtnDocente(),
+                vtnPrin.getBtnAlumno(),
+                vtnPrin.getBtnCarrera(),
+                vtnPrin.getBtnCurso(),
+                vtnPrin.getBtnPrdLectivo(),
+                vtnPrin.getBtnInscripcion(),
+                vtnPrin.getBtnMatricula(),
+                vtnPrin.getBtnDocenteMateria(),
+                vtnPrin.getBtnMateria(),
+                vtnPrin.getBtnIngresarSilabo(),
+                vtnPrin.getBtnConsultarSilabo(),
                 vtnPrin.getBtnIngresarRol(),
                 //Consultas
                 vtnPrin.getMnCtPersona(),
@@ -1113,6 +1120,7 @@ public class VtnPrincipalCTR {
                 vtnPrin.getMnCtAsistencia(),
                 vtnPrin.getMnBiblioteca(),
                 vtnPrin.getMnCtRendimientoAcademico(),
+                vtnPrin.getMnCtReportesEstado(),
                 // ingresar
                 vtnPrin.getMnIgPersona(),
                 vtnPrin.getMnIgDocente(),
