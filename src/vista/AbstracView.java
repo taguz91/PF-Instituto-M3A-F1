@@ -27,10 +27,6 @@ public abstract class AbstracView extends javax.swing.JInternalFrame {
     }
 
     public void centrarCeldas(JTable table) {
-//        DefaultTableCellRenderer tableCellRender = new DefaultTableCellRenderer();
-//
-//        tableCellRender.setHorizontalAlignment(SwingConstants.CENTER);
-//        table.getColumnModel().getColumn(0).setCellRenderer(tableCellRender);
         table.setDefaultRenderer(Object.class, new RowStyle(1));
     }
 }

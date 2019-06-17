@@ -2,7 +2,6 @@ package modelo.periodolectivo;
 
 import java.time.LocalDate;
 import modelo.carrera.CarreraMD;
-import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoMD {
 

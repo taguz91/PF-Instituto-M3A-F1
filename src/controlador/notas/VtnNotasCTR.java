@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -25,19 +24,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
-import modelo.curso.CursoBD;
-import modelo.curso.CursoMD;
-import modelo.materia.MateriaBD;
-import modelo.materia.MateriaMD;
 import modelo.notas.NotasBD;
-import modelo.periodolectivo.PeriodoLectivoBD;
-import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.DocenteBD;
-import modelo.persona.DocenteMD;
-import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
-import modelo.usuario.RolBD;
-import modelo.usuario.UsuarioBD;
 import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
@@ -45,52 +33,10 @@ import vista.principal.VtnPrincipal;
  *
  * @author MrRainx
  */
-public class VtnNotasCTR {
+public class VtnNotasCTR extends AbstractVtn {
 
-    private final VtnPrincipal desktop;
-    private final VtnNotas vista;
-    private final UsuarioBD usuario;
-    private final RolBD ROL;
-    // LISTAS
-    private Map<String, DocenteMD> listaDocentes;
-    private List<PeriodoLectivoMD> listaPeriodos;
-    private List<AlumnoCursoBD> listaNotas;
-    private List<MateriaMD> listaMaterias;
-    private List<TipoDeNotaBD> listaValidaciones;
-
-    // TABLA
-    private DefaultTableModel tablaTrad;
-    private DefaultTableModel tablaDuales;
-
-    // JTables
-    private JTable jTblTrad;
-    private JTable jTblDual;
-
-    // ACTIVACION DE HILOS
-    private boolean cargarTabla = true;
-
-    private final PeriodoLectivoBD peridoBD;
-    private final AlumnoCursoBD almnCursoBD;
-    private final TipoDeNotaBD tipoNotaBD;
-    private final CursoBD cursoBD;
-    private final MateriaBD materiaBD;
-    private final DocenteBD docenteBD;
-
-    {
-        peridoBD = new PeriodoLectivoBD();
-        almnCursoBD = new AlumnoCursoBD();
-        tipoNotaBD = new TipoDeNotaBD();
-        cursoBD = new CursoBD();
-        materiaBD = new MateriaBD();
-        docenteBD = new DocenteBD();
-    }
-
-    // private VtnPrincipalCTR ctrPrin;
     public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista) {
-        this.desktop = desktop;
-        this.vista = vista;
-        this.usuario = CONS.USUARIO;
-        this.ROL = CONS.ROL;
+        super(desktop, vista);
     }
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
@@ -101,8 +47,8 @@ public class VtnNotasCTR {
         jTblTrad = vista.getTblTrad();
         jTblDual = vista.getTblDual();
 
-        if (ROL.getNombre().toLowerCase().contains("docente")) {
-            listaDocentes = docenteBD.selectAll(usuario.getUsername());
+        if (CONS.ROL.getNombre().toLowerCase().contains("docente")) {
+            listaDocentes = docenteBD.selectAll(CONS.USUARIO.getUsername());
         } else {
             listaDocentes = docenteBD.selectAll();
         }
@@ -116,7 +62,6 @@ public class VtnNotasCTR {
         cargarComboCiclo();
         cargarComboMaterias();
         InitEventos();
-        InitTablas();
         activarForm(true);
     }
 
@@ -182,106 +127,61 @@ public class VtnNotasCTR {
     }
 
     private void InitTablas() {
-        String funcion = "";
-        // TABLA TRADICIONALES
-        jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
-        jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
-
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
         items.add("Retirado");
         items.add("Desertor");
-        jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
+        if (getModalidad().equalsIgnoreCase("tradicional") || getModalidad().equalsIgnoreCase("presencial")) {
+            if (!getEstado()) {
+                // TABLA TRADICIONALES
+                jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(false, items));
 
-        // TABLA DUALES
-        jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-        jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-        jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
-        jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
-        jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(true));
-        jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
-    }
+            } else {
+                jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+                jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(false, items));
+            }
 
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="ENCABEZADO">
-    private void cargarComboDocente() {
-        listaDocentes.entrySet().stream().map(c -> c.getKey()).forEach(vista.getCmbDocente()::addItem);
-        tablaTrad.setRowCount(0);
-        tablaDuales.setRowCount(0);
-    }
-
-    private void cargarComboPeriodos() {
-        vista.getCmbPeriodoLectivo().removeAllItems();
-        vista.getLblCarrera().setText("");
-
-        listaPeriodos = peridoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivo()::addItem);
-        tablaTrad.setRowCount(0);
-        tablaDuales.setRowCount(0);
-    }
-
-    private void setLblCarrera() {
-        vista.getLblCarrera()
-                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-                        .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
-
-    }
-
-    private void cargarComboCiclo() {
-        try {
-            vista.getCmbCiclo().removeAllItems();
-
-            cursoBD.selectCicloWhere(getIdDocente(), getIdPeriodoLectivo()).stream()
-                    .forEach(vista.getCmbCiclo()::addItem);
-        } catch (NullPointerException e) {
+        } else {
+            if (!getEstado()) {
+                jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(false, items));
+            } else {
+                jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+                jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(false, items));
+            }
         }
-        tablaTrad.setRowCount(0);
-        tablaDuales.setRowCount(0);
+
     }
 
-    private void cargarComboMaterias() {
-        try {
-            vista.getCmbAsignatura().removeAllItems();
+    private void InitPermisos() {
+        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Imprimir");
+        vista.getBtnVerNotas().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Ver Notas");
 
-            CursoMD curso = new CursoMD();
-            DocenteMD docente = new DocenteMD();
-            docente.setIdDocente(getIdDocente());
-            curso.setDocente(docente);
-            PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
-            curso.setPeriodo(periodo);
-            curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
-
-            listaMaterias = materiaBD.selectWhere(curso);
-
-            listaMaterias.stream().map(c -> c.getNombre()).forEach(vista.getCmbAsignatura()::addItem);
-            vista.getLblHoras().setText("" + listaMaterias.stream()
-                    .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
-                    .map(c -> c.getHorasPresenciales()).findFirst().orElse(-1));
-
-            listaValidaciones = tipoNotaBD.selectWhere(getIdPeriodoLectivo());
-
-            validarCombos();
-        } catch (NullPointerException e) {
-            vista.getCmbAsignatura().removeAllItems();
-        }
-        tablaTrad.setRowCount(0);
-        tablaDuales.setRowCount(0);
+        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerNotas());
     }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
-    private int getIdDocente() {
-        return listaDocentes.entrySet().stream()
-                .filter((entry) -> (entry.getKey().equals(vista.getCmbDocente().getSelectedItem().toString())))
-                .map(c -> c.getValue().getIdDocente()).findAny().get();
-    }
-
     private void mensajeDeError() {
         Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", Effects.ERROR_COLOR,
                 2);
@@ -300,25 +200,6 @@ public class VtnNotasCTR {
         tabla.setRowCount(0);
         listaNotas.stream().forEach(loader);
         activarForm(true);
-    }
-
-    private void validarCombos() {
-
-        if (vista.getCmbAsignatura().getItemCount() > 0) {
-            vista.getBtnVerNotas().setEnabled(true);
-        } else {
-            vista.getBtnVerNotas().setEnabled(false);
-        }
-    }
-
-    private int getIdPeriodoLectivo() {
-        try {
-            String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            return listaPeriodos.stream().filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .map(c -> c.getId_PerioLectivo()).findAny().orElse(-1);
-        } catch (NullPointerException e) {
-        }
-        return -1;
     }
 
     private int getSelectedRowTrad() {
@@ -370,7 +251,7 @@ public class VtnNotasCTR {
 
     private void activarForm(boolean estado) {
 
-        if (ROL.getNombre().toLowerCase().contains("docente")) {
+        if (CONS.ROL.getNombre().toLowerCase().contains("docente")) {
             vista.getTxtBuscar().setVisible(false);
             vista.getBtnBuscar().setVisible(false);
             vista.getCmbDocente().setEnabled(false);
@@ -459,6 +340,7 @@ public class VtnNotasCTR {
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
             String nombreMateria = vista.getCmbAsignatura().getSelectedItem().toString();
             listaNotas = almnCursoBD.selectWhere(cursoNombre, nombreMateria, getIdDocente(), getIdPeriodoLectivo());
+            InitTablas();
             listaNotas.stream().forEach(loader);
             cargarTabla = true;
             vista.getLblResultados().setText(listaNotas.size() + " Resultados");
@@ -951,12 +833,4 @@ public class VtnNotasCTR {
     }
 
     // </editor-fold>
-
-    private void InitPermisos() {
-        vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Imprimir");
-       vista.getBtnVerNotas().getAccessibleContext().setAccessibleName("Notas-Consultar-Notas-Ver Notas");
-   
-       
-        CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerNotas());
-    }
 }
