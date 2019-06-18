@@ -761,7 +761,7 @@ public class VtnNotasCTR extends AbstractVtn {
             int r = JOptionPane.showOptionDialog(vista, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
                     "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                     new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
-                        "Alumnos entre 90 a 100", "Reporte Completo"},
+                        "Alumnos entre 90 a 100", "Reporte Completo", "Tabla Final"},
                     "Cancelar");
 
             Effects.setLoadCursor(vista);
@@ -804,6 +804,12 @@ public class VtnNotasCTR extends AbstractVtn {
                 case 4:
                     desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteCompleto();
+                    desktop.getLblEstado().setText("COMPLETADO");
+                    break;
+
+                case 5:
+                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+                    reportes.generarReporteInformeFinalTabla();
                     desktop.getLblEstado().setText("COMPLETADO");
                     break;
 
