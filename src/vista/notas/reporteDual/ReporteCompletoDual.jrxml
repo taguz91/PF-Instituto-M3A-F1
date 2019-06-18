@@ -16,7 +16,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/ista/Documentos/GitHub/PF-Instituto-M3A-F1/src/vista/notas/reporteDual/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["vista/notas/reporteDual/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -161,7 +161,7 @@ WHERE
 			<textField>
 				<reportElement mode="Transparent" x="229" y="52" width="272" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="acd8723f-9a2c-4ea7-beb5-ace9d0d8875a"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
-					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
@@ -169,7 +169,7 @@ WHERE
 			<textField>
 				<reportElement mode="Transparent" x="195" y="72" width="305" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3d1bca3a-8a27-431e-af1f-8315419304d7"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
-					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
@@ -177,7 +177,7 @@ WHERE
 			<textField>
 				<reportElement mode="Transparent" x="177" y="92" width="63" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="88e7da80-9df7-4358-ad76-85213446d437"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
-					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
@@ -185,7 +185,7 @@ WHERE
 			<textField>
 				<reportElement mode="Transparent" x="560" y="52" width="264" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f6a4bc95-3c7d-4890-8867-efbccc6abb9b"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
-					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
@@ -193,7 +193,7 @@ WHERE
 			<textField>
 				<reportElement mode="Transparent" x="571" y="72" width="253" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9a8cc355-9ca0-44da-80aa-cbf293857cdd"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
-					<font fontName="DejaVu Sans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="DejaVu Sans" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
@@ -214,7 +214,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Apellidos]]></text>
 			</staticText>
@@ -227,7 +227,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nota Total]]></text>
 			</staticText>
@@ -240,7 +240,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Total G.A]]></text>
 			</staticText>
@@ -253,7 +253,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nombres]]></text>
 			</staticText>
@@ -266,7 +266,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[G. A2]]></text>
 			</staticText>
@@ -279,7 +279,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Cèdula]]></text>
 			</staticText>
@@ -292,7 +292,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nro Faltas]]></text>
 			</staticText>
@@ -305,7 +305,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[% Faltas]]></text>
 			</staticText>
@@ -318,7 +318,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
@@ -331,7 +331,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<text><![CDATA[Nº M]]></text>
 			</staticText>
@@ -344,7 +344,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
@@ -357,7 +357,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Asistencia]]></text>
 			</staticText>
@@ -370,7 +370,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ex. Rec.]]></text>
 			</staticText>
@@ -383,7 +383,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[G. A1]]></text>
 			</staticText>
@@ -396,7 +396,7 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="7" isBold="false"/>
+					<font fontName="DejaVu Sans" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Ex. F.]]></text>
 			</staticText>
@@ -413,7 +413,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
@@ -426,7 +426,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{apellidos_al}]]></textFieldExpression>
 			</textField>
@@ -439,7 +439,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres_al}]]></textFieldExpression>
 			</textField>
@@ -452,7 +452,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NotaFinal}]]></textFieldExpression>
 			</textField>
@@ -465,7 +465,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
 			</textField>
@@ -478,7 +478,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
@@ -491,7 +491,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{N° Faltas}]]></textFieldExpression>
 			</textField>
@@ -504,7 +504,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
@@ -517,7 +517,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{N° Matricula}]]></textFieldExpression>
 			</textField>
@@ -630,7 +630,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Sans" size="7"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
@@ -664,7 +664,7 @@ WHERE
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="676" y="84" width="166" height="20" uuid="1348a44d-e474-4207-b23e-ac5b10f2f0e6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
+					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
