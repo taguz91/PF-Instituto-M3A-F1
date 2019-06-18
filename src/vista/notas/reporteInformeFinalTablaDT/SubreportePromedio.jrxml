@@ -17,7 +17,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	AVG("AlumnoCurso".almn_curso_nota_final) AS "PROMEDIO"
+	ROUND(AVG("AlumnoCurso".almn_curso_nota_final),2 )AS "PROMEDIO"
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
