@@ -13,9 +13,20 @@ public class ReportesCTR {
 
     private final int idDocente;
 
-    public ReportesCTR(VtnNotas vista, int idDocente) {
+    private String modalidad;
+
+    public ReportesCTR(VtnNotas vista, int idDocente, String modalidad) {
         this.vista = vista;
         this.idDocente = idDocente;
+        this.modalidad = modalidad;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
     }
 
     public void generarReporteCompleto() {
@@ -23,20 +34,19 @@ public class ReportesCTR {
         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
-//        if () {
-//
-//            String path = "/vista/notas/reporteDual/ReporteCompletoDual.jasper";
-//
-//            Map parametros = new HashMap();
-//
-//            parametros.put("id_docente", idDocente);
-//            parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-//            parametros.put("curso_nombre", ciclo);
-//            parametros.put("materia_nombre", materia);
-//
-//            Middlewares.generarReporte(getClass().getResource(path), "Reporte Completo Dual", parametros);
-//            
-//        } else {
+        if (getModalidad().equalsIgnoreCase("DUAL")) {
+
+            String path = "/vista/notas/reporteDual/ReporteCompletoDual.jasper";
+
+            Map parametros = new HashMap();
+
+            parametros.put("id_docente", idDocente);
+            parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+            parametros.put("curso_nombre", ciclo);
+            parametros.put("materia_nombre", materia);
+            Middlewares.generarReporte(getClass().getResource(path), "Reporte Completo Dual", parametros);
+
+        } else {
             String path = "/vista/notas/reportesPresencial/ReporteCompletoPresencial.jasper";
 
             Map parametros = new HashMap();
@@ -47,8 +57,8 @@ public class ReportesCTR {
             parametros.put("materia_nombre", materia);
 
             Middlewares.generarReporte(getClass().getResource(path), "Reporte Completo", parametros);
-    
-//        }
+
+        }
 
     }
 

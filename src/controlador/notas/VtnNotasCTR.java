@@ -38,6 +38,8 @@ public class VtnNotasCTR extends AbstractVtn {
     public VtnNotasCTR(VtnPrincipal desktop, VtnNotas vista) {
         super(desktop, vista);
     }
+    
+    private String modalidad;
 
     // <editor-fold defaultstate="collapsed" desc="INITS">
     public void Init() {
@@ -766,7 +768,7 @@ public class VtnNotasCTR extends AbstractVtn {
 
             Effects.setLoadCursor(vista);
 
-            ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
+            ReportesCTR reportes = new ReportesCTR(vista, getIdDocente(), modalidad);
 
             switch (r) {
                 case 0:
