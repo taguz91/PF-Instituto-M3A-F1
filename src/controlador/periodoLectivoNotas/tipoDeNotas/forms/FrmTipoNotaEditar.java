@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import vista.periodoLectivoNotas.FrmTipoNota;
+import vista.tipoDeNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
 
 /**
