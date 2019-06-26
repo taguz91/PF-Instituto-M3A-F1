@@ -2,6 +2,7 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
+import controlador.vistaReportes.ReporteEstadoAlumCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -152,6 +153,7 @@ public class FrmAsistenciaCTR {
 
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
+        vista.getBtnImprimir().addActionListener(e-> btnImprimir(e));
 
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
             @Override
@@ -504,25 +506,12 @@ public class FrmAsistenciaCTR {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
     private void btnImprimir(ActionEvent e) {
-        new Thread(() -> {
+       Effects.setLoadCursor(vista);
 
-            int r = JOptionPane.showOptionDialog(vista,
-                    "Reporte de Asistencia de Alumnos\n" + "¿Elegir el tipo de Reporte?", "REPORTE ASISTENCIA",
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{"Asistencia Alumnos"}, "Cancelar");
+        reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdPeriodoLectivo());
 
-            Effects.setLoadCursor(vista);
-
-            // ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
-            try {
-                sleep(500);
-            } catch (InterruptedException ex) {
-                System.out.println(ex.getMessage());
-            }
-            desktop.getLblEstado().setText("");
-            Effects.setDefaultCursor(vista);
-            vista.getBtnVerAsistencia().setEnabled(true);
-        }).start();
+        reportes.generarReporteAsistencia();
+        Effects.setDefaultCursor(vista);
 
     }
 
@@ -569,4 +558,5 @@ public class FrmAsistenciaCTR {
        
         CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
     }
+
 }
