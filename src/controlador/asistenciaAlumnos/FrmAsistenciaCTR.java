@@ -153,7 +153,7 @@ public class FrmAsistenciaCTR {
 
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
-        vista.getBtnImprimir().addActionListener(e-> btnImprimir(e));
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
             @Override
@@ -506,7 +506,7 @@ public class FrmAsistenciaCTR {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
     private void btnImprimir(ActionEvent e) {
-       Effects.setLoadCursor(vista);
+        Effects.setLoadCursor(vista);
 
         reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdDocente());
 
@@ -550,12 +550,10 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
-
     private void InitPermisos() {
         vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Asistencia-Imprimir");
-       vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
-   
-       
+        vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
+
         CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
     }
 

@@ -5,7 +5,6 @@ import controlador.Libraries.Middlewares;
 import java.util.HashMap;
 import java.util.Map;
 import vista.asistenciaAlumnos.FrmAsistencia;
-import vista.notas.VtnNotas;
 
 /**
  *
@@ -36,7 +35,7 @@ public class reporteAsistenciaCTR {
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
-         System.out.println(parametros);
+
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia", parametros);
     }
 }
