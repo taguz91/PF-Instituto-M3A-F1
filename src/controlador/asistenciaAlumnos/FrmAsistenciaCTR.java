@@ -508,7 +508,7 @@ public class FrmAsistenciaCTR {
     private void btnImprimir(ActionEvent e) {
         Effects.setLoadCursor(vista);
 
-        reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdPeriodoLectivo());
+        reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdDocente());
 
         reportes.generarReporteAsistencia();
         Effects.setDefaultCursor(vista);
