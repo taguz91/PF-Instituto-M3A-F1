@@ -283,7 +283,7 @@ public class FrmAsistenciaCTR {
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
                         break;
                     case 6:
-                        vista.getCmbDiaClase().addItem("SÁBADO | " + ini.plusDays(5));
+                        vista.getCmbDiaClase().addItem("SABADO | " + ini.plusDays(5));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
                         break;
                     default:
