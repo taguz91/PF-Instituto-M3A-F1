@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2290974e-9101-48b1-938e-c58ae1231fa2">
 	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="87"/>
@@ -408,4 +409,33 @@ WHERE
 			</line>
 		</band>
 	</summary>
+=======
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band height="79"/>
+    </title>
+    <pageHeader>
+        <band height="35"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="61"/>
+    </columnHeader>
+    <detail>
+        <band height="125"/>
+    </detail>
+    <columnFooter>
+        <band height="45"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="54"/>
+    </pageFooter>
+    <summary>
+        <band height="42"/>
+    </summary>
+>>>>>>> parent of 7ef60e76... Reporte Asistencia
 </jasperReport>
