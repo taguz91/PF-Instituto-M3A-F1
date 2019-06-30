@@ -69,6 +69,11 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         return btnImprimir;
     }
 
+    public void setBtnImprimir(JButton btnImprimir) {
+        this.btnImprimir = btnImprimir;
+    }
+    
+
     public JComboBox<String> getCmbDiaClase() {
         return cmbDiaClase;
     }
@@ -155,7 +160,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         cmbAsignaturaAsis = new javax.swing.JComboBox<>();
         btnBuscarAsis = new javax.swing.JButton();
         btnVerAsistencia = new javax.swing.JButton();
-        btnImprimir = new javax.swing.JButton();
         txtBuscarAsis = new javax.swing.JTextField();
         lblResultados = new javax.swing.JLabel();
         lblSemana = new javax.swing.JLabel();
@@ -165,6 +169,7 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         lblDiaClase = new javax.swing.JLabel();
         cmbDiaClase = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -195,8 +200,6 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
 
         btnVerAsistencia.setText("Ver Asistencia");
 
-        btnImprimir.setText("Imprimir");
-
         lblResultados.setText("0 Resultados");
 
         lblSemana.setText("Semana: ");
@@ -223,6 +226,8 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
         lblDiaClase.setText("Dia Clase:");
 
         btnGuardar.setText("Guardar ");
+
+        btnImprimir.setText("Imprimir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,16 +276,16 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cmbDiaClase, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(69, 69, 69)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(btnImprimir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnVerAsistencia, javax.swing.GroupLayout.Alignment.LEADING)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtBuscarAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(19, 19, 19)))
-                                .addGap(8, 8, 8)
+                                        .addGap(27, 27, 27))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(69, 69, 69)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnVerAsistencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(8, 8, 8)))
                                 .addComponent(btnBuscarAsis)
                                 .addGap(18, 18, 18)))
                         .addGap(6, 6, 6))
@@ -312,19 +317,19 @@ public class FrmAsistencia extends javax.swing.JInternalFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblAsignaturaAsis)
                                 .addComponent(cmbAsignaturaAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(27, 27, 27)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCicloAsis)
                             .addComponent(cmbCicloAsis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSemana)
                             .addComponent(cmbSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDiaClase)
-                            .addComponent(cmbDiaClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbDiaClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimir)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnVerAsistencia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnImprimir)))
-                .addGap(12, 12, 12)
+                        .addGap(38, 38, 38)))
+                .addGap(9, 9, 9)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
