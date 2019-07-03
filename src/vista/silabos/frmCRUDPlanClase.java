@@ -158,12 +158,19 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "PlanCod", "Docente", "Materia", "Curso", "Unidad"
+                "PlanCod", "Docente", "Materia", "Curso", "Unidad", "Estado", "Estado"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -177,12 +184,16 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
             tlbTablaPLC.getColumnModel().getColumn(0).setMinWidth(0);
             tlbTablaPLC.getColumnModel().getColumn(0).setPreferredWidth(0);
             tlbTablaPLC.getColumnModel().getColumn(0).setMaxWidth(0);
-            tlbTablaPLC.getColumnModel().getColumn(1).setPreferredWidth(270);
-            tlbTablaPLC.getColumnModel().getColumn(1).setMaxWidth(270);
+            tlbTablaPLC.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tlbTablaPLC.getColumnModel().getColumn(1).setMaxWidth(250);
             tlbTablaPLC.getColumnModel().getColumn(3).setPreferredWidth(80);
             tlbTablaPLC.getColumnModel().getColumn(3).setMaxWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(4).setPreferredWidth(60);
-            tlbTablaPLC.getColumnModel().getColumn(4).setMaxWidth(60);
+            tlbTablaPLC.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tlbTablaPLC.getColumnModel().getColumn(4).setMaxWidth(50);
+            tlbTablaPLC.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tlbTablaPLC.getColumnModel().getColumn(5).setMaxWidth(80);
+            tlbTablaPLC.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tlbTablaPLC.getColumnModel().getColumn(6).setMaxWidth(80);
         }
 
         Cmb_periodos.addActionListener(new java.awt.event.ActionListener() {

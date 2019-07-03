@@ -61,8 +61,7 @@ public class ControladorConfiguracion_plan_clases {
 
         frm_cong_PlanClase.getBtn_cancelar().addActionListener((e) -> {
             frm_cong_PlanClase.dispose();
-             ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrincipal);
-             cP.iniciaControlador();
+             vtnPrincipal.getMnCtPlandeClase().doClick();
         });
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
             if (validarPlanClaseExistente()==true) {
