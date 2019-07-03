@@ -362,7 +362,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnTipoNotas;
     }
 
-
+    public JMenuItem getMnCtReportesEstado() {
+        return mnCtReportesEstado;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -431,6 +433,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
         mnCtAsistencia = new javax.swing.JMenuItem();
+        mnCtReportesEstado = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -826,6 +829,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAsistencia.setText("Asistencia");
         mnTipoNotas.add(mnCtAsistencia);
 
+        mnCtReportesEstado.setText("Estado Asistencia");
+        mnTipoNotas.add(mnCtReportesEstado);
+
         menuCrud.add(mnTipoNotas);
 
         mnIngresar.setText("Ingresar");
@@ -1025,6 +1031,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRendimientoAcademico;
+    private javax.swing.JMenuItem mnCtReportesEstado;
     private javax.swing.JMenuItem mnCtRoles;
     private javax.swing.JMenuItem mnCtRolesPeriodo;
     private javax.swing.JMenuItem mnCtSilabos;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="33" pageHeight="842" columnWidth="33" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9ed0211a-38b5-427b-b9b4-79978d86c07e">
-	<property name="ireport.zoom" value="1.331000000000003"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="35" pageHeight="842" columnWidth="35" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9ed0211a-38b5-427b-b9b4-79978d86c07e">
+	<property name="ireport.zoom" value="6.7274999493256225"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_alumno" class="java.lang.Integer">
@@ -50,7 +50,7 @@ WHERE
 	<detail>
 		<band height="10" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement mode="Opaque" x="0" y="0" width="34" height="10" forecolor="#000000" backcolor="#FEFEFE" uuid="1e5e79e9-fd9c-41cb-a662-d5a5960b5f98"/>
+				<reportElement mode="Opaque" x="0" y="0" width="35" height="10" forecolor="#000000" backcolor="#FEFEFE" uuid="1e5e79e9-fd9c-41cb-a662-d5a5960b5f98"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

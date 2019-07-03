@@ -13,7 +13,6 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.curso.SesionClaseMD;
 
 public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
@@ -555,15 +554,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(sql, conn, null);
-            try {
-                while (rst.next()) {
-                    fi = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
-                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-                    System.out.println(fi);
-                    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-                }
-                return fi;
-            } catch (SQLException e) {
+        try {
+            while (rst.next()) {
+                fi = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
+                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+                System.out.println(fi);
+                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+            }
+            return fi;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             pool.close(conn);
@@ -636,21 +635,19 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public List<PeriodoLectivoMD> selectIdNombreAll() {
+    public List<PeriodoLectivoBD> selectIdNombreAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
-                + "ORDER BY prd_lectivo_fecha_inicio ASC";
+                + "ORDER BY prd_lectivo_fecha_inicio";
 
-        System.out.println("-->" + SELECT);
-
-        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        List<PeriodoLectivoBD> lista = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
-                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                PeriodoLectivoBD periodo = new PeriodoLectivoBD();
                 periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
                 lista.add(periodo);

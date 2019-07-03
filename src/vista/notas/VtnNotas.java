@@ -8,8 +8,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import vista.AbstracView;
 
 /**
@@ -30,11 +28,9 @@ public class VtnNotas extends AbstracView {
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
 
-        DefaultTableCellRenderer headerTrad = (DefaultTableCellRenderer) tblTrad.getTableHeader().getDefaultRenderer();
-        headerTrad.setHorizontalAlignment(SwingConstants.CENTER);
+        centrarCabecera(tblTrad);
 
-        DefaultTableCellRenderer headerDual = (DefaultTableCellRenderer) tblDual.getTableHeader().getDefaultRenderer();
-        headerDual.setHorizontalAlignment(SwingConstants.CENTER);
+        centrarCabecera(tblDual);
 
     }
 

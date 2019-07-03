@@ -95,7 +95,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
     //Para buscar materias si una materia es nucleo estructurante
     private final MateriaBD mat;
     private ArrayList<MateriaMD> materias;
-    private Boolean perdioNE;
+    private Boolean perdioNE, tieneTerceraMatricula;
     //Para guardar la carrera en la que se esta trabajando 
     private CarreraMD carrera;
     private final CarreraBD car;
@@ -251,6 +251,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
      */
     private void guardar() {
         boolean guardar = true;
+        String error = "El formulario contiene errores.";
         if (cursosSelec.isEmpty()) {
             guardar = false;
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar materias.");
@@ -271,9 +272,21 @@ public class FrmAlumnoCursoCTR extends DCTR {
         if (posTipo < 1) {
             guardar = false;
         }
+        
+        if(tieneTerceraMatricula){
+            guardar = validarTercerasMatriculas();
+            if(!guardar){
+                error = "Debe matricularse en su tercera matricula.";
+            }
+        }
 
         //Se borra todas las materias que tienen un choque de horas
         borrarChoques(cursosSelec);
+
+        //Se valida que se haya inscrito en todos los co-requitos establecidos 
+        if (guardar) {
+            guardar = validarCoRequisitos();
+        }
 
         if (guardar) {
             //Se limpia la variable antes de guardar 
@@ -283,8 +296,11 @@ public class FrmAlumnoCursoCTR extends DCTR {
             cursosSelec.forEach(c -> {
                 //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
                 almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId(), c.getNumMatricula());
-                materiasMatricula = materiasMatricula + numMateria + ": " + c.getMateria().getNombre() + "   Curso: " + c.getNombre()
-                        + "   Matricula: " + c.getNumMatricula() + "    \n";
+                materiasMatricula = materiasMatricula + numMateria + ": "
+                        + "  Curso: " + c.getNombre()
+                        + "  Matricula: " + c.getNumMatricula()
+                        + "  Materia: " + c.getMateria().getNombre()
+                        + "    \n";
                 numMateria++;
             });
 
@@ -319,7 +335,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "El formulario contiene errores.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), error);
         }
     }
 
@@ -464,6 +480,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
             mdMatSelec.setRowCount(0);
             cursosSelec = new ArrayList();
             horarioAlmn = new ArrayList<>();
+            tieneTerceraMatricula = false;
 
             frmAlmCurso.getBtnPendientes().setEnabled(true);
             frmAlmCurso.getBtnMtCursadas().setEnabled(true);
@@ -537,6 +554,8 @@ public class FrmAlumnoCursoCTR extends DCTR {
 
         //Se leasigna el mismo valor si es que no tiene un ciclo reprobado
         cicloReprobado = cicloCursado;
+        //Aumentamos uno para que pueda coger materias superiores que no tengan prerequisitos
+        cicloCursado++;
         //Esto lo usamos para saber desde que ciclo cargar el combo de cursos
         mallaPerdidas = filtrarMalla(mallaCompleta, "R");
 
@@ -608,6 +627,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
         //Buscamos las terceras matriculas 
         ArrayList<MallaAlumnoMD> tm = filtrarTercerasMatriculas(mallaPerdidas);
         if (tm.size() > 0) {
+            tieneTerceraMatricula = true;
             int s = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(),
                     "El alumno tiene terceras matriculas \n"
                     + "¿Ver materias en las que debe realizar tercera matricula?", "Alumno con tercera matricula",
@@ -888,7 +908,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
     }
 
     /**
-     * Comprobamos que este
+     * Comprobamos que este matriculandose en co requisitos tambien
      */
     private void llenarTblConCoRequisitos(ArrayList<CursoMD> cursos) {
 
@@ -943,6 +963,67 @@ public class FrmAlumnoCursoCTR extends DCTR {
         }
 
         llenarTblMateriasPendientes(cursos);
+    }
+
+    /**
+     * Validamos los co-requisitos antes de guardar la matricula Aqui unicamente
+     * vemos los cursos en los que se esta matriculando, los seleccionados
+     */
+    private boolean validarCoRequisitos() {
+
+        ArrayList<MateriaRequisitoMD> requisitosFiltrados;
+        boolean matricula = true;
+        String mensaje = "";
+
+        for (int i = 0; i < cursosSelec.size(); i++) {
+            requisitosFiltrados = filtrarRequisitos(cursosSelec.get(i).getMateria().getId(), "C");
+            matricula = true;
+            if (requisitosFiltrados.size() > 0) {
+                matricula = false;
+            }
+
+            for (int j = 0; j < requisitosFiltrados.size(); j++) {
+                estadoMateria = estadoMateriaEnMalla(requisitosFiltrados.get(j).getMateriaRequisito().getId());
+                if (!estadoMateria.equals("C")
+                        && !estadoMateria.equals("M")) {
+                    //Tambien se comprueba con los cursos ya seleccionados
+                    for (int k = 0; k < cursosSelec.size(); k++) {
+                        if (cursosSelec.get(k).getMateria().getNombre().
+                                equals(requisitosFiltrados.get(j).getMateriaRequisito().getNombre())) {
+                            matricula = true;
+                            break;
+                        } else {
+                            mensaje = mensaje + cursosSelec.get(k).getMateria().getNombre() + " tiene como co-requisito: \n"
+                                    + requisitosFiltrados.get(j).getMateriaRequisito().getNombre() + "\n";
+                        }
+                    }
+                } else {
+                    matricula = true;
+                }
+            }
+        }
+
+        if (!matricula) {
+            mensaje = mensaje + "\nDebe matricularse en las materias con su co-requisito correspondiente.";
+            JOptionPane.showMessageDialog(null, mensaje);
+            return false;
+        } else {
+            return true;
+        }
+    }
+    /***
+     * Validamos que se matricule en terceras matriculas si es que tiene
+     * @return 
+     */
+    public boolean validarTercerasMatriculas(){
+        boolean guardar = false;
+        for (int i = 0; i < cursosSelec.size(); i++) {
+            if(cursosSelec.get(i).getNumMatricula() == 3){
+                guardar = true;
+                break;
+            }
+        }
+        return guardar;
     }
 
     /**
@@ -1235,7 +1316,8 @@ public class FrmAlumnoCursoCTR extends DCTR {
     }
 
     /**
-     * Buscamos el requisito de esta materia
+     * Buscamos el requisito de esta materia filtrando por tipo, los tipos de
+     * requisito son Co-requisito = C Pre-requisito = P
      */
     private ArrayList<MateriaRequisitoMD> filtrarRequisitos(int idMateria, String tipo) {
         ArrayList<MateriaRequisitoMD> filtrados = new ArrayList<>();

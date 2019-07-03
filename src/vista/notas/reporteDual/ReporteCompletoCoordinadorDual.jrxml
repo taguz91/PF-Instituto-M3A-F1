@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c2f446d-c223-4218-bb87-ffe1a50a6a4d">
+	<property name="ireport.zoom" value="1.0000000000000044"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement x="145" y="62" width="51" height="20" uuid="6f17aaef-5d6e-4eca-8a06-00bd5625aa19"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="14" y="24" width="108" height="80" uuid="1ed946e1-d3e5-4b32-81d4-1666ada27f31"/>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="309" y="22" width="239" height="20" uuid="d52df2ae-b671-4c6c-95dd-b5f2148b7fe1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[REGISTRO COMPLETO DE CALIFICACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="42" width="85" height="20" uuid="8044bca7-a8a6-4d21-9225-2ff82cec2102"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="842" height="22" forecolor="#006699" uuid="9a404e70-bc95-4393-bff0-35ae163d64a5"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="82" width="33" height="20" uuid="3e9a9dc8-cb58-4411-b9c7-e9ddddcb055d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="114" width="842" height="1" uuid="a412842c-88bd-4e19-8469-2bac5bf86fc6"/>
+			</line>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="704" y="94" width="138" height="20" uuid="87f039df-78b6-457d-ae5a-2c52bf917df2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="145" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="285" height="35" forecolor="#000000" backcolor="#FFFFFF" uuid="3a471a0d-37de-41ec-8074-a2db8e908651"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Datos del Estudiante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="35" width="20" height="110" forecolor="#000000" backcolor="#FFFFFF" uuid="11fe3b0c-5569-4f0f-8fab-8bbb7fc35c58"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="20" y="35" width="65" height="110" forecolor="#000000" backcolor="#FFFFFF" uuid="6f069aaa-9246-4677-a764-9f4d875470af"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="185" y="35" width="100" height="110" forecolor="#000000" backcolor="#FFFFFF" uuid="6b3009e2-09d4-49ce-839f-976dfc91f638"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="85" y="35" width="100" height="110" forecolor="#000000" backcolor="#FFFFFF" uuid="4754c211-c7d6-4ff0-a0bc-6f43a2883862"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="0" width="153" height="20" forecolor="#000000" backcolor="#006699" uuid="4b9f37a7-ef34-4d81-a9fc-3caade097a44"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fase Teórica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="438" y="0" width="58" height="35" forecolor="#000000" backcolor="#006699" uuid="b96b42ed-a5f8-45a3-94e0-83ac13afde27"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PTI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="567" y="0" width="104" height="35" forecolor="#000000" backcolor="#006699" uuid="59b105d8-e9de-4b15-97fb-86ec586a0e09"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fase Práctica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="496" y="0" width="71" height="35" forecolor="#000000" backcolor="#FFFF66" uuid="860000de-0207-4074-bfc0-76fd2055a023"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="671" y="0" width="71" height="35" forecolor="#000000" backcolor="#FFFF66" uuid="747baabf-2587-4d4a-822a-5c93e3e5fe2a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="467" y="35" width="29" height="110" forecolor="#000000" backcolor="#006699" uuid="a3f8fa0e-99a1-4184-af75-7077a84e4481"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Sub Total Fase Teórica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="438" y="35" width="29" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="a35b6f01-5d4f-48fb-8179-15c0236e33e2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Total PTI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="771" y="0" width="71" height="35" forecolor="#000000" backcolor="#FFFF66" uuid="e192e586-e43f-4492-8d9b-f9057dda16b8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="496" y="35" width="71" height="110" forecolor="#000000" backcolor="#FFFF66" uuid="08d64dfd-5bd1-4e75-97a0-ec7e35ce9598"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Aprobación Fase Teórica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="742" y="0" width="29" height="145" forecolor="#000000" backcolor="#006699" uuid="c3542b88-84b0-483f-9e20-dfa7d932f04c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Del Ciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="671" y="35" width="71" height="110" forecolor="#000000" backcolor="#FFFF66" uuid="32612e36-a855-48af-83ee-254523d7c2e8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Aprobación Fase Práctica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="771" y="35" width="71" height="110" forecolor="#000000" backcolor="#FFFF66" uuid="8211b260-e634-497b-8427-efcb0431c66e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[Aprobación Ciclo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="642" y="35" width="29" height="110" forecolor="#000000" backcolor="#006699" uuid="7a18a1b7-8c5c-4125-8286-acaa87b8f897"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Fase Práctica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="20" width="126" height="15" forecolor="#000000" backcolor="#66FF66" uuid="9f020036-a958-4f47-9b58-067a718353ae"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Núcleo Estructurante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="411" y="20" width="27" height="15" forecolor="#000000" backcolor="#006699" uuid="22292d2b-f3f5-4062-b0e0-60103a6572b8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="411" y="35" width="27" height="110" forecolor="#000000" backcolor="#006699" uuid="380d88f2-6e30-43bd-86b6-7f4e7a8629d1"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total Fase Teórica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="39e87748-7d82-457d-87ca-f26c40a9f4ce"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="306" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="d037a673-f676-41f6-bbd6-ed9316c87c65"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="327" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="752f09e0-8b21-4a16-9578-852fdb4be137"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="348" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="89b2a93e-ed5c-49fa-9f5e-d4539335a3db"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="369" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="f840f398-7f0b-41bf-9ac0-6493c04d5852"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="390" y="35" width="21" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="bb92ffe7-8fbf-4cce-9a74-78d661e56de3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="567" y="35" width="25" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="b3b99844-079e-4ec1-ad7a-38a16ffe00d5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="592" y="35" width="25" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="2b42d6a7-526d-4967-b759-6f3802483502"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="617" y="35" width="25" height="110" forecolor="#FFFFFF" backcolor="#333333" uuid="4afbb278-32dc-45b4-86ae-9c7f1229da38"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font fontName="DejaVu Sans" size="7"/>
+				</textElement>
+				<text><![CDATA[M3]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="7" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="96" splitType="Stretch">
+			<line>
+				<reportElement x="306" y="45" width="234" height="1" uuid="556238c2-4f06-4bc7-a56e-e6b4d0312da3"/>
+			</line>
+			<staticText>
+				<reportElement x="306" y="76" width="234" height="20" uuid="7f386cdd-d2f8-4867-847d-7562e7e6d88a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -28,6 +28,8 @@ WHERE
 
 
 
+
+
 SELECT
 	persona_identificacion,
 	persona_primer_apellido,

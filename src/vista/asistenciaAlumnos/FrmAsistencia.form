@@ -89,20 +89,20 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="btnImprimir" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnVerAsistencia" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="txtBuscarAsis" min="-2" pref="151" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btnImprimir" max="32767" attributes="0"/>
+                                          <Component id="btnVerAsistencia" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Component id="btnBuscarAsis" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
@@ -145,7 +145,7 @@
                               <Component id="cmbAsignaturaAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblCicloAsis" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbCicloAsis" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
@@ -153,15 +153,15 @@
                           <Component id="cmbSemana" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDiaClase" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbDiaClase" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="btnVerAsistencia" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Component id="jScrollPane2" pref="323" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -261,11 +261,6 @@
     <Component class="javax.swing.JButton" name="btnVerAsistencia">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ver Asistencia"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnImprimir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Imprimir"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscarAsis">
@@ -380,6 +375,11 @@
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnImprimir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir"/>
       </Properties>
     </Component>
   </SubComponents>

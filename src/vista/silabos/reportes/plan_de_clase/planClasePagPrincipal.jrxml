@@ -289,17 +289,6 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				</textElement>
 				<text><![CDATA[ Fecha: ]]></text>
 			</staticText>
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="218" y="90" width="143" height="15" uuid="517bc893-6078-46df-8e16-da67eee92009"/>
-				<box>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="15" width="180" height="15" uuid="3b68cec2-1565-40a4-a640-53f0a800e2be"/>
 				<box>
@@ -377,6 +366,14 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador_plan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="218" y="90" width="143" height="15" uuid="ea078f2a-709b-49b3-a28e-9fdd05a79178"/>
+				<subreportParameter name="id_plan">
+					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fecha.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

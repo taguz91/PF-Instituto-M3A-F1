@@ -7,8 +7,18 @@
 		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'BDinsta';
 
 		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE usename = 'JOHNNY';
-		select count(*) from pg_stat_activity WHERE datname = 'BDinsta'
+		select count(*) from pg_stat_activity WHERE datname = 'BDinsta';
 
+
+		SELECT * FROM pg_stat_activity 		ORDER BY usename;
+		   WHERE usename = '0102264827' 
+
+		
+		
+		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE usename = '0105003198';
+		
+		
+		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE query= 'SET application_name = ''PostgreSQL JDBC Driver''';
 
 --UPDATE PARA CONTRASEÑA DE LOS DOCENTES
 
