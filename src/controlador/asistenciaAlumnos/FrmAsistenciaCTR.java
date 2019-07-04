@@ -480,6 +480,14 @@ public class FrmAsistenciaCTR {
                         vista.getCmbDiaClase().getSelectedItem().
                                 toString().split(" | ")[2], faltas);
                 desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
+                new Thread(() -> {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    desktop.getLblEstado().setText(" ");
+                }).start();
             }
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
