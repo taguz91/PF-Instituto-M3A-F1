@@ -8,7 +8,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\HP\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\reportes\\silabo2\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select distinct c.id_docente,concat(d.docente_abreviatura,' ',p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' ',
