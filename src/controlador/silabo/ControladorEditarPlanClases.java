@@ -97,8 +97,7 @@ public class ControladorEditarPlanClases {
         
         fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
             fPlanClase.dispose();
-            ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, principal);
-            cP.iniciaControlador();
+            principal.getMnCtPlandeClase().doClick();
         });
         fPlanClase.getBtnCancelarPC().setText("Cancelar");
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{

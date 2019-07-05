@@ -591,7 +591,7 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario,rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
 
     }

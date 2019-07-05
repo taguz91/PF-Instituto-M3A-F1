@@ -153,7 +153,7 @@ public class FrmAsistenciaCTR {
 
         vista.getBtnVerAsistencia().addActionListener(e -> btnVerAsistencia(e));
         vista.getBtnBuscarAsis().addActionListener(e -> buscarDocentes());
-        vista.getBtnImprimir().addActionListener(e-> btnImprimir(e));
+        vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         vista.getTxtBuscarAsis().addKeyListener(new KeyAdapter() {
             @Override
@@ -283,7 +283,7 @@ public class FrmAsistenciaCTR {
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(4));
                         break;
                     case 6:
-                        vista.getCmbDiaClase().addItem("SÁBADO | " + ini.plusDays(5));
+                        vista.getCmbDiaClase().addItem("SABADO | " + ini.plusDays(5));
                         System.out.println("dia de la semana en la que tiene clases:  " + ini.plusDays(5));
                         break;
                     default:
@@ -480,6 +480,14 @@ public class FrmAsistenciaCTR {
                         vista.getCmbDiaClase().getSelectedItem().
                                 toString().split(" | ")[2], faltas);
                 desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
+                new Thread(() -> {
+                    try {
+                        sleep(500);
+                    } catch (InterruptedException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    desktop.getLblEstado().setText(" ");
+                }).start();
             }
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
@@ -506,9 +514,9 @@ public class FrmAsistenciaCTR {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
     private void btnImprimir(ActionEvent e) {
-       Effects.setLoadCursor(vista);
+        Effects.setLoadCursor(vista);
 
-        reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdPeriodoLectivo());
+        reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdDocente());
 
         reportes.generarReporteAsistencia();
         Effects.setDefaultCursor(vista);
@@ -550,12 +558,10 @@ public class FrmAsistenciaCTR {
      * columna.setCellRenderer(r); }
      */
     // </editor-fold>
-
     private void InitPermisos() {
         vista.getBtnImprimir().getAccessibleContext().setAccessibleName("Asistencia-Imprimir");
-       vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
-   
-       
+        vista.getBtnVerAsistencia().getAccessibleContext().setAccessibleName("Asistencia-Ver Asistencia");
+
         CONS.activarBtns(vista.getBtnImprimir(), vista.getBtnVerAsistencia());
     }
 

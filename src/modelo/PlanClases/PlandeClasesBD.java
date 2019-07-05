@@ -71,7 +71,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
        List<PlandeClasesMD> lista_plan=new ArrayList<>();
         
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre\n" +
+            PreparedStatement st=conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre,pla.estado_plan\n" +
 "       FROM \"Silabo\" AS s\n" +
 "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n" +
 "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n" +
@@ -98,6 +98,45 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 pl.getId_persona().setPrimerNombre(rs.getString(4));
                 pl.getId_materia().setNombre(rs.getString(5));
                 pl.getId_curso().setNombre(rs.getString(6));
+                pl.setEstado_plan(rs.getInt(7));
+                lista_plan.add(pl);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista_plan;
+   }
+   public static  List<PlandeClasesMD> consultarPlanClaseCoordinador(ConexionBD conexion,String [] parametros){
+       List<PlandeClasesMD> lista_plan=new ArrayList<>();
+        
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre,pla.estado_plan\n" +
+"       FROM \"Silabo\" AS s\n" +
+"       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n" +
+"       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n" +
+"                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n" +
+"                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n" +
+"                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n" +
+"                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n" +
+"					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n" +
+"					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n" +
+"					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n" +
+"                    WHERE crr.carrera_nombre=?\n" +
+"                    AND jo.nombre_jornada=? AND cr.id_prd_lectivo=? AND m.materia_nombre ILIKE '%"+parametros[2]+"%'");
+            st.setString(1, parametros[0]);
+            st.setString(2, parametros[1]);
+            st.setInt(3, Integer.parseInt(parametros[3]));
+            ResultSet rs=st.executeQuery();
+            System.out.println(st+"---------------------------------------------------------------------------->>>>>>>>>>>>>><");
+            while(rs.next()){
+                PlandeClasesMD pl=new PlandeClasesMD();
+                pl.setId_plan_clases(rs.getInt(1));
+                pl.getId_unidad().setIdUnidad(rs.getInt(2));
+                pl.getId_persona().setPrimerApellido(rs.getString(3));
+                pl.getId_persona().setPrimerNombre(rs.getString(4));
+                pl.getId_materia().setNombre(rs.getString(5));
+                pl.getId_curso().setNombre(rs.getString(6));
+                pl.setEstado_plan(rs.getInt(7));
                 lista_plan.add(pl);
             }
         } catch (SQLException ex) {
@@ -186,6 +225,19 @@ public class PlandeClasesBD extends PlandeClasesMD {
         }
         return planClase;
    }
-   
+   public void aprobarPlanClase(int id_plan,int estado){
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public .\"PlandeClases\"\n"
+                    +"SET estado_plan=?"
+                    +"where id_plan_clases=?");
+            st.setInt(1, estado);
+            st.setInt(2, id_plan);
+            st.executeUpdate();
+            System.out.println(st);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
    
 }
