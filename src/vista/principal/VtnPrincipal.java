@@ -722,7 +722,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnCtCarrera);
 
         mnCtCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Class_20px.png"))); // NOI18N
-        mnCtCurso.setText("Curso");
+        mnCtCurso.setText("Curso (Lista por docente)");
         mnTipoNotas.add(mnCtCurso);
 
         mnCtPrdLectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Calendar_20px.png"))); // NOI18N
@@ -746,7 +746,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnCtAlmnRetirados);
 
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
-        mnCtListaAlumnos.setText("Lista alumnos");
+        mnCtListaAlumnos.setText("Lista general alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
 
         mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
