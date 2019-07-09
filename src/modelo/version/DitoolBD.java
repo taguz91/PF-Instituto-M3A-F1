@@ -85,10 +85,6 @@ public class DitoolBD {
             ip = p.getProperty(CONS.BD_IP);
             port = p.getProperty(CONS.BD_PUERTO);
             database = p.getProperty(CONS.BD_DATABASE);
-
-            System.out.println("ip = " + p.getProperty(CONS.BD_IP));
-            System.out.println("database = " + p.getProperty(CONS.BD_DATABASE));
-            System.out.println("port = " + p.getProperty(CONS.BD_PUERTO));
         } catch (IOException e) {
             System.out.println("No encontramos el señor archivo. " + e.getMessage());
         }

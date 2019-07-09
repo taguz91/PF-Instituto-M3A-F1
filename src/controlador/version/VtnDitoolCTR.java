@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import modelo.CONS;
 import modelo.version.VersionMD;
 import vista.Login;
+import vista.principal.VtnPrincipal;
 import vista.version.VtnDitool;
 
 /**
@@ -27,6 +28,7 @@ public class VtnDitoolCTR {
 
     private final VersionMD version;
     private final VtnDitool vtnDitool;
+    private final VtnPrincipal vtnPrincipal;
     private boolean aCorrecto = true;
     private final ImageIcon icono;
     private boolean cerrar = false;
@@ -46,6 +48,15 @@ public class VtnDitoolCTR {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/update.png"));
         this.version = version;
         this.vtnDitool = vtnPrin;
+        this.vtnPrincipal = null;
+        this.vtnDitool.setIconImage(icono.getImage());
+    }
+
+    public VtnDitoolCTR(VersionMD version, VtnDitool vtnPrin, VtnPrincipal vtnPrincipal) {
+        this.icono = new ImageIcon(getClass().getResource("/vista/img/update.png"));
+        this.version = version;
+        this.vtnDitool = vtnPrin;
+        this.vtnPrincipal = vtnPrincipal;
         this.vtnDitool.setIconImage(icono.getImage());
     }
 
@@ -119,7 +130,12 @@ public class VtnDitoolCTR {
             if (comprobarRequisitos(p, pv)) {
                 if (compara(p, pv)) {
                     JOptionPane.showMessageDialog(null, "Esta instalada la ultima version del sistema.");
-                    ejecutarPrograma();
+                    if (vtnPrincipal == null) {
+                        ejecutarPrograma();
+                    } else {
+                        habilitarPrograma();
+                    }
+
                 } else {
                     //Aqui descargamos la versio nueva
                     crearVersion();
@@ -135,6 +151,14 @@ public class VtnDitoolCTR {
     }
 
     public void crearVersion() {
+        Object[] opt;
+        
+        if(vtnPrincipal == null){
+            opt = new Object[]{"Actualizar", "Abrir", "Salir"};
+        }else{
+            opt = new Object[]{"Actualizar", "Cancelar", "Salir"};
+        }
+        
         int s = JOptionPane.showOptionDialog(vtnDitool,
                 "\n"
                 + "¿Tiene una actualizacion pendiente del sistema?\n"
@@ -143,32 +167,39 @@ public class VtnDitoolCTR {
                 "Actualizacion pendiente",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
-                null,
-                new Object[]{"Actualizar", "Abrir", "Salir"}, "Actualizar");
+                null, opt, "Actualizar");
         switch (s) {
             case 0:
-                iniciarSprint();
-                musicaDescarga();
-                vtnDitool.getLblEstado().setText("Descargando...");
-                File pv = new File(CONS.V_DIR);
-                Properties p = new Properties();
-                Descarga descarga = new Descarga(version);
-                if (descarga.descargar()) {
-                    crearPropiedades(p, pv);
-                    vtnDitool.getLblEstado().setText("Descargado");
-                    Descomprime uzip = new Descomprime(version);
-                    vtnDitool.getLblEstado().setText("Instalando..");
-                    uzip.descomprime();
-                }
+                altualizarSistema();
                 break;
             case 1:
-                ejecutarPrograma();
+                if(vtnPrincipal == null){
+                    ejecutarPrograma();
+                }else{
+                    habilitarPrograma();
+                }
                 break;
             case 2:
                 System.exit(0);
                 break;
         }
 
+    }
+
+    private void altualizarSistema() {
+        iniciarSprint();
+        musicaDescarga();
+        vtnDitool.getLblEstado().setText("Descargando...");
+        File pv = new File(CONS.V_DIR);
+        Properties p = new Properties();
+        Descarga descarga = new Descarga(version);
+        if (descarga.descargar()) {
+            crearPropiedades(p, pv);
+            vtnDitool.getLblEstado().setText("Descargado");
+            Descomprime uzip = new Descomprime(version);
+            vtnDitool.getLblEstado().setText("Instalando..");
+            uzip.descomprime();
+        }
     }
 
     private boolean compara(Properties p, File bd) {
@@ -253,6 +284,11 @@ public class VtnDitoolCTR {
         });
     }
 
+    private void habilitarPrograma() {
+        cerrarTodo();
+        vtnPrincipal.setEnabled(true);
+    }
+
     private void cerrarTodo() {
         cerrar = true;
         vtnDitool.dispose();
@@ -284,8 +320,6 @@ public class VtnDitoolCTR {
 
                 sonido.open(AudioSystem.getAudioInputStream(a));
                 sonido.start();
-            } else {
-                JOptionPane.showMessageDialog(vtnDitool, "No encontramos el audio.");
             }
 
         } catch (LineUnavailableException e) {

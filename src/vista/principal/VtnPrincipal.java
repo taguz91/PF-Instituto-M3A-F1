@@ -696,7 +696,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnActualizar.setContentAreaFilled(false);
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnActualizar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Console_20px.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
