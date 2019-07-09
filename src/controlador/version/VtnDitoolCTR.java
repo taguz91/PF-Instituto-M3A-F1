@@ -190,6 +190,12 @@ public class VtnDitoolCTR {
             case 2:
                 System.exit(0);
                 break;
+            default:
+                if(vtnPrincipal != null){
+                    vtnPrincipal.setEnabled(true);
+                }
+                cerrarTodo();
+                break;
         }
 
     }
