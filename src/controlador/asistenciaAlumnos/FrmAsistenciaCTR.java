@@ -482,7 +482,7 @@ public class FrmAsistenciaCTR {
                 desktop.getLblEstado().setText("Los datos se han guardado exitosamente");
                 new Thread(() -> {
                     try {
-                        sleep(500);
+                        sleep(3000);
                     } catch (InterruptedException ex) {
                         System.out.println(ex.getMessage());
                     }
