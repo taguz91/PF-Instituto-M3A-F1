@@ -2,6 +2,8 @@ package controlador.version;
 
 import controlador.login.LoginCTR;
 import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.CONS;
 import modelo.version.VersionMD;
-import vista.Login;
 import vista.principal.VtnPrincipal;
 import vista.version.VtnDitool;
 
@@ -51,13 +52,20 @@ public class VtnDitoolCTR {
         this.vtnPrincipal = null;
         this.vtnDitool.setIconImage(icono.getImage());
     }
-
+    
+    /**
+     * Este constructor nos funciona cuando utilizamos el actualizador desde la ventana principal del sistema.
+     * @param version
+     * @param vtnPrin
+     * @param vtnPrincipal 
+     */
     public VtnDitoolCTR(VersionMD version, VtnDitool vtnPrin, VtnPrincipal vtnPrincipal) {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/update.png"));
         this.version = version;
         this.vtnDitool = vtnPrin;
         this.vtnPrincipal = vtnPrincipal;
         this.vtnDitool.setIconImage(icono.getImage());
+        cerrarVentana();
     }
 
     public void iniciar() {
@@ -349,6 +357,16 @@ public class VtnDitoolCTR {
 
     private void silenciar() {
         sonido.close();
+    }
+    
+    private void cerrarVentana(){
+        vtnDitool.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                vtnPrincipal.setEnabled(true); 
+            }
+
+        });
     }
 
 }

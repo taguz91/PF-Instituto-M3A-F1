@@ -1193,7 +1193,7 @@ public class VtnPrincipalCTR {
         VersionMD v = di.consultarUltimaVersion();
         if (v != null) {
             vtnPrin.setEnabled(false);
-            VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool);
+            VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool, vtnPrin);
             ctrVtn.iniciar();
         } else {
             JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
