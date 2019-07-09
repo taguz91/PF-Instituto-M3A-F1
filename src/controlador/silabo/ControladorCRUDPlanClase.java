@@ -152,7 +152,8 @@ public class ControladorCRUDPlanClase {
             int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
             if (row != -1) {
                 if (!fCrud_plan_Clases.getTlbTablaPLC().getValueAt(row, 5).equals("Aprobado")) {
-                ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario,plan_clas_selecc(), principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
+                ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario,plan_clas_selecc(), 
+                        principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                 ce.iniciaControlador();
                 fCrud_plan_Clases.dispose();
                     
@@ -286,9 +287,11 @@ public class ControladorCRUDPlanClase {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
         if (seleccion >= 0) {
             try {
+                CursoMD c = curso_selecc();
+                System.out.println(c);
                 System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
-                System.out.println("Imprimiendo.......");
+                        + c.getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+                
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/plan_de_clase/planClasePagPrincipal.jasper"));
                 Map parametro = new HashMap();
              
@@ -360,8 +363,8 @@ public class ControladorCRUDPlanClase {
             new Thread(() -> {
                 accion = false;
 
+                
                 principal.setEnabled(false);
-
                 frmCargando1 frmCargando1 = new frmCargando1();
                
 
