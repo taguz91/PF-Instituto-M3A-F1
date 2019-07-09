@@ -1,16 +1,20 @@
 package controlador.curso;
 
+import controlador.Libraries.Effects;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import modelo.CONS;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -32,6 +36,7 @@ public class VtnCursoCTR extends DVtnCTR {
 
     private final VtnCurso vtnCurso;
 
+    private ArrayList<AlumnoCursoMD> almns;
     private final CursoBD curso;
     private ArrayList<CursoMD> cursos;
     //Para cargar el combo periodos  
@@ -95,7 +100,7 @@ public class VtnCursoCTR extends DVtnCTR {
         iniciarBuscador();
 
         ctrPrin.agregarVtn(vtnCurso);
-        
+
         InitPermisos();
     }
 
@@ -379,11 +384,10 @@ public class VtnCursoCTR extends DVtnCTR {
         vtnCurso.getBtnIngresar().getAccessibleContext().setAccessibleName("Cursos-Ingresar");
         vtnCurso.getBtnListaSilabos().getAccessibleContext().setAccessibleName("Cursos-Reporte-Lista para silabos");
         vtnCurso.getBtnListaAlumnos().getAccessibleContext().setAccessibleName("Cursos-Reporte-Lista de alumnos");
-        
+
         CONS.activarBtns(vtnCurso.getBtnHorario(), vtnCurso.getCbxEliminados(),
                 vtnCurso.getBtnEliminar(), vtnCurso.getBtnEditar(), vtnCurso.getBtnIngresar(),
                 vtnCurso.getBtnListaAlumnos(), vtnCurso.getBtnListaSilabos());
-        
 
     }
 
@@ -410,4 +414,5 @@ public class VtnCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(vtnCurso, "Antes debe seleccionar un curso.");
         }
     }
+
 }
