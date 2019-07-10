@@ -225,6 +225,24 @@ public class PlandeClasesBD extends PlandeClasesMD {
         }
         return planClase;
    }
+   public static PlandeClasesMD consultarIDCURSO_ID_UNIDAD(ConexionBD conexion, int id_plan_de_clase){
+        PlandeClasesMD planClase =null;
+        try {
+            PreparedStatement st = conexion.getCon().prepareStatement("select distinct id_plan_clases,"
+                    + " id_curso,id_unidad from \"PlandeClases\" where id_plan_clases=?");
+            st.setInt(1, id_plan_de_clase);
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                planClase=new PlandeClasesMD();
+                planClase.setId_plan_clases(rs.getInt(1));
+                planClase.getId_curso().setId(rs.getInt(2));
+                planClase.getId_unidad().setIdUnidad(rs.getInt(3));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return planClase;
+   }
    public void aprobarPlanClase(int id_plan,int estado){
         try {
             PreparedStatement st=conexion.getCon().prepareStatement("UPDATE public .\"PlandeClases\"\n"

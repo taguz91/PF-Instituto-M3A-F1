@@ -66,7 +66,10 @@ public class ControladorCRUDPlanClase {
     private List<UnidadSilaboMD> unidadesSilabo;
     private List<CursoMD> lista_curso;
     private int id_periodo_lectivo = -1;
+    private int id_unidad=-1;
+    private int id_curso=-1;
     private boolean esCordinador =false;
+    private PlandeClasesMD planMD;
     private RolBD rol;
 
     public ControladorCRUDPlanClase(UsuarioBD usuario,RolBD rol, ConexionBD conexion, VtnPrincipal principal) {
@@ -192,7 +195,7 @@ public class ControladorCRUDPlanClase {
             for (PlandeClasesMD plc : lista_plan_clases) {
                 String estado=null;
                 Boolean estadoB=null;
-                System.out.println(plc.getEstado_plan()+"         <<<<<<ESTADO");
+                
                 if (plc.getEstado_plan()==0) {
                     estado="Por Aprobar";
                     estadoB=false;
@@ -259,6 +262,13 @@ public class ControladorCRUDPlanClase {
 
         return plan_clase_selec.get();
     }
+    
+    private PlandeClasesMD plan_clas_id_c_u() {
+        int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+        planMD=new PlandeClasesMD();
+        planMD=PlandeClasesBD.consultarIDCURSO_ID_UNIDAD(conexion,Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 0).toString()));
+        return planMD;
+    }
 
     private CursoMD curso_selecc() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
@@ -287,17 +297,16 @@ public class ControladorCRUDPlanClase {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
         if (seleccion >= 0) {
             try {
-                CursoMD c = curso_selecc();
-                System.out.println(c);
-                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-                        + c.getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+                
+//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
+//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
                 
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/plan_de_clase/planClasePagPrincipal.jasper"));
                 Map parametro = new HashMap();
              
                 
-                parametro.put("id_unidad", String.valueOf(unidad_seleccionada().getIdUnidad()));
-                parametro.put("id_curso", String.valueOf(curso_selecc().getId()));
+                parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getId_unidad().getIdUnidad()));
+                parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getId_curso().getId()));
                 parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getId_plan_clases()));
 
                 JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
@@ -328,6 +337,7 @@ public class ControladorCRUDPlanClase {
 
      return id_periodo_lectivo;
   }
+    
    
    public List<SilaboMD> cargar_silabo(){
          String[] parametros = {fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona())
