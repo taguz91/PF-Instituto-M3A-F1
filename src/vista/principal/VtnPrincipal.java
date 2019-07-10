@@ -370,6 +370,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return btnActualizar;
     }
 
+    public JMenuItem getMnCtAlmnMatri() {
+        return mnCtAlmnMatri;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -419,6 +423,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtInscripcion = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtAlmnRetirados = new javax.swing.JMenuItem();
+        mnCtAlmnMatri = new javax.swing.JMenuItem();
         mnCtListaAlumnos = new javax.swing.JMenuItem();
         mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
@@ -763,6 +768,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAlmnRetirados.setText("Matriculas Anuladas");
         mnTipoNotas.add(mnCtAlmnRetirados);
 
+        mnCtAlmnMatri.setText("Alumno Matricula");
+        mnTipoNotas.add(mnCtAlmnMatri);
+
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
         mnCtListaAlumnos.setText("Lista general alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
@@ -954,7 +962,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(dpnlPrincipal)
@@ -1030,6 +1038,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuCrud;
     private javax.swing.JMenuItem mnCtAccesos;
     private javax.swing.JMenuItem mnCtActivarNotas;
+    private javax.swing.JMenuItem mnCtAlmnMatri;
     private javax.swing.JMenuItem mnCtAlmnRetirados;
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtAsistencia;
