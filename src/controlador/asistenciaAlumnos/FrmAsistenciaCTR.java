@@ -514,12 +514,42 @@ public class FrmAsistenciaCTR {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="EVENTOS">
     private void btnImprimir(ActionEvent e) {
-        Effects.setLoadCursor(vista);
 
         reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdDocente());
+  
+        new Thread(() -> {
 
-        reportes.generarReporteAsistencia();
-        Effects.setDefaultCursor(vista);
+            int r = JOptionPane.showOptionDialog(vista, "Reporte individual\n" + "¿Elegir el tipo de Reporte?",
+                    "REPORTE UBE", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{"Reporte Asistencia", "Reporte Asistencia UBE"
+                    },
+                    "Cancelar");
+
+            Effects.setLoadCursor(vista);
+
+            //ReportesCTR reportes = new ReportesCTR(vista, getIdDocente());
+            switch (r) {
+                case 0:
+
+                    reportes.generarReporteAsistencia();
+                    break;
+
+                case 1:
+                    reportes.generarReporteAsistenciaUBE();
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            try {
+                sleep(500);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            Effects.setDefaultCursor(vista);
+        }).start();
 
     }
 

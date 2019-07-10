@@ -1,4 +1,3 @@
-
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Middlewares;
@@ -11,7 +10,7 @@ import vista.asistenciaAlumnos.FrmAsistencia;
  * @author Yani
  */
 public class reporteAsistenciaCTR {
-    
+
     private final FrmAsistencia vista;
 
     private final int idDocente;
@@ -20,9 +19,8 @@ public class reporteAsistenciaCTR {
         this.vista = vista;
         this.idDocente = idDocente;
     }
-    
-    
-     public void generarReporteAsistencia() {
+
+    public void generarReporteAsistencia() {
         String nombrePeriodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
         String ciclo = vista.getCmbCicloAsis().getSelectedItem().toString();
         String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
@@ -38,4 +36,22 @@ public class reporteAsistenciaCTR {
 
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia", parametros);
     }
+
+    public void generarReporteAsistenciaUBE() {
+        String nombrePeriodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
+        String ciclo = vista.getCmbCicloAsis().getSelectedItem().toString();
+        String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+
+        String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaUBE.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", idDocente);
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia UBE", parametros);
+    }
+
 }

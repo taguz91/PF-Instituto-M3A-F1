@@ -43,6 +43,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
+import controlador.version.VtnDitoolCTR;
 import controlador.vistaReportes.VtnEstadosCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -67,6 +68,8 @@ import modelo.ConexionBD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import modelo.version.DitoolBD;
+import modelo.version.VersionMD;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -98,6 +101,7 @@ import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
+import vista.version.VtnDitool;
 
 /**
  *
@@ -155,6 +159,8 @@ public class VtnPrincipalCTR {
         conecta.setVtnPrin(vtnPrin);
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
+        //Accion al boton de actualizar 
+        vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
         agregarEstilos();
         //Acciones de las ventanas de consulta
@@ -591,7 +597,7 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario,rolSeleccionado, conexion, vtnPrin);
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
 
     }
@@ -1178,6 +1184,21 @@ public class VtnPrincipalCTR {
         VtnEstadosCTR vtn = new VtnEstadosCTR(this);
         vtn.Init();
 
+    }
+
+    private void comprobarActualizacion() {
+        VtnDitool vtnDitool = new VtnDitool();
+        vtnDitool.setTitle("Ditool | Version instalada: ");
+        DitoolBD di = new DitoolBD("VERSION", "AZUL");
+        VersionMD v = di.consultarUltimaVersion();
+        if (v != null) {
+            vtnPrin.setEnabled(false);
+            VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool, vtnPrin);
+            ctrVtn.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
+                    + "Verifique su conexion e intentelo de nuevo.");
+        }
     }
 
 }
