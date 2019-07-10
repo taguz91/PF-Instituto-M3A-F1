@@ -58,7 +58,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
         
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
         
-        cargarAlumnosMatriculas();
+        //cargarAlumnosMatriculas();
         
         ctrPrin.agregarVtn(vtnMatri);
     }
