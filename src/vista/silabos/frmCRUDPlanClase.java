@@ -28,6 +28,15 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         this.setFrameIcon(icon);
     }
 
+    public JButton getBtn_editar_fecha() {
+        return btn_editar_fecha;
+    }
+
+    public void setBtn_editar_fecha(JButton btn_editar_fecha) {
+        this.btn_editar_fecha = btn_editar_fecha;
+    }
+    
+
     public JButton getBtnEditarPLC() {
         return btnEditarPLC;
     }
@@ -136,6 +145,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
         Cmb_periodos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         btnImplimirPlan = new javax.swing.JButton();
+        btn_editar_fecha = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -158,14 +168,14 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "PlanCod", "Docente", "Materia", "Curso", "Unidad", "Estado", "Estado"
+                "PlanCod", "Docente", "Materia", "Curso", "Unidad", "Estado", "Estado", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -206,6 +216,8 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
 
         btnImplimirPlan.setText("Imprimir ");
 
+        btn_editar_fecha.setText("Editar Fecha");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,9 +247,12 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                                 .addGap(32, 32, 32)
                                 .addComponent(btnNuevoPLC)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEditarPLC)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminarPLC)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnEditarPLC)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEliminarPLC))
+                                    .addComponent(btn_editar_fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addComponent(btnImplimirPlan)))))
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -256,7 +271,8 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cmb_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Carreras))
+                    .addComponent(Carreras)
+                    .addComponent(btn_editar_fecha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cmb_periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,6 +301,7 @@ public class frmCRUDPlanClase extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminarPLC;
     private javax.swing.JButton btnImplimirPlan;
     private javax.swing.JButton btnNuevoPLC;
+    private javax.swing.JButton btn_editar_fecha;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
