@@ -20,6 +20,7 @@ import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteBD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
@@ -414,5 +415,11 @@ public class VtnCursoCTR extends DVtnCTR {
             JOptionPane.showMessageDialog(vtnCurso, "Antes debe seleccionar un curso.");
         }
     }
-
+    
+    public void boton(){
+        //String periodoNombre = tabla.getValuat(getselectRow,0);
+        //String cedula = tabla.getValuat(getselectRow(),3);
+        //int idDocente = new DocenteBD().selectWhere(cedula).getIdDocente();
+    }
+    
 }

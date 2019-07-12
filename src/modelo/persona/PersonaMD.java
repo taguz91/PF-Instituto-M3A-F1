@@ -461,6 +461,15 @@ public class PersonaMD {
         this.personaActiva = per.isPersonaActiva();
 
     }
+    
+    
+    public String getSoloNombres() {
+        return getPrimerNombre() + " " + getSegundoNombre();
+    }
+    
+    public String getSoloApellidos() {
+        return getPrimerApellido() + " " +getSegundoApellido();
+    }
 
     public String getNombreCompleto() {
         return getPrimerNombre() + " " + getSegundoNombre() + " " + getPrimerApellido() + " " + getSegundoApellido();

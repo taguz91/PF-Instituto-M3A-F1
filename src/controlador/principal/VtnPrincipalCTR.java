@@ -11,6 +11,7 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnoMatriculaCTR;
 import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
@@ -77,6 +78,7 @@ import vista.alumno.FrmAlumnoCurso;
 import vista.alumno.VtnAlumnoCarrera;
 import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
+import vista.alumno.VtnAlumnoMatricula;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
@@ -183,6 +185,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtAlmnRetirados().addActionListener(e -> abrirVtnAlmnRetirados());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
+        vtnPrin.getMnCtAlmnMatri().addActionListener(e -> abrirVtnAlumnoMatricula());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -328,6 +331,18 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrdLectivo, this);
             ctrVtnPrdLectivo.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+
+    }
+    
+    public void abrirVtnAlumnoMatricula() {
+        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnAlumnoMatriculaCTR ctr = new VtnAlumnoMatriculaCTR(this, vtn);
+            ctr.iniciar();
         } else {
             errorNumVentanas();
         }
