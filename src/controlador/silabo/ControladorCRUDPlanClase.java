@@ -66,8 +66,6 @@ public class ControladorCRUDPlanClase {
     private List<UnidadSilaboMD> unidadesSilabo;
     private List<CursoMD> lista_curso;
     private int id_periodo_lectivo = -1;
-    private int id_unidad=-1;
-    private int id_curso=-1;
     private boolean esCordinador =false;
     private PlandeClasesMD planMD;
     private RolBD rol;
@@ -85,8 +83,10 @@ public class ControladorCRUDPlanClase {
         fCrud_plan_Clases = new frmCRUDPlanClase();
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
             fCrud_plan_Clases.getTlbTablaPLC().removeColumn(fCrud_plan_Clases.getTlbTablaPLC().getColumnModel().getColumn(5));
+            fCrud_plan_Clases.getBtn_editar_fecha().setVisible(true);
         } else {
             fCrud_plan_Clases.getTlbTablaPLC().removeColumn(fCrud_plan_Clases.getTlbTablaPLC().getColumnModel().getColumn(6));
+            fCrud_plan_Clases.getBtn_editar_fecha().setVisible(false);
             
         }
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
@@ -167,6 +167,17 @@ public class ControladorCRUDPlanClase {
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
+        fCrud_plan_Clases.getBtn_editar_fecha().addActionListener((ActionEvent ae) -> {
+            int row = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
+            if (row != -1) {
+                ControladorEditarFechaGenPlanClase cep =new ControladorEditarFechaGenPlanClase(conexion, principal, plan_clas_id_c_u());
+                cep.iniciaControlador();
+               fCrud_plan_Clases.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
         fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
         InitPermisos();
@@ -205,7 +216,7 @@ public class ControladorCRUDPlanClase {
                 }
                 modelotabla.addRow(new Object[]{
                     plc.getId_plan_clases(), plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_unidad().getIdUnidad(),
-                    estado,estadoB
+                    estado,estadoB,plc.getFecha_generacion()
                 });
             }
 
