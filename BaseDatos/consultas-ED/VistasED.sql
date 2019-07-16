@@ -1,5 +1,6 @@
 --Todos los docentes
-SELECT
+CREATE VIEW vdocentes_ed
+AS SELECT
 id_docente as pro_codigo,
 p.persona_identificacion as per_identificacion,
 p.persona_primer_apellido as per_primerapellido,
@@ -21,11 +22,11 @@ persona_primer_apellido,
 persona_segundo_apellido;
 
 --Toda la info
-
-SELECT
+CREATE VIEW  valumnos_ed
+AS SELECT
 pl.id_prd_lectivo as per_codigo,
 pl.prd_lectivo_fecha_inicio as per_fechainicio,
-pl.prd_lectivo_fecha_fin as car_codigo,
+pl.prd_lectivo_fecha_fin as per_fechafin,
 cr.id_carrera as car_codigo,
 cr.carrera_nombre as car_descripcion,
 m.id_materia as mat_codigo,
@@ -36,8 +37,8 @@ c.curso_paralelo as matp_paralelo,
 c.id_docente as matp_profesor,
 j.id_jornada as jor_codigo,
 j.nombre_jornada as jor_descripcion,
-ac.id_almn_curso ,
-ac.almn_curso_estado,
+ac.id_almn_curso as alum_materia,
+ac.almn_curso_estado as alum_estado,
 p.persona_identificacion as per_identificacion,
 p.persona_primer_apellido as per_primerapellido,
 p.persona_segundo_apellido as per_segundoapellido,
@@ -69,7 +70,7 @@ cr.carrera_activo = true AND
 a.alumno_activo = true AND
 p.persona_activa = true AND
 ac.almn_curso_activo = true AND
-m.materia_activa = true AND
+m.materia_activa = true
 ORDER BY
 cr.carrera_nombre,
 j.nombre_jornada,
@@ -77,10 +78,11 @@ m.materia_nombre,
 m.materia_ciclo,
 c.curso_paralelo,
 p.persona_primer_apellido,
-p.persona_segundo_apellido
+p.persona_segundo_apellido;
 
 --Todos los periodos
-SELECT
+CREATE VIEW vperiodos_ed
+AS SELECT
 pl.id_prd_lectivo as per_codigo,
 pl.prd_lectivo_fecha_inicio as per_fechainicio,
 pl.prd_lectivo_fecha_fin as per_fechafin,
