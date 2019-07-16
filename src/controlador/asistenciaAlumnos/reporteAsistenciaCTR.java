@@ -53,5 +53,25 @@ public class reporteAsistenciaCTR {
 
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia UBE", parametros);
     }
+    
+        public void generarReporteAsistenciaPorDia() {
+        String nombrePeriodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
+        String ciclo = vista.getCmbCicloAsis().getSelectedItem().toString();
+        String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
+        String fecha = vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2];
+
+        String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaUBE.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", idDocente);
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+        parametros.put("fecha_asistencia", fecha);
+
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia UBE", parametros);
+    }
+    
 
 }
