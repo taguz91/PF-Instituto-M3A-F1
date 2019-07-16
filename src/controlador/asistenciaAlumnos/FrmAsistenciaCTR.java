@@ -516,12 +516,12 @@ public class FrmAsistenciaCTR {
     private void btnImprimir(ActionEvent e) {
 
         reporteAsistenciaCTR reportes = new reporteAsistenciaCTR(vista, getIdDocente());
-  
+
         new Thread(() -> {
 
             int r = JOptionPane.showOptionDialog(vista, "Reporte individual\n" + "¿Elegir el tipo de Reporte?",
                     "REPORTE UBE", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{"Reporte Asistencia", "Reporte Asistencia UBE"
+                    new Object[]{"Reporte Asistencia", "Reporte Asistencia UBE", "Reporte Asistencia por Dia"
                     },
                     "Cancelar");
 
@@ -536,6 +536,11 @@ public class FrmAsistenciaCTR {
 
                 case 1:
                     reportes.generarReporteAsistenciaUBE();
+
+                    break;
+
+                case 3:
+                    reportes.generarReporteAsistenciaPorDia();
 
                     break;
 
