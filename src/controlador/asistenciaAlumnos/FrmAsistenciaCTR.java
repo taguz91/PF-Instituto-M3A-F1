@@ -521,7 +521,7 @@ public class FrmAsistenciaCTR {
 
             int r = JOptionPane.showOptionDialog(vista, "Reporte individual\n" + "¿Elegir el tipo de Reporte?",
                     "REPORTE UBE", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{"Reporte Asistencia", "Reporte Asistencia UBE", "Reporte Asistencia por Dia"
+                    new Object[]{"Reporte Asistencia", "Reporte Asistencia UBE", "Reporte Asistencia por Día"
                     },
                     "Cancelar");
 
@@ -539,7 +539,7 @@ public class FrmAsistenciaCTR {
 
                     break;
 
-                case 3:
+                case 2:
                     reportes.generarReporteAsistenciaPorDia();
 
                     break;
