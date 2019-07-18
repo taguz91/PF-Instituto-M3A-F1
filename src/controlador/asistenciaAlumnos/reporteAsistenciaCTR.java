@@ -1,6 +1,7 @@
 package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Middlewares;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,18 +61,20 @@ public class reporteAsistenciaCTR {
         String nombrePeriodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
         String ciclo = vista.getCmbCicloAsis().getSelectedItem().toString();
         String materia = vista.getCmbAsignaturaAsis().getSelectedItem().toString();
-        int fecha = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2]);
-
+        //int fecha = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2]);
+        String fecha = vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[2];
+        
         String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaPorDia.jasper";
-
+        
         Map parametros = new HashMap();
-
+        
         parametros.put("id_docente", idDocente);
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
         parametros.put("fecha_asistencia", fecha);
-
+       
+            System.out.println(parametros);
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia por Día", parametros);
     }
     

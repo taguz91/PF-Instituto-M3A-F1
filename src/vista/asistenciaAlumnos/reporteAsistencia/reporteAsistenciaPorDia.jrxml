@@ -15,7 +15,7 @@
 	<parameter name="materia_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="fecha_asistencia" class="java.util.Date">
+	<parameter name="fecha_asistencia" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
