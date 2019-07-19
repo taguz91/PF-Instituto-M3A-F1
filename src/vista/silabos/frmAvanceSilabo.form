@@ -33,7 +33,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="separador" alignment="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblContenidos" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
@@ -49,40 +49,40 @@
                                           <Component id="spnCumplimiento" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="CbxTipoReporte" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblTipoResporte" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                                      <Component id="lblTipoReporte" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblTipoResporte1" min="-2" pref="51" max="-2" attributes="0"/>
+                                          <Component id="lblCarrera" min="-2" pref="51" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jTextField1" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="txtCarrera" min="-2" pref="250" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblTipoResporte4" min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="lblDocente" min="-2" pref="64" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField4" max="32767" attributes="0"/>
+                                          <Component id="txtDocente" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                          <Component id="lblTipoResporte3" min="-2" pref="64" max="-2" attributes="0"/>
+                                          <Component id="lblAsignatura" min="-2" pref="64" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField3" min="-2" pref="279" max="-2" attributes="0"/>
+                                          <Component id="txtAsignatura" min="-2" pref="279" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                          <Component id="lblTipoResporte2" min="-2" pref="51" max="-2" attributes="0"/>
+                                          <Component id="lblParalelo" min="-2" pref="51" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField2" min="-2" pref="51" max="-2" attributes="0"/>
+                                          <Component id="txtParalelo" min="-2" pref="51" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                          <Component id="lblTipoResporte5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNumeroAlumnos" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jTextField5" min="-2" pref="51" max="-2" attributes="0"/>
+                                          <Component id="txtNumeroAlumnos" min="-2" pref="51" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
-                                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bntGuardar" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
@@ -100,7 +100,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -109,29 +109,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="17" max="-2" attributes="0"/>
+              <Component id="lblTitulo" min="-2" pref="17" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblTipoResporte" min="-2" max="-2" attributes="0"/>
+              <Component id="lblTipoReporte" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Component id="CbxTipoReporte" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTipoResporte1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTipoResporte3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTipoResporte5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTipoResporte2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTipoResporte4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNumeroAlumnos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNumeroAlumnos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblParalelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtParalelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblDocente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDocente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+              <Component id="separador" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Component id="lblTemasDictados" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -156,8 +156,8 @@
               </Group>
               <EmptySpace pref="32" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bntGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
           </Group>
@@ -165,7 +165,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
@@ -188,7 +188,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte">
+    <Component class="javax.swing.JLabel" name="lblTipoReporte">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reporte correspondiente a:"/>
       </Properties>
@@ -231,62 +231,62 @@
         <Property name="text" type="java.lang.String" value="Temas dictados:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txtCarrera">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte1">
+    <Component class="javax.swing.JLabel" name="lblCarrera">
       <Properties>
         <Property name="text" type="java.lang.String" value="Carrera:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="txtParalelo">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte2">
+    <Component class="javax.swing.JLabel" name="lblParalelo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Paralelo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte3">
+    <Component class="javax.swing.JLabel" name="lblAsignatura">
       <Properties>
         <Property name="text" type="java.lang.String" value="Asignatura:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField3">
+    <Component class="javax.swing.JTextField" name="txtAsignatura">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte4">
+    <Component class="javax.swing.JLabel" name="lblDocente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Docente:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="txtDocente">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTipoResporte5">
+    <Component class="javax.swing.JLabel" name="lblNumeroAlumnos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Numero de alumnos:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField5">
+    <Component class="javax.swing.JTextField" name="txtNumeroAlumnos">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="bntGuardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
@@ -331,7 +331,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    <Component class="javax.swing.JSeparator" name="separador">
     </Component>
   </SubComponents>
 </Form>
