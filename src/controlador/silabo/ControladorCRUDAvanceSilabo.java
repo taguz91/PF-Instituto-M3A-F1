@@ -14,40 +14,34 @@ import modelo.curso.CursoMD;
 import modelo.silabo.CarrerasBDS;
 import modelo.silabo.CursosBDS;
 import modelo.usuario.UsuarioBD;
-import vista.silabos.frmConfiguracionSeguimientoSilabo;
+import vista.silabos.frmCRUDAvanceSilabo;
+
 
 /**
  *
  * @author Daniel
  */
 public class ControladorCRUDAvanceSilabo {
-    private final UsuarioBD usuario;
+   private final UsuarioBD usuario;
     private ConexionBD conexion;
        private boolean esCordinador =false;
         private List<CarreraMD> carreras_docente;
-    private frmConfiguracionSeguimientoSilabo seguimiento;
-    
-      private void CARGAR_COMBO_CARRERAS() {
-          
-       seguimiento.getCbxCarrera().removeAllItems();
-        carreras_docente=new ArrayList<>();
-        if (esCordinador) {
-            carreras_docente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
-        } else {
-        carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
-        }
-        
-            
-            carreras_docente.forEach((cmd) -> {
-               seguimiento.getCmb_Carreras().addItem(cmd.getNombre());
-            });
-        
-       seguimiento.getCmb_Carreras().setSelectedIndex(0);
+    private frmCRUDAvanceSilabo seguimiento;
+
+    public ControladorCRUDAvanceSilabo(UsuarioBD usuario, ConexionBD conexion, List<CarreraMD> carreras_docente, frmCRUDAvanceSilabo seguimiento) {
+        this.usuario = usuario;
+        this.conexion = conexion;
+        this.carreras_docente = carreras_docente;
+        this.seguimiento = seguimiento;
     }
+    
+    
+     
          private CursoMD curso_selecc() {
-        int seleccion =seguimiento.getTlbTablaPLC().getSelectedRow();
+        int seleccion =seguimiento.get.getSelectedRow();
         lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(),seguimiento.getTlbTablaPLC().getValueAt(seleccion, 2).toString());
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
         return curso_selecccionado.get();
     }
+    
 }

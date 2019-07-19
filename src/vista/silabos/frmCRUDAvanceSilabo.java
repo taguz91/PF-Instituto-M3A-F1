@@ -5,6 +5,12 @@
  */
 package vista.silabos;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Daniel
@@ -16,6 +22,62 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
      */
     public frmCRUDAvanceSilabo() {
         initComponents();
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public void setBtnEditar(JButton btnEditar) {
+        this.btnEditar = btnEditar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(JButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
+    public JButton getBtnNuevo() {
+        return btnNuevo;
+    }
+
+    public void setBtnNuevo(JButton btnNuevo) {
+        this.btnNuevo = btnNuevo;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JLabel getLblBuscar() {
+        return lblBuscar;
+    }
+
+    public void setLblBuscar(JLabel lblBuscar) {
+        this.lblBuscar = lblBuscar;
+    }
+
+    public JTable getTlbAvanceSilabo() {
+        return tlbAvanceSilabo;
+    }
+
+    public void setTlbAvanceSilabo(JTable tlbAvanceSilabo) {
+        this.tlbAvanceSilabo = tlbAvanceSilabo;
+    }
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
+    }
+
+    public void setTxtBuscar(JTextField txtBuscar) {
+        this.txtBuscar = txtBuscar;
     }
 
     /**
@@ -31,7 +93,7 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         lblBuscar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblAvanceSilabo = new javax.swing.JTable();
+        tlbAvanceSilabo = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
 
@@ -39,7 +101,7 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
 
         lblBuscar.setText("Buscar");
 
-        tblAvanceSilabo.setModel(new javax.swing.table.DefaultTableModel(
+        tlbAvanceSilabo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -50,7 +112,7 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tblAvanceSilabo);
+        jScrollPane1.setViewportView(tlbAvanceSilabo);
 
         btnEditar.setText("Editar");
 
@@ -101,7 +163,7 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
-    private javax.swing.JTable tblAvanceSilabo;
+    private javax.swing.JTable tlbAvanceSilabo;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
