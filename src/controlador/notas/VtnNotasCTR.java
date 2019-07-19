@@ -171,6 +171,17 @@ public class VtnNotasCTR extends AbstractVtn {
             }
         }
 
+        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+
+        if (nombrePeriodo.equals("SCOP 3/2019 - 7/2019")) {
+            jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
+        }
+
     }
 
     private void InitPermisos() {
