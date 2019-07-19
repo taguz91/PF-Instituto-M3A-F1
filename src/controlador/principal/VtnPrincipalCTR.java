@@ -233,6 +233,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
 
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
+        //esto es para el avance de silabo
+        vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
 
         carga.start();
 

@@ -5,6 +5,10 @@
  */
 package vista.silabos;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Daniel
@@ -18,6 +22,78 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         initComponents();
     }
 
+    public JComboBox<String> getCbxAsignatura() {
+        return CbxAsignatura;
+    }
+
+    public void setCbxAsignatura(JComboBox<String> CbxAsignatura) {
+        this.CbxAsignatura = CbxAsignatura;
+    }
+
+    public JComboBox<String> getCbxCarrera() {
+        return CbxCarrera;
+    }
+
+    public void setCbxCarrera(JComboBox<String> CbxCarrera) {
+        this.CbxCarrera = CbxCarrera;
+    }
+
+    public JComboBox<String> getCbxCurso() {
+        return CbxCurso;
+    }
+
+    public void setCbxCurso(JComboBox<String> CbxCurso) {
+        this.CbxCurso = CbxCurso;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
+    public JButton getBtnSiguiente() {
+        return btnSiguiente;
+    }
+
+    public void setBtnSiguiente(JButton btnSiguiente) {
+        this.btnSiguiente = btnSiguiente;
+    }
+
+    public JLabel getLblAsignatura() {
+        return lblAsignatura;
+    }
+
+    public void setLblAsignatura(JLabel lblAsignatura) {
+        this.lblAsignatura = lblAsignatura;
+    }
+
+    public JLabel getLblCarrera() {
+        return lblCarrera;
+    }
+
+    public void setLblCarrera(JLabel lblCarrera) {
+        this.lblCarrera = lblCarrera;
+    }
+
+    public JLabel getLblConfiguracion() {
+        return lblConfiguracion;
+    }
+
+    public void setLblConfiguracion(JLabel lblConfiguracion) {
+        this.lblConfiguracion = lblConfiguracion;
+    }
+
+    public JLabel getLblCurso() {
+        return lblCurso;
+    }
+
+    public void setLblCurso(JLabel lblCurso) {
+        this.lblCurso = lblCurso;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,33 +103,33 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        CbxCurso = new javax.swing.JComboBox<>();
+        lblCurso = new javax.swing.JLabel();
+        CbxCarrera = new javax.swing.JComboBox<>();
+        lblCarrera = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
+        lblConfiguracion = new javax.swing.JLabel();
+        CbxAsignatura = new javax.swing.JComboBox<>();
+        lblAsignatura = new javax.swing.JLabel();
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel1.setText("Curso:");
+        lblCurso.setText("Curso:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Carrera:");
+        lblCarrera.setText("Carrera:");
 
-        jButton1.setText("Cancelar");
+        btnCancelar.setText("Cancelar");
 
-        jButton2.setText("Siguiente");
+        btnSiguiente.setText("Siguiente");
 
-        jLabel3.setText("Configuracion Seguimiento Silabo");
+        lblConfiguracion.setText("Configuracion Seguimiento Silabo");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxAsignatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel4.setText("Asignatura:");
+        lblAsignatura.setText("Asignatura:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,54 +137,54 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 285, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCancelar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnSiguiente)
                 .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(54, 54, 54)
-                            .addComponent(jLabel2)
+                            .addComponent(lblCarrera)
                             .addGap(48, 48, 48)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(38, 38, 38)
-                            .addComponent(jLabel3)))
+                            .addComponent(lblConfiguracion)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel4))
+                                    .addComponent(lblCurso)
+                                    .addComponent(lblAsignatura))
                                 .addGap(48, 48, 48)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblConfiguracion)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(CbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCarrera))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAsignatura))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCurso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSiguiente))
                 .addContainerGap())
         );
 
@@ -117,14 +193,14 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox<String> CbxAsignatura;
+    private javax.swing.JComboBox<String> CbxCarrera;
+    private javax.swing.JComboBox<String> CbxCurso;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSiguiente;
+    private javax.swing.JLabel lblAsignatura;
+    private javax.swing.JLabel lblCarrera;
+    private javax.swing.JLabel lblConfiguracion;
+    private javax.swing.JLabel lblCurso;
     // End of variables declaration//GEN-END:variables
 }

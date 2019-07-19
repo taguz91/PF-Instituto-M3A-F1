@@ -147,6 +147,11 @@
                 <Property name="text" type="java.lang.String" value="Silabos"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MnCAvanceSilabo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Avance de Silabo"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">

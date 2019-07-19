@@ -22,6 +22,19 @@ public class VtnPrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
+    //avance
+
+    public JMenuItem getMnCAvanceSilabo() {
+        return MnCAvanceSilabo;
+    }
+
+    public void setMnCAvanceSilabo(JMenuItem MnCAvanceSilabo) {
+        this.MnCAvanceSilabo = MnCAvanceSilabo;
+    }
+    
+    
+    //
+    
     public JMenuItem getMnCtPlandeClase() {
         return mnCtPlandeClase;
     }
@@ -429,6 +442,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         mnCtSilabos = new javax.swing.JMenuItem();
+        MnCAvanceSilabo = new javax.swing.JMenuItem();
         mnCtPlandeClase = new javax.swing.JMenuItem();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
@@ -797,6 +811,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos.setText("Silabos");
         mnTipoNotas.add(mnCtSilabos);
 
+        MnCAvanceSilabo.setText("Avance de Silabo");
+        mnTipoNotas.add(MnCAvanceSilabo);
+
         mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
@@ -1008,6 +1025,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnBiblioteca;
+    private javax.swing.JMenuItem MnCAvanceSilabo;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAlumno;
     private javax.swing.JButton btnAyuda;
