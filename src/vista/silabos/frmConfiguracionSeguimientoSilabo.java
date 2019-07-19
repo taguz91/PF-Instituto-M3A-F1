@@ -94,6 +94,22 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         this.lblCurso = lblCurso;
     }
 
+    public JComboBox<String> getCbxPeriodo() {
+        return CbxPeriodo;
+    }
+
+    public void setCbxPeriodo(JComboBox<String> CbxPeriodo) {
+        this.CbxPeriodo = CbxPeriodo;
+    }
+
+    public JLabel getLblPeriodo() {
+        return lblPeriodo;
+    }
+
+    public void setLblPeriodo(JLabel lblPeriodo) {
+        this.lblPeriodo = lblPeriodo;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,6 +128,8 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         lblConfiguracion = new javax.swing.JLabel();
         CbxAsignatura = new javax.swing.JComboBox<>();
         lblAsignatura = new javax.swing.JLabel();
+        lblPeriodo = new javax.swing.JLabel();
+        CbxPeriodo = new javax.swing.JComboBox<>();
 
         CbxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -131,12 +149,16 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
 
         lblAsignatura.setText("Asignatura:");
 
+        lblPeriodo.setText("Curso:");
+
+        CbxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 285, Short.MAX_VALUE)
+                .addGap(0, 316, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(18, 18, 18)
                 .addComponent(btnSiguiente)
@@ -153,16 +175,23 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
                             .addGap(38, 38, 38)
                             .addComponent(lblConfiguracion)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblCurso)
-                                    .addComponent(lblAsignatura))
+                                .addComponent(lblAsignatura)
                                 .addGap(48, 48, 48)
-                                .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 63, Short.MAX_VALUE))
+                                .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCurso)
+                                        .addGap(325, 325, 325)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblPeriodo)
+                                    .addGap(325, 325, 325))))))
+                .addGap(0, 90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,11 +206,15 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAsignatura))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPeriodo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCurso))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnSiguiente))
@@ -196,11 +229,13 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
     private javax.swing.JComboBox<String> CbxAsignatura;
     private javax.swing.JComboBox<String> CbxCarrera;
     private javax.swing.JComboBox<String> CbxCurso;
+    private javax.swing.JComboBox<String> CbxPeriodo;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel lblAsignatura;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblConfiguracion;
     private javax.swing.JLabel lblCurso;
+    private javax.swing.JLabel lblPeriodo;
     // End of variables declaration//GEN-END:variables
 }

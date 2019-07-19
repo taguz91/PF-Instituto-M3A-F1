@@ -291,7 +291,7 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
         separador = new javax.swing.JSeparator();
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblTitulo.setText("INFORME DE SEGUIMIENTO DEL SILABO");
+        lblTitulo.setText("Informe de Seguimiento del Silabo");
 
         CbxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reporte Correspondiente a", "Interciclo", "Fin de ciclo", " " }));
 
@@ -340,6 +340,7 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
 
         lblUnidad1.setText("Observaciones:");
 
+        txrContenidos.setEditable(false);
         txrContenidos.setColumns(20);
         txrContenidos.setRows(5);
         jScrollPane2.setViewportView(txrContenidos);
@@ -412,7 +413,7 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
-                .addGap(211, 211, 211))
+                .addGap(235, 235, 235))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,7 +458,7 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(bntGuardar))

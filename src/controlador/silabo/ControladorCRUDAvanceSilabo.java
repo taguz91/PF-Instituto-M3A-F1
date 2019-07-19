@@ -37,11 +37,6 @@ public class ControladorCRUDAvanceSilabo {
     
     
      
-         private CursoMD curso_selecc() {
-        int seleccion =seguimiento.get.getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(),seguimiento.getTlbTablaPLC().getValueAt(seleccion, 2).toString());
-        Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 3).toString())).findFirst();
-        return curso_selecccionado.get();
-    }
+   
     
 }
