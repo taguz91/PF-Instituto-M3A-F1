@@ -11,6 +11,7 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnoMatriculaCTR;
 import controlador.alumno.VtnAlumnosRetiradosCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
@@ -43,6 +44,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.usuario.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
+import controlador.version.VtnDitoolCTR;
 import controlador.vistaReportes.VtnEstadosCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -67,6 +69,8 @@ import modelo.ConexionBD;
 import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import modelo.version.DitoolBD;
+import modelo.version.VersionMD;
 import vista.alumno.FrmAlumnoCarrera;
 import vista.carrera.FrmCarrera;
 import vista.carrera.VtnCarrera;
@@ -74,6 +78,7 @@ import vista.alumno.FrmAlumnoCurso;
 import vista.alumno.VtnAlumnoCarrera;
 import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
+import vista.alumno.VtnAlumnoMatricula;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
@@ -98,6 +103,7 @@ import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
+import vista.version.VtnDitool;
 
 /**
  *
@@ -155,6 +161,8 @@ public class VtnPrincipalCTR {
         conecta.setVtnPrin(vtnPrin);
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
+        //Accion al boton de actualizar 
+        vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
         agregarEstilos();
         //Acciones de las ventanas de consulta
@@ -177,6 +185,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtAlmnRetirados().addActionListener(e -> abrirVtnAlmnRetirados());
         vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
+        vtnPrin.getMnCtAlmnMatri().addActionListener(e -> abrirVtnAlumnoMatricula());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -224,6 +233,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
 
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
+        //esto es para el avance de silabo
+        //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
 
         carga.start();
 
@@ -322,6 +333,18 @@ public class VtnPrincipalCTR {
         if (numVtns < 5) {
             VtnPrdLectivoCTR ctrVtnPrdLectivo = new VtnPrdLectivoCTR(vtnPrdLectivo, this);
             ctrVtnPrdLectivo.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+
+    }
+    
+    public void abrirVtnAlumnoMatricula() {
+        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula(); 
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnAlumnoMatriculaCTR ctr = new VtnAlumnoMatriculaCTR(this, vtn);
+            ctr.iniciar();
         } else {
             errorNumVentanas();
         }
@@ -591,7 +614,7 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, conexion, vtnPrin);
+        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
 
     }
@@ -1178,6 +1201,21 @@ public class VtnPrincipalCTR {
         VtnEstadosCTR vtn = new VtnEstadosCTR(this);
         vtn.Init();
 
+    }
+
+    private void comprobarActualizacion() {
+        VtnDitool vtnDitool = new VtnDitool();
+        vtnDitool.setTitle("Ditool | Version instalada: ");
+        DitoolBD di = new DitoolBD("VERSION", "AZUL");
+        VersionMD v = di.consultarUltimaVersion();
+        if (v != null) {
+            vtnPrin.setEnabled(false);
+            VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool, vtnPrin);
+            ctrVtn.iniciar();
+        } else {
+            JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
+                    + "Verifique su conexion e intentelo de nuevo.");
+        }
     }
 
 }

@@ -171,6 +171,17 @@ public class VtnNotasCTR extends AbstractVtn {
             }
         }
 
+        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+
+        if (nombrePeriodo.equals("SCOP 3/2019 - 7/2019")) {
+            jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(true));
+            jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
+        }
+
     }
 
     private void InitPermisos() {
@@ -414,6 +425,7 @@ public class VtnNotasCTR extends AbstractVtn {
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
+
             tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
@@ -425,6 +437,10 @@ public class VtnNotasCTR extends AbstractVtn {
                 obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
                 (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
                 calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
+
+            System.out.println("Alumno->" + obj.getId());
+            System.out.println("---->" + obj.getNotas().stream().map(c -> c.getTipoDeNota()).toArray().length);
+
         };
     }
 

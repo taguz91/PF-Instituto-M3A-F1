@@ -40,15 +40,15 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="171" splitType="Stretch">
+		<band height="114" splitType="Stretch">
 			<line>
-				<reportElement x="55" y="156" width="176" height="1" uuid="c6db6f92-7915-4e67-9e6f-29ff64285e3d"/>
+				<reportElement x="55" y="95" width="176" height="1" uuid="c6db6f92-7915-4e67-9e6f-29ff64285e3d"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="277" height="171" uuid="9b689a56-16ac-4583-ae76-89276d9cb81c"/>
+				<reportElement x="0" y="0" width="277" height="114" uuid="9b689a56-16ac-4583-ae76-89276d9cb81c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

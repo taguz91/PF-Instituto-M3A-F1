@@ -54,9 +54,14 @@
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="btnNuevoPLC" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnEditarPLC" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEliminarPLC" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnEditarPLC" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnEliminarPLC" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btn_editar_fecha" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnImplimirPlan" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -83,6 +88,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Cmb_Carreras" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Carreras" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_editar_fecha" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -164,12 +170,15 @@
         <Component class="javax.swing.JTable" name="tlbTablaPLC">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="8" rowCount="0">
                 <Column editable="false" title="PlanCod" type="java.lang.Object"/>
                 <Column editable="false" title="Docente" type="java.lang.Object"/>
                 <Column editable="false" title="Materia" type="java.lang.Object"/>
                 <Column editable="false" title="Curso" type="java.lang.Object"/>
                 <Column editable="false" title="Unidad" type="java.lang.Object"/>
+                <Column editable="false" title="Estado" type="java.lang.Object"/>
+                <Column editable="true" title="Estado" type="java.lang.Boolean"/>
+                <Column editable="false" title="Fecha" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -179,7 +188,7 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="270" minWidth="-1" prefWidth="270" resizable="true">
+                <Column maxWidth="250" minWidth="-1" prefWidth="250" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -194,7 +203,17 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="60" minWidth="-1" prefWidth="60" resizable="true">
+                <Column maxWidth="50" minWidth="-1" prefWidth="50" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="80" minWidth="-1" prefWidth="80" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="80" minWidth="-1" prefWidth="80" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -232,6 +251,11 @@
     <Component class="javax.swing.JButton" name="btnImplimirPlan">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_editar_fecha">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar Fecha"/>
       </Properties>
     </Component>
   </SubComponents>

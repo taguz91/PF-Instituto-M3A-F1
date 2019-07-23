@@ -24,6 +24,7 @@ public class PlandeClasesMD {
    private LocalDate fecha_generacion;
    private LocalDate fecha_cierre;
    private String trabajo_autonomo;
+   private int estado_plan;
 
    //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
    private MateriaMD id_materia;
@@ -126,6 +127,16 @@ public class PlandeClasesMD {
     public void setTrabajo_autonomo(String trabajo_autonomo) {
         this.trabajo_autonomo = trabajo_autonomo;
     }
+
+    public int getEstado_plan() {
+        return estado_plan;
+    }
+
+    public void setEstado_plan(int estado_plan) {
+        this.estado_plan = estado_plan;
+    }
+
+    
     
    
    
