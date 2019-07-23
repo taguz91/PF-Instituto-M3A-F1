@@ -19,7 +19,7 @@ public class run {
         if (!iniciaEstilo("Windows")) {
             iniciaEstilo("Nimbus");
         }
-
+        System.out.println("Modo desarrollo: "+CONS.M_DESARROLLO);
         if (CONS.M_DESARROLLO) {
             System.out.println("Iniciamos en modo desarrollo");
             EventQueue.invokeLater(() -> {

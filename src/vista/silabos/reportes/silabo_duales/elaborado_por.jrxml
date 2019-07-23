@@ -7,6 +7,9 @@
 	<parameter name="id_silabo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select distinct c.id_docente,concat(d.docente_abreviatura,' ',p.persona_primer_apellido,' ',p.persona_segundo_apellido,' ',p.persona_primer_nombre,' ',
 									p.persona_segundo_nombre) as nombre_docente,current_date from "Cursos" c, "Docentes" d, "Personas" p
@@ -83,16 +86,14 @@ Q.ID_PRD_LECTIVO=(select id_prd_lectivo from "Silabo" where id_silabo=$P!{id_sil
 				</textElement>
 				<text><![CDATA[Fecha: ]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="39" y="0" width="238" height="20" uuid="160be9c0-935b-4ae7-915b-4cce12a59581"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
+			<subreport>
+				<reportElement x="39" y="0" width="238" height="20" uuid="1a8ce209-38d4-4f7e-a650-539ced20967c"/>
+				<subreportParameter name="id_silabo">
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fecha.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>

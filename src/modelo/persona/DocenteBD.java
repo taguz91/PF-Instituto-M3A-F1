@@ -880,4 +880,9 @@ public class DocenteBD extends DocenteMD {
         }
         return lista;
     }
+
+    public DocenteBD selectWhere(String cedula) {
+        return new DocenteBD();
+    }
+
 }

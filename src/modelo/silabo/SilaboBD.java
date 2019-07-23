@@ -113,7 +113,7 @@ public class SilaboBD extends SilaboMD {
                     + "JOIN \"PeriodoLectivo\" pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
                     + "WHERE m.id_carrera=? "
                     + "AND m.materia_nombre ILIKE '%" + parametro + "%'\n"
-                    + "ORDER BY pr.id_prd_lectivo DESC ");
+                    + "ORDER BY m.materia_nombre ASC ");
 
             st.setInt(1, clave);
             System.out.println(st);
