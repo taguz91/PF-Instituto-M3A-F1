@@ -52,7 +52,6 @@ public class NotasBD extends NotasMD {
         try {
             conn = pool.getConnection();
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
-            System.out.println(pool.getStmt().toString());
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
 

@@ -380,8 +380,6 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
 
-        System.out.println(SELECT);
-
         List<AlumnoCursoBD> lista = new ArrayList();
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, idDocente);
@@ -393,6 +391,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             conn = pool.getConnection();
             rst = pool.ejecutarQuery(SELECT, conn, parametros);
             NotasBD notasBD = new NotasBD();
+            System.out.println(pool.getStmt().toString());
             while (rst.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
@@ -419,6 +418,13 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumnoCurso.setAlumno(alumno);
 
                 List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
+
+                if (notas.isEmpty()) {
+                    System.out.println("\nSIN NOTAS-->" + alumno.getPrimerNombre());
+                    System.out.println("" + alumnoCurso.getId());
+                    System.out.println("");
+                    System.out.println("");
+                }
 
                 alumnoCurso.setNotas(notas);
 
