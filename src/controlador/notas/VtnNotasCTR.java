@@ -414,6 +414,7 @@ public class VtnNotasCTR extends AbstractVtn {
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
+
             tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
@@ -425,6 +426,10 @@ public class VtnNotasCTR extends AbstractVtn {
                 obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
                 (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
                 calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
+
+            System.out.println("Alumno->" + obj.getId());
+            System.out.println("---->" + obj.getNotas().stream().map(c -> c.getTipoDeNota()).toArray().length);
+
         };
     }
 
