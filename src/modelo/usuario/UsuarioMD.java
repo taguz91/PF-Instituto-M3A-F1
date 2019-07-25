@@ -11,6 +11,9 @@ public class UsuarioMD {
     private String username;
     private String password;
     private boolean estado;
+    private boolean isSuperUser;
+    private boolean canCreateRolPostgres;
+
     private PersonaMD idPersona;
 
     public UsuarioMD(String username, String password, boolean estado, PersonaMD idPersona) {
@@ -54,6 +57,9 @@ public class UsuarioMD {
     public void setPersona(PersonaMD idPersona) {
         this.idPersona = idPersona;
     }
+    
+    
+    
 
     @Override
     public String toString() {
