@@ -5,11 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.ImageIcon;
 import modelo.ConnDBPool;
 import modelo.persona.PersonaMD;
 
@@ -19,7 +17,7 @@ import modelo.persona.PersonaMD;
  */
 public final class UsuarioBD extends UsuarioMD {
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rs;
 
@@ -42,23 +40,35 @@ public final class UsuarioBD extends UsuarioMD {
         setPersona(obj.getPersona());
     }
 
-    public boolean insertar() {
+    public Map<String, Object> insertar(String isCordinador) {
+        Map context = new HashMap();
+        Map<Integer, Object> parametros = new HashMap<>();
 
         String INSERT = ""
                 + "INSERT INTO \"Usuarios\" \n"
                 + " (usu_username, usu_password, id_persona)\n"
                 + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n"
                 + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
-                + "GRANT \"permisos\" TO \"" + getUsername() + "\";"
+                + "GRANT \"permisos\" TO \"" + getUsername() + "\"";
+
+        String CONS = "\n"
+                + "ALTER ROLE \"" + getUsername() + "\" SUPERUSER;"
                 + " ";
 
-        Map<Integer, Object> parametros = new HashMap<>();
+        if (isCordinador.equalsIgnoreCase("coordinador")) {
+            INSERT += CONS;
+        }
 
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
         conn = pool.getConnection();
-        return pool.ejecutar(INSERT, conn, parametros) == null;
+
+        SQLException error = pool.ejecutar(INSERT, conn, parametros);
+        context.put("value", (error == null));
+        context.put("error", error);
+
+        return context;
 
     }
 
@@ -145,7 +155,7 @@ public final class UsuarioBD extends UsuarioMD {
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
 
             while (rs.next()) {
-                
+
                 usuario = new UsuarioBD();
                 usuario.setUsername(getUsername());
 

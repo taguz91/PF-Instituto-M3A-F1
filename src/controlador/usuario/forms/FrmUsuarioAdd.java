@@ -15,7 +15,8 @@ public class FrmUsuarioAdd extends AbstracForm {
     public FrmUsuarioAdd(VtnPrincipal desktop, VtnUsuarioCTR vtnPadre) {
         super(desktop, vtnPadre);
     }
-
+    
+    
     @Override
     public void guardar() {
         if (validarFormulario()) {

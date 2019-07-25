@@ -5,6 +5,7 @@ import controlador.principal.VtnPrincipalCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.usuario.RolBD;
 
 /**
@@ -33,11 +34,11 @@ public class FrmRolEdit extends AbstractForm {
         if (!vista.getTxtNombre().getText().isEmpty()) {
             if (setObj().editar(pk)) {
                 String message = "SE HA EDITADO EL ROL: " + modelo.getNombre();
-                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
+                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, CONS.SUCCESS_COLOR, 3);
                 vtnPadre.cargarTabla();
                 vista.dispose();
             } else {
-                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "HA OCURRIDO UN PROBLEMA", Effects.ERROR_COLOR, 3);
+                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "HA OCURRIDO UN PROBLEMA", CONS.ERROR_COLOR, 3);
             }
 
         } else {

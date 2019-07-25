@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import vista.accesos.FrmAccesosDeRol;
@@ -128,11 +129,11 @@ public class FrmAccesosAddCTR {
             if (acceso.editar()) {
                 if (activo) {
                     vista.getLblEstado().setText("SE HA DADO EL PERMISO: " + acceso.getAcceso().getNombre());
-                    vista.getLblEstado().setForeground(Effects.SUCCESS_COLOR);
+                    vista.getLblEstado().setForeground(CONS.SUCCESS_COLOR);
                 } else {
 
                     vista.getLblEstado().setText("SE HA QUITADO EL PERMISO: " + acceso.getAcceso().getNombre());
-                    vista.getLblEstado().setForeground(Effects.ERROR_COLOR);
+                    vista.getLblEstado().setForeground(CONS.ERROR_COLOR);
                 }
             }
         }).start();
