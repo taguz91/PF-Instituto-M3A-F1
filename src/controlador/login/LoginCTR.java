@@ -87,14 +87,14 @@ public class LoginCTR {
                             vtn.Init();
 
                         } else {
-                            Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                            Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", CONS.ERROR_COLOR, 2);
                             Effects.setDefaultCursor(vista);
                             conex.closePool();
                         }
 
                     } catch (NullPointerException e) {
                         Effects.setDefaultCursor(vista);
-                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", Effects.ERROR_COLOR, 2);
+                        Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", CONS.ERROR_COLOR, 2);
 
                         if (conex != null) {
                             conex.closePool();
@@ -107,7 +107,7 @@ public class LoginCTR {
 
                 }).start();
             } else {
-                Effects.setTextInLabel(vista.getLblAvisos(), "RELLENE BIEN LA INFORMACION!!", Effects.ERROR_COLOR, 2);
+                Effects.setTextInLabel(vista.getLblAvisos(), "RELLENE BIEN LA INFORMACION!!", CONS.ERROR_COLOR, 2);
             }
         }
     }

@@ -97,7 +97,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
         }
         listaTipos = null;
         System.out.println("--------THREAD-->" + Thread.activeCount());
-        Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 4);
+        Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA EDITADO LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), CONS.SUCCESS_COLOR, 4);
 
         vista.dispose();
     }

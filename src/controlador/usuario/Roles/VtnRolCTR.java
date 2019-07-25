@@ -164,7 +164,7 @@ public class VtnRolCTR {
                 form.Init();
             });
         } else {
-            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", CONS.ERROR_COLOR, 2);
         }
     }
 
@@ -178,7 +178,7 @@ public class VtnRolCTR {
                 form.Init();
             });
         } else {
-            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", Effects.ERROR_COLOR, 2);
+            Effects.setTextInLabel(vista.getLblEstado(), "SELECCIONE UN ROL!!", CONS.ERROR_COLOR, 2);
         }
     }
 

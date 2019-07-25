@@ -194,16 +194,16 @@ public class VtnNotasCTR extends AbstractVtn {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
     private void mensajeDeError() {
-        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", Effects.ERROR_COLOR,
+        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", CONS.ERROR_COLOR,
                 2);
 
-        Effects.ERROR_COLOR = null;
+        CONS.ERROR_COLOR = null;
 
     }
 
     private void errorDeNota(TipoDeNotaMD rango) {
         Effects.setTextInLabel(vista.getLblEstado(),
-                "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), Effects.ERROR_COLOR, 2);
+                "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), CONS.ERROR_COLOR, 2);
     }
 
     private void refreshTabla(Consumer<AlumnoCursoBD> loader, DefaultTableModel tabla) {
@@ -331,16 +331,16 @@ public class VtnNotasCTR extends AbstractVtn {
                         editar.apply("");
                     } else {
                         Effects.setTextInLabel(vista.getLblEstado(),
-                                "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
+                                "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", CONS.ERROR_COLOR, 2);
                         refreshTabla(loader, (DefaultTableModel) tabla.getModel());
                     }
                 }
             } catch (NumberFormatException e) {
-                Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", Effects.ERROR_COLOR, 2);
+                Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", CONS.ERROR_COLOR, 2);
                 refreshTabla(loader, (DefaultTableModel) tabla.getModel());
             }
         } else {
-            Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", Effects.ERROR_COLOR, 2);
+            Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", CONS.ERROR_COLOR, 2);
             refreshTabla(loader, (DefaultTableModel) tabla.getModel());
         }
     }
