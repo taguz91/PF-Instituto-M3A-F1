@@ -623,7 +623,7 @@ public class VtnPrincipalCTR {
 
     }
     private void controladorCONFIGURACION_avance_silabo() {
-       ControladorCRUDAvanceSilabo AS= new ControladorCRUDAvanceSilabo(usuario,vtnPrin, conexion);
+       ControladorCRUDAvanceSilabo AS= new ControladorCRUDAvanceSilabo(usuario,rolSeleccionado,vtnPrin, conexion);
         AS.initCrud();
 
     }

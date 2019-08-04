@@ -5,7 +5,9 @@
  */
 package vista.silabos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +24,8 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
      */
     public frmCRUDAvanceSilabo() {
         initComponents();
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
+        this.setFrameIcon(icon);
     }
 
     public JButton getBtnEditar() {
@@ -80,6 +84,30 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
         this.txtBuscar = txtBuscar;
     }
 
+    public JComboBox<String> getCmbJornadas() {
+        return CmbJornadas;
+    }
+
+    public void setCmbJornadas(JComboBox<String> CmbJornadas) {
+        this.CmbJornadas = CmbJornadas;
+    }
+
+    public JComboBox<String> getCmb_Carreras() {
+        return Cmb_Carreras;
+    }
+
+    public void setCmb_Carreras(JComboBox<String> Cmb_Carreras) {
+        this.Cmb_Carreras = Cmb_Carreras;
+    }
+
+    public JComboBox<String> getCmb_periodos() {
+        return Cmb_periodos;
+    }
+
+    public void setCmb_periodos(JComboBox<String> Cmb_periodos) {
+        this.Cmb_periodos = Cmb_periodos;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +124,15 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
         tlbAvanceSilabo = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
+        Cmb_Carreras = new javax.swing.JComboBox<>();
+        Cmb_periodos = new javax.swing.JComboBox<>();
+        CmbJornadas = new javax.swing.JComboBox<>();
+        lblBuscar1 = new javax.swing.JLabel();
+        lblBuscar2 = new javax.swing.JLabel();
+        lblBuscar3 = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
 
         btnEliminar.setText("Eliminar");
 
@@ -103,20 +140,51 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
 
         tlbAvanceSilabo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "id", "Docente", "Materia", "Curso", "Estado", "Estado", "Fecha Entrega"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tlbAvanceSilabo);
+        if (tlbAvanceSilabo.getColumnModel().getColumnCount() > 0) {
+            tlbAvanceSilabo.getColumnModel().getColumn(0).setMinWidth(0);
+            tlbAvanceSilabo.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tlbAvanceSilabo.getColumnModel().getColumn(0).setMaxWidth(0);
+            tlbAvanceSilabo.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(3).setMaxWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(4).setMaxWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(5).setMaxWidth(80);
+            tlbAvanceSilabo.getColumnModel().getColumn(6).setPreferredWidth(90);
+            tlbAvanceSilabo.getColumnModel().getColumn(6).setMaxWidth(90);
+        }
 
         btnEditar.setText("Editar");
 
         btnNuevo.setText("Nuevo");
+
+        lblBuscar1.setText("Carreras:");
+
+        lblBuscar2.setText("Periodo:");
+
+        lblBuscar3.setText("Jornada:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,19 +192,28 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 712, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBuscar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBuscar)
+                            .addComponent(lblBuscar1)
+                            .addComponent(lblBuscar2)
+                            .addComponent(lblBuscar3))
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Cmb_Carreras, 0, 435, Short.MAX_VALUE)
+                            .addComponent(txtBuscar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(CmbJornadas, javax.swing.GroupLayout.Alignment.LEADING, 0, 213, Short.MAX_VALUE)
+                                .addComponent(Cmb_periodos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 712, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(btnEliminar)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,8 +226,20 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(lblBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBuscar1)
+                    .addComponent(Cmb_Carreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Cmb_periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBuscar2))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBuscar3)
+                    .addComponent(CmbJornadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,11 +247,17 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CmbJornadas;
+    private javax.swing.JComboBox<String> Cmb_Carreras;
+    private javax.swing.JComboBox<String> Cmb_periodos;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblBuscar1;
+    private javax.swing.JLabel lblBuscar2;
+    private javax.swing.JLabel lblBuscar3;
     private javax.swing.JTable tlbAvanceSilabo;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
