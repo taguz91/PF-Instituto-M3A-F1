@@ -294,6 +294,11 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
         lblTitulo.setText("Informe de Seguimiento del Silabo");
 
         CbxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reporte Correspondiente a", "Interciclo", "Fin de ciclo", " " }));
+        CbxTipoReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CbxTipoReporteActionPerformed(evt);
+            }
+        });
 
         lblTipoReporte.setText("Reporte correspondiente a:");
 
@@ -467,6 +472,10 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CbxTipoReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbxTipoReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CbxTipoReporteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

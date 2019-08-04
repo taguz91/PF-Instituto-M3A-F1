@@ -28,44 +28,46 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                      <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cmb_perido" max="32767" attributes="0"/>
+                          <Component id="CbxCarrera" pref="277" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                          <Component id="lblCarrera" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="CbxCarrera" min="-2" pref="277" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="CbxCurso" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="lblCurso" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="325" pref="325" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblPeriodo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="325" pref="325" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblAsignatura" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                                  <Component id="CbxSilabos" min="-2" pref="280" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="lblConfiguracion" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="CbxPeriodo" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblAsignatura" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="CbxAsignatura" min="-2" pref="277" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="CbxCurso" alignment="1" min="-2" pref="280" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="lblCurso" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="325" pref="325" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="lblPeriodo" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="325" pref="325" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
               </Group>
-              <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,13 +82,13 @@
                   <Component id="lblCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="CbxAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAsignatura" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblAsignatura" min="-2" max="-2" attributes="0"/>
+                  <Component id="cmb_perido" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="CbxPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CbxSilabos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -94,7 +96,7 @@
                   <Component id="CbxCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblCurso" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSiguiente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -115,6 +117,7 @@
             <StringItem index="3" value="Item 4"/>
           </StringArray>
         </Property>
+        <Property name="name" type="java.lang.String" value="lista_cursos" noResource="true"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -135,7 +138,11 @@
             <StringItem index="3" value="Item 4"/>
           </StringArray>
         </Property>
+        <Property name="name" type="java.lang.String" value="lista_carreras" noResource="true"/>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+      </AccessibilityProperties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -160,7 +167,17 @@
         <Property name="text" type="java.lang.String" value="Configuracion Seguimiento Silabo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="CbxAsignatura">
+    <Component class="javax.swing.JLabel" name="lblAsignatura">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Periodo Lectivo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblPeriodo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Silabo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="CbxSilabos">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -170,22 +187,13 @@
             <StringItem index="3" value="Item 4"/>
           </StringArray>
         </Property>
+        <Property name="name" type="java.lang.String" value="lista_silabos" noResource="true"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAsignatura">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Asignatura:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblPeriodo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Curso:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="CbxPeriodo">
+    <Component class="javax.swing.JComboBox" name="cmb_perido">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">

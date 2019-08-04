@@ -9,14 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.CarrerasBDS;
 import modelo.silabo.CursosBDS;
+import modelo.silabo.MateriasBDS;
 import modelo.silabo.PeriodoLectivoBDS;
+import modelo.silabo.SilaboBD;
+import modelo.silabo.SilaboMD;
+import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.usuario.UsuarioBD;
+import vista.principal.VtnPrincipal;
 import vista.silabos.frmConfiguracionSeguimientoSilabo;
 import vista.silabos.frmCRUDAvanceSilabo;
 
@@ -25,65 +32,225 @@ import vista.silabos.frmCRUDAvanceSilabo;
  * @author Daniel
  */
 public class ControladorConfiguracionAvanceSilabo {
-
+     private int id_silabo=-1;
     private final UsuarioBD usuario;
     private ConexionBD conexion;
     private boolean esCordinador = false;
     private List<CarreraMD> carreras_docente;
+     private List<SilaboMD> silabosDocente;
     private frmConfiguracionSeguimientoSilabo avance;
     private frmCRUDAvanceSilabo seguimiento;
-    private List<CursoMD> lista_curso;
+    private List<CursoMD> cursoSilabo;
     private int id_periodo_lectivo = -1;
     private List<PeriodoLectivoMD> periodosCarrera;
+    VtnPrincipal vtnPrincipal=new VtnPrincipal();
+     private List<MateriaMD> materias_Silabos;
 
-    public ControladorConfiguracionAvanceSilabo(UsuarioBD usuario, ConexionBD conexion, List<CarreraMD> carreras_docente, frmConfiguracionSeguimientoSilabo avance, frmCRUDAvanceSilabo seguimiento, List<CursoMD> lista_curso) {
+    public ControladorConfiguracionAvanceSilabo(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
         this.conexion = conexion;
-        this.carreras_docente = carreras_docente;
-        this.avance = avance;
-        this.seguimiento = seguimiento;
-        this.lista_curso = lista_curso;
+        this.vtnPrincipal=vtnPrincipal;
+
 
     }
+    public void init(){
+       conexion.conectar();
+        avance = new frmConfiguracionSeguimientoSilabo();
+        vtnPrincipal.getDpnlPrincipal().add(avance);
+        avance.setTitle("CREAR UN AVANCE DE SILABO");
+        avance.show();
+         avance.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - avance.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - avance.getSize().height) / 2);
 
-    private void CARGAR_COMBO_CARRERAS() {
-
+        avance.getBtnCancelar().addActionListener((e) -> {
+            avance.dispose();
+             
+        });
+        avance.getBtnSiguiente().addActionListener(a1 -> {
+            
+            controlador_avance_ingreso cas=new 
+        controlador_avance_ingreso(conexion,vtnPrincipal,cursos_seleccionado(),silabo_seleccionado());
+            cas.init();
+            avance.dispose();
+        });
+        avance.getCbxCarrera().addActionListener(a -> clickCmbCarreras());
+           avance.getCbxSilabos().addActionListener(a-> clickCmbSilabos());
+           avance.getCmb_perido().addActionListener(a-> clickComboPeriodos());
+           estadoCmb_silbo(false);
+           estadoCmb_cursoUnidDES(false);
+        CARGAR_COMBO_CARRERAS();
+    }
+    private void CARGAR_COMBO_CARRERAS(){
         avance.getCbxCarrera().removeAllItems();
-        carreras_docente = new ArrayList<>();
-        if (esCordinador) {
-            carreras_docente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
-        } else {
-            carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
-        }
-
+        carreras_docente=CarrerasBDS.consultar(conexion, usuario.getUsername());
+        if(carreras_docente==null){
+            JOptionPane.showMessageDialog(null, "No tiene carreras asignadas");
+        }else{
+           avance.getCbxCarrera().addItem("SELECCIONE UNA CARRERA!");
         carreras_docente.forEach((cmd) -> {
             avance.getCbxCarrera().addItem(cmd.getNombre());
         });
-
-        avance.getCbxCarrera().setSelectedIndex(0);
+        }
     }
-
-    private CursoMD curso_selecc() {
-        int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
-        Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 3).toString())).findFirst();
-        return curso_selecccionado.get();
+        
+        
+   private void LLENAR_COMBO_SILABOS(List<MateriaMD> materias){
+        avance.getCbxSilabos().removeAllItems();
+        if(materias !=null){
+             avance.getCbxSilabos().addItem("SELECCIONE UN SILABO!");
+            materias_Silabos.forEach(m ->{
+                avance.getCbxSilabos().addItem(m.getNombre());
+            });
+            avance.getCbxSilabos().setSelectedIndex(0);
+        }
     }
-   private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, avance.getCbxCarrera().getSelectedItem().toString());
-        return periodos;
+   
+     private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos){
+        avance.getCmb_perido().removeAllItems();
+        if (periodos!=null) {
+          avance.getCmb_perido().addItem("SELECCIONE SU PERIODO ACTUAL!");
+            periodos.forEach(pl-> {
+                avance.getCmb_perido().addItem(pl.getNombre_PerLectivo());
+            });
+           avance.getCmb_perido().setSelectedIndex(0);           
+        }
     }
-    private int getid_periodo() {
-        String nombre_periodo = avance.getCbxPeriodo().getSelectedItem().toString();
-        periodosCarrera = cargarPeriodos();
-        periodosCarrera
+     private void LLENAR_COMBO_CURSOS(List<CursoMD> cursos){
+        avance.getCbxCurso().removeAllItems();
+        if (cursos!=null) {
+            cursos.forEach(cs->{
+               avance.getCbxCurso().addItem(String.valueOf(cs.getNombre()));
+            });
+        } else {
+            System.out.println("NO tiene");
+        }
+    }
+     private void clickCmbCarreras(){
+    int posC=avance.getCbxCarrera().getSelectedIndex();
+    if (posC>0) {
+        estado_comboPeriodos(true);
+         String carrera=carreras_docente.get(posC-1).getNombre();
+        periodosCarrera=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, carrera);
+        LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
+        
+    }else{
+        estado_comboPeriodos(false);
+    }
+   } 
+     
+     
+     private void clickCmbSilabos(){
+       int posC=avance.getCbxCarrera().getSelectedIndex();
+       int posS=avance.getCbxSilabos().getSelectedIndex();
+       
+       if(posS>0){
+           estadoCmb_cursoUnidDES(true);
+           String materia_silabo=materias_Silabos.get(posS -1).getNombre();
+//           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
+//           LLENAR_COMBO_UNIDADES(unidadesSilabo);
+           cursoSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+           LLENAR_COMBO_CURSOS(cursoSilabo);
+           System.out.println(getIdSilabo()+"------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
+           if (avance.getCbxCurso().getItemCount()!=0) {
+               avance.getBtnSiguiente().setEnabled(true);
+           } else {
+              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
+              avance.getBtnSiguiente().setEnabled(false);
+           }
+               
+       }else{
+           clickComboPeriodos();
+           estadoCmb_cursoUnidDES(false);
+           avance.getBtnSiguiente().setEnabled(false);
+       }
+   }
+      private void clickComboPeriodos(){
+       int posC=avance.getCbxCarrera().getSelectedIndex();
+       int posP=avance.getCmb_perido().getSelectedIndex();
+       
+       if (posP>0 && posC>0) {
+          estadoCmb_silbo(true);
+        String carrera=carreras_docente.get(posC-1).getNombre();
+        String nombre_periodo=periodosCarrera.get(posP-1).getNombre_PerLectivo();
+        materias_Silabos=MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(),nombre_periodo);
+        LLENAR_COMBO_SILABOS(materias_Silabos);
+           
+           System.out.println(getid_periodo()+"----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");
+           
+       } else {
+           clickCmbCarreras();
+           estadoCmb_silbo(false);
+       }
+   } 
+     private void estadoCmb_silbo(boolean estado){
+      avance.getCbxSilabos().setEnabled(estado);
+       avance.getCbxSilabos().removeAllItems();
+  }
+  private void estadoCmb_cursoUnidDES(boolean estado){
+      avance.getCbxCurso().setEnabled(estado);
+      avance.getCbxCurso().removeAllItems();
+      avance.getCbxCurso().setEnabled(estado);
+      avance.getCbxCurso().removeAllItems();
+      
+  }
+   private int getIdSilabo(){
+      String silabo=avance.getCbxSilabos().getSelectedItem().toString();
+      silabosDocente=cargar_silabo();
+      silabosDocente
+              .stream()
+                .filter(item -> item.getIdMateria().getNombre().equals(silabo))
+                .collect(Collectors.toList())
+                .forEach(obj -> {
+                     id_silabo= obj.getIdSilabo();
+                });
+      return id_silabo;
+  }
+    public List<SilaboMD> cargar_silabo(){
+         String[] parametros = {avance.getCbxCarrera().getSelectedItem().toString(),
+             String.valueOf(usuario.getPersona().getIdPersona()),avance.getCmb_perido().getSelectedItem().toString()};
+         List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
+         
+         return silabosdocente;
+         
+    }
+  private void estado_comboPeriodos(boolean estado){
+       avance.getCmb_perido().setEnabled(estado);
+       avance.getCmb_perido().removeAllItems();
+      
+  }
+   private List<PeriodoLectivoMD> cargarPeriodos(){
+          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion,avance.getCbxCarrera().getSelectedItem().toString()); 
+          return periodos;
+     }
+ 
+private int getid_periodo(){
+     String nombre_periodo=avance.getCmb_perido().getSelectedItem().toString();
+     periodosCarrera=cargarPeriodos();
+     periodosCarrera
                 .stream()
                 .filter(item -> item.getNombre_PerLectivo().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_periodo_lectivo = obj.getId_PerioLectivo();
+                     id_periodo_lectivo= obj.getId_PerioLectivo();
                 });
+     return id_periodo_lectivo;
+  }
 
-        return id_periodo_lectivo;
+ private SilaboMD silabo_seleccionado(){
+        silabosDocente=cargar_silabo();
+        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
+                filter(s -> s.getIdMateria().getNombre().equals(avance.getCbxSilabos().getSelectedItem().toString())).
+                findFirst();
+
+        return silaboSeleccionado.get();
     }
+    private CursoMD cursos_seleccionado(){
+        Optional<CursoMD> cursoSeleccionado=cursoSilabo.stream().
+                filter(s -> s.getNombre().equals(avance.getCbxCurso().getSelectedItem().toString())).
+                findFirst();
+        return cursoSeleccionado.get();
+    }
+
+
 }
+   

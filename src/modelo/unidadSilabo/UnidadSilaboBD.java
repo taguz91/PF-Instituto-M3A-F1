@@ -131,7 +131,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad\n"
+            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad,titulo_unidad,contenidos_unidad\n"
                     + "FROM public.\"UnidadSilabo\"\n"
                     + "WHERE id_silabo=? ORDER BY numero_unidad");
 
@@ -146,6 +146,8 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
                 UnidadSilaboMD tmp = new UnidadSilaboMD();
                 tmp.setIdUnidad(rs.getInt(1));
                 tmp.setNumeroUnidad(rs.getInt(2));
+                 tmp.setTituloUnidad(rs.getString(3));
+                 tmp.setContenidosUnidad(rs.getString(4));
                 unidades.add(tmp);
             }
 
@@ -212,4 +214,5 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
         return unidad;
     }
+    
 }

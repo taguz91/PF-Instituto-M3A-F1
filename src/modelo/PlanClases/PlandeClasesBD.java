@@ -1,4 +1,4 @@
-package modelo.PlanClases;
+  package modelo.PlanClases;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

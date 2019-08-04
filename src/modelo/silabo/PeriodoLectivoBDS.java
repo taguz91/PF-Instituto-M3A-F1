@@ -75,15 +75,16 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 "FROM \"PeriodoLectivo\" AS p\n" +
 "JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n" +
 "WHERE c.carrera_nombre=? \n" +
-"AND  p.prd_lectivo_fecha_inicio=(select max(prd_lectivo_fecha_inicio) from \"PeriodoLectivo\")\n" +
+"AND  p.prd_lectivo_fecha_inicio=(select max(prd_lectivo_fecha_inicio) from \"PeriodoLectivo\" p join \"Carreras\" c ON c.id_carrera=p.id_carrera where c.carrera_nombre=?)\n" +
 "ORDER BY p.id_prd_lectivo DESC");
 
             st.setString(1, carrera);
+            st.setString(2, carrera);
 
             ResultSet rs = st.executeQuery();
             System.out.println(st);
             while (rs.next()) {
-
+ 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
                 tmp.setId_PerioLectivo(rs.getInt(1));

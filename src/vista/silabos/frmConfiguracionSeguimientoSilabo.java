@@ -22,13 +22,7 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         initComponents();
     }
 
-    public JComboBox<String> getCbxAsignatura() {
-        return CbxAsignatura;
-    }
-
-    public void setCbxAsignatura(JComboBox<String> CbxAsignatura) {
-        this.CbxAsignatura = CbxAsignatura;
-    }
+    
 
     public JComboBox<String> getCbxCarrera() {
         return CbxCarrera;
@@ -90,17 +84,31 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         return lblCurso;
     }
 
+    
+
     public void setLblCurso(JLabel lblCurso) {
         this.lblCurso = lblCurso;
     }
 
-    public JComboBox<String> getCbxPeriodo() {
-        return CbxPeriodo;
+    public JComboBox<String> getCbxSilabos() {
+        return CbxSilabos;
     }
 
-    public void setCbxPeriodo(JComboBox<String> CbxPeriodo) {
-        this.CbxPeriodo = CbxPeriodo;
+    public void setCbxSilabos(JComboBox<String> CbxSilabos) {
+        this.CbxSilabos = CbxSilabos;
     }
+
+    public JComboBox<String> getCmb_perido() {
+        return cmb_perido;
+    }
+
+    public void setCmb_perido(JComboBox<String> cmb_perido) {
+        this.cmb_perido = cmb_perido;
+    }
+
+    
+
+    
 
     public JLabel getLblPeriodo() {
         return lblPeriodo;
@@ -126,16 +134,18 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         btnCancelar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         lblConfiguracion = new javax.swing.JLabel();
-        CbxAsignatura = new javax.swing.JComboBox<>();
         lblAsignatura = new javax.swing.JLabel();
         lblPeriodo = new javax.swing.JLabel();
-        CbxPeriodo = new javax.swing.JComboBox<>();
+        CbxSilabos = new javax.swing.JComboBox<>();
+        cmb_perido = new javax.swing.JComboBox<>();
 
         CbxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxCurso.setName("lista_cursos"); // NOI18N
 
         lblCurso.setText("Curso:");
 
         CbxCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxCarrera.setName("lista_carreras"); // NOI18N
 
         lblCarrera.setText("Carrera:");
 
@@ -145,13 +155,14 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
 
         lblConfiguracion.setText("Configuracion Seguimiento Silabo");
 
-        CbxAsignatura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblAsignatura.setText("Periodo Lectivo");
 
-        lblAsignatura.setText("Asignatura:");
+        lblPeriodo.setText("Silabo");
 
-        lblPeriodo.setText("Curso:");
+        CbxSilabos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbxSilabos.setName("lista_silabos"); // NOI18N
 
-        CbxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmb_perido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,33 +176,34 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
                 .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(lblCarrera)
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmb_perido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CbxCarrera, 0, 277, Short.MAX_VALUE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(54, 54, 54)
-                            .addComponent(lblCarrera)
-                            .addGap(48, 48, 48)
-                            .addComponent(CbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(38, 38, 38)
-                            .addComponent(lblConfiguracion)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAsignatura)
-                                .addGap(48, 48, 48)
-                                .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(22, 22, 22)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(lblCurso)
+                                            .addGap(325, 325, 325)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCurso)
+                                        .addComponent(lblPeriodo)
                                         .addGap(325, 325, 325)))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblPeriodo)
-                                    .addGap(325, 325, 325))))))
-                .addGap(0, 90, Short.MAX_VALUE))
+                                    .addComponent(lblAsignatura)
+                                    .addGap(45, 45, 45)
+                                    .addComponent(CbxSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addComponent(lblConfiguracion))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,35 +215,37 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
                     .addComponent(CbxCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCarrera))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAsignatura)
+                    .addComponent(cmb_perido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CbxAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAsignatura))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CbxSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPeriodo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CbxCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCurso))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnSiguiente))
                 .addContainerGap())
         );
 
+        CbxCarrera.getAccessibleContext().setAccessibleName("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CbxAsignatura;
     private javax.swing.JComboBox<String> CbxCarrera;
     private javax.swing.JComboBox<String> CbxCurso;
-    private javax.swing.JComboBox<String> CbxPeriodo;
+    private javax.swing.JComboBox<String> CbxSilabos;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSiguiente;
+    private javax.swing.JComboBox<String> cmb_perido;
     private javax.swing.JLabel lblAsignatura;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblConfiguracion;

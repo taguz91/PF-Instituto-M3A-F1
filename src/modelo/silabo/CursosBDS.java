@@ -51,6 +51,22 @@ public class CursosBDS extends CursoMDS {
         }
         return cursos;
     }
+    public static int numero(ConexionBD conexion, int id_curso){
+       int numeroAlm=0;
+        try {
+            PreparedStatement st = conexion.getCon().prepareCall("SELECT count(id_alumno) from \"AlumnoCurso\" where id_curso=?");
+             st.setInt(1, id_curso);
+              ResultSet rs = st.executeQuery();
+              while (rs.next()) {
+                numeroAlm=rs.getInt(1);
+                
+              }
+        } catch (SQLException ex) {
+            Logger.getLogger(CursosBDS.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+        return numeroAlm;
+    }
 
     public static List<CursoMDS> ConsultarCursoCarreraDocente(ConexionBD conexion, int id_curso) {
         List<CursoMDS> cursos = new ArrayList<>();

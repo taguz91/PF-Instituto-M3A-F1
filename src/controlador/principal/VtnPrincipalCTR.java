@@ -37,7 +37,9 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUD;
+import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
+import controlador.silabo.ControladorConfiguracionAvanceSilabo;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -102,6 +104,7 @@ import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
+import vista.silabos.frmCRUDAvanceSilabo;
 import vista.silabos.frmCRUDBibliografia;
 import vista.version.VtnDitool;
 
@@ -250,6 +253,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getLblIP().setText(IP + "/" + database);
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
+        vtnPrin.getBtn_avance_si().addActionListener(e->controladorCONFIGURACION_avance_silabo());
 
     }
 
@@ -616,6 +620,11 @@ public class VtnPrincipalCTR {
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
         ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
+
+    }
+    private void controladorCONFIGURACION_avance_silabo() {
+       ControladorCRUDAvanceSilabo AS= new ControladorCRUDAvanceSilabo(usuario,vtnPrin, conexion);
+        AS.initCrud();
 
     }
 
