@@ -196,6 +196,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Consultar per&#xed;odos de notas"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtPrdIngrNotasActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
                   <Properties>
@@ -204,7 +207,8 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Consultar notas"/>
+                    <Property name="text" type="java.lang.String" value="Registro de notas"/>
+                    <Property name="actionCommand" type="java.lang.String" value="Registro de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">

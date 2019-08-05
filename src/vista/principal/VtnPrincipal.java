@@ -848,12 +848,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.setText("Notas");
 
         mnCtPrdIngrNotas.setText("Consultar períodos de notas");
+        mnCtPrdIngrNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCtPrdIngrNotasActionPerformed(evt);
+            }
+        });
         mnNotas.add(mnCtPrdIngrNotas);
 
         mnCtTipoNotas.setText("Tipos de notas");
         mnNotas.add(mnCtTipoNotas);
 
-        mnCtNotas.setText("Consultar notas");
+        mnCtNotas.setText("Registro de notas");
+        mnCtNotas.setActionCommand("Registro de notas");
         mnNotas.add(mnCtNotas);
 
         mnCtActivarNotas.setText("Consultar activación de notas");
@@ -1036,6 +1042,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private void mnIgPrdLectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnIgPrdLectivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mnIgPrdLectivoActionPerformed
+
+    private void mnCtPrdIngrNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtPrdIngrNotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnCtPrdIngrNotasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnBiblioteca;
