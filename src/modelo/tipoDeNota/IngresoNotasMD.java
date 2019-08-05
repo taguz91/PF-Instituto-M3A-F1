@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.tipoDeNota;
 
-import modelo.curso.CursoMD;
+import java.time.LocalDate;
+import modelo.curso.CursoBD;
 
 /**
  *
@@ -13,88 +9,86 @@ import modelo.curso.CursoMD;
  */
 public class IngresoNotasMD {
 
-    private int idIngresoNotas;
+    private int id;
+    private LocalDate fechaInicio;
+    private LocalDate fechaCierre;
+    private LocalDate fechaCierreExtendido;
+    private boolean estado;
+    private TipoDeNotaBD tipoNota;
+    private CursoBD curso;
 
-    private boolean notaPrimerInterCiclo;
-    private boolean notaExamenInteCiclo;
-    private boolean notaSegundoInterCiclo;
-    private boolean notaExamenFinal;
-    private boolean notaExamenDeRecuperacion;
-
-    private CursoMD curso;
-
-    public IngresoNotasMD(int idIngresoNotas, boolean notaPrimerInterCiclo, boolean notaExamenInteCiclo, boolean notaSegundoInterCicli, boolean examenFinal, boolean examenDeRecuperacion, CursoMD curso) {
-        this.idIngresoNotas = idIngresoNotas;
-        this.notaPrimerInterCiclo = notaPrimerInterCiclo;
-        this.notaExamenInteCiclo = notaExamenInteCiclo;
-        this.notaSegundoInterCiclo = notaSegundoInterCicli;
-        this.notaExamenFinal = examenFinal;
-        this.notaExamenDeRecuperacion = examenDeRecuperacion;
+    public IngresoNotasMD(int id, LocalDate fechaInicio, LocalDate fechaCierre, LocalDate fechaCierreExtendido, boolean estado, TipoDeNotaBD tipoNota, CursoBD curso) {
+        this.id = id;
+        this.fechaInicio = fechaInicio;
+        this.fechaCierre = fechaCierre;
+        this.fechaCierreExtendido = fechaCierreExtendido;
+        this.estado = estado;
+        this.tipoNota = tipoNota;
         this.curso = curso;
     }
 
     public IngresoNotasMD() {
     }
 
-    public int getIdIngresoNotas() {
-        return idIngresoNotas;
+    public int getId() {
+        return id;
     }
 
-    public void setIdIngresoNotas(int idIngresoNotas) {
-        this.idIngresoNotas = idIngresoNotas;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean isNotaPrimerInterCiclo() {
-        return notaPrimerInterCiclo;
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setNotaPrimerInterCiclo(boolean notaPrimerInterCiclo) {
-        this.notaPrimerInterCiclo = notaPrimerInterCiclo;
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public boolean isNotaExamenInteCiclo() {
-        return notaExamenInteCiclo;
+    public LocalDate getFechaCierre() {
+        return fechaCierre;
     }
 
-    public void setNotaExamenInteCiclo(boolean notaExamenInteCiclo) {
-        this.notaExamenInteCiclo = notaExamenInteCiclo;
+    public void setFechaCierre(LocalDate fechaCierre) {
+        this.fechaCierre = fechaCierre;
     }
 
-    public boolean isNotaSegundoInterCiclo() {
-        return notaSegundoInterCiclo;
+    public LocalDate getFechaCierreExtendido() {
+        return fechaCierreExtendido;
     }
 
-    public void setNotaSegundoInterCiclo(boolean notaSegundoInterCiclo) {
-        this.notaSegundoInterCiclo = notaSegundoInterCiclo;
+    public void setFechaCierreExtendido(LocalDate fechaCierreExtendido) {
+        this.fechaCierreExtendido = fechaCierreExtendido;
     }
 
-    public boolean isNotaExamenFinal() {
-        return notaExamenFinal;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setNotaExamenFinal(boolean notaExamenFinal) {
-        this.notaExamenFinal = notaExamenFinal;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
-    public boolean isNotaExamenDeRecuperacion() {
-        return notaExamenDeRecuperacion;
+    public TipoDeNotaBD getTipoNota() {
+        return tipoNota;
     }
 
-    public void setNotaExamenDeRecuperacion(boolean notaExamenDeRecuperacion) {
-        this.notaExamenDeRecuperacion = notaExamenDeRecuperacion;
+    public void setTipoNota(TipoDeNotaBD tipoNota) {
+        this.tipoNota = tipoNota;
     }
 
-    public CursoMD getCurso() {
+    public CursoBD getCurso() {
         return curso;
     }
 
-    public void setCurso(CursoMD curso) {
+    public void setCurso(CursoBD curso) {
         this.curso = curso;
     }
 
     @Override
     public String toString() {
-        return "IngresoNotasMD{" + "idIngresoNotas=" + idIngresoNotas + ", notaPrimerInterCiclo=" + notaPrimerInterCiclo + ", notaExamenInteCiclo=" + notaExamenInteCiclo + ", notaSegundoInterCiclo=" + notaSegundoInterCiclo + ", notaExamenFinal=" + notaExamenFinal + ", notaExamenDeRecuperacion=" + notaExamenDeRecuperacion + ", curso=" + curso + '}';
+        return "IngresoNotasMD{" + "id=" + id + ", fechaInicio=" + fechaInicio + ", fechaCierre=" + fechaCierre + ", fechaCierreExtendido=" + fechaCierreExtendido + ", estado=" + estado + ", tipoNota=" + tipoNota + ", curso=" + curso + '}';
     }
 
 }

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -221,9 +222,14 @@ public class FrmAsignarRolCTR {
                 .findFirst()
                 .orElse("NO");
 
-        usuario.insertar(rol);
+        Map context = usuario.insertar(rol);
 
-        JOptionPane.showMessageDialog(vista, "SE HA GUARDADO AL USUARIO" + usuario.getUsername().toUpperCase());
+        if ((boolean) context.get("value")) {
+            JOptionPane.showMessageDialog(vista, "SE HA GUARDADO AL USUARIO \n" + usuario.getUsername());
+        } else {
+            JOptionPane.showMessageDialog(vista, context.get("error"));
+        }
+
     }
 
     private void EditarRoles() {

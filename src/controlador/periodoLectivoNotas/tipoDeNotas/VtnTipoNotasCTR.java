@@ -17,8 +17,8 @@ import modelo.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
-import vista.periodoLectivoNotas.FrmTipoNota;
-import vista.periodoLectivoNotas.VtnTipoNotas;
+import vista.tipoDeNotas.FrmTipoNota;
+import vista.tipoDeNotas.VtnTipoNotas;
 import vista.principal.VtnPrincipal;
 
 /**

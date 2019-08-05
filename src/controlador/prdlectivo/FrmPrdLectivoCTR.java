@@ -25,7 +25,7 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.usuario.RolBD;
 import modelo.validaciones.CmbValidar;
-import vista.periodoLectivoNotas.VtnTipoNotas;
+import vista.tipoDeNotas.VtnTipoNotas;
 import vista.prdlectivo.FrmPrdLectivo;
 
 /**

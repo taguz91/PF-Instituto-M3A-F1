@@ -145,7 +145,7 @@ public class VtnNotasCTR extends AbstractVtn {
 
             } else {
                 jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
-                jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
                 jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
@@ -155,9 +155,9 @@ public class VtnNotasCTR extends AbstractVtn {
 
         } else {
             if (!getEstado()) {
-                jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(false));
-                jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(false));
-                jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
+                jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
+                jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
+                jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
                 jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
                 jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(false));
                 jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(false, items));
@@ -194,16 +194,16 @@ public class VtnNotasCTR extends AbstractVtn {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="VARIOS">
     private void mensajeDeError() {
-        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", Effects.ERROR_COLOR,
+        Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", CONS.ERROR_COLOR,
                 2);
 
-        Effects.ERROR_COLOR = null;
+        CONS.ERROR_COLOR = null;
 
     }
 
     private void errorDeNota(TipoDeNotaMD rango) {
         Effects.setTextInLabel(vista.getLblEstado(),
-                "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), Effects.ERROR_COLOR, 2);
+                "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), CONS.ERROR_COLOR, 2);
     }
 
     private void refreshTabla(Consumer<AlumnoCursoBD> loader, DefaultTableModel tabla) {
@@ -331,16 +331,16 @@ public class VtnNotasCTR extends AbstractVtn {
                         editar.apply("");
                     } else {
                         Effects.setTextInLabel(vista.getLblEstado(),
-                                "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", Effects.ERROR_COLOR, 2);
+                                "LAS FALTAS NO PUEDEN SER MAYORES AL NUMERO DE HORAS", CONS.ERROR_COLOR, 2);
                         refreshTabla(loader, (DefaultTableModel) tabla.getModel());
                     }
                 }
             } catch (NumberFormatException e) {
-                Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", Effects.ERROR_COLOR, 2);
+                Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO VALIDO!!", CONS.ERROR_COLOR, 2);
                 refreshTabla(loader, (DefaultTableModel) tabla.getModel());
             }
         } else {
-            Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", Effects.ERROR_COLOR, 2);
+            Effects.setTextInLabel(vista.getLblEstado(), "INGRESE SOLO NUMERO ENTEROS!!", CONS.ERROR_COLOR, 2);
             refreshTabla(loader, (DefaultTableModel) tabla.getModel());
         }
     }
@@ -425,6 +425,7 @@ public class VtnNotasCTR extends AbstractVtn {
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
     private Consumer<AlumnoCursoBD> agregarFilasTrad() {
         return (obj) -> {
+
             tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre(),
@@ -436,6 +437,10 @@ public class VtnNotasCTR extends AbstractVtn {
                 obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
                 (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
                 calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
+
+            System.out.println("Alumno->" + obj.getId());
+            System.out.println("---->" + obj.getNotas().stream().map(c -> c.getTipoDeNota()).toArray().length);
+
         };
     }
 
