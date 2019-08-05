@@ -147,96 +147,207 @@ public class FrmCurso extends javax.swing.JInternalFrame {
         setTitle("Curso-Clase");
         setMinimumSize(new java.awt.Dimension(503, 439));
         setPreferredSize(new java.awt.Dimension(503, 439));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Curso"));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbxPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
-        jPanel1.add(cbxPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 440, -1));
 
         lblPeriodoLectivo.setText("Período Lectivo:");
-        jPanel1.add(lblPeriodoLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         lblCiclo.setText("Ciclo:");
-        jPanel1.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 20));
 
         cbxCiclo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "1", "2", "3", "4", "5", "6" }));
-        jPanel1.add(cbxCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
 
         lblParalelo.setText("Paralelo:");
-        jPanel1.add(lblParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 70, 20));
 
         cbxParalelo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "A", "B", "C", "D", "E", "F" }));
-        jPanel1.add(cbxParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
 
         lblJornada.setText("Jornada:");
-        jPanel1.add(lblJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, 20));
 
         lblCapacidad.setText("Capacidad:");
-        jPanel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 90, -1));
-        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 30, -1));
 
         cbxJornada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "MATUTINO", "VESPERTINO", "NOCTURNO" }));
-        jPanel1.add(cbxJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 370, -1));
 
         lblErrorPrdLectivo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorPrdLectivo.setText("Debe seleccionar un período lectivo.");
-        jPanel1.add(lblErrorPrdLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 386, -1));
 
         lblErrorJornada.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorJornada.setText("Debe seleccionar una jornada.");
-        jPanel1.add(lblErrorJornada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 386, -1));
 
         lblErrorCiclo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCiclo.setText("Debe seleccionar un ciclo.");
-        jPanel1.add(lblErrorCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 200, -1));
 
         lblErrorParalelo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorParalelo.setText("Debe seleccionar un paralelo.");
-        jPanel1.add(lblErrorParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 250, -1));
 
         lblErrorCapacidad.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCapacidad.setText("Campo obligatorio.");
-        jPanel1.add(lblErrorCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 150, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 470, 230));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPeriodoLectivo)
+                    .addComponent(cbxPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorPrdLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblJornada)
+                        .addGap(27, 27, 27)
+                        .addComponent(cbxJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblErrorJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCiclo)
+                        .addGap(44, 44, 44)
+                        .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(lblErrorCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(lblErrorParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
+                                .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(80, 80, 80)
+                        .addComponent(lblErrorCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(lblPeriodoLectivo)
+                .addGap(6, 6, 6)
+                .addComponent(cbxPeriodoLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblErrorPrdLectivo)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxJornada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(lblErrorJornada)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblErrorCiclo)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblErrorParalelo)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCapacidad)
+                    .addComponent(lblErrorCapacidad)))
+        );
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Guardar y salir.");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, -1, -1));
 
         pnlClase.setBorder(javax.swing.BorderFactory.createTitledBorder("Clase"));
-        pnlClase.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDocete.setText("Docente:");
-        pnlClase.add(lblDocete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 100, -1));
 
         cbxDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
-        pnlClase.add(cbxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 340, -1));
 
         cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "Item 2", "Item 3", "Item 4" }));
-        pnlClase.add(cbxMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 340, -1));
 
         lblMateria.setText("Materia:");
-        pnlClase.add(lblMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, -1));
 
         lblErrorMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorMateria.setText("Debe seleccionar una materia.");
-        pnlClase.add(lblErrorMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 390, -1));
 
         lblErrorDocente.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorDocente.setText("Debe seleccionar un docente.");
-        pnlClase.add(lblErrorDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 390, -1));
 
-        getContentPane().add(pnlClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 470, 120));
+        javax.swing.GroupLayout pnlClaseLayout = new javax.swing.GroupLayout(pnlClase);
+        pnlClase.setLayout(pnlClaseLayout);
+        pnlClaseLayout.setHorizontalGroup(
+            pnlClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClaseLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(pnlClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlClaseLayout.createSequentialGroup()
+                        .addComponent(lblMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblErrorMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlClaseLayout.createSequentialGroup()
+                        .addComponent(lblDocete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(cbxDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblErrorDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pnlClaseLayout.setVerticalGroup(
+            pnlClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlClaseLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(pnlClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMateria)
+                    .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(lblErrorMateria)
+                .addGap(6, 6, 6)
+                .addGroup(pnlClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDocete)
+                    .addComponent(cbxDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(lblErrorDocente))
+        );
 
         btnGuardarContinuar.setText("Guardar y continuar ingresando");
         btnGuardarContinuar.setToolTipText("Guardar y continuar ingresando en el mismo curso.");
-        getContentPane().add(btnGuardarContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, -1, -1));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
-        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 180, 30));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(140, 140, 140)
+                                .addComponent(btnGuardarContinuar))
+                            .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
+                        .addComponent(btnGuardar))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addComponent(pnlClase, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGuardarContinuar)
+                    .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

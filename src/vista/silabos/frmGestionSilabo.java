@@ -986,63 +986,37 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
 
-        pnlUnidad.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        pnlUnidad.add(cmbUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 41, 141, -1));
-
         txtTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTituloActionPerformed(evt);
             }
         });
-        pnlUnidad.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 41, 510, -1));
 
         lblUnidad.setText("Seleccione la Unidad:");
-        pnlUnidad.add(lblUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         lblTitulo.setText("Titulo de la Unidad:");
-        pnlUnidad.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         lblFechaInicio.setText("Fecha de Inicio de Unidad:");
-        pnlUnidad.add(lblFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
-        pnlUnidad.add(dchFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(948, 20, 120, -1));
-        pnlUnidad.add(dchFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(948, 60, 120, -1));
 
         lblFechaFin.setText("Fecha de Fin de Unidad:");
-        pnlUnidad.add(lblFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 61, -1, -1));
 
         lblObjetivos.setText("Objetivos Específicos de la Unidad:");
-        pnlUnidad.add(lblObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
         lblResultados.setText("Resultados de Aprendizaje:");
-        pnlUnidad.add(lblResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 190, -1, -1));
 
         lblContenidos.setText("Contenidos de la Unidad:");
-        pnlUnidad.add(lblContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
-
-        pnlAsistidaDocente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblIndicadorAD.setText("Indicador:");
-        pnlAsistidaDocente.add(lblIndicadorAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 14, -1, -1));
-        pnlAsistidaDocente.add(txtIndicadorAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 38, 254, -1));
-        pnlAsistidaDocente.add(txtInstrumentoAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 38, 248, -1));
 
         lblInstrumentoAD.setText("Instrumento:");
-        pnlAsistidaDocente.add(lblInstrumentoAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
         spnValoracionAD.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60, 0.5d));
-        pnlAsistidaDocente.add(spnValoracionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAD.setText("Valoración");
-        pnlAsistidaDocente.add(lblValoracionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 14, -1, -1));
 
         lblFechaEnvioAD.setText("Fecha Envío:");
-        pnlAsistidaDocente.add(lblFechaEnvioAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 14, -1, -1));
-        pnlAsistidaDocente.add(dchFechaEnvioAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 36, -1, -1));
 
         lblFechaPresentacionAD.setText("Fecha Presentación:");
-        pnlAsistidaDocente.add(lblFechaPresentacionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 14, -1, -1));
-        pnlAsistidaDocente.add(dchFechaPresentacionAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 36, -1, -1));
 
         tblAsistidaDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1083,44 +1057,96 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAsistidaDocente.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        pnlAsistidaDocente.add(scrAsistidaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
-
         btnAgregarAD.setText("Agregar");
-        pnlAsistidaDocente.add(btnAgregarAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarAD.setText("Quitar");
         btnQuitarAD.setEnabled(false);
-        pnlAsistidaDocente.add(btnQuitarAD, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAsistidaDocente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAsistidaDocente.setText("Asistida Docente");
-        pnlAsistidaDocente.add(lblAsistidaDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 42, 232, -1));
+
+        javax.swing.GroupLayout pnlAsistidaDocenteLayout = new javax.swing.GroupLayout(pnlAsistidaDocente);
+        pnlAsistidaDocente.setLayout(pnlAsistidaDocenteLayout);
+        pnlAsistidaDocenteLayout.setHorizontalGroup(
+            pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(lblIndicadorAD)
+                .addGap(223, 223, 223)
+                .addComponent(lblInstrumentoAD)
+                .addGap(209, 209, 209)
+                .addComponent(lblValoracionAD)
+                .addGap(43, 43, 43)
+                .addComponent(lblFechaEnvioAD)
+                .addGap(86, 86, 86)
+                .addComponent(lblFechaPresentacionAD))
+            .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblAsistidaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(txtIndicadorAD, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtInstrumentoAD, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(spnValoracionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(dchFechaEnvioAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(dchFechaPresentacionAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addGroup(pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarAD)
+                    .addComponent(btnQuitarAD, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(scrAsistidaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlAsistidaDocenteLayout.setVerticalGroup(
+            pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIndicadorAD)
+                    .addComponent(lblInstrumentoAD)
+                    .addComponent(lblValoracionAD)
+                    .addComponent(lblFechaEnvioAD)
+                    .addComponent(lblFechaPresentacionAD))
+                .addGap(8, 8, 8)
+                .addGroup(pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblAsistidaDocente))
+                    .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtIndicadorAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtInstrumentoAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnValoracionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaEnvioAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaPresentacionAD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlAsistidaDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAsistidaDocenteLayout.createSequentialGroup()
+                        .addComponent(btnAgregarAD)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnQuitarAD))
+                    .addComponent(scrAsistidaDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         tbpEvaluacion.addTab("Gestión Docente - Asistida Docente", pnlAsistidaDocente);
 
-        pnlAprendizajeColaborativo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblIndicadorAC.setText("Indicador:");
-        pnlAprendizajeColaborativo.add(lblIndicadorAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 14, -1, -1));
-        pnlAprendizajeColaborativo.add(txtIndicadorAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 38, 254, -1));
-        pnlAprendizajeColaborativo.add(txtInstrumentoAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 38, 248, -1));
 
         lblInstrumentoAC.setText("Instrumento:");
-        pnlAprendizajeColaborativo.add(lblInstrumentoAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
         spnValoracionAC.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
-        pnlAprendizajeColaborativo.add(spnValoracionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionAC.setText("Valoración");
-        pnlAprendizajeColaborativo.add(lblValoracionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 14, -1, -1));
 
         lblFechaEnvioAC.setText("Fecha Envío:");
-        pnlAprendizajeColaborativo.add(lblFechaEnvioAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 14, -1, -1));
-        pnlAprendizajeColaborativo.add(dchFechaEnvioAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 36, -1, -1));
 
         lblFechaPresentacionAC.setText("Fecha Presentación:");
-        pnlAprendizajeColaborativo.add(lblFechaPresentacionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 14, -1, -1));
-        pnlAprendizajeColaborativo.add(dchFechaPresentacionAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 36, -1, -1));
 
         tblAprendizajeColaborativo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1161,45 +1187,97 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAprendizajeColaborativo.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        pnlAprendizajeColaborativo.add(scrAprendizajeColaborativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
-
         btnAgregarAC.setText("Agregar");
-        pnlAprendizajeColaborativo.add(btnAgregarAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarAC.setText("Quitar");
         btnQuitarAC.setEnabled(false);
-        pnlAprendizajeColaborativo.add(btnQuitarAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAprendizajeColaborativo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAprendizajeColaborativo.setText("Aprendizaje Colaborativo");
-        pnlAprendizajeColaborativo.add(lblAprendizajeColaborativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 42, -1, -1));
+
+        javax.swing.GroupLayout pnlAprendizajeColaborativoLayout = new javax.swing.GroupLayout(pnlAprendizajeColaborativo);
+        pnlAprendizajeColaborativo.setLayout(pnlAprendizajeColaborativoLayout);
+        pnlAprendizajeColaborativoLayout.setHorizontalGroup(
+            pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(lblIndicadorAC)
+                .addGap(223, 223, 223)
+                .addComponent(lblInstrumentoAC)
+                .addGap(209, 209, 209)
+                .addComponent(lblValoracionAC)
+                .addGap(43, 43, 43)
+                .addComponent(lblFechaEnvioAC)
+                .addGap(86, 86, 86)
+                .addComponent(lblFechaPresentacionAC))
+            .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(lblAprendizajeColaborativo)
+                .addGap(124, 124, 124)
+                .addComponent(txtIndicadorAC, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtInstrumentoAC, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(spnValoracionAC, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(dchFechaEnvioAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(dchFechaPresentacionAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addGroup(pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarAC)
+                    .addComponent(btnQuitarAC, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(scrAprendizajeColaborativo, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlAprendizajeColaborativoLayout.setVerticalGroup(
+            pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIndicadorAC)
+                    .addComponent(lblInstrumentoAC)
+                    .addComponent(lblValoracionAC)
+                    .addComponent(lblFechaEnvioAC)
+                    .addComponent(lblFechaPresentacionAC))
+                .addGap(8, 8, 8)
+                .addGroup(pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblAprendizajeColaborativo))
+                    .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtIndicadorAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtInstrumentoAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnValoracionAC, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaEnvioAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaPresentacionAC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlAprendizajeColaborativoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAprendizajeColaborativoLayout.createSequentialGroup()
+                        .addComponent(btnAgregarAC)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnQuitarAC))
+                    .addComponent(scrAprendizajeColaborativo, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         tbpEvaluacion.addTab("Gestión Docente - Aprendizaje Colaborativo", pnlAprendizajeColaborativo);
 
-        pnlPractica.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblIndicadorP.setText("Indicador:");
-        pnlPractica.add(lblIndicadorP, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 14, -1, -1));
-        pnlPractica.add(txtIndicadorP, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 38, 254, -1));
-        pnlPractica.add(txtInstrumentoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 38, 248, -1));
 
         lblInstrumentoP.setText("Instrumento:");
-        pnlPractica.add(lblInstrumentoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
         spnValoracionP.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
         spnValoracionP.setToolTipText("");
-        pnlPractica.add(spnValoracionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionP.setText("Valoración");
-        pnlPractica.add(lblValoracionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 14, -1, -1));
 
         lblFechaEnvioP.setText("Fecha Envío:");
-        pnlPractica.add(lblFechaEnvioP, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 14, -1, -1));
-        pnlPractica.add(dchFechaEnvioP, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 36, -1, -1));
 
         lblFechaPresentacionP.setText("Fecha Presentación:");
-        pnlPractica.add(lblFechaPresentacionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 14, -1, -1));
-        pnlPractica.add(dchFechaPresentacionP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 36, -1, -1));
 
         tblPractica.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1240,44 +1318,96 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblPractica.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        pnlPractica.add(scrPractica, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
-
         btnAgregarP.setText("Agregar");
-        pnlPractica.add(btnAgregarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarP.setText("Quitar");
         btnQuitarP.setEnabled(false);
-        pnlPractica.add(btnQuitarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblPractica.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPractica.setText("Gestión Práctica");
-        pnlPractica.add(lblPractica, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 42, 232, -1));
+
+        javax.swing.GroupLayout pnlPracticaLayout = new javax.swing.GroupLayout(pnlPractica);
+        pnlPractica.setLayout(pnlPracticaLayout);
+        pnlPracticaLayout.setHorizontalGroup(
+            pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPracticaLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(lblIndicadorP)
+                .addGap(223, 223, 223)
+                .addComponent(lblInstrumentoP)
+                .addGap(209, 209, 209)
+                .addComponent(lblValoracionP)
+                .addGap(43, 43, 43)
+                .addComponent(lblFechaEnvioP)
+                .addGap(86, 86, 86)
+                .addComponent(lblFechaPresentacionP))
+            .addGroup(pnlPracticaLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblPractica, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(txtIndicadorP, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtInstrumentoP, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(spnValoracionP, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(dchFechaEnvioP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(dchFechaPresentacionP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlPracticaLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addGroup(pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarP)
+                    .addComponent(btnQuitarP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(scrPractica, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlPracticaLayout.setVerticalGroup(
+            pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPracticaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIndicadorP)
+                    .addComponent(lblInstrumentoP)
+                    .addComponent(lblValoracionP)
+                    .addComponent(lblFechaEnvioP)
+                    .addComponent(lblFechaPresentacionP))
+                .addGap(8, 8, 8)
+                .addGroup(pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPracticaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblPractica))
+                    .addGroup(pnlPracticaLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtIndicadorP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlPracticaLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtInstrumentoP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnValoracionP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaEnvioP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaPresentacionP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlPracticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPracticaLayout.createSequentialGroup()
+                        .addComponent(btnAgregarP)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnQuitarP))
+                    .addComponent(scrPractica, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         tbpEvaluacion.addTab("Gestión Práctica", pnlPractica);
 
-        pnlAutonoma.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblIndicadorA.setText("Indicador:");
-        pnlAutonoma.add(lblIndicadorA, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 14, -1, -1));
-        pnlAutonoma.add(txtIndicadorA, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 38, 254, -1));
-        pnlAutonoma.add(txtInstrumentoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 38, 248, -1));
 
         lblInstrumentoA.setText("Instrumento:");
-        pnlAutonoma.add(lblInstrumentoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 14, -1, -1));
 
         spnValoracionA.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60.0d, 0.5d));
-        pnlAutonoma.add(spnValoracionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 36, 61, 29));
 
         lblValoracionA.setText("Valoración");
-        pnlAutonoma.add(lblValoracionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(834, 14, -1, -1));
 
         lblFechaEnvioA.setText("Fecha Envío:");
-        pnlAutonoma.add(lblFechaEnvioA, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 14, -1, -1));
-        pnlAutonoma.add(dchFechaEnvioA, new org.netbeans.lib.awtextra.AbsoluteConstraints(926, 36, -1, -1));
 
         lblFechaPresentacionA.setText("Fecha Presentación:");
-        pnlAutonoma.add(lblFechaPresentacionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 14, -1, -1));
-        pnlAutonoma.add(dchFechaPresentacionA, new org.netbeans.lib.awtextra.AbsoluteConstraints(1074, 36, -1, -1));
 
         tblAutonoma.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1318,22 +1448,84 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
             tblAutonoma.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
-        pnlAutonoma.add(scrAutonoma, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 83, 904, 96));
-
         btnAgregarA.setText("Agregar");
-        pnlAutonoma.add(btnAgregarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 83, -1, -1));
 
         btnQuitarA.setText("Quitar");
         btnQuitarA.setEnabled(false);
-        pnlAutonoma.add(btnQuitarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 121, 70, -1));
 
         lblAutonoma.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAutonoma.setText("Gestión Autónoma");
-        pnlAutonoma.add(lblAutonoma, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 42, 232, -1));
+
+        javax.swing.GroupLayout pnlAutonomaLayout = new javax.swing.GroupLayout(pnlAutonoma);
+        pnlAutonoma.setLayout(pnlAutonomaLayout);
+        pnlAutonomaLayout.setHorizontalGroup(
+            pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(lblIndicadorA)
+                .addGap(223, 223, 223)
+                .addComponent(lblInstrumentoA)
+                .addGap(209, 209, 209)
+                .addComponent(lblValoracionA)
+                .addGap(43, 43, 43)
+                .addComponent(lblFechaEnvioA)
+                .addGap(86, 86, 86)
+                .addComponent(lblFechaPresentacionA))
+            .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblAutonoma, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(txtIndicadorA, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtInstrumentoA, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(spnValoracionA, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(dchFechaEnvioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addComponent(dchFechaPresentacionA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addGroup(pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarA)
+                    .addComponent(btnQuitarA, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(scrAutonoma, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlAutonomaLayout.setVerticalGroup(
+            pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIndicadorA)
+                    .addComponent(lblInstrumentoA)
+                    .addComponent(lblValoracionA)
+                    .addComponent(lblFechaEnvioA)
+                    .addComponent(lblFechaPresentacionA))
+                .addGap(8, 8, 8)
+                .addGroup(pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblAutonoma))
+                    .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtIndicadorA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtInstrumentoA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnValoracionA, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaEnvioA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaPresentacionA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlAutonomaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAutonomaLayout.createSequentialGroup()
+                        .addComponent(btnAgregarA)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnQuitarA))
+                    .addComponent(scrAutonoma, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         tbpEvaluacion.addTab("Gestión Autónoma", pnlAutonoma);
-
-        pnlUnidad.add(tbpEvaluacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 1310, 210));
 
         txrResultados.setColumns(20);
         txrResultados.setLineWrap(true);
@@ -1341,15 +1533,11 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txrResultados.setWrapStyleWord(true);
         scrResultados.setViewportView(txrResultados);
 
-        pnlUnidad.add(scrResultados, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 220, 430, 110));
-
         txrObjetivos.setColumns(20);
         txrObjetivos.setLineWrap(true);
         txrObjetivos.setRows(5);
         txrObjetivos.setWrapStyleWord(true);
         scrObjetivos.setViewportView(txrObjetivos);
-
-        pnlUnidad.add(scrObjetivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 410, 90));
 
         txrContenidos.setColumns(20);
         txrContenidos.setLineWrap(true);
@@ -1357,10 +1545,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         txrContenidos.setWrapStyleWord(true);
         scrContenidos.setViewportView(txrContenidos);
 
-        pnlUnidad.add(scrContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 410, 100));
-
         btnCancelar.setText("Cancelar");
-        pnlUnidad.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 570, -1, -1));
 
         btnSiguiente.setText("Siguiente");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -1368,53 +1553,38 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
                 btnSiguienteActionPerformed(evt);
             }
         });
-        pnlUnidad.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 570, -1, -1));
 
         spnHorasPracticas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        pnlUnidad.add(spnHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 50, 60, -1));
 
         lblHorasPracticas.setText("Horas Prácticas:");
-        pnlUnidad.add(lblHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, -1, -1));
 
         lblHorasDocencia.setText("Horas Docencia:");
-        pnlUnidad.add(lblHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 20, -1, -1));
 
         lblHorasAutonomas.setText("Horas Autónomas:");
-        pnlUnidad.add(lblHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 80, -1, -1));
 
         spnHorasAutonomas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        pnlUnidad.add(spnHorasAutonomas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 80, 60, -1));
 
         spnHorasDocencia.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        pnlUnidad.add(spnHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 20, 60, -1));
 
         scrEstrategiasPredeterminadas.setViewportView(lstEstrategiasPredeterminadas);
 
-        pnlUnidad.add(scrEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 370, 220));
-
         lblNuevaEstrategia.setText("Nueva Estrategia de Enseñanza:");
-        pnlUnidad.add(lblNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, -1, 20));
 
         lblEstrategiasPredeterminadas.setText("Seleccione la(s) Estrategias de Enseñanza:");
-        pnlUnidad.add(lblEstrategiasPredeterminadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 330, -1));
 
         lblEliminarUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEliminarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_eliminar_unidad.png"))); // NOI18N
         lblEliminarUnidad.setToolTipText("Eliminar Unidad");
-        pnlUnidad.add(lblEliminarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 61, -1, -1));
 
         lblGuardarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_guardar_estrategia.png"))); // NOI18N
         lblGuardarEstrategia.setToolTipText("Guardar Nueva Estrategia");
         lblGuardarEstrategia.setEnabled(false);
-        pnlUnidad.add(lblGuardarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 130, -1, -1));
 
         lblAgregarUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarUnidad.setToolTipText("Agregar Unidad");
-        pnlUnidad.add(lblAgregarUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         lblAgregarEstrategia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icono_agregar.png"))); // NOI18N
         lblAgregarEstrategia.setToolTipText("Agregar Nueva Estrategia");
-        pnlUnidad.add(lblAgregarEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, -1, -1));
 
         txtNuevaEstrategia.setEnabled(false);
         txtNuevaEstrategia.addActionListener(new java.awt.event.ActionListener() {
@@ -1422,19 +1592,168 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
                 txtNuevaEstrategiaActionPerformed(evt);
             }
         });
-        pnlUnidad.add(txtNuevaEstrategia, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 430, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
-        pnlUnidad.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 570, -1, -1));
 
         lblTotalGestion.setText("Total de Gestion de  Aula:");
-        pnlUnidad.add(lblTotalGestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 350, -1, 30));
 
         lblAcumuladoGestion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblAcumuladoGestion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAcumuladoGestion.setText("0/60");
-        pnlUnidad.add(lblAcumuladoGestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 350, 60, 30));
+
+        javax.swing.GroupLayout pnlUnidadLayout = new javax.swing.GroupLayout(pnlUnidad);
+        pnlUnidad.setLayout(pnlUnidadLayout);
+        pnlUnidadLayout.setHorizontalGroup(
+            pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUnidad)
+                    .addComponent(cmbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAgregarUnidad)
+                            .addComponent(lblEliminarUnidad))))
+                .addGap(54, 54, 54)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFechaInicio)
+                    .addComponent(lblFechaFin))
+                .addGap(51, 51, 51)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dchFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dchFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHorasDocencia)
+                    .addComponent(lblHorasPracticas))
+                .addGap(52, 52, 52)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spnHorasDocencia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnHorasPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(1110, 1110, 1110)
+                .addComponent(lblHorasAutonomas)
+                .addGap(41, 41, 41)
+                .addComponent(spnHorasAutonomas, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblObjetivos)
+                .addGap(273, 273, 273)
+                .addComponent(lblEstrategiasPredeterminadas, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblAgregarEstrategia))
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrObjetivos, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblContenidos)
+                    .addComponent(scrContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(scrEstrategiasPredeterminadas, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(lblNuevaEstrategia)
+                        .addGap(253, 253, 253)
+                        .addComponent(lblGuardarEstrategia))
+                    .addComponent(txtNuevaEstrategia, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblResultados)
+                    .addComponent(scrResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(1070, 1070, 1070)
+                .addComponent(lblTotalGestion)
+                .addGap(46, 46, 46)
+                .addComponent(lblAcumuladoGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(tbpEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 1310, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(1050, 1050, 1050)
+                .addComponent(btnGuardar)
+                .addGap(19, 19, 19)
+                .addComponent(btnSiguiente)
+                .addGap(13, 13, 13)
+                .addComponent(btnCancelar))
+        );
+        pnlUnidadLayout.setVerticalGroup(
+            pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUnidad)
+                            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(cmbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lblAgregarUnidad)))
+                        .addComponent(lblEliminarUnidad))
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(lblFechaInicio)
+                        .addGap(27, 27, 27)
+                        .addComponent(lblFechaFin))
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(dchFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(dchFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(lblHorasDocencia)
+                        .addGap(16, 16, 16)
+                        .addComponent(lblHorasPracticas))
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(spnHorasDocencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(spnHorasPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHorasAutonomas)
+                    .addComponent(spnHorasAutonomas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblObjetivos)
+                    .addComponent(lblEstrategiasPredeterminadas)
+                    .addComponent(lblAgregarEstrategia))
+                .addGap(4, 4, 4)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addComponent(scrObjetivos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(lblContenidos)
+                        .addGap(6, 6, 6)
+                        .addComponent(scrContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scrEstrategiasPredeterminadas, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNuevaEstrategia, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlUnidadLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lblGuardarEstrategia)))
+                        .addGap(4, 4, 4)
+                        .addComponent(txtNuevaEstrategia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lblResultados)
+                        .addGap(16, 16, 16)
+                        .addComponent(scrResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTotalGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAcumuladoGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlUnidadLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(tbpEvaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnSiguiente)
+                    .addComponent(btnCancelar)))
+        );
 
         jScrollPane1.setViewportView(pnlUnidad);
 

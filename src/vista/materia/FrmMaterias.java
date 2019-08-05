@@ -106,7 +106,6 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Ingreso de Materias");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setText("Cancelar");
 
@@ -117,7 +116,7 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(498, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
@@ -133,47 +132,31 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 690, 40));
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblNombreMateria.setText("Nombre de Materia *");
-        jPanel3.add(lblNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
         cbTipoAcreditacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "C", "T", "H" }));
-        jPanel3.add(cbTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 178, -1));
 
         jLabel4.setText("Eje de Formación *");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         lblActivo.setText("Materia Núcleo");
-        jPanel3.add(lblActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, 21));
 
         lblCiclo.setText("Ciclo *");
-        jPanel3.add(lblCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
-        jPanel3.add(chBNucleo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
 
         lblCategoriaMateria1.setText("Tipo de Acreditación *");
-        jPanel3.add(lblCategoriaMateria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
 
         lblCategoriaMateria2.setText("Materia Tipo");
-        jPanel3.add(lblCategoriaMateria2, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 72, -1, -1));
 
         lblCategoriaMateria4.setText("Créditos *");
-        jPanel3.add(lblCategoriaMateria4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, -1, -1));
 
         lblCategoriaMateria5.setText("Código de Materia *");
-        jPanel3.add(lblCategoriaMateria5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         cbMateriaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "M", "C", "S" }));
-        jPanel3.add(cbMateriaTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 178, -1));
 
         txtCreditos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCreditosActionPerformed(evt);
             }
         });
-        jPanel3.add(txtCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 220, 176, -1));
 
         cbEjeFormacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
         cbEjeFormacion.addActionListener(new java.awt.event.ActionListener() {
@@ -181,10 +164,8 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 cbEjeFormacionActionPerformed(evt);
             }
         });
-        jPanel3.add(cbEjeFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 178, -1));
 
         jLabel5.setText("Carrera *");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 23, -1, -1));
 
         cbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE" }));
         cbCarrera.addActionListener(new java.awt.event.ActionListener() {
@@ -192,167 +173,348 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 cbCarreraActionPerformed(evt);
             }
         });
-        jPanel3.add(cbCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 510, -1));
 
         txtNombreMateria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreMateriaActionPerformed(evt);
             }
         });
-        jPanel3.add(txtNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 180, -1));
 
         lblErrorCarrera.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCarrera.setText("Seleccione una carrera");
-        jPanel3.add(lblErrorCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(147, 43, -1, -1));
 
         lblErrorCodigoMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCodigoMateria.setText("Ingrese solo letras");
-        jPanel3.add(lblErrorCodigoMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, -1, -1));
 
         lblErrorNombreMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorNombreMateria.setText("Ingrese solo letras");
-        jPanel3.add(lblErrorNombreMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
 
         lblErrorMateriaCiclo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorMateriaCiclo.setText("Seleccione un Ciclo");
-        jPanel3.add(lblErrorMateriaCiclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, -1, -1));
 
         lblErrorCreditos.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCreditos.setText("Ingrese solo números");
-        jPanel3.add(lblErrorCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 240, -1, 20));
 
         lblErrorEjeFormacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorEjeFormacion.setText("Seleccione un Eje de Formación");
-        jPanel3.add(lblErrorEjeFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
 
         lblErrorMateriaTipo.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorMateriaTipo.setText("Seleccion un Tipo");
-        jPanel3.add(lblErrorMateriaTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, -1, -1));
 
         lblErrorTipoAcreditacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorTipoAcreditacion.setText("Seleccione un Tipo de Acreditación");
-        jPanel3.add(lblErrorTipoAcreditacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 140, -1, -1));
 
         Cbx_Ciclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "Ciclo 1", "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5", "Ciclo 6" }));
-        jPanel3.add(Cbx_Ciclo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 180, -1));
-        jPanel3.add(Txt_CodMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 180, -1));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel5)
+                .addGap(92, 92, 92)
+                .addComponent(cbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(lblErrorCarrera))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel4)
+                .addGap(49, 49, 49)
+                .addComponent(cbEjeFormacion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(lblCategoriaMateria2)
+                .addGap(69, 69, 69)
+                .addComponent(cbMateriaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(lblErrorEjeFormacion)
+                .addGap(180, 180, 180)
+                .addComponent(lblErrorMateriaTipo))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblCategoriaMateria5)
+                .addGap(44, 44, 44)
+                .addComponent(Txt_CodMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblCategoriaMateria1)
+                .addGap(24, 24, 24)
+                .addComponent(cbTipoAcreditacion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(lblErrorCodigoMateria)
+                .addGap(241, 241, 241)
+                .addComponent(lblErrorTipoAcreditacion))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblNombreMateria)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombreMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorNombreMateria))
+                .addGap(20, 20, 20)
+                .addComponent(lblActivo)
+                .addGap(59, 59, 59)
+                .addComponent(chBNucleo))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(lblCiclo)
+                .addGap(109, 109, 109)
+                .addComponent(Cbx_Ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblCategoriaMateria4)
+                .addGap(81, 81, 81)
+                .addComponent(txtCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(lblErrorMateriaCiclo)
+                .addGap(240, 240, 240)
+                .addComponent(lblErrorCreditos))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel5))
+                    .addComponent(cbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
+                .addComponent(lblErrorCarrera)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(cbEjeFormacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(lblCategoriaMateria2))
+                    .addComponent(cbMateriaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorEjeFormacion)
+                    .addComponent(lblErrorMateriaTipo))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCategoriaMateria5)
+                    .addComponent(Txt_CodMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCategoriaMateria1)
+                    .addComponent(cbTipoAcreditacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorCodigoMateria)
+                    .addComponent(lblErrorTipoAcreditacion))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreMateria)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtNombreMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(lblErrorNombreMateria))
+                    .addComponent(lblActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chBNucleo))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCiclo)
+                    .addComponent(Cbx_Ciclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCategoriaMateria4)
+                    .addComponent(txtCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorMateriaCiclo)
+                    .addComponent(lblErrorCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jTPMaterias.addTab("Datos Principales", jPanel3);
 
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblTeoricas.setText("Horas de Docencia *");
-        jPanel4.add(lblTeoricas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
 
         lblPracticas.setText("Horas Prácticas *");
-        jPanel4.add(lblPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, -1, -1));
 
         lblAutoEvaluacion.setText("Horas de Auto-Estudio *");
-        jPanel4.add(lblAutoEvaluacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, -1, -1));
 
         lblTeoricas1.setText("Horas Presenciales *");
-        jPanel4.add(lblTeoricas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
 
         lblTeoricas2.setText("Total de Horas *");
-        jPanel4.add(lblTeoricas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, -1, -1));
-        jPanel4.add(txtHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 137, -1));
 
         txtHorasPracticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtHorasPracticasActionPerformed(evt);
             }
         });
-        jPanel4.add(txtHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 137, -1));
-        jPanel4.add(txtHorasAutoEstudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 137, -1));
 
         txtTotalHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalHorasActionPerformed(evt);
             }
         });
-        jPanel4.add(txtTotalHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 240, 137, -1));
-        jPanel4.add(txtHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 137, -1));
 
         lblErrorHorasDocencia.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasDocencia.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasDocencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
 
         lblErrorHorasPracticas.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasPracticas.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasPracticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, -1));
 
         lblErrorHorasPresenciales.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasPresenciales.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasPresenciales, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, -1, -1));
 
         lblErrorHorasAutoEstudio.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorHorasAutoEstudio.setText("Ingrese solo números");
-        jPanel4.add(lblErrorHorasAutoEstudio, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, -1, -1));
 
         lblErrorTotalHoras.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorTotalHoras.setText("Ingrese solo números");
-        jPanel4.add(lblErrorTotalHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, -1, -1));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(lblTeoricas)
+                .addGap(82, 82, 82)
+                .addComponent(txtHorasDocencia, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(lblErrorHorasDocencia))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(lblPracticas)
+                .addGap(97, 97, 97)
+                .addComponent(txtHorasPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(lblErrorHorasPracticas))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(lblTeoricas1)
+                .addGap(81, 81, 81)
+                .addComponent(txtHorasPresenciales, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(lblErrorHorasPresenciales))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(lblAutoEvaluacion)
+                .addGap(63, 63, 63)
+                .addComponent(txtHorasAutoEstudio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(lblErrorHorasAutoEstudio))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(lblTeoricas2)
+                .addGap(101, 101, 101)
+                .addComponent(txtTotalHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(lblErrorTotalHoras))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTeoricas)
+                    .addComponent(txtHorasDocencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblErrorHorasDocencia)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPracticas)
+                    .addComponent(txtHorasPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblErrorHorasPracticas)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTeoricas1)
+                    .addComponent(txtHorasPresenciales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblErrorHorasPresenciales)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAutoEvaluacion)
+                    .addComponent(txtHorasAutoEstudio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblErrorHorasAutoEstudio)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTeoricas2)
+                    .addComponent(txtTotalHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblErrorTotalHoras))
+        );
 
         jTPMaterias.addTab("Horas de Materia", jPanel4);
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblTeoricas3.setText("Objetivo General *");
-        jPanel2.add(lblTeoricas3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, -1, -1));
 
         lblTeoricas5.setText("Objetivo Específico*");
-        jPanel2.add(lblTeoricas5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
         txtObjetivoEspecifico.setColumns(20);
         txtObjetivoEspecifico.setRows(5);
         jScrollPane1.setViewportView(txtObjetivoEspecifico);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 320, 240));
-
         txtObjetivoGeneral.setColumns(20);
         txtObjetivoGeneral.setRows(5);
         jScrollPane2.setViewportView(txtObjetivoGeneral);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 320, 240));
-
         lblErrorObjetivoGeneral.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorObjetivoGeneral.setText("Ingrese solo letras");
-        jPanel2.add(lblErrorObjetivoGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         lblErrorObjetivoEspecifico.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorObjetivoEspecifico.setText("Ingrese solo letras");
-        jPanel2.add(lblErrorObjetivoEspecifico, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, -1, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lblTeoricas3)
+                .addGap(248, 248, 248)
+                .addComponent(lblTeoricas5))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblErrorObjetivoGeneral)
+                .addGap(251, 251, 251)
+                .addComponent(lblErrorObjetivoEspecifico))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lblTeoricas3))
+                    .addComponent(lblTeoricas5))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorObjetivoGeneral)
+                    .addComponent(lblErrorObjetivoEspecifico)))
+        );
 
         jTPMaterias.addTab("Observaciones", jPanel2);
 
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         lblTeoricas4.setText("Descripción de la Materia *");
-        jPanel5.add(lblTeoricas4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         lblTeoricas6.setText("Unidad de Organización Curricular *");
-        jPanel5.add(lblTeoricas6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         lblTeoricas7.setText("Campo de Formación *");
-        jPanel5.add(lblTeoricas7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, -1));
 
         txtDescripcionMateria.setColumns(20);
         txtDescripcionMateria.setRows(5);
         jScrollPane4.setViewportView(txtDescripcionMateria);
 
-        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 650, 130));
-
         lblErrorDescripcionMateria.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorDescripcionMateria.setText("Ingrese solo letras");
-        jPanel5.add(lblErrorDescripcionMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
         lblErrorOrganizacionCurricular.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorOrganizacionCurricular.setText("Seleccione una Organización");
-        jPanel5.add(lblErrorOrganizacionCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         lblErrorCampoFormacion.setForeground(new java.awt.Color(204, 0, 0));
         lblErrorCampoFormacion.setText("Ingrese solo letras");
-        jPanel5.add(lblErrorCampoFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, -1, -1));
 
         Cbx_OrgCurricular.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "BÁSICA", "PROFESIONAL", "TITULACIÓN" }));
         Cbx_OrgCurricular.addActionListener(new java.awt.event.ActionListener() {
@@ -360,14 +522,75 @@ public class FrmMaterias extends javax.swing.JInternalFrame {
                 Cbx_OrgCurricularActionPerformed(evt);
             }
         });
-        jPanel5.add(Cbx_OrgCurricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 220, -1));
 
         Cbx_CamFormacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE", "INTEGRACIÓN DE SABERES, CONTEXTOS Y CULTURA", "COMUNICACIÓN Y LENGUAJES ", "FUNDAMENTOS TEÓRICOS", "ADAPTACIÓN E INNOVACIÓN TECNOLÓGICA" }));
-        jPanel5.add(Cbx_CamFormacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 220, -1));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lblTeoricas6)
+                        .addGap(259, 259, 259)
+                        .addComponent(lblTeoricas7))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(Cbx_OrgCurricular, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(210, 210, 210)
+                        .addComponent(Cbx_CamFormacion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lblErrorOrganizacionCurricular)
+                        .addGap(294, 294, 294)
+                        .addComponent(lblErrorCampoFormacion))
+                    .addComponent(lblTeoricas4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorDescripcionMateria)))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTeoricas6)
+                    .addComponent(lblTeoricas7))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Cbx_OrgCurricular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cbx_CamFormacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorOrganizacionCurricular)
+                    .addComponent(lblErrorCampoFormacion))
+                .addGap(26, 26, 26)
+                .addComponent(lblTeoricas4)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(lblErrorDescripcionMateria))
+        );
 
         jTPMaterias.addTab("Finalización", jPanel5);
 
-        getContentPane().add(jTPMaterias, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 690, 340));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTPMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jTPMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         jTPMaterias.getAccessibleContext().setAccessibleName("Datos Relevantes");
 
         pack();
