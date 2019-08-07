@@ -58,7 +58,7 @@
 	"upper"("AlumnoCurso".almn_curso_asistencia) AS "Asistencia",
 	ROUND("Notas".nota_valor,0) AS "Nota Interciclo",
 	"public".estado_nota_interciclo(ROUND("Notas".nota_valor,0)) AS "ESTADO"
-	
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -124,83 +124,83 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="120" splitType="Stretch">
+		<band height="131" splitType="Stretch">
 			<staticText>
-				<reportElement x="130" y="43" width="87" height="20" uuid="8859c511-9896-4103-b7c8-02595bebc97d"/>
+				<reportElement x="130" y="54" width="87" height="20" uuid="8859c511-9896-4103-b7c8-02595bebc97d"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="562" y="43" width="270" height="20" uuid="f604539c-955c-4228-81c5-1ef645caf151"/>
+				<reportElement x="562" y="54" width="270" height="20" uuid="f604539c-955c-4228-81c5-1ef645caf151"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="43" width="276" height="20" uuid="56ac8788-2e95-475b-842b-070452985b67"/>
+				<reportElement x="217" y="54" width="276" height="20" uuid="56ac8788-2e95-475b-842b-070452985b67"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="63" width="303" height="20" uuid="437865bc-78e6-42ca-8e86-939ebe2d5448"/>
+				<reportElement x="190" y="74" width="303" height="20" uuid="437865bc-78e6-42ca-8e86-939ebe2d5448"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="842" height="22" forecolor="#006699" uuid="d5e2a223-cc94-44d5-b9c8-99c02c11007a"/>
+				<reportElement x="0" y="11" width="842" height="22" forecolor="#006699" uuid="d5e2a223-cc94-44d5-b9c8-99c02c11007a"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="573" y="63" width="259" height="20" uuid="a5aa4c68-6152-473b-825e-1ed80766e394"/>
+				<reportElement x="573" y="74" width="259" height="20" uuid="a5aa4c68-6152-473b-825e-1ed80766e394"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="14" y="23" width="108" height="80" uuid="80f54e77-8956-4414-9325-10989c6e9ed2"/>
+				<reportElement x="14" y="34" width="108" height="80" uuid="80f54e77-8956-4414-9325-10989c6e9ed2"/>
 				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="514" y="63" width="58" height="20" uuid="73c7fd98-622b-4317-9c70-beb1fe66eafd"/>
+				<reportElement x="514" y="74" width="58" height="20" uuid="73c7fd98-622b-4317-9c70-beb1fe66eafd"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="63" width="60" height="20" uuid="741ccb2a-653e-4711-99d8-5dfb2b70c246"/>
+				<reportElement x="130" y="74" width="60" height="20" uuid="741ccb2a-653e-4711-99d8-5dfb2b70c246"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="279" y="23" width="293" height="20" uuid="96f42d89-9856-46e1-b033-98066b686b9f"/>
+				<reportElement x="279" y="34" width="293" height="20" uuid="96f42d89-9856-46e1-b033-98066b686b9f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES INTERCICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="514" y="43" width="48" height="20" uuid="6ab9628c-4d4b-4881-9bbc-efecc2deb6b9"/>
+				<reportElement x="514" y="54" width="48" height="20" uuid="6ab9628c-4d4b-4881-9bbc-efecc2deb6b9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="171" y="83" width="100" height="20" uuid="b3f453c2-807f-4971-aa35-3e951e5a97c7"/>
+				<reportElement x="171" y="94" width="100" height="20" uuid="b3f453c2-807f-4971-aa35-3e951e5a97c7"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="114" width="842" height="1" uuid="f0c370df-eaa6-4d2f-b6ce-dda1ad427d82"/>
+				<reportElement x="0" y="120" width="842" height="1" uuid="f0c370df-eaa6-4d2f-b6ce-dda1ad427d82"/>
 			</line>
 			<staticText>
-				<reportElement x="130" y="83" width="41" height="20" uuid="e50dfbd9-4ff5-4ca0-9a77-928e84b18c84"/>
+				<reportElement x="130" y="94" width="41" height="20" uuid="e50dfbd9-4ff5-4ca0-9a77-928e84b18c84"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>

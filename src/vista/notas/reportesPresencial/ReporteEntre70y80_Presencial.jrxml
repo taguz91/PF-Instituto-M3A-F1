@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5ec8862-7f8a-4c30-81fa-eb6e01040058">
-	<property name="ireport.zoom" value="1.99650000000001"/>
-	<property name="ireport.x" value="111"/>
-	<property name="ireport.y" value="46"/>
+	<property name="ireport.zoom" value="1.024520183047611"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -50,9 +50,9 @@
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
-	
 
-	
+
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -65,17 +65,17 @@ FROM
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
 	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
-  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
 	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
-	
+
 WHERE
 	"Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre =$P{prd_lectivo_nombre} )
 
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND "AlumnoCurso".almn_curso_nota_final >= 70 
+	AND "AlumnoCurso".almn_curso_nota_final >= 70
 	AND "AlumnoCurso".almn_curso_nota_final < 80
 
 	GROUP BY "Alumnos".id_alumno,
@@ -93,7 +93,7 @@ WHERE
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
-	
+
 	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
@@ -114,85 +114,85 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="120" splitType="Stretch">
+		<band height="134" splitType="Stretch">
 			<staticText>
-				<reportElement x="514" y="44" width="48" height="20" uuid="46f7b04d-75cc-4dd2-9229-d10b6df4cf33"/>
+				<reportElement x="514" y="56" width="48" height="20" uuid="46f7b04d-75cc-4dd2-9229-d10b6df4cf33"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="44" width="87" height="20" uuid="4f716172-602b-4c2e-961e-f3f5d6d3ee8b"/>
+				<reportElement x="130" y="56" width="87" height="20" uuid="4f716172-602b-4c2e-961e-f3f5d6d3ee8b"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="1" width="842" height="22" forecolor="#006699" uuid="6f30f67d-c60c-4263-b5c4-b51f4b234833"/>
+				<reportElement x="0" y="13" width="842" height="22" forecolor="#006699" uuid="6f30f67d-c60c-4263-b5c4-b51f4b234833"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<image>
-				<reportElement x="14" y="24" width="108" height="80" uuid="b716b4d9-086d-4e8e-94a0-512aedc92748"/>
+				<reportElement x="14" y="36" width="108" height="80" uuid="b716b4d9-086d-4e8e-94a0-512aedc92748"/>
 				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="0" y="115" width="842" height="1" uuid="011915ca-5dcf-4d93-ba20-a8702b60ee98"/>
+				<reportElement x="0" y="125" width="842" height="1" uuid="011915ca-5dcf-4d93-ba20-a8702b60ee98"/>
 			</line>
 			<staticText>
-				<reportElement x="130" y="84" width="41" height="20" uuid="8b5b6a2d-ebaa-40c5-ba05-ef92606b824d"/>
+				<reportElement x="130" y="96" width="41" height="20" uuid="8b5b6a2d-ebaa-40c5-ba05-ef92606b824d"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="279" y="24" width="293" height="20" uuid="121f8c7b-0027-41a4-8d04-8a94e28d788c"/>
+				<reportElement x="279" y="36" width="293" height="20" uuid="121f8c7b-0027-41a4-8d04-8a94e28d788c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 70 Y 80]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="514" y="64" width="58" height="20" uuid="a37e66da-fc54-4a64-9781-a218a87cd6dc"/>
+				<reportElement x="514" y="76" width="58" height="20" uuid="a37e66da-fc54-4a64-9781-a218a87cd6dc"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="64" width="60" height="20" uuid="218b8119-bb71-47fb-a8fe-e9bfc0945450"/>
+				<reportElement x="130" y="76" width="60" height="20" uuid="218b8119-bb71-47fb-a8fe-e9bfc0945450"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="171" y="84" width="100" height="20" uuid="bdcbf17c-0323-468b-a960-5087d9e45a88"/>
+				<reportElement x="171" y="96" width="100" height="20" uuid="bdcbf17c-0323-468b-a960-5087d9e45a88"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="573" y="64" width="259" height="20" uuid="b7f0245c-7cd4-49e2-a91b-d658feb632ad"/>
+				<reportElement x="573" y="76" width="259" height="20" uuid="b7f0245c-7cd4-49e2-a91b-d658feb632ad"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="64" width="303" height="20" uuid="fce14c0c-1536-4778-8d4d-c7bda89943d1"/>
+				<reportElement x="190" y="76" width="303" height="20" uuid="fce14c0c-1536-4778-8d4d-c7bda89943d1"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="562" y="44" width="270" height="20" uuid="cff45805-7fe4-4a5f-9281-fcb0e59c67aa"/>
+				<reportElement x="562" y="56" width="270" height="20" uuid="cff45805-7fe4-4a5f-9281-fcb0e59c67aa"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="217" y="44" width="276" height="20" uuid="dc81ffa6-cef9-44e3-8d35-b7739ad1c392"/>
+				<reportElement x="217" y="56" width="276" height="20" uuid="dc81ffa6-cef9-44e3-8d35-b7739ad1c392"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>

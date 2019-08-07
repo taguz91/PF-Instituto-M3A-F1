@@ -46,9 +46,9 @@
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
-	
 
-	
+
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -61,10 +61,10 @@ FROM
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
 	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
-  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
 	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
-	
+
 WHERE
 	"Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
@@ -87,7 +87,7 @@ WHERE
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
-	
+
 	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
@@ -107,86 +107,86 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="119" splitType="Stretch">
+		<band height="133" splitType="Stretch">
 			<staticText>
-				<reportElement x="479" y="45" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
+				<reportElement x="479" y="56" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="842" height="25" forecolor="#006699" uuid="d02b93e7-c08e-4cc8-bd05-0acafa9e867e"/>
+				<reportElement x="0" y="11" width="842" height="25" forecolor="#006699" uuid="d02b93e7-c08e-4cc8-bd05-0acafa9e867e"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="479" y="64" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
+				<reportElement x="479" y="75" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="64" width="53" height="20" uuid="382793f5-30cc-4722-8a77-ccb11af825b8"/>
+				<reportElement x="124" y="75" width="53" height="20" uuid="382793f5-30cc-4722-8a77-ccb11af825b8"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="267" y="25" width="293" height="20" uuid="bdefef97-60d2-472b-be14-fa648fe5dc63"/>
+				<reportElement x="267" y="36" width="293" height="20" uuid="bdefef97-60d2-472b-be14-fa648fe5dc63"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 90 Y 100]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="45" width="83" height="20" uuid="49daa8a0-afb9-4d68-8a78-744bbf711e79"/>
+				<reportElement x="124" y="56" width="83" height="20" uuid="49daa8a0-afb9-4d68-8a78-744bbf711e79"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="114" width="842" height="1" uuid="a316d234-fe6b-40c8-b832-c8246b6d44ae"/>
+				<reportElement x="0" y="121" width="842" height="1" uuid="a316d234-fe6b-40c8-b832-c8246b6d44ae"/>
 			</line>
 			<staticText>
-				<reportElement x="124" y="84" width="41" height="20" uuid="43653b2c-95ec-495b-916f-4f536123fdc8"/>
+				<reportElement x="124" y="95" width="41" height="20" uuid="43653b2c-95ec-495b-916f-4f536123fdc8"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="207" y="45" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
+				<reportElement x="207" y="56" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="177" y="64" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
+				<reportElement x="177" y="75" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="165" y="84" width="43" height="20" uuid="5eca4a66-5a51-4f50-ad15-fb9586093722"/>
+				<reportElement x="165" y="95" width="43" height="20" uuid="5eca4a66-5a51-4f50-ad15-fb9586093722"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="537" y="45" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
+				<reportElement x="537" y="56" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="537" y="65" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
+				<reportElement x="537" y="76" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="14" y="24" width="108" height="80" uuid="8dd9a48d-d97f-4e7f-ab44-72a439478b31"/>
+				<reportElement x="14" y="35" width="108" height="80" uuid="8dd9a48d-d97f-4e7f-ab44-72a439478b31"/>
 				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 		</band>
