@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a06c960c-7e2e-495b-aa31-adb023c7258a">
-	<property name="ireport.zoom" value="1.2100000000000126"/>
-	<property name="ireport.x" value="99"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.8531167061100238"/>
+	<property name="ireport.x" value="1434"/>
+	<property name="ireport.y" value="220"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -374,7 +374,7 @@ WHERE
 				<text><![CDATA[Nota F.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="598" y="0" width="40" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="29a59228-3fc6-4dd9-8bfe-e658762f9cea"/>
+				<reportElement mode="Opaque" x="598" y="0" width="51" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="29a59228-3fc6-4dd9-8bfe-e658762f9cea"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -387,7 +387,7 @@ WHERE
 				<text><![CDATA[Asistencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="638" y="0" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="31ad2e4a-362d-47dd-b5c4-ca8a4f5e5232"/>
+				<reportElement mode="Opaque" x="649" y="0" width="50" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="31ad2e4a-362d-47dd-b5c4-ca8a4f5e5232"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -400,7 +400,7 @@ WHERE
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="672" y="0" width="44" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="30687a9d-b32d-4415-bdee-8019c1d46c50"/>
+				<reportElement mode="Opaque" x="699" y="0" width="44" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="30687a9d-b32d-4415-bdee-8019c1d46c50"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -413,7 +413,7 @@ WHERE
 				<text><![CDATA[Nro. Faltas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="716" y="0" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="81158602-00d4-4d18-85ff-5fd28e09ce13"/>
+				<reportElement mode="Opaque" x="743" y="0" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="81158602-00d4-4d18-85ff-5fd28e09ce13"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -426,7 +426,7 @@ WHERE
 				<text><![CDATA[% Faltas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="750" y="0" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="2796ec3c-1579-45db-aa70-b710e4cfae33"/>
+				<reportElement mode="Opaque" x="777" y="0" width="34" height="10" forecolor="#FFFFFF" backcolor="#006699" uuid="2796ec3c-1579-45db-aa70-b710e4cfae33"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -629,7 +629,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{NotaFinal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="598" y="0" width="40" height="10" uuid="71dd964c-5d52-4785-a2fa-61809d926d5b"/>
+				<reportElement x="598" y="0" width="51" height="10" uuid="71dd964c-5d52-4785-a2fa-61809d926d5b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -643,7 +643,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="638" y="0" width="34" height="10" uuid="88d27bb0-c39b-40d0-b226-9222a2d5cb6f"/>
+				<reportElement x="649" y="0" width="50" height="10" uuid="88d27bb0-c39b-40d0-b226-9222a2d5cb6f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -657,7 +657,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="672" y="0" width="44" height="10" uuid="d8f70dac-6a7f-49fb-a07a-3d185467f966"/>
+				<reportElement x="699" y="0" width="44" height="10" uuid="d8f70dac-6a7f-49fb-a07a-3d185467f966"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -671,7 +671,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{N° Faltas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="716" y="0" width="34" height="10" uuid="ca049b6b-5646-4773-8a68-a95953050169"/>
+				<reportElement x="743" y="0" width="34" height="10" uuid="ca049b6b-5646-4773-8a68-a95953050169"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -685,7 +685,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="750" y="0" width="34" height="10" uuid="41b8d4f7-9fc4-4697-a1e1-95ed6b8aadd5"/>
+				<reportElement x="777" y="0" width="34" height="10" uuid="41b8d4f7-9fc4-4697-a1e1-95ed6b8aadd5"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
