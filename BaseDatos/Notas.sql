@@ -137,3 +137,84 @@ INNER JOIN "public"."AlumnoCurso" ON "public"."AlumnoCurso".id_curso = "public".
 INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
 WHERE
 "PeriodoLectivo".id_prd_lectivo = 
+
+
+/*
+VERIFICA LAS NOTAS SEGUN LOS PARAMETROS
+*/
+SELECT
+"count"(*)
+FROM
+"public"."AlumnoCurso"
+INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."Jornadas" ON "public"."Cursos".id_jornada = "public"."Jornadas".id_jornada
+INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia
+INNER JOIN "public"."Alumnos" ON "public"."AlumnoCurso".id_alumno = "public"."Alumnos".id_alumno
+INNER JOIN "public"."Personas" ON "public"."Alumnos".id_persona = "public"."Personas".id_persona
+INNER JOIN "public"."Notas" ON "public"."Notas".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
+WHERE
+"public"."Cursos".id_docente = 88 AND
+"public"."PeriodoLectivo".id_prd_lectivo = 26 AND
+"public"."Cursos".curso_nombre = 'M2A' AND
+"public"."Materias".materia_nombre = 'DEPORTE DE INICIACIÓN: TEORÍA Y METODOLOGÍA'
+
+
+/*
+VERIFICA LA CANTIDAD DE ALUMNOS DE UN CURSO
+*/
+SELECT
+"count"(*)
+FROM
+"public"."AlumnoCurso"
+INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+INNER JOIN "public"."Jornadas" ON "public"."Cursos".id_jornada = "public"."Jornadas".id_jornada
+INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia
+INNER JOIN "public"."Alumnos" ON "public"."AlumnoCurso".id_alumno = "public"."Alumnos".id_alumno
+INNER JOIN "public"."Personas" ON "public"."Alumnos".id_persona = "public"."Personas".id_persona
+WHERE
+"public"."Cursos".id_docente = 88 AND
+"public"."PeriodoLectivo".id_prd_lectivo = 26 AND
+"public"."Cursos".curso_nombre = 'M2A' AND
+"public"."Materias".materia_nombre = 'DEPORTE DE INICIACIÓN: TEORÍA Y METODOLOGÍA'
+
+
+/*
+    CREA LAS NOTAS FALTANTES DE UN CURSO 
+*/
+
+INSERT INTO "Notas" ( id_almn_curso, id_tipo_nota ) SELECT
+"AlumnoCurso".id_almn_curso,
+"TipoDeNota".id_tipo_nota 
+FROM
+	"public"."AlumnoCurso"
+	INNER JOIN "public"."Cursos" ON "public"."AlumnoCurso".id_curso = "public"."Cursos".id_curso
+	INNER JOIN "public"."PeriodoLectivo" ON "public"."Cursos".id_prd_lectivo = "public"."PeriodoLectivo".id_prd_lectivo
+	INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia
+	FULL JOIN "TipoDeNota" ON "TipoDeNota".id_prd_lectivo = 26 
+WHERE
+	"public"."Cursos".id_docente = 88 
+	AND "public"."PeriodoLectivo".id_prd_lectivo = 26 
+	AND "public"."Cursos".curso_nombre = 'M2A' 
+	AND "public"."Materias".materia_nombre = 'DEPORTE DE INICIACIÓN: TEORÍA Y METODOLOGÍA' 
+	AND "TipoDeNota".tipo_nota_nombre != 'NOTA FINAL';
+
+
+/*
+    CREA LAS NOTAS FALTANTES DE TODO UN PERIODO SIEMPRE Y CUANDO ESTE EN 0
+*/
+
+INSERT INTO "Notas" ( id_almn_curso, id_tipo_nota ) SELECT
+"AlumnoCurso".id_almn_curso,
+"TipoDeNota".id_tipo_nota 
+FROM
+	"AlumnoCurso"
+	INNER JOIN "Cursos" ON "Cursos".id_curso = "AlumnoCurso".id_curso
+	INNER JOIN "PeriodoLectivo" ON "PeriodoLectivo".id_prd_lectivo = "Cursos".id_prd_lectivo
+	INNER JOIN "Materias" ON "Materias".id_materia = "Cursos".id_materia
+	FULL JOIN "TipoDeNota" ON "TipoDeNota".id_prd_lectivo = 26 
+WHERE
+	0 = ( SELECT "count" ( * ) FROM "Notas" WHERE "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso ) 
+	AND "PeriodoLectivo".id_prd_lectivo = 26 
+	AND "TipoDeNota".tipo_nota_nombre != 'NOTA FINAL';
