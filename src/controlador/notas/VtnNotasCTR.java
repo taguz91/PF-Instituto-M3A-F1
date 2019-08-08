@@ -130,7 +130,6 @@ public class VtnNotasCTR extends AbstractVtn {
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
-        items.add("Retirado");
         items.add("Desertor");
         if (getModalidad().equalsIgnoreCase("tradicional") || getModalidad().equalsIgnoreCase("presencial")) {
             if (!getEstado()) {
@@ -150,7 +149,7 @@ public class VtnNotasCTR extends AbstractVtn {
                 jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(false));
-                jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(false, items));
+                jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
             }
 
         } else {
