@@ -37,6 +37,12 @@ public class SeguimientoSilaboMD {
         this.persona=new PersonaMD();
     }
 
+    public SeguimientoSilaboMD(CursoMD curso) {
+        this.curso = curso;
+    }
+    
+    
+
     public int getId_seguimientoS() {
         return id_seguimientoS;
     }
@@ -60,6 +66,8 @@ public class SeguimientoSilaboMD {
     public void setEsInterciclo(boolean esInterciclo) {
         this.esInterciclo = esInterciclo;
     }
+
+    
 
     public CursoMD getCurso() {
         return curso;

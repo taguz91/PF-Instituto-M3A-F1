@@ -554,7 +554,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnIngresarRol.setToolTipText("Ingresar Roles");
         btnIngresarRol.setFocusPainted(false);
 
-        btn_avance_si.setText("jButton1");
+        btn_avance_si.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/avanceSilabo.png"))); // NOI18N
 
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);

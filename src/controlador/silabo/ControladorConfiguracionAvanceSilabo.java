@@ -5,11 +5,12 @@
  */
 package controlador.silabo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import modelo.AvanceSilabo.SeguimientoSilaboBD;
+import modelo.AvanceSilabo.SeguimientoSilaboMD;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
@@ -21,11 +22,9 @@ import modelo.silabo.MateriasBDS;
 import modelo.silabo.PeriodoLectivoBDS;
 import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
-import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmConfiguracionSeguimientoSilabo;
-import vista.silabos.frmCRUDAvanceSilabo;
 
 /**
  *
@@ -35,16 +34,15 @@ public class ControladorConfiguracionAvanceSilabo {
      private int id_silabo=-1;
     private final UsuarioBD usuario;
     private ConexionBD conexion;
-    private boolean esCordinador = false;
     private List<CarreraMD> carreras_docente;
      private List<SilaboMD> silabosDocente;
     private frmConfiguracionSeguimientoSilabo avance;
-    private frmCRUDAvanceSilabo seguimiento;
     private List<CursoMD> cursoSilabo;
     private int id_periodo_lectivo = -1;
     private List<PeriodoLectivoMD> periodosCarrera;
-    VtnPrincipal vtnPrincipal=new VtnPrincipal();
+    private final VtnPrincipal vtnPrincipal;
      private List<MateriaMD> materias_Silabos;
+     private List<SeguimientoSilaboMD> count;
 
     public ControladorConfiguracionAvanceSilabo(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
@@ -64,14 +62,20 @@ public class ControladorConfiguracionAvanceSilabo {
 
         avance.getBtnCancelar().addActionListener((e) -> {
             avance.dispose();
-             
+             vtnPrincipal.getMnCAvanceSilabo().doClick();
         });
         avance.getBtnSiguiente().addActionListener(a1 -> {
-            
-            controlador_avance_ingreso cas=new 
-        controlador_avance_ingreso(conexion,vtnPrincipal,cursos_seleccionado(),silabo_seleccionado());
+            if (validarSeguiSilaboExistente()==true) {
+                avance.dispose();
+                 controlador_avance_ingreso cas=new 
+                    controlador_avance_ingreso(conexion,vtnPrincipal,cursos_seleccionado(),silabo_seleccionado());
             cas.init();
             avance.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "YA EXISTE EL SEGUIMIENTO DE SILABO DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
+           
+            }
+           
         });
         avance.getCbxCarrera().addActionListener(a -> clickCmbCarreras());
            avance.getCbxSilabos().addActionListener(a-> clickCmbSilabos());
@@ -154,7 +158,7 @@ public class ControladorConfiguracionAvanceSilabo {
            if (avance.getCbxCurso().getItemCount()!=0) {
                avance.getBtnSiguiente().setEnabled(true);
            } else {
-              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
+              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN SEGUIMIENTO DE SILABO DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
               avance.getBtnSiguiente().setEnabled(false);
            }
                
@@ -249,6 +253,20 @@ private int getid_periodo(){
                 filter(s -> s.getNombre().equals(avance.getCbxCurso().getSelectedItem().toString())).
                 findFirst();
         return cursoSeleccionado.get();
+    }
+    
+    private boolean validarSeguiSilaboExistente(){
+        boolean valid=true;
+
+        
+        count=SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, cursos_seleccionado().getId());
+        for(SeguimientoSilaboMD ss:count){
+            
+            if (ss.getCurso().getId()==cursos_seleccionado().getId()) {
+                valid=false;
+            }
+        }
+        return valid;
     }
 
 
