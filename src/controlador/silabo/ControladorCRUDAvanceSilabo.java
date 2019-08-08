@@ -5,9 +5,11 @@
  */
 package controlador.silabo;
 
-import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,10 +45,12 @@ public class ControladorCRUDAvanceSilabo {
     private frmCRUDAvanceSilabo seguimiento;
     private VtnPrincipal vtnPrincipal;
     private int id_periodo_lectivo = -1;
+    private List<CursoMD> lista_curso;
     private RolBD rol;
     private List<SeguimientoSilaboMD> lista_seguimiento;
     private List<JornadaMD> lista_jornadas;
     private List<PeriodoLectivoMD> periodosCarrera;
+    private SeguimientoSilaboMD segui;
 
     public ControladorCRUDAvanceSilabo(UsuarioBD usuario,RolBD rol, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
@@ -79,7 +83,46 @@ public class ControladorCRUDAvanceSilabo {
         seguimiento.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - seguimiento.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - seguimiento.getSize().height) / 2);
         seguimiento.getBtnNuevo().addActionListener(e->insertar());
-        
+        seguimiento.getBtnEditar().addActionListener((ActionEvent ae)->{
+            int row=seguimiento.getTlbAvanceSilabo().getSelectedRow();
+            if (row!=-1) {
+                if (!seguimiento.getTlbAvanceSilabo().getValueAt(row, 4).equals("Aprobado")) {
+                    seguimiento.dispose();
+                controlador_avance_editar ce=new controlador_avance_editar(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
+                ce.init();
+                } else {
+                    
+                 JOptionPane.showMessageDialog(null, "No puede editar seguimientos de silabo aprobados", "Aviso", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } else {
+                 JOptionPane.showMessageDialog(null, "Seleccione un avance de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        seguimiento.getTlbAvanceSilabo().addMouseListener(new MouseAdapter(){
+                @Override
+        public void mouseClicked(MouseEvent me){
+            int fila =seguimiento.getTlbAvanceSilabo().getSelectedRow();
+            int columna=seguimiento.getTlbAvanceSilabo().getSelectedColumn();
+                    if (esCordinador && columna==4) {
+                        if (seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna).equals(true)) {
+                            new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna-4).toString()), 1);
+                        } else {
+                            new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna-4).toString()), 0);
+                        }
+                    }
+            
+        }
+        });
+        seguimiento.getBtnEliminar().addActionListener(a ->{
+            int row=seguimiento.getTlbAvanceSilabo().getSelectedRow();
+            if (row != -1) {
+                eliminarSeguimientos();
+                cargarAvanceSilaboDocentes_Coordinador();
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un seguimiento de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         CARGAR_COMBO_CARRERAS();
         CARGAR_COMBO_PERIODOS_CARRERA();
         CARGAR_JORNADAS();
@@ -102,9 +145,10 @@ public class ControladorCRUDAvanceSilabo {
 
     }
     public void insertar(){
+        
+        seguimiento.dispose();
          ControladorConfiguracionAvanceSilabo AS= new ControladorConfiguracionAvanceSilabo(usuario,vtnPrincipal, conexion);
         AS.init();
-        seguimiento.dispose();
     }
     
     private void cargarAvanceSilaboDocentes_Coordinador(){
@@ -127,6 +171,7 @@ public class ControladorCRUDAvanceSilabo {
             for (SeguimientoSilaboMD ss : lista_seguimiento) {
                 String estado=null;
                 Boolean estadoB=null;
+                String corresponde=null;
                 
                 if (ss.getEstado_seguimiento()==0) {
                     estado="Por Aprobar";
@@ -135,10 +180,15 @@ public class ControladorCRUDAvanceSilabo {
                     estado="Aprobado";
                     estadoB=true;
                 }
+                if (ss.isEsInterciclo()==true) {
+                    corresponde="Interciclo";
+                } else {
+                    corresponde="Fin de Ciclo";
+                }
                 modelotabla.addRow(new Object[]{
                     ss.getId_seguimientoS(),ss.getPersona().getPrimerApellido()+" "+
                     ss.getPersona().getPrimerNombre(),ss.getMateria().getNombre(),
-                    ss.getCurso().getNombre(),estado,estadoB,ss.getFecha_entrega_informe()
+                    ss.getCurso().getNombre(),estado,estadoB,ss.getFecha_entrega_informe(),corresponde
                 });
                 
             }
@@ -205,7 +255,27 @@ public class ControladorCRUDAvanceSilabo {
 
      return id_periodo_lectivo;
   }
-    
+    //UTILIZA ESTE METODO PARA EL IMPRIMIR
+     private SeguimientoSilaboMD seguimientoSilabo(){
+         int seleccion =seguimiento.getTlbAvanceSilabo().getSelectedRow();
+         segui=new SeguimientoSilaboMD();
+         segui=SeguimientoSilaboBD.consultarIDsegui_IdCurso(conexion,Integer.parseInt(
+         seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 0).toString()));
+         return segui;
+     }
+     private CursoMD curso_selecc() {
+        int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
+        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
+        Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 3).toString())).findFirst();
+        return curso_selecccionado.get();
+    }
+     private void eliminarSeguimientos(){
+         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este seguimiento de silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            new SeguimientoSilaboBD(conexion).eliminarSeguimientoSilabo(seguimientoSilabo());
+            JOptionPane.showMessageDialog(null, "Seguimiento de silabo eliminado correctamente");
+        }
+     }
     
 
 }

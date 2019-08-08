@@ -234,7 +234,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
-
+        vtnPrin.getMnCAvanceSilabo().addActionListener(a1-> controladorCONFIGURACION_avance_silabo());
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
         //esto es para el avance de silabo
         //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
