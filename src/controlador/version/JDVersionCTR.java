@@ -75,7 +75,7 @@ public class JDVersionCTR extends DVtnCTR {
         mdTbl.setRowCount(0);
         if (versiones != null) {
             versiones.forEach(v -> {
-                Object[] val = {v.getNombreSinExtension(), v.getVersion(), v.getUsername()};
+                Object[] val = {v.getNombreSinExtension(), v.getUsername(), v.getVersion()};
                 mdTbl.addRow(val);
             });
         }
