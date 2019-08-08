@@ -117,7 +117,7 @@ WHERE
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="14" width="842" height="24" forecolor="#006699" uuid="755ef762-35af-4f67-9cad-33ce26adecc6"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
