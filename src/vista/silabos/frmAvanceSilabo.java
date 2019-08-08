@@ -296,11 +296,9 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTitulo.setText("Informe de Seguimiento del Silabo");
-        getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 7, -1, -1));
 
         CbxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Reporte Correspondiente a", "Interciclo", "Fin de ciclo" }));
         CbxTipoReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -308,82 +306,187 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
                 CbxTipoReporteActionPerformed(evt);
             }
         });
-        getContentPane().add(CbxTipoReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 47, -1, -1));
 
         lblTipoReporte.setText("Reporte correspondiente a:");
-        getContentPane().add(lblTipoReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 30, 154, -1));
 
         lblContenidos.setText("Contenidos");
-        getContentPane().add(lblContenidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 232, 153, -1));
 
         txrObservaciones.setColumns(20);
         txrObservaciones.setRows(5);
         jScrollPane1.setViewportView(txrObservaciones);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 345, 113));
-
-        getContentPane().add(CbxUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 184, 320, -1));
-
         lblTemasDictados.setText("Temas dictados:");
-        getContentPane().add(lblTemasDictados, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 163, 153, -1));
 
         txtCarrera.setEditable(false);
-        getContentPane().add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 83, 250, -1));
 
         lblCarrera.setText("Carrera:");
-        getContentPane().add(lblCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 85, 51, -1));
 
         txtParalelo.setEditable(false);
-        getContentPane().add(txtParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 51, -1));
 
         lblParalelo.setText("Paralelo:");
-        getContentPane().add(lblParalelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 51, -1));
 
         lblAsignatura.setText("Asignatura:");
-        getContentPane().add(lblAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(366, 85, 64, -1));
 
         txtAsignatura.setEditable(false);
-        getContentPane().add(txtAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(442, 83, 279, -1));
 
         lblDocente.setText("Docente:");
-        getContentPane().add(lblDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 122, 64, -1));
 
         txtDocente.setEditable(false);
-        getContentPane().add(txtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 120, 243, -1));
 
         lblNumeroAlumnos.setText("Numero de alumnos:");
-        getContentPane().add(lblNumeroAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 122, -1, -1));
 
         txtNumeroAlumnos.setEditable(false);
-        getContentPane().add(txtNumeroAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(678, 120, 40, -1));
 
         btnCancelar.setText("Cancelar");
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(554, 402, -1, -1));
 
         bntGuardar.setText("Guardar");
-        getContentPane().add(bntGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(636, 402, -1, -1));
-        getContentPane().add(dchFechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, 110, 20));
 
         lblFechaEntrega.setText("Fecha Entrega Informe:");
-        getContentPane().add(lblFechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, -1, -1));
 
         lblCumplimiento.setText("Cumplimiento %:");
-        getContentPane().add(lblCumplimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, -1, -1));
 
         spnCumplimiento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 50));
         spnCumplimiento.setToolTipText("%");
-        getContentPane().add(spnCumplimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 52, -1));
 
         lblUnidad1.setText("Observaciones:");
-        getContentPane().add(lblUnidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 232, 153, -1));
 
         txrContenidos.setEditable(false);
         txrContenidos.setColumns(20);
         txrContenidos.setRows(5);
         jScrollPane2.setViewportView(txrContenidos);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 253, 333, 113));
-        getContentPane().add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 151, 706, 10));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(272, 272, 272)
+                .addComponent(lblTitulo))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(CbxTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(lblAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(lblParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumeroAlumnos)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(txtNumeroAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblTemasDictados, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(CbxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCumplimiento)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(spnCumplimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(dchFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaEntrega)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblContenidos, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(198, 198, 198)
+                .addComponent(lblUnidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(554, 554, 554)
+                .addComponent(btnCancelar)
+                .addGap(8, 8, 8)
+                .addComponent(bntGuardar))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(lblTitulo)
+                .addGap(6, 6, 6)
+                .addComponent(lblTipoReporte)
+                .addGap(0, 0, 0)
+                .addComponent(CbxTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCarrera)
+                            .addComponent(lblAsignatura))))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblParalelo)
+                    .addComponent(txtParalelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDocente)
+                            .addComponent(lblNumeroAlumnos))))
+                .addGap(4, 4, 4)
+                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(lblTemasDictados)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CbxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCumplimiento)
+                            .addComponent(spnCumplimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dchFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFechaEntrega))))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblContenidos)
+                    .addComponent(lblUnidad1))
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar)
+                    .addComponent(bntGuardar)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
