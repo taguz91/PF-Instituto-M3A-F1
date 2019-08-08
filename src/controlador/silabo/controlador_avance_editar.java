@@ -264,9 +264,9 @@ public class controlador_avance_editar {
            if(lista_avanUnidades.get(i).getObservaciones()==null){
                valid=false;
            }
-           if (lista_avanUnidades.get(i).getPortecentaje()==0) {
-               valid=false;
-           }
+//           if (lista_avanUnidades.get(i).getPortecentaje()==0) {
+//               valid=false;
+//           }
        }
        if(avanceSi.getCbxTipoReporte().getSelectedIndex()==2){
        count=SeguimientoSilaboBD.consultarSeguimientoEsInterciclo(conexion, curso.getId());

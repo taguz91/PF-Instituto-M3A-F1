@@ -370,7 +370,7 @@ public class frmAvanceSilabo extends javax.swing.JInternalFrame {
         lblCumplimiento.setText("Cumplimiento %:");
         getContentPane().add(lblCumplimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, -1, -1));
 
-        spnCumplimiento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        spnCumplimiento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 50));
         spnCumplimiento.setToolTipText("%");
         getContentPane().add(spnCumplimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 52, -1));
 

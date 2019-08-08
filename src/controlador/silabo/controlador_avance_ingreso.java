@@ -241,9 +241,9 @@ public class controlador_avance_ingreso {
            if(lista_avanzeU.get(i).getObservaciones()==null){
                valid=false;
            }
-           if (lista_avanzeU.get(i).getPortecentaje()==0) {
-               valid=false;
-           }
+//           if (lista_avanzeU.get(i).getPortecentaje()==0) {
+//               valid=false;
+//           }
        }
 //       count=SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, curso.getId());
 //         boolean esInterciclo=true;
