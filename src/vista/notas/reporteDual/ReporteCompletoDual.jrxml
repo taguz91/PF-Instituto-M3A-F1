@@ -61,6 +61,7 @@ WHERE
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	AND "MallaAlumno".id_materia = "Materias".id_materia
+	AND "AlumnoCurso".almn_curso_activo IS TRUE
 
 	GROUP BY "Alumnos".id_alumno,
 	p_alu.persona_identificacion,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
-	<property name="ireport.zoom" value="0.75"/>
-	<property name="ireport.x" value="265"/>
-	<property name="ireport.y" value="48"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f8ec0a13-7f28-4987-b6bc-4401037723df">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="554"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -71,13 +71,17 @@ FROM
   INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
 	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
-	
+	INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
+	INNER JOIN "TipoDeNota" ON "TipoDeNota".id_tipo_nota = "Notas".id_tipo_nota
 WHERE
 	 "Cursos".id_docente = $P{id_docente}
-	AND "PeriodoLectivo".prd_lectivo_nombre =  $P{prd_lectivo_nombre}
+	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
 	AND "Cursos".curso_nombre= $P{curso_nombre}
 	AND "public"."Materias".materia_nombre = $P{materia_nombre}
 	AND "MallaAlumno".id_materia = "Materias".id_materia
+	AND "TipoDeNota".tipo_nota_nombre = 'NOTA INTERCICLO'
+ AND ROUND("Notas".nota_valor,1) < 15
+	AND "AlumnoCurso".almn_curso_activo IS TRUE
 	
 	GROUP BY "Alumnos".id_alumno,
 	p_alu.persona_identificacion,
@@ -126,85 +130,85 @@ WHERE
 	<title>
 		<band height="203" splitType="Stretch">
 			<staticText>
-				<reportElement x="663" y="58" width="199" height="20"/>
+				<reportElement x="663" y="58" width="199" height="20" uuid="f5e10964-fa33-4bd1-a226-b78daa5e6c94"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="12"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE ALUMNOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1034" y="81" width="88" height="20"/>
+				<reportElement x="1034" y="81" width="88" height="20" uuid="a8f79704-03b2-41b2-bae7-c07dd545a51e"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="191" y="137" width="41" height="20"/>
+				<reportElement x="191" y="137" width="41" height="20" uuid="31440ccd-11c2-49f5-b006-6964f19961de"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="29" y="58" width="147" height="124"/>
-				<imageExpression class="java.lang.String"><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
+				<reportElement x="29" y="58" width="147" height="124" uuid="447c1f7d-6cbc-4a06-b9da-83e3de742319"/>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="191" y="70" width="122" height="20"/>
+				<reportElement x="191" y="70" width="122" height="20" uuid="a8c86fec-4c11-4d90-8aa6-05b469b04a81"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1034" y="113" width="88" height="20"/>
+				<reportElement x="1034" y="113" width="88" height="20" uuid="7308dedc-2982-4c02-99d3-a5ed5242bfd3"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="191" y="102" width="74" height="20"/>
+				<reportElement x="191" y="102" width="74" height="20" uuid="2856b4c7-481d-4b24-b5f0-b6bde96afe9c"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="14"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699"/>
+				<reportElement x="0" y="0" width="1520" height="45" forecolor="#006699" uuid="4649a008-9d10-437d-87ca-6f07d68caabb"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="32" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="193" width="1520" height="1"/>
+				<reportElement x="0" y="193" width="1520" height="1" uuid="c2d72aab-424d-4ea9-855e-653e7b7e6e94"/>
 			</line>
 			<textField>
-				<reportElement x="328" y="70" width="244" height="20"/>
+				<reportElement x="328" y="70" width="244" height="20" uuid="3b6e7448-d582-4934-91bc-1ab3c24a8f3d"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="288" y="102" width="398" height="20"/>
+				<reportElement x="288" y="102" width="398" height="20" uuid="07b848c6-3b39-49a6-87d4-1ebb31df03cc"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="137" width="41" height="20"/>
+				<reportElement x="265" y="137" width="41" height="20" uuid="2595d6d3-97d2-4bcc-ae31-f40f106875f7"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1138" y="113" width="275" height="20"/>
+				<reportElement x="1138" y="113" width="275" height="20" uuid="d86bbff4-13e9-40fd-bd47-9167debe27d8"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1138" y="81" width="275" height="20"/>
+				<reportElement x="1138" y="81" width="275" height="20" uuid="5a2d6d9d-f1d4-498f-8fe9-08a381b27332"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -214,7 +218,7 @@ WHERE
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="81" y="2" width="44" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="81" y="2" width="44" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="ab5c785d-978f-4961-add2-357df9f5a05f"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -227,7 +231,7 @@ WHERE
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="125" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="125" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="986964e3-51ef-4b05-bc0c-93cd4a404024"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -240,7 +244,7 @@ WHERE
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="381" y="2" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="381" y="2" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="e3389fbe-6bf2-4676-b174-aee034441a00"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -253,7 +257,7 @@ WHERE
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="225" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="225" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="abc27292-3925-4d7f-8501-131d5f3d2b92"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -266,7 +270,7 @@ WHERE
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1278" y="2" width="54" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1278" y="2" width="54" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="8bca42ae-0dda-403f-86bd-95435fc917c3"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -279,7 +283,7 @@ WHERE
 				<text><![CDATA[% FALTAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="960" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="960" y="2" width="100" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f373254e-3543-41bd-8002-51036adc86ac"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -292,7 +296,7 @@ WHERE
 				<text><![CDATA[APORTE 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1170" y="2" width="108" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1170" y="2" width="108" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="c80997b5-a9bd-466a-ab02-05022c884f33"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -305,7 +309,7 @@ WHERE
 				<text><![CDATA[NOTA INTERCICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1060" y="2" width="110" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="1060" y="2" width="110" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="cf66782e-0229-4ce6-85bd-9838aa32703e"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -318,7 +322,7 @@ WHERE
 				<text><![CDATA[EXAMEN INTERCICLO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="674" y="2" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="674" y="2" width="137" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="979962ee-3bdb-41f4-baaf-cb477819831a"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -331,7 +335,7 @@ WHERE
 				<text><![CDATA[TELEFONO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="518" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="518" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="7a5d9b31-f59b-4553-943f-6dac3249a566"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -344,7 +348,7 @@ WHERE
 				<text><![CDATA[CELULAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="804" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699"/>
+				<reportElement mode="Opaque" x="804" y="2" width="156" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="7f87a3d8-0191-4f0d-8fbd-2eaf85ed05eb"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -361,7 +365,7 @@ WHERE
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="225" y="0" width="156" height="20"/>
+				<reportElement x="225" y="0" width="156" height="20" uuid="771611ff-4091-4e07-8798-167e7a495426"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -369,10 +373,10 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{apellidos_al}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{apellidos_al}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="0" width="100" height="20"/>
+				<reportElement x="125" y="0" width="100" height="20" uuid="5e0ce6e0-f916-42f0-bfd4-962873f4eac0"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -380,10 +384,10 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="381" y="0" width="137" height="20"/>
+				<reportElement x="381" y="0" width="137" height="20" uuid="1e7fa35a-c75a-4da1-883d-f9de2650f832"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -391,10 +395,10 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombres_al}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombres_al}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="81" y="0" width="44" height="20"/>
+				<reportElement x="81" y="0" width="44" height="20" uuid="08b065c1-20c7-4da9-970b-939be906c75f"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -402,10 +406,10 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}.toString()]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="960" y="0" width="100" height="20"/>
+				<reportElement x="960" y="0" width="100" height="20" uuid="8df6a0d2-9410-4957-addc-55d055b97f6e"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -422,10 +426,10 @@ WHERE
 					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporte_Aporte1.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="1060" y="0" width="110" height="20"/>
+				<reportElement x="1060" y="0" width="110" height="20" uuid="a29ca73d-5f61-4abe-b88a-7516f2578928"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -442,10 +446,10 @@ WHERE
 					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteExamenInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement x="518" y="0" width="156" height="20"/>
+				<reportElement x="518" y="0" width="156" height="20" uuid="598388b9-d52b-4d7a-9408-b260e7c47080"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -453,10 +457,10 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_celular}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_celular}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="674" y="0" width="130" height="20"/>
+				<reportElement x="674" y="0" width="130" height="20" uuid="2310e7bc-336d-4c24-b3bf-81c887c74bda"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -464,10 +468,10 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_telefono}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_telefono}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="804" y="0" width="156" height="20"/>
+				<reportElement x="804" y="0" width="156" height="20" uuid="7553b02c-68db-44e8-8a0b-99fbb630b75a"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -475,10 +479,10 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{persona_correo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{persona_correo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1278" y="0" width="54" height="20"/>
+				<reportElement x="1278" y="0" width="54" height="20" uuid="c17b69b3-487c-43c9-bb14-07db8af3b95e"/>
 				<box>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
 					<leftPen lineWidth="0.75" lineColor="#000000"/>
@@ -486,10 +490,10 @@ WHERE
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{% Faltas}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{% Faltas}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="1170" y="0" width="108" height="20"/>
+				<reportElement x="1170" y="0" width="108" height="20" uuid="71ed51fd-c193-442e-bbbf-7eeb5baeb644"/>
 				<subreportParameter name="id_alumno">
 					<subreportParameterExpression><![CDATA[$F{id_alumno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -506,7 +510,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$F{materia_nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SubReporteNotaInterciclo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -519,41 +523,41 @@ WHERE
 	<summary>
 		<band height="112" splitType="Stretch">
 			<staticText>
-				<reportElement x="874" y="91" width="234" height="20"/>
+				<reportElement x="874" y="91" width="234" height="20" uuid="e9b11b92-b115-4727-90e8-a92403d236bb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
 			</staticText>
 			<line>
-				<reportElement x="357" y="59" width="234" height="1"/>
+				<reportElement x="357" y="59" width="234" height="1" uuid="60ab1085-2917-44ba-98fb-42a7a64a9bab"/>
 			</line>
 			<staticText>
-				<reportElement x="424" y="91" width="100" height="20"/>
+				<reportElement x="424" y="91" width="100" height="20" uuid="54d545c5-7995-4abe-b673-ab6e92a6e5c1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="1312" y="51" width="166" height="20"/>
+				<reportElement x="1312" y="51" width="166" height="20" uuid="b87a9189-ff3c-48d1-86c8-2cf6f8e9a2da"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="874" y="60" width="234" height="1"/>
+				<reportElement x="874" y="60" width="234" height="1" uuid="ade9dbf6-051c-42c6-a94a-cffd102180bf"/>
 			</line>
 			<textField>
-				<reportElement x="874" y="71" width="234" height="20"/>
+				<reportElement x="874" y="71" width="234" height="20" uuid="3bd59f98-05c2-4b73-9e16-0d5b3cf16687"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="357" y="71" width="234" height="20"/>
+				<reportElement x="357" y="71" width="234" height="20" uuid="1519f25e-6e0c-4fe4-97a4-3048a6fc55c2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
