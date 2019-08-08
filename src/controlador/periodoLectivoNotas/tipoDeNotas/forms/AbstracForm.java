@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import vista.periodoLectivoNotas.FrmTipoNota;
+import vista.tipoDeNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
 
 /**

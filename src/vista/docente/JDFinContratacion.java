@@ -206,16 +206,11 @@ public class JDFinContratacion extends javax.swing.JDialog {
 
         tpFrm.addTab("Fin Contrato", jPanel3);
 
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel3.setText("<html>Advertencia!! Al dar de baja a un docente tenga en cuenta que se eliminarán los cursos a los cuáles esta asignado el docente</html>");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 0, 457, 38));
 
         jLabel4.setText("Seleccione en que período desea dar de baja al docente");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 45, -1, -1));
 
         Cbx_Periodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
-        jPanel4.add(Cbx_Periodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 69, 229, -1));
 
         tblMateriasCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -235,14 +230,51 @@ public class JDFinContratacion extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblMateriasCursos);
 
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 123, 457, 121));
-
         Lbl_ErrPeriodos.setForeground(new java.awt.Color(255, 0, 0));
         Lbl_ErrPeriodos.setText("Seleccione una Opción");
-        jPanel4.add(Lbl_ErrPeriodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 140, -1));
 
         btnReasignarMateria.setText("Reasignar Materia");
-        jPanel4.add(btnReasignarMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 68, -1, -1));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel4))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Lbl_ErrPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(91, 91, 91)
+                .addComponent(btnReasignarMateria))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel4)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(Cbx_Periodos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(Lbl_ErrPeriodos))
+                    .addComponent(btnReasignarMateria))
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         tpFrm.addTab("Lista de Cursos", jPanel4);
 

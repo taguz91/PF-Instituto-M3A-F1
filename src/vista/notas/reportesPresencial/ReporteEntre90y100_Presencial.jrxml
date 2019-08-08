@@ -46,9 +46,9 @@
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
 	max("MallaAlumno".malla_almn_num_matricula) AS "N° Matricula"
-	
 
-	
+
+
 FROM
 	"AlumnoCurso"
 	INNER JOIN "Cursos" ON "AlumnoCurso".id_curso = "Cursos".id_curso
@@ -61,10 +61,10 @@ FROM
 	INNER JOIN "Carreras" ON "public"."Carreras".id_carrera = "public"."Materias".id_carrera
 	INNER JOIN "Personas" ON "public"."Personas".id_persona = "public"."Docentes".id_persona
 	INNER JOIN "Docentes" doc_coor ON doc_coor.id_docente = "public"."Carreras".id_docente_coordinador
-  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona	
+  INNER JOIN "Personas" per_coor ON per_coor.id_persona = doc_coor.id_persona
 	INNER JOIN "AlumnosCarrera" ON "AlumnosCarrera".id_alumno = "Alumnos".id_alumno
 	INNER JOIN "MallaAlumno" on "AlumnosCarrera".id_almn_carrera = "MallaAlumno".id_almn_carrera
-	
+
 WHERE
 	"Cursos".id_docente = $P{id_docente}
 	AND "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}
@@ -87,7 +87,7 @@ WHERE
   doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
   per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
 	"AlumnoCurso".almn_curso_estado
-	
+
 	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
@@ -107,86 +107,96 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="119" splitType="Stretch">
+		<band height="133" splitType="Stretch">
 			<staticText>
-				<reportElement x="479" y="45" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
+				<reportElement x="479" y="56" width="58" height="20" uuid="60b069dd-9616-41c5-ad15-a476ca94a3f3"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Docente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="842" height="25" forecolor="#006699" uuid="d02b93e7-c08e-4cc8-bd05-0acafa9e867e"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="11" width="842" height="25" forecolor="#006699" uuid="d02b93e7-c08e-4cc8-bd05-0acafa9e867e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="479" y="64" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
+				<reportElement x="479" y="75" width="58" height="20" uuid="773cdbc7-2d67-4b2d-923e-430c27ff122f"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Asignatura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="64" width="53" height="20" uuid="382793f5-30cc-4722-8a77-ccb11af825b8"/>
+				<reportElement x="124" y="75" width="53" height="20" uuid="382793f5-30cc-4722-8a77-ccb11af825b8"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Carrera:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="267" y="25" width="293" height="20" uuid="bdefef97-60d2-472b-be14-fa648fe5dc63"/>
+				<reportElement x="267" y="36" width="293" height="20" uuid="bdefef97-60d2-472b-be14-fa648fe5dc63"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[REGISTRO DE CALIFICACIONES ENTRE 90 Y 100]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="45" width="83" height="20" uuid="49daa8a0-afb9-4d68-8a78-744bbf711e79"/>
+				<reportElement x="124" y="56" width="83" height="20" uuid="49daa8a0-afb9-4d68-8a78-744bbf711e79"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Período Lectivo:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="114" width="842" height="1" uuid="a316d234-fe6b-40c8-b832-c8246b6d44ae"/>
+				<reportElement x="0" y="121" width="842" height="1" uuid="a316d234-fe6b-40c8-b832-c8246b6d44ae"/>
 			</line>
 			<staticText>
-				<reportElement x="124" y="84" width="41" height="20" uuid="43653b2c-95ec-495b-916f-4f536123fdc8"/>
+				<reportElement x="124" y="95" width="41" height="20" uuid="43653b2c-95ec-495b-916f-4f536123fdc8"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Ciclo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="207" y="45" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="207" y="56" width="262" height="20" uuid="0dac02c6-2523-4abd-ac92-d91c521ed294"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="177" y="64" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="177" y="75" width="292" height="20" uuid="230294ad-35be-40dd-8e95-0e55fee39f99"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="165" y="84" width="43" height="20" uuid="5eca4a66-5a51-4f50-ad15-fb9586093722"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="165" y="95" width="43" height="20" uuid="5eca4a66-5a51-4f50-ad15-fb9586093722"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="537" y="45" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="537" y="56" width="295" height="20" uuid="4a3f5717-83e7-492a-b3d5-745ebcf708fe"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="537" y="65" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement x="537" y="76" width="295" height="20" uuid="fba39dd8-de72-48c9-bc89-cde5e6bc71a3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="14" y="24" width="108" height="80" uuid="8dd9a48d-d97f-4e7f-ab44-72a439478b31"/>
+				<reportElement x="14" y="35" width="108" height="80" uuid="8dd9a48d-d97f-4e7f-ab44-72a439478b31"/>
 				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 		</band>
@@ -391,43 +401,47 @@ WHERE
 		<band height="4" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="164" splitType="Stretch">
+		<band height="122" splitType="Stretch">
 			<line>
-				<reportElement x="435" y="84" width="234" height="1" uuid="23a5f1ae-f2c9-4de0-819e-290cf0376961"/>
+				<reportElement x="435" y="53" width="234" height="1" uuid="23a5f1ae-f2c9-4de0-819e-290cf0376961"/>
 			</line>
 			<staticText>
-				<reportElement x="124" y="115" width="234" height="20" uuid="7cc3bb4d-5d07-45d9-b43d-af0f5448da39"/>
+				<reportElement x="124" y="84" width="234" height="20" uuid="7cc3bb4d-5d07-45d9-b43d-af0f5448da39"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="435" y="115" width="234" height="20" uuid="df2fd3d5-651a-4852-9752-911e08b757fd"/>
+				<reportElement x="435" y="84" width="234" height="20" uuid="df2fd3d5-651a-4852-9752-911e08b757fd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
 			</staticText>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="669" y="115" width="153" height="20" uuid="b7ceba3e-e27a-4343-9d4d-95aa362f61d5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
-			</textField>
 			<line>
-				<reportElement x="124" y="83" width="234" height="1" uuid="1bc28f95-a45d-46fd-9f09-65fb6524440c"/>
+				<reportElement x="124" y="52" width="234" height="1" uuid="1bc28f95-a45d-46fd-9f09-65fb6524440c"/>
 			</line>
 			<textField>
-				<reportElement x="124" y="95" width="234" height="20" uuid="513e85b6-ec93-4ff8-9cd7-2321a13b9910"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="124" y="64" width="234" height="20" uuid="513e85b6-ec93-4ff8-9cd7-2321a13b9910"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="435" y="95" width="234" height="20" uuid="576c1621-4328-4be2-8d28-cec5f31dd865"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="435" y="64" width="234" height="20" uuid="576c1621-4328-4be2-8d28-cec5f31dd865"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="669" y="84" width="164" height="20" uuid="3ce6f313-86b6-4c6f-befa-9a04e19d4e47"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

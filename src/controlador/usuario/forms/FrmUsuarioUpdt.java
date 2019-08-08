@@ -3,6 +3,7 @@ package controlador.usuario.forms;
 import controlador.Libraries.Effects;
 import controlador.usuario.VtnUsuarioCTR;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 
@@ -44,7 +45,7 @@ public class FrmUsuarioUpdt extends AbstracForm {
         if (validarFormulario()) {
             if (getObj().editar(Pk)) {
                 String message = "SE HA EDITADO AL USUARIO: " + modelo.getUsername();
-                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, Effects.SUCCESS_COLOR, 3);
+                Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), message, CONS.SUCCESS_COLOR, 3);
                 vista.dispose();
                 destruirVariables();
                 //vtnPadre.cargarTabla(modelo.selectAll());

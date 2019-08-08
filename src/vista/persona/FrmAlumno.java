@@ -97,69 +97,45 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Formulario Alumno");
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jLabel2.setText("Cédula *");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, 20));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 860, 10));
-        jPanel1.add(Txt_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 480, -1));
 
         jLabel3.setText("Nombre *");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, 20));
 
         Txt_Cedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_CedulaActionPerformed(evt);
             }
         });
-        jPanel1.add(Txt_Cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 180, -1));
 
         CmBx_TipoBachillerato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "BGU", "BI", "TECNICO", "TECNICO PRODUCTIVO", "OTRO" }));
-        jPanel1.add(CmBx_TipoBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 270, -1));
 
         Txt_TlSuperior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_TlSuperiorActionPerformed(evt);
             }
         });
-        jPanel1.add(Txt_TlSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 270, -1));
 
         jLabel8.setText("Titulo de Bachiller *");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, 20));
 
         jLabel5.setText("Tipo de Bachiller *");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, -1));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 860, 7));
 
         CmBx_SecEconomico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|" }));
-        jPanel1.add(CmBx_SecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 270, -1));
 
         CmBx_ForMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "JARDÍN DE INFANTES", "PRIMARIA", "EDUCACIÓN BÁSICA", "SECUNDARIA", "EDUCACIÓN MEDIA", "EDUCACIÓN SUPERIOR", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "POST-GRADO", "NINGUNO" }));
-        jPanel1.add(CmBx_ForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, 270, -1));
 
         CmBx_Parentesco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "MADRE", "PADRE", "HERMANO/A", "ESPOSO/A", "OTRO" }));
-        jPanel1.add(CmBx_Parentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 390, 270, -1));
 
         jLabel21.setText("Parentesco Contacto *");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, -1, 20));
 
         jLabel20.setText("Formacion Madre *");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, -1, 20));
 
         jLabel15.setText("Sector Económico ");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, -1, 20));
 
         jLabel6.setText("Año de Bachiller *");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, 20));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 870, 10));
 
         Btn_Cancelar.setText("Cancelar");
-        jPanel1.add(Btn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, 90, -1));
 
         Btn_Guardar.setText("Guardar");
-        jPanel1.add(Btn_Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 460, 100, -1));
-        jPanel1.add(Txt_ConEmergency, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 250, -1));
-        jPanel1.add(Txt_NomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 250, -1));
 
         CmBx_ForPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CENTRO DE ALFABETIZACIÓN", "JARDÍN DE INFANTES", "PRIMARIA", "EDUCACIÓN BÁSICA", "SECUNDARIA", "EDUCACIÓN MEDIA", "EDUCACIÓN SUPERIOR", "SUPERIOR NO UNIVERSITARIO", "SUPERIOR UNIVERSITARIO", "POST-GRADO", "NINGUNO" }));
         CmBx_ForPadre.addActionListener(new java.awt.event.ActionListener() {
@@ -167,125 +143,329 @@ public class FrmAlumno extends javax.swing.JInternalFrame {
                 CmBx_ForPadreActionPerformed(evt);
             }
         });
-        jPanel1.add(CmBx_ForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 250, -1));
 
         jLabel14.setText("Trabaja");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, 20));
 
         ChkBx_Trabaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ChkBx_TrabajaActionPerformed(evt);
             }
         });
-        jPanel1.add(ChkBx_Trabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, -1, -1));
-        jPanel1.add(Txt_Ocupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 250, -1));
 
         jLabel13.setText("Ocupacion *");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel12.setText("Bono de Desarrollo Humano");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
-        jPanel1.add(ChkBx_Pension, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
 
         jLabel19.setText("Formacion Padre *");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         jLabel22.setText("Nombre Contacto *");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, 20));
 
         jLabel23.setText("Contacto Emergencia *");
-        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, 20));
-        jPanel1.add(ChkBx_EdcSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
 
         jLabel7.setText("Educación Superior: ");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 20));
 
         jLabel4.setText("Tipo de Colegio *");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 20));
 
         CmBx_TipoColegio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "FISCAL", "FISCOMISIONAL", "PRIVADA", "MUNICIPAL", "OTROS" }));
-        jPanel1.add(CmBx_TipoColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 250, -1));
 
         Btn_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
-        jPanel1.add(Btn_Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 31, -1));
 
         Lbl_ErrCedula.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrCedula.setText("Ingrese solo números");
-        jPanel1.add(Lbl_ErrCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 160, -1));
 
         Lbl_ErrTipColegio.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipColegio.setText("Seleccione un Colegio");
-        jPanel1.add(Lbl_ErrTipColegio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 130, -1));
 
         Lbl_ErrTipBachillerato.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipBachillerato.setText("Seleccione un Bachillerato");
-        jPanel1.add(Lbl_ErrTipBachillerato, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, -1, -1));
 
         Lbl_ErrTiSuperior.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTiSuperior.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrTiSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, -1, -1));
 
         Lbl_ErrOcupacion.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrOcupacion.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrOcupacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 130, -1));
 
         Lbl_ErrSecEconomico.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrSecEconomico.setText("Seleccione un Sector");
-        jPanel1.add(Lbl_ErrSecEconomico, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 290, 190, -1));
 
         Lbl_ErrForPadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForPadre.setText("Seleccione la Formación del Padre");
-        jPanel1.add(Lbl_ErrForPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 210, -1));
 
         Lbl_ErrForMadre.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrForMadre.setText("Seleccione la Formacion de la Madre");
-        jPanel1.add(Lbl_ErrForMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, 250, -1));
 
         Lbl_ErrNomContacto.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrNomContacto.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrNomContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 120, -1));
 
         Lbl_ErrParentesco.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrParentesco.setText("Seleccione un Parentesco");
-        jPanel1.add(Lbl_ErrParentesco, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, 250, -1));
 
         Lbl_ErrConEmergencia.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrConEmergencia.setText("Ingrese solo números");
-        jPanel1.add(Lbl_ErrConEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 170, -1));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 870, 10));
 
         Cbx_Identificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "|SELECCIONE|", "CÉDULA", "PASAPORTE" }));
-        jPanel1.add(Cbx_Identificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 140, -1));
 
         jLabel1.setText("Tipo de Identificación *");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         Lbl_ErrTipoIdenti.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrTipoIdenti.setText("Seleccione un tipo de Identificación");
-        jPanel1.add(Lbl_ErrTipoIdenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 210, -1));
 
         Lbl_TSuperior.setText("Título Superior");
-        jPanel1.add(Lbl_TSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         Txt_TituloSuperior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Txt_TituloSuperiorActionPerformed(evt);
             }
         });
-        jPanel1.add(Txt_TituloSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 250, -1));
 
         Lbl_ErrorTSuperior.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrorTSuperior.setText("Ingrese solo letras");
-        jPanel1.add(Lbl_ErrorTSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
-        jPanel1.add(Txt_Anios, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 230, 120, -1));
 
         Lbl_AbvTitulo.setText("Abreviatura del Título");
-        jPanel1.add(Lbl_AbvTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, -1));
-        jPanel1.add(Txt_Abreviatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 120, -1));
 
         Lbl_ErrAnio.setForeground(new java.awt.Color(204, 0, 0));
         Lbl_ErrAnio.setText("Ingrese un valor válido");
-        jPanel1.add(Lbl_ErrAnio, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(39, 39, 39)
+                .addComponent(Cbx_Identificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel3)
+                .addGap(24, 24, 24)
+                .addComponent(Txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(Lbl_ErrTipoIdenti, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Txt_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_ErrCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(Btn_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4)
+                .addGap(58, 58, 58)
+                .addComponent(CmBx_TipoColegio, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addGap(54, 54, 54)
+                .addComponent(CmBx_TipoBachillerato, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrTipColegio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(290, 290, 290)
+                .addComponent(Lbl_ErrTipBachillerato))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel7)
+                .addGap(22, 22, 22)
+                .addComponent(ChkBx_EdcSuperior)
+                .addGap(279, 279, 279)
+                .addComponent(jLabel8)
+                .addGap(48, 48, 48)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Txt_TlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_ErrTiSuperior)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(Lbl_TSuperior)
+                .addGap(71, 71, 71)
+                .addComponent(Txt_TituloSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(Lbl_AbvTitulo)
+                .addGap(37, 37, 37)
+                .addComponent(Txt_Abreviatura, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrorTSuperior))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel13)
+                .addGap(81, 81, 81)
+                .addComponent(Txt_Ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel6)
+                .addGap(55, 55, 55)
+                .addComponent(Txt_Anios, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrOcupacion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(290, 290, 290)
+                .addComponent(Lbl_ErrAnio))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel12)
+                .addGap(38, 38, 38)
+                .addComponent(ChkBx_Pension)
+                .addGap(119, 119, 119)
+                .addComponent(jLabel14)
+                .addGap(23, 23, 23)
+                .addComponent(ChkBx_Trabaja)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel15)
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CmBx_SecEconomico, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_ErrSecEconomico, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel19)
+                .addGap(51, 51, 51)
+                .addComponent(CmBx_ForPadre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel20)
+                .addGap(49, 49, 49)
+                .addComponent(CmBx_ForMadre, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrForPadre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(210, 210, 210)
+                .addComponent(Lbl_ErrForMadre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel22)
+                .addGap(47, 47, 47)
+                .addComponent(Txt_NomContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrNomContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160)
+                .addComponent(jLabel21)
+                .addGap(30, 30, 30)
+                .addComponent(CmBx_Parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel23)
+                .addGap(29, 29, 29)
+                .addComponent(Txt_ConEmergency, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(170, 170, 170)
+                .addComponent(Lbl_ErrParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(Lbl_ErrConEmergencia, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(640, 640, 640)
+                .addComponent(Btn_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(Btn_Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(Cbx_Identificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Lbl_ErrTipoIdenti)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Txt_Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(Lbl_ErrCedula))
+                    .addComponent(Btn_Buscar))
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmBx_TipoColegio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(CmBx_TipoBachillerato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_ErrTipColegio)
+                    .addComponent(Lbl_ErrTipBachillerato))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ChkBx_EdcSuperior)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Txt_TlSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(Lbl_ErrTiSuperior)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_TSuperior)
+                    .addComponent(Txt_TituloSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_AbvTitulo)
+                    .addComponent(Txt_Abreviatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Lbl_ErrorTSuperior)
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(Txt_Ocupacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_Anios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_ErrOcupacion)
+                    .addComponent(Lbl_ErrAnio))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ChkBx_Pension)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ChkBx_Trabaja)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(CmBx_SecEconomico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(Lbl_ErrSecEconomico)))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19)
+                    .addComponent(CmBx_ForPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmBx_ForMadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_ErrForPadre)
+                    .addComponent(Lbl_ErrForMadre))
+                .addGap(16, 16, 16)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_NomContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_ErrNomContacto)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CmBx_Parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_ConEmergency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_ErrParentesco))
+                .addComponent(Lbl_ErrConEmergencia)
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Btn_Cancelar)
+                    .addComponent(Btn_Guardar)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

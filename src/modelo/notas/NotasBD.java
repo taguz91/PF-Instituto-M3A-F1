@@ -42,7 +42,8 @@ public class NotasBD extends NotasMD {
                 + "\"public\".\"Notas\"\n"
                 + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
                 + "WHERE\n"
-                + "\"public\".\"Notas\".id_almn_curso = ?";
+                + "\"public\".\"Notas\".id_almn_curso = ?\n"
+                + "ORDER BY \"Notas\".nota_valor ASC";
 
         List<NotasBD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -51,7 +52,6 @@ public class NotasBD extends NotasMD {
         try {
             conn = pool.getConnection();
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
-            System.out.println(pool.getStmt().toString());
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
 

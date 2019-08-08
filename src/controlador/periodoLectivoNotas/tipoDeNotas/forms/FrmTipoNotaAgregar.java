@@ -5,8 +5,9 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import vista.periodoLectivoNotas.FrmTipoNota;
+import vista.tipoDeNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;
 
 /**
@@ -53,7 +54,7 @@ public class FrmTipoNotaAgregar extends AbstracForm {
                     .forEach(obj -> {
                         obj.insertar();
                     });
-            Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA AGREGADO  LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), Effects.SUCCESS_COLOR, 3);
+            Effects.setTextInLabel(vtnPadre.getVista().getLblEstado(), "SE HA AGREGADO  LOS TIPOS DE NOTA PARA " + vista.getCmbPeriodoLectivo().getSelectedItem().toString(), CONS.SUCCESS_COLOR, 3);
         }).start();
         vista.dispose();
     }

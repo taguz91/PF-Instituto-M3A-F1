@@ -143,3 +143,41 @@ WHERE
 ORDER BY
 "Personas".persona_primer_apellido ASC
 ;
+
+
+DELETE FROM "Notas" WHERE "Notas".id_nota IN (SELECT
+	"public"."Notas".id_nota 
+FROM
+	"public"."Notas"
+	INNER JOIN "public"."TipoDeNota" ON "public"."Notas".id_tipo_nota = "public"."TipoDeNota".id_tipo_nota
+	INNER JOIN "public"."AlumnoCurso" ON "public"."AlumnoCurso".id_almn_curso = "Notas".id_almn_curso
+	INNER JOIN "public"."Cursos" ON "public"."Cursos".id_curso = "AlumnoCurso".id_curso 
+WHERE
+	"Cursos".id_prd_lectivo = 21 
+	AND "TipoDeNota".id_prd_lectivo != "Cursos".id_prd_lectivo 
+ORDER BY
+	"public"."TipoDeNota".id_prd_lectivo);
+
+
+
+
+
+SELECT
+"public"."AlumnoCurso".id_almn_curso,
+"public"."Personas".persona_identificacion,
+"public"."Personas".persona_primer_apellido,
+"public"."Personas".persona_segundo_apellido,
+"public"."Personas".persona_primer_nombre,
+"public"."Personas".persona_segundo_nombre,
+"public"."Materias".materia_nombre
+FROM
+"public"."AlumnoCurso"
+INNER JOIN "public"."Cursos" ON "public"."Cursos".id_curso = "public"."AlumnoCurso".id_curso
+INNER JOIN "public"."Alumnos" ON "public"."AlumnoCurso".id_alumno = "public"."Alumnos".id_alumno
+INNER JOIN "public"."Personas" ON "public"."Alumnos".id_persona = "public"."Personas".id_persona
+INNER JOIN "public"."Materias" ON "public"."Cursos".id_materia = "public"."Materias".id_materia
+
+WHERE
+	"Cursos".id_prd_lectivo = 22 
+	AND 0 = ( SELECT "count" ( * ) FROM "Notas" WHERE "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso )
+	ORDER BY "AlumnoCurso".id_almn_curso;

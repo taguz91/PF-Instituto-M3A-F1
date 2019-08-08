@@ -6,11 +6,14 @@ import controlador.excepciones.BreakException;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.UsuarioBD;
+import modelo.usuario.UsuarioMD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.FrmUsuario;
 
@@ -24,6 +27,7 @@ public abstract class AbstracForm {
     protected FrmUsuario vista;
     protected UsuarioBD modelo;
     protected VtnUsuarioCTR vtnPadre;
+    private List<UsuarioMD> usuarios;
 
     //LISTAS
     protected Map<String, PersonaMD> listaPersonas;
@@ -46,6 +50,14 @@ public abstract class AbstracForm {
         cargarComoPersonas();
         activarFormulario(true);
 
+    }
+
+    public List<UsuarioMD> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<UsuarioMD> usuarios) {
+        this.usuarios = usuarios;
     }
 
     private void InitEventos() {
@@ -77,6 +89,30 @@ public abstract class AbstracForm {
         });
 
         vista.getBtnGuardar().addActionListener(e -> guardar());
+
+        vista.getTxtBuscarPer().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String cedula = vista.getTxtBuscarPer().getText();
+
+                vista.getTxtUsername().setText(cedula);
+
+            }
+
+        });
+
+        vista.getTxtUsername().addCaretListener(e -> {
+            String username = vista.getTxtUsername().getText();
+            if (isCreated(username)) {
+                vista.getTxtUsername().setBorder(CONS.ERR_BORDER);
+                vista.getLblError().setVisible(true);
+                vista.getBtnGuardar().setEnabled(false);
+            } else {
+                vista.getTxtUsername().setBorder(CONS.DEFAULT_BORDER);
+                vista.getLblError().setVisible(false);
+                vista.getBtnGuardar().setEnabled(true);
+            }
+        });
 
     }
 
@@ -168,6 +204,11 @@ public abstract class AbstracForm {
         return false;
     }
 
+    private boolean isCreated(String username) {
+        return usuarios.stream().map(c -> c.getUsername()).anyMatch(item -> item.equals(username));
+    }
+
     //EVENTOS
     public abstract void guardar();
+
 }

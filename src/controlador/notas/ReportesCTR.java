@@ -154,6 +154,23 @@ public class ReportesCTR {
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Tabla Final", parametros);
 
     }
+    
+        public void generarReporteInterciclo() {
+        String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
+        String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
+        String materia = vista.getCmbAsignatura().getSelectedItem().toString();
+
+        String path = "/vista/notas/reportesPresencial/ReporteInterciclo.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", idDocente);
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Interciclo", parametros);
+    }
 
     /* public void ReportePrueba2(){
          String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();

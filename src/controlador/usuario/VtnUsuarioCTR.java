@@ -62,7 +62,12 @@ public class VtnUsuarioCTR {
     //METODOS DE APOYO
     private void InitEventos() {
 
-        vista.getBtnIngresar().addActionListener(e -> new FrmUsuarioAdd(desktop, this).Init());
+        vista.getBtnIngresar().addActionListener(e -> {
+            FrmUsuarioAdd form = new FrmUsuarioAdd(desktop, this);
+            form.Init();
+            form.setUsuarios(listaUsuarios);
+
+        });
         vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
         vista.getBtnEditar().addActionListener(e -> btnEditar(e));
         vista.getBtnActualizar().addActionListener(e -> {
@@ -76,7 +81,6 @@ public class VtnUsuarioCTR {
                 cargarTablaFilter(vista.getTxtBuscar().getText());
             }
         });
-        
 
     }
 
@@ -209,6 +213,7 @@ public class VtnUsuarioCTR {
             FrmUsuarioUpdt form = new FrmUsuarioUpdt(desktop, this);
             form.Init();
             form.setModelo(getModelo());
+            form.setUsuarios(listaUsuarios);
 
         } else {
             JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
@@ -252,12 +257,12 @@ public class VtnUsuarioCTR {
 
     private void InitPermisos() {
         vista.getBtnIngresar().getAccessibleContext().setAccessibleName("Usuarios-Ingresar");
-       vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Usuarios-Actualizar");
-       vista.getBtnEditar().getAccessibleContext().setAccessibleName("Usuarios-Editar");
-       vista.getBtnAsignarRoles().getAccessibleContext().setAccessibleName("Usuarios-Asignar Roles");
-       vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Usuarios-Eliminar");
-       vista.getBtnVerRoles().getAccessibleContext().setAccessibleName("Usuarios-Ver Roles");
-       
+        vista.getBtnActualizar().getAccessibleContext().setAccessibleName("Usuarios-Actualizar");
+        vista.getBtnEditar().getAccessibleContext().setAccessibleName("Usuarios-Editar");
+        vista.getBtnAsignarRoles().getAccessibleContext().setAccessibleName("Usuarios-Asignar Roles");
+        vista.getBtnEliminar().getAccessibleContext().setAccessibleName("Usuarios-Eliminar");
+        vista.getBtnVerRoles().getAccessibleContext().setAccessibleName("Usuarios-Ver Roles");
+
         CONS.activarBtns(vista.getBtnIngresar(), vista.getBtnActualizar(),
                 vista.getBtnEditar(), vista.getBtnAsignarRoles(),
                 vista.getBtnEliminar(), vista.getBtnVerRoles());

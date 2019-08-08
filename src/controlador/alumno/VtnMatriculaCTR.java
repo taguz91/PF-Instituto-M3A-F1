@@ -89,6 +89,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private void clickAnular() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
+            if(CONS.M_DESARROLLO){
+                JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(ctrPrin, matriculas.get(posFila));
+                ctr.iniciar();
+            }
+            
             if (validarFecha()) {
                 JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(ctrPrin, matriculas.get(posFila));
                 ctr.iniciar();

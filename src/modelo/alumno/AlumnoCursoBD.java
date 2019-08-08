@@ -124,7 +124,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	WHERE c.id_curso = ac.id_curso\n"
                 + "	AND m.id_materia = c.id_materia\n"
                 + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + " "
-                + "     AND almn_curso_estado <> 'RETIRADO';";
+                + "     AND (almn_curso_estado <> 'RETIRADO' OR  almn_curso_activo = false);";
         PreparedStatement ps = conecta.getPS(sql);
         ArrayList<AlumnoCursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(ps);
@@ -375,12 +375,10 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "\"public\".\"Cursos\".id_docente = ? AND\n"
                 + "\"public\".\"PeriodoLectivo\".id_prd_lectivo = ? AND\n"
                 + "\"public\".\"Cursos\".curso_nombre = ? AND\n"
-                + "\"public\".\"Materias\".materia_nombre = ?\n"
-                //+ "\"public\".\"AlumnoCurso\"almn_curso_activo IS TRUE"
+                + "\"public\".\"Materias\".materia_nombre = ? AND\n"
+                + "\"public\".\"AlumnoCurso\".almn_curso_activo IS TRUE\n"
                 + "ORDER BY\n"
                 + "\"public\".\"Personas\".persona_primer_apellido, \"public\".\"Personas\".persona_segundo_apellido ASC";
-
-        System.out.println(SELECT);
 
         List<AlumnoCursoBD> lista = new ArrayList();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -393,6 +391,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
             conn = pool.getConnection();
             rst = pool.ejecutarQuery(SELECT, conn, parametros);
             NotasBD notasBD = new NotasBD();
+            System.out.println(pool.getStmt().toString());
             while (rst.next()) {
                 AlumnoCursoBD alumnoCurso = new AlumnoCursoBD();
 
@@ -419,6 +418,13 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 alumnoCurso.setAlumno(alumno);
 
                 List<NotasBD> notas = notasBD.selectWhere(alumnoCurso);
+
+                if (notas.isEmpty()) {
+                    System.out.println("\nSIN NOTAS-->" + alumno.getPrimerNombre());
+                    System.out.println("" + alumnoCurso.getId());
+                    System.out.println("");
+                    System.out.println("");
+                }
 
                 alumnoCurso.setNotas(notas);
 

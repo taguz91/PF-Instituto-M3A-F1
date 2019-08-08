@@ -77,9 +77,9 @@
                                           <Component id="lblHoras" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnVerNotas" min="-2" pref="100" max="-2" attributes="0"/>
-                                          <Component id="btnImprimir" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btnVerNotas" max="32767" attributes="0"/>
+                                          <Component id="btnImprimir" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -95,7 +95,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -280,11 +280,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVerNotas">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Notas"/>
+        <Property name="text" type="java.lang.String" value="Cargar Notas"/>
         <Property name="enabled" type="boolean" value="false"/>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="null"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtBuscar">

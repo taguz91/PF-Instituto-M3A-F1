@@ -1,5 +1,6 @@
 package modelo;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 import java.util.Arrays;
@@ -7,6 +8,9 @@ import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -28,6 +32,12 @@ public class CONS {
             V_NOTAS = "Notas", V_FECHA = "Fecha";
     //Direccion de las propiedades de version  
     public static final String V_DIR = "version.properties";
+
+    public static Color ERROR_COLOR = new Color(159, 53, 39);
+    public static Color SUCCESS_COLOR = new Color(10, 186, 52);
+
+    public static Border ERR_BORDER = new LineBorder(ERROR_COLOR, 1);
+    public static Border DEFAULT_BORDER = UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border");
 
     //Obtenemos la direccion 
     public static String getDir() {
