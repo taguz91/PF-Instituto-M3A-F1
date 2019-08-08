@@ -3,6 +3,20 @@
 	<property name="ireport.zoom" value="1.0514816984441842"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="Aprobado">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#006600" backcolor="#66FF66"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("REPROBADO")]]></conditionExpression>
+			<style mode="Opaque" forecolor="#990000" backcolor="#FF9999"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{Estado}.equals("RETIRADO")]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="id_docente" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -471,7 +485,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Asistencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="629" y="0" width="54" height="10" uuid="2cea05e5-dd27-43a3-9a41-e60dd1824f94"/>
+				<reportElement style="Aprobado" x="629" y="0" width="54" height="10" uuid="2cea05e5-dd27-43a3-9a41-e60dd1824f94"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
