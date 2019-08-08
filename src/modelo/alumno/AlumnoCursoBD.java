@@ -124,7 +124,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                 + "	WHERE c.id_curso = ac.id_curso\n"
                 + "	AND m.id_materia = c.id_materia\n"
                 + "	AND id_alumno = " + idAlm + " AND id_prd_lectivo = " + idPrd + " "
-                + "     AND almn_curso_estado <> 'RETIRADO';";
+                + "     AND (almn_curso_estado <> 'RETIRADO' OR  almn_curso_activo = false);";
         PreparedStatement ps = conecta.getPS(sql);
         ArrayList<AlumnoCursoMD> cursos = new ArrayList();
         ResultSet rs = conecta.sql(ps);
