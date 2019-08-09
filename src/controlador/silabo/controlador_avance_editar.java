@@ -238,7 +238,7 @@ public class controlador_avance_editar {
                         avanceSi.getBntGuardar().setEnabled(true);
                     }
                 }else{
-                     JOptionPane.showMessageDialog(null, "         REVISE INFORMACION INCOMPLETA\nY/O REPORTE DE CICLO O INTERCICLO YA EXISTENTE", "Aviso", JOptionPane.ERROR_MESSAGE);
+                     JOptionPane.showMessageDialog(null, "     REVISE INFORMACION INCOMPLETA\nY/O REPORTE YA EXISTENTE O APROBADO", "Aviso", JOptionPane.ERROR_MESSAGE);
                 }
 
                 
@@ -282,7 +282,25 @@ public class controlador_avance_editar {
             }
         }
        }
-       return valid;
-   }
+       if (avanceSi.getCbxTipoReporte().getSelectedIndex()==1) {
+        count=SeguimientoSilaboBD.consultarSeguimientoAprobacion(conexion,seguimientoS.getId_seguimientoS(), curso.getId());
+           for(SeguimientoSilaboMD ss:count){
+               if (ss.getEstado_seguimiento()==1 ) {
+                   valid=false;
+               }
+           }
+       }
+       if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Fin de Ciclo")) {
+        count=SeguimientoSilaboBD.consultarSeguimientoAprobacion(conexion,seguimientoS.getId_seguimientoS(), curso.getId());
+           for(SeguimientoSilaboMD ss:count){
+               if (ss.getEstado_seguimiento()==1 ) {
+                   valid=false;
+               }
+           }
+       }
+       
    
+       return valid;
+   
+}
 }

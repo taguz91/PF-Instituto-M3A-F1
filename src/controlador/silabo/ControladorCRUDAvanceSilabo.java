@@ -86,14 +86,15 @@ public class ControladorCRUDAvanceSilabo {
         seguimiento.getBtnEditar().addActionListener((ActionEvent ae)->{
             int row=seguimiento.getTlbAvanceSilabo().getSelectedRow();
             if (row!=-1) {
-                if (!seguimiento.getTlbAvanceSilabo().getValueAt(row, 4).equals("Aprobado")) {
-                    seguimiento.dispose();
+               // if (!seguimiento.getTlbAvanceSilabo().getValueAt(row, 4).equals("Aprobado") & !seguimiento.getTlbAvanceSilabo().getValueAt(row, 6).equals("Fin de Ciclo")) {
+                    
+                seguimiento.dispose();
                 controlador_avance_editar ce=new controlador_avance_editar(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
                 ce.init();
-                } else {
-                    
-                 JOptionPane.showMessageDialog(null, "No puede editar seguimientos de silabo aprobados", "Aviso", JOptionPane.ERROR_MESSAGE);
-                }
+//                } else {
+//                 JOptionPane.showMessageDialog(null, "No puede editar este avance de FIN DE CICLO aprobado!", "Aviso", JOptionPane.ERROR_MESSAGE);
+//                }
+               
                 
             } else {
                  JOptionPane.showMessageDialog(null, "Seleccione un avance de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
