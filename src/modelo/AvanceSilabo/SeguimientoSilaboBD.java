@@ -219,6 +219,29 @@ public class SeguimientoSilaboBD  extends SeguimientoSilaboMD{
         }
         return lista_seguimiento;
     }
+    public static List<SeguimientoSilaboMD> consultarSeguimientoAprobacion(ConexionBD conexion,int idsegui,int id_curso){
+        List<SeguimientoSilaboMD> lista_seguimiento=new ArrayList<>();
+        
+        try {
+            PreparedStatement st=conexion.getCon().prepareStatement("select estado_seguimiento,es_interciclo from \"SeguimientoSilabo\" where id_seguimientosilabo=? and id_curso=?");
+            
+            st.setInt(1,idsegui);
+            st.setInt(2,id_curso);
+            ResultSet rs = st.executeQuery();
+            System.out.println(st+"  ----------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<< CONSULTAA" );
+            
+            while(rs.next()){
+                SeguimientoSilaboMD ss=new SeguimientoSilaboMD();
+                ss.setEstado_seguimiento(rs.getInt(1));
+                ss.setEsInterciclo(rs.getBoolean(2));
+                lista_seguimiento.add(ss);
+                System.out.println(ss.getEstado_seguimiento()+"--------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeguimientoSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista_seguimiento;
+    }
     
     public static SeguimientoSilaboMD consultarIDsegui_IdCurso(ConexionBD conexion,int id_Segui){
         SeguimientoSilaboMD segui=null;

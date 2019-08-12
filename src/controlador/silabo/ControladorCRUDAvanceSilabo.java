@@ -93,6 +93,7 @@ public class ControladorCRUDAvanceSilabo {
 
         seguimiento.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - seguimiento.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - seguimiento.getSize().height) / 2);
+
         seguimiento.getBtnNuevo().addActionListener(e -> insertar());
         seguimiento.getBtnEditar().addActionListener((ActionEvent ae) -> {
             int row = seguimiento.getTlbAvanceSilabo().getSelectedRow();
@@ -105,6 +106,7 @@ public class ControladorCRUDAvanceSilabo {
 
                     JOptionPane.showMessageDialog(null, "No puede editar seguimientos de silabo aprobados", "Aviso", JOptionPane.ERROR_MESSAGE);
                 }
+
 
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un avance de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
