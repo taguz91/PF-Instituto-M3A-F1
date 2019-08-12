@@ -11,12 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -33,12 +29,6 @@ import modelo.silabo.CursosBDS;
 import modelo.silabo.PeriodoLectivoBDS;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDAvanceSilabo;
 
@@ -62,30 +52,29 @@ public class ControladorCRUDAvanceSilabo {
     private List<PeriodoLectivoMD> periodosCarrera;
     private SeguimientoSilaboMD segui;
 
-    public ControladorCRUDAvanceSilabo(UsuarioBD usuario, RolBD rol, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+    public ControladorCRUDAvanceSilabo(UsuarioBD usuario,RolBD rol, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
         this.conexion = conexion;
         this.vtnPrincipal = vtnPrincipal;
-        this.rol = rol;
+        this.rol=rol;
     }
-
-    public void initCrud() {
-        conexion.conectar();
+    public void initCrud(){
+         conexion.conectar();
 
         seguimiento = new frmCRUDAvanceSilabo();
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
             seguimiento.getTlbAvanceSilabo().removeColumn(seguimiento.getTlbAvanceSilabo().getColumnModel().getColumn(4));
-
+            
         } else {
             seguimiento.getTlbAvanceSilabo().removeColumn(seguimiento.getTlbAvanceSilabo().getColumnModel().getColumn(5));
-
+            
         }
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
-            esCordinador = true;
+            esCordinador=true;
             seguimiento.getBtnEditar().setEnabled(false);
             seguimiento.getBtnNuevo().setEnabled(false);
             seguimiento.getBtnEliminar().setEnabled(false);
-
+            
         }
         vtnPrincipal.getDpnlPrincipal().add(seguimiento);
         seguimiento.setTitle("Avances de Sílabos");
@@ -93,42 +82,37 @@ public class ControladorCRUDAvanceSilabo {
 
         seguimiento.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - seguimiento.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - seguimiento.getSize().height) / 2);
-
-        seguimiento.getBtnNuevo().addActionListener(e -> insertar());
-        seguimiento.getBtnEditar().addActionListener((ActionEvent ae) -> {
-            int row = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-            if (row != -1) {
-                if (!seguimiento.getTlbAvanceSilabo().getValueAt(row, 4).equals("Aprobado")) {
-                    seguimiento.dispose();
-                    controlador_avance_editar ce = new controlador_avance_editar(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
-                    ce.init();
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "No puede editar seguimientos de silabo aprobados", "Aviso", JOptionPane.ERROR_MESSAGE);
-                }
-
-
+        seguimiento.getBtnNuevo().addActionListener(e->insertar());
+        seguimiento.getBtnEditar().addActionListener((ActionEvent ae)->{
+            int row=seguimiento.getTlbAvanceSilabo().getSelectedRow();
+            if (row!=-1) {
+                    
+                seguimiento.dispose();
+                controlador_avance_editar ce=new controlador_avance_editar(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
+                ce.init();
+               
+                
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un avance de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "Seleccione un avance de silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
-        seguimiento.getTlbAvanceSilabo().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                int fila = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-                int columna = seguimiento.getTlbAvanceSilabo().getSelectedColumn();
-                if (esCordinador && columna == 4) {
-                    if (seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna).equals(true)) {
-                        new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 1);
-                    } else {
-                        new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 0);
+        seguimiento.getTlbAvanceSilabo().addMouseListener(new MouseAdapter(){
+                @Override
+        public void mouseClicked(MouseEvent me){
+            int fila =seguimiento.getTlbAvanceSilabo().getSelectedRow();
+            int columna=seguimiento.getTlbAvanceSilabo().getSelectedColumn();
+                    if (esCordinador && columna==4) {
+                        if (seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna).equals(true)) {
+                            new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna-4).toString()), 1);
+                        } else {
+                            new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna-4).toString()), 0);
+                        }
                     }
-                }
-
-            }
+            
+        }
         });
-        seguimiento.getBtnEliminar().addActionListener(a -> {
-            int row = seguimiento.getTlbAvanceSilabo().getSelectedRow();
+        seguimiento.getBtnEliminar().addActionListener(a ->{
+            int row=seguimiento.getTlbAvanceSilabo().getSelectedRow();
             if (row != -1) {
                 eliminarSeguimientos();
                 cargarAvanceSilaboDocentes_Coordinador();
@@ -140,7 +124,8 @@ public class ControladorCRUDAvanceSilabo {
         CARGAR_COMBO_PERIODOS_CARRERA();
         CARGAR_JORNADAS();
         cargarAvanceSilaboDocentes_Coordinador();
-
+        
+        
         seguimiento.getCmb_Carreras().addActionListener(a -> cargarAvanceSilaboDocentes_Coordinador());
         seguimiento.getCmb_Carreras().addActionListener(a -> CARGAR_COMBO_PERIODOS_CARRERA());
         seguimiento.getCmbJornadas().addActionListener(a -> cargarAvanceSilaboDocentes_Coordinador());
@@ -148,83 +133,82 @@ public class ControladorCRUDAvanceSilabo {
         seguimiento.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
-                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
-                    cargarAvanceSilaboDocentes_Coordinador();
+               if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                cargarAvanceSilaboDocentes_Coordinador();
                 }
             }
         });
-        seguimiento.getCmb_periodos().setEnabled(false);
-        seguimiento.getBtn_Imprimir().addActionListener(e -> imprimir());
+         seguimiento.getCmb_periodos().setEnabled(false);
 
     }
-
-    public void insertar() {
-
+    public void insertar(){
+        
         seguimiento.dispose();
-        ControladorConfiguracionAvanceSilabo AS = new ControladorConfiguracionAvanceSilabo(usuario, vtnPrincipal, conexion);
+         ControladorConfiguracionAvanceSilabo AS= new ControladorConfiguracionAvanceSilabo(usuario,vtnPrincipal, conexion);
         AS.init();
     }
-
-    private void cargarAvanceSilaboDocentes_Coordinador() {
+    
+    private void cargarAvanceSilaboDocentes_Coordinador(){
         try {
             DefaultTableModel modelotabla;
             modelotabla = (DefaultTableModel) seguimiento.getTlbAvanceSilabo().getModel();
             String[] parametros = {seguimiento.getCmb_Carreras().getSelectedItem().toString(), seguimiento.getCmbJornadas().getSelectedItem().toString(), seguimiento.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona()),
                 String.valueOf(getid_periodo())};
             if (esCordinador) {
-                String[] parametros1 = {seguimiento.getCmb_Carreras().getSelectedItem().toString(), seguimiento.getCmbJornadas().getSelectedItem().toString(), seguimiento.getTxtBuscar().getText(),
-                    String.valueOf(getid_periodo())};
-                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboCoordinador(conexion, parametros1);
+            String[] parametros1 = {seguimiento.getCmb_Carreras().getSelectedItem().toString(), seguimiento.getCmbJornadas().getSelectedItem().toString(), seguimiento.getTxtBuscar().getText(),
+                String.valueOf(getid_periodo())};
+                lista_seguimiento=SeguimientoSilaboBD.consultarSeguimientoSilaboCoordinador(conexion, parametros1);
             } else {
-
-                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboDocentes(conexion, parametros);
+                
+                lista_seguimiento=SeguimientoSilaboBD.consultarSeguimientoSilaboDocentes(conexion, parametros);
             }
             for (int j = seguimiento.getTlbAvanceSilabo().getModel().getRowCount() - 1; j >= 0; j--) {
                 modelotabla.removeRow(j);
             }
             for (SeguimientoSilaboMD ss : lista_seguimiento) {
-                String estado = null;
-                Boolean estadoB = null;
-                String corresponde = null;
-
-                if (ss.getEstado_seguimiento() == 0) {
-                    estado = "Por Aprobar";
-                    estadoB = false;
+                String estado=null;
+                Boolean estadoB=null;
+                String corresponde=null;
+                
+                if (ss.getEstado_seguimiento()==0) {
+                    estado="Por Aprobar";
+                    estadoB=false;
                 } else {
-                    estado = "Aprobado";
-                    estadoB = true;
+                    estado="Aprobado";
+                    estadoB=true;
                 }
-                if (ss.isEsInterciclo() == true) {
-                    corresponde = "Interciclo";
+                if (ss.isEsInterciclo()==true) {
+                    corresponde="Interciclo";
                 } else {
-                    corresponde = "Fin de Ciclo";
+                    corresponde="Fin de Ciclo";
                 }
                 modelotabla.addRow(new Object[]{
-                    ss.getId_seguimientoS(), ss.getPersona().getPrimerApellido() + " "
-                    + ss.getPersona().getPrimerNombre(), ss.getMateria().getNombre(),
-                    ss.getCurso().getNombre(), estado, estadoB, ss.getFecha_entrega_informe(), corresponde
+                    ss.getId_seguimientoS(),ss.getPersona().getPrimerApellido()+" "+
+                    ss.getPersona().getPrimerNombre(),ss.getMateria().getNombre(),
+                    ss.getCurso().getNombre(),estado,estadoB,ss.getFecha_entrega_informe(),corresponde
                 });
-
+                
             }
             seguimiento.getTlbAvanceSilabo().setModel(modelotabla);
         } catch (Exception e) {
         }
-
+        
+        
     }
-
     private void CARGAR_COMBO_CARRERAS() {
         seguimiento.getCmb_Carreras().removeAllItems();
-        carreras_docente = new ArrayList<>();
+        carreras_docente=new ArrayList<>();
         if (esCordinador) {
             carreras_docente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
         } else {
-            carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
         }
-
-        carreras_docente.forEach((cmd) -> {
-            seguimiento.getCmb_Carreras().addItem(cmd.getNombre());
-        });
-
+        
+            
+            carreras_docente.forEach((cmd) -> {
+                seguimiento.getCmb_Carreras().addItem(cmd.getNombre());
+            });
+        
         seguimiento.getCmb_Carreras().setSelectedIndex(0);
     }
 
@@ -236,7 +220,6 @@ public class ControladorCRUDAvanceSilabo {
         });
 
     }
-
     private void CARGAR_COMBO_PERIODOS_CARRERA() {
         seguimiento.getCmb_periodos().removeAllItems();
         List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
@@ -250,13 +233,13 @@ public class ControladorCRUDAvanceSilabo {
         }
 
     }
-
-    private List<PeriodoLectivoMD> cargarPeriodos() {
+    
+        private List<PeriodoLectivoMD> cargarPeriodos() {
         List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
         return periodos;
     }
-
-    private int getid_periodo() {
+    
+     private int getid_periodo() {
         String nombre_periodo = seguimiento.getCmb_periodos().getSelectedItem().toString();
         periodosCarrera = cargarPeriodos();
         periodosCarrera
@@ -267,84 +250,29 @@ public class ControladorCRUDAvanceSilabo {
                     id_periodo_lectivo = obj.getId_PerioLectivo();
                 });
 
-        return id_periodo_lectivo;
-    }
-
+     return id_periodo_lectivo;
+  }
     //UTILIZA ESTE METODO PARA EL IMPRIMIR
-    private SeguimientoSilaboMD seguimientoSilabo() {
-        int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-        segui = new SeguimientoSilaboMD();
-        segui = SeguimientoSilaboBD.consultarIDsegui_IdCurso(conexion, Integer.parseInt(
-                seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 0).toString()));
-        return segui;
-    }
-
-    private CursoMD curso_selecc() {
+     private SeguimientoSilaboMD seguimientoSilabo(){
+         int seleccion =seguimiento.getTlbAvanceSilabo().getSelectedRow();
+         segui=new SeguimientoSilaboMD();
+         segui=SeguimientoSilaboBD.consultarIDsegui_IdCurso(conexion,Integer.parseInt(
+         seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 0).toString()));
+         return segui;
+     }
+     private CursoMD curso_selecc() {
         int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
         lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 3).toString())).findFirst();
         return curso_selecccionado.get();
     }
-
-    private void eliminarSeguimientos() {
-        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este seguimiento de silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
+     private void eliminarSeguimientos(){
+         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este seguimiento de silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             new SeguimientoSilaboBD(conexion).eliminarSeguimientoSilabo(seguimientoSilabo());
             JOptionPane.showMessageDialog(null, "Seguimiento de silabo eliminado correctamente");
         }
-    }
-
-    public void imprimir() {
-        int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-        if (seleccion >= 0) {
-            if (seguimientoSilabo().isEsInterciclo() == false) {
-                 try {
-
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
-                    JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
-                    Map parametro = new HashMap();
-
-                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                    JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                    JasperViewer pv = new JasperViewer(jp, false);
-                    pv.setVisible(true);
-                    pv.setTitle("Avance de silabo (fin de ciclo)");
-                    //principal.add(pv);
-                } catch (JRException ex) {
-                    Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, ex);
-                }
-
-            } else {
-
-                try {
-
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
-                    JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_de_silabo/avance_principal.jasper"));
-                    Map parametro = new HashMap();
-
-                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                    JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                    JasperViewer pv = new JasperViewer(jp, false);
-                    pv.setVisible(true);
-                    pv.setTitle("Avance de silabo(interciclo)");
-                    //principal.add(pv);
-                } catch (JRException ex) {
-                    Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null, ex);
-                }
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
-        }
-
-    }
+     }
+    
 
 }
