@@ -315,6 +315,7 @@ public class ControladorCRUDAvanceSilabo {
                     //principal.add(pv);
                 } catch (JRException ex) {
                     Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex);
                 }
 
             } else {
@@ -336,6 +337,7 @@ public class ControladorCRUDAvanceSilabo {
                     //principal.add(pv);
                 } catch (JRException ex) {
                     Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex);
                 }
             }
 
