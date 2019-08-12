@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="222e36e8-cd5b-4261-8da6-f73a1c83a128">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_curso" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_silabo_fin/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.persona_identificacion,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido) as apellidos,
+	concat(p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombres
+	from  
+	"AlumnoCurso" ac join "Cursos" c ON c.id_curso=ac.id_curso 
+	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
+	where ac.almn_curso_asistencia='Desertor' and C.id_curso=$P!{id_curso} 
+	order by concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido)]]>
+	</queryString>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="192" height="20" uuid="2c0c31f6-ed39-4d85-90fe-26156c1eb3cf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[*Estudiantes desertores de la materia:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="192" y="0" width="200" height="20" uuid="adfb53d5-d11b-4475-9eda-60a3edf9f49d"/>
+				<subreportParameter name="id_curso">
+					<subreportParameterExpression><![CDATA[$P{id_curso}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "numero de estudiantes desertores.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="349" y="0" width="206" height="20" uuid="6af25374-c41e-41c3-9512-2934cd8c6bab"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="137" height="20" uuid="a1a81045-f9b0-44f1-8270-20a0f552db1b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="0" width="212" height="20" uuid="d1d8af3b-bc4e-43f5-ba55-1b72aa23b4a5"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

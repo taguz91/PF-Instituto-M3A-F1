@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8554d389-fc34-44f0-9d9e-2063b8a95bdb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_carrera" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ca.carrera_nombre,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
+			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as 
+apellidos
+from  "Carreras" ca join "Docentes" d on d.id_docente=ca.id_docente_coordinador join "Personas" p 
+on p.id_persona=d.id_persona where ca.id_carrera=$P!{id_carrera}]]>
+	</queryString>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="121" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="81" width="277" height="20" uuid="76cff12a-1b08-480b-8498-004701579853"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="101" width="277" height="20" uuid="bda0add5-2d86-4a51-9438-75d0d9bbcc24"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Coordinador de carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="277" height="20" uuid="f1c06123-4d30-4199-9d54-9558c5ab7f38"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Revisado por:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
