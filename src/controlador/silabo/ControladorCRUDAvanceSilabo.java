@@ -11,8 +11,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +33,12 @@ import modelo.silabo.CursosBDS;
 import modelo.silabo.PeriodoLectivoBDS;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDAvanceSilabo;
 
@@ -139,6 +149,7 @@ public class ControladorCRUDAvanceSilabo {
             }
         });
          seguimiento.getCmb_periodos().setEnabled(false);
+         seguimiento.getBtn_Imprimir().addActionListener(e -> imprimir());
 
     }
     public void insertar(){
@@ -273,6 +284,57 @@ public class ControladorCRUDAvanceSilabo {
             JOptionPane.showMessageDialog(null, "Seguimiento de silabo eliminado correctamente");
         }
      }
+     public void imprimir() {
+        int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
+        if (seleccion >= 0) {
+            if (seguimientoSilabo().isEsInterciclo() == false) {
+                 try {
+
+//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
+//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+                    JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
+                    Map parametro = new HashMap();
+
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+
+                    JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+                    JasperViewer pv = new JasperViewer(jp, false);
+                    pv.setVisible(true);
+                    pv.setTitle("Avance de silabo (fin de ciclo)");
+                    //principal.add(pv);
+                } catch (JRException ex) {
+                    Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+
+                try {
+
+//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
+//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+                    JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_de_silabo/avance_principal.jasper"));
+                    Map parametro = new HashMap();
+
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+
+                    JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+                    JasperViewer pv = new JasperViewer(jp, false);
+                    pv.setVisible(true);
+                    pv.setTitle("Avance de silabo(interciclo)");
+                    //principal.add(pv);
+                } catch (JRException ex) {
+                    Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
+        }
+
+    }
+     
     
 
 }
