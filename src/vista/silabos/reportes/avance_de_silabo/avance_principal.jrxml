@@ -31,7 +31,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 		<band height="60" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="153" height="28" uuid="bad0ed57-b993-477c-a9a9-07c7bca447ed"/>
-				<imageExpression><![CDATA["C:\\Users\\HP\\Documents\\NetBeansProjects\\avances de silabo reporte\\src\\avance_de_silabo\\1.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/silabos/reportes/avance_de_silabo/1.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="28" width="555" height="22" uuid="23c4566b-04f8-4d9d-b325-9014d4e6e26c"/>
