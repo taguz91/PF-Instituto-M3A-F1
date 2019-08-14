@@ -1,16 +1,10 @@
 package modelo.version;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
 import modelo.CONS;
 
 /**
@@ -23,10 +17,9 @@ public class DitoolBD {
 
     public DitoolBD(String user, String pass) {
         try {
-            String url = generarURL();
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
-            ct = DriverManager.getConnection(url, user, pass);
+            ct = DriverManager.getConnection(CONS.BD_URL, CONS.getBDUser(), CONS.BD_PASS);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
@@ -62,75 +55,6 @@ public class DitoolBD {
         }
     }
 
-    private String generarURL() {
-        File bd = new File(CONS.BD_DIR);
-        Properties p = new Properties();
-        if (!bd.exists()) {
-            crearPropiedades(p, bd);
-        }
-
-        if (!comprobarRequisitos(p, bd)) {
-            if (bd.delete()) {
-                System.out.println("No tiene todas las propiedades lo borramos.");
-            }
-            crearPropiedades(p, bd);
-        }
-
-        String ip = "";
-        String port = "";
-        String database = "";
-
-        try {
-            p.load(new FileReader(bd));
-            ip = p.getProperty(CONS.BD_IP);
-            port = p.getProperty(CONS.BD_PUERTO);
-            database = p.getProperty(CONS.BD_DATABASE);
-        } catch (IOException e) {
-            System.out.println("No encontramos el señor archivo. " + e.getMessage());
-        }
-
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
-    }
-
-    private boolean comprobarRequisitos(Properties p, File bd) {
-        boolean todas = true;
-        try {
-            p.load(new FileReader(bd));
-            if (p.getProperty(CONS.BD_DATABASE) == null) {
-                todas = false;
-            }
-
-            if (p.getProperty(CONS.BD_IP) == null) {
-                todas = false;
-            }
-
-            if (p.getProperty(CONS.BD_PUERTO) == null) {
-                todas = false;
-            }
-
-        } catch (IOException e) {
-            System.out.println("Divertida: " + e.getMessage());
-        }
-        return todas;
-    }
-
-    private boolean crearPropiedades(Properties p, File bd) {
-        boolean creado = false;
-        try {
-            FileOutputStream fo = new FileOutputStream(bd);
-            p.setProperty("ip", "35.193.226.187");
-            p.setProperty("database", "BDinsta");
-            p.setProperty("port", "5432");
-            p.store(fo, "Propiedades de la base de datos: \n"
-                    + "Modifiquelos para que se pueda conectar a otra base de datos: ");
-            creado = true;
-        } catch (FileNotFoundException e) {
-            System.out.println("No podemos escribir el archivo: " + e.getMessage());
-        } catch (IOException ex) {
-            System.out.println("No se pudo guardar el properties: " + ex.getMessage());
-        }
-        return creado;
-    }
 
     //Consultamos la ultima version de la base de datos:
     public VersionMD consultarUltimaVersion() {
