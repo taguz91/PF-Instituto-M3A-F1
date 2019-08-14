@@ -103,6 +103,7 @@ public abstract class AbstracForm {
 
         vista.getTxtUsername().addCaretListener(e -> {
             String username = vista.getTxtUsername().getText();
+/*
             if (isCreated(username)) {
                 vista.getTxtUsername().setBorder(CONS.ERR_BORDER);
                 vista.getLblError().setVisible(true);
@@ -112,6 +113,8 @@ public abstract class AbstracForm {
                 vista.getLblError().setVisible(false);
                 vista.getBtnGuardar().setEnabled(true);
             }
+           */     
+
         });
 
     }
