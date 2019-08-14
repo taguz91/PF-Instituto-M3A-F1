@@ -22,7 +22,7 @@ import modelo.usuario.UsuarioBD;
 public class CONS {
 
     //Modo del proyecto 
-    public static final boolean M_DESARROLLO = true;
+    public static final boolean M_DESARROLLO = false;
     //Nombre de las propiedadesde la base de matos
     public static final String BD_DATABASE = "database", BD_IP = "ip", BD_PUERTO = "port";
     //Direccion de las propiedades de base de datos

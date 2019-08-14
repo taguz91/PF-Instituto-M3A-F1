@@ -40,24 +40,14 @@ public final class UsuarioBD extends UsuarioMD {
         setPersona(obj.getPersona());
     }
 
-    public Map<String, Object> insertar(String isCordinador) {
+    public Map<String, Object> insertar() {
         Map context = new HashMap();
         Map<Integer, Object> parametros = new HashMap<>();
 
         String INSERT = ""
                 + "INSERT INTO \"Usuarios\" \n"
                 + " (usu_username, usu_password, id_persona)\n"
-                + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n"
-                + "CREATE ROLE \"" + getUsername() + "\" LOGIN ENCRYPTED PASSWORD '" + getPassword() + "';\n"
-                + "GRANT \"permisos\" TO \"" + getUsername() + "\"";
-
-        String CONS = "\n"
-                + "ALTER ROLE \"" + getUsername() + "\" SUPERUSER;"
-                + " ";
-
-        if (isCordinador.equalsIgnoreCase("coordinador")) {
-            INSERT += CONS;
-        }
+                + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n";
 
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
