@@ -246,7 +246,7 @@ public class SeguimientoSilaboBD  extends SeguimientoSilaboMD{
     public static SeguimientoSilaboMD consultarIDsegui_IdCurso(ConexionBD conexion,int id_Segui){
         SeguimientoSilaboMD segui=null;
         try {
-            PreparedStatement st=conexion.getCon().prepareStatement("SELECT id_seguimientosilabo,id_curso\n" +
+            PreparedStatement st=conexion.getCon().prepareStatement("SELECT id_seguimientosilabo,id_curso,es_interciclo\n" +
                     "                    FROM  \"SeguimientoSilabo\"  \n" +
                     "					\n" +
                     "                      where id_seguimientosilabo=?");
@@ -256,6 +256,7 @@ public class SeguimientoSilaboBD  extends SeguimientoSilaboMD{
                 segui=new SeguimientoSilaboMD();
                 segui.setId_seguimientoS(rs.getInt(1));
                 segui.getCurso().setId(rs.getInt(2));
+                segui.setEsInterciclo(rs.getBoolean(3));
                 
             }
         } catch (SQLException ex) {
