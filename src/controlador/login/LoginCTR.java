@@ -73,7 +73,7 @@ public class LoginCTR {
                         String PASSWORD = vista.getTxtPassword().getText().trim();
 
                         activarForm(false);
-                        conex = new ConnDBPool(USERNAME, PASSWORD);
+                        conex = new ConnDBPool(null);
                         modelo = new UsuarioBD();
                         modelo.setUsername(USERNAME);
                         modelo.setPassword(PASSWORD);
@@ -83,7 +83,7 @@ public class LoginCTR {
 
                             vista.dispose();
                             CONS.setUsuario(modelo);
-                            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB(USERNAME, PASSWORD, "Login", conex));
+                            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB("Login", conex));
                             vtn.Init();
 
                         } else {

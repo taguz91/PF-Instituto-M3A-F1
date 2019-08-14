@@ -42,15 +42,15 @@ public class ConectarDB {
     //Pool 
     private ConnDBPool pool;
 
-    public ConectarDB(String user, String pass, String mensaje, ConnDBPool pool) {
+    public ConectarDB(String mensaje, ConnDBPool pool) {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
             //Nos conectamos
-            this.user = user;
-            this.pass = pass;
+            this.user = CONS.getBDUser();
+            this.pass = CONS.BD_PASS;
             this.vtnPrin = null;
-            this.url = generarURL();
+            this.url = CONS.BD_URL;
             ct = DriverManager.getConnection(url, user, pass);
             this.pool = pool;
 

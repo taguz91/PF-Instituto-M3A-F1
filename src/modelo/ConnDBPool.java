@@ -27,17 +27,20 @@ public class ConnDBPool {
     private ResultSet rs;
 
     public ConnDBPool() {
+        if (config == null && ds == null) {
+            new ConnDBPool(null);
+        }
     }
 
-    public ConnDBPool(String username, String password) {
+    public ConnDBPool(Object param) {
         try {
 
             config = new HikariConfig();
-            config.setJdbcUrl(generarURL());
+            config.setJdbcUrl(CONS.BD_URL);
 
-            config.setUsername(username);
+            config.setUsername(CONS.getBDUser());
 
-            config.setPassword(password);
+            config.setPassword(CONS.BD_PASS);
 
             config.setMaximumPoolSize(2);
             config.addDataSourceProperty("cachePrepStmts", "true");
@@ -91,7 +94,7 @@ public class ConnDBPool {
 //            System.out.println("*PreparedStatement ejecutado correctamente*");
 //            System.out.println("*******************************************");
 
-            System.out.println("---->" + stmt.toString());
+//            System.out.println("---->" + stmt.toString());
             return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -228,4 +231,5 @@ public class ConnDBPool {
             ConnDBPool.ds.close();
         }
     }
+
 }

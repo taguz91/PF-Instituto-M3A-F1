@@ -13,8 +13,8 @@
 		SELECT * FROM pg_stat_activity 		ORDER BY usename;
 		   WHERE usename = '0102264827' 
 
-		
-		
+		pg_dump -Fc -v -h 35.193.226.187  -p 5432 -U postgres "BDinsta" > whd_pgdump.backup
+		/home/diegocondo1007/IstaServer
 		SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE usename = '0105003198';
 		
 		

@@ -39,6 +39,25 @@ public class CONS {
     public static Border ERR_BORDER = new LineBorder(ERROR_COLOR, 1);
     public static Border DEFAULT_BORDER = UIManager.getLookAndFeel().getDefaults().getBorder("TextField.border");
 
+    /*
+        Base de datos
+     */
+    public static String BD_PASS = "APP_DESK_ISTA_$2019";
+    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDinsta";
+
+    public static String getBDUser() {
+        if (ROL != null) {
+            if (ROL.getNombre().equalsIgnoreCase("coordinador")) {
+                return ROL.getNombre().toUpperCase();
+            } else if (ROL.getNombre().equalsIgnoreCase("docente")) {
+                return ROL.getNombre().toUpperCase();
+            }            
+        }
+
+        return "APP_ESCRITORIO";
+
+    }
+
     //Obtenemos la direccion 
     public static String getDir() {
         File dir = new File("./");
