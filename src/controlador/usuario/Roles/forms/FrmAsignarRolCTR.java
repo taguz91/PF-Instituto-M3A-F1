@@ -216,13 +216,7 @@ public class FrmAsignarRolCTR {
 
     private void guardarUsuario() {
 
-        String rol = rolesDados.stream()
-                .map(c -> c.getNombre())
-                .filter(item -> item.equalsIgnoreCase("coordinador"))
-                .findFirst()
-                .orElse("NO");
-
-        Map context = usuario.insertar(rol);
+        Map context = usuario.insertar();
 
         if ((boolean) context.get("value")) {
             JOptionPane.showMessageDialog(vista, "SE HA GUARDADO AL USUARIO \n" + usuario.getUsername());
