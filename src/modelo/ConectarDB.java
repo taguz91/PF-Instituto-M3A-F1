@@ -12,7 +12,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.propiedades.Propiedades;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -64,13 +63,6 @@ public class ConectarDB {
         } catch (SQLException ex) {
             System.out.println("No nos pudimos conectar.");
         }
-    }
-
-    private String generarURL() {
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
     public PreparedStatement sqlPS(String nsql) {

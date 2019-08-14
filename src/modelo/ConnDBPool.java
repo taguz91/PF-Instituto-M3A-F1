@@ -12,7 +12,6 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
-import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -69,13 +68,6 @@ public class ConnDBPool {
     }
 
     // <editor-fold defaultstate="collapsed" desc="METODOS DE MANEJO DE DATOS"> 
-    private String generarURL() {
-
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
-    }
 
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         //this.conn = conn;
