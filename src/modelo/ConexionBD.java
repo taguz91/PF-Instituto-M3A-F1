@@ -9,9 +9,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import modelo.propiedades.Propiedades;
 
 /**
  *
@@ -24,7 +21,7 @@ public class ConexionBD {
     private String usuario = "postgres";
 
     private String contrasena = "qwerty79";
-    private final ConectarDB conecta; 
+    private final ConectarDB conecta;
 
     private Connection con = null;
 
@@ -33,13 +30,13 @@ public class ConexionBD {
     private ResultSet rs = null;
 
     public ConexionBD(ConectarDB conecta) {
-        this.conecta = conecta; 
+        this.conecta = conecta;
     }
 
     public void conectar() {
 
         con = conecta.getConecction("Clase conexion de andres");
-        url = generarURL();
+        url = CONS.BD_URL;
         System.out.println("Establecida la conexión con la base de datos");
 
     }
@@ -67,7 +64,7 @@ public class ConexionBD {
                     System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
                     con = conecta.getConecction("Funcion getCon de andresss");
                 }
-            }else{
+            } else {
                 con = conecta.devolverConexion();
             }
         } catch (SQLException ex) {
@@ -97,15 +94,6 @@ public class ConexionBD {
 
     public void setRs(ResultSet rs) {
         this.rs = rs;
-    }
-
-    public static String generarURL() {
-
-        String ip = Propiedades.getPropertie("ip");
-        String port = Propiedades.getPropertie("port");
-        String database = Propiedades.getPropertie("database");
-
-        return "jdbc:postgresql://" + ip + ":" + port + "/" + database;
     }
 
 }

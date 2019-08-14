@@ -39,7 +39,6 @@ import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
-import controlador.silabo.ControladorConfiguracionAvanceSilabo;
 import controlador.silabo.ControladorSilaboC;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -68,7 +67,6 @@ import javax.swing.event.InternalFrameEvent;
 import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
-import modelo.propiedades.Propiedades;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.version.DitoolBD;
@@ -104,7 +102,6 @@ import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
-import vista.silabos.frmCRUDAvanceSilabo;
 import vista.silabos.frmCRUDBibliografia;
 import vista.version.VtnDitool;
 
@@ -140,7 +137,7 @@ public class VtnPrincipalCTR {
         this.conexion = new ConexionBD(conecta);
 
         //Inciamos la carga pero la detenemos
-        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado(), vtnPrin);
+        this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
         vtnPrin.setIconImage(CONS.getImage());
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -244,13 +241,8 @@ public class VtnPrincipalCTR {
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
 
-        /*
-            SET DIRECCION IP
-         */
-        String IP = Propiedades.getPropertie("ip");
-        String database = Propiedades.getPropertie("database");
 
-        vtnPrin.getLblIP().setText(IP + "/" + database);
+        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados" );
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
         vtnPrin.getBtn_avance_si().addActionListener(e->controladorCONFIGURACION_avance_silabo());
