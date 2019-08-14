@@ -199,9 +199,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "usu_password = set_byte( MD5( ? )::bytea, 4,64),\n"
                 + "id_persona = ?\n"
                 + " WHERE \n"
-                + " usu_username = ?;\n"
-                + "ALTER ROLE \"" + getUsername() + "\" ENCRYPTED PASSWORD '" + getPassword() + "';\n"
-                + "";
+                + " usu_username = ?;\n";
 
         Map<Integer, Object> parametros = new HashMap<>();
 
@@ -222,15 +220,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + " WHERE \n"
                 + " usu_username = ? ;\n"
                 + "";
-        String ROL_POSTGRES;
 
-        if (estado) {
-            ROL_POSTGRES = "ALTER ROLE \"" + Pk + "\" LOGIN";
-        } else {
-            ROL_POSTGRES = "ALTER ROLE \"" + Pk + "\" NOLOGIN";
-        }
-        DELETE = DELETE + ROL_POSTGRES;
-        System.out.println(Pk);
 
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, estado);
