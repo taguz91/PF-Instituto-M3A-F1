@@ -3,7 +3,7 @@
 */
 
 CREATE OR REPLACE FUNCTION registro_ficha_salud () RETURNS TRIGGER AS $registro_ficha_salud$ BEGIN
-		INSERT INTO "Seccion" ( nombre, ficha_id )
+		INSERT INTO "SeccionFS" ( seccion_nombre_id, ficha_id )
 	VALUES
 		( 1, NEW.id ),
 		( 2, NEW.id ),
@@ -34,34 +34,34 @@ EXECUTE PROCEDURE registro_ficha_salud ();
 CREATE 
 	OR REPLACE FUNCTION registro_preguntas_f_salud () RETURNS TRIGGER AS $registro_preguntas_f_salud$ BEGIN
 	CASE
-			NEW.nombre 
+			NEW.seccion_nombre_id 
 		
-		WHEN '1' THEN
-			INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 1 THEN
+			INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 1, NEW.ID ),
 			( 2, NEW.ID ),
 			( 3, NEW.ID ),
 			( 4, NEW.ID );
 		
-		WHEN '2' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 2 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 5, NEW.ID ),
 			( 6, NEW.ID ),
 			( 7, NEW.ID ),
 			( 8, NEW.ID );
 		
-		WHEN '3' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 3 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 9, NEW.ID ),
 			( 10, NEW.ID ),
 			( 11, NEW.ID ),
 			( 12, NEW.ID );
 		
-		WHEN '4' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 4 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 13, NEW.ID ),
 			( 35, NEW.ID ),
@@ -69,26 +69,26 @@ CREATE
 			( 37, NEW.ID ),
 			( 38, NEW.ID);
 		
-		WHEN '5' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 5 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 14, NEW.ID ),
 			( 39, NEW.ID );
 		
-		WHEN '6' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 6 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 15, NEW.ID ),
 			( 40, NEW.ID );
 		
-		WHEN '7' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 7 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 16, NEW.ID ),
 			( 41, NEW.ID );
 		
-		WHEN '8' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 8 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 17, NEW.ID ),
 			( 18, NEW.ID ),
@@ -108,19 +108,19 @@ CREATE
 			( 47, NEW.ID ),
 			( 48, NEW.ID );
 		
-		WHEN '9' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 9 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 24, NEW.ID ),
 			( 49, NEW.ID );
 		
-		WHEN '10' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 10 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 50, NEW.ID );
 		
-		WHEN '11' THEN
-		INSERT INTO "DetallePreguntas" ( pregunta_id, seccion_id )
+		WHEN 11 THEN
+		INSERT INTO "DetalleResuesta" ( pregunta_id, seccion_id )
 		VALUES
 			( 25, NEW.ID ),
 			( 51, NEW.ID ),
