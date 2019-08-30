@@ -9,7 +9,7 @@
 	from  
 	"AlumnoCurso" ac join "Cursos" c ON c.id_curso=ac.id_curso 
 	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
-	where ac.almn_curso_asistencia='No asiste' and C.id_curso=$P!{id_curso}]]>
+	where ac.almn_curso_asistencia='No asiste' and C.id_curso=$P!{id_curso}  and ac.almn_curso_activo='true']]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<background>

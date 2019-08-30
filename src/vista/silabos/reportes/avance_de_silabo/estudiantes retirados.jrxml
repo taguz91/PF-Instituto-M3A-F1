@@ -12,7 +12,8 @@
 apellidos,concat(p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombres from "AlumnoCursoRetirados" acr 
 join "AlumnoCurso" ac on  ac.id_almn_curso=acr.id_almn_curso
 join "Cursos" c on c.id_curso=ac.id_curso join "Alumnos"  a on 
-ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona where c.id_curso=$P!{id_curso}]]>
+ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona where c.id_curso=$P!{id_curso} 
+]]>
 	</queryString>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
