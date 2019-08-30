@@ -16,7 +16,7 @@ join "Cursos" c on c.id_curso=ac.id_curso where c.id_curso=$P!{id_curso}]]>
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="20" uuid="e1ec903d-f99f-4523-b932-592ae1f22fe1"/>
-				<textFieldExpression><![CDATA["("+$F{count}+")"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["(0)"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
