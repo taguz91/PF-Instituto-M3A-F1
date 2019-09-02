@@ -6,13 +6,6 @@ INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUE
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (7, 'PORCENTAJE', NULL, NULL, NULL);
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (8, 'FECHA', NULL, NULL, NULL);
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (9, 'CALIFICACION ENES', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (10, 'ALERGIAS-ALIMENTOS', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (11, 'ALERGIAS-MEDICAMENTOS', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (12, 'ALERGIAS-PICADURAS-INSECTOS', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (13, 'ALERGIAS-MEDIO-AMBIENTE', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (14, 'TRATAMIENTOS QUIRURGICOS', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (15, 'ENFERMEDAD-VACUNA', NULL, NULL, NULL);
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (16, 'ENFERMEDAD-FAMILIA', NULL, NULL, NULL);
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (17, 'FRECUENCIA-CIGARRILLOS', NULL, NULL, 'RADIO');
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (18, 'EDAD', NULL, NULL, NULL);
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (19, 'FRECUENCIA-INGIERE(ALCOHOL, DROGAS)', NULL, NULL, 'RADIO');
@@ -24,4 +17,12 @@ INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUE
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (25, 'ALIMENTACION', NULL, NULL, 'CHECK');
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (26, 'CASUA-DE-ASISTENCIA-PSICOLOGICO', NULL, NULL, 'CHECK');
 INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (27, 'DIAGNOSTICO-PSICOLOGICO-PSIQUIATRICO', NULL, NULL, 'CHECK');
-INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (28, 'MUY-MALA<>MALA<>REGULAR<>BUENA<>MUY BUENA', NULL, NULL, 'RADIO');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (28, 'DIAGNOSTICO-FAMILIA', NULL, NULL, NULL);
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (29, 'MUY-MALA<>MALA<>REGULAR<>BUENA<>MUY BUENA', NULL, NULL, 'CMB');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (10, 'ALERGIAS-ALIMENTOS', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (11, 'ALERGIAS-MEDICAMENTOS', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (12, 'ALERGIAS-PICADURAS-INSECTOS', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (13, 'ALERGIAS-MEDIO-AMBIENTE', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (14, 'TRATAMIENTOS QUIRURGICOS', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (15, 'ENFERMEDAD-VACUNA', NULL, NULL, 'CHECK');
+INSERT INTO "TipoRespuesta"("id", "nombre", "min_len", "max_len", "extra") VALUES (16, 'ENFERMEDAD-FAMILIA', NULL, NULL, 'CHECK');
