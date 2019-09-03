@@ -208,7 +208,6 @@
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Registro de notas"/>
-                    <Property name="actionCommand" type="java.lang.String" value="Registro de notas"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">
@@ -254,6 +253,21 @@
                 <Property name="text" type="java.lang.String" value="Estado Asistencia"/>
               </Properties>
             </MenuItem>
+            <Menu class="javax.swing.JMenu" name="mnFichas">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Fichas"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtFichaSalud">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Fichas de Salud"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnIngresar">

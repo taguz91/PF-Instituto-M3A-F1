@@ -23,7 +23,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     }
 
     //avance
-
     public JMenuItem getMnCAvanceSilabo() {
         return MnCAvanceSilabo;
     }
@@ -39,10 +38,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public void setBtn_avance_si(JButton btn_avance_si) {
         this.btn_avance_si = btn_avance_si;
     }
-    
-    
+
     //
-    
     public JMenuItem getMnCtPlandeClase() {
         return mnCtPlandeClase;
     }
@@ -395,6 +392,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtAlmnMatri;
     }
 
+    public JMenuItem getMnCtFichaSalud() {
+        return mnCtFichaSalud;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -467,6 +468,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMiPerfil = new javax.swing.JMenuItem();
         mnCtAsistencia = new javax.swing.JMenuItem();
         mnCtReportesEstado = new javax.swing.JMenuItem();
+        mnFichas = new javax.swing.JMenu();
+        mnCtFichaSalud = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -859,7 +862,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.add(mnCtTipoNotas);
 
         mnCtNotas.setText("Registro de notas");
-        mnCtNotas.setActionCommand("Registro de notas");
         mnNotas.add(mnCtNotas);
 
         mnCtActivarNotas.setText("Consultar activación de notas");
@@ -894,6 +896,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtReportesEstado.setText("Estado Asistencia");
         mnTipoNotas.add(mnCtReportesEstado);
+
+        mnFichas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
+        mnFichas.setText("Fichas");
+
+        mnCtFichaSalud.setText("Fichas de Salud");
+        mnFichas.add(mnCtFichaSalud);
+
+        mnTipoNotas.add(mnFichas);
 
         menuCrud.add(mnTipoNotas);
 
@@ -1047,6 +1057,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnCtPrdIngrNotasActionPerformed
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnBiblioteca;
     private javax.swing.JMenuItem MnCAvanceSilabo;
@@ -1089,6 +1100,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
     private javax.swing.JMenuItem mnCtDocenteMateria;
+    private javax.swing.JMenuItem mnCtFichaSalud;
     private javax.swing.JMenuItem mnCtHistorialUsers;
     private javax.swing.JMenuItem mnCtInscripcion;
     private javax.swing.JMenuItem mnCtListaAlumnos;
@@ -1109,6 +1121,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtTipoNotas;
     private javax.swing.JMenuItem mnCtUsuarios;
     private javax.swing.JMenu mnEstilo;
+    private javax.swing.JMenu mnFichas;
     private javax.swing.JMenuItem mnIgActivarNotas1;
     private javax.swing.JMenuItem mnIgAlumno;
     private javax.swing.JMenuItem mnIgCarrera;
