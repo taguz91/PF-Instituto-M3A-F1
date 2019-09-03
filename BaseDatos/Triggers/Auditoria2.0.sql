@@ -1,0 +1,6 @@
+--PID ID del backed
+--pg_backend_pid()
+--Canales que la session esta escuchando
+--pg_listening_channels()
+--Sesion de usuario
+--session_user
