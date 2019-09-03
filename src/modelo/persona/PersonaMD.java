@@ -461,14 +461,13 @@ public class PersonaMD {
         this.personaActiva = per.isPersonaActiva();
 
     }
-    
-    
+
     public String getSoloNombres() {
         return getPrimerNombre() + " " + getSegundoNombre();
     }
-    
+
     public String getSoloApellidos() {
-        return getPrimerApellido() + " " +getSegundoApellido();
+        return getPrimerApellido() + " " + getSegundoApellido();
     }
 
     public String getNombreCompleto() {
@@ -477,6 +476,10 @@ public class PersonaMD {
 
     public String getNombreCorto() {
         return getPrimerNombre() + " " + getPrimerApellido();
+    }
+
+    public String getInfo() {
+        return identificacion + " " + primerApellido + " " + primerNombre;
     }
 
     @Override
@@ -507,5 +510,4 @@ public class PersonaMD {
         this.profesion = profesion;
     }
 
-    
 }

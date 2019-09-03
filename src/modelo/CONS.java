@@ -22,7 +22,7 @@ import modelo.usuario.UsuarioBD;
 public class CONS {
 
     //Modo del proyecto 
-    public static final boolean M_DESARROLLO = false;
+    public static final boolean M_DESARROLLO = true;
     //Nombre de las propiedadesde la base de matos
     public static final String BD_DATABASE = "database", BD_IP = "ip", BD_PUERTO = "port";
     //Direccion de las propiedades de base de datos
@@ -43,7 +43,8 @@ public class CONS {
         Base de datos
      */
     public static String BD_PASS = "APP_DESK_ISTA_$2019";
-    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDinsta";
+    //public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDinsta";
+    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDnotas";
     public static final String DB_IP = "35.192.7.211:5432";
 
     public static String getBDUser() {
