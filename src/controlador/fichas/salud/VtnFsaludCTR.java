@@ -6,6 +6,7 @@
 package controlador.fichas.salud;
 
 import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -108,8 +109,15 @@ public class VtnFsaludCTR {
             Thread thread = new Thread(() -> {
                 int idFicha = (Integer) table.getValueAt(getRow(), 1);
 
+                String path = "/vista/fichas/salud/FichasReportes/ReporteSalud.jasper";
+
                 Map params = new HashMap();
-                
+
+                params.put("idFichaMaster", new Integer(idFicha));
+                JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
+                System.out.println("-----------" + params);
+
+                Middlewares.generarReporte(getClass().getResource(path), "Reporte Ficha Salud", params);
 
             });
 
