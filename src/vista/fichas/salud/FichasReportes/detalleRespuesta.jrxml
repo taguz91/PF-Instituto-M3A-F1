@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteSalud_subreport1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="435b9f97-7fdf-4b39-bcf4-44a629651571">
-	<property name="ireport.zoom" value="1.5"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteSalud_subreport1" language="groovy" pageWidth="595" pageHeight="40" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="435b9f97-7fdf-4b39-bcf4-44a629651571">
+	<property name="ireport.zoom" value="4.707642565081508"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idSeccion" class="java.lang.Integer">
@@ -40,23 +40,13 @@ ORDER BY
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="23" height="20" uuid="73c35ebf-cdd5-4108-aebc-10b7098a93e1"/>
-				<textElement verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="23" y="20" width="559" height="20" uuid="ec6a61ac-5e4d-45f7-bd50-fef2f84bc6ec"/>
+				<reportElement x="34" y="20" width="549" height="20" uuid="ec6a61ac-5e4d-45f7-bd50-fef2f84bc6ec"/>
 				<textFieldExpression><![CDATA[$F{respuesta}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="23" y="0" width="559" height="20" uuid="62e9722d-8ed5-454c-a35f-14f2d6df29cd"/>
-				<textElement verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
-			</textField>
 			<subreport>
-				<reportElement x="0" y="40" width="595" height="20" uuid="827eb555-874f-4f5b-94a4-2657cb99006f"/>
+				<reportElement x="34" y="20" width="441" height="20" uuid="827eb555-874f-4f5b-94a4-2657cb99006f"/>
 				<subreportParameter name="idDetalleRespuesta">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -64,13 +54,23 @@ ORDER BY
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleParametros.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="60" width="595" height="20" uuid="286f9264-c0bc-48b7-8fb2-2a4befa8dca7"/>
+				<reportElement x="34" y="20" width="549" height="20" uuid="286f9264-c0bc-48b7-8fb2-2a4befa8dca7"/>
 				<subreportParameter name="idDetalleRespuesta">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleDiagnostico.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement x="17" y="0" width="17" height="20" uuid="f088ef6e-0a3a-4236-baa5-e27e4cdfe911"/>
+				<textElement verticalAlignment="Bottom" markup="none"/>
+				<text><![CDATA[$F{numero}]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="0" width="441" height="20" uuid="62e9722d-8ed5-454c-a35f-14f2d6df29cd"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

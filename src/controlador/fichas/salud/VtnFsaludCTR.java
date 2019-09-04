@@ -110,12 +110,10 @@ public class VtnFsaludCTR {
                 int idFicha = (Integer) table.getValueAt(getRow(), 1);
 
                 String path = "/vista/fichas/salud/FichasReportes/ReporteSalud.jasper";
-
+  
                 Map params = new HashMap();
 
                 params.put("idFichaMaster", new Integer(idFicha));
-                JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
-                System.out.println("-----------" + params);
 
                 Middlewares.generarReporte(getClass().getResource(path), "Reporte Ficha Salud", params);
 
