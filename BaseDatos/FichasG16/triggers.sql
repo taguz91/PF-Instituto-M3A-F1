@@ -35,9 +35,10 @@ CREATE
 	OR REPLACE FUNCTION registro_preguntas_f_salud () RETURNS TRIGGER AS $registro_preguntas_f_salud$
 	 BEGIN
 
-		INSERT INTO "DetalleRespuesta" ( pregunta_id, seccion_id ) SELECT
+		INSERT INTO "DetalleRespuesta" ( pregunta_id, seccion_id, respuesta ) SELECT
 		"Pregunta"."id" AS "pregunta_id",
-		NEW.id AS "seccion_id" 
+		NEW.id AS "seccion_id", 
+		'' AS respuesta
 		FROM
 			"Pregunta" 
 		WHERE
