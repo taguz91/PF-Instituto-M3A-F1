@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2be6adf5-4eaf-4437-bf82-caa3faefb77e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cedula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+"public"."Personas".persona_identificacion,
+"public"."Personas".persona_primer_apellido,
+"public"."Personas".persona_segundo_apellido,
+"public"."Personas".persona_primer_nombre,
+"public"."Personas".persona_segundo_nombre
+FROM
+"public"."Personas"
+WHERE 
+"public"."Personas".persona_identificacion = $P{cedula}]]>
+	</queryString>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="176" y="0" width="213" height="33" uuid="98865e1a-26fe-47cb-885e-d9e43ca62e89"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[FICHA DE SALUD]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="93fd260f-ba6e-40a3-9a8e-550750d08268"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Cédula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="58" height="20" uuid="dace0099-3475-4aa3-b1ae-33c4aad82876"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="0" width="100" height="20" uuid="e3b482a9-a469-4023-b92d-815e6b3526e0"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="31" width="100" height="20" uuid="78547113-6aea-45f1-a0b2-612051750724"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="31" width="100" height="20" uuid="b1106382-2fdc-44f8-82b5-ebaa5fd6e88a"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="31" width="100" height="20" uuid="04f09019-1ac2-45ea-a027-34f069ab8550"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="31" width="100" height="20" uuid="8f69eb70-3185-460f-999f-26fb597fbfed"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
