@@ -21,6 +21,7 @@ import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
+import controlador.fichas.salud.VtnFsaludCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -100,6 +101,7 @@ import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
+import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
@@ -231,7 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
-        vtnPrin.getMnCAvanceSilabo().addActionListener(a1-> controladorCONFIGURACION_avance_silabo());
+        vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
         //esto es para el avance de silabo
         //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
@@ -241,11 +243,13 @@ public class VtnPrincipalCTR {
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
 
-
-        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados" );
+        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados");
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
-        vtnPrin.getBtn_avance_si().addActionListener(e->controladorCONFIGURACION_avance_silabo());
+        vtnPrin.getBtn_avance_si().addActionListener(e -> controladorCONFIGURACION_avance_silabo());
+
+        //Menus Fichas
+        vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));
 
     }
 
@@ -334,9 +338,9 @@ public class VtnPrincipalCTR {
         }
 
     }
-    
+
     public void abrirVtnAlumnoMatricula() {
-        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula(); 
+        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula();
         eventoInternal(vtn);
         if (numVtns < 5) {
             VtnAlumnoMatriculaCTR ctr = new VtnAlumnoMatriculaCTR(this, vtn);
@@ -614,8 +618,9 @@ public class VtnPrincipalCTR {
         cP.iniciaControlador();
 
     }
+
     private void controladorCONFIGURACION_avance_silabo() {
-       ControladorCRUDAvanceSilabo AS= new ControladorCRUDAvanceSilabo(usuario,rolSeleccionado,vtnPrin, conexion);
+        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin, conexion);
         AS.initCrud();
 
     }
@@ -1217,6 +1222,11 @@ public class VtnPrincipalCTR {
             JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
                     + "Verifique su conexion e intentelo de nuevo.");
         }
+    }
+
+    private void mnctFichaSalud(ActionEvent e) {
+        VtnFsaludCTR vtn = new VtnFsaludCTR(vtnPrin, new VtnFichaSalud());
+        vtn.Init();
     }
 
 }
