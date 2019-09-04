@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteSalud_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="06819520-444b-41f7-a002-e74603fd9f30">
+	<property name="ireport.zoom" value="1.6105100000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFicha" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"public"."Personas".persona_identificacion,
+	"public"."Personas".persona_primer_apellido,
+	"public"."Personas".persona_segundo_apellido,
+	"public"."Personas".persona_primer_nombre,
+	"public"."Personas".persona_segundo_nombre,
+	"public"."FichaSalud"."id" 
+FROM
+	"public"."Personas"
+	INNER JOIN "public"."FichaSalud" ON "Personas".id_persona = "FichaSalud".persona_id 
+WHERE
+	"public"."FichaSalud"."id" = $P{idFicha}]]>
+	</queryString>
+	<field name="persona_identificacion" class="java.lang.String"/>
+	<field name="persona_primer_apellido" class="java.lang.String"/>
+	<field name="persona_segundo_apellido" class="java.lang.String"/>
+	<field name="persona_primer_nombre" class="java.lang.String"/>
+	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="41" width="68" height="20" uuid="bd62f2a5-fad2-407a-8697-43e1e0d5b091"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nombres:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="68" height="20" uuid="54307b2a-419b-4ecf-9723-98451474a817"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Cédula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="72" width="68" height="20" uuid="6a8f9c68-952d-4f13-9a62-c541f3f92b90"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Apellidos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="10" width="100" height="20" uuid="d0b560d6-0371-4902-bc4c-e1e532ca6047"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="72" width="100" height="20" uuid="e0064263-002a-480e-9e19-3190b8e85e4d"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="41" width="100" height="20" uuid="48744868-231e-4a60-aef3-ffc5147a31fd"/>
+				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="72" width="100" height="20" uuid="b9b11bf5-4973-4b4a-b5c5-739b0db37bd0"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="41" width="100" height="20" uuid="4bcc94e5-6494-4ea2-84c7-27587e324eb4"/>
+				<textFieldExpression><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="10" width="100" height="20" uuid="b179818e-be92-4b4e-9ecd-8856f7770be1"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="374" y="10" width="81" height="20" uuid="dfd38a2d-69ba-4e48-9d05-4c1ad76d65b0"/>
+				<text><![CDATA[Numero de Ficha:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

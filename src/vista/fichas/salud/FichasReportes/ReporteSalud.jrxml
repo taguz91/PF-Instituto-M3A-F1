@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2be6adf5-4eaf-4437-bf82-caa3faefb77e">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.1435888100000056"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="cedula" class="java.lang.String">
+	<parameter name="idFichaMaster" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\diego\\OneDrive\\Documentos\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\fichas\\salud\\FichasReportes\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-"public"."Personas".persona_identificacion,
-"public"."Personas".persona_primer_apellido,
-"public"."Personas".persona_segundo_apellido,
-"public"."Personas".persona_primer_nombre,
-"public"."Personas".persona_segundo_nombre
+	"public"."SeccionFS".seccion_nombre_id,
+		"public"."SeccionFS"."id" ,
+	"public"."SeccionNombreFS".nombre
+
 FROM
-"public"."Personas"
-WHERE 
-"public"."Personas".persona_identificacion = $P{cedula}]]>
+	"public"."SeccionFS"
+	INNER JOIN "public"."SeccionNombreFS" ON "public"."SeccionFS".seccion_nombre_id = "public"."SeccionNombreFS"."id" 
+WHERE
+	"SeccionFS".ficha_id = $P{idFichaMaster}]]>
 	</queryString>
-	<field name="persona_identificacion" class="java.lang.String"/>
-	<field name="persona_primer_apellido" class="java.lang.String"/>
-	<field name="persona_segundo_apellido" class="java.lang.String"/>
-	<field name="persona_primer_nombre" class="java.lang.String"/>
-	<field name="persona_segundo_nombre" class="java.lang.String"/>
+	<field name="seccion_nombre_id" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="43" splitType="Stretch">
+		<band height="124" splitType="Stretch">
 			<staticText>
 				<reportElement x="176" y="0" width="213" height="33" uuid="98865e1a-26fe-47cb-885e-d9e43ca62e89"/>
 				<textElement>
@@ -35,51 +36,40 @@ WHERE
 				</textElement>
 				<text><![CDATA[FICHA DE SALUD]]></text>
 			</staticText>
+			<subreport>
+				<reportElement x="0" y="33" width="555" height="90" uuid="784eefc4-2e07-4918-8e67-827688540f9d"/>
+				<subreportParameter name="idFicha">
+					<subreportParameterExpression><![CDATA[$P{idFichaMaster}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "header.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="123" width="555" height="1" uuid="98dfa108-661b-4c53-b31e-cadf1ddfbe10"/>
+			</line>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="63" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="50" height="20" uuid="93fd260f-ba6e-40a3-9a8e-550750d08268"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[Cédula:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="31" width="58" height="20" uuid="dace0099-3475-4aa3-b1ae-33c4aad82876"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[Nombre:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="65" y="0" width="100" height="20" uuid="e3b482a9-a469-4023-b92d-815e6b3526e0"/>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="65" y="31" width="100" height="20" uuid="78547113-6aea-45f1-a0b2-612051750724"/>
-				<textFieldExpression><![CDATA[$F{persona_primer_apellido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="165" y="31" width="100" height="20" uuid="b1106382-2fdc-44f8-82b5-ebaa5fd6e88a"/>
-				<textFieldExpression><![CDATA[$F{persona_segundo_apellido}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="265" y="31" width="100" height="20" uuid="04f09019-1ac2-45ea-a027-34f069ab8550"/>
-				<textFieldExpression><![CDATA[$F{persona_primer_nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="365" y="31" width="100" height="20" uuid="8f69eb70-3185-460f-999f-26fb597fbfed"/>
-				<textFieldExpression><![CDATA[$F{persona_segundo_nombre}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="99d1f344-e55a-4d2a-bfd4-7dfbbb3062e5"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="20" width="555" height="23" uuid="979262d6-bc9c-4b16-bf3f-5364207375b7"/>
+				<subreportParameter name="idSeccion">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleRespuesta.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
@@ -88,6 +78,6 @@ WHERE
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

@@ -109,6 +109,7 @@ public class VtnFsaludCTR {
                 int idFicha = (Integer) table.getValueAt(getRow(), 1);
 
                 Map params = new HashMap();
+                
 
             });
 

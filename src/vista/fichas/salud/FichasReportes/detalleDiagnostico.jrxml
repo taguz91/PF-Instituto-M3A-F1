@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalleRespuesta_subreport1" language="groovy" pageWidth="555" pageHeight="36" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ba1d5dac-76f7-400f-9e67-e1fe456c4e9f">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idDetalleRespuesta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"public"."DiagnosticoFS".diagnostico,
+	"public"."DiagnosticoFS".parentesco 
+FROM
+	"public"."DetalleDiagnostico"
+	INNER JOIN "public"."DiagnosticoFS" ON "public"."DetalleDiagnostico".diagnostico_id = "public"."DiagnosticoFS"."id" 
+WHERE
+	"public"."DetalleDiagnostico".detalle_respuesta_id = $P{idDetalleRespuesta}]]>
+	</queryString>
+	<field name="diagnostico" class="java.lang.String"/>
+	<field name="parentesco" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="10" width="103" height="20" uuid="4e479918-e387-4bcc-8e23-63824db8a79d"/>
+				<text><![CDATA[parentesco]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="10" width="100" height="20" uuid="dcf42cd1-ee39-4d94-94b1-9c10ba5def50"/>
+				<textFieldExpression><![CDATA[$F{parentesco}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="218" y="10" width="100" height="20" uuid="90d67005-3835-4986-baf9-1f26769d41af"/>
+				<text><![CDATA[diagnostico]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="10" width="100" height="20" uuid="58aa25a0-e008-4137-a311-d0c6ac02bb8a"/>
+				<textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
