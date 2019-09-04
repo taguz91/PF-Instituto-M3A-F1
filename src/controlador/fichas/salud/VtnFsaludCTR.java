@@ -6,10 +6,14 @@
 package controlador.fichas.salud;
 
 import controlador.Libraries.Effects;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.fichas.FichaSaludBD;
 import modelo.fichas.FichaSaludMD;
@@ -51,6 +55,8 @@ public class VtnFsaludCTR {
                 cargarTablaFilter(vista.getTxtBuscar().getText().toLowerCase());
             }
         });
+
+        vista.getBtnGenerarFicha().addActionListener(e -> btnGenerarFicha(e));
     }
 
     private void cargarTabla() {
@@ -84,6 +90,32 @@ public class VtnFsaludCTR {
                 obj.getPersona().getInfo()
             });
         };
+    }
+
+    private int getRow() {
+        return vista.getTbl().getSelectedRow();
+    }
+
+    private void btnGenerarFicha(ActionEvent e) {
+        int row = getRow();
+
+        if (row == -1) {
+
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA DE LA TABLA!!");
+
+        } else {
+
+            Thread thread = new Thread(() -> {
+                int idFicha = (Integer) table.getValueAt(getRow(), 1);
+
+                Map params = new HashMap();
+
+            });
+
+            thread.start();
+
+        }
+
     }
 
 }
