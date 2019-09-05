@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["vista/fichas/salud/FichasReportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./src/vista/fichas/salud/FichasReportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -53,7 +53,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="53" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<textField>
 				<reportElement mode="Opaque" x="0" y="1" width="595" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="99d1f344-e55a-4d2a-bfd4-7dfbbb3062e5"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
@@ -61,17 +61,20 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="595" height="1" uuid="98dfa108-661b-4c53-b31e-cadf1ddfbe10"/>
+			</line>
 			<subreport>
-				<reportElement x="0" y="21" width="595" height="32" uuid="979262d6-bc9c-4b16-bf3f-5364207375b7"/>
+				<reportElement x="0" y="21" width="595" height="33" uuid="335c0901-8ecb-4ec7-b420-0cb994069396"/>
 				<subreportParameter name="idSeccion">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleRespuesta.jasper"]]></subreportExpression>
 			</subreport>
-			<line>
-				<reportElement x="0" y="0" width="595" height="1" uuid="98dfa108-661b-4c53-b31e-cadf1ddfbe10"/>
-			</line>
 		</band>
 	</detail>
 	<columnFooter>

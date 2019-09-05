@@ -61,15 +61,14 @@ ORDER BY
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleDiagnostico.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement x="17" y="0" width="17" height="20" uuid="f088ef6e-0a3a-4236-baa5-e27e4cdfe911"/>
-				<textElement verticalAlignment="Bottom" markup="none"/>
-				<text><![CDATA[$F{numero}]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="34" y="0" width="441" height="20" uuid="62e9722d-8ed5-454c-a35f-14f2d6df29cd"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="17" y="0" width="17" height="20" uuid="1f274f50-df6d-47f2-89ca-d5b65f912c1a"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
