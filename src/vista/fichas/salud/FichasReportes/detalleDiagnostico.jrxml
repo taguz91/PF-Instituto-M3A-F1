@@ -34,22 +34,30 @@ WHERE
 		<band height="20" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="103" height="20" uuid="4e479918-e387-4bcc-8e23-63824db8a79d"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[parentesco]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="103" y="0" width="100" height="20" uuid="dcf42cd1-ee39-4d94-94b1-9c10ba5def50"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{parentesco}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="203" y="0" width="100" height="20" uuid="90d67005-3835-4986-baf9-1f26769d41af"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[diagnostico]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="303" y="0" width="100" height="20" uuid="58aa25a0-e008-4137-a311-d0c6ac02bb8a"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
 			</textField>
 		</band>

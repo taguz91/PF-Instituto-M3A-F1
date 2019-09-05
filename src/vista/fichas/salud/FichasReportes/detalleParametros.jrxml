@@ -32,7 +32,9 @@ WHERE
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="2" y="0" width="592" height="20" uuid="fd80ec40-289f-42f3-91a1-56c566a52295"/>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
