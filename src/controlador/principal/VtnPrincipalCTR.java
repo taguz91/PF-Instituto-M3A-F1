@@ -40,6 +40,7 @@ import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
+import controlador.ube.VtnReporteNumAlumnoCTR;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
@@ -103,6 +104,7 @@ import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
+import vista.ube.VtnReporteNumAlumno;
 import vista.version.VtnDitool;
 
 /**
@@ -231,7 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
-        vtnPrin.getMnCAvanceSilabo().addActionListener(a1-> controladorCONFIGURACION_avance_silabo());
+        vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
         //esto es para el avance de silabo
         //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
@@ -241,12 +243,15 @@ public class VtnPrincipalCTR {
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
 
-
-        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados" );
+        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados");
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
-        vtnPrin.getBtn_avance_si().addActionListener(e->controladorCONFIGURACION_avance_silabo());
-
+        vtnPrin.getBtn_avance_si().addActionListener(e -> controladorCONFIGURACION_avance_silabo());
+        iniciarAccionesRep();
+    }
+    
+    private void iniciarAccionesRep(){
+        vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
     }
 
     public void abrirVtnPersona() {
@@ -334,9 +339,9 @@ public class VtnPrincipalCTR {
         }
 
     }
-    
+
     public void abrirVtnAlumnoMatricula() {
-        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula(); 
+        VtnAlumnoMatricula vtn = new VtnAlumnoMatricula();
         eventoInternal(vtn);
         if (numVtns < 5) {
             VtnAlumnoMatriculaCTR ctr = new VtnAlumnoMatriculaCTR(this, vtn);
@@ -601,6 +606,17 @@ public class VtnPrincipalCTR {
 
     }
 
+    private void abrirVtnReporteNumAlumno() {
+        VtnReporteNumAlumno vtn = new VtnReporteNumAlumno();
+        eventoInternal(vtn);
+        if (numVtns < 5) {
+            VtnReporteNumAlumnoCTR ctr = new VtnReporteNumAlumnoCTR(this, vtn);
+            ctr.iniciar();
+        } else {
+            errorNumVentanas();
+        }
+    }
+
     private void controladorCRUD() {
 
         ControladorCRUD c = new ControladorCRUD(usuario, rolSeleccionado, vtnPrin, conexion);
@@ -614,8 +630,9 @@ public class VtnPrincipalCTR {
         cP.iniciaControlador();
 
     }
+
     private void controladorCONFIGURACION_avance_silabo() {
-       ControladorCRUDAvanceSilabo AS= new ControladorCRUDAvanceSilabo(usuario,rolSeleccionado,vtnPrin, conexion);
+        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin, conexion);
         AS.initCrud();
 
     }
