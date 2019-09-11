@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.tipoDeNota.TipoDeNotaMD;
@@ -64,7 +66,7 @@ public class NotasBD extends NotasMD {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(NotasBD.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             pool.closeStmt().close(rs).close(conn);
         }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaSalud" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2be6adf5-4eaf-4437-bf82-caa3faefb77e">
+	<property name="ireport.zoom" value="2.1435888100000056"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFichaMaster" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./src/vista/fichas/salud/FichasReportes/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"public"."SeccionFS".seccion_nombre_id,
+		"public"."SeccionFS"."id" ,
+	"public"."SeccionNombreFS".nombre
+
+FROM
+	"public"."SeccionFS"
+	INNER JOIN "public"."SeccionNombreFS" ON "public"."SeccionFS".seccion_nombre_id = "public"."SeccionNombreFS"."id" 
+WHERE
+	"SeccionFS".ficha_id = $P{idFichaMaster}]]>
+	</queryString>
+	<field name="seccion_nombre_id" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="595" height="33" forecolor="#FFFFFF" backcolor="#006699" uuid="98865e1a-26fe-47cb-885e-d9e43ca62e89"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="20"/>
+				</textElement>
+				<text><![CDATA[FICHA DE SALUD]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="33" width="595" height="90" uuid="784eefc4-2e07-4918-8e67-827688540f9d"/>
+				<subreportParameter name="idFicha">
+					<subreportParameterExpression><![CDATA[$P{idFichaMaster}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "header.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="1" width="595" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="99d1f344-e55a-4d2a-bfd4-7dfbbb3062e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="595" height="1" uuid="98dfa108-661b-4c53-b31e-cadf1ddfbe10"/>
+			</line>
+			<subreport>
+				<reportElement x="0" y="21" width="595" height="33" uuid="335c0901-8ecb-4ec7-b420-0cb994069396"/>
+				<subreportParameter name="idSeccion">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detalleRespuesta.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
