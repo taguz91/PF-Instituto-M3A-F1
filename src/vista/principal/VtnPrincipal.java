@@ -395,6 +395,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtAlmnMatri;
     }
 
+    public JMenuItem getMnRepNumAlumno() {
+        return mnRepNumAlumno;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -487,6 +491,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgPrdIngrNotas1 = new javax.swing.JMenuItem();
         mnIgNotas1 = new javax.swing.JMenuItem();
         mnIgActivarNotas1 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mnRepNumAlumno = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
 
@@ -859,7 +865,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.add(mnCtTipoNotas);
 
         mnCtNotas.setText("Registro de notas");
-        mnCtNotas.setActionCommand("Registro de notas");
         mnNotas.add(mnCtNotas);
 
         mnCtActivarNotas.setText("Consultar activación de notas");
@@ -981,6 +986,13 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         menuCrud.add(mnIngresar);
 
+        jMenu1.setText("Reportes");
+
+        mnRepNumAlumno.setText("Numero Alumnos");
+        jMenu1.add(mnRepNumAlumno);
+
+        menuCrud.add(jMenu1);
+
         mnOpciones.setText("Opciones");
 
         mnEstilo.setText("Estilo");
@@ -1072,6 +1084,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_avance_si;
     private javax.swing.ButtonGroup btngEstilo;
     private javax.swing.JDesktopPane dpnlPrincipal;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1131,6 +1144,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnNotas;
     private javax.swing.JMenu mnNotas1;
     private javax.swing.JMenu mnOpciones;
+    private javax.swing.JMenuItem mnRepNumAlumno;
     private javax.swing.JMenu mnTipoNotas;
     private javax.swing.JPanel pnlMenu;
     // End of variables declaration//GEN-END:variables

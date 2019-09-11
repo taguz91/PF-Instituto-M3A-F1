@@ -8,11 +8,7 @@
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_silabo_fin/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.persona_identificacion,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido) as 
-apellidos,concat(p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombres from "AlumnoCursoRetirados" acr 
-join "AlumnoCurso" ac on  ac.id_almn_curso=acr.id_almn_curso
-join "Cursos" c on c.id_curso=ac.id_curso join "Alumnos"  a on 
-ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona where c.id_curso=$P!{id_curso}]]>
+		<![CDATA[]]>
 	</queryString>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -23,14 +19,14 @@ ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona where c.
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="122" height="20" uuid="c279ac56-0b2a-40c3-b682-7dfaad1c4a39"/>
+				<reportElement x="0" y="0" width="151" height="20" uuid="c279ac56-0b2a-40c3-b682-7dfaad1c4a39"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[* Estudiantes Retirados: ]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="122" y="0" width="51" height="20" uuid="5606d298-a6d5-4251-83b3-b212551d24eb"/>
+				<reportElement x="151" y="0" width="51" height="20" uuid="5606d298-a6d5-4251-83b3-b212551d24eb"/>
 				<subreportParameter name="id_curso">
 					<subreportParameterExpression><![CDATA[$P{id_curso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -40,43 +36,6 @@ ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona where c.
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
-			<textField>
-				<reportElement x="349" y="0" width="206" height="20" uuid="00cd0178-7d4c-4ea6-a4e0-9dec383bdd82"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="0" width="137" height="20" uuid="cdcba31b-65fc-4e2c-97db-e762f9923a4e"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="137" y="0" width="212" height="20" uuid="0574a9f5-5771-4677-89c8-c06721dea6a6"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="20"/>
 	</detail>
 </jasperReport>

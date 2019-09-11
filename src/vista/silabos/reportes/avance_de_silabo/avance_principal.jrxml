@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1bbd19a5-ae14-4f85-994c-245def644ff2">
 	<property name="ireport.zoom" value="0.9090909090909097"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="339"/>
+	<property name="ireport.y" value="606"/>
 	<parameter name="id_curso" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_de_silabo/"]]></defaultValueExpression>
@@ -10,11 +10,11 @@
 	<parameter name="id_seguimiento" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select c.id_curso,pl.prd_lectivo_nombre,ca.id_carrera,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
-			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as 
+			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as
 apellidos,m.materia_nombre,ca.carrera_nombre
 ,c.curso_nombre
 from "Cursos" c join "Docentes" d on d.id_docente=c.id_docente join "Personas" p on  p.id_persona=d.id_persona
-join "Materias" m on m.id_materia=c.id_materia join "Carreras" ca on ca.id_carrera=m.id_carrera  join "PeriodoLectivo" pl 
+join "Materias" m on m.id_materia=c.id_materia join "Carreras" ca on ca.id_carrera=m.id_carrera  join "PeriodoLectivo" pl
 on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 	</queryString>
 	<field name="id_curso" class="java.lang.Integer"/>
@@ -91,7 +91,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="145" y="105" width="410" height="20" uuid="94e82072-044b-4b3e-86e9-f076b1afb2aa"/>
+				<reportElement x="159" y="105" width="396" height="20" uuid="94e82072-044b-4b3e-86e9-f076b1afb2aa"/>
 				<subreportParameter name="id_curso">
 					<subreportParameterExpression><![CDATA[$F{id_curso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -99,7 +99,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "TOTAL_EN_EL_CURSO.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="0" y="105" width="145" height="20" uuid="5bfdd6d6-f760-43f5-9347-33e9cdee4069"/>
+				<reportElement x="0" y="105" width="159" height="20" uuid="5bfdd6d6-f760-43f5-9347-33e9cdee4069"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -117,25 +117,25 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="145" width="130" height="20" uuid="33a3246d-e049-4a99-a92c-972e4b4766ee"/>
+				<reportElement x="0" y="145" width="153" height="20" uuid="33a3246d-e049-4a99-a92c-972e4b4766ee"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE DEL DOCENTE:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="130" y="145" width="425" height="20" uuid="1f60beda-5fb3-4865-a732-d72f9fc32595"/>
+				<reportElement x="153" y="145" width="402" height="20" uuid="1f60beda-5fb3-4865-a732-d72f9fc32595"/>
 				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="165" width="169" height="20" uuid="6ddedf82-7763-4c2d-afcc-a89308c4d80e"/>
+				<reportElement x="0" y="165" width="194" height="20" uuid="6ddedf82-7763-4c2d-afcc-a89308c4d80e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[REPORTE CORRESPONDIENTE A:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="169" y="165" width="100" height="20" uuid="0d8d1822-cee8-48c5-941d-f75b9ea7b298"/>
+				<reportElement x="194" y="165" width="100" height="20" uuid="0d8d1822-cee8-48c5-941d-f75b9ea7b298"/>
 				<text><![CDATA[Interciclo]]></text>
 			</staticText>
 		</band>
@@ -475,16 +475,16 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "menor a 70 porciento.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="25">
+		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="159" height="20" uuid="09888fea-ddc7-487a-9e41-07be316531f5"/>
+				<reportElement x="0" y="0" width="178" height="20" uuid="09888fea-ddc7-487a-9e41-07be316531f5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[ *Fecha de entrega del reporte:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="159" y="0" width="396" height="20" uuid="69b3aede-c091-4067-98ec-730ebd1c0c2a"/>
+				<reportElement x="178" y="0" width="377" height="20" uuid="69b3aede-c091-4067-98ec-730ebd1c0c2a"/>
 				<subreportParameter name="id_avance">
 					<subreportParameterExpression><![CDATA[$P{id_seguimiento}]]></subreportParameterExpression>
 				</subreportParameter>

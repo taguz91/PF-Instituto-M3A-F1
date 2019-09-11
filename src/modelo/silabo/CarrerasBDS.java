@@ -65,7 +65,28 @@ public class CarrerasBDS extends CarreraMD {
         return carreras;
 
     }
+public CarreraMD  retornaModalidad(int id_curso){
+    CarreraMD carrera = null;
+    try {
 
+            PreparedStatement st = conexion.getCon().prepareStatement("select carrera_modalidad from \"Carreras\" where id_carrera=(select id_carrera from \"PeriodoLectivo\"  where id_prd_lectivo=(select id_prd_lectivo from \"Cursos\" where id_curso=?))");
+            
+            st.setInt(1, id_curso);
+            System.out.println(st);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                carrera = new CarreraMD();
+                
+                
+                carrera.setModalidad(rs.getString(1));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CarrerasBDS.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    return carrera;
+}
     public CarreraMD retornaCarreraCoordinador(String username) {
         CarreraMD carrera = null;
         try {

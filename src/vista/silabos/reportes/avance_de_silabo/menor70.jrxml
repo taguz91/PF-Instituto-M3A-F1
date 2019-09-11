@@ -8,10 +8,9 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select count (ROUND(((ROUND(n.nota_valor,1)*100)/45),1))
-from "Notas" n join "TipoDeNota" tn on n.id_tipo_nota=tn.id_tipo_nota join 
-"AlumnoCurso" ac on ac.id_almn_curso=n.id_almn_curso join "Cursos" c ON c.id_curso=
-ac.id_curso where tn.tipo_nota_nombre = 'NOTA INTERCICLO'
-AND C.id_curso=$P!{id_curso} and ROUND(((ROUND(n.nota_valor,1)*100)/45),1)<70 and  ac.almn_curso_asistencia='Asiste']]>
+	from "Notas" n join "TipoDeNota" tn on n.id_tipo_nota=tn.id_tipo_nota join 
+	"AlumnoCurso" ac on ac.id_almn_curso=n.id_almn_curso join "Cursos" c ON c.id_curso=ac.id_curso where tn.tipo_nota_nombre = 'NOTA INTERCICLO'
+	AND C.id_curso=$P!{id_curso} and ROUND(((ROUND(n.nota_valor,1)*100)/45),1)<70 and  ac.almn_curso_asistencia='Asiste' and ac.almn_curso_activo='true']]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<background>

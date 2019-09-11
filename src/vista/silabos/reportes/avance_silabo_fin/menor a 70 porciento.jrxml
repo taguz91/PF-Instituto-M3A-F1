@@ -10,10 +10,10 @@
 	<queryString>
 		<![CDATA[select p.persona_identificacion,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido) as apellidos,
 	concat(p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombres
-	from "Notas" n join "TipoDeNota" tn on n.id_tipo_nota=tn.id_tipo_nota join 
-	"AlumnoCurso" ac on ac.id_almn_curso=n.id_almn_curso join "Cursos" c ON c.id_curso=ac.id_curso 
+	from "Notas" n join "TipoDeNota" tn on n.id_tipo_nota=tn.id_tipo_nota join
+	"AlumnoCurso" ac on ac.id_almn_curso=n.id_almn_curso join "Cursos" c ON c.id_curso=ac.id_curso
 	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
-	where tn.tipo_nota_nombre = 'NOTA INTERCICLO'and  ac.almn_curso_asistencia='Asiste' 
+	where tn.tipo_nota_nombre = 'NOTA INTERCICLO'and  ac.almn_curso_asistencia='Asiste' and ac.almn_curso_activo='true'
 
 	AND C.id_curso=$P!{id_curso} and  ROUND(((ROUND(n.nota_valor,1)*100)/45),1)<70
 	order by concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido)]]>
@@ -25,16 +25,16 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="20">
+		<band height="27">
 			<staticText>
-				<reportElement x="0" y="0" width="380" height="20" uuid="fc0c3b4d-355e-4476-a6bf-28f9b1fc4f62"/>
+				<reportElement x="0" y="0" width="380" height="27" uuid="fc0c3b4d-355e-4476-a6bf-28f9b1fc4f62"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[*Reportar el nombre de los estudiantes con aprovechamiento menor al 70%:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="380" y="0" width="146" height="20" uuid="9914ee8a-837d-48f1-a76c-ba1934ee76e2"/>
+				<reportElement x="380" y="0" width="146" height="27" uuid="9914ee8a-837d-48f1-a76c-ba1934ee76e2"/>
 				<subreportParameter name="id_curso">
 					<subreportParameterExpression><![CDATA[$P{id_curso}]]></subreportParameterExpression>
 				</subreportParameter>

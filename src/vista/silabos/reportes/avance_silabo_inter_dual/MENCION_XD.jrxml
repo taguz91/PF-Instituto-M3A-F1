@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0ffd6583-7a80-4418-8dea-15274204759f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_carrera" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select ca.carrera_nombre,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
+			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as 
+apellidos
+from  "Carreras" ca join "Docentes" d on d.id_docente=ca.id_docente_coordinador join "Personas" p 
+on p.id_persona=d.id_persona where ca.id_carrera=$P!{id_carrera}]]>
+	</queryString>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="e78e6945-1bef-4eee-94ac-f7feb28aeaa9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="555" height="20" uuid="48f413c0-0e85-4fcd-ac5d-fede5dfbd91d"/>
+				<textFieldExpression><![CDATA["Coordinador/a de la carrera "+$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
