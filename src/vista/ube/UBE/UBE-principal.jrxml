@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d064d0fc-3be6-466a-8e5f-005c80555654">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_carrera" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+pl.id_prd_lectivo,
+carrera_codigo,
+prd_lectivo_nombre, (
+  SELECT COUNT(*)
+  FROM public."Matricula" m
+  JOIN public."Alumnos" a ON
+  a.id_alumno = m.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE persona_activa = true AND
+  persona_sexo ILIKE '%H%' AND
+  m.id_prd_lectivo = pl.id_prd_lectivo
+) AS hombres, (
+  SELECT COUNT(*)
+  FROM public."Matricula" m
+  JOIN public."Alumnos" a ON
+  a.id_alumno = m.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE persona_activa = true AND
+  persona_sexo ILIKE '%M%' AND
+  m.id_prd_lectivo = pl.id_prd_lectivo
+) AS mujeres
+FROM public."Carreras" c
+JOIN public."PeriodoLectivo" pl ON
+pl.id_carrera = c.id_carrera and c.id_carrera=$P!{id_carrera}
+GROUP BY
+pl.id_prd_lectivo,
+carrera_codigo,
+prd_lectivo_nombre
+ORDER BY
+prd_lectivo_fecha_inicio DESC;]]>
+	</queryString>
+	<field name="id_prd_lectivo" class="java.lang.Integer"/>
+	<field name="carrera_codigo" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="hombres" class="java.lang.Long"/>
+	<field name="mujeres" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="23" width="555" height="22" forecolor="#006699" uuid="c6944a78-b913-4577-ae32-d619b936709a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="140" height="23" uuid="a9b8fa86-26b5-4ee5-b659-bdfb3b9ce3f4"/>
+				<imageExpression><![CDATA["vista/ube/UBE/1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="45" width="555" height="16" uuid="bd1ea962-aaca-4180-bb9d-1e6e003f110a"/>
+				<imageExpression><![CDATA["vista/ube/UBE/Captura.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="554e426c-3286-4eba-87b8-36f96e5d7492"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE BIENESTAR ESTUDIANTIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="314" height="20" forecolor="#006699" uuid="858205fc-2649-4837-a860-39b32f9c1e53"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="22" width="117" height="20" forecolor="#006699" uuid="da05f451-a427-4e7c-bda2-a0c772c6044e"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de hombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="22" width="124" height="20" forecolor="#006699" uuid="980ca6aa-0f1b-4fe7-ab7c-64cc508f7738"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de mujeres]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="314" height="20" uuid="43cae89d-eb9f-4e5c-95ee-84b7785c603c"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="314" y="0" width="117" height="20" uuid="f5ace044-180a-4df6-a77f-d0aea0dbd8e8"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{hombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="124" height="20" uuid="2920ad9b-eebe-47d6-bbcc-2d6a8eefdc61"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{mujeres}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
