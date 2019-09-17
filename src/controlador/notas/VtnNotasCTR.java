@@ -130,6 +130,7 @@ public class VtnNotasCTR extends AbstractVtn {
         List<String> items = new ArrayList<>();
         items.add("Asiste");
         items.add("No asiste");
+        items.add("Retirado");
         items.add("Desertor");
         if (getModalidad().equalsIgnoreCase("tradicional") || getModalidad().equalsIgnoreCase("presencial")) {
             if (!getEstado()) {

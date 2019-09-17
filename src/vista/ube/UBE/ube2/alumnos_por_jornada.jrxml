@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d8afc340-938e-4a6f-8df3-014a839fac91">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_jornada" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_carrera" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+pl.id_prd_lectivo,
+carrera_codigo,
+prd_lectivo_nombre, (
+  SELECT
+  COUNT(DISTINCT curso_nombre)
+  FROM public."Cursos" cr
+  WHERE
+  cr.id_prd_lectivo = pl.id_prd_lectivo AND
+  cr.id_jornada =$P!{id_jornada} 
+) AS num_JORNADA, (
+  SELECT
+  count(DISTINCT id_alumno)
+  FROM public."AlumnoCurso" ac
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = $P!{id_jornada}
+  )
+) AS alum_JORNADA
+FROM public."Carreras" c
+JOIN public."PeriodoLectivo" pl ON
+pl.id_carrera = c.id_carrera
+AND c.id_carrera=$P!{id_carrera}
+GROUP BY
+pl.id_prd_lectivo,
+carrera_codigo,
+prd_lectivo_nombre
+ORDER BY
+prd_lectivo_fecha_inicio DESC;]]>
+	</queryString>
+	<field name="id_prd_lectivo" class="java.lang.Integer"/>
+	<field name="carrera_codigo" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="num_jornada" class="java.lang.Long"/>
+	<field name="alum_jornada" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="23" width="555" height="22" forecolor="#006699" uuid="ac987aa1-f94a-4a83-86c5-491a6e5b3511"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="140" height="23" uuid="12440a73-30d1-4c98-ba5b-078a508309ee"/>
+				<imageExpression><![CDATA["vista/ube/UBE/ube2/1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="46" width="555" height="16" uuid="7aa4bcf2-3abb-45df-b54b-cee3252d5532"/>
+				<imageExpression><![CDATA["vista/ube/UBE/ube2/Captura.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="a1b0b51c-d2b9-4e62-916d-37c8afc1455c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE BIENESTAR ESTUDIANTIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="30" width="100" height="20" forecolor="#006699" uuid="bca30626-1c74-4c59-861c-7f27e9a66ee5"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[num jornada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="355" height="20" forecolor="#006699" uuid="f9f53ff8-6fe2-4e3e-804c-55a23908f288"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[prd_lectivo_nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="30" width="100" height="20" forecolor="#006699" uuid="c6761e5b-0d7b-4ba5-b683-6e02e5dfac29"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[almn jornada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="355" height="20" uuid="1cb8563c-d565-46dd-a852-3d23abef82de"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20" uuid="dcf6bf14-8d86-432c-8814-b2ef20c7f46b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{num_jornada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="7e3f1ea4-6beb-41d0-aca7-3fec911cd7eb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{alum_jornada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

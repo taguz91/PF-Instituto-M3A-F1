@@ -21,6 +21,7 @@ import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
+import controlador.fichas.salud.VtnFsaludCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -101,6 +102,7 @@ import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnAlumnosRetirados;
 import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
+import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
@@ -247,11 +249,18 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
         vtnPrin.getBtn_avance_si().addActionListener(e -> controladorCONFIGURACION_avance_silabo());
+
         iniciarAccionesRep();
     }
     
     private void iniciarAccionesRep(){
         vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
+
+
+        //Menus Fichas
+        vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));
+
+
     }
 
     public void abrirVtnPersona() {
@@ -1234,6 +1243,11 @@ public class VtnPrincipalCTR {
             JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
                     + "Verifique su conexion e intentelo de nuevo.");
         }
+    }
+
+    private void mnctFichaSalud(ActionEvent e) {
+        VtnFsaludCTR vtn = new VtnFsaludCTR(vtnPrin, new VtnFichaSalud());
+        vtn.Init();
     }
 
 }
