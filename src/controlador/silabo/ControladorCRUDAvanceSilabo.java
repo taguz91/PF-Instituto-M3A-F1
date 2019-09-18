@@ -338,6 +338,32 @@ public class ControladorCRUDAvanceSilabo {
                 }
             } else if (ca.getModalidad().equalsIgnoreCase("DUAL")) {
                 System.out.println("esto es para las duales");
+                if (seguimientoSilabo().isEsInterciclo() == false) {
+                
+                
+                 try {
+
+//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
+//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
+                        Map parametro = new HashMap();
+
+                        parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                        parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+
+                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+                        JasperViewer pv = new JasperViewer(jp, false);
+                        pv.setVisible(true);
+                        pv.setTitle("Avance de silabo (fin de ciclo)");
+                        //principal.add(pv);
+                    } catch (JRException ex) {
+                        Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                 
+                
+                
+                }
+                else{
                 try {
 
 //                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
@@ -355,6 +381,7 @@ public class ControladorCRUDAvanceSilabo {
                     //principal.add(pv);
                 } catch (JRException ex) {
                     Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 }
             }
 
