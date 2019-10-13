@@ -146,8 +146,8 @@ public class VtnNotasCTR extends AbstractVtn {
             } else {
                 jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
                 jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
-                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
                 jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(false));
                 jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
