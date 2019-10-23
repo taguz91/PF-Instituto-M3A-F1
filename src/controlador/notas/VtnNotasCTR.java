@@ -146,10 +146,10 @@ public class VtnNotasCTR extends AbstractVtn {
             } else {
                 jTblTrad.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
                 jTblTrad.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
-                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(false));
-                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
-                jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(false));
-                jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(false));
+                jTblTrad.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
+                jTblTrad.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+                jTblTrad.getColumnModel().getColumn(11).setCellEditor(new TextFieldCellEditor(true));
+                jTblTrad.getColumnModel().getColumn(14).setCellEditor(new TextFieldCellEditor(true));
                 jTblTrad.getColumnModel().getColumn(16).setCellEditor(new ComboBoxCellEditor(true, items));
             }
 
@@ -158,9 +158,9 @@ public class VtnNotasCTR extends AbstractVtn {
                 jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
                 jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));
                 jTblDual.getColumnModel().getColumn(9).setCellEditor(new TextFieldCellEditor(true));
-                jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(false));
-                jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(false));
-                jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(false, items));
+                jTblDual.getColumnModel().getColumn(10).setCellEditor(new TextFieldCellEditor(true));
+                jTblDual.getColumnModel().getColumn(13).setCellEditor(new TextFieldCellEditor(true));
+                jTblDual.getColumnModel().getColumn(15).setCellEditor(new ComboBoxCellEditor(true, items));
             } else {
                 jTblDual.getColumnModel().getColumn(6).setCellEditor(new TextFieldCellEditor(true));
                 jTblDual.getColumnModel().getColumn(7).setCellEditor(new TextFieldCellEditor(true));

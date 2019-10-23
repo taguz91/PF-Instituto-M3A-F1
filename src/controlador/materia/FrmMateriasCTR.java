@@ -109,9 +109,9 @@ public class FrmMateriasCTR extends DCTR {
                 acceso++;
                 if (acceso > 1) {
                     String nombre = frmMaterias.getCbEjeFormacion().getSelectedItem().toString();
-                    if (nombre.equals("BÁSICA")) {
+                    if (nombre.equals("BÁSICA") || nombre.equals("FORMACIÓN BÁSICA") || nombre.equals("UNIDAD BÁSICA")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(1);
-                    } else if (nombre.equals("PROFESIONAL")) {
+                    } else if (nombre.equals("PROFESIONAL") || nombre.equals("FORMACIÓN PROFESIONAL") || nombre.equals("UNIDAD PROFESIONAL")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(2);
                     } else if (nombre.equals("TITULACIÓN")) {
                         frmMaterias.getCbx_OrgCurricular().setSelectedIndex(3);

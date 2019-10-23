@@ -96,7 +96,6 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         vtnMallaAlm.getCmbEstado().addActionListener(e -> clickCombo());
         vtnMallaAlm.getCmbCiclo().addActionListener(e -> clickCombo());
 
-        vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
                 vtnMallaAlm.getTxtBuscar().getText().trim()));
