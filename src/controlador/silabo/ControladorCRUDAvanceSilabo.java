@@ -306,7 +306,7 @@ public class ControladorCRUDAvanceSilabo {
                         parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
                         parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
 
-                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());   
                         JasperViewer pv = new JasperViewer(jp, false);
                         pv.setVisible(true);
                         pv.setTitle("Avance de silabo (fin de ciclo)");

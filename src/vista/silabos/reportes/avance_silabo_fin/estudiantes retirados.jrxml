@@ -8,7 +8,13 @@
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_silabo_fin/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select p.persona_identificacion,concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido) as apellidos,
+	concat(p.persona_primer_nombre,' ',p.persona_segundo_nombre) as nombres
+	from
+	"AlumnoCurso" ac join "Cursos" c ON c.id_curso=ac.id_curso
+	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
+	where ac.almn_curso_estado='RETIRADO' and C.id_curso=$P!{id_curso} and ac.almn_curso_activo='false'
+	order by concat(p.persona_primer_apellido,' ',p.persona_segundo_apellido)]]>
 	</queryString>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -36,6 +42,43 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20"/>
+		<band height="20">
+			<textField>
+				<reportElement x="137" y="0" width="212" height="20" uuid="c6d8e8f6-2c26-4c97-9efc-0fdde44e07b9"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="0" width="206" height="20" uuid="338fbe22-95ba-4ece-acc0-61de618f3cc2"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="137" height="20" uuid="0b57bb67-e8f0-47dd-a92e-bcbadc67dbcd"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{persona_identificacion}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 </jasperReport>
