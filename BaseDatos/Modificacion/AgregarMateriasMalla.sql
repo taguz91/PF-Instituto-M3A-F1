@@ -268,3 +268,69 @@ INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
 			WHERE id_carrera = 3)
 			AND malla_almn_ciclo = 5
 			AND id_materia = 111)
+
+
+--- Insertamos fase practica y pti de TAF
+
+SELECT * FROM public."Materias" WHERE materia_codigo ILIKE 'TAFPTI-01';
+
+-- Ciclo: 1  Materia: 419 PTI
+-- Ciclo: 1  Materia: 420 FP
+
+INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
+  SELECT id_almn_carrera, 419, 1
+	FROM public."AlumnosCarrera"
+	WHERE id_carrera = 11
+	AND id_almn_carrera NOT IN(
+		SELECT id_almn_carrera FROM public."MallaAlumno"
+			WHERE id_almn_carrera IN (
+			SELECT id_almn_carrera
+			FROM public."AlumnosCarrera"
+			WHERE id_carrera = 11)
+			AND malla_almn_ciclo = 1
+			AND id_materia = 419);
+
+
+INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
+  SELECT id_almn_carrera, 420, 1
+	FROM public."AlumnosCarrera"
+	WHERE id_carrera = 11
+	AND id_almn_carrera NOT IN(
+		SELECT id_almn_carrera FROM public."MallaAlumno"
+			WHERE id_almn_carrera IN (
+			SELECT id_almn_carrera
+			FROM public."AlumnosCarrera"
+			WHERE id_carrera = 11)
+			AND malla_almn_ciclo = 1
+			AND id_materia = 420);
+
+
+-- Ciclo: 2  Materia: 419 PTI
+-- Ciclo: 2  Materia: 420 FP
+
+INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
+  SELECT id_almn_carrera, 421, 2
+	FROM public."AlumnosCarrera"
+	WHERE id_carrera = 11
+	AND id_almn_carrera NOT IN(
+		SELECT id_almn_carrera FROM public."MallaAlumno"
+			WHERE id_almn_carrera IN (
+			SELECT id_almn_carrera
+			FROM public."AlumnosCarrera"
+			WHERE id_carrera = 11)
+			AND malla_almn_ciclo = 2
+			AND id_materia = 421);
+
+
+INSERT INTO public."MallaAlumno"(id_almn_carrera, id_materia, malla_almn_ciclo)
+  SELECT id_almn_carrera, 422, 2
+	FROM public."AlumnosCarrera"
+	WHERE id_carrera = 11
+	AND id_almn_carrera NOT IN(
+		SELECT id_almn_carrera FROM public."MallaAlumno"
+			WHERE id_almn_carrera IN (
+			SELECT id_almn_carrera
+			FROM public."AlumnosCarrera"
+			WHERE id_carrera = 11)
+			AND malla_almn_ciclo = 2
+			AND id_materia = 422);
