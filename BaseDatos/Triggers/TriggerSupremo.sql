@@ -75,7 +75,11 @@ DECLARE
   estado character varying(10) := 'S';
 
   reg RECORD;
-  almn_curso CURSOR FOR  SELECT id_alumno, id_materia, almn_curso_nota_final, id_carrera
+  almn_curso CURSOR FOR  SELECT id_alumno,
+	id_materia,
+	almn_curso_nota_final,
+	id_carrera,
+	almn_curso_estado
   FROM public."AlumnoCurso" ac, public."Cursos" c,
   public."PeriodoLectivo" pl
   WHERE c.id_prd_lectivo = old.id_prd_lectivo AND
@@ -109,7 +113,8 @@ BEGIN
     	);
       RAISE NOTICE 'Numero de matricula : % de %', num_matricula, reg.id_alumno;
       --Revisamos como sera el estado
-      IF reg.almn_curso_nota_final >= 70 THEN
+      IF reg.almn_curso_nota_final >= 70 AND
+			reg.almn_curso_estado NOT SIMILAR TO ('%REPROBADO%') THEN
         estado := 'C';
       ELSE
         estado := 'R';
