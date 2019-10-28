@@ -92,8 +92,9 @@ public class JDHorarioCTR extends DVtnCTR {
     private void llenarCmbDias() {
         jd.getCmbDia().removeAllItems();
         jd.getCmbDia().addItem("Seleccione");
-        for (int i = 1; i < ctrHClase.getjSelec().length; i++) {
-            jd.getCmbDia().addItem(ctrHClase.getjSelec()[i]);
+        String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+        for (int i = 1; i < t.length; i++) {
+            jd.getCmbDia().addItem(t[i]);
         }
     }
 
