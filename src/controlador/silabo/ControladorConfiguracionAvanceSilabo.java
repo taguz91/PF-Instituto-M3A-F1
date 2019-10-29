@@ -134,7 +134,7 @@ public class ControladorConfiguracionAvanceSilabo {
     if (posC>0) {
         estado_comboPeriodos(true);
          String carrera=carreras_docente.get(posC-1).getNombre();
-        periodosCarrera=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, carrera);
+        periodosCarrera=PeriodoLectivoBDS.consultarPeriodos(conexion, carrera);
         LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
         
     }else{
@@ -223,7 +223,7 @@ public class ControladorConfiguracionAvanceSilabo {
       
   }
    private List<PeriodoLectivoMD> cargarPeriodos(){
-          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion,avance.getCbxCarrera().getSelectedItem().toString()); 
+          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodos(conexion,avance.getCbxCarrera().getSelectedItem().toString()); 
           return periodos;
      }
  
