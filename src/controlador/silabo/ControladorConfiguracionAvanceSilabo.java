@@ -231,7 +231,7 @@ public class ControladorConfiguracionAvanceSilabo {
     }
 
     private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, avance.getCbxCarrera().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, avance.getCbxCarrera().getSelectedItem().toString());
         return periodos;
     }
 
