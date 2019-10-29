@@ -394,3 +394,13 @@ ALTER TABLE public."AlumnoCurso" ALTER COLUMN "almn_curso_fecha_registro" TYPE T
 
 --
 ALTER TABLE public."Matricula" ADD COLUMN matricula_tipo character varying(20) NOT NULL DEFAULT 'ORDINARIA';
+
+
+
+/*
+    MODIFICANDO LA MALLA
+*/
+UPDATE "MallaAlumno" 
+SET id_materia = 198 , malla_almn_ciclo = 1
+WHERE
+	id_malla_alumno IN ( SELECT id_malla_alumno FROM "MallaAlumno" WHERE "MallaAlumno".id_materia = 168 AND id_almn_carrera IN ( SELECT id_almn_carrera FROM "public"."AlumnosCarrera" WHERE id_carrera = 6 ) );
