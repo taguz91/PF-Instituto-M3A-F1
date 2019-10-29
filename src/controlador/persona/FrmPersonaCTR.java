@@ -294,23 +294,11 @@ public class FrmPersonaCTR extends DCTR {
         if (estado) {
             frmPersona.getLblTipoDiscapacidad().setVisible(estado);
             frmPersona.getCmbTipoDiscapacidad().setVisible(estado);
-            //frmPersona.getLblErrorTipoDiscapacidad().setVisible(estado);
             frmPersona.getLblCarnetConadis().setVisible(estado);
             frmPersona.getTxtCarnetConadis().setVisible(estado);
-            //frmPersona.getLblErrorCarnetConadis().setVisible(estado);
             frmPersona.getLblPorcentaje().setVisible(estado);
             frmPersona.getTxtPorcentaje().setVisible(estado);
-            //frmPersona.getLblErrorPorcentaje().setVisible(estado);
 
-//            if (frmPersona.getCmbTipoDiscapacidad().getSelectedIndex() == 6) {
-//                frmPersona.getLblEspecifiqueDiscapacidad().setVisible(estado);
-//                //frmPersona.getLblErrorEspecifiqueDiscapacidad().setVisible(estado);
-//                frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(estado);
-//            } else {
-//                frmPersona.getLblEspecifiqueDiscapacidad().setVisible(false);
-//                //frmPersona.getLblErrorEspecifiqueDiscapacidad().setVisible(estado);
-//                frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(false);
-//            }
             if (estado) {
                 frmPersona.getCmbTipoDiscapacidad().addActionListener(new CmbValidar(
                         frmPersona.getCmbTipoDiscapacidad(), frmPersona.getLblErrorTipoDiscapacidad()));
@@ -325,10 +313,6 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getLblPorcentaje().setVisible(estado);
             frmPersona.getTxtPorcentaje().setVisible(estado);
             frmPersona.getLblErrorPorcentaje().setVisible(estado);
-//            frmPersona.getLblEspecifiqueDiscapacidad().setVisible(estado);
-//            frmPersona.getLblErrorEspecifiqueDiscapacidad().setVisible(estado);
-//            frmPersona.getTxtEspecifiqueDiscapacidad().setVisible(estado);
-
         }
     }
 
@@ -440,9 +424,6 @@ public class FrmPersonaCTR extends DCTR {
             frmPersona.getCmbTipoSangre().addActionListener(new CmbValidar(
                     frmPersona.getCmbTipoSangre(), frmPersona.getLblErrorTipoSangre()));
             frmPersona.getCmbTipoSangre().addPropertyChangeListener(habilitar_Guardar);
-
-//            frmPersona.getCmbCategoriaMigratoria().addActionListener(new CmbValidar(
-//                    frmPersona.getCmbCategoriaMigratoria(), frmPersona.getLblErrorCategoriaMigratoria()));
             frmPersona.getCmbCategoriaMigratoria().addPropertyChangeListener(habilitar_Guardar);
         }
         //Validar los txt
@@ -452,19 +433,14 @@ public class FrmPersonaCTR extends DCTR {
 
         frmPersona.getTxtCalleSecundaria().addKeyListener(new TxtVDireccion(
                 frmPersona.getTxtCalleSecundaria(), frmPersona.getLblErrorCalleSec()));
-        // frmPersona.getTxtCalleSecundaria().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtCelular().addKeyListener(new TxtVCelular(
                 frmPersona.getTxtCelular(), frmPersona.getLblErrorCelular()));
-        //frmPersona.getTxtCelular().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtCodigoPostal().addKeyListener(new TxtVNumeros(
                 frmPersona.getTxtCodigoPostal(), frmPersona.getLblErrorCodigoPostal()));
         frmPersona.getTxtCodigoPostal().addPropertyChangeListener(habilitar_Guardar);
 
-//        frmPersona.getTxtEspecifiqueDiscapacidad().addKeyListener(new TxtVLetras(
-//                frmPersona.getTxtEspecifiqueDiscapacidad(), frmPersona.getLblErrorEspecifiqueDiscapacidad()));
-//        frmPersona.getTxtEspecifiqueDiscapacidad().addPropertyChangeListener(habilitar_Guardar);
         frmPersona.getTxtPorcentaje().addKeyListener(new TxtVNumeros(
                 frmPersona.getTxtPorcentaje(), frmPersona.getLblErrorPorcentaje()));
         frmPersona.getTxtPorcentaje().addPropertyChangeListener(habilitar_Guardar);
@@ -479,11 +455,9 @@ public class FrmPersonaCTR extends DCTR {
 
         frmPersona.getTxtReferencia().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtReferencia(), frmPersona.getLblErrorReferencia()));
-        // frmPersona.getTxtReferencia().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtSector().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtSector(), frmPersona.getLblErrorSector()));
-        //frmPersona.getTxtSector().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtSegundoApellido().addKeyListener(new TxtVLetras(
                 frmPersona.getTxtSegundoApellido(), frmPersona.getLblErrorSegApellido()));
@@ -495,15 +469,8 @@ public class FrmPersonaCTR extends DCTR {
 
         frmPersona.getTxtTelefono().addKeyListener(new TxtVTelefono(
                 frmPersona.getTxtTelefono(), frmPersona.getLblErrorTelefono()));
-//        //frmPersona.getTxtTelefono().addPropertyChangeListener(habilitar_Guardar);
-
-//        frmPersona.getTxtCarnetConadis().addKeyListener(new TxtVCarnetConadis(
-//                frmPersona.getTxtCarnetConadis(), frmPersona.getLblErrorCarnetConadis()));
-        frmPersona.getTxtCarnetConadis().addPropertyChangeListener(habilitar_Guardar);
-
         frmPersona.getTxtCorreo().addKeyListener(new TxtVCorreo(
                 frmPersona.getTxtCorreo(), frmPersona.getLblErrorCorreo()));
-//      frmPersona.getTxtCorreo().addPropertyChangeListener(habilitar_Guardar);
 
         frmPersona.getTxtNumeroCasa().addKeyListener(new TxtVNumCasa(frmPersona.getTxtNumeroCasa(),
                 frmPersona.getLblErrorNumeroCasa()));
@@ -741,15 +708,6 @@ public class FrmPersonaCTR extends DCTR {
                 frmPersona.getLblErrorTipoDiscapacidad().setVisible(false);
             }
 
-            carnetConadis = frmPersona.getTxtCarnetConadis().getText().trim();
-            if (!Validar.esCarnetConadis(carnetConadis)) {
-                guardar = false;
-                frmPersona.getLblErrorCarnetConadis().setVisible(true);
-            } else {
-                carnetConadis = frmPersona.getTxtCarnetConadis().getText();
-                frmPersona.getLblErrorCarnetConadis().setVisible(false);
-            }
-
             porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText().trim().toUpperCase();
             if (!Validar.esNumeros(porcentajeDiscapacidad)) {
                 guardar = false;
@@ -758,6 +716,8 @@ public class FrmPersonaCTR extends DCTR {
                 porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
                 frmPersona.getLblErrorPorcentaje().setVisible(false);
             }
+            
+            carnetConadis = frmPersona.getTxtCarnetConadis().getText();
         }
 
         if (frmPersona.getCmbIdiomas().getSelectedIndex() < 1) {
@@ -821,7 +781,7 @@ public class FrmPersonaCTR extends DCTR {
                 if (posPr > 0 && posPr <= parroquias.size()) {
                     frmPersona.getLblErrorParroquiaReside().setVisible(false);
                     //Editar el codigo postal
-                    
+
                     lugarRes = parroquias.get(posPr - 1);
                     //
                 } else {
@@ -1317,12 +1277,12 @@ public class FrmPersonaCTR extends DCTR {
         if (posPa > 0 && posPa < parroquias.size()) {
             //cantones.get(posPa).getId();
             frmPersona.getTxtCodigoPostal().setText(parroquias.get(posPa - 1).getCodigo());
-        
+
         } else {
 //            lug.editarLugar(cantones.get(posPa).getId());
             frmPersona.getTxtCodigoPostal().setText("");
-           // codigo = frmPersona.getTxtCodigoPostal().setText(lug.editarLugar(cantones.get(posPa).getId()));
-            
+            // codigo = frmPersona.getTxtCodigoPostal().setText(lug.editarLugar(cantones.get(posPa).getId()));
+
         }
     }
 
