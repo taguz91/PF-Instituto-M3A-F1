@@ -45,7 +45,7 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
                     + "WHERE c.id_carrera=?  AND  p.prd_lectivo_fecha_inicio>='2018-11-12' ORDER BY p.id_prd_lectivo DESC");
 
             st.setInt(1, clave);
-
+            System.out.println(st+"------------------------------------------------------------------------------------------------");
             ResultSet rs = st.executeQuery();
             System.out.println(st);
             while (rs.next()) {
@@ -89,6 +89,38 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 tmp.setId_PerioLectivo(rs.getInt(1));
                 tmp.setNombre_PerLectivo(rs.getString(2));
+                
+
+                periodos.add(tmp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PeriodoLectivoBDS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return periodos;
+
+    }
+    public static List<PeriodoLectivoMD> consultarPeriodos(ConexionBD conexion, String carrera) {
+
+        List<PeriodoLectivoMD> periodos = new ArrayList<>();
+        try {
+
+            PreparedStatement st = conexion.getCon().prepareStatement("	SELECT p.id_prd_lectivo, p.prd_lectivo_nombre , p.prd_lectivo_fecha_fin\n" +
+"                    FROM \"PeriodoLectivo\" AS p\n" +
+"                   JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n" +
+"                    WHERE c.carrera_nombre=?  AND  p.prd_lectivo_fecha_inicio>='2019-05-27' ORDER BY p.id_prd_lectivo DESC");
+
+            st.setString(1, carrera);
+
+            ResultSet rs = st.executeQuery();
+            System.out.println(st);
+            while (rs.next()) {
+ 
+                PeriodoLectivoMD tmp = new PeriodoLectivoMD();
+
+                tmp.setId_PerioLectivo(rs.getInt(1));
+                tmp.setNombre_PerLectivo(rs.getString(2));
+                tmp.setFecha_Fin(rs.getDate(3).toLocalDate());
                 
 
                 periodos.add(tmp);

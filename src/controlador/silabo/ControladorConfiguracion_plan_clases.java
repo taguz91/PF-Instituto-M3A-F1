@@ -94,7 +94,7 @@ public class ControladorConfiguracion_plan_clases {
          
     }
      private List<PeriodoLectivoMD> cargarPeriodos(){
-          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion,frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString()); 
+          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodos(conexion,frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString()); 
           return periodos;
      }
  
@@ -180,7 +180,7 @@ private void clickCmbCarreras(){
     if (posC>0) {
         estado_comboPeriodos(true);
          String carrera=silabos_docente.get(posC-1).getNombre();
-        periodosCarrera=PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, carrera);
+        periodosCarrera=PeriodoLectivoBDS.consultarPeriodos(conexion, carrera);
         LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
         
     }else{

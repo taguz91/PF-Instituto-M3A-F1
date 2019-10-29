@@ -147,7 +147,6 @@ public class ControladorCRUDAvanceSilabo {
                 }
             }
         });
-        seguimiento.getCmb_periodos().setEnabled(false);
         seguimiento.getBtn_Imprimir().addActionListener(e -> imprimir());
 
     }
@@ -233,7 +232,7 @@ public class ControladorCRUDAvanceSilabo {
 
     private void CARGAR_COMBO_PERIODOS_CARRERA() {
         seguimiento.getCmb_periodos().removeAllItems();
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
         if (periodos == null) {
             JOptionPane.showMessageDialog(null, "No existen Periodos");
         } else {
@@ -246,7 +245,7 @@ public class ControladorCRUDAvanceSilabo {
     }
 
     private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, seguimiento.getCmb_Carreras().getSelectedItem().toString());
         return periodos;
     }
 

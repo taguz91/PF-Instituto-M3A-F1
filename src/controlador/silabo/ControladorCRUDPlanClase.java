@@ -119,6 +119,7 @@ public class ControladorCRUDPlanClase {
         CARGAR_COMBO_PERIODOS_CARRERA();
         CARGAR_JORNADAS();
         cargarPlanesDeClaseProfesor();
+        getid_periodo();
 
         fCrud_plan_Clases.setLocation((principal.getDpnlPrincipal().getSize().width - fCrud_plan_Clases.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - fCrud_plan_Clases.getSize().height) / 2);
@@ -179,7 +180,6 @@ public class ControladorCRUDPlanClase {
         });
         
         fCrud_plan_Clases.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
-        fCrud_plan_Clases.getCmb_periodos().setEnabled(false);
         InitPermisos();
     }
     
@@ -228,7 +228,7 @@ public class ControladorCRUDPlanClase {
 
     private void CARGAR_COMBO_PERIODOS_CARRERA() {
         fCrud_plan_Clases.getCmb_periodos().removeAllItems();
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString());
         if (periodos == null) {
             JOptionPane.showMessageDialog(null, "No existen Periodos");
         } else {
@@ -300,7 +300,7 @@ public class ControladorCRUDPlanClase {
     }
 
     private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodosPlanDeClse(conexion, fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, fCrud_plan_Clases.getCmb_Carreras().getSelectedItem().toString());
         return periodos;
     }
 
