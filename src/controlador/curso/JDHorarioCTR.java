@@ -92,8 +92,9 @@ public class JDHorarioCTR extends DVtnCTR {
     private void llenarCmbDias() {
         jd.getCmbDia().removeAllItems();
         jd.getCmbDia().addItem("Seleccione");
-        for (int i = 1; i < ctrHClase.getjSelec().length; i++) {
-            jd.getCmbDia().addItem(ctrHClase.getjSelec()[i]);
+        String[] t = {"H", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
+        for (int i = 1; i < t.length; i++) {
+            jd.getCmbDia().addItem(t[i]);
         }
     }
 
@@ -152,28 +153,6 @@ public class JDHorarioCTR extends DVtnCTR {
                 guardar = false;
             }
         }
-        //Si todo sigue correcto hasta ahora validamos que sean horas en la jornada especificada
-//        if (guardar) {
-//            guardar = false;
-//            for (String hSelec : ctrHClase.gethSelec()) {
-//                if (hSelec.equals(horaIni)) {
-//                    guardar = true;
-//                }
-//            }
-//
-//            for (String hSelec : ctrHClase.gethSelec()) {
-//                if (hSelec.equals(horaFin)) {
-//                    guardar = true;
-//                }
-//            }
-//            if (!guardar) {
-//                jd.getLblError().setText("<html>Recuerde que esta en " + jornada + "<br>  Horario: "
-//                        + ctrHClase.gethSelec()[0] + " - "
-//                        + ctrHClase.gethSelec()[ctrHClase.gethSelec().length - 1] + "</html>");
-//            } else {
-//                jd.getLblError().setText("");
-//            }
-//        }
 
         if (guardar) {
             //Vemos si no guardamos ya ese horario

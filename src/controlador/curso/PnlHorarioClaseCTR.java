@@ -48,6 +48,7 @@ public class PnlHorarioClaseCTR {
     }
 
     private void llenarHorarios() {
+        mdTbl.setRowCount(0);
         sesiones = bd.cargarHorarioCurso(curso);
         if (sesiones != null) {
             System.out.println("---------");

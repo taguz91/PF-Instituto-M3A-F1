@@ -19,7 +19,7 @@ public class DitoolBD {
         try {
             //Cargamos el driver
             Class.forName("org.postgresql.Driver");
-            ct = DriverManager.getConnection(CONS.BD_URL, CONS.getBDUser(), CONS.BD_PASS);
+            ct = DriverManager.getConnection(CONS.BD_URL, user, pass);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {
