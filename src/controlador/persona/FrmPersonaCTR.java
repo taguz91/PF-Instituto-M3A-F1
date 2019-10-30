@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import modelo.COMBOS;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
 import modelo.persona.PersonaBD;
@@ -55,15 +56,7 @@ public class FrmPersonaCTR extends DCTR {
     private final PersonaBD persona;
     private TxtVCedula valCe;
     private int numAccion = 2;
-
-    private final String[] idiomas = {"Árabe", "Croata", "Francés",
-        "Español", "Maltés", "Chino", "Danés", "Vietnamita", "Inglés", "Serbio",
-        "Sueco", "Hindi", "Finés", "Bosnia", "Ucraniano", "Japonés", "Portugués",
-        "Islandés", "Checo", "Polaco", "Catalán", "Malayo", "Búlgaro", "Rumano",
-        "Coreano", "Griego", "Ruso", "Noruego", "Nynorsk", "Húngaro", "Tailandés",
-        "Irlandés", "Turco", "Estonio", "Albanés", "Alemán", "Hebreo", "TH",
-        "Neerlandés", "Letón", "Italiano", "Eslovaco", "Lituano", "Italiano",
-        "Macedonio", "Bielorruso", "Esloveno", "Indonesio"};
+    private final String[] idiomas = COMBOS.IDIOMAS;
 
     //Para cargar los paises  
     private ArrayList<LugarMD> paises;
@@ -165,7 +158,7 @@ public class FrmPersonaCTR extends DCTR {
      */
     public boolean confirmaError() {
         //boolean error = false;
-        if (frmPersona.getLblErrorCallePrin().isVisible() == false
+        return !(frmPersona.getLblErrorCallePrin().isVisible() == false
                 && frmPersona.getLblErrorCalleSec().isVisible() == false
                 && frmPersona.getLblErrorCanton().isVisible() == false
                 && frmPersona.getLblErrorCantonReside().isVisible() == false
@@ -181,8 +174,6 @@ public class FrmPersonaCTR extends DCTR {
                 && frmPersona.getLblErrorNacionalidad().isVisible() == false
                 && frmPersona.getLblErrorPaisReside().isVisible() == false
                 && frmPersona.getLblErrorPaisReside().isVisible() == false
-                //&& frmPersona.getLblErrorParroquiaReside().isVisible() == false
-                //                && frmPersona.getLblErrorEspecifiqueDiscapacidad().isVisible() == false
                 && frmPersona.getLblErrorCategoriaMigratoria().isVisible() == false
                 && frmPersona.getLblErrorPorcentaje().isVisible() == false
                 && frmPersona.getLblErrorPriApellido().isVisible() == false
@@ -196,11 +187,7 @@ public class FrmPersonaCTR extends DCTR {
                 && frmPersona.getLblErrorSexo().isVisible() == false
                 && frmPersona.getLblErrorTelefono().isVisible() == false
                 && frmPersona.getLblErrorTipoResidencia().isVisible() == false
-                && frmPersona.getLblErrorTipoSangre().isVisible() == false) {
-            return false;
-        } else {
-            return true;
-        }
+                && frmPersona.getLblErrorTipoSangre().isVisible() == false);
     }
 
     /**
@@ -213,6 +200,7 @@ public class FrmPersonaCTR extends DCTR {
         String cedula = frmPersona.getTxtIdentificacion().getText();
 
         if (!cedula.equals("")) {
+
             if (valCe.isValidarCedula()) {
                 if (!Validar.esCedula(cedula)) {
                     errorCedula = true;
@@ -521,11 +509,8 @@ public class FrmPersonaCTR extends DCTR {
      */
     public void habilitarBtnGuardar() {
 
-        String TipoId, Identificacion, PriNombre, PriApellido, FechaNaci,
-                EstadoCivil, TipoSangre, Genero, Sexo, Etnia, IdiomaRaiz, CallePrin,
-                TipoResidencia, TipoDiscapacidad = null, CarnetConadis = null,
-                PorcentajeDiscapacidad = null, comboCategoriaMigratoria;
-        boolean Discapacidad, categoriaMigratoria;
+        String TipoId, Identificacion, PriNombre, PriApellido,
+                EstadoCivil, TipoSangre, Genero, Sexo, Etnia, IdiomaRaiz, CallePrin;
 
         TipoId = frmPersona.getCmbTipoId().getSelectedItem().toString();
         Identificacion = frmPersona.getTxtIdentificacion().getText();
@@ -538,7 +523,7 @@ public class FrmPersonaCTR extends DCTR {
         TipoSangre = frmPersona.getCmbTipoSangre().getSelectedItem().toString();
         Etnia = frmPersona.getCmbEtnia().getSelectedItem().toString();
         CallePrin = frmPersona.getTxtCallePrincipal().getText();
-        categoriaMigratoria = frmPersona.getCbxCategoriaMigratoria().isSelected();
+
         if (confirmaError() == false) {
             if (TipoId.equals("SELECCIONE") == false
                     && Identificacion.equals("") == false
@@ -578,10 +563,10 @@ public class FrmPersonaCTR extends DCTR {
                 fechaNac, estadoCivil = "a", tipoSangre = "a", genero = "a",
                 sexo = "a", etnia = "a", carnetConadis = "a",
                 tipoDiscapacidad = "a", porcentajeDiscapacidad = "a",
-                idiomaRaiz = "a", telefono, callePrin, tipoResidencia = "a",
+                idiomaRaiz = "a", telefono, callePrin,
                 calleSec, referencia, comboCategoriaMigra = "a",
                 celular, numCasa, sector,
-                zonaResidencia, correo, especifiqueDiscapacidad = "a";
+                zonaResidencia, correo;
 
         boolean discapacidad, categoriaMigra;
         int tipoIdentifi;
@@ -596,9 +581,9 @@ public class FrmPersonaCTR extends DCTR {
             } else {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
-        } else {
-            //Validar cuando es pasaporte 
         }
+        
+        
         priNombre = frmPersona.getTxtPrimerNombre().getText().trim().toUpperCase();
         if (!Validar.esLetras(priNombre)) {
             guardar = false;
@@ -606,21 +591,19 @@ public class FrmPersonaCTR extends DCTR {
         } else {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
+        
         segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
-
         priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
             guardar = false;
             frmPersona.getLblErrorPriApellido().setVisible(true);
-
         } else {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
+        
         segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
-
         if (frmPersona.getJdfechaNacimiento().isValid()) {
             fecha = frmPersona.getJdfechaNacimiento().getDate();
-
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             //Se lo pasa a un string para poder validarlo
             fechaNac = sdf.format(fecha);
@@ -636,7 +619,6 @@ public class FrmPersonaCTR extends DCTR {
                 frmPersona.getLblErrorFecNac().setVisible(false);
             }
         } else {
-            System.out.println("No es valida la fecha");
             frmPersona.getLblErrorFecNac().setVisible(false);
         }
 
@@ -676,7 +658,6 @@ public class FrmPersonaCTR extends DCTR {
             guardar = false;
             frmPersona.getLblTipoDiscapacidad().setVisible(true);
         } else {
-            tipoResidencia = frmPersona.getCmbTipoResidencia().getSelectedItem().toString();
             frmPersona.getLblErrorTipoResidencia().setVisible(false);
         }
 
@@ -716,7 +697,7 @@ public class FrmPersonaCTR extends DCTR {
                 porcentajeDiscapacidad = frmPersona.getTxtPorcentaje().getText();
                 frmPersona.getLblErrorPorcentaje().setVisible(false);
             }
-            
+
             carnetConadis = frmPersona.getTxtCarnetConadis().getText();
         }
 

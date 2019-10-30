@@ -210,6 +210,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
         frmAlmCurso.getBtnPendientes().addActionListener(e -> mostrarInformacion("P"));
         frmAlmCurso.getBtnHorarioAlmn().addActionListener(e -> horarioAlmn());
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
+        
+        // Acciones de choques de horas
+        frmAlmCurso.getBtnChoques().addActionListener(e -> mostrarChoque());
 
     }
 
@@ -272,10 +275,10 @@ public class FrmAlumnoCursoCTR extends DCTR {
         if (posTipo < 1) {
             guardar = false;
         }
-        
-        if(tieneTerceraMatricula){
+
+        if (tieneTerceraMatricula) {
             guardar = validarTercerasMatriculas();
-            if(!guardar){
+            if (!guardar) {
                 error = "Debe matricularse en su tercera matricula.";
             }
         }
@@ -783,7 +786,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
                 for (int j = 0; j < cursos.size(); j++) {
                     //Si es la misma materia la eliminamos de cursos
                     if (mallaMatriculadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()) {
-                        //System.out.println("Esta matriculado en: " + cursos.get(j).getId_materia().getNombre());
                         cursos.remove(j);
                         break;
                     }
@@ -797,7 +799,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     for (int j = 0; j < cursos.size(); j++) {
                         //Si es la misma materia la eliminamos de cursos
                         if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()) {
-                            //System.out.println("Ya curso: " + cursos.get(j).getId_materia().getNombre());
                             cursos.remove(j);
                             break;
                         }
@@ -810,7 +811,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
                         //Si es la misma materia la eliminamos de cursos
                         if (mallaCursadas.get(i).getMateria().getId() == cursos.get(j).getMateria().getId()
                                 && !perdioNucleoEstruncturante(mallaCursadas.get(i).getMateria().getId())) {
-                            System.out.println("Ya curso y no es nucleo: " + cursos.get(j).getMateria().getNombre());
                             cursos.remove(j);
                             break;
                         }
@@ -842,7 +842,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
             for (int i = 0; i < materias.size(); i++) {
                 //&& materias.get(i).isMateriaNucleo()
                 if (materias.get(i).getId() == idMateria && materias.get(i).isMateriaNucleo()) {
-                    System.out.println("Encontramos un nucleo Estructurante ");
                     perdio = true;
                     break;
                 }
@@ -1011,14 +1010,17 @@ public class FrmAlumnoCursoCTR extends DCTR {
             return true;
         }
     }
-    /***
+
+    /**
+     * *
      * Validamos que se matricule en terceras matriculas si es que tiene
-     * @return 
+     *
+     * @return
      */
-    public boolean validarTercerasMatriculas(){
+    public boolean validarTercerasMatriculas() {
         boolean guardar = false;
         for (int i = 0; i < cursosSelec.size(); i++) {
-            if(cursosSelec.get(i).getNumMatricula() == 3){
+            if (cursosSelec.get(i).getNumMatricula() == 3) {
                 guardar = true;
                 break;
             }
@@ -1032,9 +1034,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
      * @param cursos
      */
     public void llenarTblMateriasPendientes(ArrayList<CursoMD> cursos) {
-        //Antes validamos que esos cursos ya no esten el materia seleccionados 
-        //Si cursos no esta vacio llenamos la tabla
-        //Pasamos el nuevo cursos depurado al array 
+        // Antes validamos que esos cursos ya no esten el materia seleccionados 
+        // Si cursos no esta vacio llenamos la tabla
+        // Pasamos el nuevo cursos depurado al array 
         cursosPen = cursos;
         mdMatPen.setRowCount(0);
         if (!cursos.isEmpty()) {
@@ -1166,6 +1168,8 @@ public class FrmAlumnoCursoCTR extends DCTR {
         //llenarTblMateriasPendientes(cursosPen);
         llenarTblMatSelec(cursosSelec);
         cargarMaterias();
+        // Borramos los choques en el string porque ya nos devolvimos 
+        choques = "";
     }
 
     /**
@@ -1192,6 +1196,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
     }
 
     private boolean choque;
+    private String choques = "";
 
     /**
      * Comprobamos si se choca el horario del alumno
@@ -1206,8 +1211,13 @@ public class FrmAlumnoCursoCTR extends DCTR {
                 if ((h.getDia() == hc.getDia() && h.getHoraIni() == hc.getHoraIni())
                         || (h.getDia() == hc.getDia() && h.getHoraFin() == hc.getHoraFin())) {
                     choque = true;
-                    System.out.println("Dia que choca: " + hc.getDia());
-                    System.out.println("Choca hora de: " + hc.getHoraIni() + " || " + hc.getHoraFin());
+
+                    // Mostramos los choques 
+                    choques = "Dia que choca: " + hc.getDia() + "\n"
+                            + "Choca hora de: " + hc.getHoraIni() + " || " + hc.getHoraFin() + " \n \n";
+                    
+                    // System.out.println("Dia que choca: " + hc.getDia());
+                    // System.out.println("Choca hora de: " + hc.getHoraIni() + " || " + hc.getHoraFin());
                 }
             });
         });
@@ -1362,6 +1372,10 @@ public class FrmAlumnoCursoCTR extends DCTR {
             });
         }
         return hc;
+    }
+
+    private void mostrarChoque() {
+        JOptionPane.showMessageDialog(frmAlmCurso, "Choches: \n" + choques);
     }
 
 }
