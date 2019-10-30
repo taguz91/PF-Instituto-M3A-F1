@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e43316c5-a018-4cbb-ba2e-dd9c1875b142">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="238"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="804" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e43316c5-a018-4cbb-ba2e-dd9c1875b142">
+	<property name="ireport.zoom" value="8.140274938684064"/>
+	<property name="ireport.x" value="3405"/>
+	<property name="ireport.y" value="5250"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
@@ -55,7 +55,7 @@ OBJETIVO
 ESPECÍFICO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="84" y="0" width="94" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="a311e88a-b3f1-4739-8539-3aae5639ecfe"/>
+				<reportElement mode="Opaque" x="84" y="0" width="84" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="a311e88a-b3f1-4739-8539-3aae5639ecfe"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -71,7 +71,7 @@ RESULTADOS DE
 APRENDIZAJE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="178" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="32bf905f-771e-4bb7-807c-023e8cd2c067"/>
+				<reportElement mode="Opaque" x="168" y="0" width="13" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="32bf905f-771e-4bb7-807c-023e8cd2c067"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -83,7 +83,7 @@ APRENDIZAJE]]></text>
 				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="202" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="90674e29-d33b-4073-bdcd-9398011dd5de"/>
+				<reportElement mode="Opaque" x="181" y="0" width="13" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="90674e29-d33b-4073-bdcd-9398011dd5de"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -95,7 +95,7 @@ APRENDIZAJE]]></text>
 				<text><![CDATA[FECHA FIN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="226" y="0" width="133" height="36" forecolor="#FFFFFF" backcolor="#006699" uuid="46d2729a-f918-4f7a-bd3b-7976ceb964fd"/>
+				<reportElement mode="Opaque" x="194" y="0" width="210" height="36" forecolor="#FFFFFF" backcolor="#006699" uuid="46d2729a-f918-4f7a-bd3b-7976ceb964fd"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -108,7 +108,7 @@ APRENDIZAJE]]></text>
 CONTENIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="226" y="36" width="133" height="51" forecolor="#FFFFFF" backcolor="#006699" uuid="aab4c120-a82c-4415-8772-1ce36fa4d32e"/>
+				<reportElement mode="Opaque" x="194" y="36" width="210" height="51" forecolor="#FFFFFF" backcolor="#006699" uuid="aab4c120-a82c-4415-8772-1ce36fa4d32e"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -122,7 +122,7 @@ CONTENIDOS]]></text>
 (UNIDADES Y TEMAS)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="359" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f449888d-2b29-443f-8db0-85dbbd0b537f"/>
+				<reportElement mode="Opaque" x="404" y="0" width="45" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f449888d-2b29-443f-8db0-85dbbd0b537f"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -130,11 +130,13 @@ CONTENIDOS]]></text>
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[N° HORAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="359" y="20" width="25" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="791dccdd-b120-4476-9c16-62bd7185ab36"/>
+				<reportElement mode="Opaque" x="404" y="20" width="15" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="791dccdd-b120-4476-9c16-62bd7185ab36"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -143,40 +145,12 @@ CONTENIDOS]]></text>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
 				<textElement rotation="Left">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[DOCENTES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="384" y="20" width="23" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="07a69884-33c7-4e6f-9dec-df44825fbc41"/>
-				<box>
-					<pen lineWidth="0.75" lineColor="#000000"/>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement rotation="Left">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PRÁCTICAS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="407" y="20" width="22" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="b08bd04e-aa6d-4855-b40b-1726aba71fd8"/>
-				<box>
-					<pen lineWidth="0.75" lineColor="#000000"/>
-					<topPen lineWidth="0.75" lineColor="#000000"/>
-					<leftPen lineWidth="0.75" lineColor="#000000"/>
-					<bottomPen lineWidth="0.75" lineColor="#000000"/>
-					<rightPen lineWidth="0.75" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle" rotation="Left">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[AUTÓNOMAS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="429" y="0" width="126" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="06581f6b-fa0f-477d-9a33-2c41dfc3775d"/>
+				<reportElement mode="Opaque" x="449" y="0" width="106" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="06581f6b-fa0f-477d-9a33-2c41dfc3775d"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -191,12 +165,40 @@ CONTENIDOS]]></text>
 ESTRATEGIAS DE 
 ENSEÑANZA]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="419" y="20" width="15" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="07a69884-33c7-4e6f-9dec-df44825fbc41"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement rotation="Left">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PRÁCTICAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="434" y="20" width="15" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="b08bd04e-aa6d-4855-b40b-1726aba71fd8"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="Left">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[AUTÓNOMAS]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="492" splitType="Stretch">
+		<band height="596" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="84" height="492" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
+				<reportElement x="0" y="0" width="84" height="574" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -207,7 +209,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{objetivo_especifico_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="407" y="0" width="22" height="492" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
+				<reportElement x="434" y="0" width="15" height="574" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -219,7 +221,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="359" y="0" width="25" height="492" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
+				<reportElement x="404" y="0" width="15" height="574" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -231,19 +233,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_docencia_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="0" width="23" height="492" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="84" y="0" width="94" height="492" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
+				<reportElement x="84" y="0" width="84" height="574" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -254,7 +244,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="178" y="0" width="24" height="492" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
+				<reportElement x="168" y="0" width="13" height="574" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -266,7 +256,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="202" y="0" width="24" height="492" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
+				<reportElement x="181" y="0" width="13" height="574" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -278,7 +268,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_fin_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="226" y="32" width="133" height="64" uuid="c2e20fe5-f040-401b-96d7-809cd861dfe0"/>
+				<reportElement x="194" y="32" width="210" height="53" uuid="c2e20fe5-f040-401b-96d7-809cd861dfe0"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -292,19 +282,19 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="226" y="96" width="133" height="396" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
+				<reportElement x="194" y="85" width="210" height="489" uuid="07f77bed-79f5-4f52-a9f2-c3dfc53ab3cd"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{contenidos_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="0" width="29" height="32" uuid="836e9759-317f-4dfd-8b11-d5feab0e3c11"/>
+				<reportElement x="330" y="0" width="74" height="32" uuid="836e9759-317f-4dfd-8b11-d5feab0e3c11"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -314,7 +304,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="226" y="0" width="104" height="33" uuid="9be90bcb-e3e0-4697-94c8-f81523587be6"/>
+				<reportElement x="194" y="0" width="181" height="33" uuid="9be90bcb-e3e0-4697-94c8-f81523587be6"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 				</box>
@@ -324,31 +314,27 @@ ENSEÑANZA]]></text>
 				<text><![CDATA[UNIDAD DIDÁCTICA:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="431" y="491" width="125" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
+				<reportElement x="449" y="572" width="106" height="1" uuid="5a6d52fc-a5f0-44a2-a23d-e902a540857d"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="555" y="0" width="1" height="492" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
+				<reportElement x="554" y="0" width="1" height="573" uuid="15e520f5-b661-4994-bd17-55e0585e7496"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement x="431" y="0" width="125" height="415" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
+				<reportElement x="451" y="0" width="104" height="454" uuid="e7935e25-9810-4cd8-8e1d-c94d9d2d5b86"/>
 				<subreportParameter name="id_u">
 					<subreportParameterExpression><![CDATA[$F{id_unidad}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "estrategias.jasper"]]></subreportExpression>
 			</subreport>
-		</band>
-	</detail>
-	<summary>
-		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="359" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
+				<reportElement x="0" y="574" width="404" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -362,13 +348,28 @@ ENSEÑANZA]]></text>
 				<text><![CDATA[TOTAL HORAS CICLO]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="359" y="0" width="70" height="22" uuid="d07cbcab-dbe1-4bb2-b5b0-64fb60957ff0"/>
+				<reportElement x="404" y="574" width="45" height="21" uuid="d07cbcab-dbe1-4bb2-b5b0-64fb60957ff0"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "HORAS_MATERIA.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="419" y="0" width="15" height="574" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
+			</textField>
 		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

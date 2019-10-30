@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4d5538da-5234-4928-9900-0b074ffe320f">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.948717100000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_u" class="java.lang.String">
@@ -16,7 +16,7 @@
 	<detail>
 		<band height="18">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="126" height="18" uuid="f1079856-44a9-412b-98ab-c2150b3dd0f9"/>
+				<reportElement x="0" y="0" width="92" height="18" uuid="f1079856-44a9-412b-98ab-c2150b3dd0f9"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
