@@ -211,6 +211,22 @@ ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE backup_notas_prd();
 
 
+/* Todos los trigger de PeriodoLectivo */
+
+CREATE TRIGGER backup_notas_malla
+AFTER UPDATE OF prd_lectivo_estado
+ON public."PeriodoLectivo" FOR EACH ROW
+EXECUTE PROCEDURE backup_notas_prd();
+
+CREATE TRIGGER cierre_prd_backup
+BEFORE UPDATE OF prd_lectivo_estado
+ON public."PeriodoLectivo" FOR EACH ROW
+EXECUTE PROCEDURE cierre_prd_backup();
+
+CREATE TRIGGER pasar_notas_malla
+AFTER UPDATE OF prd_lectivo_estado
+ON public."PeriodoLectivo" FOR EACH ROW
+EXECUTE PROCEDURE pasar_notas();
 
 --Una funcion que me llena las notas *
 --Solo debo pasar el id del periodo
