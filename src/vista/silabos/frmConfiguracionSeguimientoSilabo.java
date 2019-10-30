@@ -143,6 +143,8 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
         cmb_perido = new javax.swing.JComboBox<>();
 
         setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         CbxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CbxCurso.setName("lista_cursos"); // NOI18N

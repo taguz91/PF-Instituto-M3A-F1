@@ -111,6 +111,7 @@ public class frmConfiguraciónPlanClase extends javax.swing.JInternalFrame {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setText("Carrera:");
 

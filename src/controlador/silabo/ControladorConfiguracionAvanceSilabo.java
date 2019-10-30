@@ -266,7 +266,7 @@ public class ControladorConfiguracionAvanceSilabo {
 
     private boolean validarSeguiSilaboExistente() {
         boolean valid = true;
-
+        System.out.println("PASOOOOOOOOOOOOOOOOOOOOOOOO POR AKI ------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         count = SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, cursos_seleccionado().getId());
         for (SeguimientoSilaboMD ss : count) {
 

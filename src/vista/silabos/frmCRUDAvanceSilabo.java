@@ -171,6 +171,8 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tlbAvanceSilabo.getTableHeader().setResizingAllowed(false);
+        tlbAvanceSilabo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tlbAvanceSilabo);
         if (tlbAvanceSilabo.getColumnModel().getColumnCount() > 0) {
             tlbAvanceSilabo.getColumnModel().getColumn(0).setMinWidth(0);

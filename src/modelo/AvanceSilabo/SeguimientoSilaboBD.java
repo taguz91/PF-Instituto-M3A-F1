@@ -184,7 +184,7 @@ public class SeguimientoSilaboBD  extends SeguimientoSilaboMD{
             
             st.setInt(1,id_curso);
             ResultSet rs = st.executeQuery();
-            System.out.println(st );
+            System.out.println(st+"-0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" );
             
             while(rs.next()){
                 SeguimientoSilaboMD ss=new SeguimientoSilaboMD();
