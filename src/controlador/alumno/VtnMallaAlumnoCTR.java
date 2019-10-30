@@ -2,6 +2,7 @@ package controlador.alumno;
 
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -97,6 +98,9 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         vtnMallaAlm.getCmbCiclo().addActionListener(e -> clickCombo());
 
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
+        vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
+        vtnMallaAlm.getBtnReporteCarrera().addActionListener(e -> reportePorCarrera());
+
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
                 vtnMallaAlm.getTxtBuscar().getText().trim()));
         //Agregamos la validacion de buscador
@@ -429,12 +433,24 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
 
     private void InitPermisos() {
         vtnMallaAlm.getBtnActualizarNota().getAccessibleContext().setAccessibleName("Malla-Alumnos-Actualizar Nota");
-       vtnMallaAlm.getBtnIngNota().getAccessibleContext().setAccessibleName("Malla-Alumnos-Ingresar Nota");
-       vtnMallaAlm.getBtnReporteMallaAlumno().getAccessibleContext().setAccessibleName("Malla-Alumno-Reporte-Malla de Alumno");
-       
-       
+        vtnMallaAlm.getBtnIngNota().getAccessibleContext().setAccessibleName("Malla-Alumnos-Ingresar Nota");
+        vtnMallaAlm.getBtnReporteMallaAlumno().getAccessibleContext().setAccessibleName("Malla-Alumno-Reporte-Malla de Alumno");
+
         CONS.activarBtns(vtnMallaAlm.getBtnActualizarNota(), vtnMallaAlm.getBtnIngNota(),
                 vtnMallaAlm.getBtnReporteMallaAlumno());
+    }
+
+    private void reportePorCarrera() {
+        int pos = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
+        if (pos > 0) {
+            mallaAlm.cargarMallaPorCarrera(carreras.get(pos - 1).getId());
+            vtnMallaAlm.setCursor(new Cursor(3));
+            reporteGrande();
+            
+        } else {
+            JOptionPane.showMessageDialog(vtnMallaAlm, "Seleccione una carrera.");
+        }
+
     }
 
     /**
@@ -456,19 +472,26 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                     JOptionPane.showMessageDialog(null, "error" + ex);
                 }
             } else {
-                JasperReport jr;
-                String path = "/vista/reportes/repMallas.jasper";
-                try {
-                    Map parametro = new HashMap();
-                    parametro.put("consulta", mallaAlm.getSql());
-                    jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                    ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
-                } catch (JRException ex) {
-                    JOptionPane.showMessageDialog(null, "error" + ex);
-                }
+                reporteGrande();
             }
         } else {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No tenemos datos para mostrar el reporte.");
+        }
+    }
+
+    private void reporteGrande() {
+        JasperReport jr;
+        String path = "/vista/reportes/repMallas.jasper";
+        try {
+            Map parametro = new HashMap();
+            parametro.put("consulta", mallaAlm.getSql());
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        } finally {
+            vtnMallaAlm.setCursor(new Cursor(0));
         }
     }
 
