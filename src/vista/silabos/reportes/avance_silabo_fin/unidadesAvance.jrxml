@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6fe87d80-5536-4b2c-8d49-47f306d3d715">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_seguimiento" class="java.lang.String">
@@ -66,7 +66,7 @@ Ej. Pérdidas de clase.]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="144" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="20" width="267" height="20" uuid="c80c69ff-8c4c-4c1f-937c-1c33c991094b"/>
 				<box>
@@ -108,7 +108,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="40" width="267" height="85" uuid="c2e0b74d-7d89-4326-aba2-bd5664a9151f"/>
+				<reportElement x="0" y="40" width="267" height="104" uuid="c2e0b74d-7d89-4326-aba2-bd5664a9151f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -119,7 +119,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{contenidos_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="267" y="0" width="80" height="125" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
+				<reportElement x="267" y="0" width="80" height="144" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -131,7 +131,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{cumplimiento_porcentaje}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="347" y="0" width="208" height="125" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
+				<reportElement x="347" y="0" width="208" height="144" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
