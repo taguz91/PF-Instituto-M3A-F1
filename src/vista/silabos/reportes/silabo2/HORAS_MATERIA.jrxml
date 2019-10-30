@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="86890cc0-06c2-483c-9a6b-ea94299aaf12">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="3.1384283767210035"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
@@ -16,7 +16,7 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="25" height="22" uuid="75b5300b-d642-482f-9580-6346b0ff41fb"/>
+				<reportElement x="0" y="0" width="15" height="22" uuid="75b5300b-d642-482f-9580-6346b0ff41fb"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -28,7 +28,7 @@
 				<textFieldExpression><![CDATA[$F{materia_horas_docencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="25" y="0" width="23" height="22" uuid="95134409-4d98-4e61-a72c-d4c39e20a639"/>
+				<reportElement x="15" y="0" width="15" height="22" uuid="95134409-4d98-4e61-a72c-d4c39e20a639"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -40,7 +40,7 @@
 				<textFieldExpression><![CDATA[$F{materia_horas_practicas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="48" y="0" width="22" height="22" uuid="1b78d63e-5d82-46f8-a430-ac4d89fc2cc6"/>
+				<reportElement x="30" y="0" width="15" height="22" uuid="1b78d63e-5d82-46f8-a430-ac4d89fc2cc6"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
