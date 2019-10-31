@@ -71,7 +71,7 @@ Ej. Pérdidas de clase.]]></text>
 	<detail>
 		<band height="94" splitType="Stretch">
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="20" width="254" height="20" isPrintWhenDetailOverflows="true" uuid="c80c69ff-8c4c-4c1f-937c-1c33c991094b"/>
+				<reportElement x="0" y="20" width="254" height="20" isPrintWhenDetailOverflows="true" uuid="c80c69ff-8c4c-4c1f-937c-1c33c991094b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -85,7 +85,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="94" height="20" isPrintWhenDetailOverflows="true" uuid="b34c1a30-8878-4aeb-b770-f44c2fc4f3b1"/>
+				<reportElement x="0" y="0" width="94" height="20" isPrintWhenDetailOverflows="true" uuid="b34c1a30-8878-4aeb-b770-f44c2fc4f3b1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -100,7 +100,7 @@ Ej. Pérdidas de clase.]]></text>
 				<text><![CDATA[Unidad Didáctica ]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="94" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="505f8c9b-41ce-438f-ac25-b7b0bdccf647"/>
+				<reportElement x="94" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="505f8c9b-41ce-438f-ac25-b7b0bdccf647"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -129,7 +129,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{contenidos_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="254" y="0" width="93" height="94" isPrintWhenDetailOverflows="true" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="254" y="0" width="93" height="94" isPrintWhenDetailOverflows="true" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -143,7 +143,7 @@ Ej. Pérdidas de clase.]]></text>
 				<textFieldExpression><![CDATA[$F{cumplimiento_porcentaje}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="347" y="0" width="208" height="94" isPrintWhenDetailOverflows="true" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="347" y="0" width="208" height="94" isPrintWhenDetailOverflows="true" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
