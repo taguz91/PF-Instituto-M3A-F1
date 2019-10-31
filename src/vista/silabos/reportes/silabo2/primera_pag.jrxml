@@ -2,12 +2,15 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="768"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="id_silabo" class="java.lang.String"/>
+	<parameter name="SUBREPORTES_GLOBALES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select  
 case m.materia_ciclo 
@@ -551,7 +554,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 		</band>
 		<band height="50">
 			<subreport>
-				<reportElement x="0" y="0" width="509" height="50" uuid="0c096568-b9bf-4320-b0c2-b6324bc5e558"/>
+				<reportElement x="2" y="0" width="507" height="50" uuid="0973f977-b845-46cb-ac92-9ca4469bee24"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
