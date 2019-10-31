@@ -20,7 +20,7 @@
 	<columnHeader>
 		<band height="38" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="267" height="38" uuid="1a39433a-5dd3-4851-a387-158615b6cb47"/>
+				<reportElement x="0" y="0" width="254" height="38" uuid="1a39433a-5dd3-4851-a387-158615b6cb47"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -30,11 +30,12 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[TEMAS DIDÁCTICOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="267" y="0" width="80" height="38" uuid="eb6808b7-6bde-43c5-b21d-7e1643ecbbe1"/>
+				<reportElement x="254" y="0" width="93" height="38" uuid="eb6808b7-6bde-43c5-b21d-7e1643ecbbe1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -44,6 +45,7 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[CUMPLIMIENTO %]]></text>
 			</staticText>
@@ -58,6 +60,7 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[Observaciones,
 problemas presentados
@@ -66,9 +69,9 @@ Ej. Pérdidas de clase.]]></text>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="144" splitType="Stretch">
+		<band height="86" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="20" width="267" height="20" uuid="c80c69ff-8c4c-4c1f-937c-1c33c991094b"/>
+				<reportElement x="0" y="20" width="254" height="20" isPrintWhenDetailOverflows="true" uuid="c80c69ff-8c4c-4c1f-937c-1c33c991094b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -76,11 +79,13 @@ Ej. Pérdidas de clase.]]></text>
 					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="94" height="20" uuid="b34c1a30-8878-4aeb-b770-f44c2fc4f3b1"/>
+				<reportElement x="0" y="0" width="94" height="20" isPrintWhenDetailOverflows="true" uuid="b34c1a30-8878-4aeb-b770-f44c2fc4f3b1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -90,11 +95,12 @@ Ej. Pérdidas de clase.]]></text>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[Unidad Didáctica ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="94" y="0" width="173" height="20" uuid="505f8c9b-41ce-438f-ac25-b7b0bdccf647"/>
+				<reportElement x="94" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="505f8c9b-41ce-438f-ac25-b7b0bdccf647"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -104,11 +110,12 @@ Ej. Pérdidas de clase.]]></text>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="0" y="40" width="267" height="104" uuid="c2e0b74d-7d89-4326-aba2-bd5664a9151f"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="40" width="254" height="46" uuid="c2e0b74d-7d89-4326-aba2-bd5664a9151f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -116,10 +123,13 @@ Ej. Pérdidas de clase.]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{contenidos_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="267" y="0" width="80" height="144" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="254" y="0" width="93" height="86" isPrintWhenDetailOverflows="true" uuid="070909f3-d011-46ec-87d5-fd466b8c9c7f"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -127,11 +137,13 @@ Ej. Pérdidas de clase.]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cumplimiento_porcentaje}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="347" y="0" width="208" height="144" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="347" y="0" width="208" height="86" isPrintWhenDetailOverflows="true" uuid="2f6a9932-f85a-4af8-b138-ac311116f8e0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -139,7 +151,9 @@ Ej. Pérdidas de clase.]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
 		</band>
