@@ -525,7 +525,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				</textElement>
 				<text><![CDATA[5.OBJETIVO DE LA ASIGNATURA]]></text>
 			</staticText>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="21" y="20" width="524" height="18" uuid="99bd3d4f-95b7-4eca-bddc-0b2214091051"/>
 				<box>
 					<pen lineWidth="0.75"/>
