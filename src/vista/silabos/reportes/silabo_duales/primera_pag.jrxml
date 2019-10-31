@@ -529,7 +529,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement>
-					<font size="8"/>
+					<font size="10"/>
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_objetivo}]]></textFieldExpression>
@@ -549,7 +549,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement>
-					<font size="8"/>
+					<font size="10"/>
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{materia_objetivo_especifico}]]></textFieldExpression>
