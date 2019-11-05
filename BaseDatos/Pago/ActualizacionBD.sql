@@ -23,3 +23,7 @@ CREATE TABLE pago."Comprobante"(
   comprobante_activo BOOLEAN NOT NULL DEFAULT 'true',
   CONSTRAINT comprobante_pk PRIMARY KEY("id_comprobante")
 ) WITH (OIDS = FALSE);
+
+
+
+ALTER TABLE pago."Pago" ADD CONSTRAINT 
