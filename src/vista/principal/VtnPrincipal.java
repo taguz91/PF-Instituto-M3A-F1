@@ -48,20 +48,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtAsistencia;
     }
 
-    public void setMnCtAsistencia(JMenuItem mnCtAsistencia) {
-        this.mnCtAsistencia = mnCtAsistencia;
-    }
-
     public JMenuItem getMnCtRendimientoAcademico() {
         return mnCtRendimientoAcademico;
-    }
-
-    public void setMnCtRendimientoAcademico(JMenuItem mnCtRendimientoAcademico) {
-        this.mnCtRendimientoAcademico = mnCtRendimientoAcademico;
-    }
-
-    public void setMnCtPlandeClase(JMenuItem mnCtPlandeClase) {
-        this.mnCtPlandeClase = mnCtPlandeClase;
     }
 
     public JMenuItem getMnIgPlandeClase() {
@@ -268,10 +256,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtNotas;
     }
 
-    public void setMnCtNotas(JMenuItem mnCtNotas) {
-        this.mnCtNotas = mnCtNotas;
-    }
-
     public JButton getBtnDocenteMateria() {
         return btnDocenteMateria;
     }
@@ -352,20 +336,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnNotas1;
     }
 
+    public JMenuItem getMnCtComprobantes() {
+        return mnCtComprobantes;
+    }
+
     public JMenuItem getMnCtAccesos() {
         return mnCtAccesos;
     }
 
-    public void setMnCtAccesos(JMenuItem mnCtAccesos) {
-        this.mnCtAccesos = mnCtAccesos;
-    }
-
     public JMenuItem getMnCtMiPerfil() {
         return mnCtMiPerfil;
-    }
-
-    public void setMnCtMiPerfil(JMenuItem mnCtMiPerfil) {
-        this.mnCtMiPerfil = mnCtMiPerfil;
     }
 
     public JMenuItem getMnCtListaAlumnos() {
@@ -395,7 +375,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JMenuItem getMnRepNumAlumno() {
         return mnRepNumAlumno;
     }
-
 
     public JMenuItem getMnCtFichaSalud() {
         return mnCtFichaSalud;
@@ -475,6 +454,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtReportesEstado = new javax.swing.JMenuItem();
         mnFichas = new javax.swing.JMenu();
         mnCtFichaSalud = new javax.swing.JMenuItem();
+        mnCtComprobantes = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
         mnIgDocente = new javax.swing.JMenuItem();
@@ -823,11 +803,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtRolesPeriodo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Permanent_Job_20px.png"))); // NOI18N
         mnCtRolesPeriodo.setText("Roles periodo");
-        mnCtRolesPeriodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCtRolesPeriodoActionPerformed(evt);
-            }
-        });
         mnTipoNotas.add(mnCtRolesPeriodo);
 
         mnCtSilabos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
@@ -885,11 +860,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnNotas);
 
         MnBiblioteca.setText("Biblioteca");
-        MnBiblioteca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnBibliotecaActionPerformed(evt);
-            }
-        });
         mnTipoNotas.add(MnBiblioteca);
 
         mnCtAccesos.setText("Accesos");
@@ -911,6 +881,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnFichas.add(mnCtFichaSalud);
 
         mnTipoNotas.add(mnFichas);
+
+        mnCtComprobantes.setText("Comprobantes");
+        mnCtComprobantes.setToolTipText("");
+        mnTipoNotas.add(mnCtComprobantes);
 
         menuCrud.add(mnTipoNotas);
 
@@ -1051,17 +1025,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnIngresarSilaboActionPerformed
 
-    private void mnCtRolesPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtRolesPeriodoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mnCtRolesPeriodoActionPerformed
-
     private void mnCtActivarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtActivarNotasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mnCtActivarNotasActionPerformed
-
-    private void MnBibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnBibliotecaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MnBibliotecaActionPerformed
 
     private void mnIgPrdLectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnIgPrdLectivoActionPerformed
         // TODO add your handling code here:
@@ -1112,6 +1078,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtAlumno;
     private javax.swing.JMenuItem mnCtAsistencia;
     private javax.swing.JMenuItem mnCtCarrera;
+    private javax.swing.JMenuItem mnCtComprobantes;
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
     private javax.swing.JMenuItem mnCtDocenteMateria;

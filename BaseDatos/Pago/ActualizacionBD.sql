@@ -5,7 +5,8 @@ CREATE SCHEMA pago;
 CREATE TABLE pago."Pago"(
   id_pago SERIAL NOT NULL,
   id_comprobante INT NOT NULL,
-  id_malla_alumno INT NOT NULL,
+  id_malla_alumno INT,
+  pago_observaciones TEXT,
   pago NUMERIC(8, 4) NOT NULL DEFAULT '0.0',
   pago_numero_matricula INT NOT NULL DEFAULT 2,
   pago_activo BOOLEAN NOT NULL DEFAULT 'false',
@@ -15,7 +16,7 @@ CREATE TABLE pago."Pago"(
 CREATE TABLE pago."Comprobante"(
   id_comprobante SERIAL NOT NULL,
   id_prd_lectivo INT NOT NULL,
-  id_almn_carrera INT NOT NULL,
+  id_almno INT NOT NULL,
   comprobante BYTEA,
   comprobante_codigo character varying(50) NOT NULL DEFAULT '',
   comprobante_fecha_pago TIMESTAMP NOT NULL DEFAULT now(),
