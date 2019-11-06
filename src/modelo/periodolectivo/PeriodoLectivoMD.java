@@ -1,6 +1,7 @@
 package modelo.periodolectivo;
 
 import java.time.LocalDate;
+import java.util.function.Consumer;
 import modelo.carrera.CarreraMD;
 
 public class PeriodoLectivoMD {
@@ -18,14 +19,14 @@ public class PeriodoLectivoMD {
     public PeriodoLectivoMD() {
     }
 
-    public PeriodoLectivoMD(int id_PerioLectivo, String nombre_PerLectivo, String observacion_PerLectivo, boolean activo_PerLectivo, boolean estado_PerLectivo, LocalDate fecha_Inicio, LocalDate fecha_Fin, CarreraMD carrera) {
-        this.id = id_PerioLectivo;
-        this.nombre = nombre_PerLectivo;
-        this.observacion = observacion_PerLectivo;
-        this.activo = activo_PerLectivo;
-        this.estado = estado_PerLectivo;
-        this.fechaInicio = fecha_Inicio;
-        this.fechaFin = fecha_Fin;
+    public PeriodoLectivoMD(int id, String nombre, String observacion, boolean activo, boolean estado, LocalDate fechaInicio, LocalDate fechaFin, CarreraMD carrera) {
+        this.id = id;
+        this.nombre = nombre;
+        this.observacion = observacion;
+        this.activo = activo;
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.carrera = carrera;
     }
 
@@ -33,8 +34,8 @@ public class PeriodoLectivoMD {
         return id;
     }
 
-    public PeriodoLectivoMD setPeriodo(int id_PerioLectivo) {
-        this.id = id_PerioLectivo;
+    public PeriodoLectivoMD setPeriodo(int id) {
+        this.id = id;
         return this;
     }
 
@@ -42,77 +43,85 @@ public class PeriodoLectivoMD {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public PeriodoLectivoMD setNombre(String nombre) {
         this.nombre = nombre;
+        return this;
     }
 
     public String getObservacion() {
         return observacion;
     }
 
-    public void setObservacion(String observacion_PerLectivo) {
-        this.observacion = observacion_PerLectivo;
+    public PeriodoLectivoMD setObservacion(String observacion) {
+        this.observacion = observacion;
+        return this;
     }
 
     public boolean isActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo_PerLectivo) {
-        this.activo = activo_PerLectivo;
+    public PeriodoLectivoMD setActivo(boolean activo) {
+        this.activo = activo;
+        return this;
     }
 
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public PeriodoLectivoMD setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+        return this;
     }
 
     public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fecha_Fin) {
-        this.fechaFin = fecha_Fin;
+    public PeriodoLectivoMD setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+        return this;
     }
 
     public CarreraMD getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(CarreraMD carrera) {
+    public PeriodoLectivoMD setCarrera(CarreraMD carrera) {
         this.carrera = carrera;
+        return this;
     }
 
     public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado_PerLectivo(boolean estado_PerLectivo) {
-        this.estado = estado_PerLectivo;
+    public PeriodoLectivoMD setEstado(boolean estado) {
+        this.estado = estado;
+        return this;
     }
 
     public int getNumSemanas() {
         return NumSemanas;
     }
 
-    public void setNumSemanas(int NumSemanas) {
+    public PeriodoLectivoMD setNumSemanas(int NumSemanas) {
         this.NumSemanas = NumSemanas;
+        return this;
     }
 
     public int getNumDias() {
         return NumDias;
     }
 
-    public void setNumDias(int NumDias) {
+    public PeriodoLectivoMD setNumDias(int NumDias) {
         this.NumDias = NumDias;
+        return this;
     }
 
-    
-
-    public PeriodoLectivoMD get() {
+    public PeriodoLectivoMD periodoBuilder(Consumer<PeriodoLectivoMD> builder) {
+        builder.accept(this);
         return this;
     }
 

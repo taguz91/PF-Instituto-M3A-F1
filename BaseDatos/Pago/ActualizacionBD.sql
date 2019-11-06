@@ -28,4 +28,18 @@ CREATE TABLE pago."Comprobante"(
 
 
 
-ALTER TABLE pago."Pago" ADD CONSTRAINT 
+ALTER TABLE pago."Comprobante" ADD CONSTRAINT  "comprobante_fk_periodo_lectivo"
+  FOREIGN KEY(id_prd_lectivo) REFERENCES "PeriodoLectivo"(id_prd_lectivo)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE pago."Comprobante" ADD CONSTRAINT  "comprobante__fk__alumno"
+  FOREIGN KEY(id_almno) REFERENCES "Alumnos"(id_alumno)
+    ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE pago."Pago" ADD CONSTRAINT  "pago__fk__comprobante"
+  FOREIGN KEY(id_comprobante) REFERENCES "Comprobante"(id_comprobante)
+    ON UPDATE CASCADE ON DELETE CASCADE;

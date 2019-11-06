@@ -7,10 +7,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select count (ROUND(((ROUND(n.nota_valor,1)*100)/30),1))
-	from "Notas" n join "TipoDeNota" tn on n.id_tipo_nota=tn.id_tipo_nota join 
-	"AlumnoCurso" ac on ac.id_almn_curso=n.id_almn_curso join "Cursos" c ON c.id_curso=ac.id_curso where tn.tipo_nota_nombre = 'NOTA INTERCICLO'
-	AND C.id_curso=$P!{id_curso} and ROUND(((ROUND(n.nota_valor,1)*100)/30),1)<70 and  ac.almn_curso_asistencia='Asiste' and ac.almn_curso_activo='true']]>
+		<![CDATA[select count(ac.id_almn_curso)
+	from  
+	"AlumnoCurso" ac join "Cursos" c ON c.id_curso=ac.id_curso 
+	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
+	where  C.id_curso=$P!{id_curso} and  ROUND(ac.almn_curso_nota_final,1)<70 and  ac.almn_curso_asistencia ILIKE '%Asiste%' and ac.almn_curso_activo IS TRUE]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<background>

@@ -19,16 +19,23 @@ public class ComprobanteBD {
     public static List<ComprobanteMD> selectAll() {
         String SELECT = ""
                 + "SELECT\n"
-                + "	pago.\"Comprobante\".id_comprobante,\n"
-                + "	pago.\"Comprobante\".id_prd_lectivo,\n"
-                + "	pago.\"Comprobante\".id_almno,\n"
-                + "	pago.\"Comprobante\".comprobante_total,\n"
-                + "	pago.\"Comprobante\".comprobante_codigo,\n"
-                + "	pago.\"Comprobante\".comprobante_fecha_pago\n"
+                + "	\"Comprobante\".id_comprobante,\n"
+                + "	\"Comprobante\".id_almno,\n"
+                + "	\"Comprobante\".comprobante_total,\n"
+                + "	\"Comprobante\".comprobante_codigo,\n"
+                + "	\"Comprobante\".comprobante_fecha_pago,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"Comprobante\".id_prd_lectivo,\n"
+                + "	\"Personas\".persona_identificacion,\n"
+                + "	\"Personas\".persona_primer_apellido,\n"
+                + "	\"Personas\".persona_primer_nombre \n"
                 + "FROM\n"
-                + "	pago.\"Comprobante\" \n"
+                + "	\"Comprobante\"\n"
+                + "	INNER JOIN \"Alumnos\" ON \"Comprobante\".id_almno = \"Alumnos\".id_alumno\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Comprobante\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Personas\" ON \"Alumnos\".id_persona = \"Personas\".id_persona \n"
                 + "WHERE\n"
-                + "	pago.\"Comprobante\".comprobante_activo IS TRUE"
+                + "	\"Comprobante\".comprobante_activo IS TRUE"
                 + "";
 
         List<ComprobanteMD> comprobantes = new ArrayList<>();
@@ -43,9 +50,17 @@ public class ComprobanteBD {
                 ComprobanteMD comprobante = new ComprobanteMD();
 
                 comprobante.setId(rs.getInt("id_comprobante"));
-                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setPeriodo(rs.getInt("id_prd_lectivo"));
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD()
+                        .setPeriodo(rs.getInt("id_prd_lectivo"))
+                        .setNombre(rs.getString("prd_lectivo_nombre"));
+
                 comprobante.setPeriodo(periodo);
+
+                PeriodoLectivoMD periodoBuild = new PeriodoLectivoMD().periodoBuilder($ -> {
+
+                });
+
                 comprobante.setTotal(rs.getDouble("comprobante_total"));
                 comprobante.setCodigo(rs.getString("comprobante_codigo"));
                 System.out.println(rs.getDate("comprobante_fecha_pago"));

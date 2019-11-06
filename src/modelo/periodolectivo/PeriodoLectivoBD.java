@@ -104,7 +104,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 lista.add(p);
             }
             rs.close();
@@ -259,7 +259,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }
@@ -291,7 +291,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 m.setObservacion(rs.getString("prd_lectivo_observacion"));
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
-                m.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                m.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 m.setCarrera(carrera);
             }
             rs.close();
@@ -327,7 +327,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }
@@ -619,7 +619,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 c.setModalidad(rst.getString("carrera_modalidad"));
                 periodo.setCarrera(c);
 
-                periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
+                periodo.setEstado(rst.getBoolean("prd_lectivo_estado"));
                 periodo.setActivo(rst.getBoolean("prd_lectivo_activo"));
                 periodo.setFechaInicio(rst.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 periodo.setFechaFin(rst.getDate("prd_lectivo_fecha_fin").toLocalDate());
