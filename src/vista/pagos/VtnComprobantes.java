@@ -1,5 +1,11 @@
 package vista.pagos;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author MrRainx
@@ -8,6 +14,50 @@ public class VtnComprobantes extends javax.swing.JInternalFrame {
 
     public VtnComprobantes() {
         initComponents();
+    }
+
+    public JButton getBtnAdd() {
+        return btnAdd;
+    }
+
+    public JButton getBtnEdit() {
+        return btnEdit;
+    }
+
+    public JButton getBtnElim() {
+        return btnElim;
+    }
+
+    public JButton getBtnInfo() {
+        return btnInfo;
+    }
+
+    public JComboBox<String> getCmbCarreras() {
+        return cmbCarreras;
+    }
+
+    public JComboBox<String> getCmbMaterias() {
+        return cmbMaterias;
+    }
+
+    public JComboBox<String> getCmbPeriodos() {
+        return cmbPeriodos;
+    }
+
+    public JLabel getLblEstado() {
+        return lblEstado;
+    }
+
+    public JLabel getLblResultados() {
+        return lblResultados;
+    }
+
+    public JTable getTbl() {
+        return tbl;
+    }
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
     }
 
     @SuppressWarnings("unchecked")

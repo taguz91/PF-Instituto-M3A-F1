@@ -27,6 +27,7 @@ import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
 import controlador.notas.VtnControlUBCTR;
 import controlador.notas.VtnNotasCTR;
+import controlador.pagos.VtnComprobantesCTR;
 import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.persona.FrmAlumnoCTR;
 import controlador.persona.FrmDocenteCTR;
@@ -240,6 +241,8 @@ public class VtnPrincipalCTR {
         //esto es para el avance de silabo
         //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
 
+        vtnPrin.getMnCtComprobantes().addActionListener(e -> btnComprobantes(e));
+
         carga.start();
 
         //Esto es para la consola 
@@ -252,14 +255,12 @@ public class VtnPrincipalCTR {
 
         iniciarAccionesRep();
     }
-    
-    private void iniciarAccionesRep(){
-        vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
 
+    private void iniciarAccionesRep() {
+        vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
 
         //Menus Fichas
         vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));
-
 
     }
 
@@ -1247,6 +1248,11 @@ public class VtnPrincipalCTR {
 
     private void mnctFichaSalud(ActionEvent e) {
         VtnFsaludCTR vtn = new VtnFsaludCTR(vtnPrin, new VtnFichaSalud());
+        vtn.Init();
+    }
+
+    private void btnComprobantes(ActionEvent e) {
+        VtnComprobantesCTR vtn = new VtnComprobantesCTR(this);
         vtn.Init();
     }
 
