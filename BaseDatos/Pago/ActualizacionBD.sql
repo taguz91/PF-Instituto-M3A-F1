@@ -18,6 +18,7 @@ CREATE TABLE pago."Comprobante"(
   id_prd_lectivo INT NOT NULL,
   id_almno INT NOT NULL,
   comprobante BYTEA,
+  comprobante_total NUMERIC(8, 4) NOT NULL DEFAULT '0.0',
   comprobante_codigo character varying(50) NOT NULL DEFAULT '',
   comprobante_fecha_pago TIMESTAMP NOT NULL DEFAULT now(),
   comprobante_usuario_ingreso character varying(50) NOT NULL DEFAULT 'ADMIN',
