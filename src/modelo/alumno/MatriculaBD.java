@@ -26,7 +26,7 @@ public class MatriculaBD extends MatriculaMD {
     public void ingresar() {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
                 + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId_PerioLectivo() + ", '" + getTipo() + "');";
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId() + ", '" + getTipo() + "');";
 
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) != null) {
@@ -127,14 +127,14 @@ public class MatriculaBD extends MatriculaMD {
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
                     m.setId(rs.getInt("id_matricula"));
                     a.setId_Alumno(rs.getInt("id_alumno"));
-                    p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                    p.setPeriodo(rs.getInt("id_prd_lectivo"));
                     m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
                     a.setIdentificacion(rs.getString("persona_identificacion"));
                     a.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
                     a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    p.setNombre(rs.getString("prd_lectivo_nombre"));
                     a.setIdentificacion(rs.getString("persona_identificacion"));
                     m.setAlumno(a);
                     m.setPeriodo(p);

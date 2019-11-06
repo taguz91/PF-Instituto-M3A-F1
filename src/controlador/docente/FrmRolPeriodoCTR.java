@@ -47,7 +47,7 @@ public class FrmRolPeriodoCTR extends DCTR {
             frmRolPer.getCmbPeriodoLectivo().removeAllItems();
             frmRolPer.getCmbPeriodoLectivo().addItem("Seleccione");
             periodos.forEach((p) -> {
-                frmRolPer.getCmbPeriodoLectivo().addItem(p.getNombre_PerLectivo());
+                frmRolPer.getCmbPeriodoLectivo().addItem(p.getNombre());
             });
         }
     }
@@ -89,6 +89,6 @@ public class FrmRolPeriodoCTR extends DCTR {
         idRolPrd = rp.getId_rol();
         editar = true;
         frmRolPer.getTxtNombreRol().setText(rp.getNombre_rol());
-        frmRolPer.getCmbPeriodoLectivo().setSelectedItem(rp.getPeriodo().getNombre_PerLectivo());
+        frmRolPer.getCmbPeriodoLectivo().setSelectedItem(rp.getPeriodo().getNombre());
     }
 }

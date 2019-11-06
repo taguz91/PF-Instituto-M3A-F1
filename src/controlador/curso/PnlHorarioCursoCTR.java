@@ -63,7 +63,7 @@ public class PnlHorarioCursoCTR {
         this.curso.setNombre(nomCurso);
         //Inciamos el periodo para pasarle 
         PeriodoLectivoMD p = new PeriodoLectivoMD();
-        p.setId_PerioLectivo(idPrd);
+        p.setPeriodo(idPrd);
         this.curso.setPeriodo(p);
     }
 
@@ -188,37 +188,37 @@ public class PnlHorarioCursoCTR {
     //Todos los metodos publicos de esta clase
     public void actualizarLunes() {
         sesionLunes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 1,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionLunes, 1);
     }
 
     public void actualizarMartes() {
         sesionMartes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 2,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionMartes, 2);
     }
 
     public void actualizarMiercoles() {
         sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getNombre(), 3,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionMiercoles, 3);
     }
 
     public void actuatizarJueves() {
         sesionJueves = bd.cargarHorarioCursoPorDia(curso.getNombre(), 4,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionJueves, 4);
     }
 
     public void actualizarViernes() {
         sesionViernes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 5,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionViernes, 5);
     }
 
     public void actualizarSabado() {
         sesionSabado = bd.cargarHorarioCursoPorDia(curso.getNombre(), 6,
-                curso.getPeriodo().getId_PerioLectivo());
+                curso.getPeriodo().getId());
         llenarDia(sesionSabado, 6);
     }
 

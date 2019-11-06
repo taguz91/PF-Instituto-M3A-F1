@@ -126,7 +126,7 @@ public class VtnReporteNumAlumnoCTR {
     private void llenarCmbPeriodo(ArrayList<PeriodoLectivoMD> periodos) {
         iniciarCmb(vtn.getCmbPeriodo());
         periodos.forEach(p -> {
-            vtn.getCmbPeriodo().addItem(p.getNombre_PerLectivo());
+            vtn.getCmbPeriodo().addItem(p.getNombre());
         });
     }
 

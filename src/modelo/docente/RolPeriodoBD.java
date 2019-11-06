@@ -22,7 +22,7 @@ public class RolPeriodoBD extends RolPeriodoMD {
     public boolean InsertarRol() {
         String nsql = "Insert into public.\"RolesPeriodo\"(\n"
                 + "id_prd_lectivo,rol_prd)\n"
-                + "Values (" + getPeriodo().getId_PerioLectivo() + ", "
+                + "Values (" + getPeriodo().getId() + ", "
                 + "UPPER('" + getNombre_rol() + "'));";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
@@ -35,7 +35,7 @@ public class RolPeriodoBD extends RolPeriodoMD {
 
     public boolean editarRolPeriodo(int aguja) {
         String nsql = "UPDATE public.\"RolesPeriodo\"\n"
-                + "SET id_prd_lectivo=" + getPeriodo().getId_PerioLectivo() + ","
+                + "SET id_prd_lectivo=" + getPeriodo().getId() + ","
                 + " rol_prd='" + getNombre_rol() + "'\n"
                 + " WHERE id_rol_prd= " + aguja + ";";
         PreparedStatement ps = conecta.getPS(nsql);
@@ -72,8 +72,8 @@ public class RolPeriodoBD extends RolPeriodoMD {
             while (rs.next()) {
                 RolPeriodoMD m = new RolPeriodoMD();
                 PeriodoLectivoMD perL = new PeriodoLectivoMD();
-                perL.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
-                perL.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                perL.setPeriodo(rs.getInt("id_prd_lectivo"));
+                perL.setNombre(rs.getString("prd_lectivo_nombre"));
                 m.setId_rol(rs.getInt("id_rol_prd"));
                 m.setPeriodo(perL);
                 //m.setPeriodo(perLec.getNombre_PerLectivo());

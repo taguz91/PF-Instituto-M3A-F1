@@ -98,7 +98,7 @@ public class VtnRolPeriodosCTR extends DVtnCTR {
         int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < roles.size(); i++) {
             mdTbl.addRow(new Object[columnas]);
-            vtnRolPe.getTblAlumno().setValueAt(String.valueOf(roles.get(i).getPeriodo().getNombre_PerLectivo()), i, 0);
+            vtnRolPe.getTblAlumno().setValueAt(String.valueOf(roles.get(i).getPeriodo().getNombre()), i, 0);
             vtnRolPe.getTblAlumno().setValueAt(String.valueOf(roles.get(i).getNombre_rol()), i, 1);
 
         }

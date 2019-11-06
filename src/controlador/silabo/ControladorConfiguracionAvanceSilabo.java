@@ -114,7 +114,7 @@ public class ControladorConfiguracionAvanceSilabo {
         if (periodos != null) {
             avance.getCmb_perido().addItem("SELECCIONE SU PERIODO ACTUAL!");
             periodos.forEach(pl -> {
-                avance.getCmb_perido().addItem(pl.getNombre_PerLectivo());
+                avance.getCmb_perido().addItem(pl.getNombre());
             });
             avance.getCmb_perido().setSelectedIndex(0);
         }
@@ -177,7 +177,7 @@ public class ControladorConfiguracionAvanceSilabo {
         if (posP > 0 && posC > 0) {
             estadoCmb_silbo(true);
             String carrera = carreras_docente.get(posC - 1).getNombre();
-            String nombre_periodo = periodosCarrera.get(posP - 1).getNombre_PerLectivo();
+            String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
             materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
 
@@ -240,10 +240,10 @@ public class ControladorConfiguracionAvanceSilabo {
         periodosCarrera = cargarPeriodos();
         periodosCarrera
                 .stream()
-                .filter(item -> item.getNombre_PerLectivo().equals(nombre_periodo))
+                .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_periodo_lectivo = obj.getId_PerioLectivo();
+                    id_periodo_lectivo = obj.getId();
                 });
         return id_periodo_lectivo;
     }

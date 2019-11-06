@@ -188,7 +188,7 @@ public class FrmAsistenciaCTR {
         vista.getLblCarreraAsistencia().setText("");
 
         listaPeriodos = periodoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivoAsis()::addItem);
+        listaPeriodos.stream().map(c -> c.getNombre()).forEach(vista.getCmbPeriodoLectivoAsis()::addItem);
         tablaTrad.setRowCount(0);
 
     }
@@ -196,7 +196,7 @@ public class FrmAsistenciaCTR {
     private void setLblCarrera() {
 
         vista.getLblCarreraAsistencia()
-                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .setText(listaPeriodos.stream().filter(item -> item.getId() == getIdPeriodoLectivo())
                         .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
     }
 
@@ -219,7 +219,7 @@ public class FrmAsistenciaCTR {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
+            periodo.setPeriodo(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCicloAsis().getSelectedItem().toString());
 
@@ -340,8 +340,8 @@ public class FrmAsistenciaCTR {
     private int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
-            return listaPeriodos.stream().filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .map(c -> c.getId_PerioLectivo()).findAny().orElse(-1);
+            return listaPeriodos.stream().filter(item -> item.getNombre().equals(periodo))
+                    .map(c -> c.getId()).findAny().orElse(-1);
         } catch (NullPointerException e) {
         }
         return -1;

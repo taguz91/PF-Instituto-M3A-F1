@@ -188,8 +188,8 @@ public List<PeriodoLectivoMD> mostrarDatos1(ConexionBD conexion) {
 
             while (rs.next()) {
                 PeriodoLectivoMD m = new PeriodoLectivoMD();
-                m.setId_PerioLectivo(rs.getInt(1));
-                m.setNombre_PerLectivo(rs.getString(2));
+                m.setPeriodo(rs.getInt(1));
+                m.setNombre(rs.getString(2));
                 lista.add(m);
             }
             // rs.close();//cerrar conexion cn la bd 
@@ -241,7 +241,7 @@ public List<PeriodoLectivoMD> mostrarDatos1(ConexionBD conexion) {
 
             while (rs.next()) {
 
-                m.setId_PerioLectivo(rs.getInt(1));
+                m.setPeriodo(rs.getInt(1));
                 //return m;
             }
             // rs.close();//cerrar conexion cn la bd 

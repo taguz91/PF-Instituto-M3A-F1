@@ -196,10 +196,10 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
         posPrd = vtnAR.getCmbPrdLectivos().getSelectedIndex();
         if (posPrd > 0) {
             if (vtnAR.getCbxEliminados().isSelected()) {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getId_PerioLectivo());
+                almsCursosRetirados = acrb.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getId());
                 llenarTblAlmRetirado(almsCursosRetirados);
             } else {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getId_PerioLectivo());
+                almsCursosRetirados = acrb.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getId());
                 llenarTblAlmRetirado(almsCursosRetirados);
             }
         }
@@ -232,7 +232,7 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
         mdTbl.setRowCount(0);
         if (almns != null) {
             almns.forEach(a -> {
-                Object[] v = {a.getAlumnoCurso().getCurso().getPeriodo().getNombre_PerLectivo(),
+                Object[] v = {a.getAlumnoCurso().getCurso().getPeriodo().getNombre(),
                     a.getAlumnoCurso().getAlumno().getNombreCorto(),
                     a.getAlumnoCurso().getCurso().getMateria().getNombre(),
                     a.getFecha(), a.getObservacion()};
@@ -254,7 +254,7 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
         vtnAR.getCmbPrdLectivos().addItem("Seleccione");
         if (periodos != null) {
             periodos.forEach(p -> {
-                vtnAR.getCmbPrdLectivos().addItem(p.getNombre_PerLectivo());
+                vtnAR.getCmbPrdLectivos().addItem(p.getNombre());
             });
             vtnAR.getCmbPrdLectivos().setSelectedIndex(0);
         }

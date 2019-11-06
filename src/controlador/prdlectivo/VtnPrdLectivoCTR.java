@@ -137,21 +137,21 @@ public class VtnPrdLectivoCTR extends DCTR {
             String nombre;
             String dia_Inicio, mes_Inicio, anio_Inicio;
             String dia_Fin, mes_Fin, anio_Fin;
-            dia_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getDayOfMonth());
-            mes_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getMonthValue());
-            anio_Inicio = String.valueOf(periodos.get(i).getFecha_Inicio().getYear());
-            dia_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getDayOfMonth());
-            mes_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getMonthValue());
-            anio_Fin = String.valueOf(periodos.get(i).getFecha_Fin().getYear());
+            dia_Inicio = String.valueOf(periodos.get(i).getFechaInicio().getDayOfMonth());
+            mes_Inicio = String.valueOf(periodos.get(i).getFechaInicio().getMonthValue());
+            anio_Inicio = String.valueOf(periodos.get(i).getFechaInicio().getYear());
+            dia_Fin = String.valueOf(periodos.get(i).getFechaFin().getDayOfMonth());
+            mes_Fin = String.valueOf(periodos.get(i).getFechaFin().getMonthValue());
+            anio_Fin = String.valueOf(periodos.get(i).getFechaFin().getYear());
 
 //            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
 //                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId_PerioLectivo(), i, 0);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre_PerLectivo(), i, 2);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre(), i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
-            if (periodos.get(i).isEstado_PerLectivo() == true) {
+            if (periodos.get(i).isEstado() == true) {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
             } else {
                 vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
@@ -228,11 +228,11 @@ public class VtnPrdLectivoCTR extends DCTR {
             JOptionPane.showMessageDialog(null, "Seleccione un Período Lectivo");
         } else {
             periodo = capturarFila();
-            if (periodo.isEstado_PerLectivo() == false) {
+            if (periodo.isEstado() == false) {
                 int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                 int result = JOptionPane.showConfirmDialog(null, "El Período Lectivo que seleccionó esta Cerrado\n ¿Desea Abrir este Período Lectivo? ", " Abrir Período Lectivo ", dialog);
                 if (result == 0) {
-                    if (bdPerLectivo.abrirPeriodo(periodo.getId_PerioLectivo()) == true) {
+                    if (bdPerLectivo.abrirPeriodo(periodo.getId()) == true) {
                         JOptionPane.showMessageDialog(null, "Período Lectivo Abierto Satisfactoriamente");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo abrir este Período Lectivo");
@@ -249,7 +249,7 @@ public class VtnPrdLectivoCTR extends DCTR {
                         + "Este proceso se tardará algunos minutos\n"
                         + "¿Esta seguro que desea cerrar este Período Lectivo? ", " Cerrar Período Lectivo ", dialog);
                 if (result == 0) {
-                    if (periodo.isEstado_PerLectivo() == false) {
+                    if (periodo.isEstado() == false) {
                         JOptionPane.showMessageDialog(null, "Este Período Lectivo ya fue cerrado");
                     } else {
                         if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
@@ -271,7 +271,7 @@ public class VtnPrdLectivoCTR extends DCTR {
         if (posFila >= 0) {
             try {
                 Map parametro = new HashMap();
-                parametro.put("periodo", periodos.get(posFila).getId_PerioLectivo());
+                parametro.put("periodo", periodos.get(posFila).getId());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Lista de Docente por Periodo Lectivo");
                 System.out.println(parametro);

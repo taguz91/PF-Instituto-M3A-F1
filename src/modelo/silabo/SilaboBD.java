@@ -45,7 +45,7 @@ public class SilaboBD extends SilaboMD {
                     + "	VALUES (?, ?)");
 
             st.setInt(1, getIdMateria().getId());
-            st.setInt(2, getIdPeriodoLectivo().getId_PerioLectivo());
+            st.setInt(2, getIdPeriodoLectivo().getId());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -90,9 +90,9 @@ public class SilaboBD extends SilaboMD {
                 tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstadoSilabo(rs.getInt(7));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
-                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(9).toLocalDate());
-                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(10).toLocalDate());
+                tmp.getIdPeriodoLectivo().setPeriodo(rs.getInt(8));
+                tmp.getIdPeriodoLectivo().setFechaInicio(rs.getDate(9).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFechaFin(rs.getDate(10).toLocalDate());
 
                 silabos.add(tmp);
             }
@@ -125,9 +125,9 @@ public class SilaboBD extends SilaboMD {
                 tmp.setIdSilabo(rs.getInt(1));
                 tmp.getIdMateria().setId(rs.getInt(2));
                 tmp.getIdMateria().setNombre(rs.getString(3));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(4));
-                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(5).toLocalDate());
-                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(6).toLocalDate());
+                tmp.getIdPeriodoLectivo().setPeriodo(rs.getInt(4));
+                tmp.getIdPeriodoLectivo().setFechaInicio(rs.getDate(5).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFechaFin(rs.getDate(6).toLocalDate());
                 tmp.setEstadoSilabo(rs.getInt(7));
                 silabos.add(tmp);
             }
@@ -162,9 +162,9 @@ public class SilaboBD extends SilaboMD {
                 tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstadoSilabo(rs.getInt(7));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
-                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(9).toLocalDate());
-                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(10).toLocalDate());
+                tmp.getIdPeriodoLectivo().setPeriodo(rs.getInt(8));
+                tmp.getIdPeriodoLectivo().setFechaInicio(rs.getDate(9).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFechaFin(rs.getDate(10).toLocalDate());
 
                 silabos.add(tmp);
             }
@@ -200,7 +200,7 @@ public class SilaboBD extends SilaboMD {
 
             st.setInt(1, getIdMateria().getId());
             st.setInt(2, getEstadoSilabo());
-            st.setInt(3, getIdPeriodoLectivo().getId_PerioLectivo());
+            st.setInt(3, getIdPeriodoLectivo().getId());
             st.setInt(4, getIdSilabo());
             st.executeUpdate();
             st.close();
@@ -324,7 +324,7 @@ public class SilaboBD extends SilaboMD {
                     + "	VALUES (?, ?)");
 
             st.setInt(1, s.getIdMateria().getId());
-            st.setInt(2, s.getIdPeriodoLectivo().getId_PerioLectivo());
+            st.setInt(2, s.getIdPeriodoLectivo().getId());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -407,9 +407,9 @@ public class SilaboBD extends SilaboMD {
                 tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstadoSilabo(rs.getInt(7));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
-                tmp.getIdPeriodoLectivo().setFecha_Inicio(rs.getDate(9).toLocalDate());
-                tmp.getIdPeriodoLectivo().setFecha_Fin(rs.getDate(10).toLocalDate());
+                tmp.getIdPeriodoLectivo().setPeriodo(rs.getInt(8));
+                tmp.getIdPeriodoLectivo().setFechaInicio(rs.getDate(9).toLocalDate());
+                tmp.getIdPeriodoLectivo().setFechaFin(rs.getDate(10).toLocalDate());
 
                 silabos.add(tmp);
             }
@@ -454,8 +454,8 @@ public class SilaboBD extends SilaboMD {
                 tmp.getIdMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getIdMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstadoSilabo(rs.getInt(7));
-                tmp.getIdPeriodoLectivo().setId_PerioLectivo(rs.getInt(8));
-                tmp.getIdPeriodoLectivo().setNombre_PerLectivo(rs.getString(9));
+                tmp.getIdPeriodoLectivo().setPeriodo(rs.getInt(8));
+                tmp.getIdPeriodoLectivo().setNombre(rs.getString(9));
 
                 silabos.add(tmp);
             }

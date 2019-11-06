@@ -250,7 +250,7 @@ public class ControladorCRUD {
 
                 modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
-                    smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
+                    smd.getIdPeriodoLectivo().getFechaInicio() + " / " + smd.getIdPeriodoLectivo().getFechaFin(),
                     estado,
                     smd.getIdSilabo(),
                     estado2
@@ -290,7 +290,7 @@ public class ControladorCRUD {
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
         
-        if (silaboSeleccionado.get().getIdPeriodoLectivo().getId_PerioLectivo() != ultimo.getId_PerioLectivo()) {
+        if (silaboSeleccionado.get().getIdPeriodoLectivo().getId() != ultimo.getId()) {
 
             if (p == 1) {
                 return silaboSeleccionado.get();

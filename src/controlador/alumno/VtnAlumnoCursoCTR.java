@@ -149,7 +149,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarTblPorPrd() {
         if (posPrd > 0) {
-            almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getId_PerioLectivo());
+            almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getId());
             llenatTbl(almns);
         }
     }
@@ -160,7 +160,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     private void cargarTblPorCiclo() {
         if (posCiclo > 0) {
             almns = alc.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
-                    periodos.get(posPrd - 1).getId_PerioLectivo());
+                    periodos.get(posPrd - 1).getId());
             llenatTbl(almns);
         }
     }
@@ -171,7 +171,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     private void cargarTblPorCurso() {
         if (posCur > 0) {
             almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1),
-                    periodos.get(posPrd - 1).getId_PerioLectivo());
+                    periodos.get(posPrd - 1).getId());
             llenatTbl(almns);
         }
     }
@@ -204,7 +204,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         if (!periodos.isEmpty()) {
             vtnAlmnCurso.getCmbPrdLectivos().addItem("Todos");
             periodos.forEach(p -> {
-                vtnAlmnCurso.getCmbPrdLectivos().addItem(p.getNombre_PerLectivo());
+                vtnAlmnCurso.getCmbPrdLectivos().addItem(p.getNombre());
             });
         }
     }
@@ -256,7 +256,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarCursoPorPrd() {
         if (posPrd > 0) {
-            cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId());
             vtnAlmnCurso.getCmbCursos().removeAllItems();
             if (cursos != null) {
                 vtnAlmnCurso.getCmbCursos().addItem("Todos");

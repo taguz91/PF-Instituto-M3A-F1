@@ -234,7 +234,7 @@ public class ControladorCRUDPlanClase {
         } else {
 
             periodos.forEach((prd) -> {
-                fCrud_plan_Clases.getCmb_periodos().addItem(prd.getNombre_PerLectivo());
+                fCrud_plan_Clases.getCmb_periodos().addItem(prd.getNombre());
             });
         }
 
@@ -340,10 +340,10 @@ public class ControladorCRUDPlanClase {
         periodosCarrera = cargarPeriodos();
         periodosCarrera
                 .stream()
-                .filter(item -> item.getNombre_PerLectivo().equals(nombre_periodo))
+                .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_periodo_lectivo = obj.getId_PerioLectivo();
+                    id_periodo_lectivo = obj.getId();
                 });
 
      return id_periodo_lectivo;

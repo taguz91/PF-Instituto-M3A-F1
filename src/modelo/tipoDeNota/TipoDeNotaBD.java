@@ -59,7 +59,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         parametros.put(1, getNombre());
         parametros.put(2, getValorMinimo());
         parametros.put(3, getValorMaximo());
-        parametros.put(4, getPeriodoLectivo().getId_PerioLectivo());
+        parametros.put(4, getPeriodoLectivo().getId());
 
         return pool.ejecutar(INSERT, conn, parametros) == null;
     }
@@ -106,8 +106,8 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 tipoNota.setFechaCreacion(rs.getDate("tipo_nota_fecha_creacion").toLocalDate());
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
-                periodo.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                periodo.setPeriodo(rs.getInt("id_prd_lectivo"));
+                periodo.setNombre(rs.getString("prd_lectivo_nombre"));
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
@@ -146,7 +146,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
         conn = pool.getConnection();
         rs = pool.ejecutarQuery(SELECT, conn, parametros);
         PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-        periodo.setId_PerioLectivo(idPeriodo);
+        periodo.setPeriodo(idPeriodo);
         try {
             while (rs.next()) {
                 TipoDeNotaBD tipo = new TipoDeNotaBD();
@@ -202,7 +202,7 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
                 + "	tipo_nota_nombre = '" + getNombre() + "',\n"
                 + "	tipo_nota_valor_minimo = " + getValorMinimo() + ",\n"
                 + "	tipo_nota_valor_maximo = " + getValorMaximo() + ",\n"
-                + "	id_prd_lectivo = " + getPeriodoLectivo().getId_PerioLectivo() + "\n"
+                + "	id_prd_lectivo = " + getPeriodoLectivo().getId() + "\n"
                 + "WHERE\n"
                 + "	id_tipo_nota = " + Pk;
 

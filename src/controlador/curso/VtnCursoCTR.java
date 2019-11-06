@@ -210,10 +210,10 @@ public class VtnCursoCTR extends DVtnCTR {
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
         if (posPrd > 0) {
             //Cargamos el combo de cursos por el periodo  
-            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId());
             cargarCmbCursos(nombresC);
             //Cargamos los cursos por periodo
-            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getId());
             llenarTbl(cursos);
         } else {
             cargarCursos();
@@ -234,7 +234,7 @@ public class VtnCursoCTR extends DVtnCTR {
             llenarTbl(cursos);
         } else if (posNom > 0 && posPrd > 0) {
             cursos = curso.cargarCursosPorNombreYPrdLectivo(vtnCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId_PerioLectivo());
+                    periodos.get(posPrd - 1).getId());
             llenarTbl(cursos);
         }
     }
@@ -250,7 +250,7 @@ public class VtnCursoCTR extends DVtnCTR {
             cursos.forEach((c) -> {
                 Object valores[] = {
                     c.getId(),
-                    c.getPeriodo().getNombre_PerLectivo(),
+                    c.getPeriodo().getNombre(),
                     c.getMateria().getNombre(),
                     c.getDocente().getIdentificacion(),
                     c.getDocente().getPrimerNombre() + " "
@@ -277,7 +277,7 @@ public class VtnCursoCTR extends DVtnCTR {
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
             periodos.forEach((p) -> {
-                vtnCurso.getCmbPeriodoLectivo().addItem(p.getNombre_PerLectivo());
+                vtnCurso.getCmbPeriodoLectivo().addItem(p.getNombre());
             });
         }
     }

@@ -714,7 +714,7 @@ public class MateriaBD extends MateriaMD {
         
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, curso.getDocente().getIdDocente());
-        parametros.put(2, curso.getPeriodo().getId_PerioLectivo());
+        parametros.put(2, curso.getPeriodo().getId());
         parametros.put(3, curso.getNombre());
         
 
