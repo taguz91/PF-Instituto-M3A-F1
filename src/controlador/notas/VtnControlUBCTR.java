@@ -136,7 +136,7 @@ public class VtnControlUBCTR {
         listaPeriodos
                 .stream()
                 .forEach(obj -> {
-                    vista.getCmbPeriodoLectivo().addItem(obj.getNombre_PerLectivo());
+                    vista.getCmbPeriodoLectivo().addItem(obj.getNombre());
                 });
     }
 
@@ -144,7 +144,7 @@ public class VtnControlUBCTR {
 
         vista.getLblCarrera().setText(listaPeriodos
                 .stream()
-                .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .filter(item -> item.getId() == getIdPeriodoLectivo())
                 .map(c -> c.getCarrera().getNombre())
                 .findFirst()
                 .orElse("")
@@ -174,7 +174,7 @@ public class VtnControlUBCTR {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
+            periodo.setPeriodo(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
@@ -229,8 +229,8 @@ public class VtnControlUBCTR {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
             return listaPeriodos
                     .stream()
-                    .filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .map(c -> c.getId_PerioLectivo())
+                    .filter(item -> item.getNombre().equals(periodo))
+                    .map(c -> c.getId())
                     .findAny()
                     .orElse(-1);
         } catch (NullPointerException e) {

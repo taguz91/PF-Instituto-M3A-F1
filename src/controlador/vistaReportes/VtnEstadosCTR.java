@@ -62,7 +62,7 @@ public class VtnEstadosCTR {
         periodos = modelo.selectIdNombreAll();
 
         periodos.stream()
-                .map(c -> c.getNombre_PerLectivo())
+                .map(c -> c.getNombre())
                 .forEach(vista.getCmbPeriodos()::addItem);
         setCarrera();
     }
@@ -80,8 +80,8 @@ public class VtnEstadosCTR {
 
     private int getIdPeriodo() {
         return periodos.stream()
-                .filter(item -> item.getNombre_PerLectivo().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
-                .map(c -> c.getId_PerioLectivo())
+                .filter(item -> item.getNombre().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
+                .map(c -> c.getId())
                 .findFirst()
                 .orElse(-1);
     }

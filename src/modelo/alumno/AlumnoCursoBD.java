@@ -216,7 +216,7 @@ public class AlumnoCursoBD extends AlumnoCursoMD {
                     m.setNombre(rs.getString("materia_nombre"));
 
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    p.setNombre(rs.getString("prd_lectivo_nombre"));
                     c.setPeriodo(p);
 
                     c.setMateria(m);

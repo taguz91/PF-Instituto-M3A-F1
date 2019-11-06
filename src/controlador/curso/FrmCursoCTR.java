@@ -126,7 +126,7 @@ public class FrmCursoCTR extends DCTR {
             frmCurso.getCbxPeriodoLectivo().removeAllItems();
             frmCurso.getCbxPeriodoLectivo().addItem("Seleccione");
             periodos.forEach((p) -> {
-                frmCurso.getCbxPeriodoLectivo().addItem(p.getNombre_PerLectivo());
+                frmCurso.getCbxPeriodoLectivo().addItem(p.getNombre());
             });
         }
     }
@@ -302,7 +302,7 @@ public class FrmCursoCTR extends DCTR {
             if (!editando) {
                 CursoMD existeCurso = curso.existeDocenteMateria(materias.get(posMat - 1).getId(),
                         docentes.get(posDoc - 1).getIdDocente(), jornadas.get(posJrd - 1).getId(),
-                        periodos.get(posPrd - 1).getId_PerioLectivo(), ciclo, paralelo);
+                        periodos.get(posPrd - 1).getId(), ciclo, paralelo);
 
                 if (existeCurso != null) {
                     guardar = false;
@@ -312,7 +312,7 @@ public class FrmCursoCTR extends DCTR {
                     frmCurso.getLblError().setVisible(false);
 
                     existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
-                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId_PerioLectivo(),
+                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId(),
                             paralelo);
                     if (existeCurso != null) {
                         guardar = false;
@@ -378,7 +378,7 @@ public class FrmCursoCTR extends DCTR {
         //Ocultamos el btn de guardar y continuar
         frmCurso.getBtnGuardarContinuar().setVisible(false);
 
-        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getPeriodo().getNombre_PerLectivo());
+        frmCurso.getCbxPeriodoLectivo().setSelectedItem(c.getPeriodo().getNombre());
         frmCurso.getCbxJornada().setSelectedIndex(j);
         frmCurso.getCbxCiclo().setSelectedItem(c.getCiclo() + "");
         frmCurso.getCbxParalelo().setSelectedItem(c.getNombre().charAt(2) + "");

@@ -52,10 +52,10 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
-                tmp.setId_PerioLectivo(rs.getInt(1));
-                tmp.setNombre_PerLectivo(rs.getString(2));
-                tmp.setFecha_Inicio(rs.getDate(3).toLocalDate());
-                tmp.setFecha_Fin(rs.getDate(4).toLocalDate());
+                tmp.setPeriodo(rs.getInt(1));
+                tmp.setNombre(rs.getString(2));
+                tmp.setFechaInicio(rs.getDate(3).toLocalDate());
+                tmp.setFechaFin(rs.getDate(4).toLocalDate());
 
                 periodos.add(tmp);
             }
@@ -89,8 +89,8 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
-                tmp.setId_PerioLectivo(rs.getInt(1));
-                tmp.setNombre_PerLectivo(rs.getString(2));
+                tmp.setPeriodo(rs.getInt(1));
+                tmp.setNombre(rs.getString(2));
 
                 periodos.add(tmp);
             }
@@ -120,9 +120,9 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
 
                 PeriodoLectivoMD tmp = new PeriodoLectivoMD();
 
-                tmp.setId_PerioLectivo(rs.getInt(1));
-                tmp.setNombre_PerLectivo(rs.getString(2));
-                tmp.setFecha_Fin(rs.getDate(3).toLocalDate());
+                tmp.setPeriodo(rs.getInt(1));
+                tmp.setNombre(rs.getString(2));
+                tmp.setFechaFin(rs.getDate(3).toLocalDate());
 
                 periodos.add(tmp);
             }

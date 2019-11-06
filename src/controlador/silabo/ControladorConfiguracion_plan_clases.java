@@ -159,7 +159,7 @@ public class ControladorConfiguracion_plan_clases {
         if (periodos!=null) {
             frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE SU PERIODO ACTUAL!");
             periodos.forEach(pl-> {
-                frm_cong_PlanClase.getCmb_Periodos().addItem(pl.getNombre_PerLectivo());
+                frm_cong_PlanClase.getCmb_Periodos().addItem(pl.getNombre());
             });
            frm_cong_PlanClase.getCmb_Periodos().setSelectedIndex(0);           
         }
@@ -219,7 +219,7 @@ private void clickCmbCarreras(){
        if (posP>0 && posC>0) {
           estadoCmb_silbo(true);
         String carrera=silabos_docente.get(posC-1).getNombre();
-        String nombre_periodo=periodosCarrera.get(posP-1).getNombre_PerLectivo();
+        String nombre_periodo=periodosCarrera.get(posP-1).getNombre();
         materias_Silabos=MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(),nombre_periodo);
         LLENAR_COMBO_SILABOS(materias_Silabos);
            
@@ -265,10 +265,10 @@ private void clickCmbCarreras(){
      periodosCarrera=cargarPeriodos();
      periodosCarrera
                 .stream()
-                .filter(item -> item.getNombre_PerLectivo().equals(nombre_periodo))
+                .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                     id_periodo_lectivo= obj.getId_PerioLectivo();
+                     id_periodo_lectivo= obj.getId();
                 });
      return id_periodo_lectivo;
   }

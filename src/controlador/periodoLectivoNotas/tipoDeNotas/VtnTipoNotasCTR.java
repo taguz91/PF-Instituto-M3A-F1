@@ -107,7 +107,7 @@ public class VtnTipoNotasCTR {
             if (vista.getCmbPeriodos().getSelectedIndex() != 0) {
                 cargarTabla(listaTiposNotas
                         .stream()
-                        .filter(item -> item.getPeriodoLectivo().getNombre_PerLectivo().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
+                        .filter(item -> item.getPeriodoLectivo().getNombre().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
                         .collect(Collectors.toList())
                 );
             } else {
@@ -131,7 +131,7 @@ public class VtnTipoNotasCTR {
         vista.getCmbPeriodos().addItem("---------------------------------------------------");
         listaPeriodos
                 .stream()
-                .map(c -> c.getNombre_PerLectivo())
+                .map(c -> c.getNombre())
                 .forEachOrdered(vista.getCmbPeriodos()::addItem);
 
     }
@@ -144,7 +144,7 @@ public class VtnTipoNotasCTR {
                         || item.getFechaCreacion().toString().toUpperCase().contains(Aguja)
                         || String.valueOf(item.getValorMaximo()).toUpperCase().contains(Aguja)
                         || String.valueOf(item.getValorMinimo()).toUpperCase().contains(Aguja)
-                        || item.getPeriodoLectivo().getNombre_PerLectivo().toUpperCase().contains(Aguja)
+                        || item.getPeriodoLectivo().getNombre().toUpperCase().contains(Aguja)
                 )
                 .collect(Collectors.toList())
                 .forEach(agregarFilas());
@@ -156,7 +156,7 @@ public class VtnTipoNotasCTR {
                 tablaTiposNotas.getDataVector().size() + 1,
                 obj.getId(),
                 obj.getNombre(),
-                obj.getPeriodoLectivo().getNombre_PerLectivo(),
+                obj.getPeriodoLectivo().getNombre(),
                 obj.getPeriodoLectivo().getCarrera().getNombre(),
                 obj.getPeriodoLectivo().getCarrera().getModalidad(),
                 obj.getValorMinimo(),

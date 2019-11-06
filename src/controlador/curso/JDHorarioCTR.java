@@ -244,7 +244,7 @@ public class JDHorarioCTR extends DVtnCTR {
     private void cargarDatos() {
         //Titulo de la ventana 
         jd.setTitle("Horario - " + curso.getMateria().getNombre() + " - " + curso.getNombre());
-        jd.getLblPrd().setText(curso.getPeriodo().getNombre_PerLectivo());
+        jd.getLblPrd().setText(curso.getPeriodo().getNombre());
         jd.getLblMateria().setText(curso.getMateria().getNombre());
         switch (curso.getNombre().charAt(0)) {
             case 'M':

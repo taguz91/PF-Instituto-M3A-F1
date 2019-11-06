@@ -1622,7 +1622,7 @@ public class ControladorSilaboU {
 
     public int insertarUnidades() {
 
-        silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId(), silabo.getIdPeriodoLectivo().getId_PerioLectivo()).getIdSilabo());
+        silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId(), silabo.getIdPeriodoLectivo().getId()).getIdSilabo());
 
 
         /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
