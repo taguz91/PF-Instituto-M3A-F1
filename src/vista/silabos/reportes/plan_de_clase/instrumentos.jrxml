@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2191cef9-589e-4ebc-b471-d1c3a848f2d5">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="38"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_unidad" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -26,7 +26,7 @@ e.id_unidad=u.id_unidad AND e.id_unidad=$P!{id_unidad}]]>
 	<detail>
 		<band height="11" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="112" height="11" uuid="f80d3f30-a2b1-460d-b064-f66a0a48fba3"/>
+				<reportElement x="0" y="0" width="90" height="11" uuid="f80d3f30-a2b1-460d-b064-f66a0a48fba3"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c14134c1-6473-4170-8b02-ec86690538f3">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.853116706110003"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
@@ -22,7 +22,7 @@ SELECT '' as anticipacion,'' as construccion,nombre_estrategia as consolidacion 
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="139" height="12" uuid="8c7ad19d-0aca-45b8-90f8-2fd904f1bd5e"/>
+				<reportElement x="0" y="0" width="121" height="12" uuid="8c7ad19d-0aca-45b8-90f8-2fd904f1bd5e"/>
 				<textElement>
 					<font size="7"/>
 				</textElement>

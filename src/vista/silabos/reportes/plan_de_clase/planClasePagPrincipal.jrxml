@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="85387e7d-52aa-4690-b858-91546a5d0505">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.9487171000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="64"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/plan_de_clase/"]]></defaultValueExpression>
 	</parameter>
@@ -10,11 +10,33 @@
 	<parameter name="id_curso" class="java.lang.String"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select r.id_carrera,r.carrera_nombre,m.materia_nombre,m.materia_codigo, c.curso_nombre,current_date,
-concat(d.docente_abreviatura,p.persona_primer_nombre,' ' ,p.persona_primer_apellido) 
-as nombre_doc from"Docentes" d join "Personas" p on d.id_persona=p.id_persona join "Cursos" c 
-on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join 
-"Carreras" r on m.id_carrera=r.id_carrera where c.id_curso=$P!{id_curso}]]>
+		<![CDATA[SELECT
+	r.id_carrera,
+	r.carrera_nombre,
+	M.materia_nombre,
+	M.materia_codigo,
+	C.curso_nombre,
+	CURRENT_DATE,
+	concat ( d.docente_abreviatura, P.persona_primer_nombre, ' ', P.persona_primer_apellido ) AS nombre_doc,
+	(
+	SELECT
+		concat ( coor.docente_abreviatura, per_coor.persona_primer_apellido, ' ', per_coor.persona_primer_nombre ) AS "COOR" 
+	FROM
+		"Personas" per_coor
+		INNER JOIN "Docentes" coor ON per_coor.id_persona = coor.id_persona 
+	WHERE
+		coor.id_docente = r.id_docente_coordinador 
+	) AS COORDINADOR,
+	( SELECT numero_unidad FROM "UnidadSilabo" WHERE "UnidadSilabo".id_unidad = $P!{id_unidad} ) AS "UNIDAD_SILABO",
+	( SELECT fecha_generacion FROM "PlandeClases" WHERE id_plan_clases =$P!{id_plan_clase} ) AS fecha_generacion 
+FROM
+	"Docentes" d
+	JOIN "Personas" P ON d.id_persona = P.id_persona
+	JOIN "Cursos" C ON C.id_docente = d.id_docente
+	JOIN "Materias" M ON C.id_materia = M.id_materia
+	JOIN "Carreras" r ON M.id_carrera = r.id_carrera 
+WHERE
+	C.id_curso = $P!{id_curso}]]>
 	</queryString>
 	<field name="id_carrera" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -23,6 +45,9 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 	<field name="curso_nombre" class="java.lang.String"/>
 	<field name="current_date" class="java.sql.Date"/>
 	<field name="nombre_doc" class="java.lang.String"/>
+	<field name="coordinador" class="java.lang.String"/>
+	<field name="UNIDAD_SILABO" class="java.lang.Integer"/>
+	<field name="fecha_generacion" class="java.sql.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -195,14 +220,6 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<text><![CDATA[PLAN DE CLASE N°]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="328" y="0" width="200" height="20" uuid="2fc30b8f-01df-4294-a7b5-2068e73e111f"/>
-				<subreportParameter name="id_unidad">
-					<subreportParameterExpression><![CDATA[$P{id_unidad}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "numero_unidad.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
 				<reportElement x="0" y="38" width="273" height="74" uuid="053397cf-7652-4606-b3d2-7ad345b0659b"/>
 				<subreportParameter name="id_unidad">
 					<subreportParameterExpression><![CDATA[$P{id_unidad}]]></subreportParameterExpression>
@@ -210,10 +227,17 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "datos_unidad.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="326" y="0" width="102" height="20" uuid="9650b1e0-a160-494d-a357-ff00f2d21258"/>
+				<textElement verticalAlignment="Top">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIDAD_SILABO}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="20">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="20" uuid="686cc8e6-fce0-4858-a7c8-4b0e2ad23804"/>
+				<reportElement x="0" y="0" width="555" height="20" isPrintWhenDetailOverflows="true" uuid="686cc8e6-fce0-4858-a7c8-4b0e2ad23804"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<subreportParameter name="id_unidad">
 					<subreportParameterExpression><![CDATA[$P{id_unidad}]]></subreportParameterExpression>
@@ -225,27 +249,33 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SEGUNDA_PARTE_DATOS_UNIDAD.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="26"/>
+		<band height="9"/>
 		<band height="105">
 			<staticText>
 				<reportElement x="180" y="15" width="48" height="15" uuid="50eb41f7-67bb-4a7c-854c-b55cf50ac267"/>
 				<box>
+					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[ Nombre:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="228" y="15" width="133" height="15" uuid="bcbcb89c-3fad-429e-8270-1af326474dba"/>
 				<box>
-					<leftPen lineWidth="0.0"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_doc}]]></textFieldExpression>
 			</textField>
@@ -280,12 +310,14 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 			<staticText>
 				<reportElement x="180" y="90" width="38" height="15" uuid="ba2b84dc-04e9-47a8-a43a-3c43c6ae1840"/>
 				<box>
+					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[ Fecha: ]]></text>
 			</staticText>
@@ -293,13 +325,10 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				<reportElement x="0" y="15" width="180" height="15" uuid="3b68cec2-1565-40a4-a640-53f0a800e2be"/>
 				<box>
 					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
@@ -320,7 +349,6 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 			<staticText>
 				<reportElement x="0" y="90" width="180" height="15" uuid="3c4cfcda-1b41-4aab-a70d-83bec1d17065"/>
 				<box>
-					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -328,6 +356,7 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
@@ -359,22 +388,96 @@ on c.id_docente=d.id_docente join "Materias" m on c.id_materia=m.id_materia join
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
-			<subreport>
-				<reportElement x="361" y="0" width="194" height="105" uuid="4407e806-2d96-4cdf-a3bf-e5a8fa16cf1f"/>
-				<subreportParameter name="ID_CARR">
-					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador_plan.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="218" y="90" width="143" height="15" uuid="ea078f2a-709b-49b3-a28e-9fdd05a79178"/>
-				<subreportParameter name="id_plan">
-					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "fecha.jasper"]]></subreportExpression>
-			</subreport>
+			<textField>
+				<reportElement x="411" y="15" width="144" height="15" uuid="56e750b4-c80b-4969-a385-37c4eb8d0ee3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coordinador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="90" width="194" height="15" uuid="265cbdbc-32e9-425f-a436-e15c928f3105"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<text><![CDATA[ Fecha: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="75" width="194" height="15" uuid="3f193346-3bd8-4429-88cc-b6179ecdfa00"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="0" width="194" height="15" uuid="bc78137f-5461-408a-88c5-11abb748c52b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COORDINADOR/A DE LA CARRERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="15" width="50" height="15" uuid="e5e45cc8-45aa-45b9-89b7-0d551d0b42cd"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<text><![CDATA[ Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="30" width="194" height="45" uuid="73406a0a-9a1a-4c2d-b939-33f746a53815"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="218" y="90" width="143" height="15" uuid="ecc6adb1-de53-4ebd-a3c7-edd99dd5b04e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_generacion}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
