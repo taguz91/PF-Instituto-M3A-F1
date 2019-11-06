@@ -7,7 +7,6 @@ package modelo.silabo;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -102,7 +101,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    
+
     public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, int clave, String parametro) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -215,7 +214,7 @@ public class SilaboBD extends SilaboMD {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
-                    + "	SET documento_silabo =?\n"
+                    + "	SET documento_silabo =? \n"
                     + "	WHERE id_silabo=?");
 
             st.setBinaryStream(1, fis, (int) f.length());
@@ -305,7 +304,6 @@ public class SilaboBD extends SilaboMD {
 
             st.setInt(1, estado);
             st.setInt(2, silabo);
-            
 
             st.executeUpdate();
             System.out.println(st);
@@ -320,8 +318,8 @@ public class SilaboBD extends SilaboMD {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Silabo\"(\n"
-                    + "	 id_materia, id_prd_lectivo)\n"
-                    + "	VALUES (?, ?)");
+                    + "	 id_materia, id_prd_lectivo, fecha_silabo)\n"
+                    + "	VALUES (?, ?, now())");
 
             st.setInt(1, s.getIdMateria().getId());
             st.setInt(2, s.getIdPeriodoLectivo().getId());

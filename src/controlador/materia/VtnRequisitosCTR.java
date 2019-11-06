@@ -22,7 +22,6 @@ public class VtnRequisitosCTR extends DVtnCTR {
     private final MateriaRequisitoBD materiarequisito;
     private int idRequisito = -1;
     private boolean editar = false;
-    private boolean habilitaBoton = false;
     //objeto Materia
     private MateriaMD materia;
     //ArrayList de Materias
@@ -46,16 +45,32 @@ public class VtnRequisitosCTR extends DVtnCTR {
      */
     public void iniciar() {
         frmreq.getLblNombreMateria().setText(materia.getNombre());
-        cargarComboMaterias();
+        
         frmreq.getBtnGuardar().addActionListener(e -> guardarMateriaRequisito());
         ctrPrin.agregarVtn(frmreq);
+        
+        // Acciones en la ventana  
+        
+        frmreq.getJrbCoRequisito().addActionListener(e -> cargarComboMaterias());
+        frmreq.getJrbPrerequisito().addActionListener(e -> cargarComboMaterias());
     }
 
     /**
      * Se encargar de enlistar en un combobox las materias
      */
     private void cargarComboMaterias() {
-        materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
+        boolean co = frmreq.getJrbCoRequisito().isSelected();
+        boolean pre = frmreq.getJrbPrerequisito().isSelected();
+
+        if (co) {
+            materias = materiabd.getMateriasParaCorequisito(materia.getId());
+        }
+
+        if (pre) {
+            materias = materiabd.getMateriasParaPrequisitos(materia.getId());
+        }
+
+        //materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
         frmreq.getCmbrequisitos().removeAllItems();
         frmreq.getCmbrequisitos().addItem("Seleccione");
 

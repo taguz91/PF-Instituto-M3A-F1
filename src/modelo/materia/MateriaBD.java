@@ -711,12 +711,11 @@ public class MateriaBD extends MateriaMD {
         System.out.println(SELECT);
 
         List<MateriaMD> lista = new ArrayList<>();
-        
+
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, curso.getDocente().getIdDocente());
         parametros.put(2, curso.getPeriodo().getId());
         parametros.put(3, curso.getNombre());
-        
 
         conn = POOL.getConnection();
         rst = POOL.ejecutarQuery(SELECT, conn, parametros);
@@ -742,4 +741,62 @@ public class MateriaBD extends MateriaMD {
         return sqlg;
     }
 
+    // Querys para pre y co requisitos 
+    public ArrayList<MateriaMD> getMateriasParaCorequisito(int idMateria) {
+        String sql = "SELECT id_materia, "
+                + " materia_nombre \n"
+                + "FROM public.\"Materias\" m \n"
+                + "WHERE materia_activa = 'true' "
+                + "AND m.id_carrera = ( "
+                + " SELECT id_carrera FROM public.\"Materias\" "
+                + " WHERE id_materia = " + idMateria
+                + ") AND materia_ciclo = ("
+                + " SELECT materia_ciclo FROM public.\"Materias\" "
+                + " WHERE id_materia = " + idMateria
+                + ")"
+                + "AND materia_activa = true;";
+        return getParaRequisitos(sql);
+    }
+    
+    public ArrayList<MateriaMD> getMateriasParaPrequisitos(int idMateria) {
+        String sql = "SELECT id_materia, "
+                + " materia_nombre \n"
+                + "FROM public.\"Materias\" m \n"
+                + "WHERE materia_activa = 'true' "
+                + "AND m.id_carrera = ( "
+                + " SELECT id_carrera FROM public.\"Materias\" "
+                + " WHERE id_materia = " + idMateria
+                + ") AND materia_ciclo = ("
+                + " SELECT materia_ciclo - 1 FROM public.\"Materias\" "
+                + " WHERE id_materia = " + idMateria
+                + ")"
+                + "AND materia_activa = true;";
+        return getParaRequisitos(sql);
+    }
+
+    private ArrayList<MateriaMD> getParaRequisitos(String sql) {
+        ArrayList<MateriaMD> lista = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                MateriaMD m;
+                while (rs.next()) {
+                    m = new MateriaMD();
+                    m.setId(rs.getInt("id_materia"));
+                    m.setNombre(rs.getString("materia_nombre"));
+                    lista.add(m);
+                }
+                ps.getConnection().close();
+                return lista;
+            } else {
+                System.out.println("No se pudo consultar materias para combo");
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("No se pudo consultar materias para combo");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+    }
 }
