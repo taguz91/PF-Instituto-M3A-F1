@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.materia.EjeFormacionMD;
 import modelo.materia.MateriaBD;
@@ -54,8 +53,6 @@ public class FrmMateriasCTR extends DCTR {
         this.frmMaterias = frmMaterias;
         this.ctrVtnMat = null;
         this.materiaBD = new MateriaBD(ctrPrin.getConecta());
-        //this.carBD = new CarreraBD(conecta); 
-        //this.ejeBD = new EjeFormacionBD(conecta);
     }
 
     public FrmMateriasCTR(FrmMaterias frmMaterias, VtnPrincipalCTR ctrPrin, VtnMateriaCTR ctrVtnMat) {
@@ -63,8 +60,6 @@ public class FrmMateriasCTR extends DCTR {
         this.frmMaterias = frmMaterias;
         this.ctrVtnMat = ctrVtnMat;
         this.materiaBD = new MateriaBD(ctrPrin.getConecta());
-        //this.carBD = new CarreraBD(conecta); 
-        //this.ejeBD = new EjeFormacionBD(conecta);
     }
 
     public void iniciar() {
