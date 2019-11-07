@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e43316c5-a018-4cbb-ba2e-dd9c1875b142">
 	<property name="ireport.zoom" value="1.9487171000000056"/>
 	<property name="ireport.x" value="200"/>
-	<property name="ireport.y" value="27"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
@@ -266,21 +266,6 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_fin_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="226" y="32" width="133" height="35" isPrintWhenDetailOverflows="true" uuid="c2e20fe5-f040-401b-96d7-809cd861dfe0"/>
-				<box>
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement>
-					<font isBold="true"/>
-					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="330" y="0" width="29" height="32" isPrintWhenDetailOverflows="true" uuid="836e9759-317f-4dfd-8b11-d5feab0e3c11"/>
 				<box>
 					<rightPen lineWidth="0.75"/>
@@ -341,7 +326,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{estrategias}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="226" y="67" width="133" height="68" isPrintWhenDetailOverflows="true" uuid="cb2cc22d-534e-41e0-9708-8eaf56607dec"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="226" y="33" width="133" height="102" isPrintWhenDetailOverflows="true" uuid="cb2cc22d-534e-41e0-9708-8eaf56607dec"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -349,10 +334,11 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" markup="styled">
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{contenidos_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style isBold='true'>" + $F{titulo_unidad} + "</style>" +  "\n\n" +
+$F{contenidos_unidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
