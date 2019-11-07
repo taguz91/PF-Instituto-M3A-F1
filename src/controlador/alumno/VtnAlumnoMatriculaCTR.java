@@ -97,7 +97,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
         if (alumnosMatriculas != null) {
             alumnosMatriculas.forEach(am -> {
                 Object[] v = {
-                    am.getPeriodo().getNombre_PerLectivo(),
+                    am.getPeriodo().getNombre(),
                     am.getAlumno().getIdentificacion(),
                     am.getAlumno().getSoloNombres(),
                     am.getAlumno().getSoloApellidos(), 
@@ -118,7 +118,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
-            almnMatricula = almMatri.getPorPeriodo(periodos.get(posPrd - 1).getId_PerioLectivo());
+            almnMatricula = almMatri.getPorPeriodo(periodos.get(posPrd - 1).getId());
             llenarTbl(almnMatricula);
         } else {
             cargarAlumnosMatriculas();
@@ -134,7 +134,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
         if (periodos != null) {
             vtnMatri.getCmbPeriodos().addItem("Seleccione");
             periodos.forEach(p -> {
-                vtnMatri.getCmbPeriodos().addItem(p.getNombre_PerLectivo());
+                vtnMatri.getCmbPeriodos().addItem(p.getNombre());
             });
         }
     }

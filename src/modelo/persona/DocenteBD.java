@@ -640,7 +640,7 @@ public class DocenteBD extends DocenteMD {
 
     public boolean deshabilitarCursos(CursoMD curso) {
         String sql = "UPDATE public.\"Cursos\" SET curso_activo = false "
-                + "WHERE id_docente = " + curso.getDocente().getIdDocente() + " AND id_prd_lectivo = " + curso.getPeriodo().getId_PerioLectivo()
+                + "WHERE id_docente = " + curso.getDocente().getIdDocente() + " AND id_prd_lectivo = " + curso.getPeriodo().getId()
                 + " AND id_materia = " + curso.getMateria().getId() + " AND curso_nombre = '" + curso.getNombre() + "';";
         PreparedStatement ps = conecta.getPS(sql);
         if (conecta.nosql(ps) == null) {

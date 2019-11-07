@@ -41,18 +41,18 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
-                + " VALUES( " + c.getId() + ", '" + p.getNombre_PerLectivo().toUpperCase() + "   " + Meses(p.getFecha_Inicio()) + "   " + Meses(p.getFecha_Fin()) + "', '" + p.getFecha_Inicio()
-                + "', '" + p.getFecha_Fin() + "', '" + p.getObservacion_PerLectivo().toUpperCase() + "', true, true);";
+                + " VALUES( " + c.getId() + ", '" + p.getNombre().toUpperCase() + "   " + Meses(p.getFechaInicio()) + "   " + Meses(p.getFechaFin()) + "', '" + p.getFechaInicio()
+                + "', '" + p.getFechaFin() + "', '" + p.getObservacion().toUpperCase() + "', true, true);";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '" + p.getNombre_PerLectivo() + "',"
-                + " prd_lectivo_fecha_inicio = '" + p.getFecha_Inicio() + "', prd_lectivo_fecha_fin = '" + p.getFecha_Fin()
-                + "', prd_lectivo_observacion = '" + p.getObservacion_PerLectivo()
-                + "' WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
+                + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '" + p.getNombre() + "',"
+                + " prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', prd_lectivo_fecha_fin = '" + p.getFechaFin()
+                + "', prd_lectivo_observacion = '" + p.getObservacion()
+                + "' WHERE id_prd_lectivo = " + p.getId() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
             return true;
@@ -65,7 +65,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean eliminarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_activo = false"
-                + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
+                + " WHERE id_prd_lectivo = " + p.getId() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
@@ -73,7 +73,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
                 + " prd_lectivo_estado = false"
-                + " WHERE id_prd_lectivo = " + p.getId_PerioLectivo() + ";";
+                + " WHERE id_prd_lectivo = " + p.getId() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
@@ -96,15 +96,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 p.setCarrera(carrera);
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 lista.add(p);
             }
             rs.close();
@@ -126,7 +126,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
                 lista.add(p);
             }
             rs.close();
@@ -214,11 +214,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rs.next()) {
                 PeriodoLectivoMD m = new PeriodoLectivoMD();
                 carrera = new CarreraMD();
-                m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                m.setPeriodo(rs.getInt("id_prd_lectivo"));
                 carrera.setId(rs.getInt("id_carrera"));
-                m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                m.setNombre(rs.getString("prd_lectivo_nombre"));
+                m.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                m.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
                 m.setCarrera(carrera);
                 lista.add(m);
             }
@@ -248,7 +248,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
 
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
@@ -256,10 +256,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 p.setCarrera(carrera);
 
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }
@@ -284,14 +284,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             PeriodoLectivoMD m = new PeriodoLectivoMD();
             carrera = new CarreraMD();
             while (rs.next()) {
-                m.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
-                m.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                m.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                m.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                m.setObservacion_PerLectivo(rs.getString("prd_lectivo_observacion"));
+                m.setPeriodo(rs.getInt("id_prd_lectivo"));
+                m.setNombre(rs.getString("prd_lectivo_nombre"));
+                m.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                m.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                m.setObservacion(rs.getString("prd_lectivo_observacion"));
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
-                m.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                m.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 m.setCarrera(carrera);
             }
             rs.close();
@@ -317,17 +317,17 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setCodigo(rs.getString("carrera_codigo"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 p.setCarrera(carrera);
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-                p.setEstado_PerLectivo(rs.getBoolean("prd_lectivo_estado"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setEstado(rs.getBoolean("prd_lectivo_estado"));
 
                 lista.add(p);
             }
@@ -352,14 +352,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
 
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = car.buscar(rs.getInt("id_carrera"));
                 p.setCarrera(carrera);
 
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
 
             }
             rs.close();
@@ -414,11 +414,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 p.setCarrera(carrera);
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
 
                 prds.add(p);
             }
@@ -439,7 +439,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         ResultSet rs = conecta.sql(sql);
         try {
             while (rs.next()) {
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
             }
             rs.close();
             return p;
@@ -461,14 +461,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rs.next()) {
 
-                p.setId_PerioLectivo(rs.getInt("id_prd_lectivo"));
+                p.setPeriodo(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = car.buscar(rs.getInt("id_carrera"));
                 p.setCarrera(carrera);
 
-                p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
-                p.setFecha_Inicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                p.setFecha_Fin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
 
             }
             rs.close();
@@ -610,8 +610,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rst.next()) {
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
-                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                periodo.setPeriodo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre(rst.getString("prd_lectivo_nombre"));
 
                 CarreraMD c = new CarreraMD();
                 c.setId(rst.getInt("id_carrera"));
@@ -619,10 +619,10 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 c.setModalidad(rst.getString("carrera_modalidad"));
                 periodo.setCarrera(c);
 
-                periodo.setEstado_PerLectivo(rst.getBoolean("prd_lectivo_estado"));
-                periodo.setActivo_PerLectivo(rst.getBoolean("prd_lectivo_activo"));
-                periodo.setFecha_Inicio(rst.getDate("prd_lectivo_fecha_inicio").toLocalDate());
-                periodo.setFecha_Fin(rst.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                periodo.setEstado(rst.getBoolean("prd_lectivo_estado"));
+                periodo.setActivo(rst.getBoolean("prd_lectivo_activo"));
+                periodo.setFechaInicio(rst.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                periodo.setFechaFin(rst.getDate("prd_lectivo_fecha_fin").toLocalDate());
 
                 lista.add(periodo);
 
@@ -648,8 +648,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rst.next()) {
                 PeriodoLectivoBD periodo = new PeriodoLectivoBD();
-                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
-                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                periodo.setPeriodo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre(rst.getString("prd_lectivo_nombre"));
                 lista.add(periodo);
             }
         } catch (SQLException | NullPointerException e) {
@@ -710,8 +710,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rst.next()) {
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
-                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                periodo.setPeriodo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre(rst.getString("prd_lectivo_nombre"));
 
                 CarreraMD c = new CarreraMD();
                 c.setId(rst.getInt("id_carrera"));
@@ -757,8 +757,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rst.next()) {
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setId_PerioLectivo(rst.getInt("id_prd_lectivo"));
-                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                periodo.setPeriodo(rst.getInt("id_prd_lectivo"));
+                periodo.setNombre(rst.getString("prd_lectivo_nombre"));
 
                 CarreraMD carreraMap = new CarreraMD();
                 carreraMap.setId(rst.getInt("id_carrera"));
@@ -804,7 +804,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             while (rst.next()) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
 
-                periodo.setNombre_PerLectivo(rst.getString("prd_lectivo_nombre"));
+                periodo.setNombre(rst.getString("prd_lectivo_nombre"));
                 System.out.println("Semanas " + rst.getInt(3));
                 periodo.setNumSemanas(rst.getInt(3));
                 semana.add(periodo);

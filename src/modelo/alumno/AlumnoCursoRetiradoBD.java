@@ -206,7 +206,7 @@ public class AlumnoCursoRetiradoBD extends AlumnoCursoRetiradoMD {
                     a.setIdentificacion(rs.getString("persona_identificacion"));
                     a.setPrimerNombre(rs.getString("persona_primer_nombre"));
                     a.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    p.setNombre(rs.getString("prd_lectivo_nombre"));
 
                     c.setMateria(m);
                     c.setPeriodo(p);

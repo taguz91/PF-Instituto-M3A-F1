@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.silabo;
 
 import java.awt.event.ActionEvent;
@@ -14,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.ConexionBD;
@@ -250,7 +244,7 @@ public class ControladorCRUD {
 
                 modeloTabla.addRow(new Object[]{
                     smd.getIdMateria().getNombre(),
-                    smd.getIdPeriodoLectivo().getFecha_Inicio() + " / " + smd.getIdPeriodoLectivo().getFecha_Fin(),
+                    smd.getIdPeriodoLectivo().getFechaInicio() + " / " + smd.getIdPeriodoLectivo().getFechaFin(),
                     estado,
                     smd.getIdSilabo(),
                     estado2
@@ -290,7 +284,7 @@ public class ControladorCRUD {
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
         
-        if (silaboSeleccionado.get().getIdPeriodoLectivo().getId_PerioLectivo() != ultimo.getId_PerioLectivo()) {
+        if (silaboSeleccionado.get().getIdPeriodoLectivo().getId() != ultimo.getId()) {
 
             if (p == 1) {
                 return silaboSeleccionado.get();
@@ -306,6 +300,7 @@ public class ControladorCRUD {
 
         crud.getLblSeleccionDocumento().setVisible(estado);
         crud.getChbProgramaAnalitico().setVisible(estado);
+        crud.getChxDualSemanas().setVisible(estado);
         crud.getChbSilabo().setVisible(estado);
         crud.getBtnGenerar().setVisible(estado);
 

@@ -239,7 +239,7 @@ public class VtnCarreraCTR extends DVtnCTR {
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
-            nmPrd.add(p.getNombre_PerLectivo());
+            nmPrd.add(p.getNombre());
         });
         Object np = JOptionPane.showInputDialog(ctrPrin.getVtnPrin(),
                 "Lista de periodos lectivos", "Periodos lectivos",

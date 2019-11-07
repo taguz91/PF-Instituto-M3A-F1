@@ -153,8 +153,8 @@ public class ControladorSilaboC {
             //configuracion.getCmbPeriodo().removeAllItems();
 
             configuracion.getCmbAsignatura().removeAllItems();
-            System.out.println("-------------------" + periodosCarrera.get(0).getNombre_PerLectivo());
-            cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId_PerioLectivo());
+            System.out.println("-------------------" + periodosCarrera.get(0).getNombre());
+            cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId());
             //cargarComboPeriodos(carreraSeleccionada.get().getId());
 
         });
@@ -169,10 +169,10 @@ public class ControladorSilaboC {
 
                 System.out.println("-----------------------------entro");
                 for (SilaboMD s : silabosAnteriores) {
-                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre_PerLectivo() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
+                    System.out.println(materiaSeleccionada.get().getId() + " - " + s.getIdMateria() + " - " + s.getIdPeriodoLectivo().getNombre() + " - " + configuracion.getCmbPeriodo().getSelectedItem().toString());
                 }
                 Optional<SilaboMD> silaboSeleccionado = silabosAnteriores.stream().
-                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre_PerLectivo().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
+                        filter(s -> s.getIdMateria().getId() == (materiaSeleccionada.get().getId()) && s.getIdPeriodoLectivo().getNombre().equals(configuracion.getCmbPeriodo().getSelectedItem().toString())).
                         findFirst();
                 silaboAnterior = silaboSeleccionado.get();
             }
@@ -285,7 +285,7 @@ public class ControladorSilaboC {
         silabosAnteriores = SilaboBD.consultarAnteriores(conexion, parametros);
 
         silabosAnteriores.forEach((prd) -> {
-            configuracion.getCmbPeriodo().addItem(prd.getIdPeriodoLectivo().getNombre_PerLectivo());
+            configuracion.getCmbPeriodo().addItem(prd.getIdPeriodoLectivo().getNombre());
         });
 
         if (silabosAnteriores.size() > 0) {
@@ -1839,7 +1839,7 @@ public class ControladorSilaboC {
 
     public int insertarUnidades() {
 
-        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId(), silaboNuevo.getIdPeriodoLectivo().getId_PerioLectivo()).getIdSilabo());
+        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId(), silaboNuevo.getIdPeriodoLectivo().getId()).getIdSilabo());
 
         for (UnidadSilaboMD umd : unidadesSilabo) {
 

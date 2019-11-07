@@ -109,7 +109,7 @@ public class AlumnoMatriculaBD {
                     c.setNombre(rs.getString("carrera_nombre"));
                     c.setCodigo(rs.getString("carrera_codigo"));
 
-                    p.setNombre_PerLectivo(rs.getString("prd_lectivo_nombre"));
+                    p.setNombre(rs.getString("prd_lectivo_nombre"));
                     p.setCarrera(c);
 
                     am.setAlumno(a);

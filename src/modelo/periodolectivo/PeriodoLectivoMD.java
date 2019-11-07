@@ -1,14 +1,15 @@
 package modelo.periodolectivo;
 
 import java.time.LocalDate;
+import java.util.function.Consumer;
 import modelo.carrera.CarreraMD;
 
 public class PeriodoLectivoMD {
 
-    private int id_PerioLectivo;
-    private String nombre_PerLectivo, observacion_PerLectivo;
-    private boolean activo_PerLectivo, estado_PerLectivo;
-    private LocalDate fecha_Inicio, fecha_Fin;
+    private int id;
+    private String nombre, observacion;
+    private boolean activo, estado;
+    private LocalDate fechaInicio, fechaFin;
     private int NumSemanas;
 
     private int NumDias;
@@ -18,104 +19,109 @@ public class PeriodoLectivoMD {
     public PeriodoLectivoMD() {
     }
 
-    public PeriodoLectivoMD(int id_PerioLectivo, String nombre_PerLectivo, String observacion_PerLectivo, boolean activo_PerLectivo, boolean estado_PerLectivo, LocalDate fecha_Inicio, LocalDate fecha_Fin, CarreraMD carrera) {
-        this.id_PerioLectivo = id_PerioLectivo;
-        this.nombre_PerLectivo = nombre_PerLectivo;
-        this.observacion_PerLectivo = observacion_PerLectivo;
-        this.activo_PerLectivo = activo_PerLectivo;
-        this.estado_PerLectivo = estado_PerLectivo;
-        this.fecha_Inicio = fecha_Inicio;
-        this.fecha_Fin = fecha_Fin;
+    public PeriodoLectivoMD(int id, String nombre, String observacion, boolean activo, boolean estado, LocalDate fechaInicio, LocalDate fechaFin, CarreraMD carrera) {
+        this.id = id;
+        this.nombre = nombre;
+        this.observacion = observacion;
+        this.activo = activo;
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.carrera = carrera;
     }
 
-    public int getId_PerioLectivo() {
-        return id_PerioLectivo;
+    public int getId() {
+        return id;
     }
 
-    public void setId_PerioLectivo(int id_PerioLectivo) {
-        this.id_PerioLectivo = id_PerioLectivo;
+    public PeriodoLectivoMD setPeriodo(int id) {
+        this.id = id;
+        return this;
     }
 
-    public String getNombre_PerLectivo() {
-        return nombre_PerLectivo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre_PerLectivo(String nombre_PerLectivo) {
-        this.nombre_PerLectivo = nombre_PerLectivo;
+    public PeriodoLectivoMD setNombre(String nombre) {
+        this.nombre = nombre;
+        return this;
     }
 
-    public String getObservacion_PerLectivo() {
-        return observacion_PerLectivo;
+    public String getObservacion() {
+        return observacion;
     }
 
-    public void setObservacion_PerLectivo(String observacion_PerLectivo) {
-        this.observacion_PerLectivo = observacion_PerLectivo;
+    public PeriodoLectivoMD setObservacion(String observacion) {
+        this.observacion = observacion;
+        return this;
     }
 
-    public boolean isActivo_PerLectivo() {
-        return activo_PerLectivo;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setActivo_PerLectivo(boolean activo_PerLectivo) {
-        this.activo_PerLectivo = activo_PerLectivo;
+    public PeriodoLectivoMD setActivo(boolean activo) {
+        this.activo = activo;
+        return this;
     }
 
-    public LocalDate getFecha_Inicio() {
-        return fecha_Inicio;
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha_Inicio(LocalDate fecha_Inicio) {
-        this.fecha_Inicio = fecha_Inicio;
+    public PeriodoLectivoMD setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+        return this;
     }
 
-    public LocalDate getFecha_Fin() {
-        return fecha_Fin;
+    public LocalDate getFechaFin() {
+        return fechaFin;
     }
 
-    public void setFecha_Fin(LocalDate fecha_Fin) {
-        this.fecha_Fin = fecha_Fin;
+    public PeriodoLectivoMD setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+        return this;
     }
 
     public CarreraMD getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(CarreraMD carrera) {
+    public PeriodoLectivoMD setCarrera(CarreraMD carrera) {
         this.carrera = carrera;
+        return this;
     }
 
-    public boolean isEstado_PerLectivo() {
-        return estado_PerLectivo;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setEstado_PerLectivo(boolean estado_PerLectivo) {
-        this.estado_PerLectivo = estado_PerLectivo;
+    public PeriodoLectivoMD setEstado(boolean estado) {
+        this.estado = estado;
+        return this;
     }
-    
-    
+
     public int getNumSemanas() {
         return NumSemanas;
     }
 
-    public void setNumSemanas(int NumSemanas) {
+    public PeriodoLectivoMD setNumSemanas(int NumSemanas) {
         this.NumSemanas = NumSemanas;
+        return this;
     }
 
     public int getNumDias() {
         return NumDias;
     }
 
-    public void setNumDias(int NumDias) {
+    public PeriodoLectivoMD setNumDias(int NumDias) {
         this.NumDias = NumDias;
+        return this;
     }
 
-    @Override
-    public String toString() {
-        return "PeriodoLectivoMD{" + "id_PerioLectivo=" + id_PerioLectivo + ", nombre_PerLectivo=" + nombre_PerLectivo + ", observacion_PerLectivo=" + observacion_PerLectivo + ", activo_PerLectivo=" + activo_PerLectivo + ", estado_PerLectivo=" + estado_PerLectivo + ", fecha_Inicio=" + fecha_Inicio + ", fecha_Fin=" + fecha_Fin + ", carrera=" + carrera + '}';
-    }
-
-    public PeriodoLectivoMD get() {
+    public PeriodoLectivoMD periodoBuilder(Consumer<PeriodoLectivoMD> builder) {
+        builder.accept(this);
         return this;
     }
 

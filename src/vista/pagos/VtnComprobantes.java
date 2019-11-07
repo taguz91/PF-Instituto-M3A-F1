@@ -92,11 +92,11 @@ public class VtnComprobantes extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "ID", "Alumno", "Periodo Lectivo", "Codigo", "Fecha Pago"
+                "ID", "Alumno", "Periodo Lectivo", "Codigo", "Monto Total", "Fecha Pago"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -109,9 +109,12 @@ public class VtnComprobantes extends javax.swing.JInternalFrame {
             tbl.getColumnModel().getColumn(0).setMinWidth(0);
             tbl.getColumnModel().getColumn(0).setPreferredWidth(0);
             tbl.getColumnModel().getColumn(0).setMaxWidth(0);
-            tbl.getColumnModel().getColumn(4).setMinWidth(100);
-            tbl.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tbl.getColumnModel().getColumn(4).setMaxWidth(100);
+            tbl.getColumnModel().getColumn(4).setMinWidth(80);
+            tbl.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(4).setMaxWidth(80);
+            tbl.getColumnModel().getColumn(5).setMinWidth(100);
+            tbl.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tbl.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtros"));

@@ -389,7 +389,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
-            nmPrd.add(p.getNombre_PerLectivo());
+            nmPrd.add(p.getNombre());
         });
         Object np = JOptionPane.showInputDialog(null,
                 "Lista de periodos lectivos", "Periodos lectivos",
@@ -490,7 +490,7 @@ public class VtnDocenteCTR extends DVtnCTR {
             ArrayList<String> nmPrd = new ArrayList();
             nmPrd.add("Seleccione");
             periodos.forEach(p -> {
-                nmPrd.add(p.getNombre_PerLectivo());
+                nmPrd.add(p.getNombre());
             });
             Object np = JOptionPane.showInputDialog(null,
                     "Lista de periodos lectivos", "Periodos lectivos",
@@ -504,9 +504,9 @@ public class VtnDocenteCTR extends DVtnCTR {
 
                 System.out.println("Este es el periodo: " + np.toString());
                 int posPrd = nmPrd.indexOf(np);
-                System.out.println("La posicion es: " + posPrd + " El nombre es: " + periodos.get(posPrd - 1).getNombre_PerLectivo());
+                System.out.println("La posicion es: " + posPrd + " El nombre es: " + periodos.get(posPrd - 1).getNombre());
 
-                selecionarRol(periodos.get(posPrd - 1).getId_PerioLectivo());
+                selecionarRol(periodos.get(posPrd - 1).getId());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");
@@ -553,7 +553,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
-            nmPrd.add(p.getNombre_PerLectivo());
+            nmPrd.add(p.getNombre());
         });
         Object np = JOptionPane.showInputDialog(null,
                 "Lista de periodos lectivos", "Periodos lectivos",
@@ -591,7 +591,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
-            nmPrd.add(p.getNombre_PerLectivo());
+            nmPrd.add(p.getNombre());
         });
         Object np = JOptionPane.showInputDialog(null,
                 "Lista de periodos lectivos", "Periodos lectivos",

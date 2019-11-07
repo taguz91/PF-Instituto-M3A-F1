@@ -84,14 +84,14 @@ public abstract class AbstractVtn {
         vista.getLblCarrera().setText("");
         
         listaPeriodos = peridoBD.selectPeriodoWhere(getIdDocente());
-        listaPeriodos.stream().map(c -> c.getNombre_PerLectivo()).forEach(vista.getCmbPeriodoLectivo()::addItem);
+        listaPeriodos.stream().map(c -> c.getNombre()).forEach(vista.getCmbPeriodoLectivo()::addItem);
         tablaTrad.setRowCount(0);
         tablaDuales.setRowCount(0);
     }
     
     protected void setLblCarrera() {
         vista.getLblCarrera()
-                .setText(listaPeriodos.stream().filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
+                .setText(listaPeriodos.stream().filter(item -> item.getId() == getIdPeriodoLectivo())
                         .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
         
     }
@@ -117,7 +117,7 @@ public abstract class AbstractVtn {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setId_PerioLectivo(getIdPeriodoLectivo());
+            periodo.setPeriodo(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
             
@@ -147,8 +147,8 @@ public abstract class AbstractVtn {
     protected int getIdPeriodoLectivo() {
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
-            return listaPeriodos.stream().filter(item -> item.getNombre_PerLectivo().equals(periodo))
-                    .map(c -> c.getId_PerioLectivo()).findAny().orElse(-1);
+            return listaPeriodos.stream().filter(item -> item.getNombre().equals(periodo))
+                    .map(c -> c.getId()).findAny().orElse(-1);
         } catch (NullPointerException e) {
         }
         return -1;
@@ -165,8 +165,8 @@ public abstract class AbstractVtn {
     
     protected boolean getEstado() {
         return listaPeriodos.stream()
-                .filter(item -> item.getNombre_PerLectivo().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
-                .map(c -> c.isEstado_PerLectivo())
+                .filter(item -> item.getNombre().equals(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
+                .map(c -> c.isEstado())
                 .findFirst()
                 .orElse(false);
     }

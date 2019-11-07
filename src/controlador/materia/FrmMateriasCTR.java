@@ -26,7 +26,6 @@ import modelo.materia.EjeFormacionBD;
 import modelo.materia.MateriaMD;
 import modelo.validaciones.TxtVNumeros_2;
 import vista.materia.FrmMaterias;
-import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -36,7 +35,7 @@ public class FrmMateriasCTR extends DCTR {
 
     private final FrmMaterias frmMaterias;
     private final MateriaBD materiaBD;
-    private boolean guardar = false, siguiente = false, anterior = false;
+    private boolean guardar = false;
     private int acceso = 0;
     private boolean editar = false;
     private String nombre_Materia;
@@ -74,10 +73,16 @@ public class FrmMateriasCTR extends DCTR {
                 List<EjeFormacionMD> ejes = materiaBD.cargarEjes(materiaBD.filtrarIdCarrera(nombre, 0).getId());
                 frmMaterias.getCbEjeFormacion().removeAllItems();
                 frmMaterias.getCbEjeFormacion().addItem("SELECCIONE");
+
+                frmMaterias.getCbx_OrgCurricular().removeAllItems();
+                frmMaterias.getCbx_OrgCurricular().addItem("SELECCIONE");
+
                 if (nombre.equals("SELECCIONE") == false) {
                     frmMaterias.getCbEjeFormacion().setEnabled(true);
                     for (int i = 0; i < ejes.size(); i++) {
                         frmMaterias.getCbEjeFormacion().addItem(ejes.get(i).getNombre());
+
+                        frmMaterias.getCbx_OrgCurricular().addItem(ejes.get(i).getNombre());
                     }
                     habilitarGuardar();
                 }
@@ -149,6 +154,7 @@ public class FrmMateriasCTR extends DCTR {
         iniciarCarreras();
 
     }
+
     public void iniciarCarreras() {
         List<CarreraMD> carreras = materiaBD.cargarCarreras();
         for (int i = 0; i < carreras.size(); i++) {
@@ -177,16 +183,16 @@ public class FrmMateriasCTR extends DCTR {
         objetivoGeneral = frmMaterias.getTxtObjetivoGeneral().getText();
         objetivoEspecifico = frmMaterias.getTxtObjetivoEspecifico().getText();
         descripcionMateria = frmMaterias.getTxtDescripcionMateria().getText();
-        organizacionCurri = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
-        campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
+//        organizacionCurri = frmMaterias.getCbx_OrgCurricular().getSelectedItem().toString();
+//        campoFormacion = frmMaterias.getCbx_CamFormacion().getSelectedItem().toString();
         if (Carrera.equals("SELECCIONE") == false && Eje.equals("SELECCIONE") == false
                 && materiaCodigo.equals("") == false && materiaNombre.equals("") == false
                 && materiaCiclo.equals("SELECCIONE") == false && tipoAcreditacion.equals("SELECCIONE") == false
                 && creditos.equals("") == false && horasDocencia.equals("") == false && horasPracticas.equals("") == false
                 && horasPresenciales.equals("") == false && horasAutoEstudio.equals("") == false
                 && totalHoras.equals("") == false && objetivoGeneral.equals("") == false && objetivoEspecifico.equals("") == false
-                && descripcionMateria.equals("") == false && organizacionCurri.equals("SELECCIONE") == false
-                && campoFormacion.equals("SELECCIONE") == false) {
+                && descripcionMateria.equals("") == false /*&& organizacionCurri.equals("SELECCIONE") == false
+                && campoFormacion.equals("SELECCIONE") == false*/) {
             if (frmMaterias.getLblErrorCarrera().isVisible() == false && frmMaterias.getLblErrorEjeFormacion().isVisible() == false
                     && frmMaterias.getLblErrorCodigoMateria().isVisible() == false && frmMaterias.getLblErrorNombreMateria().isVisible() == false
                     && frmMaterias.getLblErrorTipoAcreditacion().isVisible() == false && frmMaterias.getLblErrorMateriaCiclo().isVisible() == false
@@ -205,7 +211,7 @@ public class FrmMateriasCTR extends DCTR {
     }
 
     public void iniciarComponentes() {
-        
+
         frmMaterias.getCbCarrera().setToolTipText("Seleccione un Carrera");
         frmMaterias.getCbEjeFormacion().setToolTipText("Seleccione un Eje de Formación");
         frmMaterias.getTxt_CodMateria().setToolTipText("Escriba el Código perteneciente a la Materia, este Código debe ser único");
@@ -222,7 +228,7 @@ public class FrmMateriasCTR extends DCTR {
         frmMaterias.getCbx_OrgCurricular().setToolTipText("Seleccione la Unidad de Organización Curricular de la materia");
         frmMaterias.getTxtDescripcionMateria().setToolTipText("Escriba la Descripción de la materia");
         frmMaterias.getCbTipoAcreditacion().setToolTipText("Seleccione la Organización Curricular de la materia");
-        
+
         frmMaterias.getLblErrorCarrera().setVisible(false);
         frmMaterias.getLblErrorEjeFormacion().setVisible(false);
         frmMaterias.getLblErrorCodigoMateria().setVisible(false);
@@ -249,7 +255,7 @@ public class FrmMateriasCTR extends DCTR {
         frmMaterias.getTxtObjetivoEspecifico().setLineWrap(true);
         frmMaterias.getTxtObjetivoEspecifico().setWrapStyleWord(true);
         frmMaterias.getTxtDescripcionMateria().setLineWrap(true);
-        frmMaterias.getTxtDescripcionMateria().setWrapStyleWord(true); 
+        frmMaterias.getTxtDescripcionMateria().setWrapStyleWord(true);
     }
 
     public void borrarCampos() {
