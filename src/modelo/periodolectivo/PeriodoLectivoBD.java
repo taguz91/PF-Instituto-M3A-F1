@@ -41,7 +41,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
                 + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
-                + " VALUES( " + c.getId() + ", '" + p.getNombre().toUpperCase() + "   " + Meses(p.getFechaInicio()) + "   " + Meses(p.getFechaFin()) + "', '" + p.getFechaInicio()
+                + " VALUES( " + c.getId() + ", '" + p.getNombre().toUpperCase() + " " + Meses(p.getFechaInicio()) + "   " + Meses(p.getFechaFin()) + "', '" + p.getFechaInicio()
                 + "', '" + p.getFechaFin() + "', '" + p.getObservacion().toUpperCase() + "', true, true);";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
@@ -49,7 +49,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '" + p.getNombre() + "',"
+                + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '"
+                + p.getNombre() + " "
+                + Meses(p.getFechaInicio())
+                + "  "
+                + Meses(p.getFechaFin()) + "',"
                 + " prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', prd_lectivo_fecha_fin = '" + p.getFechaFin()
                 + "', prd_lectivo_observacion = '" + p.getObservacion()
                 + "' WHERE id_prd_lectivo = " + p.getId() + ";";

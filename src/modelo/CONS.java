@@ -42,9 +42,10 @@ public class CONS {
     /*
         Base de datos
      */
+    public static final String BD_NAME = "BDinsta";
+    //public static final String BD_NAME = "BDnotas";
     public static String BD_PASS = "APP_DESK_ISTA_$2019";
-    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDinsta";
-    //public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/BDnotas";
+    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/"+BD_NAME;
     public static final String DB_IP = "35.192.7.211:5432";
 
     public static String getBDUser() {

@@ -4,7 +4,6 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import controlador.principal.DCTR;
 import java.awt.Font;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,10 +21,7 @@ import javax.swing.JOptionPane;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.tipoDeNota.TipoDeNotaBD;
-import modelo.usuario.RolBD;
 import modelo.validaciones.CmbValidar;
-import vista.tipoDeNotas.VtnTipoNotas;
 import vista.prdlectivo.FrmPrdLectivo;
 
 /**
@@ -235,13 +231,9 @@ public class FrmPrdLectivoCTR extends DCTR {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
-                    VtnTipoNotas vista = new VtnTipoNotas();
-//                    TipoDeNotaMD m = new TipoDeNotaMD();
-                    TipoDeNotaBD modelo = new TipoDeNotaBD();
-                    RolBD permisos = new RolBD();
+                    
                     VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(ctrPrin.getVtnPrin());
                     controlador.Init();
-//                    reiniciarComponentes(frmPrdLectivo);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }
@@ -255,7 +247,6 @@ public class FrmPrdLectivoCTR extends DCTR {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
-//                    reiniciarComponentes(frmPrdLectivo);
                     editar = false;
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -270,8 +261,7 @@ public class FrmPrdLectivoCTR extends DCTR {
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
 
-        periodo.setNombre(frmPrdLectivo.getTxt_Nombre().getText() + "   " + dia_Inicio + "   "
-                + dia_Fin);
+        periodo.setNombre(frmPrdLectivo.getTxt_Nombre().getText() + " ");
         periodo.setFechaInicio(dia_Inicio);
         periodo.setFechaFin(dia_Fin);
         periodo.setObservacion(frmPrdLectivo.getTxtObservacion().getText());

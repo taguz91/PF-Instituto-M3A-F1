@@ -169,6 +169,13 @@ public class VtnPrincipalCTR {
         //Accion al boton de actualizar 
         vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
+        // Seteamos el usuario y su rol  
+        String userRol = CONS.USUARIO.getUsername() + " | " + CONS.ROL.getNombre();
+        vtnPrin.getLblUsuario().setText(userRol);
+        vtnPrin.getLblUsuario().setToolTipText(userRol);
+        
+        
+
         agregarEstilos();
         //Acciones de las ventanas de consulta
         //Para el estilo 
@@ -248,7 +255,7 @@ public class VtnPrincipalCTR {
         //Esto es para la consola 
         vtnPrin.getBtnConsola().addActionListener(e -> iniciarConsola());
 
-        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados");
+        vtnPrin.getLblIP().setText(CONS.DB_IP + "/Conectados/" + CONS.BD_NAME);
 
         vtnPrin.getMnCtMiPerfil().addActionListener(e -> btnMiperfilActionPerformance(e));
         vtnPrin.getBtn_avance_si().addActionListener(e -> controladorCONFIGURACION_avance_silabo());
