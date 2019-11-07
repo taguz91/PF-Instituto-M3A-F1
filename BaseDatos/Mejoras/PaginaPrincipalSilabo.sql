@@ -69,24 +69,24 @@ m.materia_horas_practicas,
 m.materia_horas_auto_estudio,
 ROUND( CAST(
   CAST(m.materia_horas_docencia AS FLOAT) /
-  CAST(c.carrera_semanas AS FLOAT) AS NUMERIC),
+  CAST($P{num_semanas} AS FLOAT) AS NUMERIC),
 1) AS horas_sem_docen,
 ROUND ( CAST(
   CAST(m.materia_horas_practicas AS FLOAT) /
-  CAST(c.carrera_semanas AS FLOAT)AS NUMERIC),
+  CAST($P{num_semanas} AS FLOAT)AS NUMERIC),
 1)  AS horas_sem_prac,
 current_date,
 ROUND( CAST(
   CAST(m.materia_horas_auto_estudio AS FLOAT) /
-  CAST(c.carrera_semanas AS FLOAT) AS NUMERIC),
+  CAST($P{num_semanas} AS FLOAT) AS NUMERIC),
 1) AS horas_sem_auto,
 m.materia_horas_docencia + m.materia_horas_practicas + m.materia_horas_auto_estudio AS materia_total_horas,
 c.carrera_nombre,
 c.carrera_modalidad,
 ROUND( CAST(
-  CAST( m.materia_horas_practicas AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) +
-  CAST(m.materia_horas_docencia AS FLOAT)/CAST(c.carrera_semanas AS FLOAT) +
-  CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST(c.carrera_semanas AS FLOAT)
+  CAST( m.materia_horas_practicas AS FLOAT)/CAST($P{num_semanas} AS FLOAT) +
+  CAST(m.materia_horas_docencia AS FLOAT)/CAST($P{num_semanas} AS FLOAT) +
+  CAST(m.materia_horas_auto_estudio AS FLOAT)/CAST($P{num_semanas} AS FLOAT)
   AS NUMERIC),
 1) AS horas_semanales
 FROM "Materias" m,"Carreras" c
