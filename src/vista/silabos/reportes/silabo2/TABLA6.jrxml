@@ -312,7 +312,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="429" y="0" width="126" height="135" isPrintWhenDetailOverflows="true" uuid="86a97c76-37b2-456e-805c-eec1d5523ba5"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="429" y="0" width="126" height="135" isPrintWhenDetailOverflows="true" uuid="86a97c76-37b2-456e-805c-eec1d5523ba5"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
