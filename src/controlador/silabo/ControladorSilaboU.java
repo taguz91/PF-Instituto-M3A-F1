@@ -1724,7 +1724,7 @@ public class ControladorSilaboU {
 
             estrategiasAprendizaje = new ArrayList<>();
 
-            evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
+            //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
 
             biblioteca = new ArrayList<>();
 
