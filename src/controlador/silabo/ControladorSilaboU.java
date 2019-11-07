@@ -1720,15 +1720,16 @@ public class ControladorSilaboU {
 
             }
 
-            estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
+            //estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
 
             estrategiasAprendizaje = new ArrayList<>();
 
-            evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
+            //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
 
+            
             biblioteca = new ArrayList<>();
 
-            referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
+            //referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
 
             tiposActividad = TipoActividadBD.consultar(conexion);
 

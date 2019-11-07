@@ -207,11 +207,11 @@ public class ControladorSilaboR {
                 principal.setEnabled(true);
 
                 frmCargando1.dispose();
-                /*
+                
                 crud.dispose();
 
                 principal.getBtnConsultarSilabo().doClick();
-                 */
+                 
             }).start();
 
         }
