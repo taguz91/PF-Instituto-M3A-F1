@@ -1,35 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.silabo;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
 import modelo.silabo.SilaboBD;
-
 import modelo.silabo.SilaboMD;
-import net.sf.jasperreports.engine.JRExporterParameter;
+import modelo.validaciones.Validar;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
@@ -64,32 +53,27 @@ public class ControladorSilaboR {
 
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
 
-        crud.getChbProgramaAnalitico().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                crud.getChbSilabo().setSelected(false);
-            }
-
+        crud.getChbProgramaAnalitico().addActionListener((ActionEvent ae) -> {
+            crud.getChbSilabo().setSelected(false);
+            crud.getChxDualSemanas().setSelected(false);
         });
 
-        crud.getChbSilabo().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                crud.getChbProgramaAnalitico().setSelected(false);
-            }
+        crud.getChbSilabo().addActionListener((ActionEvent ae) -> {
+            crud.getChbProgramaAnalitico().setSelected(false);
+            crud.getChxDualSemanas().setSelected(false);
+        });
 
+        crud.getChxDualSemanas().addActionListener((ActionEvent e) -> {
+            crud.getChbSilabo().setSelected(false);
+            crud.getChbProgramaAnalitico().setSelected(false);
         });
 
     }
 
     public void imprimirSilabo() {
         try {
-
-            System.out.println("Imprimiendo.......");
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
             Map parametro = new HashMap();
-            String par = "47";
 
             parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
             parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
@@ -98,25 +82,16 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Sílabo");
 
-            existeCarpeta();
-
             //EXPORTACION A PDF
-            File f = new File(("pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
-            OutputStream output = new FileOutputStream(f);
-            JasperExportManager.exportReportToPdfStream(jp, output);
-            //byte[] d=JasperExportManager.exportReportToPdf(jp);
-            FileInputStream fis = new FileInputStream(f);
-            SilaboBD.guardarSilabo(conexion, fis, f, silabo);
-            System.out.println("Se guardo pdf");
-
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, "error " + e);
+            File pdf = new File(("pdfs/" + "ST-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            existeCarpeta(pdf, jp);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Error reporte: " + e);
         }
 
     }
 
-    private void existeCarpeta() {
+    private void existeCarpeta(File pdf, JasperPrint jasPDF) {
         File carpeta = new File("pdfs/");
         if (!carpeta.exists()) {
             if (carpeta.mkdir()) {
@@ -124,18 +99,23 @@ public class ControladorSilaboR {
                         + "se guardaran los documentos.");
             }
         }
+
+        try {
+            OutputStream output = new FileOutputStream(pdf);
+            JasperExportManager.exportReportToPdfStream(jasPDF, output);
+            FileInputStream fis = new FileInputStream(pdf);
+            SilaboBD.guardarSilabo(conexion, fis, pdf, silabo);
+        } catch (FileNotFoundException | JRException e) {
+            JOptionPane.showMessageDialog(null, "Error guardar PDF: " + e);
+        }
     }
 
-    public void imprimirProgramaAnalitico() {
+    private void imprimirProgramaAnalitico() {
         try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass()
+                    .getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
 
-            System.out.println("Imprimiendo.......");
-           //JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
-              JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
-
-           Map parametro = new HashMap();
-            String par = "47";
-
+            Map parametro = new HashMap();
             parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
             parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
             JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
@@ -143,51 +123,51 @@ public class ControladorSilaboR {
             pv.setVisible(true);
             pv.setTitle("Silabo Duales");
 
-             existeCarpeta();
-            //EXPORTACION A PDF
-            File f = new File(("../PF-Instituto-M3A-F1/pdfs/" + "SA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
-            OutputStream output = new FileOutputStream(f);
-            JasperExportManager.exportReportToPdfStream(jp, output);
-            //byte[] d=JasperExportManager.exportReportToPdf(jp);
-            FileInputStream fis = new FileInputStream(f);
-            SilaboBD.guardarSilabo(conexion, fis, f, silabo);
-            System.out.println("Se guardo pdf");
-
-        } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, " error " + e);
+            File pdf = new File(("pdfs/" + "SD-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            existeCarpeta(pdf, jp);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
-      public void imprimirProgramaAnalitico1() {
-        try {
 
-            System.out.println("Imprimiendo.......");
-           JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/formato2/primerapag.jasper"));
-              //JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
+    private void imprimirProgramaAnaliticoConSemanas() {
 
-           Map parametro = new HashMap();
-            String par = "47";
+        String semanas = JOptionPane.showInputDialog("Escriba el numero de semanas");;
 
-            parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
-            parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-            JasperViewer pv = new JasperViewer(jp, false);
-            pv.setVisible(true);
-            pv.setTitle("Programa Analítico");
+        if (semanas != null) {
+            int numSemanas = 0;
+            if (Validar.esNumeros(semanas)) {
+                numSemanas = Integer.parseInt(semanas);
+                if (numSemanas >= 6) {
+                    try {
+                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass()
+                                .getResource("/vista/silabos/"
+                                        + "reportes/silabo_duales/"
+                                        + "primera_pag_param_semanas.jasper")
+                        );
 
-            existeCarpeta();
-            //EXPORTACION A PDF
-            File fl = new File(("pdfs/" + "PA-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
-            OutputStream output = new FileOutputStream(fl);
-            JasperExportManager.exportReportToPdfStream(jp, output);
-            //byte[] d=JasperExportManager.exportReportToPdf(jp);
-            FileInputStream fis1 = new FileInputStream(fl);
-            SilaboBD.guardarAnalitico(conexion, fis1, fl, silabo);
-            System.out.println("Se guardo pdf");
+                        Map parametro = new HashMap();
+                        parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
+                        parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
+                        parametro.put("num_semanas", numSemanas);
 
-        } catch (Exception e) {
+                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
+                        JasperViewer pv = new JasperViewer(jp, false);
+                        pv.setVisible(true);
+                        pv.setTitle("Silabos Duales | Semanas");
 
-            JOptionPane.showMessageDialog(null, " error " + e);
+                        File pdf = new File(("pdfs/" + "SD-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+                        existeCarpeta(pdf, jp);
+                    } catch (JRException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe indicar mas de seis semanas de clases por periodo ");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo puede ingresar numeros.");
+            }
         }
     }
 
@@ -204,13 +184,21 @@ public class ControladorSilaboR {
 
                 frmCargando1.setVisible(true);
 
+                boolean select = false;
+
                 if (crud.getChbSilabo().isSelected()) {
                     imprimirSilabo();
+                }
 
-                } else if (crud.getChbProgramaAnalitico().isSelected()) {
+                if (crud.getChbProgramaAnalitico().isSelected()) {
                     imprimirProgramaAnalitico();
+                }
 
-                } else {
+                if (crud.getChxDualSemanas().isSelected()) {
+                    imprimirProgramaAnaliticoConSemanas();
+                }
+
+                if (select) {
                     JOptionPane.showMessageDialog(null, "Debe seleccionar el documento antes de imprimir");
                 }
 
@@ -219,11 +207,11 @@ public class ControladorSilaboR {
                 principal.setEnabled(true);
 
                 frmCargando1.dispose();
-
+                /*
                 crud.dispose();
 
                 principal.getBtnConsultarSilabo().doClick();
-
+                 */
             }).start();
 
         }
