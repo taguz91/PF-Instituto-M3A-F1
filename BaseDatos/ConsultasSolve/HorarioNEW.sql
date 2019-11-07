@@ -36,10 +36,10 @@ NULL AS sa
 FROM "SesionClase" g
 JOIN "Cursos"  c ON g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada = a.id_jornada
-WHERE c.id_materia=70
+WHERE c.id_materia= $P!{id_materia}
 AND c.id_prd_lectivo = (
   SELECT id_prd_lectivo
-  FROM "Silabo" WHERE id_silabo = $P!{id_silabo}
+  FROM "Silabo" WHERE id_silabo = 5133
 )
 UNION
 SELECT  g.hora_inicio_sesion AS hi,
@@ -72,9 +72,9 @@ NULL AS sa
 FROM "SesionClase" g
 JOIN "Cursos"  c on g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada = a.id_jornada
-WHERE c.id_materia =$P!{id_materia}
+WHERE c.id_materia = $P!{id_materia}
 AND c.id_prd_lectivo = (
-  SELECT id_prd_lectivo FROM "Silabo" WHERE id_silabo=$P!{id_silabo}
+  SELECT id_prd_lectivo FROM "Silabo" WHERE id_silabo= $P!{id_silabo}
 )
 UNION
 SELECT  g.hora_inicio_sesion as hi,
@@ -107,10 +107,10 @@ CASE WHEN g.dia_sesion = 3 THEN
 FROM "SesionClase" g
 JOIN "Cursos"  c on g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada=a.id_jornada
-WHERE c.id_materia=70
+WHERE c.id_materia= $P!{id_materia}
 AND c.id_prd_lectivo=(
   SELECT id_prd_lectivo
-  FROM "Silabo" WHERE id_silabo=$P!{id_silabo}
+  FROM "Silabo" WHERE id_silabo= $P!{id_silabo}
 )
 UNION
 SELECT
@@ -144,9 +144,9 @@ NULL AS sa
 FROM "SesionClase" g
 JOIN "Cursos"  c on g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada = a.id_jornada
-WHERE c.id_materia =$P!{id_materia}
+WHERE c.id_materia = $P!{id_materia}
 AND c.id_prd_lectivo = (
-  SELECT id_prd_lectivo FROM "Silabo" WHERE id_silabo=$P!{id_silabo}
+  SELECT id_prd_lectivo FROM "Silabo" WHERE id_silabo= $P!{id_silabo}
 )
 UNION
 SELECT
@@ -180,10 +180,10 @@ NULL AS sa
 FROM "SesionClase" g
 JOIN "Cursos"  c on g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada = a.id_jornada
-WHERE c.id_materia =$P!{id_materia}
+WHERE c.id_materia = $P!{id_materia}
 AND c.id_prd_lectivo = (
   SELECT id_prd_lectivo
-  FROM "Silabo" WHERE id_silabo=$P!{id_silabo}
+  FROM "Silabo" WHERE id_silabo= $P!{id_silabo}
 )
 UNION
 SELECT
@@ -217,10 +217,10 @@ CONCAT(
 FROM "SesionClase" g
 JOIN "Cursos"  c on g.id_curso = c.id_curso
 JOIN "Jornadas" a on c.id_jornada = a.id_jornada
-WHERE c.id_materia =$P!{id_materia}
+WHERE c.id_materia = $P!{id_materia}
 AND c.id_prd_lectivo = (
   SELECT id_prd_lectivo
-  FROM "Silabo" WHERE id_silabo=$P!{id_silabo}
+  FROM "Silabo" WHERE id_silabo= $P!{id_silabo}
 )
 ) AS x
 GROUP BY hora, hi
