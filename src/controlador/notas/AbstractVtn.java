@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
@@ -20,8 +19,6 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
-import modelo.usuario.RolBD;
-import modelo.usuario.UsuarioBD;
 import vista.notas.VtnNotas;
 import vista.principal.VtnPrincipal;
 
