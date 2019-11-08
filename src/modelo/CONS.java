@@ -42,22 +42,22 @@ public class CONS {
     /*
         Base de datos
      */
-    public static final String BD_NAME = "BDinsta";
+    public static final String BD_NAME = "ista";
     //public static final String BD_NAME = "BDnotas";
-    public static String BD_PASS = "APP_DESK_ISTA_$2019";
-    public static String BD_URL = "jdbc:postgresql://35.192.7.211:5432/"+BD_NAME;
-    public static final String DB_IP = "35.192.7.211:5432";
+    public static String BD_PASS = "TDSoftware158";
+    public static String BD_URL = "jdbc:postgresql://34.68.63.254:18587/"+BD_NAME;
+    public static final String DB_IP = "34.68.63.254";
 
     public static String getBDUser() {
         if (ROL != null) {
             if (ROL.getNombre().equalsIgnoreCase("coordinador")) {
-                return ROL.getNombre().toUpperCase();
+                return "tsds";
             } else if (ROL.getNombre().equalsIgnoreCase("docente")) {
-                return ROL.getNombre().toUpperCase();
+                return "tsds";
             }            
         }
 
-        return "APP_ESCRITORIO";
+        return "tsds";
 
     }
 
