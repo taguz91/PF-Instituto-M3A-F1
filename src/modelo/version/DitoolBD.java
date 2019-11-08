@@ -29,8 +29,12 @@ public class DitoolBD {
 
     public PreparedStatement getPs(String nsql) {
         try {
-            PreparedStatement ps = ct.prepareStatement(nsql);
-            return ps;
+            if (ct != null) {
+                PreparedStatement ps = ct.prepareStatement(nsql);
+                return ps;
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             System.out.println("No se pudo preparar el statement. " + e.getMessage());
             return null;
@@ -49,7 +53,9 @@ public class DitoolBD {
 
     public void cerrar(PreparedStatement ps) {
         try {
-            ps.getConnection().close();
+            if (ps != null) {
+                ps.getConnection().close();
+            }
         } catch (SQLException e) {
             System.out.println("No pudimos cerrar la conexion pls try again. " + e.getMessage());
         }

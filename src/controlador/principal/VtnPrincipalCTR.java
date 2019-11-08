@@ -170,11 +170,11 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
         // Seteamos el usuario y su rol  
-        String userRol = CONS.USUARIO.getUsername() + " | " + CONS.ROL.getNombre();
+        String userRol = CONS.USUARIO.getPersona().getPrimerNombre()
+                + " " + CONS.USUARIO.getPersona().getPrimerApellido()
+                + "  |  " + CONS.ROL.getNombre();
         vtnPrin.getLblUsuario().setText(userRol);
         vtnPrin.getLblUsuario().setToolTipText(userRol);
-        
-        
 
         agregarEstilos();
         //Acciones de las ventanas de consulta

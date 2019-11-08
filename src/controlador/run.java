@@ -29,7 +29,7 @@ public class run {
         } else {
             VtnDitool vtnDitool = new VtnDitool();
             vtnDitool.setTitle("Ditool | Version instalada: ");
-            DitoolBD di = new DitoolBD("VERSION", "AZUL");
+                DitoolBD di = new DitoolBD("tsds", "TDSoftware158");
             VersionMD v = di.consultarUltimaVersion();
             if (v != null) {
                 VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool);

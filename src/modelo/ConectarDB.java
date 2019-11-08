@@ -305,4 +305,17 @@ public class ConectarDB {
         }
     }
 
+    public static int getIdGenerado(PreparedStatement ps) {
+        int idGenerado = 0;
+        try {
+            ResultSet res = ps.getGeneratedKeys();
+            if (res.next()) {
+                idGenerado = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener el ultimo ID: " + e.getMessage());
+        }
+        return idGenerado;
+    }
+
 }
