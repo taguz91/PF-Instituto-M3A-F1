@@ -88,7 +88,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasDocencia(rs.getInt(4));
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
-                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.setEstado(rs.getInt(7));
                 tmp.getPeriodo().setPeriodo(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
@@ -127,7 +127,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getPeriodo().setPeriodo(rs.getInt(4));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(5).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(6).toLocalDate());
-                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.setEstado(rs.getInt(7));
                 silabos.add(tmp);
             }
 
@@ -160,7 +160,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasDocencia(rs.getInt(4));
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
-                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.setEstado(rs.getInt(7));
                 tmp.getPeriodo().setPeriodo(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
@@ -198,7 +198,7 @@ public class SilaboBD extends SilaboMD {
                     + "	WHERE id_silabo=?");
 
             st.setInt(1, getMateria().getId());
-            st.setInt(2, getEstadoSilabo());
+            st.setInt(2, getEstado());
             st.setInt(3, getPeriodo().getId());
             st.setInt(4, getID());
             st.executeUpdate();
@@ -404,7 +404,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasDocencia(rs.getInt(4));
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
-                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.setEstado(rs.getInt(7));
                 tmp.getPeriodo().setPeriodo(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
@@ -451,7 +451,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasDocencia(rs.getInt(4));
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
-                tmp.setEstadoSilabo(rs.getInt(7));
+                tmp.setEstado(rs.getInt(7));
                 tmp.getPeriodo().setPeriodo(rs.getInt(8));
                 tmp.getPeriodo().setNombre(rs.getString(9));
 

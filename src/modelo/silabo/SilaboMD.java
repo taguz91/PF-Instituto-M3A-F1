@@ -21,7 +21,7 @@ public class SilaboMD {
 
     private MateriaMD materia;
 
-    private int estadoSilabo;
+    private int estado;
 
     private PeriodoLectivoMD periodo;
 
@@ -55,12 +55,12 @@ public class SilaboMD {
         this.materia = idMateria;
     }
 
-    public int getEstadoSilabo() {
-        return estadoSilabo;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setEstadoSilabo(int estadoSilabo) {
-        this.estadoSilabo = estadoSilabo;
+    public void setEstado(int estadoSilabo) {
+        this.estado = estadoSilabo;
     }
 
     public PeriodoLectivoMD getPeriodo() {
