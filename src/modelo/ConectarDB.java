@@ -56,8 +56,6 @@ public class ConectarDB {
             ctrCt = new ConexionesCTR(ct);
             ctrCt.iniciar("Contructor ConectarBD || Modo Produccion");
 
-            //ct = DriverManager.getConnection(url, user, pass);
-            System.out.println("Nos conectamos. Desde: " + mensaje);
         } catch (ClassNotFoundException e) {
             System.out.println("No pudimos conectarnos DB. " + e.getMessage());
         } catch (SQLException ex) {

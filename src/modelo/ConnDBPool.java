@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,10 +26,19 @@ public class ConnDBPool {
     private PreparedStatement stmt;
     private ResultSet rs;
 
+    private static ConnDBPool CONPOOL;
+
     public ConnDBPool() {
         if (config == null && ds == null) {
-            new ConnDBPool(null);
+            CONPOOL = new ConnDBPool(null);
         }
+    }
+
+    public ConnDBPool single() {
+        if (CONPOOL != null) {
+            return CONPOOL;
+        }
+        return new ConnDBPool(null);
     }
 
     public ConnDBPool(Object param) {
@@ -68,7 +78,6 @@ public class ConnDBPool {
     }
 
     // <editor-fold defaultstate="collapsed" desc="METODOS DE MANEJO DE DATOS"> 
-
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         //this.conn = conn;
         try {
@@ -221,6 +230,41 @@ public class ConnDBPool {
     public void closePool() {
         if (ConnDBPool.ds != null && !ConnDBPool.ds.isClosed()) {
             ConnDBPool.ds.close();
+        }
+    }
+    
+    // Metodos JOHNNY
+    
+    public PreparedStatement getPSPOOL(String sql) {
+        try {
+            return getConnection().prepareStatement(sql);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, 
+                    "Error de conexion con el servidor. \n"
+                    + e.getMessage()
+            );
+            return null;
+        }
+    }
+    
+    public SQLException noSQLPOOL(PreparedStatement ps) {
+        try {
+            ps.executeUpdate(); 
+            return null;
+        } catch (SQLException e) {
+            return e; 
+        } finally {
+            try {
+                ps.getConnection().close();
+                ps.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, 
+                        "Error al cerrar conexion. \n"
+                        + e.getMessage(),
+                        "Error servidor",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
         }
     }
 
