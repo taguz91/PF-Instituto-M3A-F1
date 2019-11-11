@@ -23,7 +23,7 @@ import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 
-import vista.silabos.frmSilabos;
+import vista.silabos.VtnSilabos;
 
 /**
  *
@@ -33,7 +33,7 @@ public class ControladorCRUD {
 
     private final UsuarioBD usuario;
 
-    private frmSilabos crud;
+    private VtnSilabos crud;
 
     private ConexionBD conexion;
 
@@ -56,7 +56,7 @@ public class ControladorCRUD {
 
         conexion.conectar();
 
-        crud = new frmSilabos();
+        crud = new VtnSilabos();
 
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
 

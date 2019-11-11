@@ -42,6 +42,7 @@ import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
+import controlador.silabo.VtnSilabosCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -239,9 +240,9 @@ public class VtnPrincipalCTR {
 
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
-        vtnPrin.getMnCtSilabos().addActionListener(al -> controladorCRUD());
+        vtnPrin.getMnCtSilabos().addActionListener(al -> btnSilabo());
         vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
-        vtnPrin.getBtnConsultarSilabo().addActionListener(al -> controladorCRUD());
+        vtnPrin.getBtnConsultarSilabo().addActionListener(al -> btnSilabo());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
         vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
@@ -634,12 +635,9 @@ public class VtnPrincipalCTR {
         }
     }
 
-    private void controladorCRUD() {
-
-        ControladorCRUD c = new ControladorCRUD(usuario, rolSeleccionado, vtnPrin, conexion);
-
-        c.iniciarControlador();
-
+    private void btnSilabo() {
+        VtnSilabosCTR vtn = new VtnSilabosCTR(this);
+        vtn.Init();
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
