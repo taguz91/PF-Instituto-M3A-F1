@@ -39,7 +39,7 @@ JOIN "Jornadas" a on c.id_jornada = a.id_jornada
 WHERE c.id_materia= $P!{id_materia}
 AND c.id_prd_lectivo = (
   SELECT id_prd_lectivo
-  FROM "Silabo" WHERE id_silabo = 5133
+  FROM "Silabo" WHERE id_silabo = $P!{id_silabo}
 )
 UNION
 SELECT  g.hora_inicio_sesion AS hi,
