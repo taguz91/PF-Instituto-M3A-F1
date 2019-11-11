@@ -305,10 +305,10 @@ public class ControladorSilaboC {
         gestion = new frmGestionSilabo();
 
         bibliografia = new frmReferencias();
-        
+
         gestion.getBtnGuardar().setEnabled(false);
-        
-        cambioSilabo=false;
+
+        cambioSilabo = false;
 
         if (silaboAnterior == null) {
             carrerasDocente = new ArrayList<>();
@@ -448,45 +448,45 @@ public class ControladorSilaboC {
         gestion.getLblGuardarEstrategia().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                
-               int  limite=110;
-               if(gestion.getTxtNuevaEstrategia().getText().length()<=limite){
-                
-                boolean existe = false;
 
-                EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
+                int limite = 110;
+                if (gestion.getTxtNuevaEstrategia().getText().length() <= limite) {
 
-                List<EstrategiasAprendizajeMD> estrategias = EstrategiasAprendizajeBD.consultar(conexion);
+                    boolean existe = false;
 
-                for (EstrategiasAprendizajeMD e : estrategias) {
+                    EstrategiasAprendizajeBD nuevaEstrategia = new EstrategiasAprendizajeBD(conexion, gestion.getTxtNuevaEstrategia().getText());
 
-                    if (e.getDescripcionEstrategia().toUpperCase().trim().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase().trim())) {
-                        existe = true;
-                        JOptionPane.showMessageDialog(null, "La estrategia que intentó ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
+                    List<EstrategiasAprendizajeMD> estrategias = EstrategiasAprendizajeBD.consultar(conexion);
 
-                }
+                    for (EstrategiasAprendizajeMD e : estrategias) {
 
-                if (!existe) {
-                    if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
-                        JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                    } else {
-                        nuevaEstrategia.insertar();
-                        JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+                        if (e.getDescripcionEstrategia().toUpperCase().trim().equals(gestion.getTxtNuevaEstrategia().getText().toUpperCase().trim())) {
+                            existe = true;
+                            JOptionPane.showMessageDialog(null, "La estrategia que intentó ingresar ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
 
                     }
-                }
 
-                gestion.getTxtNuevaEstrategia().setText("");
-                gestion.getTxtNuevaEstrategia().setEnabled(false);
-                gestion.getLblGuardarEstrategia().setEnabled(false);
+                    if (!existe) {
+                        if (gestion.getTxtNuevaEstrategia().getText().isEmpty() || gestion.getTxtNuevaEstrategia().getText().equals("Ingrese la nueva estrategia...")) {
+                            JOptionPane.showMessageDialog(null, "No ha ingresado ninguna estrategia", "Aviso", JOptionPane.WARNING_MESSAGE);
 
-                cargarEstrategias(seleccionarUnidad());
-                
-               }else{
+                        } else {
+                            nuevaEstrategia.insertar();
+                            JOptionPane.showMessageDialog(null, "Nueva estrategia guardada correctamente.");
+
+                        }
+                    }
+
+                    gestion.getTxtNuevaEstrategia().setText("");
+                    gestion.getTxtNuevaEstrategia().setEnabled(false);
+                    gestion.getLblGuardarEstrategia().setEnabled(false);
+
+                    cargarEstrategias(seleccionarUnidad());
+
+                } else {
                     JOptionPane.showMessageDialog(null, "El texto excede el numero máximo de caracteres! Ingrese de nuevo");
-               }
+                }
 
             }
         });
@@ -541,7 +541,8 @@ public class ControladorSilaboC {
                         unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio)) {
+                        if (unidadSeleccionada.getFechaFinUnidad().isAfter(fechaInicio)
+                                || unidadSeleccionada.getFechaFinUnidad().equals(fechaInicio)) {
                             unidadSeleccionada.setFechaInicioUnidad(fechaInicio);
                             actualizarUnidad(unidadSeleccionada);
                         } else {
@@ -568,7 +569,8 @@ public class ControladorSilaboC {
                         unidadSeleccionada.setFechaFinUnidad(fechaFin);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1, ChronoUnit.DAYS))) {
+                        if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1, ChronoUnit.DAYS))
+                                || unidadSeleccionada.getFechaFinUnidad().equals(fechaFin)) {
 
                             unidadSeleccionada.setFechaFinUnidad(fechaFin);
                             actualizarUnidad(unidadSeleccionada);
@@ -1922,15 +1924,12 @@ public class ControladorSilaboC {
             }
 
             //estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboNuevo.getIdSilabo());
-
             estrategiasAprendizaje = new ArrayList<>();
 
             //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboNuevo.getIdSilabo());
-
             biblioteca = new ArrayList<>();
 
             //referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silaboNuevo.getIdSilabo());
-
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             return true;
