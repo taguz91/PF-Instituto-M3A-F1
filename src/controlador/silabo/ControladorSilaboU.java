@@ -772,7 +772,7 @@ public class ControladorSilaboU {
             }
 
         });
-        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
+        //gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
 
         gestion.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
 
