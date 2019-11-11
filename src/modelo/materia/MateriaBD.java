@@ -766,8 +766,8 @@ public class MateriaBD extends MateriaMD {
                 + "AND m.id_carrera = ( "
                 + " SELECT id_carrera FROM public.\"Materias\" "
                 + " WHERE id_materia = " + idMateria
-                + ") AND materia_ciclo = ("
-                + " SELECT materia_ciclo - 1 FROM public.\"Materias\" "
+                + ") AND materia_ciclo < ("
+                + " SELECT materia_ciclo FROM public.\"Materias\" "
                 + " WHERE id_materia = " + idMateria
                 + ")"
                 + "AND materia_activa = true;";
