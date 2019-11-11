@@ -1,5 +1,6 @@
 package controlador.silabo;
 
+import modelo.ConexionBD;
 import modelo.silabo.SilaboMD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmGestionSilabo;
@@ -10,8 +11,20 @@ import vista.silabos.frmGestionSilabo;
  */
 public abstract class AbstractSilaboCTR {
 
-    private SilaboMD modelo;
-    private frmGestionSilabo vista;
-    private VtnPrincipal vtnPrincipal;
+    protected SilaboMD modelo;
+    protected frmGestionSilabo vista;
+    protected VtnPrincipal vtnPrincipal;
+    protected ConexionBD conexion;
+
+    public AbstractSilaboCTR(SilaboMD modelo, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+        if (modelo != null) {
+            this.modelo = modelo;
+        } else {
+            this.modelo = modelo;
+        }
+        this.vista = new frmGestionSilabo();
+        this.vtnPrincipal = vtnPrincipal;
+        this.conexion = conexion;
+    }
 
 }
