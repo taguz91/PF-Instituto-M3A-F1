@@ -298,5 +298,12 @@ public class ConnDBPool {
         }
         return id;
     }
+    
+    public void cerrarCONPS(PreparedStatement ps) {
+        try {
+            ps.getConnection().close();
+        } catch (Exception e) {
+        }
+    }
 
 }

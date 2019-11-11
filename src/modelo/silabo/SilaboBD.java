@@ -348,7 +348,7 @@ public class SilaboBD extends SilaboMD {
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
             st.setString(3, clave[2]);
-            System.out.println(st);
+            
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
