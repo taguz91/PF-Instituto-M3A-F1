@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.silabo;
 
 import com.placeholder.PlaceHolder;
@@ -30,15 +25,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConexionBD;
-import modelo.carrera.CarreraMD;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeBD;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboBD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
-import modelo.materia.MateriaMD;
-import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.referencias.ReferenciasBD;
 import modelo.referencias.ReferenciasMD;
 
@@ -70,17 +62,9 @@ public class ControladorSilaboU {
 
     private frmReferencias bibliografia;
 
-    private List<CarreraMD> carrerasDocente;
-
-    private List<PeriodoLectivoMD> periodosCarrera;
-
-    private List<MateriaMD> materiasDocente;
-
     private List<UnidadSilaboMD> unidadesSilabo;
 
     private List<EstrategiasUnidadMD> estrategiasSilabo;
-
-    private List<EstrategiasAprendizajeMD> estrategiasAprendizaje;
 
     private List<EvaluacionSilaboMD> evaluacionesSilabo;
 
@@ -101,13 +85,10 @@ public class ControladorSilaboU {
 
     private boolean retroceso = false;
 
-    private static SilaboMD silabo_;
-
     public ControladorSilaboU(SilaboMD silabo, VtnPrincipal principal, ConexionBD conexion) {
         this.silabo = silabo;
         this.principal = principal;
         this.conexion = conexion;
-        silabo_ = silabo;
     }
 
     public void iniciarControlador() {
@@ -137,8 +118,6 @@ public class ControladorSilaboU {
 
         estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
 
-        estrategiasAprendizaje = new ArrayList<>();
-
         evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
 
         biblioteca = new ArrayList<>();
@@ -156,15 +135,7 @@ public class ControladorSilaboU {
 
         gestion.getBtnGuardar().setEnabled(false);
 
-        gestion.getCmbUnidad().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-
-                mostrarUnidad();
-
-            }
-
-        });
+        gestion.getCmbUnidad().addActionListener(e -> mostrarUnidad());
 
         gestion.getTxtTitulo().addKeyListener(new KeyAdapter() {
             @Override
@@ -801,18 +772,6 @@ public class ControladorSilaboU {
             }
 
         });
-
-//        gestion.getTxtBuscarEstrategia().addKeyListener(new KeyAdapter(){
-//            @Override
-//            public void keyReleased(KeyEvent ke) {
-//            
-//                if (ke.getKeyCode()==KeyEvent.VK_ENTER){
-//                    buscarEstrategias(seleccionarUnidad());
-//                }
-//                
-//            }
-//            
-//        });
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
 
         gestion.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
@@ -820,34 +779,6 @@ public class ControladorSilaboU {
         mostrarUnidad();
     }
 
-//    public void buscarEstrategias(UnidadSilaboMD unidadSeleccionada) {
-//
-//        DefaultListModel modeloEstrategias = new DefaultListModel();
-//
-//        gestion.getLstEstrategiasPredeterminadas().setCellRenderer(new CheckListRenderer());
-//        gestion.getLstEstrategiasPredeterminadas().setModel(modeloEstrategias);
-//        
-//        
-//        
-//        
-//        EstrategiasAprendizajeBD.consultar2(conexion, gestion.getTxtBuscarEstrategia().getText()).forEach((emd) -> {
-//            modeloEstrategias.addElement(new CheckListItem(emd.getDescripcionEstrategia()));
-//        });
-//
-//        for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-//            CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
-//
-//            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
-//
-//                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
-//                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
-//
-//                    item.setSelected(true);
-//
-//                }
-//            }
-//        }
-//    }
     private boolean accion = true;
     private boolean accion2 = true;
     private boolean accion3 = true;
@@ -861,7 +792,6 @@ public class ControladorSilaboU {
                 gestion.getBtnSiguiente().setEnabled(false);
                 gestion.getBtnCancelar().setEnabled(false);
                 principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
-                //guardarArchivos();
                 System.out.println("============" + silabo.getIdSilabo());
                 new SilaboBD(conexion).eliminar(silabo);
 
@@ -898,7 +828,6 @@ public class ControladorSilaboU {
                     bibliografia.getBtnFinalizar().setEnabled(false);
                     bibliografia.getBtnCancelar().setEnabled(false);
                     principal.getLblEstado().setText("Guardando silabo... Espere por favor");
-                    // guardarArchivos();
 
                     new SilaboBD(conexion).eliminar(silabo);
 
@@ -944,7 +873,6 @@ public class ControladorSilaboU {
                         } catch (InterruptedException ex) {
                             Logger.getLogger(ControladorSilaboC.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        //guardarArchivos();
 
                         new SilaboBD(conexion).eliminar(silabo);
 
@@ -1105,10 +1033,6 @@ public class ControladorSilaboU {
 
     public void mostrarUnidad() {
 
-        /*for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
-              CheckListItem item2 = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
-              item2.setSelected(false);
-        }*/
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
         gestion.getTxtTitulo().setText(unidadSeleccionada.getTituloUnidad());
@@ -1208,15 +1132,8 @@ public class ControladorSilaboU {
             }
         }
 
-        /* unidadesSilabo.stream().filter((umd) -> (umd.getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad())).map((umd) -> {
-            umd.setNumeroUnidad(umd.getNumeroUnidad() - 1);
-            return umd;
-        }).forEachOrdered((umd) -> {
-            gestion.getCmbUnidad().removeItemAt(umd.getNumeroUnidad() - 1);
-        });*/
         for (UnidadSilaboMD umd : unidadesSilabo) {
             if (umd.getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
-                //gestion.getCmbUnidad().removeItemAt(umd.getNumeroUnidad());
                 umd.setNumeroUnidad(umd.getNumeroUnidad() - 1);
 
             }
@@ -1354,20 +1271,6 @@ public class ControladorSilaboU {
                 break;
         }
 
-        /*for (int i = 0; i < evaluaciones.size(); i++) {
-
-            if (evaluaciones.get(i).getIdUnidad().getIdUnidad() == gestion.getCmbUnidad().getSelectedIndex() && evaluaciones.get(i).getIdTipoActividad().getIdTipoActividad() == p) {
-
-                modeloTabla.addRow(new Object[]{
-                    evaluaciones.get(i).getIndicador(),
-                    evaluaciones.get(i).getInstrumento(),
-                    evaluaciones.get(i).getValoracion(),
-                    evaluaciones.get(i).getFechaEnvio(),
-                    evaluaciones.get(i).getFechaPresentacion()
-                });
-            }
-
-        }*/
         for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
 
             if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
@@ -1441,10 +1344,6 @@ public class ControladorSilaboU {
             biblioteca = ReferenciasBD.consultarVirtual(conexion, bibliografia.getTxtBuscar().getText());
         }
 
-//        for (int j = bibliografia.getTblBiblioteca().getModel().getRowCount() - 1; j >= 0; j--) {
-//
-//            modeloTabla.removeRow(j);
-//        }
         modeloTabla.setRowCount(0);
 
         for (ReferenciasMD rmd : biblioteca) {
@@ -1467,7 +1366,6 @@ public class ControladorSilaboU {
         ReferenciasMD referenciaSeleccionada = seleccionarReferencia();
 
         boolean nuevo = true;
-        boolean nuevo2 = true;
 
         int i = 0;
 
@@ -1621,48 +1519,28 @@ public class ControladorSilaboU {
 
         silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId(), silabo.getIdPeriodoLectivo().getId()).getIdSilabo());
 
-
-        /*List<UnidadSilaboMD> unidadesSilaboBD = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo());
-        
-
-        List<EstrategiasUnidadMD> estrategiasSilaboBD = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
-
-    
-
-        List<EvaluacionSilaboMD> evaluacionesSilaboBD = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
-
-       
-
-        List<ReferenciaSilaboMD> referenciasSilaboBD = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
-
-         */
         for (UnidadSilaboMD umd : unidadesSilabo) {
 
             umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd, umd.getIdSilabo().getIdSilabo());
 
-            //Integer aux = umd.getIdSilabo().getIdSilabo();
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
-                //if (aux.equals(silabo.getIdSilabo())) {
                 if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
                     ebd.insertar(emd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
                 }
-                //}
 
             }
 
             for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
 
-                //if (aux.equals(silabo.getIdSilabo())) {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENRTRAMOS " + umd.getNumeroUnidad());
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                     esd.insertar(evd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
                 }
-                //}
 
             }
         }
@@ -1676,12 +1554,6 @@ public class ControladorSilaboU {
 
         for (int i = 0; i < referenciasSilabo.size() - 2; i++) {
             ReferenciaSilaboBD rbd = new ReferenciaSilaboBD(conexion);
-            //System.out.println("============>"+referenciasSilabo.get(i).getIdReferencia().getDescripcionReferencia());
-            /*if (referenciasSilabo.get(i).getIdReferencia().isExisteEnBiblioteca()==false) {
-                
-                ReferenciasBD r = new ReferenciasBD(conexion);
-                r.insertar(referenciasSilabo.get(i).getIdReferencia(), 1);
-            }*/
 
             rbd.insertar(referenciasSilabo.get(i), is, 0);
 
@@ -1704,7 +1576,6 @@ public class ControladorSilaboU {
         try {
             new SilaboBD(conexion).insertar(silabo);
 
-            //silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId()).getIdSilabo());
             int is = insertarUnidades();
 
             insertarReferencias(is);
@@ -1717,13 +1588,8 @@ public class ControladorSilaboU {
 
             }
 
-            //estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
-            estrategiasAprendizaje = new ArrayList<>();
-
-            //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
             biblioteca = new ArrayList<>();
 
-            //referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
             tiposActividad = TipoActividadBD.consultar(conexion);
 
             return true;
@@ -1822,63 +1688,4 @@ public class ControladorSilaboU {
 
     }
 
-//    public void guardarArchivos() {
-//        try {
-//            
-//            ObjectOutputStream archivoSilabo = new ObjectOutputStream(new FileOutputStream("silabo.txt"));
-//            archivoSilabo.writeObject(silabo);
-//            archivoSilabo.close();
-//
-//            ObjectInputStream archivoSilaboR = new ObjectInputStream(new FileInputStream("biblioteca.txt"));
-//            silabo = (SilaboBD) archivoSilaboR.readObject();
-//            archivoSilaboR.close();
-//            
-//            
-//            ObjectOutputStream archivoUnidades = new ObjectOutputStream(new FileOutputStream("unidades.txt"));
-//            archivoUnidades.writeObject(unidadesSilabo);
-//            archivoUnidades.close();
-//
-//            ObjectInputStream archivoUnidadesR = new ObjectInputStream(new FileInputStream("unidades.txt"));
-//            unidadesSilabo = (List<UnidadSilaboMD>) archivoUnidadesR.readObject();
-//            archivoUnidadesR.close();
-//
-//            ObjectOutputStream archivoEstrategias = new ObjectOutputStream(new FileOutputStream("estrategias.txt"));
-//            archivoEstrategias.writeObject(estrategiasSilabo);
-//            archivoEstrategias.close();
-//
-//            ObjectInputStream archivoEstrategiasR = new ObjectInputStream(new FileInputStream("estrategias.txt"));
-//            estrategiasSilabo = (List<EstrategiasUnidadMD>) archivoEstrategiasR.readObject();
-//            archivoEstrategiasR.close();
-//
-//            ObjectOutputStream archivoEvaluaciones = new ObjectOutputStream(new FileOutputStream("evaluaciones.txt"));
-//            archivoEstrategias.writeObject(unidadesSilabo);
-//            archivoEvaluaciones.close();
-//
-//            ObjectInputStream archivoEvaluacionesR = new ObjectInputStream(new FileInputStream("evaluaciones.txt"));
-//            evaluacionesSilabo = (List<EvaluacionSilaboMD>) archivoEvaluacionesR.readObject();
-//            archivoEvaluacionesR.close();
-//            
-//            ObjectOutputStream archivoBiblioteca = new ObjectOutputStream(new FileOutputStream("biblioteca.txt"));
-//            archivoBiblioteca.writeObject(biblioteca);
-//            archivoBiblioteca.close();
-//
-//            ObjectInputStream archivoBibliotecaR = new ObjectInputStream(new FileInputStream("biblioteca.txt"));
-//            biblioteca = (List<ReferenciasMD>) archivoBibliotecaR.readObject();
-//            archivoBibliotecaR.close();
-//
-//            ObjectOutputStream archivoReferencias = new ObjectOutputStream(new FileOutputStream("referencias.txt"));
-//            archivoReferencias.writeObject(referenciasSilabo);
-//            archivoEvaluaciones.close();
-//
-//            ObjectInputStream archivoReferenciasR = new ObjectInputStream(new FileInputStream("referencias.txt"));
-//            referenciasSilabo = (List<ReferenciaSilaboMD>) archivoReferenciasR.readObject();
-//            archivoReferenciasR.close();
-//            
-//            
-//
-//        } catch (IOException | ClassNotFoundException e) {
-//            System.out.println("****************************"+e.getMessage());
-//        }
-//
-//    }
 }
