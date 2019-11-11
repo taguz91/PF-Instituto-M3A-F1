@@ -84,20 +84,6 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     private List<MateriaMD> materiasDocente;
 
-    private List<UnidadSilaboMD> unidadesSilabo;
-
-    private List<EstrategiasUnidadMD> estrategiasSilabo;
-
-    private List<EvaluacionSilaboMD> evaluacionesSilabo;
-
-    private List<TipoActividadMD> tiposActividad;
-
-    private List<ReferenciasMD> biblioteca;
-
-    private List<ReferenciaSilaboMD> referenciasSilabo;
-
-    private DefaultListModel modeloBase;
-
     private static Integer idEvaluacionSig = 0;
     private Integer idEvaluacion;
     private boolean retroceso = false;
@@ -110,11 +96,6 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     public void iniciarControlador() {
 
-        if (conexion.getCon() == null) {
-            conexion.conectar();
-        }
-
-        configuracion = new frmConfiguracionSilabo();
 
         vtnPrincipal.getDpnlPrincipal().add(configuracion);
 
@@ -136,12 +117,10 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                     findFirst();
 
             periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carreraSeleccionada.get().getId());
-            //configuracion.getCmbPeriodo().removeAllItems();
 
             configuracion.getCmbAsignatura().removeAllItems();
             System.out.println("-------------------" + periodosCarrera.get(0).getNombre());
             cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId());
-            //cargarComboPeriodos(carreraSeleccionada.get().getId());
 
         });
 
@@ -273,13 +252,11 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
             materiasDocente = new ArrayList<>();
 
-            unidadesSilabo = new ArrayList<>();
+            unidades = new ArrayList<>();
 
-            estrategiasSilabo = new ArrayList<>();
+            estrategias = new ArrayList<>();
 
-            estrategiasAprendizaje = new ArrayList<>();
-
-            evaluacionesSilabo = new ArrayList<>();
+            evaluaciones = new ArrayList<>();
 
             biblioteca = new ArrayList<>();
 
@@ -289,17 +266,15 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
                 UnidadSilaboMD tmp = new UnidadSilaboMD();
                 tmp.setNumeroUnidad(i);
-                unidadesSilabo.add(tmp);
+                unidades.add(tmp);
             }
         } else {
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboAnterior.getID(), 0);
+            unidades = UnidadSilaboBD.consultar(conexion, silaboAnterior.getID(), 0);
 
-            estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboAnterior.getID());
+            estrategias = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboAnterior.getID());
 
-            estrategiasAprendizaje = new ArrayList<>();
-
-            evaluacionesSilabo = new ArrayList<>();
+            evaluaciones = new ArrayList<>();
 
             //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboAnterior.getIdSilabo());
             biblioteca = new ArrayList<>();
@@ -323,7 +298,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - gestion.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - gestion.getSize().height) / 2);
 
-        unidadesSilabo.forEach((umd) -> {
+        unidades.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
 
@@ -456,7 +431,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 gestion.getLstEstrategiasPredeterminadas().repaint(gestion.getLstEstrategiasPredeterminadas().getCellBounds(index, index));
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
-                estrategiasSilabo.removeIf(e -> {
+                estrategias.removeIf(e -> {
                     return e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad();
                 });
 
@@ -471,7 +446,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                                 filter(e -> e.getDescripcionEstrategia().equals(estrategia)).
                                 findFirst();
 
-                        estrategiasSilabo.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
+                        estrategias.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
 
                         cambioSilabo = true;
                         gestion.getBtnGuardar().setEnabled(true);
@@ -713,7 +688,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
                 int acumuladoDocencia = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoDocencia = acumuladoDocencia + umd.getHorasDocenciaUnidad();
                     }
@@ -738,7 +713,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
                 int acumuladoPractica = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoPractica = acumuladoPractica + umd.getHorasPracticaUnidad();
                     }
@@ -763,7 +738,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
                 int acumuladoAutonomo = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoAutonomo = acumuladoAutonomo + umd.getHorasAutonomoUnidad();
                     }
@@ -795,7 +770,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             @Override
             public void mouseClicked(MouseEvent me) {
 
-                if (unidadesSilabo.size() > 1) {
+                if (unidades.size() > 1) {
                     int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta unidad?", "Eliminar", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         eliminarUnidad();
@@ -985,7 +960,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         gestion.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
 
-        cargarEstrategias(unidadesSilabo.get(0));
+        cargarEstrategias(unidades.get(0));
         gestion.getCmbUnidad().setSelectedIndex(0);
     }
     private boolean accion = true;
@@ -1145,10 +1120,10 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         System.out.println("------->entro");
         vtnPrincipal.getDpnlPrincipal().add(bibliografia);
         cargarBiblioteca();
-        bibliografia.setTitle(silabo.getIdMateria().getNombre());
+        bibliografia.setTitle(silabo.getMateria().getNombre());
         bibliografia.show();
-        bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
-                (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
+        bibliografia.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1217,30 +1192,32 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         bibliografia.getBtnAtras().addActionListener(b -> gestion.setVisible(true));
         cargarBiblioteca();
     }
-    
+
     /**
-     * AL seleccionar una unidad 
-     * @return 
+     * AL seleccionar una unidad
+     *
+     * @return
      */
     public UnidadSilaboMD seleccionarUnidad() {
-        Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
+        Optional<UnidadSilaboMD> unidadSeleccionada = unidades.stream().
                 filter(u -> u.getNumeroUnidad() == (gestion.getCmbUnidad().getSelectedIndex() + 1)).
                 findFirst();
         return unidadSeleccionada.get();
     }
-    
+
     /**
-     * Actualizamos el numero de unidad 
-     * @param unidadSeleccionada 
+     * Actualizamos el numero de unidad
+     *
+     * @param unidadSeleccionada
      */
     public void actualizarUnidad(UnidadSilaboMD unidadSeleccionada) {
         unidadSeleccionada.setBandera(true);
-        unidadesSilabo.set(unidadSeleccionada.getNumeroUnidad() - 1, unidadSeleccionada);
+        unidades.set(unidadSeleccionada.getNumeroUnidad() - 1, unidadSeleccionada);
         gestion.getBtnGuardar().setEnabled(true);
     }
-    
+
     /**
-     * Mostramos la unidad 
+     * Mostramos la unidad
      */
     public void mostrarUnidad() {
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
@@ -1279,10 +1256,11 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
     }
-    
+
     /**
-     * Cargamos estrategias de la unidad 
-     * @param unidadSeleccionada 
+     * Cargamos estrategias de la unidad
+     *
+     * @param unidadSeleccionada
      */
     public void cargarEstrategias(UnidadSilaboMD unidadSeleccionada) {
 
@@ -1298,7 +1276,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
             CheckListItem item = (CheckListItem) gestion.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
 
-            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+            for (EstrategiasUnidadMD emd : estrategias) {
 
                 if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
                         && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
@@ -1309,44 +1287,44 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             }
         }
     }
-    
+
     /**
      * Creamos una unidad nueva
      */
     public void agregarUnidad() {
         UnidadSilaboMD nuevaUnidad = new UnidadSilaboMD();
-        nuevaUnidad.setNumeroUnidad(unidadesSilabo.size() + 1);
-        unidadesSilabo.add(nuevaUnidad);
-        gestion.getCmbUnidad().addItem("Unidad " + unidadesSilabo.size());
+        nuevaUnidad.setNumeroUnidad(unidades.size() + 1);
+        unidades.add(nuevaUnidad);
+        gestion.getCmbUnidad().addItem("Unidad " + unidades.size());
         JOptionPane.showMessageDialog(null, "Nueva unidad agregada");
-        gestion.getCmbUnidad().setSelectedIndex(unidadesSilabo.size() - 1);
+        gestion.getCmbUnidad().setSelectedIndex(unidades.size() - 1);
     }
-    
+
     /**
      * Eliminamos una unidad ... eliminamos todo lo correspondiente a la misma.
      */
     public void eliminarUnidad() {
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
-        unidadesSilabo.removeIf(u -> u.getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        unidades.removeIf(u -> u.getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        estrategiasSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        estrategias.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        evaluacionesSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        evaluaciones.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+        for (EstrategiasUnidadMD emd : estrategias) {
             if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 
-        for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
+        for (EvaluacionSilaboMD emd : evaluaciones) {
             if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 
-        for (UnidadSilaboMD umd : unidadesSilabo) {
+        for (UnidadSilaboMD umd : unidades) {
             if (umd.getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 //gestion.getCmbUnidad().removeItemAt(umd.getNumeroUnidad());
                 umd.setNumeroUnidad(umd.getNumeroUnidad() - 1);
@@ -1356,7 +1334,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         List<String> comboNuevo = new ArrayList<>();
 
-        for (int i = 1; i <= unidadesSilabo.size(); i++) {
+        for (int i = 1; i <= unidades.size(); i++) {
             comboNuevo.add("Unidad " + (i));
         }
 
@@ -1365,7 +1343,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         if (unidadSeleccionada.getNumeroUnidad() == 1) {
             gestion.getCmbUnidad().setSelectedIndex(0);
 
-        } else if (unidadSeleccionada.getNumeroUnidad() == unidadesSilabo.size() + 1) {
+        } else if (unidadSeleccionada.getNumeroUnidad() == unidades.size() + 1) {
 
             gestion.getCmbUnidad().setSelectedIndex(unidadSeleccionada.getNumeroUnidad() - 2);
         } else {
@@ -1375,12 +1353,13 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         mostrarTotalGestion();
 
     }
-    
+
     /**
-     * Agregamos una evaluacion dependiendo cual sea 
+     * Agregamos una evaluacion dependiendo cual sea
+     *
      * @param tipo
      * @param unidad
-     * @param p 
+     * @param p
      */
     public void agregarEvaluacion(TipoActividadMD tipo, UnidadSilaboMD unidad, int p) {
         switch (p) {
@@ -1389,7 +1368,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAD().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAD().getText(), gestion.getTxtInstrumentoAD().getText(), (double) (gestion.getSpnValoracionAD().getValue()), gestion.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAsistidaDocente().getModel(), 1);
                     limpiarEvaluacionesAD();
                     cambioSilabo = true;
@@ -1404,7 +1383,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionAC().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorAC().getText(), gestion.getTxtInstrumentoAC().getText(), (double) (gestion.getSpnValoracionAC().getValue()), gestion.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAprendizajeColaborativo().getModel(), 2);
                     limpiarEvaluacionesAC();
                     cambioSilabo = true;
@@ -1419,7 +1398,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionP().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorP().getText(), gestion.getTxtInstrumentoP().getText(), (double) (gestion.getSpnValoracionP().getValue()), gestion.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblPractica().getModel(), 3);
                     limpiarEvaluacionesP();
                     gestion.getBtnGuardar().setEnabled(true);
@@ -1433,7 +1412,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (gestion.getSpnValoracionA().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, gestion.getTxtIndicadorA().getText(), gestion.getTxtInstrumentoA().getText(), (double) (gestion.getSpnValoracionA().getValue()), gestion.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), gestion.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) gestion.getTblAutonoma().getModel(), 4);
                     limpiarEvaluacionesA();
                     cambioSilabo = true;
@@ -1446,31 +1425,33 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         }
         mostrarTotalGestion();
     }
-    
+
     /**
      * Validar limite de evaluacion
+     *
      * @param valor
-     * @return 
+     * @return
      */
     public boolean validarLimiteEvaluaciones(double valor) {
         double total = 0;
-        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        total = evaluaciones.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
         return (total + valor) <= 60.0;
     }
-    
+
     /**
-     * Mostramos el total de la gestion 
+     * Mostramos el total de la gestion
      */
     public void mostrarTotalGestion() {
         double total = 0;
-        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        total = evaluaciones.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
         gestion.getLblAcumuladoGestion().setText(total + "/60");
     }
-    
+
     /**
      * Seleccionamos el tipo de actividad
+     *
      * @param infoE
-     * @return 
+     * @return
      */
     public TipoActividadMD seleccionarTipoActividad(String[] infoE) {
         Optional<TipoActividadMD> tipoSeleccionado = tiposActividad.stream().
@@ -1478,11 +1459,12 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 findFirst();
         return tipoSeleccionado.get();
     }
-    
+
     /**
      * Cargamos las evaluaciones
+     *
      * @param modeloTabla
-     * @param p 
+     * @param p
      */
     public void cargarEvaluaciones(DefaultTableModel modeloTabla, int p) {
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
@@ -1517,7 +1499,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 break;
         }
 
-        for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
+        for (EvaluacionSilaboMD emd : evaluaciones) {
 
             if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
                     && emd.getIdTipoActividad().getIdTipoActividad() == p) {
@@ -1534,9 +1516,9 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         }
 
     }
-    
+
     /**
-     * Limpiamos evaluaciones asisitdas por docente 
+     * Limpiamos evaluaciones asisitdas por docente
      */
     public void limpiarEvaluacionesAD() {
         gestion.getTxtInstrumentoAD().setText(null);
@@ -1545,7 +1527,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.getDchFechaEnvioAD().setDate(null);
         gestion.getDchFechaPresentacionAD().setDate(null);
     }
-    
+
     /**
      * Limpiar evaluaciones aprendizaje colaborativo
      */
@@ -1557,7 +1539,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.getDchFechaPresentacionAC().setDate(null);
         gestion.getDchFechaEnvioAC().setDate(null);
     }
-    
+
     /**
      * Limpiar evaluaciones practicas
      */
@@ -1568,9 +1550,9 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.getDchFechaEnvioP().setDate(null);
         gestion.getDchFechaPresentacionP().setDate(null);
     }
-    
+
     /**
-     * Quitamos evaluaiones autonomas 
+     * Quitamos evaluaiones autonomas
      */
     public void limpiarEvaluacionesA() {
         gestion.getTxtInstrumentoA().setText(null);
@@ -1579,7 +1561,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         gestion.getDchFechaEnvioA().setDate(null);
         gestion.getDchFechaPresentacionA().setDate(null);
     }
-    
+
     /**
      * Cargamos biblioteca
      */
@@ -1608,9 +1590,9 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         bibliografia.getTblBiblioteca().setModel(modeloTabla);
 
     }
-    
+
     /**
-     * Agregamos bibliografias base 
+     * Agregamos bibliografias base
      */
     public void agregarBibliografiaBase() {
 
@@ -1642,38 +1624,39 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 b.add("• " + rsm.getIdReferencia().getDescripcionReferencia());
             }
         });
-        modeloBase = new DefaultListModel<>();
+        tablaM = new DefaultListModel<>();
         b.forEach((s) -> {
-            modeloBase.addElement(s);
+            tablaM.addElement(s);
         });
-        bibliografia.getLstBibliografiaBase().setModel(modeloBase);
+        bibliografia.getLstBibliografiaBase().setModel(tablaM);
     }
-    
+
     /**
-     * Agregamos bibliografia no base 
+     * Agregamos bibliografia no base
      */
     public void agregarBibliografiaNoBase() {
         referenciasSilabo.removeIf(r -> r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
-        ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
-        ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
+        ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silaboNuevo.getID()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
+        ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silaboNuevo.getID()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
         referenciasSilabo.add(new ReferenciaSilaboMD(complementaria, silaboNuevo));
         referenciasSilabo.add(new ReferenciaSilaboMD(linkografia, silaboNuevo));
 
     }
-    
+
     /**
-     * Quitamos biblio base 
+     * Quitamos biblio base
      */
     public void quitarBibliografiaBase() {
         String seleccion = bibliografia.getLstBibliografiaBase().getModel().getElementAt(bibliografia.getLstBibliografiaBase().getSelectedIndex()).substring(2);
         referenciasSilabo.removeIf(p -> p.getIdReferencia().getDescripcionReferencia().equals(seleccion));
 
-        modeloBase.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
+        tablaM.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
     }
-    
+
     /**
-     * Referencias 
-     * @return 
+     * Referencias
+     *
+     * @return
      */
     public ReferenciasMD seleccionarReferencia() {
         int seleccion = bibliografia.getTblBiblioteca().getSelectedRow();
@@ -1683,53 +1666,57 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         return referenciaSeleccionada.get();
     }
-    
+
     /**
-     * Quitar  evaluacion asistida por docente
+     * Quitar evaluacion asistida por docente
+     *
      * @param modeloTabla
-     * @param p 
+     * @param p
      */
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAsistidaDocente().getValueAt(gestion.getTblAsistidaDocente().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
         gestion.getBtnGuardar().setEnabled(true);
     }
-    
+
     /**
      * Quitar evaliacion de aprendizaje colaborativo
+     *
      * @param modeloTabla
-     * @param p 
+     * @param p
      */
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAprendizajeColaborativo().getValueAt(gestion.getTblAprendizajeColaborativo().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
         gestion.getBtnGuardar().setEnabled(true);
     }
-    
+
     /**
      * Remover evaluaciones practicas
+     *
      * @param modeloTabla
-     * @param p 
+     * @param p
      */
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == gestion.getTblPractica().getValueAt(gestion.getTblPractica().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
         gestion.getBtnGuardar().setEnabled(true);
     }
-    
+
     /**
-     * Remover las evaluaciones  autonoma
+     * Remover las evaluaciones autonoma
+     *
      * @param modeloTabla
-     * @param p 
+     * @param p
      */
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == gestion.getTblAutonoma().getValueAt(gestion.getTblAutonoma().getSelectedRow(), 5));
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
         cambioSilabo = true;
@@ -1737,22 +1724,22 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     }
 
     public int insertarUnidades() {
-        silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId(), silaboNuevo.getIdPeriodoLectivo().getId()).getIdSilabo());
+        silaboNuevo.setID(SilaboBD.consultarUltimo(conexion, silaboNuevo.getMateria().getId(), silaboNuevo.getPeriodo().getId()).getID());
 
-        for (UnidadSilaboMD umd : unidadesSilabo) {
-            umd.getIdSilabo().setIdSilabo(silaboNuevo.getIdSilabo());
+        for (UnidadSilaboMD umd : unidades) {
+            umd.getIdSilabo().setID(silaboNuevo.getID());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd, umd.getIdSilabo().getID());
 
-            umd.setIdUnidad(UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
-            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+            umd.setIdUnidad(UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getID(), umd.getNumeroUnidad()).getIdUnidad());
+            for (EstrategiasUnidadMD emd : estrategias) {
                 if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
                     ebd.insertar(emd, umd.getIdUnidad());
                 }
             }
 
-            for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
+            for (EvaluacionSilaboMD evd : evaluaciones) {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
                     esd.insertar(evd, umd.getIdUnidad());
@@ -1762,10 +1749,11 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         return silaboNuevo.getID();
     }
-    
+
     /**
-     * Guardamos las referencias 
-     * @param is 
+     * Guardamos las referencias
+     *
+     * @param is
      */
     public void insertarReferencias(int is) {
 
@@ -1795,21 +1783,18 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     public boolean guardarSilabo() {
         try {
             silaboNuevo.insertar();
-            //silaboNuevo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silaboNuevo.getIdMateria().getId()).getIdSilabo());
+
             int is = insertarUnidades();
             insertarReferencias(is);
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silaboNuevo.getID(), 1);
+            unidades = UnidadSilaboBD.consultar(conexion, silaboNuevo.getID(), 1);
 
-            for (UnidadSilaboMD umd : unidadesSilabo) {
+            for (UnidadSilaboMD umd : unidades) {
                 umd.setBandera(false);
             }
 
-            //estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboNuevo.getIdSilabo());
-            estrategiasAprendizaje = new ArrayList<>();
-            //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboNuevo.getIdSilabo());
             biblioteca = new ArrayList<>();
-            //referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silaboNuevo.getIdSilabo());
+
             tiposActividad = TipoActividadBD.consultar(conexion);
             return true;
         } catch (Exception e) {
@@ -1821,51 +1806,51 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             return false;
         }
     }
-    
-    
+
     /**
      * Valiadamos que los campos esten llenos
-     * @return 
+     *
+     * @return
      */
     public boolean validarCampos() {
         boolean control = true;
         int contador = 0;
         double aprovechamiento = 0.0;
 
-        for (int i = 0; i < unidadesSilabo.size(); i++) {
+        for (int i = 0; i < unidades.size(); i++) {
 
-            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+            if (unidades.get(i).getTituloUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+            if (unidades.get(i).getObjetivoEspecificoUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+            if (unidades.get(i).getResultadosAprendizajeUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+            if (unidades.get(i).getContenidosUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getFechaInicioUnidad() == null) {
+            if (unidades.get(i).getFechaInicioUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getFechaFinUnidad() == null) {
+            if (unidades.get(i).getFechaFinUnidad() == null) {
                 control = false;
             }
 
-            for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                if (estrategiasSilabo.get(j).getIdUnidad().getNumeroUnidad() == (unidadesSilabo.get(i).getNumeroUnidad())) {
+            for (int j = 0; j < estrategias.size(); j++) {
+                if (estrategias.get(j).getIdUnidad().getNumeroUnidad() == (unidades.get(i).getNumeroUnidad())) {
                     contador++;
                 }
             }
 
-            for (int k = 0; k < evaluacionesSilabo.size(); k++) {
-                aprovechamiento = aprovechamiento + evaluacionesSilabo.get(k).getValoracion();
+            for (int k = 0; k < evaluaciones.size(); k++) {
+                aprovechamiento = aprovechamiento + evaluaciones.get(k).getValoracion();
             }
 
             if (contador == 0) {
@@ -1882,10 +1867,11 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         }
         return control;
     }
-    
+
     /**
-     * Cargamos als referencias 
-     * @param referenciasSilabo 
+     * Cargamos als referencias
+     *
+     * @param referenciasSilabo
      */
     public void cargarReferencias(List<ReferenciaSilaboMD> referenciasSilabo) {
         List<String> b = new ArrayList<>();
@@ -1906,33 +1892,34 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             }
         }
 
-        modeloBase = new DefaultListModel<>();
+        tablaM = new DefaultListModel<>();
         b.forEach((s) -> {
-            modeloBase.addElement(s);
+            tablaM.addElement(s);
         });
 
-        bibliografia.getLstBibliografiaBase().setModel(modeloBase);
+        bibliografia.getLstBibliografiaBase().setModel(tablaM);
 
     }
-    
+
     /**
-     * Validamos las horas 
-     * @return boolean 
+     * Validamos las horas
+     *
+     * @return boolean
      */
     public boolean validarHoras() {
         int totalDocencia = 0;
         int totalPractica = 0;
         int totalAutonomo = 0;
         boolean control = false;
-        
-        for (UnidadSilaboMD umd : unidadesSilabo) {
+
+        for (UnidadSilaboMD umd : unidades) {
             totalDocencia = totalDocencia + umd.getHorasDocenciaUnidad();
             totalPractica = totalPractica + umd.getHorasPracticaUnidad();
             totalAutonomo = totalAutonomo + umd.getHorasAutonomoUnidad();
         }
-        if (totalDocencia == silaboNuevo.getIdMateria().getHorasDocencia()
-                && totalPractica == silaboNuevo.getIdMateria().getHorasPracticas()
-                && totalAutonomo == silaboNuevo.getIdMateria().getHorasAutoEstudio()) {
+        if (totalDocencia == silaboNuevo.getMateria().getHorasDocencia()
+                && totalPractica == silaboNuevo.getMateria().getHorasPracticas()
+                && totalAutonomo == silaboNuevo.getMateria().getHorasAutoEstudio()) {
 
             control = true;
         }
@@ -1941,7 +1928,8 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     /**
      * Debe tener biblio base
-     * @return 
+     *
+     * @return
      */
     public boolean validarBiblioBase() {
         boolean control = false;

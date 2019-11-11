@@ -31,14 +31,10 @@ import vista.silabos.frmSilabos;
  */
 public class ControladorCRUD {
 
-    private SilaboBD silabo;
-
     private final UsuarioBD usuario;
 
     private frmSilabos crud;
 
-    //private frmGestionSilabo gestion;
-    //private frmConfiguracionSilabo configuracion;
     private ConexionBD conexion;
 
     private RolBD rol;
@@ -113,7 +109,7 @@ public class ControladorCRUD {
 
             crud.dispose();
 
-            ControladorSilaboC csc = new ControladorSilaboC(principal, usuario, conexion);
+            ControladorSilaboC csc = new ControladorSilaboC(null, principal, conexion);
 
             csc.iniciarControlador();
         });
@@ -126,9 +122,8 @@ public class ControladorCRUD {
                 if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(row, 2).equals("Aprobado")) {
                     crud.dispose();
 
-                    ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(0), principal, conexion);
-
-                    csu.iniciarControlador();
+                    //ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(0), principal, conexion);
+                    //csu.iniciarControlador();
                 } else {
                     JOptionPane.showMessageDialog(null, "No puede editar silabos  aprobados y/o correspondientes a un periodo anterior", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
@@ -234,7 +229,7 @@ public class ControladorCRUD {
 
                 String estado = null;
                 Boolean estado2 = null;
-                if (smd.getEstadoSilabo() == 0) {
+                if (smd.getEstado() == 0) {
                     estado = "Por aprobar";
                     estado2 = false;
                 } else {
@@ -266,12 +261,12 @@ public class ControladorCRUD {
     public SilaboMD seleccionarSilabo(int p) {
 
         int seleccion = crud.getTblSilabos().getSelectedRow();
-        Optional<SilaboMD>  silaboSeleccionado;
+        Optional<SilaboMD> silaboSeleccionado;
         if (esCoordinador) {
             silaboSeleccionado = silabosDocente.stream().
                     filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
                     findFirst();
-        }else{
+        } else {
 
             silaboSeleccionado = silabosDocente.stream().
                     filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
@@ -283,7 +278,7 @@ public class ControladorCRUD {
 
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
-        
+
         if (silaboSeleccionado.get().getPeriodo().getId() != ultimo.getId()) {
 
             if (p == 1) {

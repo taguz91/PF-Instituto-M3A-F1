@@ -52,26 +52,10 @@ import vista.silabos.frmReferencias;
  *
  * @author Andres Ullauri
  */
-public class ControladorSilaboU extends AbstractSilaboCTR {
-
-    private frmReferencias bibliografia;
-
-    private List<UnidadSilaboMD> unidadesSilabo;
-
-    private List<EstrategiasUnidadMD> estrategiasSilabo;
-
-    private List<EvaluacionSilaboMD> evaluacionesSilabo;
-
-    private List<TipoActividadMD> tiposActividad;
-
-    private List<ReferenciasMD> biblioteca;
-
-    private List<ReferenciaSilaboMD> referenciasSilabo;
-
-    private DefaultListModel modeloBase;
-
+public class ControladorSilaboU {
+    /*
     private static Integer idEvaluacionSig = 0;
-    
+
     private Integer idEvaluacion;
 
     private boolean cambioSilabo;
@@ -82,22 +66,6 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         super(modelo, vtnPrincipal, conexion);
     }
 
-    public void iniciarControlador() {
-        vista = new frmGestionSilabo();
-        bibliografia = new frmReferencias();
-
-        vtnPrincipal.getDpnlPrincipal().add(vista);
-
-        vista.setTitle(modelo.getMateria().getNombre());
-
-        vista.show();
-
-        vista.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - vista.getSize().width) / 2,
-                (vtnPrincipal.getDpnlPrincipal().getSize().height - vista.getSize().height) / 2);
-
-        iniciarSilabo(modelo);
-
-    }
 
     public void iniciarSilabo(SilaboMD silabo) {
 
@@ -105,11 +73,11 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         cambioSilabo = false;
 
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getID(), 1);
+        unidades = UnidadSilaboBD.consultar(conexion, silabo.getID(), 1);
 
-        estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getID());
+        estrategias = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getID());
 
-        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getID());
+        evaluaciones = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getID());
 
         biblioteca = new ArrayList<>();
 
@@ -120,7 +88,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         mostrarTotalGestion();
 
         cargarReferencias(referenciasSilabo);
-        unidadesSilabo.forEach((umd) -> {
+        unidades.forEach((umd) -> {
             vista.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
         });
 
@@ -238,7 +206,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 vista.getLstEstrategiasPredeterminadas().repaint(vista.getLstEstrategiasPredeterminadas().getCellBounds(index, index));
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
-                estrategiasSilabo.removeIf(e -> {
+                estrategias.removeIf(e -> {
                     return e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad();
                 });
 
@@ -253,10 +221,10 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                                 filter(e -> e.getDescripcionEstrategia().equals(estrategia)).
                                 findFirst();
 
-                        estrategiasSilabo.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
+                        estrategias.add(new EstrategiasUnidadMD(estrategiaSeleccionada.get(), unidadSeleccionada));
                         cambioSilabo = true;
                         vista.getBtnGuardar().setEnabled(true);
-                        System.out.println(estrategiasSilabo.size() + "------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>><< TAMAÑO DEL ARRAY LIST");
+                        System.out.println(estrategias.size() + "------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>><< TAMAÑO DEL ARRAY LIST");
 
                         System.out.println(estrategiaSeleccionada.get().getDescripcionEstrategia() + " - " + unidadSeleccionada.getNumeroUnidad());
 
@@ -495,7 +463,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
                 int acumuladoDocencia = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoDocencia = acumuladoDocencia + umd.getHorasDocenciaUnidad();
                     }
@@ -520,7 +488,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
                 int acumuladoPractica = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoPractica = acumuladoPractica + umd.getHorasPracticaUnidad();
                     }
@@ -545,7 +513,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
                 int acumuladoAutonomo = 0;
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidadesSilabo) {
+                for (UnidadSilaboMD umd : unidades) {
                     if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
                         acumuladoAutonomo = acumuladoAutonomo + umd.getHorasAutonomoUnidad();
                     }
@@ -577,7 +545,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
             @Override
             public void mouseClicked(MouseEvent me) {
 
-                if (unidadesSilabo.size() > 1) {
+                if (unidades.size() > 1) {
                     int reply = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar esta unidad?", "Eliminar", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) {
                         eliminarUnidad();
@@ -1006,7 +974,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
     public UnidadSilaboMD seleccionarUnidad() {
 
-        Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
+        Optional<UnidadSilaboMD> unidadSeleccionada = unidades.stream().
                 filter(u -> u.getNumeroUnidad() == (vista.getCmbUnidad().getSelectedIndex() + 1)).
                 findFirst();
 
@@ -1016,7 +984,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
     public void actualizarUnidad(UnidadSilaboMD unidadSeleccionada) {
 
         unidadSeleccionada.setBandera(true);
-        unidadesSilabo.set(unidadSeleccionada.getNumeroUnidad() - 1, unidadSeleccionada);
+        unidades.set(unidadSeleccionada.getNumeroUnidad() - 1, unidadSeleccionada);
         cambioSilabo = true;
         vista.getBtnGuardar().setEnabled(true);
 
@@ -1076,7 +1044,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         for (int i = 0; i < vista.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
             CheckListItem item = (CheckListItem) vista.getLstEstrategiasPredeterminadas().getModel().getElementAt(i);
 
-            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+            for (EstrategiasUnidadMD emd : estrategias) {
 
                 if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
                         && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
@@ -1091,12 +1059,12 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
     public void agregarUnidad() {
 
         UnidadSilaboMD nuevaUnidad = new UnidadSilaboMD();
-        nuevaUnidad.setNumeroUnidad(unidadesSilabo.size() + 1);
-        unidadesSilabo.add(nuevaUnidad);
-        vista.getCmbUnidad().addItem("Unidad " + unidadesSilabo.size());
+        nuevaUnidad.setNumeroUnidad(unidades.size() + 1);
+        unidades.add(nuevaUnidad);
+        vista.getCmbUnidad().addItem("Unidad " + unidades.size());
         JOptionPane.showMessageDialog(null, "Nueva unidad agregada");
 
-        vista.getCmbUnidad().setSelectedIndex(unidadesSilabo.size() - 1);
+        vista.getCmbUnidad().setSelectedIndex(unidades.size() - 1);
 
     }
 
@@ -1104,26 +1072,26 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
-        unidadesSilabo.removeIf(u -> u.getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        unidades.removeIf(u -> u.getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        estrategiasSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        estrategias.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        evaluacionesSilabo.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        evaluaciones.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+        for (EstrategiasUnidadMD emd : estrategias) {
             if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
             }
         }
 
-        for (EvaluacionSilaboMD esd : evaluacionesSilabo) {
+        for (EvaluacionSilaboMD esd : evaluaciones) {
             if (esd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 esd.getIdUnidad().setNumeroUnidad(esd.getIdUnidad().getNumeroUnidad() - 1);
 
             }
         }
 
-        for (UnidadSilaboMD umd : unidadesSilabo) {
+        for (UnidadSilaboMD umd : unidades) {
             if (umd.getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
                 umd.setNumeroUnidad(umd.getNumeroUnidad() - 1);
 
@@ -1132,7 +1100,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         List<String> comboNuevo = new ArrayList<>();
 
-        for (int i = 1; i <= unidadesSilabo.size(); i++) {
+        for (int i = 1; i <= unidades.size(); i++) {
             comboNuevo.add("Unidad " + (i));
         }
 
@@ -1141,7 +1109,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         if (unidadSeleccionada.getNumeroUnidad() == 1) {
             vista.getCmbUnidad().setSelectedIndex(0);
 
-        } else if (unidadSeleccionada.getNumeroUnidad() == unidadesSilabo.size() + 1) {
+        } else if (unidadSeleccionada.getNumeroUnidad() == unidades.size() + 1) {
 
             vista.getCmbUnidad().setSelectedIndex(unidadSeleccionada.getNumeroUnidad() - 2);
         } else {
@@ -1154,7 +1122,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         double total = 0;
 
-        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        total = evaluaciones.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
         return (total + valor) <= 60.0;
 
@@ -1178,7 +1146,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (vista.getSpnValoracionAD().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorAD().getText(), vista.getTxtInstrumentoAD().getText(), (double) (vista.getSpnValoracionAD().getValue()), vista.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorAD().getText(), vista.getTxtInstrumentoAD().getText(), (double) (vista.getSpnValoracionAD().getValue()), vista.getDchFechaEnvioAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionAD().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) vista.getTblAsistidaDocente().getModel(), 1);
                     limpiarEvaluacionesAD();
                     vista.getBtnGuardar().setEnabled(true);
@@ -1194,7 +1162,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (vista.getSpnValoracionAC().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorAC().getText(), vista.getTxtInstrumentoAC().getText(), (double) (vista.getSpnValoracionAC().getValue()), vista.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorAC().getText(), vista.getTxtInstrumentoAC().getText(), (double) (vista.getSpnValoracionAC().getValue()), vista.getDchFechaEnvioAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionAC().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) vista.getTblAprendizajeColaborativo().getModel(), 2);
                     limpiarEvaluacionesAC();
                     vista.getBtnGuardar().setEnabled(true);
@@ -1209,7 +1177,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (vista.getSpnValoracionP().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorP().getText(), vista.getTxtInstrumentoP().getText(), (double) (vista.getSpnValoracionP().getValue()), vista.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorP().getText(), vista.getTxtInstrumentoP().getText(), (double) (vista.getSpnValoracionP().getValue()), vista.getDchFechaEnvioP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionP().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) vista.getTblPractica().getModel(), 3);
                     limpiarEvaluacionesP();
                     vista.getBtnGuardar().setEnabled(true);
@@ -1224,7 +1192,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 if (validarLimiteEvaluaciones((double) (vista.getSpnValoracionA().getValue()))) {
                     ++idEvaluacionSig;
                     idEvaluacion = idEvaluacionSig;
-                    evaluacionesSilabo.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorA().getText(), vista.getTxtInstrumentoA().getText(), (double) (vista.getSpnValoracionA().getValue()), vista.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
+                    evaluaciones.add(new EvaluacionSilaboMD(idEvaluacion, vista.getTxtIndicadorA().getText(), vista.getTxtInstrumentoA().getText(), (double) (vista.getSpnValoracionA().getValue()), vista.getDchFechaEnvioA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), vista.getDchFechaPresentacionA().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), tipo, unidad));
                     cargarEvaluaciones((DefaultTableModel) vista.getTblAutonoma().getModel(), 4);
                     limpiarEvaluacionesA();
                     vista.getBtnGuardar().setEnabled(true);
@@ -1262,7 +1230,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
                 break;
         }
 
-        for (EvaluacionSilaboMD emd : evaluacionesSilabo) {
+        for (EvaluacionSilaboMD emd : evaluaciones) {
 
             if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
                     && emd.getIdTipoActividad().getIdTipoActividad() == p) {
@@ -1382,13 +1350,13 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
             }
 
         });
-        modeloBase = new DefaultListModel<>();
+        tablaM = new DefaultListModel<>();
 
         b.forEach((s) -> {
-            modeloBase.addElement(s);
+            tablaM.addElement(s);
         });
 
-        bibliografia.getLstBibliografiaBase().setModel(modeloBase);
+        bibliografia.getLstBibliografiaBase().setModel(tablaM);
 
     }
 
@@ -1410,7 +1378,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         referenciasSilabo.removeIf(p -> p.getIdReferencia().getDescripcionReferencia().equals(seleccion));
 
-        modeloBase.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
+        tablaM.remove(bibliografia.getLstBibliografiaBase().getSelectedIndex());
 
         if (bibliografia.getLstBibliografiaBase().getSelectedIndex() != -1) {
             bibliografia.getBtnQuitarBibliografiaBase().setEnabled(true);
@@ -1431,12 +1399,12 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
     public void quitarEvaluacionAD(DefaultTableModel modeloTabla, int p) {
         System.out.println("ANTESSS ");
-        evaluacionesSilabo.forEach(es -> {
+        evaluaciones.forEach(es -> {
             System.out.println(es.getInstrumento());
         });
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == vista.getTblAsistidaDocente().getValueAt(vista.getTblAsistidaDocente().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == vista.getTblAsistidaDocente().getValueAt(vista.getTblAsistidaDocente().getSelectedRow(), 5));
         System.out.println("DESPUESSSS ");
-        evaluacionesSilabo.forEach(es -> {
+        evaluaciones.forEach(es -> {
             System.out.println(es.getInstrumento());
         });
         cargarEvaluaciones(modeloTabla, p);
@@ -1448,7 +1416,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
     public void quitarEvaluacionAC(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == vista.getTblAprendizajeColaborativo().getValueAt(vista.getTblAprendizajeColaborativo().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == vista.getTblAprendizajeColaborativo().getValueAt(vista.getTblAprendizajeColaborativo().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
@@ -1458,7 +1426,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
     public void quitarEvaluacionP(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == vista.getTblPractica().getValueAt(vista.getTblPractica().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == vista.getTblPractica().getValueAt(vista.getTblPractica().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
@@ -1468,7 +1436,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
     public void quitarEvaluacionA(DefaultTableModel modeloTabla, int p) {
 
-        evaluacionesSilabo.removeIf(e -> e.getIdEvaluacion() == vista.getTblAutonoma().getValueAt(vista.getTblAutonoma().getSelectedRow(), 5));
+        evaluaciones.removeIf(e -> e.getIdEvaluacion() == vista.getTblAutonoma().getValueAt(vista.getTblAutonoma().getSelectedRow(), 5));
 
         cargarEvaluaciones(modeloTabla, p);
         mostrarTotalGestion();
@@ -1497,12 +1465,12 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         }
 
-        modeloBase = new DefaultListModel<>();
+        tablaM = new DefaultListModel<>();
         b.forEach((s) -> {
-            modeloBase.addElement(s);
+            tablaM.addElement(s);
         });
 
-        bibliografia.getLstBibliografiaBase().setModel(modeloBase);
+        bibliografia.getLstBibliografiaBase().setModel(tablaM);
 
     }
 
@@ -1510,13 +1478,13 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         modelo.setID(SilaboBD.consultarUltimo(conexion, modelo.getMateria().getId(), modelo.getPeriodo().getId()).getID());
 
-        for (UnidadSilaboMD umd : unidadesSilabo) {
+        for (UnidadSilaboMD umd : unidades) {
 
             umd.getIdSilabo().setID(modelo.getID());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
             ubd.insertar(umd, umd.getIdSilabo().getID());
 
-            for (EstrategiasUnidadMD emd : estrategiasSilabo) {
+            for (EstrategiasUnidadMD emd : estrategias) {
 
                 if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
@@ -1525,7 +1493,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
             }
 
-            for (EvaluacionSilaboMD evd : evaluacionesSilabo) {
+            for (EvaluacionSilaboMD evd : evaluaciones) {
 
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENRTRAMOS " + umd.getNumeroUnidad());
@@ -1571,9 +1539,9 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
             insertarReferencias(is);
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, modelo.getID(), 1);
+            unidades = UnidadSilaboBD.consultar(conexion, modelo.getID(), 1);
 
-            for (UnidadSilaboMD umd : unidadesSilabo) {
+            for (UnidadSilaboMD umd : unidades) {
 
                 umd.setBandera(false);
 
@@ -1602,41 +1570,41 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         int contador = 0;
         double aprovechamiento = 0.0;
 
-        for (int i = 0; i < unidadesSilabo.size(); i++) {
+        for (int i = 0; i < unidades.size(); i++) {
 
-            if (unidadesSilabo.get(i).getTituloUnidad() == null) {
+            if (unidades.get(i).getTituloUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getObjetivoEspecificoUnidad() == null) {
+            if (unidades.get(i).getObjetivoEspecificoUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getResultadosAprendizajeUnidad() == null) {
+            if (unidades.get(i).getResultadosAprendizajeUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getContenidosUnidad() == null) {
+            if (unidades.get(i).getContenidosUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getFechaInicioUnidad() == null) {
+            if (unidades.get(i).getFechaInicioUnidad() == null) {
                 control = false;
             }
 
-            if (unidadesSilabo.get(i).getFechaFinUnidad() == null) {
+            if (unidades.get(i).getFechaFinUnidad() == null) {
                 control = false;
             }
 
-            for (int j = 0; j < estrategiasSilabo.size(); j++) {
-                if (estrategiasSilabo.get(j).getIdUnidad().getNumeroUnidad() == (unidadesSilabo.get(i).getNumeroUnidad())) {
+            for (int j = 0; j < estrategias.size(); j++) {
+                if (estrategias.get(j).getIdUnidad().getNumeroUnidad() == (unidades.get(i).getNumeroUnidad())) {
                     contador++;
                 }
 
             }
 
-            for (int k = 0; k < evaluacionesSilabo.size(); k++) {
-                aprovechamiento = aprovechamiento + evaluacionesSilabo.get(k).getValoracion();
+            for (int k = 0; k < evaluaciones.size(); k++) {
+                aprovechamiento = aprovechamiento + evaluaciones.get(k).getValoracion();
             }
 
             if (contador == 0) {
@@ -1657,7 +1625,7 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
 
         double total = 0;
 
-        total = evaluacionesSilabo.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        total = evaluaciones.stream().map((emd) -> emd.getValoracion()).reduce(total, (accumulator, _item) -> accumulator + _item);
 
         vista.getLblAcumuladoGestion().setText(total + "/60");
 
@@ -1678,5 +1646,5 @@ public class ControladorSilaboU extends AbstractSilaboCTR {
         return control;
 
     }
-
+     */
 }

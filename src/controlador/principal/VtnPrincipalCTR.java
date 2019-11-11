@@ -656,7 +656,7 @@ public class VtnPrincipalCTR {
 
     private void controladorIngreso() {
 
-        ControladorSilaboC c = new ControladorSilaboC(vtnPrin, usuario, new ConexionBD(conecta));
+        ControladorSilaboC c = new ControladorSilaboC(null, vtnPrin, new ConexionBD(conecta));
 
         c.iniciarControlador();
 
@@ -1002,7 +1002,7 @@ public class VtnPrincipalCTR {
     }
 
     private void btnNotasDuales(ActionEvent e) {
-        
+
     }
 
     /**
