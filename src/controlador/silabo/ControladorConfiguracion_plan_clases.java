@@ -101,7 +101,7 @@ public class ControladorConfiguracion_plan_clases {
     private SilaboMD silabo_seleccionado(){
         silabosDocente=cargar_silabo();
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
+                filter(s -> s.getMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
                 findFirst();
 
         return silaboSeleccionado.get();
@@ -252,10 +252,10 @@ private void clickCmbCarreras(){
       silabosDocente=cargar_silabo();
       silabosDocente
               .stream()
-                .filter(item -> item.getIdMateria().getNombre().equals(silabo))
+                .filter(item -> item.getMateria().getNombre().equals(silabo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                     id_silabo= obj.getIdSilabo();
+                     id_silabo= obj.getID();
                 });
       return id_silabo;
   }

@@ -84,11 +84,11 @@ public class Controlador_plan_clases {
     }
 
     public void iniciaControlador() {
-        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO"+silabo.getIdSilabo()+" -------------- ID_UNIDAD"+unidadsilabo.getIdUnidad());
+        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO"+silabo.getID()+" -------------- ID_UNIDAD"+unidadsilabo.getIdUnidad());
         conexion.conectar();
         fPlanClase = new frmPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
-        fPlanClase.setTitle(silabo.getIdMateria().getNombre());
+        fPlanClase.setTitle(silabo.getMateria().getNombre());
         fPlanClase.show();
         fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
@@ -170,13 +170,13 @@ public class Controlador_plan_clases {
       lista_curso=CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
         cargarCamposCursoCarreraDocente(lista_curso);
         
-      lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+      lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
      
         
         
-      lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+      lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_estrategiasSilabo);
         
       lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);

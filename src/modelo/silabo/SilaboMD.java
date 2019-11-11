@@ -3,64 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modelo.silabo;
 
 import java.util.List;
-import modelo.evaluacionSilabo.EvaluacionSilabo;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.referenciasSilabo.ReferenciaSilabo;
 import modelo.unidadSilabo.UnidadSilabo;
 
 /**
- * 
+ *
  * @author Andres Ullauri
  */
 public class SilaboMD {
-    
-    
-    private Integer idSilabo;
 
-    private MateriaMD idMateria;
-    
-    
-    
+    private Integer ID;
+
+    private MateriaMD materia;
+
     private int estadoSilabo;
-    
-    private PeriodoLectivoMD idPeriodoLectivo;
- 
-    private List<UnidadSilabo> unidadSilaboList;
 
-    private List<ReferenciaSilabo> referenciaSilaboList;
+    private PeriodoLectivoMD periodo;
+
+    private List<UnidadSilabo> unidades;
+
+    private List<ReferenciaSilabo> referencias;
 
     public SilaboMD() {
-        this.idMateria = new MateriaMD();
-        this.idPeriodoLectivo = new PeriodoLectivoMD();
+        this.materia = new MateriaMD();
+        this.periodo = new PeriodoLectivoMD();
     }
 
     public SilaboMD(MateriaMD idMateria, PeriodoLectivoMD idPeriodoLectivo) {
-        this.idMateria = idMateria;
-        this.idPeriodoLectivo = idPeriodoLectivo;
+        this.materia = idMateria;
+        this.periodo = idPeriodoLectivo;
     }
 
-    
-
-
-    public Integer getIdSilabo() {
-        return idSilabo;
+    public Integer getID() {
+        return ID;
     }
 
-    public void setIdSilabo(Integer idSilabo) {
-        this.idSilabo = idSilabo;
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
-    public MateriaMD getIdMateria() {
-        return idMateria;
+    public MateriaMD getMateria() {
+        return materia;
     }
 
-    public void setIdMateria(MateriaMD idMateria) {
-        this.idMateria = idMateria;
+    public void setMateria(MateriaMD idMateria) {
+        this.materia = idMateria;
     }
 
     public int getEstadoSilabo() {
@@ -71,31 +63,28 @@ public class SilaboMD {
         this.estadoSilabo = estadoSilabo;
     }
 
-    public PeriodoLectivoMD getIdPeriodoLectivo() {
-        return idPeriodoLectivo;
+    public PeriodoLectivoMD getPeriodo() {
+        return periodo;
     }
 
-    public void setIdPeriodoLectivo(PeriodoLectivoMD idPeriodoLectivo) {
-        this.idPeriodoLectivo = idPeriodoLectivo;
+    public void setPeriodo(PeriodoLectivoMD periodo) {
+        this.periodo = periodo;
     }
 
-    public List<UnidadSilabo> getUnidadSilaboList() {
-        return unidadSilaboList;
+    public List<UnidadSilabo> getUnidades() {
+        return unidades;
     }
 
-    public void setUnidadSilaboList(List<UnidadSilabo> unidadSilaboList) {
-        this.unidadSilaboList = unidadSilaboList;
+    public void setUnidades(List<UnidadSilabo> unidades) {
+        this.unidades = unidades;
     }
 
-    public List<ReferenciaSilabo> getReferenciaSilaboList() {
-        return referenciaSilaboList;
+    public List<ReferenciaSilabo> getReferencias() {
+        return referencias;
     }
 
-    public void setReferenciaSilaboList(List<ReferenciaSilabo> referenciaSilaboList) {
-        this.referenciaSilaboList = referenciaSilaboList;
+    public void setReferencias(List<ReferenciaSilabo> referencias) {
+        this.referencias = referencias;
     }
- 
-
-    
 
 }

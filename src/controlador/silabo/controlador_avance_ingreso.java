@@ -73,7 +73,7 @@ public class controlador_avance_ingreso {
         lista_curso = CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
         
         lista_avanzeU=new ArrayList<>();
-        unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(conexion, silabo.getIdSilabo());
+        unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(conexion, silabo.getID());
         cargarTemasUnidades();
         cargarCampos(lista_curso);
         avanceSi.getCbxTipoReporte().removeItemAt(2);

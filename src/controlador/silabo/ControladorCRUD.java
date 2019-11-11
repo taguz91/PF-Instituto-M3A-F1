@@ -243,10 +243,10 @@ public class ControladorCRUD {
                 }
 
                 modeloTabla.addRow(new Object[]{
-                    smd.getIdMateria().getNombre(),
-                    smd.getIdPeriodoLectivo().getFechaInicio() + " / " + smd.getIdPeriodoLectivo().getFechaFin(),
+                    smd.getMateria().getNombre(),
+                    smd.getPeriodo().getFechaInicio() + " / " + smd.getPeriodo().getFechaFin(),
                     estado,
-                    smd.getIdSilabo(),
+                    smd.getID(),
                     estado2
                 });
 
@@ -269,12 +269,12 @@ public class ControladorCRUD {
         Optional<SilaboMD>  silaboSeleccionado;
         if (esCoordinador) {
             silaboSeleccionado = silabosDocente.stream().
-                    filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
+                    filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
                     findFirst();
         }else{
 
             silaboSeleccionado = silabosDocente.stream().
-                    filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
+                    filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
                     findFirst();
         }
 
@@ -284,7 +284,7 @@ public class ControladorCRUD {
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
         
-        if (silaboSeleccionado.get().getIdPeriodoLectivo().getId() != ultimo.getId()) {
+        if (silaboSeleccionado.get().getPeriodo().getId() != ultimo.getId()) {
 
             if (p == 1) {
                 return silaboSeleccionado.get();

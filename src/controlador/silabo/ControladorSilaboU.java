@@ -52,7 +52,7 @@ import vista.silabos.frmReferencias;
  *
  * @author Andres Ullauri
  */
-public class ControladorSilaboU {
+public class ControladorSilaboU extends AbstractSilaboCTR {
 
     private SilaboMD silabo;
 
@@ -97,7 +97,7 @@ public class ControladorSilaboU {
 
         principal.getDpnlPrincipal().add(gestion);
 
-        gestion.setTitle(silabo.getIdMateria().getNombre());
+        gestion.setTitle(silabo.getMateria().getNombre());
 
         gestion.show();
 
@@ -114,15 +114,15 @@ public class ControladorSilaboU {
 
         cambioSilabo = false;
 
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(), 1);
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getID(), 1);
 
-        estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getIdSilabo());
+        estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silabo.getID());
 
-        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getIdSilabo());
+        evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silabo.getID());
 
         biblioteca = new ArrayList<>();
 
-        referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getIdSilabo());
+        referenciasSilabo = ReferenciaSilaboBD.recuperarReferencias(conexion, silabo.getID());
 
         tiposActividad = TipoActividadBD.consultar(conexion);
 
@@ -511,9 +511,9 @@ public class ControladorSilaboU {
 
                 }
 
-                if ((acumuladoDocencia + (int) gestion.getSpnHorasDocencia().getValue()) > silabo.getIdMateria().getHorasDocencia()) {
-                    gestion.getSpnHorasDocencia().setValue(silabo.getIdMateria().getHorasDocencia() - acumuladoDocencia);
-                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getIdMateria().getHorasDocencia() + " horas de gestión docente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                if ((acumuladoDocencia + (int) gestion.getSpnHorasDocencia().getValue()) > silabo.getMateria().getHorasDocencia()) {
+                    gestion.getSpnHorasDocencia().setValue(silabo.getMateria().getHorasDocencia() - acumuladoDocencia);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getMateria().getHorasDocencia() + " horas de gestión docente", "Aviso", JOptionPane.WARNING_MESSAGE);
 
                 }
 
@@ -536,9 +536,9 @@ public class ControladorSilaboU {
 
                 }
 
-                if ((acumuladoPractica + (int) gestion.getSpnHorasPracticas().getValue()) > silabo.getIdMateria().getHorasPracticas()) {
-                    gestion.getSpnHorasPracticas().setValue(silabo.getIdMateria().getHorasPracticas() - acumuladoPractica);
-                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getIdMateria().getHorasPracticas() + " horas de gestión práctica", "Aviso", JOptionPane.WARNING_MESSAGE);
+                if ((acumuladoPractica + (int) gestion.getSpnHorasPracticas().getValue()) > silabo.getMateria().getHorasPracticas()) {
+                    gestion.getSpnHorasPracticas().setValue(silabo.getMateria().getHorasPracticas() - acumuladoPractica);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getMateria().getHorasPracticas() + " horas de gestión práctica", "Aviso", JOptionPane.WARNING_MESSAGE);
 
                 }
 
@@ -561,9 +561,9 @@ public class ControladorSilaboU {
 
                 }
 
-                if ((acumuladoAutonomo + (int) gestion.getSpnHorasAutonomas().getValue()) > silabo.getIdMateria().getHorasAutoEstudio()) {
-                    gestion.getSpnHorasAutonomas().setValue(silabo.getIdMateria().getHorasAutoEstudio() - acumuladoAutonomo);
-                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getIdMateria().getHorasAutoEstudio() + " horas de gestión autónoma", "Aviso", JOptionPane.WARNING_MESSAGE);
+                if ((acumuladoAutonomo + (int) gestion.getSpnHorasAutonomas().getValue()) > silabo.getMateria().getHorasAutoEstudio()) {
+                    gestion.getSpnHorasAutonomas().setValue(silabo.getMateria().getHorasAutoEstudio() - acumuladoAutonomo);
+                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getMateria().getHorasAutoEstudio() + " horas de gestión autónoma", "Aviso", JOptionPane.WARNING_MESSAGE);
 
                 }
 
@@ -792,7 +792,7 @@ public class ControladorSilaboU {
                 gestion.getBtnSiguiente().setEnabled(false);
                 gestion.getBtnCancelar().setEnabled(false);
                 principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
-                System.out.println("============" + silabo.getIdSilabo());
+                System.out.println("============" + silabo.getID());
                 new SilaboBD(conexion).eliminar(silabo);
 
                 if (guardarSilabo()) {
@@ -924,7 +924,7 @@ public class ControladorSilaboU {
 
         principal.getDpnlPrincipal().add(bibliografia);
 
-        bibliografia.setTitle(silabo.getIdMateria().getNombre());
+        bibliografia.setTitle(silabo.getMateria().getNombre());
 
         bibliografia.show();
 
@@ -1405,8 +1405,8 @@ public class ControladorSilaboU {
 
         referenciasSilabo.removeIf(r -> r.getIdReferencia().getTipoReferencia().equals("Complementaria") || r.getIdReferencia().getTipoReferencia().equals("Linkografia"));
 
-        ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
-        ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getIdSilabo()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
+        ReferenciasMD complementaria = new ReferenciasMD(String.valueOf(silabo.getID()), bibliografia.getTxrBibliografiaComplementaria().getText(), "Complementaria");
+        ReferenciasMD linkografia = new ReferenciasMD(String.valueOf(silabo.getID()), bibliografia.getTxrLinkografia().getText(), "Linkografia");
 
         referenciasSilabo.add(new ReferenciaSilaboMD(complementaria, silabo));
         referenciasSilabo.add(new ReferenciaSilaboMD(linkografia, silabo));
@@ -1517,19 +1517,19 @@ public class ControladorSilaboU {
 
     public int insertarUnidades() {
 
-        silabo.setIdSilabo(SilaboBD.consultarUltimo(conexion, silabo.getIdMateria().getId(), silabo.getIdPeriodoLectivo().getId()).getIdSilabo());
+        silabo.setID(SilaboBD.consultarUltimo(conexion, silabo.getMateria().getId(), silabo.getPeriodo().getId()).getID());
 
         for (UnidadSilaboMD umd : unidadesSilabo) {
 
-            umd.getIdSilabo().setIdSilabo(silabo.getIdSilabo());
+            umd.getIdSilabo().setID(silabo.getID());
             UnidadSilaboBD ubd = new UnidadSilaboBD(conexion);
-            ubd.insertar(umd, umd.getIdSilabo().getIdSilabo());
+            ubd.insertar(umd, umd.getIdSilabo().getID());
 
             for (EstrategiasUnidadMD emd : estrategiasSilabo) {
 
                 if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
-                    ebd.insertar(emd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
+                    ebd.insertar(emd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getID(), umd.getNumeroUnidad()).getIdUnidad());
                 }
 
             }
@@ -1539,13 +1539,13 @@ public class ControladorSilaboU {
                 if (evd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ENRTRAMOS " + umd.getNumeroUnidad());
                     EvaluacionSilaboBD esd = new EvaluacionSilaboBD(conexion);
-                    esd.insertar(evd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getIdSilabo(), umd.getNumeroUnidad()).getIdUnidad());
+                    esd.insertar(evd, UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getID(), umd.getNumeroUnidad()).getIdUnidad());
                 }
 
             }
         }
 
-        return silabo.getIdSilabo();
+        return silabo.getID();
     }
 
     public void insertarReferencias(int is) {
@@ -1580,7 +1580,7 @@ public class ControladorSilaboU {
 
             insertarReferencias(is);
 
-            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(), 1);
+            unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getID(), 1);
 
             for (UnidadSilaboMD umd : unidadesSilabo) {
 

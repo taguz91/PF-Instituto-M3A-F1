@@ -89,7 +89,7 @@ public class ControladorEditarPlanClases {
          conexion.conectar();
         fPlanClase = new frmPlanClase();
         principal.getDpnlPrincipal().add(fPlanClase);
-        fPlanClase.setTitle("EDITAR "+silabo.getIdMateria().getNombre());
+        fPlanClase.setTitle("EDITAR "+silabo.getMateria().getNombre());
         fPlanClase.show();
          PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su descripcion.......");
         fPlanClase.setLocation((principal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
@@ -167,10 +167,10 @@ public class ControladorEditarPlanClases {
         
         lista_estrategias_metodologicas_antici=EstrategiasMetodologicasBD.consultarEstrategiasMetologicas(conexion, planclase.getId_plan_clases());
         System.out.println(lista_estrategias_metodologicas_antici.size()+"---->>>tamaño desde la base de datos");
-        lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
-        lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getIdSilabo(), unidadsilabo.getNumeroUnidad());
+        lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
         CargarEvaluacionesInstrumento(lista_estrategiasSilabo); 
         
        lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getId_plan_clases());

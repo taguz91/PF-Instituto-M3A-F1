@@ -75,15 +75,15 @@ public class ControladorSilaboR {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
             Map parametro = new HashMap();
 
-            parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
-            parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
+            parametro.put("parameter1", String.valueOf(silabo.getMateria().getId()));
+            parametro.put("id_silabo", String.valueOf(silabo.getID()));
             JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
             JasperViewer pv = new JasperViewer(jp, false);
             pv.setVisible(true);
             pv.setTitle("Sílabo");
 
             //EXPORTACION A PDF
-            File pdf = new File(("pdfs/" + "ST-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            File pdf = new File(("pdfs/" + "ST-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             existeCarpeta(pdf, jp);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, "Error reporte: " + e);
@@ -116,14 +116,14 @@ public class ControladorSilaboR {
                     .getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
 
             Map parametro = new HashMap();
-            parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
-            parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
+            parametro.put("parameter1", String.valueOf(silabo.getMateria().getId()));
+            parametro.put("id_silabo", String.valueOf(silabo.getID()));
             JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
             JasperViewer pv = new JasperViewer(jp, false);
             pv.setVisible(true);
             pv.setTitle("Silabo Duales");
 
-            File pdf = new File(("pdfs/" + "SD-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+            File pdf = new File(("pdfs/" + "SD-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             existeCarpeta(pdf, jp);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
@@ -147,8 +147,8 @@ public class ControladorSilaboR {
                         );
 
                         Map parametro = new HashMap();
-                        parametro.put("parameter1", String.valueOf(silabo.getIdMateria().getId()));
-                        parametro.put("id_silabo", String.valueOf(silabo.getIdSilabo()));
+                        parametro.put("parameter1", String.valueOf(silabo.getMateria().getId()));
+                        parametro.put("id_silabo", String.valueOf(silabo.getID()));
                         parametro.put("num_semanas", numSemanas);
 
                         JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
@@ -156,7 +156,7 @@ public class ControladorSilaboR {
                         pv.setVisible(true);
                         pv.setTitle("Silabos Duales | Semanas");
 
-                        File pdf = new File(("pdfs/" + "SD-" + silabo.getIdMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
+                        File pdf = new File(("pdfs/" + "SD-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
                         existeCarpeta(pdf, jp);
                     } catch (JRException e) {
                         JOptionPane.showMessageDialog(null, "Error: " + e);

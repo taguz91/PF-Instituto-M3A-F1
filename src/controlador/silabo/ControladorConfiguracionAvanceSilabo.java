@@ -207,10 +207,10 @@ public class ControladorConfiguracionAvanceSilabo {
         silabosDocente = cargar_silabo();
         silabosDocente
                 .stream()
-                .filter(item -> item.getIdMateria().getNombre().equals(silabo))
+                .filter(item -> item.getMateria().getNombre().equals(silabo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_silabo = obj.getIdSilabo();
+                    id_silabo = obj.getID();
                 });
         return id_silabo;
     }
@@ -251,7 +251,7 @@ public class ControladorConfiguracionAvanceSilabo {
     private SilaboMD silabo_seleccionado() {
         silabosDocente = cargar_silabo();
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
-                filter(s -> s.getIdMateria().getNombre().equals(avance.getCbxSilabos().getSelectedItem().toString())).
+                filter(s -> s.getMateria().getNombre().equals(avance.getCbxSilabos().getSelectedItem().toString())).
                 findFirst();
 
         return silaboSeleccionado.get();

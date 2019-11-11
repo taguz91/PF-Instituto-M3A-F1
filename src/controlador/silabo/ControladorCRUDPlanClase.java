@@ -365,14 +365,14 @@ public class ControladorCRUDPlanClase {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
 
         silabosDocente = cargar_silabo();
-        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().filter(s -> s.getIdMateria().getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString())).
+        Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().filter(s -> s.getMateria().getNombre().equals(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 2).toString())).
                 findFirst();
         return silaboSeleccionado.get();
     }
 
     private UnidadSilaboMD unidad_seleccionada() {
         int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo_seleccionado().getIdSilabo(),1);
+        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo_seleccionado().getID(),1);
         Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
                 filter(s -> s.getNumeroUnidad() == Integer.parseInt(fCrud_plan_Clases.getTlbTablaPLC().getValueAt(seleccion, 4).toString())).
                 findFirst();
