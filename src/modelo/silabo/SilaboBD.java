@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.silabo;
 
 import java.io.File;
@@ -39,7 +34,8 @@ public class SilaboBD extends SilaboMD {
     public void insertar() {
 
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Silabo\"(\n"
+            PreparedStatement st = conexion.getCon()
+                    .prepareStatement("INSERT INTO public.\"Silabo\"(\n"
                     + "	 id_materia, id_prd_lectivo)\n"
                     + "	VALUES (?, ?)");
 

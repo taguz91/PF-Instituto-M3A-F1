@@ -7,11 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,10 +27,20 @@ public class ConnDBPool {
     private PreparedStatement stmt;
     private ResultSet rs;
 
+    private static ConnDBPool CONPOOL;
+
     public ConnDBPool() {
         if (config == null && ds == null) {
-            new ConnDBPool(null);
+            CONPOOL = new ConnDBPool(null);
         }
+    }
+
+    public static ConnDBPool single() {
+        if (CONPOOL != null) {
+            return CONPOOL;
+        }
+        ConnDBPool con = new ConnDBPool(null);
+        return con;
     }
 
     public ConnDBPool(Object param) {
@@ -68,7 +80,6 @@ public class ConnDBPool {
     }
 
     // <editor-fold defaultstate="collapsed" desc="METODOS DE MANEJO DE DATOS"> 
-
     public SQLException ejecutar(String sql, Connection conn, Map<Integer, Object> parametros) {
         //this.conn = conn;
         try {
@@ -222,6 +233,70 @@ public class ConnDBPool {
         if (ConnDBPool.ds != null && !ConnDBPool.ds.isClosed()) {
             ConnDBPool.ds.close();
         }
+    }
+
+    // Metodos JOHNNY
+    public PreparedStatement getPSPOOL(String sql) {
+        try {
+            return getConnection().prepareStatement(sql);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error de conexion con el servidor. \n"
+                    + e.getMessage()
+            );
+            return null;
+        }
+    }
+
+    public SQLException noSQLPOOL(PreparedStatement ps) {
+        try {
+            ps.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            return e;
+        } finally {
+            try {
+                ps.getConnection().close();
+                ps.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error al cerrar conexion. \n"
+                        + e.getMessage(),
+                        "Error servidor",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    }
+
+    public PreparedStatement getPSID(String sql) {
+        try {
+            return getConnection()
+                    .prepareStatement(
+                            sql,
+                            Statement.RETURN_GENERATED_KEYS
+                    );
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public int getIDGenerado(PreparedStatement ps) {
+        int id = 0;
+        try {
+            ResultSet res = ps.getGeneratedKeys();
+            if (res.next()) {
+                id = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al obtener el ID generado. "
+                    + e.getMessage(),
+                    "Error ID",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return id;
     }
 
 }
