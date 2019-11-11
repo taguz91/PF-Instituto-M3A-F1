@@ -231,7 +231,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesion(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
-        vtnPrin.getMnCtPrdIngrNotas().addActionListener(e -> btnPrdIngrNotas(e));
+        vtnPrin.getMnCtNotasDuales().addActionListener(e -> btnNotasDuales(e));
         vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
         vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
@@ -868,7 +868,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 
-        vtnPrin.getMnCtPrdIngrNotas().setAccelerator(KeyStroke.getKeyStroke(
+        vtnPrin.getMnCtNotasDuales().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
@@ -1001,11 +1001,8 @@ public class VtnPrincipalCTR {
         jd.setIconImage(CONS.getImage());
     }
 
-    private void btnPrdIngrNotas(ActionEvent e) {
-
-//        VtnPeriodoIngresoNotasCTR vtn = new VtnPeriodoIngresoNotasCTR(vtnPrin, new VtnPeriodoIngresoNotas(), new PeriodoIngresoNotasBD(), rolSeleccionado);
-//
-//        vtn.Init();
+    private void btnNotasDuales(ActionEvent e) {
+        
     }
 
     /**

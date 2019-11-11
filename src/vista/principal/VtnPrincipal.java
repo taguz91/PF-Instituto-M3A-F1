@@ -284,8 +284,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return lblEstado;
     }
 
-    public JMenuItem getMnCtPrdIngrNotas() {
-        return mnCtPrdIngrNotas;
+    public JMenuItem getMnCtNotasDuales() {
+        return mnCtNotasDuales;
     }
 
     public JButton getBtnConsola() {
@@ -443,15 +443,15 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtSilabos = new javax.swing.JMenuItem();
         MnCAvanceSilabo = new javax.swing.JMenuItem();
         mnCtPlandeClase = new javax.swing.JMenuItem();
-        mnCtUsuarios = new javax.swing.JMenuItem();
-        mnCtRoles = new javax.swing.JMenuItem();
-        mnCtHistorialUsers = new javax.swing.JMenuItem();
         mnNotas = new javax.swing.JMenu();
-        mnCtPrdIngrNotas = new javax.swing.JMenuItem();
+        mnCtNotasDuales = new javax.swing.JMenuItem();
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtActivarNotas = new javax.swing.JMenuItem();
         mnCtRendimientoAcademico = new javax.swing.JMenuItem();
+        mnCtUsuarios = new javax.swing.JMenuItem();
+        mnCtRoles = new javax.swing.JMenuItem();
+        mnCtHistorialUsers = new javax.swing.JMenuItem();
         MnBiblioteca = new javax.swing.JMenuItem();
         mnCtAccesos = new javax.swing.JMenuItem();
         mnCtMiPerfil = new javax.swing.JMenuItem();
@@ -833,28 +833,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtPlandeClase.setText("Plan de clase");
         mnTipoNotas.add(mnCtPlandeClase);
 
-        mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
-        mnCtUsuarios.setText("Usuarios");
-        mnTipoNotas.add(mnCtUsuarios);
-
-        mnCtRoles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
-        mnCtRoles.setText("Roles usuarios");
-        mnTipoNotas.add(mnCtRoles);
-
-        mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
-        mnCtHistorialUsers.setText("Historial usuarios");
-        mnTipoNotas.add(mnCtHistorialUsers);
-
         mnNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas.setText("Notas");
 
-        mnCtPrdIngrNotas.setText("Consultar períodos de notas");
-        mnCtPrdIngrNotas.addActionListener(new java.awt.event.ActionListener() {
+        mnCtNotasDuales.setText("Registro Notas Duales");
+        mnCtNotasDuales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCtPrdIngrNotasActionPerformed(evt);
+                mnCtNotasDualesActionPerformed(evt);
             }
         });
-        mnNotas.add(mnCtPrdIngrNotas);
+        mnNotas.add(mnCtNotasDuales);
 
         mnCtTipoNotas.setText("Tipos de notas");
         mnNotas.add(mnCtTipoNotas);
@@ -874,6 +862,18 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.add(mnCtRendimientoAcademico);
 
         mnTipoNotas.add(mnNotas);
+
+        mnCtUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_Groups_20px.png"))); // NOI18N
+        mnCtUsuarios.setText("Usuarios");
+        mnTipoNotas.add(mnCtUsuarios);
+
+        mnCtRoles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Protect_20px.png"))); // NOI18N
+        mnCtRoles.setText("Roles usuarios");
+        mnTipoNotas.add(mnCtRoles);
+
+        mnCtHistorialUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Analyze_20px_1.png"))); // NOI18N
+        mnCtHistorialUsers.setText("Historial usuarios");
+        mnTipoNotas.add(mnCtHistorialUsers);
 
         MnBiblioteca.setText("Biblioteca");
         mnTipoNotas.add(MnBiblioteca);
@@ -1049,9 +1049,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnIgPrdLectivoActionPerformed
 
-    private void mnCtPrdIngrNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtPrdIngrNotasActionPerformed
+    private void mnCtNotasDualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtNotasDualesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mnCtPrdIngrNotasActionPerformed
+    }//GEN-LAST:event_mnCtNotasDualesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1108,9 +1108,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtMiPerfil;
     private javax.swing.JMenuItem mnCtNotas;
+    private javax.swing.JMenuItem mnCtNotasDuales;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPlandeClase;
-    private javax.swing.JMenuItem mnCtPrdIngrNotas;
     private javax.swing.JMenuItem mnCtPrdLectivo;
     private javax.swing.JMenuItem mnCtRendimientoAcademico;
     private javax.swing.JMenuItem mnCtReportesEstado;

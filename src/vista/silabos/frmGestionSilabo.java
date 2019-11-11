@@ -7,7 +7,6 @@ package vista.silabos;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -56,7 +54,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
     public void setLblTotalGestion(JLabel lblTotalGestion) {
         this.lblTotalGestion = lblTotalGestion;
     }
-    
+
     public JButton getBtnGuardar() {
         return btnGuardar;
     }
@@ -859,7 +857,7 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
 
     public JLabel getLblGuardarEstrategia() {
         return lblGuardarEstrategia;
-        
+
     }
 
     public void setLblGuardarEstrategia(JLabel lblGuardarEstrategia) {
@@ -1944,5 +1942,4 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         }
     }
 
-    
 }
