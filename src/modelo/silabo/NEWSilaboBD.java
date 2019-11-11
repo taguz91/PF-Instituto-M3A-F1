@@ -1,6 +1,6 @@
 package modelo.silabo;
 
-import modelo.ConectarDB;
+import modelo.ConnDBPool;
 
 /**
  *
@@ -8,7 +8,13 @@ import modelo.ConectarDB;
  */
 public class NEWSilaboBD {
     
-    private final ConectarDB conecta = conecta;
+    private final ConnDBPool CON = ConnDBPool.single();
+    
+    private static final String INSERT = "INSERT INTO "
+            + "public.\"Silabo\"";
+    
+    
+    
     
     
     
