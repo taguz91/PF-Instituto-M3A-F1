@@ -62,13 +62,11 @@ import java.util.logging.Logger;
  *
  * @author Andres Ullauri
  */
-public class ControladorSilaboC {
+public class ControladorSilaboC extends AbstractSilaboCTR {
 
     private SilaboBD silaboNuevo;
 
     private SilaboMD silaboAnterior;
-
-    private VtnPrincipal principal;
 
     private frmConfiguracionSilabo configuracion;
 
@@ -77,8 +75,6 @@ public class ControladorSilaboC {
     private frmReferencias bibliografia;
 
     private UsuarioBD usuario;
-
-    private ConexionBD conexion;
 
     private List<CarreraMD> carrerasDocente;
 
@@ -91,8 +87,6 @@ public class ControladorSilaboC {
     private List<UnidadSilaboMD> unidadesSilabo;
 
     private List<EstrategiasUnidadMD> estrategiasSilabo;
-
-    private List<EstrategiasAprendizajeMD> estrategiasAprendizaje;
 
     private List<EvaluacionSilaboMD> evaluacionesSilabo;
 
@@ -110,11 +104,8 @@ public class ControladorSilaboC {
 
     private boolean cambioSilabo = false;
 
-    public ControladorSilaboC(VtnPrincipal principal, UsuarioBD usuario, ConexionBD conexion) {
-        this.principal = principal;
-        this.usuario = usuario;
-        this.conexion = conexion;
-
+    public ControladorSilaboC(SilaboMD modelo, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+        super(modelo, vtnPrincipal, conexion);
     }
 
     public void iniciarControlador() {
@@ -125,14 +116,14 @@ public class ControladorSilaboC {
 
         configuracion = new frmConfiguracionSilabo();
 
-        principal.getDpnlPrincipal().add(configuracion);
+        vtnPrincipal.getDpnlPrincipal().add(configuracion);
 
         configuracion.setTitle("Silabo");
 
         configuracion.show();
 
-        configuracion.setLocation((principal.getDpnlPrincipal().getSize().width - configuracion.getSize().width) / 2,
-                (principal.getDpnlPrincipal().getSize().height - configuracion.getSize().height) / 2);
+        configuracion.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - configuracion.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - configuracion.getSize().height) / 2);
 
         cargarComboCarreras();
 
@@ -184,7 +175,7 @@ public class ControladorSilaboC {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 configuracion.dispose();
-                principal.getMnCtSilabos().doClick();
+                vtnPrincipal.getMnCtSilabos().doClick();
 
             }
         });
@@ -353,14 +344,14 @@ public class ControladorSilaboC {
 
         mostrarTotalGestion();
 
-        principal.getDpnlPrincipal().add(gestion);
+        vtnPrincipal.getDpnlPrincipal().add(gestion);
 
         gestion.setTitle(silabo.getMateria().getNombre());
 
         gestion.show();
 
-        gestion.setLocation((principal.getDpnlPrincipal().getSize().width - gestion.getSize().width) / 2,
-                (principal.getDpnlPrincipal().getSize().height - gestion.getSize().height) / 2);
+        gestion.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - gestion.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - gestion.getSize().height) / 2);
 
         unidadesSilabo.forEach((umd) -> {
             gestion.getCmbUnidad().addItem("Unidad " + umd.getNumeroUnidad());
@@ -1015,7 +1006,7 @@ public class ControladorSilaboC {
                 int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar el proceso?", "Cancelar", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     gestion.dispose();
-                    principal.getMnCtSilabos().doClick();
+                    vtnPrincipal.getMnCtSilabos().doClick();
                 }
             }
 
@@ -1051,7 +1042,7 @@ public class ControladorSilaboC {
                 gestion.getBtnGuardar().setEnabled(false);
                 gestion.getBtnCancelar().setEnabled(false);
 
-                principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
+                vtnPrincipal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
 
                 if (silaboNuevo.getID() == null) {
                     //guardarArchivos();
@@ -1075,7 +1066,7 @@ public class ControladorSilaboC {
                     cambioSilabo = false;
                 }
 
-                principal.getLblEstado().setText("");
+                vtnPrincipal.getLblEstado().setText("");
 
                 gestion.getBtnCancelar().setEnabled(true);
 
@@ -1095,7 +1086,7 @@ public class ControladorSilaboC {
                 if (validarBiblioBase()) {
                     bibliografia.getBtnFinalizar().setEnabled(false);
                     bibliografia.getBtnCancelar().setEnabled(false);
-                    principal.getLblEstado().setText("Guardando silabo... Espere por favor");
+                    vtnPrincipal.getLblEstado().setText("Guardando silabo... Espere por favor");
                     if (silaboNuevo.getID() == null) {
                         //guardarArchivos();
                         aux = guardarSilabo();
@@ -1118,9 +1109,9 @@ public class ControladorSilaboC {
                         gestion.dispose();
                         bibliografia.dispose();
 
-                        principal.getMnCtSilabos().doClick();
+                        vtnPrincipal.getMnCtSilabos().doClick();
                     }
-                    principal.getLblEstado().setText("");
+                    vtnPrincipal.getLblEstado().setText("");
                     bibliografia.getBtnFinalizar().setEnabled(true);
 
                 } else {
@@ -1146,7 +1137,7 @@ public class ControladorSilaboC {
                         gestion.getBtnGuardar().setEnabled(false);
                         gestion.getBtnSiguiente().setEnabled(false);
                         gestion.getBtnCancelar().setEnabled(false);
-                        principal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
+                        vtnPrincipal.getLblEstado().setText("Guardando cambios en el silabo... Espere por favor");
 
                         try {
                             Thread.sleep(1000);
@@ -1173,7 +1164,7 @@ public class ControladorSilaboC {
 
                     }
 
-                    principal.getLblEstado().setText("");
+                    vtnPrincipal.getLblEstado().setText("");
 
                     if (!retroceso) {
                         gestion.setVisible(false);
@@ -1203,14 +1194,14 @@ public class ControladorSilaboC {
     public void citarReferencias(SilaboBD silabo, frmReferencias bibliografia) {
 
         System.out.println("------->entro");
-        principal.getDpnlPrincipal().add(bibliografia);
+        vtnPrincipal.getDpnlPrincipal().add(bibliografia);
         cargarBiblioteca();
         bibliografia.setTitle(silabo.getMateria().getNombre());
 
         bibliografia.show();
 
-        bibliografia.setLocation((principal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
-                (principal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
+        bibliografia.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - bibliografia.getSize().width) / 2,
+                (vtnPrincipal.getDpnlPrincipal().getSize().height - bibliografia.getSize().height) / 2);
 
         bibliografia.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -1283,7 +1274,7 @@ public class ControladorSilaboC {
                 if (reply == JOptionPane.YES_OPTION) {
                     bibliografia.dispose();
                     gestion.dispose();
-                    principal.getMnCtSilabos().doClick();
+                    vtnPrincipal.getMnCtSilabos().doClick();
                 }
             }
 
@@ -1918,8 +1909,7 @@ public class ControladorSilaboC {
 
             }
 
-            //estrategiasSilabo = EstrategiasUnidadBD.cargarEstrategiasU(conexion, silaboNuevo.getIdSilabo());
-            estrategiasAprendizaje = new ArrayList<>();
+
 
             //evaluacionesSilabo = EvaluacionSilaboBD.recuperarEvaluaciones(conexion, silaboNuevo.getIdSilabo());
             biblioteca = new ArrayList<>();
