@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
-import modelo.curso.SesionClaseMD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
 
@@ -307,10 +310,10 @@ public class CarreraBD extends CarreraMD {
     /*Obtener num de semanas de las carreras*/
     public ArrayList<CarreraMD> cargarNumdeSemanas(int id_prd) {
         String sql = "SELECT\n"
-                + "\"public\".\"Carreras\".carrera_semanas\n"
+                + "\"Carreras\".carrera_semanas\n"
                 + "FROM\n"
-                + "\"public\".\"Carreras\"\n"
-                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + "\"Carreras\"\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
                 + "WHERE \"PeriodoLectivo\".id_prd_lectivo = " + id_prd + "";
         ArrayList<CarreraMD> semanas = new ArrayList<>();
         conn = pool.getConnection();
@@ -362,5 +365,42 @@ public class CarreraBD extends CarreraMD {
         }
 
         return carrera;
+    }
+
+    public static List<CarreraMD> findBy(String cedulaDocente) {
+        String SELECT = ""
+                + "SELECT DISTINCT\n"
+                + "	\"Carreras\".id_carrera,\n"
+                + "	\"Carreras\".carrera_nombre \n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"Docentes\".docente_codigo = '" + CONS.USUARIO.getPersona().getIdentificacion() + "'"
+                + "";
+
+        List<CarreraMD> carreras = new ArrayList<>();
+
+        ConnDBPool pool = new ConnDBPool();
+        Connection conn = pool.getConnection();
+        ResultSet rs = pool.ejecutarQuery(SELECT, conn, null);
+
+        try {
+            while (rs.next()) {
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                carrera.setNombre(rs.getString("carrera_nombre"));
+                carreras.add(carrera);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarreraBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.closeStmt().close(rs).close(conn);
+        }
+
+        return carreras;
+
     }
 }

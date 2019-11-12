@@ -160,7 +160,7 @@ public abstract class AbstracForm {
                 .entrySet()
                 .stream()
                 .filter(item -> item.getKey().equalsIgnoreCase(vista.getCmbPeriodoLectivo().getSelectedItem().toString()))
-                .map(c -> c.getValue().getId())
+                .map(c -> c.getValue().getID())
                 .findFirst()
                 .get();
     }
@@ -210,7 +210,7 @@ public abstract class AbstracForm {
                 tipo.setValorMaximo(new Double(vista.getTblTipoNota().getValueAt(index, 2).toString()));
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-                periodo.setPeriodo(getIdPeriodo());
+                periodo.setID(getIdPeriodo());
                 tipo.setPeriodoLectivo(periodo);
                 listaTipos.add(tipo);
 

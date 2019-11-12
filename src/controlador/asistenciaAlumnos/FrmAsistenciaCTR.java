@@ -196,7 +196,7 @@ public class FrmAsistenciaCTR {
     private void setLblCarrera() {
 
         vista.getLblCarreraAsistencia()
-                .setText(listaPeriodos.stream().filter(item -> item.getId() == getIdPeriodoLectivo())
+                .setText(listaPeriodos.stream().filter(item -> item.getID() == getIdPeriodoLectivo())
                         .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
     }
 
@@ -219,7 +219,7 @@ public class FrmAsistenciaCTR {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setPeriodo(getIdPeriodoLectivo());
+            periodo.setID(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCicloAsis().getSelectedItem().toString());
 
@@ -341,7 +341,7 @@ public class FrmAsistenciaCTR {
         try {
             String periodo = vista.getCmbPeriodoLectivoAsis().getSelectedItem().toString();
             return listaPeriodos.stream().filter(item -> item.getNombre().equals(periodo))
-                    .map(c -> c.getId()).findAny().orElse(-1);
+                    .map(c -> c.getID()).findAny().orElse(-1);
         } catch (NullPointerException e) {
         }
         return -1;

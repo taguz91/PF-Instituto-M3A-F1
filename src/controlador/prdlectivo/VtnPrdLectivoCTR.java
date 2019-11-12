@@ -146,7 +146,7 @@ public class VtnPrdLectivoCTR extends DCTR {
 
 //            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
 //                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getId(), i, 0);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getID(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre(), i, 2);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
@@ -232,7 +232,7 @@ public class VtnPrdLectivoCTR extends DCTR {
                 int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                 int result = JOptionPane.showConfirmDialog(null, "El Período Lectivo que seleccionó esta Cerrado\n ¿Desea Abrir este Período Lectivo? ", " Abrir Período Lectivo ", dialog);
                 if (result == 0) {
-                    if (bdPerLectivo.abrirPeriodo(periodo.getId()) == true) {
+                    if (bdPerLectivo.abrirPeriodo(periodo.getID()) == true) {
                         JOptionPane.showMessageDialog(null, "Período Lectivo Abierto Satisfactoriamente");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo abrir este Período Lectivo");
@@ -271,7 +271,7 @@ public class VtnPrdLectivoCTR extends DCTR {
         if (posFila >= 0) {
             try {
                 Map parametro = new HashMap();
-                parametro.put("periodo", periodos.get(posFila).getId());
+                parametro.put("periodo", periodos.get(posFila).getID());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Lista de Docente por Periodo Lectivo");
                 System.out.println(parametro);

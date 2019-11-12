@@ -196,10 +196,10 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
         posPrd = vtnAR.getCmbPrdLectivos().getSelectedIndex();
         if (posPrd > 0) {
             if (vtnAR.getCbxEliminados().isSelected()) {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getId());
+                almsCursosRetirados = acrb.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getID());
                 llenarTblAlmRetirado(almsCursosRetirados);
             } else {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getId());
+                almsCursosRetirados = acrb.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getID());
                 llenarTblAlmRetirado(almsCursosRetirados);
             }
         }

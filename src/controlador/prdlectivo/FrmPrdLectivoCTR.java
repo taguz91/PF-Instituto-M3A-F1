@@ -242,7 +242,7 @@ public class FrmPrdLectivoCTR extends DCTR {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(bdPerLectivo, carrera);
-                periodo.setPeriodo(id_PeriodoLectivo);
+                periodo.setID(id_PeriodoLectivo);
                 if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
@@ -289,7 +289,7 @@ public class FrmPrdLectivoCTR extends DCTR {
 
     //Extrae los datos de los objetos y los pasa a los componentes de un respectivo Período Lectivo
     public void editar(PeriodoLectivoMD mdPerLectivo, CarreraMD mdCarrera) {
-        id_PeriodoLectivo = mdPerLectivo.getId();
+        id_PeriodoLectivo = mdPerLectivo.getID();
         editar = true;
         Calendar calendar_Inicio = Calendar.getInstance();
         calendar_Inicio.clear();

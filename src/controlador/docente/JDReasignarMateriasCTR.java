@@ -136,7 +136,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
         for (int i = frmReasignarMateria.getTblDocentesDisponibles().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getId(), docenteMD.getIdDocente());
+        List<CursoMD> lista = d.capturarMaterias(p.buscarPeriodo(periodo).getID(), docenteMD.getIdDocente());
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);

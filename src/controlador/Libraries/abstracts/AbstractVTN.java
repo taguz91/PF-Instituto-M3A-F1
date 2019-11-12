@@ -5,8 +5,11 @@ import controlador.principal.VtnPrincipalCTR;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.CONS;
+import modelo.usuario.UsuarioMD;
 
 /**
  *
@@ -23,24 +26,10 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     protected DefaultTableModel tableM;
     protected List<M> lista;
 
+    protected final UsuarioMD user = CONS.USUARIO;
+
     public AbstractVTN(VtnPrincipalCTR desktop) {
         this.desktop = desktop;
-    }
-
-    public V getVista() {
-        return vista;
-    }
-
-    public void setVista(V vista) {
-        this.vista = vista;
-    }
-
-    public VtnPrincipalCTR getDesktop() {
-        return desktop;
-    }
-
-    public JTable getTable() {
-        return table;
     }
 
     public void setTable(JTable table) {
@@ -49,24 +38,17 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
 
     }
 
-    public M getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(M modelo) {
-        this.modelo = modelo;
-    }
-
     public DefaultTableModel getTableM() {
         return tableM;
     }
 
-    public List<M> getLista() {
-        return lista;
-    }
-
-    public void setLista(List<M> lista) {
-        this.lista = lista;
+    public Integer getSelectedRow() {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
+            return null;
+        }
+        return row;
     }
 
     /**
@@ -77,6 +59,7 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     }
 
     protected void cargarTabla(Consumer<M> cargador) {
+        tableM.setRowCount(0);
         lista.forEach(cargador);
     }
 

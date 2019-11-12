@@ -17,7 +17,7 @@ public class VtnComprobantesCTR extends AbstractVTN<VtnComprobantes, Comprobante
         super(desktop);
 
     }
-
+    /*
     @Override
     public void Init() {
         setModelo(new ComprobanteMD());
@@ -39,5 +39,6 @@ public class VtnComprobantesCTR extends AbstractVTN<VtnComprobantes, Comprobante
             });
         };
     }
+     */
 
 }

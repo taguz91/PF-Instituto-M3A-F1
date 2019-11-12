@@ -52,7 +52,7 @@ public class ComprobanteBD {
                 comprobante.setId(rs.getInt("id_comprobante"));
 
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD()
-                        .setPeriodo(rs.getInt("id_prd_lectivo"))
+                        .setID(rs.getInt("id_prd_lectivo"))
                         .setNombre(rs.getString("prd_lectivo_nombre"));
 
                 comprobante.setPeriodo(periodo);

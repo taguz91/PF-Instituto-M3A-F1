@@ -302,7 +302,7 @@ public class FrmCursoCTR extends DCTR {
             if (!editando) {
                 CursoMD existeCurso = curso.existeDocenteMateria(materias.get(posMat - 1).getId(),
                         docentes.get(posDoc - 1).getIdDocente(), jornadas.get(posJrd - 1).getId(),
-                        periodos.get(posPrd - 1).getId(), ciclo, paralelo);
+                        periodos.get(posPrd - 1).getID(), ciclo, paralelo);
 
                 if (existeCurso != null) {
                     guardar = false;
@@ -312,7 +312,7 @@ public class FrmCursoCTR extends DCTR {
                     frmCurso.getLblError().setVisible(false);
 
                     existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
-                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getId(),
+                            jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getID(),
                             paralelo);
                     if (existeCurso != null) {
                         guardar = false;

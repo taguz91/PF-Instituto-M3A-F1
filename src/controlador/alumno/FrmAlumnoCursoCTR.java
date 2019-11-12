@@ -315,7 +315,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
 
                 //Se ingresa matricula
                 MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                        periodos.get(posPrd - 1).getId());
+                        periodos.get(posPrd - 1).getID());
 
                 if (m != null) {
                     System.out.println("Ya esta matriculado: ");
@@ -333,7 +333,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     if (c == JOptionPane.YES_OPTION) {
                         //Imprimimos el reporte de matricula
                         llamaReporteMatricula(alumnosCarrera.get(posAlm).getAlumno().getIdentificacion(),
-                                periodos.get(posPrd - 1).getId());
+                                periodos.get(posPrd - 1).getID());
                     }
                 }
             }
@@ -425,9 +425,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
         if (posPrd > 0) {
             buscadoresEstado(true);
             frmAlmCurso.getLblNumMatriculas().setText(
-                    matri.numMaticulados(periodos.get(posPrd - 1).getId()) + "");
+                    matri.numMaticulados(periodos.get(posPrd - 1).getID()) + "");
             frmAlmCurso.getLblNumMatriculasClases().setText(
-                    matri.numMaticuladosClases(periodos.get(posPrd - 1).getId()) + "");
+                    matri.numMaticuladosClases(periodos.get(posPrd - 1).getID()) + "");
             //Cargamos informacion de la carrera que usaremos.
             carrera = car.buscarPorId(periodos.get(posPrd - 1).getCarrera().getId());
             mostrarInfoCarrera(carrera);
@@ -723,7 +723,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
      */
     private void cargarCmbCursos(int posPrd, int cicloCursado, int cicloReprobado) {
         frmAlmCurso.getCmbCurso().removeAllItems();
-        nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId(),
+        nombreCursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID(),
                 cicloReprobado, cicloCursado);
         if (nombreCursos != null) {
             frmAlmCurso.getCmbCurso().addItem("Seleccione");
@@ -749,12 +749,12 @@ public class FrmAlumnoCursoCTR extends DCTR {
         if (posPrd > 0 && posCurso > 0) {
             cursosPen = cur.buscarCursosPorNombreYPrdLectivo(
                     frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId());
+                    periodos.get(posPrd - 1).getID());
             //Cargamos todos los requisitos de este ciclo en esta carrera
             requisitos = matReq.buscarRequisitosPorCarrera(periodos.get(posPrd - 1).getCarrera().getId());
             //Cargamos el horario de este curso 
             hcurso = sesion.cargarHorarioCurso(frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId());
+                    periodos.get(posPrd - 1).getID());
             clasificarMateriasPendientes(cursosPen);
         } else {
             mdMatPen.setRowCount(0);
@@ -1184,7 +1184,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
             CambioPnlCTR.cambioPnl(jd.getPnlHorario(), pnl);
             PnlHorarioCursoCTR ctr = new PnlHorarioCursoCTR(pnl,
                     frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId(), ctrPrin.getConecta());
+                    periodos.get(posPrd - 1).getID(), ctrPrin.getConecta());
             ctr.iniciar();
             jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
             jd.setVisible(true);

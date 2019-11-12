@@ -88,7 +88,7 @@ public abstract class AbstractVtn {
     
     protected void setLblCarrera() {
         vista.getLblCarrera()
-                .setText(listaPeriodos.stream().filter(item -> item.getId() == getIdPeriodoLectivo())
+                .setText(listaPeriodos.stream().filter(item -> item.getID() == getIdPeriodoLectivo())
                         .map(c -> c.getCarrera().getNombre()).findFirst().orElse(""));
         
     }
@@ -114,7 +114,7 @@ public abstract class AbstractVtn {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setPeriodo(getIdPeriodoLectivo());
+            periodo.setID(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
             
@@ -145,7 +145,7 @@ public abstract class AbstractVtn {
         try {
             String periodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
             return listaPeriodos.stream().filter(item -> item.getNombre().equals(periodo))
-                    .map(c -> c.getId()).findAny().orElse(-1);
+                    .map(c -> c.getID()).findAny().orElse(-1);
         } catch (NullPointerException e) {
         }
         return -1;

@@ -55,7 +55,7 @@ public class CursoBD extends CursoMD {
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
                 + "	curso_paralelo)\n"
-                + "	VALUES (" + getMateria().getId() + ", " + getPeriodo().getId()
+                + "	VALUES (" + getMateria().getId() + ", " + getPeriodo().getID()
                 + ", " + getDocente().getIdDocente() + ", " + getJornada().getId()
                 + ", '" + getNombre() + "', " + getCapacidad() + ", " + getCiclo()
                 + ", '" + getParalelo() + "');";
@@ -68,7 +68,7 @@ public class CursoBD extends CursoMD {
     public void editarCurso(int idCurso) {
         String nsql = "UPDATE public.\"Cursos\"\n"
                 + "	SET id_materia=" + getMateria().getId() + ", "
-                + " id_prd_lectivo=" + getPeriodo().getId() + ", "
+                + " id_prd_lectivo=" + getPeriodo().getID() + ", "
                 + "id_docente= " + getDocente().getIdDocente() + ", "
                 + "id_jornada=" + getJornada().getId() + ", "
                 + "curso_nombre='" + getNombre() + "', curso_capacidad=" + getCapacidad() + ", "
@@ -114,7 +114,7 @@ public class CursoBD extends CursoMD {
                 + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
                 + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
                 + "	curso_paralelo, curso_activo)\n"
-                + "	VALUES (" + c.getMateria().getId() + ", " + c.getPeriodo().getId()
+                + "	VALUES (" + c.getMateria().getId() + ", " + c.getPeriodo().getID()
                 + ", " + c.getDocente().getIdDocente() + ", " + c.getJornada().getId()
                 + ", '" + c.getNombre() + "', " + c.getCapacidad() + ", " + c.getCiclo()
                 + ", '" + c.getParalelo() + "', true);";
@@ -216,7 +216,7 @@ public class CursoBD extends CursoMD {
                     m.setId(rs.getInt("id_materia"));
                     c.setMateria(m);
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    p.setPeriodo(rs.getInt("id_prd_lectivo"));
+                    p.setID(rs.getInt("id_prd_lectivo"));
 
                     c.setPeriodo(p);
                     DocenteMD d = new DocenteMD();
@@ -690,7 +690,7 @@ public class CursoBD extends CursoMD {
                     m.setId(rs.getInt("id_materia"));
                     c.setMateria(m);
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    p.setPeriodo(rs.getInt("id_prd_lectivo"));
+                    p.setID(rs.getInt("id_prd_lectivo"));
 
                     c.setPeriodo(p);
                     DocenteMD d = new DocenteMD();
@@ -725,7 +725,7 @@ public class CursoBD extends CursoMD {
             m.setNombre(rs.getString("materia_nombre"));
             c.setMateria(m);
             PeriodoLectivoMD p = new PeriodoLectivoMD();
-            p.setPeriodo(rs.getInt("id_prd_lectivo"));
+            p.setID(rs.getInt("id_prd_lectivo"));
             p.setNombre(rs.getString("prd_lectivo_nombre"));
             c.setPeriodo(p);
             DocenteMD d = new DocenteMD();

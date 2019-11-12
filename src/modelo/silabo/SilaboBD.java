@@ -2,6 +2,7 @@ package modelo.silabo;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -40,7 +42,7 @@ public class SilaboBD extends SilaboMD {
                             + "	VALUES (?, ?)");
 
             st.setInt(1, getMateria().getId());
-            st.setInt(2, getPeriodo().getId());
+            st.setInt(2, getPeriodo().getID());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -85,7 +87,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstado(rs.getInt(7));
-                tmp.getPeriodo().setPeriodo(rs.getInt(8));
+                tmp.getPeriodo().setID(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
 
@@ -120,7 +122,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.setID(rs.getInt(1));
                 tmp.getMateria().setId(rs.getInt(2));
                 tmp.getMateria().setNombre(rs.getString(3));
-                tmp.getPeriodo().setPeriodo(rs.getInt(4));
+                tmp.getPeriodo().setID(rs.getInt(4));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(5).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(6).toLocalDate());
                 tmp.setEstado(rs.getInt(7));
@@ -157,7 +159,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstado(rs.getInt(7));
-                tmp.getPeriodo().setPeriodo(rs.getInt(8));
+                tmp.getPeriodo().setID(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
 
@@ -195,7 +197,7 @@ public class SilaboBD extends SilaboMD {
 
             st.setInt(1, getMateria().getId());
             st.setInt(2, getEstado());
-            st.setInt(3, getPeriodo().getId());
+            st.setInt(3, getPeriodo().getID());
             st.setInt(4, getID());
             st.executeUpdate();
             st.close();
@@ -318,7 +320,7 @@ public class SilaboBD extends SilaboMD {
                     + "	VALUES (?, ?, now())");
 
             st.setInt(1, s.getMateria().getId());
-            st.setInt(2, s.getPeriodo().getId());
+            st.setInt(2, s.getPeriodo().getID());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -401,7 +403,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstado(rs.getInt(7));
-                tmp.getPeriodo().setPeriodo(rs.getInt(8));
+                tmp.getPeriodo().setID(rs.getInt(8));
                 tmp.getPeriodo().setFechaInicio(rs.getDate(9).toLocalDate());
                 tmp.getPeriodo().setFechaFin(rs.getDate(10).toLocalDate());
 
@@ -448,7 +450,7 @@ public class SilaboBD extends SilaboMD {
                 tmp.getMateria().setHorasPracticas(rs.getInt(5));
                 tmp.getMateria().setHorasAutoEstudio(rs.getInt(6));
                 tmp.setEstado(rs.getInt(7));
-                tmp.getPeriodo().setPeriodo(rs.getInt(8));
+                tmp.getPeriodo().setID(rs.getInt(8));
                 tmp.getPeriodo().setNombre(rs.getString(9));
 
                 silabos.add(tmp);
@@ -482,9 +484,74 @@ public class SilaboBD extends SilaboMD {
         return silabo;
     }
 
-//    SELECT * FROM "Carreras" c 
-//JOIN "Docentes" d ON c.id_docente_coordinador=d.id_docente
-//JOIN "Personas" p ON p.id_persona=d.id_persona
-//JOIN "Usuarios" u ON u.id_persona=p.id_persona
-//WHERE u.usu_username='0103156675'
+    public static List<SilaboMD> findBy(String cedulaDocente, int idCarrera) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"Materias\".id_materia,\n"
+                + "	\"Materias\".materia_nombre,\n"
+                + "	\"Silabo\".fecha_silabo,\n"
+                + "	\"Silabo\".estado_silabo,\n"
+                + "	\"Silabo\".id_silabo \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
+                + "	INNER JOIN (\n"
+                + "	SELECT DISTINCT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_materia \n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "		INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "		AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
+                + "		AND \"Cursos\".id_prd_lectivo >= 20 \n"
+                + "	) AS info ON \"PeriodoLectivo\".id_prd_lectivo = info.id_prd_lectivo \n"
+                + "	AND \"Materias\".id_materia = info.id_materia \n"
+                + "ORDER BY\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo DESC,\n"
+                + "	\"Materias\".materia_nombre ASC"
+                + "";
+
+        List<SilaboMD> silabos = new ArrayList<>();
+
+        ConnDBPool pool = new ConnDBPool();
+        Connection conn = pool.getConnection();
+        ResultSet rs = pool.ejecutarQuery(SELECT, conn, null);
+
+        try {
+            while (rs.next()) {
+                SilaboMD silabo = new SilaboMD();
+
+                silabo.setID(rs.getInt("id_silabo"));
+                silabo.setEstado(rs.getInt("estado_silabo"));
+
+                silabo.setPeriodo(
+                        new PeriodoLectivoMD()
+                                .setID(rs.getInt("id_prd_lectivo"))
+                                .setNombre(rs.getString("prd_lectivo_nombre"))
+                );
+
+                silabo.setMateria(
+                        new MateriaMD()
+                                .setId(rs.getInt("id_materia"))
+                                .setNombre(rs.getString("materia_nombre"))
+                );
+
+                silabos.add(silabo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            pool.closeStmt().close(rs).close(conn);
+        }
+
+        return silabos;
+
+    }
+
 }

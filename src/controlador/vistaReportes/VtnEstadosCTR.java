@@ -81,7 +81,7 @@ public class VtnEstadosCTR {
     private int getIdPeriodo() {
         return periodos.stream()
                 .filter(item -> item.getNombre().equalsIgnoreCase(vista.getCmbPeriodos().getSelectedItem().toString()))
-                .map(c -> c.getId())
+                .map(c -> c.getID())
                 .findFirst()
                 .orElse(-1);
     }

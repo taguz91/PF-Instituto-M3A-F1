@@ -78,7 +78,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      * @return
      */
     private boolean validarFecha() {
-        LocalDate fi = prd.buscarFechaInicioPrd(matriculas.get(posFila).getPeriodo().getId());
+        LocalDate fi = prd.buscarFechaInicioPrd(matriculas.get(posFila).getPeriodo().getID());
         LocalDate fa = LocalDate.now();
         return fa.isBefore(fi.plusMonths(1));
     }
@@ -178,7 +178,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
-            matriculas = matr.cargarMatriculasPorPrd(periodos.get(posPrd - 1).getId());
+            matriculas = matr.cargarMatriculasPorPrd(periodos.get(posPrd - 1).getID());
             llenarTbl(matriculas);
         } else {
             cargarMatriculas();
@@ -317,7 +317,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
 
     private String selecCurso() {
         ArrayList<String> cursos = matr.cursosMatriculado(matriculas.get(posFila).getAlumno().getId_Alumno(),
-                matriculas.get(posFila).getPeriodo().getId());
+                matriculas.get(posFila).getPeriodo().getID());
         Object np = JOptionPane.showInputDialog(null,
                 "Cursos en los que se matriculo: ", "Matricula",
                 JOptionPane.QUESTION_MESSAGE, null,
@@ -340,7 +340,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repImpresionMatricula.jasper"));
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
-            parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId());
+            parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
@@ -356,7 +356,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculaSinFoto.jasper"));
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
-            parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId());
+            parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
         } catch (JRException ex) {
@@ -374,7 +374,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             try {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculadosPeriodo.jasper"));
                 Map parametro = new HashMap();
-                parametro.put("periodo", periodos.get(posCombo - 1).getId());
+                parametro.put("periodo", periodos.get(posCombo - 1).getID());
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
@@ -394,7 +394,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/cartaCompromiso.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("idAlumno", matriculas.get(posFila).getAlumno().getId_Alumno());
-                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId());
+                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
                 parametro.put("curso", curso);
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
@@ -412,7 +412,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/cartaNumMatricula.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("idAlumno", matriculas.get(posFila).getAlumno().getId_Alumno());
-                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getId());
+                parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
                 parametro.put("curso", curso);
                 parametro.put("numMatricula", numMatricula);
                 parametro.put("matricula", matricula);
@@ -446,7 +446,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repNumMatriculaPeriodo.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("matricula", numMatricula);
-                parametro.put("periodo", periodos.get(posPrd - 1).getId());
+                parametro.put("periodo", periodos.get(posPrd - 1).getID());
                 System.out.println("Parametros: " + parametro);
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
@@ -461,7 +461,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculasPeriodo.jasper"));
             Map parametro = new HashMap();
-            parametro.put("periodo", periodos.get(posPrd - 1).getId());
+            parametro.put("periodo", periodos.get(posPrd - 1).getID());
             System.out.println("Parametros: " + parametro);
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {

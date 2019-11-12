@@ -145,7 +145,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
     public void filtrarMaterias(String nombre_Periodo, List<Integer> num) {
         DocenteBD d = new DocenteBD(ctrPrin.getConecta());
         PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
-        lista = d.capturarMaterias(p.capturarIdPeriodo(nombre_Periodo).getId(), docenteMD.getIdDocente());
+        lista = d.capturarMaterias(p.capturarIdPeriodo(nombre_Periodo).getID(), docenteMD.getIdDocente());
 
         for (int x = 0; x < num.size(); x++) {
             for (int i = 0; i < lista.size(); i++) {
@@ -158,7 +158,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
         if(lista.isEmpty()){
             JOptionPane.showMessageDialog(null, "Todas las materias ya fueron reasignadas");
         }
-        periodo = p.capturarIdPeriodo(nombre_Periodo).getId();
+        periodo = p.capturarIdPeriodo(nombre_Periodo).getID();
     }
 
     public void llenarTabla() {
@@ -303,7 +303,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
             docente.setObservacion(Observacion);
             docente.setFechaFinContratacion(convertirDate(fecha));
             docente.setIdDocente(docenteMD.getIdDocente());
-            periodoMD.setPeriodo(periodoBD.capturarIdPeriodo(periodo).getId());
+            periodoMD.setID(periodoBD.capturarIdPeriodo(periodo).getID());
 
             curso.setPeriodo(periodoMD);
             curso.setDocente(docente);
@@ -323,7 +323,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
                     if (cont == lista.size()) {
                         JOptionPane.showMessageDialog(null, "Se finalizó el contrato del Docente con éxito");
                         frmFinContrato.getBtnReasignarMateria().setEnabled(true);
-                        this.periodo = periodoMD.getId();
+                        this.periodo = periodoMD.getID();
                         botoninformeDocente();
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este Docente");
@@ -331,7 +331,7 @@ public class JDFinContratacionCTR extends DVtnCTR {
                 } else {
                     JOptionPane.showMessageDialog(null, "Se finalizó el contrato del Docente");
                     frmFinContrato.getBtnReasignarMateria().setEnabled(true);
-                    this.periodo = periodoMD.getId();
+                    this.periodo = periodoMD.getID();
                     botoninformeDocente();
                 }
             } else {

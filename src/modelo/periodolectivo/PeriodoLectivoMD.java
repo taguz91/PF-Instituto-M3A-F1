@@ -30,11 +30,11 @@ public class PeriodoLectivoMD {
         this.carrera = carrera;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public PeriodoLectivoMD setPeriodo(int id) {
+    public PeriodoLectivoMD setID(int id) {
         this.id = id;
         return this;
     }
@@ -122,6 +122,11 @@ public class PeriodoLectivoMD {
 
     public PeriodoLectivoMD periodoBuilder(Consumer<PeriodoLectivoMD> builder) {
         builder.accept(this);
+        return this;
+    }
+
+    public PeriodoLectivoMD set(Consumer<PeriodoLectivoMD> consumer) {
+        consumer.accept(this);
         return this;
     }
 

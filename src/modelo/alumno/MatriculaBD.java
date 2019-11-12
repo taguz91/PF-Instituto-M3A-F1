@@ -26,7 +26,7 @@ public class MatriculaBD extends MatriculaMD {
     public void ingresar() {
         nsql = "INSERT INTO public.\"Matricula\"(\n"
                 + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getId() + ", '" + getTipo() + "');";
+                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getID() + ", '" + getTipo() + "');";
 
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) != null) {
@@ -127,7 +127,7 @@ public class MatriculaBD extends MatriculaMD {
                     PeriodoLectivoMD p = new PeriodoLectivoMD();
                     m.setId(rs.getInt("id_matricula"));
                     a.setId_Alumno(rs.getInt("id_alumno"));
-                    p.setPeriodo(rs.getInt("id_prd_lectivo"));
+                    p.setID(rs.getInt("id_prd_lectivo"));
                     m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
                     a.setIdentificacion(rs.getString("persona_identificacion"));
                     a.setPrimerNombre(rs.getString("persona_primer_nombre"));
