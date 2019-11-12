@@ -1218,7 +1218,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     /**
      * Mostramos la unidad
      */
-    public void mostrarUnidad() {
+    private void mostrarUnidad() {
         UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
         gestion.getTxtTitulo().setText(unidadSeleccionada.getTituloUnidad());

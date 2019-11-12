@@ -59,7 +59,7 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "s.id_materia, m.materia_nombre "
                 + FROM_SILABO
                 + " crr.carrera_nombre = ? "
-                + "AND p.id_persona = ? "
+                + " AND p.id_persona = ? "
                 + " AND prd_lectivo_nombre = ? ;";
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
