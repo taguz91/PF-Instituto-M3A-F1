@@ -50,7 +50,7 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmConfiguracionSilabo;
+import vista.silabos.VtnConfigSilabo;
 import vista.silabos.frmGestionSilabo;
 import vista.silabos.frmGestionSilabo.CheckListItem;
 import vista.silabos.frmGestionSilabo.CheckListRenderer;
@@ -68,7 +68,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     private SilaboMD silaboAnterior;
 
-    private frmConfiguracionSilabo configuracion = new frmConfiguracionSilabo();
+    private VtnConfigSilabo configuracion = new VtnConfigSilabo();
 
     private frmGestionSilabo gestion;
 
@@ -97,7 +97,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     public void iniciarControlador() {
 
         vtnPrincipal.getDpnlPrincipal().add(configuracion);
-        
+
         configuracion.setTitle("Silabo");
 
         configuracion.show();
@@ -106,7 +106,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - configuracion.getSize().height) / 2);
 
         cargarComboCarreras();
-
+        /*
         configuracion.getCmbCarrera().addActionListener((ActionEvent ae) -> {
 
             configuracion.getCmbPeriodo().removeAllItems();
@@ -122,7 +122,6 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getID());
 
         });
-
         configuracion.getBtnSiguiente().addActionListener((ActionEvent ae) -> {
 
             Optional<MateriaMD> materiaSeleccionada = materiasDocente.stream().
@@ -176,20 +175,21 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         });
 
         configuracion.getCmbCarrera().setSelectedIndex(0);
+         */
     }
 
     public void cargarComboCarreras() {
-
+/*
         carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
 
         carrerasDocente.forEach((cmd) -> {
             configuracion.getCmbCarrera().addItem(cmd.getNombre());
         });
-
+*/
     }
 
     public void cargarComboMaterias(int idCarrera, int idPeriodo) {
-
+        /*
         String[] parametros = {usuario.getUsername(), String.valueOf(idCarrera), String.valueOf(idPeriodo)};
 
         materiasDocente = MateriasBDS.consultar(conexion, parametros);
@@ -210,11 +210,11 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             configuracion.getBtnSiguiente().setEnabled(true);
 
         }
-
+         */
     }
 
     public void cargarComboPeriodos(int idMateria) {
-
+/*
         Integer[] parametros = {idMateria, usuario.getPersona().getIdPersona()};
         silabosAnteriores = SilaboBD.consultarAnteriores(conexion, parametros);
 
@@ -229,7 +229,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             configuracion.getCmbPeriodo().setEnabled(false);
             configuracion.getSpnUnidades().setEnabled(true);
         }
-
+*/
     }
 
     public void iniciarSilabo(SilaboBD silabo, SilaboMD silaboAnterior, int numUnidades) {

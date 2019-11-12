@@ -98,6 +98,7 @@ public class VtnSilabos extends AbstracView {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Silabos");
         setVisible(true);
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -182,7 +183,7 @@ public class VtnSilabos extends AbstracView {
         bgImprimirLayout.setVerticalGroup(
             bgImprimirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgImprimirLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblSeleccionDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)

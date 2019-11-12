@@ -4,7 +4,6 @@ import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.function.Consumer;
 import modelo.CONS;
@@ -80,7 +79,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnNuevo(ActionEvent e) {
-
+        VtnConfigSilaboCTR vtn = new VtnConfigSilaboCTR(desktop);
+        vtn.Init();
     }
 
     private void btnEditar(ActionEvent e) {

@@ -45,7 +45,7 @@ public class CONS {
     public static final String BD_NAME = "BDinsta";
     //public static final String BD_NAME = "BDnotas";
     public static String BD_PASS = "3113";
-    public static String BD_URL = "jdbc:postgresql://190.11.21.51:5432/BDinsta";
+    public static String BD_URL = "jdbc:postgresql://localhost:5432/BDinsta";
     public static final String DB_IP = "190.11.21.51";
 
     public static String getBDUser() {
