@@ -366,7 +366,7 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
                 + "	persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' \n"
                 + "	OR persona_identificacion ILIKE '%" + aguja + "%' \n"
                 + ") AND persona_activa = true;";
-        return null;
+        return consultaMallasTbl(sql);
     }
 
     private ArrayList<MallaAlumnoMD> consultaMallasTbl(String sql) {

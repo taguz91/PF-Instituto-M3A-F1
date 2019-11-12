@@ -308,7 +308,6 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 vtnMallaAlm.getCmbEstado().setEnabled(true);
                 if (!cargados) {
                     cargados = true;
-                    System.out.println("Se cargan los ciclos");
                     cargarCmbEstado();
                     ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
                     cargarCmbCiclos(ciclos);
@@ -446,7 +445,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             mallaAlm.cargarMallaPorCarrera(carreras.get(pos - 1).getId());
             vtnMallaAlm.setCursor(new Cursor(3));
             reporteGrande();
-            
+
         } else {
             JOptionPane.showMessageDialog(vtnMallaAlm, "Seleccione una carrera.");
         }
@@ -475,7 +474,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 reporteGrande();
             }
         } else {
-            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No tenemos datos para mostrar el reporte.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar la carrera y un alumno.");
         }
     }
 
@@ -487,7 +486,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             parametro.put("consulta", mallaAlm.getSql());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
-            
+
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         } finally {

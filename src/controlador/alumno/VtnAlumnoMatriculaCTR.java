@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.alumno;
 
 import controlador.principal.DVtnCTR;
@@ -57,9 +52,6 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
         iniciarBuscador();
         
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
-        
-        //cargarAlumnosMatriculas();
-        
         ctrPrin.agregarVtn(vtnMatri);
     }
     
