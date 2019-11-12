@@ -185,7 +185,7 @@ PRESENTACIÓN]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_presentacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="67" uuid="913cdad8-3785-4d53-85b4-4e9a5c44ef24"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="67" uuid="913cdad8-3785-4d53-85b4-4e9a5c44ef24"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

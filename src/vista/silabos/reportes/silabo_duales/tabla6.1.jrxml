@@ -79,7 +79,7 @@
 		</band>
 		<band height="50">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="50" uuid="517947e6-6356-40f7-83d0-eeffcb197c29"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="50" uuid="517947e6-6356-40f7-83d0-eeffcb197c29"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>

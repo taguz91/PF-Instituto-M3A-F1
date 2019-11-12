@@ -115,7 +115,7 @@ DE ENVIO]]></text>
 	<detail>
 		<band height="68" splitType="Stretch">
 			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="-1" y="0" width="41" height="67" uuid="04af889e-f04f-4346-bb29-2a171c935b64"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="-1" y="0" width="41" height="67" uuid="04af889e-f04f-4346-bb29-2a171c935b64"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

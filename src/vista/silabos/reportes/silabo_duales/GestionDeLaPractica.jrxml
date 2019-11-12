@@ -198,7 +198,7 @@ DE ENVIO]]></text>
 				<textFieldExpression><![CDATA[$F{indicador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="41" height="67" uuid="43b374b7-0cf5-4bae-a89b-7545ac1e1f4c"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="67" uuid="43b374b7-0cf5-4bae-a89b-7545ac1e1f4c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

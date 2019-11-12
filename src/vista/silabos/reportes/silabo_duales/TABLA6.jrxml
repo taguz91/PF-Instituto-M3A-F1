@@ -315,7 +315,7 @@ ENSEÑANZA]]></text>
 				<textElement verticalAlignment="Top" markup="styled">
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style isBold='true'> UNIDAD DIDÁCTICA:"
+				<textFieldExpression><![CDATA["<style isBold='true'>UNIDAD DIDÁCTICA: "
 + $F{numero_unidad}
 + " </style> \n\n"
 + "<style isBold='true'>" 

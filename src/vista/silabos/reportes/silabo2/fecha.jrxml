@@ -24,7 +24,8 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[" "+$F{fecha_silabo}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_silabo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
