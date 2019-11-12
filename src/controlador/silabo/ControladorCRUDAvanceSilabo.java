@@ -257,7 +257,7 @@ public class ControladorCRUDAvanceSilabo {
                 .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_periodo_lectivo = obj.getId();
+                    id_periodo_lectivo = obj.getID();
                 });
 
         return id_periodo_lectivo;

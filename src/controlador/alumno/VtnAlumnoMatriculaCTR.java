@@ -118,7 +118,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
-            almnMatricula = almMatri.getPorPeriodo(periodos.get(posPrd - 1).getId());
+            almnMatricula = almMatri.getPorPeriodo(periodos.get(posPrd - 1).getID());
             llenarTbl(almnMatricula);
         } else {
             cargarAlumnosMatriculas();

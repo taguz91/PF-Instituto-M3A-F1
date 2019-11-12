@@ -149,7 +149,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarTblPorPrd() {
         if (posPrd > 0) {
-            almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getId());
+            almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
     }
@@ -160,7 +160,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     private void cargarTblPorCiclo() {
         if (posCiclo > 0) {
             almns = alc.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
-                    periodos.get(posPrd - 1).getId());
+                    periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
     }
@@ -171,7 +171,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     private void cargarTblPorCurso() {
         if (posCur > 0) {
             almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1),
-                    periodos.get(posPrd - 1).getId());
+                    periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
     }
@@ -256,7 +256,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarCursoPorPrd() {
         if (posPrd > 0) {
-            cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId());
+            cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             vtnAlmnCurso.getCmbCursos().removeAllItems();
             if (cursos != null) {
                 vtnAlmnCurso.getCmbCursos().addItem("Todos");

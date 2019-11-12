@@ -8,7 +8,8 @@ package modelo.unidadSilabo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import modelo.evaluacionSilabo.EvaluacionSilabo;
+import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+
 import modelo.silabo.SilaboMD;
 
 /**
@@ -39,7 +40,7 @@ public class UnidadSilaboMD implements Serializable {
 
     private int horasAutonomoUnidad;
 
-    private List<EvaluacionSilabo> evaluacionSilaboList;
+    private List<EvaluacionSilaboMD> evaluacionSilaboList;
 
     private SilaboMD idSilabo;
     
@@ -163,11 +164,11 @@ public class UnidadSilaboMD implements Serializable {
         this.horasAutonomoUnidad = horasAutonomoUnidad;
     }
 
-    public List<EvaluacionSilabo> getEvaluacionSilaboList() {
+    public List<EvaluacionSilaboMD> getEvaluacionSilaboList() {
         return evaluacionSilaboList;
     }
 
-    public void setEvaluacionSilaboList(List<EvaluacionSilabo> evaluacionSilaboList) {
+    public void setEvaluacionSilaboList(List<EvaluacionSilaboMD> evaluacionSilaboList) {
         this.evaluacionSilaboList = evaluacionSilaboList;
     }
 

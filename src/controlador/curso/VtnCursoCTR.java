@@ -210,10 +210,10 @@ public class VtnCursoCTR extends DVtnCTR {
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
         if (posPrd > 0) {
             //Cargamos el combo de cursos por el periodo  
-            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getId());
+            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             cargarCmbCursos(nombresC);
             //Cargamos los cursos por periodo
-            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getId());
+            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             llenarTbl(cursos);
         } else {
             cargarCursos();
@@ -234,7 +234,7 @@ public class VtnCursoCTR extends DVtnCTR {
             llenarTbl(cursos);
         } else if (posNom > 0 && posPrd > 0) {
             cursos = curso.cargarCursosPorNombreYPrdLectivo(vtnCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getId());
+                    periodos.get(posPrd - 1).getID());
             llenarTbl(cursos);
         }
     }

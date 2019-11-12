@@ -32,7 +32,7 @@ public class FrmTipoNotaEditar extends AbstracForm {
 
         tabla = (DefaultTableModel) vista.getTblTipoNota().getModel();
 
-        ID_PERIODO = modelo.getPeriodoLectivo().getId();
+        ID_PERIODO = modelo.getPeriodoLectivo().getID();
 
         vista.getCmbPeriodoLectivo().addItem(modelo.getPeriodoLectivo().getNombre());
 

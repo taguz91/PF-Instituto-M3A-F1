@@ -279,7 +279,7 @@ public class ControladorCRUD {
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
 
-        if (silaboSeleccionado.get().getPeriodo().getId() != ultimo.getId()) {
+        if (silaboSeleccionado.get().getPeriodo().getID() != ultimo.getID()) {
 
             if (p == 1) {
                 return silaboSeleccionado.get();

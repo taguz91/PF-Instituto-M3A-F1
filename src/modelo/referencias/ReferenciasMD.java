@@ -3,7 +3,7 @@
 package modelo.referencias;
 
 import java.util.List;
-import modelo.referenciasSilabo.ReferenciaSilabo;
+import modelo.referenciasSilabo.ReferenciaSilaboMD;
 
 
 public class ReferenciasMD {
@@ -18,7 +18,7 @@ public class ReferenciasMD {
 
     private boolean existeEnBiblioteca;
 
-    private List<ReferenciaSilabo> referenciaSilaboList;
+    private List<ReferenciaSilaboMD> referenciaSilaboList;
 
     public ReferenciasMD() {
     }
@@ -70,11 +70,11 @@ public class ReferenciasMD {
         this.existeEnBiblioteca = existeEnBiblioteca;
     }
 
-    public List<ReferenciaSilabo> getReferenciaSilaboList() {
+    public List<ReferenciaSilaboMD> getReferenciaSilaboList() {
         return referenciaSilaboList;
     }
 
-    public void setReferenciaSilaboList(List<ReferenciaSilabo> referenciaSilaboList) {
+    public void setReferenciaSilaboList(List<ReferenciaSilaboMD> referenciaSilaboList) {
         this.referenciaSilaboList = referenciaSilaboList;
     }
     

@@ -3,35 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modelo.estrategiasAprendizaje;
 
 import java.util.List;
-import modelo.estrategiasUnidad.EstrategiasUnidad;
+import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 
 /**
- * 
+ *
  * @author Andres Ullauri
  */
 public class EstrategiasAprendizajeMD {
 
-    
     private Integer idEstrategia;
 
     private String descripcionEstrategia;
-  
 
-    private List<EstrategiasUnidad> estrategiasUnidadList;
+    private List<EstrategiasUnidadMD> estrategiasUnidadList;
 
     public EstrategiasAprendizajeMD() {
     }
-    
-    
 
-    public EstrategiasAprendizajeMD( String descripcionEstrategia) {
-        
+    public EstrategiasAprendizajeMD(String descripcionEstrategia) {
+
         this.descripcionEstrategia = descripcionEstrategia;
-       
+
     }
 
     public Integer getIdEstrategia() {
@@ -50,15 +45,12 @@ public class EstrategiasAprendizajeMD {
         this.descripcionEstrategia = descripcionEstrategia;
     }
 
-    public List<EstrategiasUnidad> getEstrategiasUnidadList() {
+    public List<EstrategiasUnidadMD> getEstrategiasUnidadList() {
         return estrategiasUnidadList;
     }
 
-    public void setEstrategiasUnidadList(List<EstrategiasUnidad> estrategiasUnidadList) {
+    public void setEstrategiasUnidadList(List<EstrategiasUnidadMD> estrategiasUnidadList) {
         this.estrategiasUnidadList = estrategiasUnidadList;
     }
-    
-    
-    
-    
+
 }

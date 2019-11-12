@@ -10,7 +10,7 @@ public class MateriaMD {
 
     private int id;
     private CarreraMD carrera;
-    private EjeFormacionMD eje; 
+    private EjeFormacionMD eje;
     private String codigo;
     private String nombre;
     private int ciclo;
@@ -21,7 +21,7 @@ public class MateriaMD {
     private int horasDocencia;
     private int horasPracticas;
     private int horasAutoEstudio;
-    private int horasPresenciales; 
+    private int horasPresenciales;
     private int totalHoras;
     private String objetivo;
     private String descripcion;
@@ -29,6 +29,7 @@ public class MateriaMD {
     private String organizacioncurricular;
     private String materiacampoformacion;
     private boolean materiaNucleo, materiaActiva;
+
     public MateriaMD() {
     }
 
@@ -57,182 +58,202 @@ public class MateriaMD {
         this.materiaNucleo = materiaNucleo;
     }
 
-    
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public MateriaMD setId(int id) {
         this.id = id;
+        return this;
     }
 
     public CarreraMD getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(CarreraMD carrera) {
+    public MateriaMD setCarrera(CarreraMD carrera) {
         this.carrera = carrera;
+        return this;
     }
 
     public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public MateriaMD setCodigo(String codigo) {
         this.codigo = codigo;
+        return this;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public MateriaMD setNombre(String nombre) {
         this.nombre = nombre;
+        return this;
     }
 
     public int getCiclo() {
         return ciclo;
     }
 
-    public void setCiclo(int ciclo) {
+    public MateriaMD setCiclo(int ciclo) {
         this.ciclo = ciclo;
+        return this;
     }
 
     public int getCreditos() {
         return creditos;
     }
 
-    public void setCreditos(int creditos) {
+    public MateriaMD setCreditos(int creditos) {
         this.creditos = creditos;
+        return this;
     }
 
     public char getTipo() {
         return tipo;
     }
 
-    public void setTipo(char tipo) {
+    public MateriaMD setTipo(char tipo) {
         this.tipo = tipo;
+        return this;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public MateriaMD setCategoria(String categoria) {
         this.categoria = categoria;
+        return this;
     }
 
     public EjeFormacionMD getEje() {
         return eje;
     }
 
-    public void setEje(EjeFormacionMD eje) {
+    public MateriaMD setEje(EjeFormacionMD eje) {
         this.eje = eje;
+        return this;
     }
 
     public char getTipoAcreditacion() {
         return tipoAcreditacion;
     }
 
-    public void setTipoAcreditacion(char tipoAcreditacion) {
+    public MateriaMD setTipoAcreditacion(char tipoAcreditacion) {
         this.tipoAcreditacion = tipoAcreditacion;
+        return this;
     }
 
     public int getHorasDocencia() {
         return horasDocencia;
     }
 
-    public void setHorasDocencia(int horasDocencia) {
+    public MateriaMD setHorasDocencia(int horasDocencia) {
         this.horasDocencia = horasDocencia;
+        return this;
     }
 
     public int getHorasPresenciales() {
         return horasPresenciales;
     }
 
-    public void setHorasPresenciales(int horasPresenciales) {
+    public MateriaMD setHorasPresenciales(int horasPresenciales) {
         this.horasPresenciales = horasPresenciales;
+        return this;
     }
 
     public int getHorasPracticas() {
         return horasPracticas;
     }
 
-    public void setHorasPracticas(int horasPracticas) {
+    public MateriaMD setHorasPracticas(int horasPracticas) {
         this.horasPracticas = horasPracticas;
+        return this;
     }
 
     public int getHorasAutoEstudio() {
         return horasAutoEstudio;
     }
 
-    public void setHorasAutoEstudio(int horasAutoEstudio) {
+    public MateriaMD setHorasAutoEstudio(int horasAutoEstudio) {
         this.horasAutoEstudio = horasAutoEstudio;
+        return this;
     }
 
     public int getTotalHoras() {
         return totalHoras;
     }
 
-    public void setTotalHoras(int totalHoras) {
+    public MateriaMD setTotalHoras(int totalHoras) {
         this.totalHoras = totalHoras;
+        return this;
     }
 
     public String getObjetivo() {
         return objetivo;
     }
 
-    public void setObjetivo(String objetivo) {
+    public MateriaMD setObjetivo(String objetivo) {
         this.objetivo = objetivo;
+        return this;
     }
 
     public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public MateriaMD setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+        return this;
     }
 
     public String getObjetivoespecifico() {
         return objetivoespecifico;
     }
 
-    public void setObjetivoespecifico(String objetivoespecifico) {
+    public MateriaMD setObjetivoespecifico(String objetivoespecifico) {
         this.objetivoespecifico = objetivoespecifico;
+        return this;
     }
 
     public String getOrganizacioncurricular() {
         return organizacioncurricular;
     }
 
-    public void setOrganizacioncurricular(String organizacioncurricular) {
+    public MateriaMD setOrganizacioncurricular(String organizacioncurricular) {
         this.organizacioncurricular = organizacioncurricular;
+        return this;
     }
 
     public String getMateriacampoformacion() {
         return materiacampoformacion;
     }
 
-    public void setMateriacampoformacion(String materiacampoformacion) {
+    public MateriaMD setMateriacampoformacion(String materiacampoformacion) {
         this.materiacampoformacion = materiacampoformacion;
+        return this;
     }
 
     public boolean isMateriaNucleo() {
         return materiaNucleo;
     }
 
-    public void setMateriaNucleo(boolean materiaNucleo) {
+    public MateriaMD setMateriaNucleo(boolean materiaNucleo) {
         this.materiaNucleo = materiaNucleo;
+        return this;
     }
 
     public boolean isMateriaActiva() {
         return materiaActiva;
     }
 
-    public void setMateriaActiva(boolean materiaActiva) {
+    public MateriaMD setMateriaActiva(boolean materiaActiva) {
         this.materiaActiva = materiaActiva;
+        return this;
     }
-    
-    
+
 }

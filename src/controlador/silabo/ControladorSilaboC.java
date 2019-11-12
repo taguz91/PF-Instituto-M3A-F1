@@ -119,7 +119,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
             configuracion.getCmbAsignatura().removeAllItems();
             System.out.println("-------------------" + periodosCarrera.get(0).getNombre());
-            cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getId());
+            cargarComboMaterias(carreraSeleccionada.get().getId(), periodosCarrera.get(0).getID());
 
         });
 
@@ -1723,7 +1723,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     }
 
     public int insertarUnidades() {
-        silaboNuevo.setID(SilaboBD.consultarUltimo(conexion, silaboNuevo.getMateria().getId(), silaboNuevo.getPeriodo().getId()).getID());
+        silaboNuevo.setID(SilaboBD.consultarUltimo(conexion, silaboNuevo.getMateria().getId(), silaboNuevo.getPeriodo().getID()).getID());
 
         for (UnidadSilaboMD umd : unidades) {
             umd.getIdSilabo().setID(silaboNuevo.getID());

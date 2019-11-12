@@ -152,7 +152,7 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
     private void llenarTbl() {
         mdTbl.setRowCount(0);
         almnsCurso = almCur.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
-                matricula.getPeriodo().getId());
+                matricula.getPeriodo().getID());
         almnsCurso.forEach(ac -> {
             Object[] v = {ac.getCurso().getMateria().getNombre(),
                 ac.getCurso().getNombre()};

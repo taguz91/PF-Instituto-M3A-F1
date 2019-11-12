@@ -144,7 +144,7 @@ public class VtnControlUBCTR {
 
         vista.getLblCarrera().setText(listaPeriodos
                 .stream()
-                .filter(item -> item.getId() == getIdPeriodoLectivo())
+                .filter(item -> item.getID() == getIdPeriodoLectivo())
                 .map(c -> c.getCarrera().getNombre())
                 .findFirst()
                 .orElse("")
@@ -174,7 +174,7 @@ public class VtnControlUBCTR {
             docente.setIdDocente(getIdDocente());
             curso.setDocente(docente);
             PeriodoLectivoMD periodo = new PeriodoLectivoMD();
-            periodo.setPeriodo(getIdPeriodoLectivo());
+            periodo.setID(getIdPeriodoLectivo());
             curso.setPeriodo(periodo);
             curso.setNombre(vista.getCmbCiclo().getSelectedItem().toString());
 
@@ -230,7 +230,7 @@ public class VtnControlUBCTR {
             return listaPeriodos
                     .stream()
                     .filter(item -> item.getNombre().equals(periodo))
-                    .map(c -> c.getId())
+                    .map(c -> c.getID())
                     .findAny()
                     .orElse(-1);
         } catch (NullPointerException e) {

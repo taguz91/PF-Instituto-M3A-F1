@@ -506,7 +506,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 int posPrd = nmPrd.indexOf(np);
                 System.out.println("La posicion es: " + posPrd + " El nombre es: " + periodos.get(posPrd - 1).getNombre());
 
-                selecionarRol(periodos.get(posPrd - 1).getId());
+                selecionarRol(periodos.get(posPrd - 1).getID());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila de la tabla");

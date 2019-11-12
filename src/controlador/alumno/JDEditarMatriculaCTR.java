@@ -132,7 +132,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      */
     private void cambiarACurso(String curso) {
         cursos = cur.buscarCursosPorNombreYPrdLectivo(curso,
-                matricula.getPeriodo().getId());
+                matricula.getPeriodo().getID());
         int[] selecs = jd.getTblClasesActuales().getSelectedRows();
         for (int s : selecs) {
             for (int i = 0; i < cursos.size(); i++) {
@@ -173,7 +173,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      * @param ciclo
      */
     private void llenarCursosDisponibles(int ciclo) {
-        nomCursos = cur.cargarNombreCursosPorPeriodoCiclo(matricula.getPeriodo().getId(),
+        nomCursos = cur.cargarNombreCursosPorPeriodoCiclo(matricula.getPeriodo().getID(),
                 ciclo);
         ArrayList<String> nomAux = new ArrayList<>();
 
@@ -300,7 +300,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
         jd.getLblPeriodo().setText(matricula.getPeriodo().getNombre());
         jd.getLblFecha().setText(matricula.getSoloFecha());
         almnsCurso = almCur.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
-                matricula.getPeriodo().getId());
+                matricula.getPeriodo().getID());
         llenarTblMA(almnsCurso);
     }
 

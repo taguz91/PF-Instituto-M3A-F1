@@ -113,7 +113,7 @@ public class ReferenciasCRUDCTR {
         } else if(frmCRUDBibliografiaC.getCmblibros().getSelectedIndex()>0){
          nombre= frmCRUDBibliografiaC.getCmblibros().getSelectedItem().toString();
         mo=BDbibliotecaC.retornaPRDlectivo(conexion, nombre);
-           List<ReferenciasMD> referencias = BDbibliotecaC.consultarBporperiodo(conexion,mo.getId());
+           List<ReferenciasMD> referencias = BDbibliotecaC.consultarBporperiodo(conexion,mo.getID());
         System.out.println("entro");
         DefaultTableModel modeloTabla;
 
@@ -141,13 +141,13 @@ public class ReferenciasCRUDCTR {
            // cargartablaperiodo();
         } else{
               try {
-                System.out.println(mo.getId());
+                System.out.println(mo.getID());
                 System.out.println("Imprimiendo.......");
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/biblioteca/referencias_x_carrera.jasper"));
                 Map parametro = new HashMap();
              
                 
-                parametro.put("id_prd_lectivo", String.valueOf(mo.getId()));
+                parametro.put("id_prd_lectivo", String.valueOf(mo.getID()));
                 
                 JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
                 JasperViewer pv = new JasperViewer(jp, false);

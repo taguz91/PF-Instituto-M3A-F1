@@ -7,7 +7,8 @@
 package modelo.tipoActividad;
 
 import java.util.List;
-import modelo.evaluacionSilabo.EvaluacionSilabo;
+import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+
 
 /**
  * 
@@ -21,7 +22,7 @@ public class TipoActividadMD {
    
     private String nombreSubtipoActividad;
     
-    private List<EvaluacionSilabo> evaluacionSilaboList;
+    private List<EvaluacionSilaboMD> evaluacionSilaboList;
 
     public TipoActividadMD() {
     }
@@ -56,11 +57,11 @@ public class TipoActividadMD {
         this.nombreSubtipoActividad = nombreSubtipoActividad;
     }
 
-    public List<EvaluacionSilabo> getEvaluacionSilaboList() {
+    public List<EvaluacionSilaboMD> getEvaluacionSilaboList() {
         return evaluacionSilaboList;
     }
 
-    public void setEvaluacionSilaboList(List<EvaluacionSilabo> evaluacionSilaboList) {
+    public void setEvaluacionSilaboList(List<EvaluacionSilaboMD> evaluacionSilaboList) {
         this.evaluacionSilaboList = evaluacionSilaboList;
     }
    

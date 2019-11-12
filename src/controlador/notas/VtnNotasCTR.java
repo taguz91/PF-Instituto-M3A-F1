@@ -234,7 +234,7 @@ public class VtnNotasCTR extends AbstractVtn {
     };
 
     private String getModalidad() {
-        return listaPeriodos.stream().filter(item -> item.getId() == getIdPeriodoLectivo())
+        return listaPeriodos.stream().filter(item -> item.getID() == getIdPeriodoLectivo())
                 .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
     }
 
