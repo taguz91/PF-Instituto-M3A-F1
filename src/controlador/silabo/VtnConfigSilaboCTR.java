@@ -9,6 +9,8 @@ import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.List;
 import modelo.carrera.CarreraMD;
+import modelo.materia.MateriaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.SilaboMD;
 import vista.silabos.VtnConfigSilabo;
 
@@ -19,6 +21,8 @@ import vista.silabos.VtnConfigSilabo;
 public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     private List<CarreraMD> carreras;
+    private List<MateriaMD> materias;
+    private List<PeriodoLectivoMD> periodos;
 
     public VtnConfigSilaboCTR(VtnPrincipalCTR desktop) {
         super(desktop);
@@ -29,6 +33,14 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
         METODOS
      */
     private void cargarCmbCarreras() {
+
+    }
+
+    private void cargarCmMaterias() {
+
+    }
+
+    private void cargarCmbPeriodosRef() {
 
     }
 }
