@@ -248,12 +248,16 @@ public class ConnDBPool {
         }
     }
 
-    public SQLException noSQLPOOL(PreparedStatement ps) {
+    public void noSQLPOOL(PreparedStatement ps) {
         try {
             ps.executeUpdate();
-            return null;
         } catch (SQLException e) {
-            return e;
+            JOptionPane.showMessageDialog(null,
+                    "Error al ejecutar el script. \n"
+                    + e.getMessage(),
+                    "Error SQL",
+                    JOptionPane.ERROR_MESSAGE
+            );
         } finally {
             try {
                 ps.getConnection().close();
@@ -297,6 +301,13 @@ public class ConnDBPool {
             );
         }
         return id;
+    }
+
+    public void cerrarCONPS(PreparedStatement ps) {
+        try {
+            ps.getConnection().close();
+        } catch (SQLException e) {
+        }
     }
 
 }
