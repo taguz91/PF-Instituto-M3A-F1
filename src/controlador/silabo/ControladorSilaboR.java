@@ -23,7 +23,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCargando1;
-import vista.silabos.frmSilabos;
+import vista.silabos.VtnSilabos;
 
 /**
  *
@@ -35,11 +35,11 @@ public class ControladorSilaboR {
 
     private ConexionBD conexion;
 
-    private frmSilabos crud;
+    private VtnSilabos crud;
 
     private VtnPrincipal principal;
 
-    public ControladorSilaboR(frmSilabos crud, SilaboMD silabo, ConexionBD conexion, VtnPrincipal principal) {
+    public ControladorSilaboR(VtnSilabos crud, SilaboMD silabo, ConexionBD conexion, VtnPrincipal principal) {
         this.silabo = silabo;
         this.conexion = conexion;
         this.crud = crud;

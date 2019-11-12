@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public abstract class AbstractVTN<V extends JInternalFrame, M> {
 
-    private V vista;
-    private final VtnPrincipalCTR desktop;
-    private JTable table;
-    private M modelo;
-    private DefaultTableModel tableM;
-    private List<M> lista;
+    protected V vista;
+    protected final VtnPrincipalCTR desktop;
+    protected JTable table;
+    protected M modelo;
+    protected DefaultTableModel tableM;
+    protected List<M> lista;
 
     public AbstractVTN(VtnPrincipalCTR desktop) {
         this.desktop = desktop;

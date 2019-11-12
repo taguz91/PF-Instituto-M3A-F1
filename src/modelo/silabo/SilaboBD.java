@@ -36,8 +36,8 @@ public class SilaboBD extends SilaboMD {
         try {
             PreparedStatement st = conexion.getCon()
                     .prepareStatement("INSERT INTO public.\"Silabo\"(\n"
-                    + "	 id_materia, id_prd_lectivo)\n"
-                    + "	VALUES (?, ?)");
+                            + "	 id_materia, id_prd_lectivo)\n"
+                            + "	VALUES (?, ?)");
 
             st.setInt(1, getMateria().getId());
             st.setInt(2, getPeriodo().getId());

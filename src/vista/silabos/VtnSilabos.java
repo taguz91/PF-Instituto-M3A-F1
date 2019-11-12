@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author Andres Ullauri
  */
-public class frmSilabos extends javax.swing.JInternalFrame {
+public class VtnSilabos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmSilabos
      */
-    public frmSilabos() {
+    public VtnSilabos() {
         initComponents();
 
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("vista/img/logo.png"));
@@ -29,80 +29,40 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         return cmbCarrera;
     }
 
-    public void setCmbCarrera(JComboBox<String> cmbCarrera) {
-        this.cmbCarrera = cmbCarrera;
-    }
-
     public JLabel getLblCarrera() {
         return lblCarrera;
-    }
-
-    public void setLblCarrera(JLabel lblCarrera) {
-        this.lblCarrera = lblCarrera;
     }
 
     public JButton getBtnEditar() {
         return btnEditar;
     }
 
-    public void setBtnEditar(JButton btnEditar) {
-        this.btnEditar = btnEditar;
-    }
-
     public JButton getBtnEliminar() {
         return btnEliminar;
-    }
-
-    public void setBtnEliminar(JButton btnEliminar) {
-        this.btnEliminar = btnEliminar;
     }
 
     public JButton getBtnImprimir() {
         return btnImprimir;
     }
 
-    public void setBtnImprimir(JButton btnImprimir) {
-        this.btnImprimir = btnImprimir;
-    }
-
     public JButton getBtnNuevo() {
         return btnNuevo;
-    }
-
-    public void setBtnNuevo(JButton btnNuevo) {
-        this.btnNuevo = btnNuevo;
     }
 
     public JLabel getLblBuscar() {
         return lblBuscar;
     }
 
-    public void setLblBuscar(JLabel lblBuscar) {
-        this.lblBuscar = lblBuscar;
-    }
-
     public JScrollPane getSrcSilabos() {
         return srcSilabos;
     }
 
-    public void setSrcSilabos(JScrollPane srcSilabos) {
-        this.srcSilabos = srcSilabos;
-    }
-
-    public JTable getTblSilabos() {
-        return tblSilabos;
-    }
-
-    public void setTblSilabos(JTable tblSilabos) {
-        this.tblSilabos = tblSilabos;
+    public JTable getTbl() {
+        return tbl;
     }
 
     public JTextField getTxtBuscar() {
         return txtBuscar;
-    }
-
-    public void setTxtBuscar(JTextField txtBuscar) {
-        this.txtBuscar = txtBuscar;
     }
 
     public JCheckBox getChxDualSemanas() {
@@ -119,19 +79,20 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         srcSilabos = new javax.swing.JScrollPane();
-        tblSilabos = new javax.swing.JTable();
+        tbl = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         lblBuscar = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
+        cmbCarrera = new javax.swing.JComboBox<>();
+        lblCarrera = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         btnGenerar = new javax.swing.JButton();
         chbSilabo = new javax.swing.JCheckBox();
         chbProgramaAnalitico = new javax.swing.JCheckBox();
         lblSeleccionDocumento = new javax.swing.JLabel();
-        cmbCarrera = new javax.swing.JComboBox<>();
-        lblCarrera = new javax.swing.JLabel();
         chxDualSemanas = new javax.swing.JCheckBox();
 
         setClosable(true);
@@ -140,7 +101,7 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         setResizable(true);
         setVisible(true);
 
-        tblSilabos.setModel(new javax.swing.table.DefaultTableModel(
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -163,20 +124,20 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblSilabos.setShowHorizontalLines(false);
-        srcSilabos.setViewportView(tblSilabos);
-        if (tblSilabos.getColumnModel().getColumnCount() > 0) {
-            tblSilabos.getColumnModel().getColumn(0).setResizable(false);
-            tblSilabos.getColumnModel().getColumn(1).setPreferredWidth(220);
-            tblSilabos.getColumnModel().getColumn(1).setMaxWidth(220);
-            tblSilabos.getColumnModel().getColumn(2).setMinWidth(140);
-            tblSilabos.getColumnModel().getColumn(2).setPreferredWidth(140);
-            tblSilabos.getColumnModel().getColumn(2).setMaxWidth(140);
-            tblSilabos.getColumnModel().getColumn(3).setMinWidth(0);
-            tblSilabos.getColumnModel().getColumn(3).setPreferredWidth(0);
-            tblSilabos.getColumnModel().getColumn(3).setMaxWidth(0);
-            tblSilabos.getColumnModel().getColumn(4).setResizable(false);
-            tblSilabos.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tbl.setShowHorizontalLines(false);
+        srcSilabos.setViewportView(tbl);
+        if (tbl.getColumnModel().getColumnCount() > 0) {
+            tbl.getColumnModel().getColumn(0).setResizable(false);
+            tbl.getColumnModel().getColumn(1).setPreferredWidth(220);
+            tbl.getColumnModel().getColumn(1).setMaxWidth(220);
+            tbl.getColumnModel().getColumn(2).setMinWidth(140);
+            tbl.getColumnModel().getColumn(2).setPreferredWidth(140);
+            tbl.getColumnModel().getColumn(2).setMaxWidth(140);
+            tbl.getColumnModel().getColumn(3).setMinWidth(0);
+            tbl.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tbl.getColumnModel().getColumn(3).setMaxWidth(0);
+            tbl.getColumnModel().getColumn(4).setResizable(false);
+            tbl.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
         lblBuscar.setText("Buscar:");
@@ -193,6 +154,10 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         });
 
         btnImprimir.setText("Imprimir");
+
+        lblCarrera.setText("Carrera:");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Opciones de Impresion"));
 
         btnGenerar.setText("Generar");
 
@@ -212,9 +177,38 @@ public class frmSilabos extends javax.swing.JInternalFrame {
 
         lblSeleccionDocumento.setText("Seleccione el documento:");
 
-        lblCarrera.setText("Carrera:");
-
         chxDualSemanas.setText("Silabos Duales / Semanas");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chxDualSemanas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chbSilabo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSeleccionDocumento))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(lblSeleccionDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chbSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chxDualSemanas, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,27 +226,20 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                             .addComponent(cmbCarrera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar))))
-                    .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar)
+                                .addGap(38, 38, 38)))
+                        .addGap(50, 50, 50)
+                        .addComponent(btnImprimir)
+                        .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chbProgramaAnalitico, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSeleccionDocumento)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(chxDualSemanas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(chbSilabo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnImprimir)))
-                .addGap(0, 14, Short.MAX_VALUE))
+                        .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,18 +258,12 @@ public class frmSilabos extends javax.swing.JInternalFrame {
                     .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(srcSilabos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblSeleccionDocumento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chbProgramaAnalitico)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chbSilabo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chxDualSemanas)
-                        .addGap(22, 22, 22)
-                        .addComponent(btnGenerar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addGap(15, 15, 15))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -304,33 +285,18 @@ public class frmSilabos extends javax.swing.JInternalFrame {
         return btnGenerar;
     }
 
-    public void setBtnGenerar(JButton btnGenerar) {
-        this.btnGenerar = btnGenerar;
-    }
-
     public JCheckBox getChbProgramaAnalitico() {
         return chbProgramaAnalitico;
-    }
-
-    public void setChbProgramaAnalitico(JCheckBox chbProgramaAnalitico) {
-        this.chbProgramaAnalitico = chbProgramaAnalitico;
     }
 
     public JCheckBox getChbSilabo() {
         return chbSilabo;
     }
 
-    public void setChbSilabo(JCheckBox chbSilabo) {
-        this.chbSilabo = chbSilabo;
-    }
-
     public JLabel getLblSeleccionDocumento() {
         return lblSeleccionDocumento;
     }
 
-    public void setLblSeleccionDocumento(JLabel lblSeleccionDocumento) {
-        this.lblSeleccionDocumento = lblSeleccionDocumento;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -342,11 +308,12 @@ public class frmSilabos extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox chbSilabo;
     private javax.swing.JCheckBox chxDualSemanas;
     private javax.swing.JComboBox<String> cmbCarrera;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblSeleccionDocumento;
     private javax.swing.JScrollPane srcSilabos;
-    private javax.swing.JTable tblSilabos;
+    private javax.swing.JTable tbl;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

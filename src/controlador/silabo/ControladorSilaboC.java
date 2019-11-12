@@ -68,7 +68,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     private SilaboMD silaboAnterior;
 
-    private frmConfiguracionSilabo configuracion;
+    private frmConfiguracionSilabo configuracion = new frmConfiguracionSilabo();
 
     private frmGestionSilabo gestion;
 
@@ -96,9 +96,8 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
     public void iniciarControlador() {
 
-
         vtnPrincipal.getDpnlPrincipal().add(configuracion);
-
+        
         configuracion.setTitle("Silabo");
 
         configuracion.show();
