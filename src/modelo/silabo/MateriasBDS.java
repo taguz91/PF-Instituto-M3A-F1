@@ -36,7 +36,7 @@ public class MateriasBDS extends MateriaMD {
     public MateriasBDS(int id, CarreraMD carrera, EjeFormacionMD eje, String codigo, String nombre, int ciclo, int creditos, char tipo, String categoria, char tipoAcreditacion, int horasDocencia, int horasPracticas, int horasAutoEstudio, int horasPresenciales, int totalHoras, String objetivo, String descripcion, String objetivoespecifico, String organizacioncurricular, String materiacampoformacion, boolean materiaNucleo, boolean materiaActiva) {
         super(id, carrera, eje, codigo, nombre, ciclo, creditos, tipo, categoria, tipoAcreditacion, horasDocencia, horasPracticas, horasAutoEstudio, horasPresenciales, totalHoras, objetivo, descripcion, objetivoespecifico, organizacioncurricular, materiacampoformacion, materiaNucleo, materiaActiva);
     }*/
-
+    // Pasado 
     public static List<MateriaMD> consultar(ConexionBD conexion, String[] clave) {
 
         List<MateriaMD> materias = new ArrayList<>();
@@ -100,6 +100,8 @@ public class MateriasBDS extends MateriaMD {
         return materias;
 
     }
+    // Pasado
+    
     public static List<MateriaMD> consultarSilabo2(ConexionBD conexion, String carrera,int id_persona,String periodo_nombe ) {
 
         List<MateriaMD> materias = new ArrayList<>();
