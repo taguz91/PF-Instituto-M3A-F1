@@ -35,8 +35,8 @@ public class run {
                 VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool);
                 ctrVtn.iniciar();
             } else {
-                JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
-                        + "Verifique su conexion e intentelo de nuevo.");
+                JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso al servidor. \n"
+                        + "Ponganse en contacto con el administrador de la base de datos.");
             }
         }
 

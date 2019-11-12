@@ -41,7 +41,7 @@ public class NEWSilaboBD implements ISilaboBD {
         PreparedStatement ps = CON.getPSID(INSERT);
         try {
             ps.setInt(1, s.getMateria().getId());
-            ps.setInt(2, s.getPeriodo().getId());
+            ps.setInt(2, s.getPeriodo().getID());
             return CON.getIDGenerado(ps);
         } catch (SQLException e) {
             return 0;
@@ -126,7 +126,7 @@ public class NEWSilaboBD implements ISilaboBD {
                 s.getMateria().setHorasPracticas(res.getInt(5));
                 s.getMateria().setHorasAutoEstudio(res.getInt(6));
                 s.setEstado(res.getInt(7));
-                s.getPeriodo().setPeriodo(res.getInt(8));
+                s.getPeriodo().setID(res.getInt(8));
                 s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
                 s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
 
@@ -175,7 +175,7 @@ public class NEWSilaboBD implements ISilaboBD {
                 s.getMateria().setHorasPracticas(res.getInt(5));
                 s.getMateria().setHorasAutoEstudio(res.getInt(6));
                 s.setEstado(res.getInt(7));
-                s.getPeriodo().setPeriodo(res.getInt(8));
+                s.getPeriodo().setID(res.getInt(8));
                 s.getPeriodo().setNombre(res.getString(9));
 
                 SS.add(s);
@@ -258,7 +258,5 @@ public class NEWSilaboBD implements ISilaboBD {
         } catch (SQLException e) {
         }
     }
-    
-    
 
 }

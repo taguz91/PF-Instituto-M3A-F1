@@ -21,7 +21,7 @@ public class CarrerasBDS extends CarreraMD {
     public CarrerasBDS(ConexionBD conexion) {
         this.conexion = conexion;
     }
-
+    // Pasado 
     public static List<CarreraMD> consultar(ConexionBD conexion, String clave) {
 
         List<CarreraMD> carreras = new ArrayList<>();
@@ -58,7 +58,7 @@ public class CarrerasBDS extends CarreraMD {
         return carreras;
 
     }
-
+    // Pasado
     public CarreraMD retornaModalidad(int id_curso) {
         CarreraMD carrera = null;
         try {
@@ -80,7 +80,7 @@ public class CarrerasBDS extends CarreraMD {
         }
         return carrera;
     }
-
+    // Pasado
     public CarreraMD retornaCarreraCoordinador(String username) {
         CarreraMD carrera = null;
         try {
