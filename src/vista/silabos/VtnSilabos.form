@@ -29,7 +29,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblBuscar" min="-2" max="-2" attributes="0"/>
                           <Component id="lblCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -48,25 +48,16 @@
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="srcSilabos" pref="705" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnGenerar" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="chbProgramaAnalitico" alignment="0" max="32767" attributes="0"/>
-                      <Component id="chxDualSemanas" alignment="0" max="32767" attributes="0"/>
-                      <Component id="chbSilabo" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSeleccionDocumento" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="srcSilabos" pref="693" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -89,20 +80,15 @@
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="srcSilabos" pref="240" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="lblSeleccionDocumento" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="chbProgramaAnalitico" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="chbSilabo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="chxDualSemanas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="btnGenerar" min="-2" max="-2" attributes="0"/>
+                      <Component id="srcSilabos" pref="400" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -115,7 +101,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblSilabos">
+        <Component class="javax.swing.JTable" name="tbl">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
@@ -196,32 +182,6 @@
         <Property name="text" type="java.lang.String" value="Imprimir"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnGenerar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Generar"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="chbSilabo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Silabo tradicionales"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbSilaboActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="chbProgramaAnalitico">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Silabo Duales"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbProgramaAnaliticoActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblSeleccionDocumento">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Seleccione el documento:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="cmbCarrera">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -237,10 +197,84 @@
         <Property name="text" type="java.lang.String" value="Carrera:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="chxDualSemanas">
+    <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Silabos Duales / Semanas"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Opciones de Impresion"/>
+          </Border>
+        </Property>
       </Properties>
-    </Component>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnGenerar" alignment="0" pref="152" max="32767" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="chbProgramaAnalitico" alignment="0" max="32767" attributes="0"/>
+                          <Component id="chxDualSemanas" alignment="0" max="32767" attributes="0"/>
+                          <Component id="chbSilabo" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="lblSeleccionDocumento" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <Component id="lblSeleccionDocumento" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="chbProgramaAnalitico" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="chbSilabo" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="chxDualSemanas" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnGenerar" min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="btnGenerar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Generar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="chbSilabo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Silabo tradicionales"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbSilaboActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="chbProgramaAnalitico">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Silabo Duales"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbProgramaAnaliticoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblSeleccionDocumento">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seleccione el documento:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="chxDualSemanas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Silabos Duales / Semanas"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

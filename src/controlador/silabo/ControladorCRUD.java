@@ -60,9 +60,9 @@ public class ControladorCRUD {
 
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
-            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(2));
+            crud.getTbl().removeColumn(crud.getTbl().getColumnModel().getColumn(2));
         } else {
-            crud.getTblSilabos().removeColumn(crud.getTblSilabos().getColumnModel().getColumn(4));
+            crud.getTbl().removeColumn(crud.getTbl().getColumnModel().getColumn(4));
 
         }
 
@@ -84,20 +84,20 @@ public class ControladorCRUD {
             crud.getBtnEliminar().setEnabled(false);
         }
 
-        crud.getTblSilabos().addMouseListener(new MouseAdapter() {
+        crud.getTbl().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
 
-                int fila = crud.getTblSilabos().getSelectedRow();
-                int columna = crud.getTblSilabos().getSelectedColumn();
+                int fila = crud.getTbl().getSelectedRow();
+                int columna = crud.getTbl().getSelectedColumn();
 
                 if (esCoordinador && columna == 3) {
-                    System.out.println(crud.getTblSilabos().getValueAt(fila, columna));
-                    if (crud.getTblSilabos().getValueAt(fila, columna).equals(true)) {
-                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna - 1).toString()), 1);
+                    System.out.println(crud.getTbl().getValueAt(fila, columna));
+                    if (crud.getTbl().getValueAt(fila, columna).equals(true)) {
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTbl().getValueAt(fila, columna - 1).toString()), 1);
                     } else {
 
-                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTblSilabos().getValueAt(fila, columna - 1).toString()), 0);
+                        new SilaboBD(conexion).aprobar(Integer.parseInt(crud.getTbl().getValueAt(fila, columna - 1).toString()), 0);
                     }
                 }
             }
@@ -116,10 +116,10 @@ public class ControladorCRUD {
 
         // Boton EDITAR Silabo
         crud.getBtnEditar().addActionListener((ActionEvent ae) -> {
-            int row = crud.getTblSilabos().getSelectedRow();
+            int row = crud.getTbl().getSelectedRow();
             if (row != -1) {
 
-                if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(row, 2).equals("Aprobado")) {
+                if (seleccionarSilabo(0) != null && !crud.getTbl().getValueAt(row, 2).equals("Aprobado")) {
                     crud.dispose();
 
                     //ControladorSilaboU csu = new ControladorSilaboU(seleccionarSilabo(0), principal, conexion);
@@ -135,7 +135,7 @@ public class ControladorCRUD {
 
         // Boton ELIMINAR Silabo
         crud.getBtnEliminar().addActionListener((ActionEvent ae) -> {
-            int row = crud.getTblSilabos().getSelectedRow();
+            int row = crud.getTbl().getSelectedRow();
             if (row != -1) {
 
                 eliminarSilabo();
@@ -150,7 +150,7 @@ public class ControladorCRUD {
         crud.getBtnImprimir().addActionListener((ActionEvent ae) -> {
 
             //VALIDA QUE SELECCIONE UN SILABO E IMPRIMA
-            int row = crud.getTblSilabos().getSelectedRow();
+            int row = crud.getTbl().getSelectedRow();
 
             if (row != -1) {
 
@@ -207,7 +207,7 @@ public class ControladorCRUD {
 
             DefaultTableModel modeloTabla;
 
-            modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
+            modeloTabla = (DefaultTableModel) crud.getTbl().getModel();
 
             String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
             //
@@ -220,7 +220,7 @@ public class ControladorCRUD {
                 silabosDocente = SilaboBD.consultar(conexion, parametros);
             }
 
-            for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
+            for (int j = crud.getTbl().getModel().getRowCount() - 1; j >= 0; j--) {
 
                 modeloTabla.removeRow(j);
             }
@@ -247,7 +247,7 @@ public class ControladorCRUD {
 
             }
 
-            crud.getTblSilabos().setModel(modeloTabla);
+            crud.getTbl().setModel(modeloTabla);
 
         } catch (Exception e) {
 
@@ -260,16 +260,16 @@ public class ControladorCRUD {
 
     public SilaboMD seleccionarSilabo(int p) {
 
-        int seleccion = crud.getTblSilabos().getSelectedRow();
+        int seleccion = crud.getTbl().getSelectedRow();
         Optional<SilaboMD> silaboSeleccionado;
         if (esCoordinador) {
             silaboSeleccionado = silabosDocente.stream().
-                    filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
+                    filter(s -> s.getID() == Integer.parseInt(crud.getTbl().getValueAt(seleccion, 2).toString())).
                     findFirst();
         } else {
 
             silaboSeleccionado = silabosDocente.stream().
-                    filter(s -> s.getID() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
+                    filter(s -> s.getID() == Integer.parseInt(crud.getTbl().getValueAt(seleccion, 3).toString())).
                     findFirst();
         }
 
@@ -303,7 +303,7 @@ public class ControladorCRUD {
 
     public void eliminarSilabo() {
 
-        if (seleccionarSilabo(0) != null && !crud.getTblSilabos().getValueAt(crud.getTblSilabos().getSelectedRow(), 2).equals("Aprobado")) {
+        if (seleccionarSilabo(0) != null && !crud.getTbl().getValueAt(crud.getTbl().getSelectedRow(), 2).equals("Aprobado")) {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 new SilaboBD(conexion).eliminar(seleccionarSilabo(0));
