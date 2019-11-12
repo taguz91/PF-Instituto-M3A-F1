@@ -96,7 +96,9 @@ public class CursosBDS extends CursoMDS {
         }
         return cursos;
     }
-
+    
+    // ESta no se usa en nada 
+    /*
     public static List<CursoMD> ConsultarCurso(ConexionBD conexion) {
         List<CursoMD> cursos = new ArrayList<>();
         try {
@@ -115,5 +117,5 @@ public class CursosBDS extends CursoMDS {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cursos;
-    }
+    }*/
 }

@@ -18,6 +18,15 @@ import modelo.silabo.mbd.ISilaboBD;
 public class NEWSilaboBD implements ISilaboBD {
 
     private final ConnDBPool CON = ConnDBPool.single();
+    
+    private static NEWSilaboBD SBD; 
+    
+    public static NEWSilaboBD single(){
+        if(SBD == null){
+            SBD = new NEWSilaboBD();
+        }
+        return SBD;
+    }
 
     private static final String INSERT = "INSERT INTO "
             + "public.\"Silabo\"("

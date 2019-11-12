@@ -17,6 +17,15 @@ import modelo.silabo.mbd.IMateriaBD;
 public class NEWMateriaBD implements IMateriaBD {
 
     private final ConnDBPool CON = ConnDBPool.single();
+    
+    private static NEWMateriaBD MBD; 
+    
+    public static NEWMateriaBD single(){
+        if(MBD == null){
+            MBD = new NEWMateriaBD();
+        }
+        return MBD;
+    }
 
     @Override
     public List<MateriaMD> getByUsernameCarreraPeriodoSinSilabo(String username, int idPeriodo, int idCarrera) {

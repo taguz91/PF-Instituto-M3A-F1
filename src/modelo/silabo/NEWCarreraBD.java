@@ -16,8 +16,17 @@ import modelo.silabo.mbd.ICarreraBD;
  */
 public class NEWCarreraBD implements ICarreraBD {
 
-    private ConnDBPool CON = ConnDBPool.single();
+    private final ConnDBPool CON = ConnDBPool.single();
 
+    private static NEWCarreraBD CBD;
+
+    public static NEWCarreraBD single() {
+        if (CBD == null) {
+            CBD = new NEWCarreraBD();
+        }
+        return CBD;
+    }
+    
     @Override
     public List<CarreraMD> getByUsername(String username) {
         String sql = "SELECT DISTINCT crr.id_carrera, "
