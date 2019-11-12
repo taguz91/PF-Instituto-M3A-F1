@@ -114,8 +114,8 @@ PRESENTACIÓN]]></text>
 	</columnHeader>
 	<detail>
 		<band height="67" splitType="Stretch">
-			<textField>
-				<reportElement x="41" y="0" width="104" height="67" uuid="9c154007-d2e9-4625-92a7-02d60a333427"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="41" y="0" width="104" height="67" uuid="9c154007-d2e9-4625-92a7-02d60a333427"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -125,8 +125,8 @@ PRESENTACIÓN]]></text>
 				</box>
 				<textFieldExpression><![CDATA[$F{indicador}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="145" y="0" width="62" height="67" uuid="bf37c3b2-b383-4fc8-82f5-dd771315dc25"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="145" y="0" width="62" height="67" uuid="bf37c3b2-b383-4fc8-82f5-dd771315dc25"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -137,8 +137,8 @@ PRESENTACIÓN]]></text>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="207" y="0" width="105" height="67" uuid="e9d45d1e-2f69-42b0-ae63-3cf54aff6429"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="207" y="0" width="105" height="67" uuid="e9d45d1e-2f69-42b0-ae63-3cf54aff6429"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -148,8 +148,8 @@ PRESENTACIÓN]]></text>
 				</box>
 				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="312" y="0" width="75" height="67" uuid="f2796740-3fc8-4675-949e-859b50af5e70"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="312" y="0" width="75" height="67" uuid="f2796740-3fc8-4675-949e-859b50af5e70"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -160,8 +160,8 @@ PRESENTACIÓN]]></text>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{valoracion}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="387" y="0" width="78" height="67" uuid="613f1030-d6b8-4f5d-b98c-106ae3a77275"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToBandHeight" x="387" y="0" width="78" height="67" uuid="613f1030-d6b8-4f5d-b98c-106ae3a77275"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -172,8 +172,8 @@ PRESENTACIÓN]]></text>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{fecha_envio}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="465" y="0" width="90" height="67" uuid="182443a1-5aa2-4e8f-bec9-8fb48437e728"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToBandHeight" x="465" y="0" width="90" height="67" uuid="182443a1-5aa2-4e8f-bec9-8fb48437e728"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -185,7 +185,7 @@ PRESENTACIÓN]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_presentacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="41" height="67" uuid="913cdad8-3785-4d53-85b4-4e9a5c44ef24"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="67" uuid="913cdad8-3785-4d53-85b4-4e9a5c44ef24"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -193,7 +193,9 @@ PRESENTACIÓN]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<text><![CDATA[Gestión de la docencia]]></text>
 			</staticText>
 		</band>
