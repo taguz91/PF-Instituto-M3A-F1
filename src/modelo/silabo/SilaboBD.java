@@ -49,7 +49,8 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-
+    
+    // Consultar 
     public static List<SilaboMD> consultar(ConexionBD conexion, String[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -97,7 +98,8 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
+    
+    // Revisar esta consulta
     public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, int clave, String parametro) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -132,8 +134,9 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
-    public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, String clave) {
+    
+    // Revisar esta WEA 
+    private static List<SilaboMD> consultarCoordinador(ConexionBD conexion, String clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
         try {
@@ -205,7 +208,7 @@ public class SilaboBD extends SilaboMD {
 
     }
 //Ya ahora si se guarda en la base
-
+    // Pasado
     public static void guardarSilabo(ConexionBD conexion, FileInputStream fis, File f, SilaboMD s) {
 
         try {
@@ -225,7 +228,8 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-
+    
+    // Pasado
     public static void guardarAnalitico(ConexionBD conexion, FileInputStream fis1, File fl, SilaboMD s) {
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"Silabo\"\n"
@@ -244,7 +248,8 @@ public class SilaboBD extends SilaboMD {
 
         }
     }
-
+    
+    // Investigar esta WEA esta rarisimo
     public SilaboMD retornaSilabo(int id) {
         SilaboMD silabo = null;
         try {
@@ -290,7 +295,7 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-
+    // Pasado
     public void aprobar(int silabo, int estado) {
 
         try {
@@ -309,7 +314,8 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-
+    
+    // Pasada
     public void insertar(SilaboMD s) {
 
         try {
@@ -327,7 +333,8 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-
+    
+    // Pasada
     public static List<SilaboMD> consultarSilabo1(ConexionBD conexion, String[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -366,7 +373,8 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
+    
+    // Pasada
     public static List<SilaboMD> consultarSilabo2(ConexionBD conexion, String carrera, int id_persona) {
 
         List<SilaboMD> silabos = new ArrayList<>();
@@ -413,7 +421,8 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-
+    
+    // Pasada
     public static List<SilaboMD> consultarAnteriores(ConexionBD conexion, Integer[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
