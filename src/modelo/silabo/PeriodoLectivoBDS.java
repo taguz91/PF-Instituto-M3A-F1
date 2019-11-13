@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.silabo;
 
 import java.sql.PreparedStatement;
@@ -33,7 +28,7 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         super(id_PerioLectivo, nombre_PerLectivo, observacion_PerLectivo, activo_PerLectivo, estado_PerLectivo, fecha_Inicio, fecha_Fin, carrera);
         this.conexion = conexion;
     }
-
+    // Pasado 
     public static List<PeriodoLectivoMD> consultar(ConexionBD conexion, int clave) {
 
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
@@ -101,7 +96,7 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
         return periodos;
 
     }
-
+    // Pasado 
     public static List<PeriodoLectivoMD> consultarPeriodos(ConexionBD conexion, String carrera) {
 
         List<PeriodoLectivoMD> periodos = new ArrayList<>();

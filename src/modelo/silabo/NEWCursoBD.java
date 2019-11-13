@@ -64,12 +64,53 @@ public class NEWCursoBD implements ICursoBD {
 
     @Override
     public int getNumeroAlumnos(int idCurso) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int num = 0;
+        String sql = "SELECT count(id_alumno) "
+                + "FROM public.\"AlumnoCurso\" "
+                + "WHERE id_curso = ?;";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idCurso);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                num = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al consultar numero de alumnos. "
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return num;
     }
 
     @Override
-    public List<CursoMD> getByCurso(int idCurso) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CursoMDS> getByCurso(int idCurso) {
+        String sql = "";
+        List<CursoMDS> CS = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idCurso);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                CursoMDS c = new CursoMDS();
+                c.getId_carrera().setNombre(res.getString(1));
+                c.getId_materia().setNombre(res.getString(2));
+                c.getId_materia().setCodigo(res.getString(3));
+                c.setCurso_nombre(res.getString(4));
+                c.getId_persona().setPrimerNombre(res.getString(5));
+                c.getId_persona().setPrimerApellido(res.getString(6));
+                CS.add(c);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al consultar curso para silabo. "
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return CS;
     }
 
 }

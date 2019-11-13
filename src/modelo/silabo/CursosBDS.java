@@ -25,7 +25,8 @@ public class CursosBDS extends CursoMDS {
         super(id_materia, id_carrera, id_persona);
         this.conexion = conexion;
     }
-
+    
+    // Pasado
     public static List<CursoMD> Consultarcursos(ConexionBD conexion, int id_docente_persona, int id_periodo, String nombre_materia) {
         List<CursoMD> cursos = new ArrayList<>();
         try {
@@ -51,6 +52,9 @@ public class CursosBDS extends CursoMDS {
         }
         return cursos;
     }
+    
+    // Pasado 
+    
     public static int numero(ConexionBD conexion, int id_curso){
        int numeroAlm=0;
         try {
