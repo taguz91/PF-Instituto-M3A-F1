@@ -2,6 +2,7 @@ package modelo.silabo.mbd;
 
 import java.util.List;
 import modelo.curso.CursoMD;
+import modelo.silabo.CursoMDS;
 
 /**
  *
@@ -17,7 +18,7 @@ public interface ICursoBD {
     
     public int getNumeroAlumnos(int idCurso);
     
-    public List<CursoMD> getByCurso(
+    public List<CursoMDS> getByCurso(
             int idCurso
     );
     
