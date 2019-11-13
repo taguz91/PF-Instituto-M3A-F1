@@ -10,21 +10,18 @@
 		<![CDATA[SELECT
 	"count" ( * ) 
 FROM
-	"Notas"
-	INNER JOIN "TipoDeNota" ON "Notas".id_tipo_nota = "TipoDeNota".id_tipo_nota
-	INNER JOIN "AlumnoCurso" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso 
+	"AlumnoCurso"
 WHERE
-	"TipoDeNota".tipo_nota_nombre ILIKE'%NOTA FINAL%' 
-	AND "AlumnoCurso".almn_curso_activo IS TRUE 
-	AND "AlumnoCurso".almn_curso_asistencia ILIKE'%ASISTE%' 
-	AND ROUND( "Notas".nota_valor, 1 ) < (
+	"AlumnoCurso".almn_curso_activo IS TRUE 
+	AND "AlumnoCurso".almn_curso_asistencia ILIKE '%ASISTE%' 
+	AND ROUND( "AlumnoCurso".almn_curso_nota_final, 1 ) < (
 	SELECT
 		round( ( tipo_nota_valor_maximo / 100 ) * 70, 2 ) AS "MINIMO" 
 	FROM
 		"TipoDeNota" 
 	WHERE
 		"TipoDeNota".id_prd_lectivo = ( SELECT "Cursos".id_prd_lectivo FROM "Cursos" WHERE "Cursos".id_curso = $P!{id_curso} ) 
-		AND "TipoDeNota".tipo_nota_nombre ILIKE'%NOTA FINAL%' 
+		AND "TipoDeNota".tipo_nota_nombre ='NOTA FINAL' 
 	) 
 	AND "AlumnoCurso".id_curso = $P!{id_curso};]]>
 	</queryString>

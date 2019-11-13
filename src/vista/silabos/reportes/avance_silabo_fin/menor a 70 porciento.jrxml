@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0d3e5ec6-389b-46ef-9d15-bf8d93797c3f">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.9487171000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_curso" class="java.lang.String"/>
+	<parameter name="id_curso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_silabo_fin/"]]></defaultValueExpression>
 	</parameter>
@@ -16,27 +18,23 @@ FROM
 	"Personas"
 	INNER JOIN "Alumnos" ON "Alumnos".id_persona = "Personas".id_persona
 	INNER JOIN "AlumnoCurso" ON "AlumnoCurso".id_alumno = "Alumnos".id_alumno
-	INNER JOIN "Notas" ON "Notas".id_almn_curso = "AlumnoCurso".id_almn_curso
-	INNER JOIN "TipoDeNota" ON "Notas".id_tipo_nota = "TipoDeNota".id_tipo_nota
 WHERE
-	"TipoDeNota".tipo_nota_nombre ILIKE'%NOTA FINAL%' 
-	AND "AlumnoCurso".almn_curso_activo IS TRUE 
+	"AlumnoCurso".almn_curso_activo IS TRUE 
 	AND "AlumnoCurso".almn_curso_asistencia ILIKE '%ASISTE%' 
-	AND ROUND( "Notas".nota_valor, 2 ) < (
+	AND ROUND( "AlumnoCurso".almn_curso_nota_final, 2 ) < (
 	SELECT
 		round( ( tipo_nota_valor_maximo / 100 ) * 70, 2 ) AS "MINIMO" 
 	FROM
 		"TipoDeNota" 
 	WHERE
 		"TipoDeNota".id_prd_lectivo = ( SELECT "Cursos".id_prd_lectivo FROM "Cursos" WHERE "Cursos".id_curso = $P!{id_curso}) 
-		AND "TipoDeNota".tipo_nota_nombre ILIKE'%NOTA FINAL%' 
+		AND "TipoDeNota".tipo_nota_nombre ='NOTA FINAL' 
 	) 
 	AND "AlumnoCurso".id_curso = $P!{id_curso}]]>
 	</queryString>
-	<field name="almn_curso_nota_final" class="java.math.BigDecimal"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
-	<field name="apellidos" class="java.lang.String"/>
-	<field name="nombres" class="java.lang.String"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -71,7 +69,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="137" height="20" uuid="c9707299-d018-4558-9b02-bc1c6581c9d3"/>
@@ -95,7 +93,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
