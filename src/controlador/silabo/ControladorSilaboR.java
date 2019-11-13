@@ -30,7 +30,7 @@ import vista.silabos.VtnSilabos;
  * @author Andres Ullauri
  */
 public class ControladorSilaboR {
-
+    /*
     private SilaboMD silabo;
 
     private ConexionBD conexion;
@@ -50,7 +50,7 @@ public class ControladorSilaboR {
     }
 
     public void iniciarControlador() {
-
+        
         crud.getBtnGenerar().addActionListener(e -> ejecutar(e));
 
         crud.getChbProgramaAnalitico().addActionListener((ActionEvent ae) -> {
@@ -67,29 +67,10 @@ public class ControladorSilaboR {
             crud.getChbSilabo().setSelected(false);
             crud.getChbProgramaAnalitico().setSelected(false);
         });
-
+         
     }
 
-    public void imprimirSilabo() {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
-            Map parametro = new HashMap();
 
-            parametro.put("parameter1", String.valueOf(silabo.getMateria().getId()));
-            parametro.put("id_silabo", String.valueOf(silabo.getID()));
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-            JasperViewer pv = new JasperViewer(jp, false);
-            pv.setVisible(true);
-            pv.setTitle("Sílabo");
-
-            //EXPORTACION A PDF
-            File pdf = new File(("pdfs/" + "ST-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
-            existeCarpeta(pdf, jp);
-        } catch (JRException e) {
-            JOptionPane.showMessageDialog(null, "Error reporte: " + e);
-        }
-
-    }
 
     private void existeCarpeta(File pdf, JasperPrint jasPDF) {
         File carpeta = new File("pdfs/");
@@ -207,14 +188,15 @@ public class ControladorSilaboR {
                 principal.setEnabled(true);
 
                 frmCargando1.dispose();
-                
+
                 crud.dispose();
 
                 principal.getBtnConsultarSilabo().doClick();
-                 
+
             }).start();
 
         }
 
     }
+     */
 }
