@@ -140,7 +140,8 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     }
 
     private void btnSiguiente(ActionEvent e) {
-
+        NEWfrmSilaboCTR form = new NEWfrmSilaboCTR(null, desktop);
+        form.Init();
     }
 
     private void btnCancelar(ActionEvent e) {
