@@ -155,10 +155,11 @@ public class ControladorCRUD {
             if (row != -1) {
 
                 opcionesImpresion(true);
-
+                /*
                 ControladorSilaboR csr = new ControladorSilaboR(crud, seleccionarSilabo(1), conexion, principal);
 
                 csr.iniciarControlador();
+                 */
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
@@ -292,12 +293,13 @@ public class ControladorCRUD {
     }
 
     public void opcionesImpresion(boolean estado) {
-
+        /*
         crud.getLblSeleccionDocumento().setVisible(estado);
         crud.getChbProgramaAnalitico().setVisible(estado);
         crud.getChxDualSemanas().setVisible(estado);
         crud.getChbSilabo().setVisible(estado);
         crud.getBtnGenerar().setVisible(estado);
+         */
 
     }
 

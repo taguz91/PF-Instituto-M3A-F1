@@ -30,7 +30,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Component id="srcSilabos" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblBuscar" min="-2" max="-2" attributes="0"/>
                           <Component id="lblCarrera" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -49,16 +50,11 @@
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace pref="142" max="32767" attributes="0"/>
                       <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="srcSilabos" pref="693" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bgImprimir" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,16 +76,8 @@
                   <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="srcSilabos" pref="400" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="bgImprimir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
+              <Component id="srcSilabos" pref="404" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,12 +94,12 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="0">
-                <Column editable="false" title="ID" type="java.lang.Integer"/>
+                <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="No." type="java.lang.Object"/>
-                <Column editable="false" title="Asignatura" type="java.lang.String"/>
-                <Column editable="false" title="Periodo" type="java.lang.String"/>
-                <Column editable="false" title="Estado" type="java.lang.String"/>
-                <Column editable="true" title="Estado" type="java.lang.Boolean"/>
+                <Column editable="false" title="Asignatura" type="java.lang.Object"/>
+                <Column editable="false" title="Periodo" type="java.lang.Object"/>
+                <Column editable="false" title="Ultima Actualizacion" type="java.lang.Object"/>
+                <Column editable="true" title="Estado" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -136,12 +124,12 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="140" minWidth="140" prefWidth="140" resizable="true">
+                <Column maxWidth="110" minWidth="110" prefWidth="110" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="20" resizable="true">
+                <Column maxWidth="100" minWidth="100" prefWidth="100" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -181,11 +169,6 @@
         <Property name="text" type="java.lang.String" value="Nuevo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnImprimir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Imprimir"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="cmbCarrera">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -201,76 +184,10 @@
         <Property name="text" type="java.lang.String" value="Carrera:"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="bgImprimir">
+    <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Opciones de Impresion"/>
-          </Border>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Imprimir"/>
       </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnGenerar" alignment="0" pref="152" max="32767" attributes="0"/>
-                      <Component id="chbProgramaAnalitico" alignment="0" max="32767" attributes="0"/>
-                      <Component id="chxDualSemanas" alignment="0" max="32767" attributes="0"/>
-                      <Component id="chbSilabo" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
-                      <Component id="lblSeleccionDocumento" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="lblSeleccionDocumento" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="chbProgramaAnalitico" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="chbSilabo" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="chxDualSemanas" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnGenerar" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="btnGenerar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Generar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="chbSilabo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Silabo tradicionales"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="chbProgramaAnalitico">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Silabo Duales"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblSeleccionDocumento">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Seleccione el documento:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="chxDualSemanas">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Silabos Duales / Semanas"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
+    </Component>
   </SubComponents>
 </Form>

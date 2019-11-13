@@ -70,7 +70,6 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     }
 
-    @Nullable
     private int getIdMateria() throws NullPointerException {
         return getMateria()
                 .map(c -> c.getId())
