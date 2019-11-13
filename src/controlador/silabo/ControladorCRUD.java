@@ -8,7 +8,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.event.CaretEvent;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.ConexionBD;
@@ -48,6 +51,7 @@ public class ControladorCRUD {
     private boolean esCoordinador = false;
 
     private List<SilaboMD> silabosDocente;
+    private DefaultTableModel modeloTabla;
 
     public ControladorCRUD(UsuarioBD usuario, RolBD rol, VtnPrincipal principal, ConexionBD conexion) {
         this.usuario = usuario;
@@ -61,6 +65,15 @@ public class ControladorCRUD {
         conexion.conectar();
 
         crud = new frmSilabos();
+        modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
+
+        crud.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscarSilabo(e);
+            }
+
+        });
 
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
@@ -170,19 +183,10 @@ public class ControladorCRUD {
 
         });
 
-        crud.getTxtBuscar().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent ke) {
-
-                cargarSilabosDocente();
-
-            }
-
-        });
-
-        crud.getCmbCarrera().addActionListener(al -> cargarSilabosDocente());
-
+        //crud.getCmbCarrera().addActionListener(al -> cargarSilabosDocente());
         cargarComboCarreras();
+
+        crud.getBtnActualizar().addActionListener(this::btnAtualizar);
 
         cargarSilabosDocente();
         InitPermisos();
@@ -208,13 +212,14 @@ public class ControladorCRUD {
     }
 
     public void cargarSilabosDocente() {
+        modeloTabla.setRowCount(0);
         try {
 
-            DefaultTableModel modeloTabla;
-
-            modeloTabla = (DefaultTableModel) crud.getTblSilabos().getModel();
-
-            String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
+            String[] parametros = {
+                crud.getCmbCarrera().getSelectedItem().toString(),
+                crud.getTxtBuscar().getText(),
+                String.valueOf(usuario.getPersona().getIdPersona())
+            };
             //
 
             if (esCoordinador) {
@@ -225,35 +230,9 @@ public class ControladorCRUD {
                 silabosDocente = SilaboBD.consultar(conexion, parametros);
             }
 
-            for (int j = crud.getTblSilabos().getModel().getRowCount() - 1; j >= 0; j--) {
+            silabosDocente.forEach(cargador());
 
-                modeloTabla.removeRow(j);
-            }
-
-            for (SilaboMD smd : silabosDocente) {
-
-                String estado = null;
-                Boolean estado2 = null;
-                if (smd.getEstadoSilabo() == 0) {
-                    estado = "Por aprobar";
-                    estado2 = false;
-                } else {
-                    estado = "Aprobado";
-                    estado2 = true;
-                }
-
-                modeloTabla.addRow(new Object[]{
-                    smd.getIdMateria().getNombre(),
-                    smd.getIdPeriodoLectivo().getFechaInicio() + " / " + smd.getIdPeriodoLectivo().getFechaFin(),
-                    estado,
-                    smd.getIdSilabo(),
-                    estado2
-                });
-
-            }
-
-            crud.getTblSilabos().setModel(modeloTabla);
-
+            //crud.getTblSilabos().setModel(modeloTabla);
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -266,12 +245,12 @@ public class ControladorCRUD {
     public SilaboMD seleccionarSilabo(int p) {
 
         int seleccion = crud.getTblSilabos().getSelectedRow();
-        Optional<SilaboMD>  silaboSeleccionado;
+        Optional<SilaboMD> silaboSeleccionado;
         if (esCoordinador) {
             silaboSeleccionado = silabosDocente.stream().
                     filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 2).toString())).
                     findFirst();
-        }else{
+        } else {
 
             silaboSeleccionado = silabosDocente.stream().
                     filter(s -> s.getIdSilabo() == Integer.parseInt(crud.getTblSilabos().getValueAt(seleccion, 3).toString())).
@@ -283,7 +262,7 @@ public class ControladorCRUD {
 
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();
-        
+
         if (silaboSeleccionado.get().getIdPeriodoLectivo().getId() != ultimo.getId()) {
 
             if (p == 1) {
@@ -329,6 +308,43 @@ public class ControladorCRUD {
 
         CONS.activarBtns(crud.getBtnNuevo(), crud.getBtnEditar(),
                 crud.getBtnEliminar(), crud.getBtnImprimir());
+    }
+
+    private Consumer<SilaboMD> cargador() {
+
+        return obj -> {
+
+            String estado = null;
+            Boolean estado2 = null;
+            if (obj.getEstadoSilabo() == 0) {
+                estado = "Por aprobar";
+                estado2 = false;
+            } else {
+                estado = "Aprobado";
+                estado2 = true;
+            }
+
+            modeloTabla.addRow(new Object[]{
+                obj.getIdMateria().getNombre(),
+                obj.getIdPeriodoLectivo().getFechaInicio() + " / " + obj.getIdPeriodoLectivo().getFechaFin(),
+                estado,
+                obj.getIdSilabo(),
+                estado2
+            });
+        };
+    }
+
+    private void txtBuscarSilabo(KeyEvent e) {
+        modeloTabla.setRowCount(0);
+        this.silabosDocente.stream()
+                .filter(item -> item.getIdMateria().getNombre().toLowerCase().contains(crud.getTxtBuscar().getText().toLowerCase()))
+                .forEach(cargador());
+    }
+
+    private void btnAtualizar(ActionEvent e) {
+        new Thread(() -> {
+            cargarSilabosDocente();
+        }).start();
     }
 
 }
