@@ -55,7 +55,7 @@ public class NEWReferenciaSilaboBD extends CONBD implements IReferenciaSilaboBD 
                 + "r.descripcion_referencia, "
                 + "r.existe_en_biblioteca "
                 + "FROM public.\"ReferenciaSilabo\" rs, "
-                + "public.\"Referencias\" r"
+                + "public.\"Referencias\" r "
                 + "WHERE id_silabo=? "
                 + "AND r.id_referencia = rs.id_referencia";
         List<ReferenciaSilaboMD> RS = new ArrayList<>();

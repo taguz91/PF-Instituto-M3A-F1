@@ -59,7 +59,7 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
                 + "us.numero_unidad  "
                 + "FROM public.\"EstrategiasUnidad\" eu, "
                 + "public.\"UnidadSilabo\" us, "
-                + "public.\"EstrategiasAprendizaje\" ea"
+                + "public.\"EstrategiasAprendizaje\" ea "
                 + "WHERE eu.id_unidad = us.id_unidad "
                 + "AND eu.id_estrategia = ea.id_estrategia "
                 + "AND id_silabo=?;";
@@ -99,7 +99,7 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
                 + "public.\"UnidadSilabo\" us, "
                 + "public.\"EstrategiasAprendizaje\" ea "
                 + "WHERE eu.id_unidad = us.id_unidad "
-                + "AND eu.id_estrategia = ea.id_estrategia\n"
+                + "AND eu.id_estrategia = ea.id_estrategia "
                 + "AND id_silabo=? AND numero_unidad=?";
         List<EstrategiasUnidadMD> EUS = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);

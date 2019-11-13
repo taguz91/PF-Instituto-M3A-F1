@@ -497,7 +497,6 @@ public class SilaboBD extends SilaboMD {
                 + "	WHERE\n"
                 + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
                 + "		AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
-                + "		AND \"Cursos\".id_prd_lectivo >= 20 \n"
                 + "	) AS info ON \"PeriodoLectivo\".id_prd_lectivo = info.id_prd_lectivo \n"
                 + "	AND \"Materias\".id_materia = info.id_materia \n"
                 + "ORDER BY\n"

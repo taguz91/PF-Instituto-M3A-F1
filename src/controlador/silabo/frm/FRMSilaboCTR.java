@@ -50,12 +50,15 @@ public class FRMSilaboCTR extends DCTR {
         "Valoración", "Fecha Envío",
         "Fecha Presentación"
     };
+    private static final String[] TITULO_ESTRATEGIAS = {
+        "X", "Titulo"
+    };
     // Todos los modelos de las tablas de gestion
     private final DefaultTableModel mdTblAD = TblEstilo.modelTblSinEditar(TITULO_GESTION);
     private final DefaultTableModel mdTblAC = TblEstilo.modelTblSinEditar(TITULO_GESTION);
     private final DefaultTableModel mdTblGP = TblEstilo.modelTblSinEditar(TITULO_GESTION);
     private final DefaultTableModel mdTblGA = TblEstilo.modelTblSinEditar(TITULO_GESTION);
-    private final DefaultTableModel mdTblES = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+    private final DefaultTableModel mdTblES = TblEstilo.modelTblSinEditar(TITULO_ESTRATEGIAS);
 
     // Para tener referencia de un silabo 
     private final SilaboMD silabo;
