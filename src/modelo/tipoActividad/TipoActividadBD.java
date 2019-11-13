@@ -39,16 +39,16 @@ public class TipoActividadBD extends TipoActividadMD {
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_tipo_actividad, nombre_tipo_actividad, nombre_subtipo_actividad\n"
                     + "	FROM public.\"TipoActividad\"");
 
-            ResultSet rs = st.executeQuery();
+            ResultSet res = st.executeQuery();
 
-            while (rs.next()) {
+            while (res.next()) {
 
-                TipoActividadMD tmp = new TipoActividadMD();
-                tmp.setIdTipoActividad(rs.getInt(1));
-                tmp.setNombreTipoActividad(rs.getString(2));
-                tmp.setNombreSubtipoActividad(rs.getString(3));
+                TipoActividadMD ta = new TipoActividadMD();
+                ta.setIdTipoActividad(res.getInt(1));
+                ta.setNombreTipoActividad(res.getString(2));
+                ta.setNombreSubtipoActividad(res.getString(3));
 
-                actividades.add(tmp);
+                actividades.add(ta);
             }
 
         } catch (SQLException ex) {

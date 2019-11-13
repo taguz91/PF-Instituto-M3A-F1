@@ -70,13 +70,13 @@ public class ReferenciaSilaboBD extends ReferenciaSilaboMD {
              PreparedStatement st = conexion.getCon().prepareStatement( "SELECT \"ReferenciaSilabo\".id_referencia, \"Referencias\".tipo_referencia, \"Referencias\".descripcion_referencia, \"Referencias\".existe_en_biblioteca FROM \"ReferenciaSilabo\",\"Referencias\"\n"
                     + "WHERE id_silabo="+aguja+"\n"
                     + "AND \"Referencias\".id_referencia=\"ReferenciaSilabo\".id_referencia");
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
+            ResultSet res = st.executeQuery();
+            while (res.next()) {
                 ReferenciaSilaboMD r = new ReferenciaSilaboMD();
-                r.getIdReferencia().setIdReferencia(rs.getInt(1));
-                r.getIdReferencia().setTipoReferencia(rs.getString(2));
-                r.getIdReferencia().setDescripcionReferencia(rs.getString(3));
-                r.getIdReferencia().setExisteEnBiblioteca(rs.getBoolean(4));
+                r.getIdReferencia().setIdReferencia(res.getInt(1));
+                r.getIdReferencia().setTipoReferencia(res.getString(2));
+                r.getIdReferencia().setDescripcionReferencia(res.getString(3));
+                r.getIdReferencia().setExisteEnBiblioteca(res.getBoolean(4));
 
                 //e.getIdUnidad().;
 

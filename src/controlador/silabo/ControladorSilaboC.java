@@ -38,9 +38,6 @@ import modelo.referencias.ReferenciasBD;
 import modelo.referencias.ReferenciasMD;
 import modelo.referenciasSilabo.ReferenciaSilaboBD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
-import modelo.silabo.CarrerasBDS;
-import modelo.silabo.MateriasBDS;
-import modelo.silabo.PeriodoLectivoBDS;
 import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
 
@@ -65,23 +62,14 @@ import java.util.logging.Logger;
 public class ControladorSilaboC extends AbstractSilaboCTR {
 
     private SilaboBD silaboNuevo;
-
     private SilaboMD silaboAnterior;
-
     private VtnConfigSilabo configuracion = new VtnConfigSilabo();
-
     private frmGestionSilabo gestion;
-
     private frmReferencias bibliografia;
-
     private UsuarioBD usuario;
-
     private List<CarreraMD> carrerasDocente;
-
     private List<SilaboMD> silabosAnteriores;
-
     private List<PeriodoLectivoMD> periodosCarrera;
-
     private List<MateriaMD> materiasDocente;
 
     private static Integer idEvaluacionSig = 0;

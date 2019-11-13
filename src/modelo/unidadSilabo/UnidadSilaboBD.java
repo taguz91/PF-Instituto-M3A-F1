@@ -22,44 +22,39 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         this.conexion = conexion;
     }
 
-    public UnidadSilaboBD(ConexionBD conexion, int numeroUnidad, String tituloUnidad, LocalDate fechaInicioUnidad, LocalDate fechaFinUnidad, String objetivoEspecificoUnidad, String resultadosAprendizajeUnidad, String contenidosUnidad, int horasDocenciaUnidad, int horasPracticaUnidad, int horasAutonomoUnidad) {
-        super(numeroUnidad, tituloUnidad, fechaInicioUnidad, fechaFinUnidad, objetivoEspecificoUnidad, resultadosAprendizajeUnidad, contenidosUnidad, horasDocenciaUnidad, horasPracticaUnidad, horasAutonomoUnidad);
-        this.conexion = conexion;
-    }
-
     public void insertar(UnidadSilaboMD u, int is) {
 
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"UnidadSilabo\"(\n"
+            PreparedStatement ps = conexion.getCon().prepareStatement("INSERT INTO public.\"UnidadSilabo\"(\n"
                     + "	 numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, id_silabo, titulo_unidad)\n"
-                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?,"+is+", ?)");
+                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?," + is + ", ?)");
 
-            st.setInt(1, u.getNumeroUnidad());
-            st.setString(2, u.getObjetivoEspecificoUnidad());
-            st.setString(3, u.getResultadosAprendizajeUnidad());
-            st.setString(4, u.getContenidosUnidad());
-            if (u.getFechaInicioUnidad()==null){
-                st.setDate(5, null);
-                
-            }else{
-                st.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));  
+            ps.setInt(1, u.getNumeroUnidad());
+            ps.setString(2, u.getObjetivoEspecificoUnidad());
+            ps.setString(3, u.getResultadosAprendizajeUnidad());
+            ps.setString(4, u.getContenidosUnidad());
+            if (u.getFechaInicioUnidad() == null) {
+                ps.setDate(5, null);
+
+            } else {
+                ps.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));
             }
-           if (u.getFechaFinUnidad()==null){
-               st.setDate(6, null); 
-              
-           }else{
-               st.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad())); 
-           }
-            
-            st.setInt(7, u.getHorasDocenciaUnidad());
-            st.setInt(8, u.getHorasPracticaUnidad());
-            st.setInt(9, u.getHorasAutonomoUnidad());
+            if (u.getFechaFinUnidad() == null) {
+                ps.setDate(6, null);
 
-            st.setString(10, u.getTituloUnidad());
+            } else {
+                ps.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
+            }
 
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
+            ps.setInt(7, u.getHorasDocenciaUnidad());
+            ps.setInt(8, u.getHorasPracticaUnidad());
+            ps.setInt(9, u.getHorasAutonomoUnidad());
+
+            ps.setString(10, u.getTituloUnidad());
+
+            ps.executeUpdate();
+            System.out.println(ps);
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,47 +62,40 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
     }
 
     public static List<UnidadSilaboMD> consultar(ConexionBD conexion, int clave, int tipo) {
-
         List<UnidadSilaboMD> unidades = new ArrayList<>();
-        
-        try {
 
+        try {
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, titulo_unidad\n"
                     + "FROM public.\"UnidadSilabo\"\n"
                     + "WHERE id_silabo=? ORDER BY numero_unidad");
-
             st.setInt(1, clave);
-
             System.out.println(st);
-            ResultSet rs = st.executeQuery();
+            ResultSet res = st.executeQuery();
 
-            while (rs.next()) {
-                
-                
-                UnidadSilaboMD tmp = new UnidadSilaboMD();
-                tmp.setIdUnidad(rs.getInt(1));
-                tmp.setNumeroUnidad(rs.getInt(2));
-                tmp.setObjetivoEspecificoUnidad(rs.getString(3));
-                tmp.setResultadosAprendizajeUnidad(rs.getString(4));
-                tmp.setContenidosUnidad(rs.getString(5));
-                if (rs.getDate(6)!=null && tipo==1){
-                     tmp.setFechaInicioUnidad(rs.getDate(6).toLocalDate());
-                }
-                
-                
-                
-                if (rs.getDate(7)!=null && tipo==1){
-                    tmp.setFechaFinUnidad(rs.getDate(7).toLocalDate()); 
-                }
-               
-                tmp.setHorasDocenciaUnidad(rs.getInt(8));
-                System.out.println(tmp.getHorasDocenciaUnidad());
-                tmp.setHorasPracticaUnidad(rs.getInt(9));
-                System.out.println(tmp.getHorasPracticaUnidad());
-                tmp.setHorasAutonomoUnidad(rs.getInt(10));
-                tmp.setTituloUnidad(rs.getString(11));
+            while (res.next()) {
 
-                unidades.add(tmp);
+                UnidadSilaboMD u = new UnidadSilaboMD();
+                u.setIdUnidad(res.getInt(1));
+                u.setNumeroUnidad(res.getInt(2));
+                u.setObjetivoEspecificoUnidad(res.getString(3));
+                u.setResultadosAprendizajeUnidad(res.getString(4));
+                u.setContenidosUnidad(res.getString(5));
+                if (res.getDate(6) != null && tipo == 1) {
+                    u.setFechaInicioUnidad(res.getDate(6).toLocalDate());
+                }
+
+                if (res.getDate(7) != null && tipo == 1) {
+                    u.setFechaFinUnidad(res.getDate(7).toLocalDate());
+                }
+
+                u.setHorasDocenciaUnidad(res.getInt(8));
+                System.out.println(u.getHorasDocenciaUnidad());
+                u.setHorasPracticaUnidad(res.getInt(9));
+                System.out.println(u.getHorasPracticaUnidad());
+                u.setHorasAutonomoUnidad(res.getInt(10));
+                u.setTituloUnidad(res.getString(11));
+
+                unidades.add(u);
             }
 
         } catch (SQLException ex) {
@@ -115,10 +103,11 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
+
     public static List<UnidadSilaboMD> consultarUnidadesPlanClase(ConexionBD conexion, int clave) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
-        
+
         try {
 
             PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad, numero_unidad,titulo_unidad,contenidos_unidad\n"
@@ -128,17 +117,16 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             st.setInt(1, clave);
 
             System.out.println(st);
-            ResultSet rs = st.executeQuery();
+            ResultSet res = st.executeQuery();
 
-            while (rs.next()) {
-                
-                
-                UnidadSilaboMD tmp = new UnidadSilaboMD();
-                tmp.setIdUnidad(rs.getInt(1));
-                tmp.setNumeroUnidad(rs.getInt(2));
-                 tmp.setTituloUnidad(rs.getString(3));
-                 tmp.setContenidosUnidad(rs.getString(4));
-                unidades.add(tmp);
+            while (res.next()) {
+
+                UnidadSilaboMD u = new UnidadSilaboMD();
+                u.setIdUnidad(res.getInt(1));
+                u.setNumeroUnidad(res.getInt(2));
+                u.setTituloUnidad(res.getString(3));
+                u.setContenidosUnidad(res.getString(4));
+                unidades.add(u);
             }
 
         } catch (SQLException ex) {
@@ -146,34 +134,35 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
-    public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo,int unidad) {
+
+    public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo, int unidad) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
-        
+
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n" +
-"u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n" +
-"from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
+            PreparedStatement st = conexion.getCon().prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n"
+                    + "u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n"
+                    + "from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
 
             st.setInt(1, silabo);
-            st.setInt(2,unidad);
+            st.setInt(2, unidad);
 
             System.out.println(st);
-            ResultSet rs = st.executeQuery();
+            ResultSet res = st.executeQuery();
 
-            while (rs.next()) {
+            while (res.next()) {
 
                 UnidadSilaboMD tmp = new UnidadSilaboMD();
-                tmp.setNumeroUnidad(rs.getInt(1));
-                tmp.setTituloUnidad(rs.getString(2));
-                tmp.setFechaInicioUnidad(rs.getDate(3).toLocalDate());
-                tmp.setFechaFinUnidad(rs.getDate(4).toLocalDate());
-                tmp.setHorasDocenciaUnidad(rs.getInt(5));
-                tmp.setHorasPracticaUnidad(rs.getInt(6));
-                tmp.setObjetivoEspecificoUnidad(rs.getString(7));
-                tmp.setResultadosAprendizajeUnidad(rs.getString(8));
-                tmp.setContenidosUnidad(rs.getString(9));
+                tmp.setNumeroUnidad(res.getInt(1));
+                tmp.setTituloUnidad(res.getString(2));
+                tmp.setFechaInicioUnidad(res.getDate(3).toLocalDate());
+                tmp.setFechaFinUnidad(res.getDate(4).toLocalDate());
+                tmp.setHorasDocenciaUnidad(res.getInt(5));
+                tmp.setHorasPracticaUnidad(res.getInt(6));
+                tmp.setObjetivoEspecificoUnidad(res.getString(7));
+                tmp.setResultadosAprendizajeUnidad(res.getString(8));
+                tmp.setContenidosUnidad(res.getString(9));
                 unidades.add(tmp);
             }
 
@@ -182,8 +171,8 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         }
         return unidades;
     }
-    
-    public static UnidadSilaboMD consultarUltima(ConexionBD conexion,int is,int iu){
+
+    public static UnidadSilaboMD consultarUltima(ConexionBD conexion, int is, int iu) {
         UnidadSilaboMD unidad = null;
         try {
 
@@ -204,5 +193,5 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
         return unidad;
     }
-    
+
 }

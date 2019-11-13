@@ -1218,6 +1218,7 @@ public class VtnPrincipalCTR {
     }
 
     public void agregarVtn(JInternalFrame ji) {
+        eventoInternal(ji);
         vtnPrin.getDpnlPrincipal().add(ji);
         ji.show();
     }
