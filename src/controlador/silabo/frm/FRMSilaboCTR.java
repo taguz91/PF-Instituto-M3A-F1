@@ -41,32 +41,41 @@ public class FRMSilaboCTR extends DCTR {
     protected List<ReferenciaSilaboMD> referenciasSilabo;
 
     // Para tener referencia de un silabo 
-    private final SilaboMD silaboReferencia;
-    // Para saber la cantidad de unidades que tendra el silabo  
-    private final int numUnidades;
+    private final SilaboMD silabo;
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
-            SilaboMD silaboRefencia,
-            int numUnidades
+            SilaboMD silabo
     ) {
         super(ctrPrin);
-        this.silaboReferencia = silaboRefencia;
-        this.numUnidades = numUnidades;
+        this.silabo = silabo;
     }
 
-    public void iniciar() {
-        // Siempre iniciamos el estado del boton en falso para que 
-        // no pueda guardar hasta realizar cambios
-        estadoBtnGuardar(false);
-        // Comprobamos si existe o no un silabo anterior para iniciar
-        // el formulario
-        existeSilabo();
+    public void nuevo(int num) {
+        crearSilaboNuevo(num);
+        iniciarSilabo();
         iniciarVentana();
     }
 
+    public void referenciado() {
+        crearSilaboReferenciado(silabo);
+        iniciarSilabo();
+        iniciarVentana();
+    }
+
+    public void editar() {
+
+        iniciarVentana();
+    }
+
+    /**
+     * Comprobamos si existe o no un silabo anterior para iniciar el formulario
+     */
     private void iniciarVentana() {
-        FRM_GESTION.setTitle(silaboReferencia.getMateria().getNombre());
+        // Siempre iniciamos el estado del boton en falso para que 
+        // no pueda guardar hasta realizar cambios
+        estadoBtnGuardar(false);
+        FRM_GESTION.setTitle(silabo.getMateria().getNombre());
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
     }
@@ -80,12 +89,7 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getCmbUnidad().addActionListener(e -> mostrarUnidad());
     }
 
-    private void existeSilabo() {
-        if (silaboReferencia == null) {
-            crearSilaboNuevo();
-        } else {
-            crearSilaboReferenciado(silaboReferencia);
-        }
+    private void iniciarSilabo() {
         // Iniciamo los arrays para guardar las diferentes cosas
         evaluaciones = new ArrayList<>();
         biblioteca = new ArrayList<>();
@@ -94,7 +98,7 @@ public class FRMSilaboCTR extends DCTR {
         mostrarTotalGestion();
     }
 
-    private void crearSilaboNuevo() {
+    private void crearSilaboNuevo(int numUnidades) {
         unidades = new ArrayList<>();
         estrategias = new ArrayList<>();
         referenciasSilabo = new ArrayList<>();
