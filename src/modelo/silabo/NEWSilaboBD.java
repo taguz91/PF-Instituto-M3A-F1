@@ -75,12 +75,12 @@ public class NEWSilaboBD implements ISilaboBD {
     }
 
     @Override
-    public List<SilaboMD> getByCarreraPersonaPeriodo(
+    public SilaboMD getByCarreraPersonaPeriodo(
             String nombreCarrera,
             int idPersona,
             String nombrePeriodo
     ) {
-        List<SilaboMD> SS = new ArrayList<>();
+        SilaboMD SS = null;
         String sql = "SELECT DISTINCT id_silabo,\n"
                 + "s.id_materia, m.materia_nombre "
                 + FROM_SILABO
@@ -96,12 +96,11 @@ public class NEWSilaboBD implements ISilaboBD {
             ResultSet res = ps.executeQuery();
 
             while (res.next()) {
-                SilaboMD s = new SilaboMD();
-                s.setID(res.getInt(1));
-                s.getMateria().setId(res.getInt(2));
-                s.getMateria().setNombre(res.getString(3));
+                SS = new SilaboMD();
+                SS.setID(res.getInt(1));
+                SS.getMateria().setId(res.getInt(2));
+                SS.getMateria().setNombre(res.getString(3));
 
-                SS.add(s);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,

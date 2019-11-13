@@ -13,7 +13,7 @@ public interface ISilaboBD {
 
     public int nuevoSilabo(SilaboMD s);
 
-    public List<SilaboMD> getByCarreraPersonaPeriodo(
+    public SilaboMD getByCarreraPersonaPeriodo(
             String nombreCarrera,
             int idPersona,
             String nombrePeriodo
@@ -28,22 +28,21 @@ public interface ISilaboBD {
             int idPersona,
             int idMateria
     );
-    
+
     public void setEstado(int idSilabo, int estado);
-    
+
     public SilaboMD getSilaboById(int idSilabo);
-    
+
     public void guardarPDFAnalitico(
-            int idSilabo, 
-            FileInputStream fis, 
+            int idSilabo,
+            FileInputStream fis,
             File f
     );
-    
+
     public void guardarPDFSilabo(
-            int idSilabo, 
-            FileInputStream fis, 
+            int idSilabo,
+            FileInputStream fis,
             File f
     );
-    
 
 }

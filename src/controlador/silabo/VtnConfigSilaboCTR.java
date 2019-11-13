@@ -150,11 +150,24 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     }
 
     private void btnSiguiente(ActionEvent e) {
-        modelo = new SilaboMD();
-        modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getIdCarrera()));
-        modelo.setMateria(getMateria().get());
-        FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
-        ctr.nuevo(Integer.parseInt(vista.getSpnUnidades().getValue().toString()));
+        int indexCmbRef = vista.getCmbPeriodoRef().getSelectedIndex();
+        if (indexCmbRef > 0) {
+            modelo = NEWSilaboBD.single().getByCarreraPersonaPeriodo(
+                    vista.getCmbCarrera().getSelectedItem().toString(),
+                    CONS.USUARIO.getPersona().getIdPersona(),
+                    vista.getCmbPeriodoRef().getSelectedItem().toString()
+            );
+
+            FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+            ctr.referenciado();
+
+        } else {
+            modelo = new SilaboMD();
+            modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getIdCarrera()));
+            modelo.setMateria(getMateria().get());
+            FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+            ctr.nuevo(Integer.parseInt(vista.getSpnUnidades().getValue().toString()));
+        }
     }
 
     private void btnCancelar(ActionEvent e) {
