@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import modelo.estilo.TblEstilo;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.referencias.ReferenciasMD;
@@ -41,8 +43,20 @@ public class FRMSilaboCTR extends DCTR {
     protected List<TipoActividadMD> tiposActividad;
     protected List<ReferenciasMD> biblioteca;
     protected List<ReferenciaSilaboMD> referenciasSilabo;
-    
-    // Todos los modelos de las tablas para 
+
+    // Titulo de las tablas  
+    private static final String[] TITULO_GESTION = {
+        "Indicador", "Instrumento",
+        "Valoración", "Fecha Envío",
+        "Fecha Presentación"
+    };
+    // Todos los modelos de las tablas de gestion
+    private final DefaultTableModel mdTblAD = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+    private final DefaultTableModel mdTblAC = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+    private final DefaultTableModel mdTblGP = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+    private final DefaultTableModel mdTblGA = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+    private final DefaultTableModel mdTblES = TblEstilo.modelTblSinEditar(TITULO_GESTION);
+
     // Para tener referencia de un silabo 
     private final SilaboMD silabo;
     // Para guardar la unidad  
@@ -87,6 +101,7 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.setTitle(silabo.getMateria().getNombre());
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
+        mostrarUnidad();
     }
 
     private void iniciarCMBUnidad() {
@@ -99,6 +114,17 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     private void iniciarSilabo() {
+        // Todos los modelos de las tablas  
+        FRM_GESTION.getTblAprendizajeColaborativo()
+                .setModel(mdTblAC);
+        FRM_GESTION.getTblAsistidaDocente()
+                .setModel(mdTblAD);
+        FRM_GESTION.getTblAutonoma()
+                .setModel(mdTblGA);
+        FRM_GESTION.getTblPractica()
+                .setModel(mdTblGP);
+        FRM_GESTION.getTblEstrategias()
+                .setModel(mdTblES);
         // Iniciamo los arrays para guardar las diferentes cosas
         evaluaciones = new ArrayList<>();
         biblioteca = new ArrayList<>();
@@ -130,11 +156,11 @@ public class FRMSilaboCTR extends DCTR {
     private void estadoBtnGuardar(boolean estado) {
         FRM_GESTION.getBtnGuardar().setEnabled(estado);
     }
-    
+
     /**
-     * Para obtener la unidad seleccionada 
+     * Para obtener la unidad seleccionada
      */
-    private void actualizarUnidadSeleccionada(){
+    private void actualizarUnidadSeleccionada() {
         unidadSelec = unidades.get(
                 FRM_GESTION.getCmbUnidad().getSelectedIndex()
         );
@@ -147,7 +173,7 @@ public class FRMSilaboCTR extends DCTR {
     private void mostrarUnidad() {
         // Actualizamos la unidad seleccionada
         actualizarUnidadSeleccionada();
-        
+
         // Actualizamos los txt del formulario 
         FRM_GESTION.getTxtTitulo().setText(
                 unidadSelec.getTituloUnidad()
@@ -161,7 +187,7 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getTxrResultados().setText(
                 unidadSelec.getResultadosAprendizajeUnidad()
         );
-        
+
         // Actualizamos las fechas  
         if (unidadSelec.getFechaFinUnidad() != null) {
             FRM_GESTION.getDchFechaInicio().setDate(
@@ -173,7 +199,7 @@ public class FRMSilaboCTR extends DCTR {
         } else {
             FRM_GESTION.getDchFechaInicio().setDate(null);
         }
-        
+
         if (unidadSelec.getFechaFinUnidad() != null) {
             FRM_GESTION.getDchFechaFin().setDate(
                     Date.from(unidadSelec.getFechaFinUnidad()
@@ -184,7 +210,7 @@ public class FRMSilaboCTR extends DCTR {
         } else {
             FRM_GESTION.getDchFechaFin().setDate(null);
         }
-        
+
         // Actualizamos las horas de docencia  
         FRM_GESTION.getSpnHdocencia().setValue(
                 unidadSelec.getHorasDocenciaUnidad()
@@ -195,21 +221,57 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getSpnHautonomas().setValue(
                 unidadSelec.getHorasAutonomoUnidad()
         );
-        
+
         // Actualizamos las estrategias 
         // Debemos revisar  lo de estrategias 
-        
         // Actualizamos las evaluaciones 
-        
-        
+        cargarEvaluaciones();
     }
-    
+
     /**
-     * Cargamos las evaluaciones 
+     * Cargamos las evaluaciones
      */
-    private void cargarEvaluaciones(){
-        
-    } 
+    private void cargarEvaluaciones() {
+        mdTblAC.setRowCount(0);
+        mdTblAD.setRowCount(0);
+        mdTblES.setRowCount(0);
+        mdTblGA.setRowCount(0);
+        mdTblGP.setRowCount(0);
+
+        evaluaciones.forEach(e -> {
+            if (e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
+                Object[] row = {
+                    e.getIndicador(),
+                    e.getInstrumento(),
+                    e.getValoracion(),
+                    e.getFechaEnvio(),
+                    e.getFechaPresentacion(),
+                    e.getIdEvaluacion()
+                };
+
+                switch (e.getIdTipoActividad().getIdTipoActividad()) {
+                    // "Asistido por el Docente"
+                    case 1:
+                        mdTblAD.addRow(row);
+                        break;
+                    // "Aprendizaje Colaborativo"
+                    case 2:
+                        mdTblAC.addRow(row);
+                        break;
+                    // "Gestión de la Práctica"
+                    case 3:
+                        mdTblGP.addRow(row);
+                        break;
+                    // "Gestión de Trabajo Autónomo"
+                    case 4:
+                        mdTblGA.addRow(row);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
 
     /**
      * Mostramos el total de las evaluaciones de gestion
