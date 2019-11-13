@@ -81,6 +81,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void btnNuevo(ActionEvent e) {
         VtnConfigSilaboCTR vtn = new VtnConfigSilaboCTR(desktop);
         vtn.Init();
+        vista.dispose();
     }
 
     private void btnEditar(ActionEvent e) {

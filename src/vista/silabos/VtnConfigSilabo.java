@@ -18,6 +18,8 @@ public class VtnConfigSilabo extends AbstracView {
 
     public VtnConfigSilabo() {
         initComponents();
+        this.btnSiguiente.setEnabled(false);
+        this.spnUnidades.setEnabled(false);
 
     }
 
