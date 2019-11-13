@@ -5,9 +5,9 @@
  */
 package controlador.silabo;
 
-import com.sun.istack.internal.Nullable;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import controlador.silabo.frm.FRMSilaboCTR;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Optional;
@@ -153,8 +153,8 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
         modelo = new SilaboMD();
         modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getIdCarrera()));
         modelo.setMateria(getMateria().get());
-        NEWfrmSilaboCTR form = new NEWfrmSilaboCTR(modelo, desktop);
-        form.Init();
+        FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+        ctr.nuevo(Integer.parseInt(vista.getSpnUnidades().getValue().toString()));
     }
 
     private void btnCancelar(ActionEvent e) {

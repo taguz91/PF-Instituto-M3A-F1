@@ -170,6 +170,17 @@ public class TblEstilo {
         };
         return modelo;
     }
+    
+    public static DefaultTableModel modelTblSinEditar(String titulo[]) {
+        String[][] datos = {};
+        DefaultTableModel modelo = new DefaultTableModel(datos, titulo) {
+            @Override
+            public final boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        return modelo;
+    }
 
     public static void formatoTblMatricula(JTable tbl) {
         formatoTbl(tbl);
