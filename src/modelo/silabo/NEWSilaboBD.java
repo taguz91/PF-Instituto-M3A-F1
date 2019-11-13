@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.mbd.ISilaboBD;
-import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -422,6 +421,15 @@ public class NEWSilaboBD implements ISilaboBD {
         } finally {
             CON.close(conn);
         }
+
+    }
+
+    public boolean eliminar(SilaboMD silabo) {
+
+        String DELETE = "DELETE FROM public.\"Silabo\"\n"
+                + "	WHERE id_silabo=" + silabo.getID();
+
+        return CON.ejecutar(DELETE, null) == null;
 
     }
 

@@ -308,7 +308,7 @@ public class ControladorCRUD {
         if (seleccionarSilabo(0) != null && !crud.getTbl().getValueAt(crud.getTbl().getSelectedRow(), 2).equals("Aprobado")) {
             int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                new SilaboBD(conexion).eliminar(seleccionarSilabo(0));
+                //new SilaboBD(conexion).eliminar(seleccionarSilabo(0));
                 JOptionPane.showMessageDialog(null, "Silabo eliminado correctamente");
             }
         } else {

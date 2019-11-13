@@ -1,40 +1,22 @@
 package controlador.silabo;
 
-import com.sun.istack.internal.Nullable;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.event.CaretEvent;
 import modelo.CONS;
-import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.validaciones.Validar;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.silabos.VtnSilabos;
 
 /**
@@ -42,6 +24,8 @@ import vista.silabos.VtnSilabos;
  * @author MrRainx
  */
 public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
+
+    private NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
 
     private List<CarreraMD> carreras;
 
@@ -111,7 +95,9 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         int row = getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(vista, "DEBE SELECCIONAR UN SILABO PRIMERO!!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            return null;
+            SilaboMD silabo = new SilaboMD();
+            silabo.setID(0);
+            return silabo;
         }
         int id = Integer.valueOf(table.getValueAt(row, 0).toString());
         return lista.stream()
@@ -193,6 +179,13 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnEliminar(ActionEvent e) {
+        boolean estado = SILABO_CONN.eliminar(getSilaboSeleccionadoTbl());
+
+        if (estado) {
+            JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
+        } else {
+            JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
+        }
 
     }
 

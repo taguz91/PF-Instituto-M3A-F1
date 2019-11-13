@@ -275,28 +275,7 @@ public class SilaboBD extends SilaboMD {
         return silabo;
     }
 
-    public void eliminar(SilaboMD s) {
 
-        try {
-
-            if (conexion.getCon() != null) {
-
-                PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"Silabo\"\n"
-                        + "	WHERE id_silabo=?");
-
-                st.setInt(1, s.getID());
-
-                st.executeUpdate();
-
-                System.out.println(st);
-                st.close();
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
     // Pasado
     public void aprobar(int silabo, int estado) {
 

@@ -108,6 +108,32 @@ public class ConnDBPool {
         }
     }
 
+    public SQLException ejecutar(String sql, Map<Integer, Object> parametros) {
+        //this.conn = conn;
+        Connection conn = getConnection();
+        try {
+
+            if (parametros == null) {
+                stmt = conn.prepareStatement(sql);
+            } else {
+                stmt = prepararStatement(sql, conn, parametros);
+            }
+
+            stmt.executeUpdate();
+
+//            System.out.println("*******************************************");
+//            System.out.println("*PreparedStatement ejecutado correctamente*");
+//            System.out.println("*******************************************");
+            return null;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            close(conn);
+            return e;
+        } finally {
+            closeStmt().close(conn);
+        }
+    }
+
     private PreparedStatement prepararStatement(String sql, Connection conn, Map<Integer, Object> parametros) throws SQLException {
 
         stmt = conn.prepareStatement(sql);
