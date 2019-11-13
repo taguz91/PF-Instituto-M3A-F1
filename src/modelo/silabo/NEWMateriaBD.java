@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.materia.MateriaMD;
@@ -17,11 +19,11 @@ import modelo.silabo.mbd.IMateriaBD;
 public class NEWMateriaBD implements IMateriaBD {
 
     private final ConnDBPool CON = ConnDBPool.single();
-    
-    private static NEWMateriaBD MBD; 
-    
-    public static NEWMateriaBD single(){
-        if(MBD == null){
+
+    private static NEWMateriaBD MBD;
+
+    public static NEWMateriaBD single() {
+        if (MBD == null) {
             MBD = new NEWMateriaBD();
         }
         return MBD;
@@ -130,6 +132,48 @@ public class NEWMateriaBD implements IMateriaBD {
             CON.cerrarCONPS(ps);
         }
         return MS;
+    }
+
+    public List<MateriaMD> getMateriasSinSilabo(String cedulaDocente, int idCarrera) {
+        String SELECT = ""
+                + "WITH mis_materias AS (\n"
+                + "	SELECT\n"
+                + "		\"Materias\".id_materia,\n"
+                + "		\"Materias\".materia_nombre \n"
+                + "	FROM\n"
+                + "		\"Docentes\"\n"
+                + "		INNER JOIN \"DocentesMateria\" ON \"DocentesMateria\".id_docente = \"Docentes\".id_docente\n"
+                + "		INNER JOIN \"Materias\" ON \"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "		AND \"Materias\".id_carrera = " + idCarrera + " \n"
+                + "	) SELECT\n"
+                + "	mis_materias.id_materia,\n"
+                + "	mis_materias.materia_nombre \n"
+                + "FROM\n"
+                + "	mis_materias \n"
+                + "WHERE\n"
+                + "	mis_materias.id_materia NOT IN ( SELECT DISTINCT \"Silabo\".id_materia FROM \"Silabo\" INNER JOIN mis_materias ON \"Silabo\".id_materia = mis_materias.id_materia AND \"Silabo\".id_prd_lectivo > 20 );"
+                + "";
+        System.out.println(SELECT);
+        ResultSet rs = CON.ejecutarQuery(SELECT, null);
+        List<MateriaMD> materias = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                MateriaMD materia = new MateriaMD();
+                materia.setId(rs.getInt("id_materia"));
+                materia.setNombre(rs.getString("materia_nombre"));
+
+                materias.add(materia);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWMateriaBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return materias;
+
     }
 
 }
