@@ -39,7 +39,7 @@ public class ConnDBPool {
         if (CONPOOL != null) {
             return CONPOOL;
         }
-        ConnDBPool con = new ConnDBPool(null);
+        ConnDBPool con = new ConnDBPool();
         return con;
     }
 
@@ -191,6 +191,22 @@ public class ConnDBPool {
         return rs;
     }
 
+    public ResultSet ejecutarQuery(String sql, Map<Integer, Object> parametros) {
+        Connection conn = getConnection();
+        try {
+            if (parametros == null) {
+                stmt = conn.prepareStatement(sql);
+            } else {
+                stmt = prepararStatement(sql, conn, parametros);
+            }
+            rs = stmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return rs;
+    }
+
     public ConnDBPool close(Connection conn) {
         try {
             if (conn != null) {
@@ -205,6 +221,9 @@ public class ConnDBPool {
     public ConnDBPool close(ResultSet rs) {
         try {
             rs.close();
+            Connection conn = rs.getStatement().getConnection();
+            rs.getStatement().close();
+            conn.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

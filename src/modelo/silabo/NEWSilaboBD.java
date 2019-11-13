@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.mbd.ISilaboBD;
 
 /**
@@ -18,11 +21,11 @@ import modelo.silabo.mbd.ISilaboBD;
 public class NEWSilaboBD implements ISilaboBD {
 
     private final ConnDBPool CON = ConnDBPool.single();
-    
-    private static NEWSilaboBD SBD; 
-    
-    public static NEWSilaboBD single(){
-        if(SBD == null){
+
+    private static NEWSilaboBD SBD;
+
+    public static NEWSilaboBD single() {
+        if (SBD == null) {
             SBD = new NEWSilaboBD();
         }
         return SBD;
@@ -266,6 +269,49 @@ public class NEWSilaboBD implements ISilaboBD {
             CON.noSQLPOOL(ps);
         } catch (SQLException e) {
         }
+    }
+
+    public List<SilaboMD> getSilaboRef(int idCarrera, int idMateria) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
+                + "	AND \"Silabo\".id_materia = " + idMateria + " \n"
+                + "	AND \"PeriodoLectivo\".id_prd_lectivo <> ( SELECT \"PeriodoLectivo\".id_prd_lectivo FROM \"PeriodoLectivo\" WHERE \"PeriodoLectivo\".id_carrera = 2 ORDER BY \"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC LIMIT 1 ) \n"
+                + "ORDER BY\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC \n"
+                + "	LIMIT 1"
+                + "";
+
+        List<SilaboMD> silabosRef = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT, null);
+        try {
+            while (rs.next()) {
+                SilaboMD silabo = new SilaboMD();
+                silabo.setID(rs.getInt("id_silabo"));
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD()
+                        .setID(rs.getInt("id_prd_lectivo"))
+                        .setNombre(rs.getString("prd_lectivo_nombre"));
+
+                silabo.setPeriodo(periodo);
+
+                silabosRef.add(silabo);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+        return silabosRef;
+
     }
 
 }
