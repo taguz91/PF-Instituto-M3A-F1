@@ -1245,7 +1245,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
     }
 
     /**
-     * Cargamos estrategias de la unidad
+     * Cargamos estrategias de la unidad esto se debe revisar a fondo
      *
      * @param unidadSeleccionada
      */

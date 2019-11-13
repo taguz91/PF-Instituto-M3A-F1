@@ -16,7 +16,6 @@ public interface IEstrategiaUnidadSilaboBD {
     
     public List<EstrategiasUnidadMD> getBySilabo(int idSilabo);
     
-    
     public List<EstrategiasUnidadMD> getBySilaboUnidad(
             int idSilabo,
             int numUnidad

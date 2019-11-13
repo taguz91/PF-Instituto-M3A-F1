@@ -9,9 +9,9 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  */
 public interface IUnidadSilaboBD {
     
-    public List<UnidadSilaboMD> getBySilaboConFecha(int idSilabo);
+    public List<UnidadSilaboMD> getBySilabo(int idSilabo);
     
-    public List<UnidadSilaboMD> getBySilaboSinFecha(int idSilabo);
+    public List<UnidadSilaboMD> getBySilaboParaReferencia(int idSilabo);
     
     public List<UnidadSilaboMD> getBySilaboUnidad(
             int idSilabo,

@@ -28,7 +28,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
     }
 
     @Override
-    public List<UnidadSilaboMD> getBySilaboConFecha(int idSilabo) {
+    public List<UnidadSilaboMD> getBySilabo(int idSilabo) {
         String sql = "SELECT id_unidad, "
                 + "numero_unidad, "
                 + "objetivo_especifico_unidad, "
@@ -75,7 +75,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
     }
 
     @Override
-    public List<UnidadSilaboMD> getBySilaboSinFecha(int idSilabo) {
+    public List<UnidadSilaboMD> getBySilaboParaReferencia(int idSilabo) {
         String sql = "SELECT id_unidad, "
                 + "numero_unidad, "
                 + "objetivo_especifico_unidad, "
@@ -95,7 +95,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setIdUnidad(0);
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));

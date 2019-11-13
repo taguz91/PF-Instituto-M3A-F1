@@ -2,7 +2,9 @@ package controlador.silabo.frm;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
@@ -39,9 +41,12 @@ public class FRMSilaboCTR extends DCTR {
     protected List<TipoActividadMD> tiposActividad;
     protected List<ReferenciasMD> biblioteca;
     protected List<ReferenciaSilaboMD> referenciasSilabo;
-
+    
+    // Todos los modelos de las tablas para 
     // Para tener referencia de un silabo 
     private final SilaboMD silabo;
+    // Para guardar la unidad  
+    private UnidadSilaboMD unidadSelec;
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
@@ -58,13 +63,17 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     public void referenciado() {
-        crearSilaboReferenciado(silabo);
+        cargarDatosSilabo();
         iniciarSilabo();
+        // Buscamos sin el id de las unidades
+        unidades = USBD.getBySilaboParaReferencia(silabo.getID());
         iniciarVentana();
     }
 
     public void editar() {
-
+        cargarDatosSilabo();
+        // Buscamos con el id de unidades
+        unidades = USBD.getBySilabo(silabo.getID());
         iniciarVentana();
     }
 
@@ -111,14 +120,24 @@ public class FRMSilaboCTR extends DCTR {
         }
     }
 
-    private void crearSilaboReferenciado(SilaboMD sr) {
-        unidades = USBD.getBySilaboSinFecha(sr.getID());
-        estrategias = EUBD.getBySilabo(sr.getID());
-        referenciasSilabo = RSBD.getBySilabo(sr.getID());
+    private void cargarDatosSilabo() {
+        // Igual para editar
+        estrategias = EUBD.getBySilabo(silabo.getID());
+        // Igual al editar 
+        referenciasSilabo = RSBD.getBySilabo(silabo.getID());
     }
 
     private void estadoBtnGuardar(boolean estado) {
         FRM_GESTION.getBtnGuardar().setEnabled(estado);
+    }
+    
+    /**
+     * Para obtener la unidad seleccionada 
+     */
+    private void actualizarUnidadSeleccionada(){
+        unidadSelec = unidades.get(
+                FRM_GESTION.getCmbUnidad().getSelectedIndex()
+        );
     }
 
     /**
@@ -126,13 +145,76 @@ public class FRMSilaboCTR extends DCTR {
      * acciones.
      */
     private void mostrarUnidad() {
-
+        // Actualizamos la unidad seleccionada
+        actualizarUnidadSeleccionada();
+        
+        // Actualizamos los txt del formulario 
+        FRM_GESTION.getTxtTitulo().setText(
+                unidadSelec.getTituloUnidad()
+        );
+        FRM_GESTION.getTxrContenidos().setText(
+                unidadSelec.getContenidosUnidad()
+        );
+        FRM_GESTION.getTxrObjetivos().setText(
+                unidadSelec.getObjetivoEspecificoUnidad()
+        );
+        FRM_GESTION.getTxrResultados().setText(
+                unidadSelec.getResultadosAprendizajeUnidad()
+        );
+        
+        // Actualizamos las fechas  
+        if (unidadSelec.getFechaFinUnidad() != null) {
+            FRM_GESTION.getDchFechaInicio().setDate(
+                    Date.from(unidadSelec.getFechaInicioUnidad()
+                            .atStartOfDay(ZoneId.systemDefault())
+                            .toInstant()
+                    )
+            );
+        } else {
+            FRM_GESTION.getDchFechaInicio().setDate(null);
+        }
+        
+        if (unidadSelec.getFechaFinUnidad() != null) {
+            FRM_GESTION.getDchFechaFin().setDate(
+                    Date.from(unidadSelec.getFechaFinUnidad()
+                            .atStartOfDay(ZoneId.systemDefault())
+                            .toInstant()
+                    )
+            );
+        } else {
+            FRM_GESTION.getDchFechaFin().setDate(null);
+        }
+        
+        // Actualizamos las horas de docencia  
+        FRM_GESTION.getSpnHdocencia().setValue(
+                unidadSelec.getHorasDocenciaUnidad()
+        );
+        FRM_GESTION.getSpnHpracticas().setValue(
+                unidadSelec.getHorasPracticaUnidad()
+        );
+        FRM_GESTION.getSpnHautonomas().setValue(
+                unidadSelec.getHorasAutonomoUnidad()
+        );
+        
+        // Actualizamos las estrategias 
+        // Debemos revisar  lo de estrategias 
+        
+        // Actualizamos las evaluaciones 
+        
+        
     }
+    
+    /**
+     * Cargamos las evaluaciones 
+     */
+    private void cargarEvaluaciones(){
+        
+    } 
 
     /**
      * Mostramos el total de las evaluaciones de gestion
      */
-    public void mostrarTotalGestion() {
+    private void mostrarTotalGestion() {
         double total = 0;
         total = evaluaciones.stream()
                 .map((emd) -> emd.getValoracion())
