@@ -36,11 +36,11 @@ public class ConnDBPool {
     }
 
     public static ConnDBPool single() {
-        if (CONPOOL != null) {
-            return CONPOOL;
+        if (CONPOOL == null) {
+            CONPOOL = new ConnDBPool();
         }
-        ConnDBPool con = new ConnDBPool();
-        return con;
+
+        return CONPOOL;
     }
 
     public ConnDBPool(Object param) {

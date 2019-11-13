@@ -6,6 +6,7 @@
 package modelo.silabo;
 
 import java.util.List;
+import java.util.Map;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
@@ -25,7 +26,7 @@ public class SilaboMD {
 
     private PeriodoLectivoMD periodo;
 
-    private List<UnidadSilaboMD> unidades;
+    private Map<Integer, UnidadSilaboMD> unidades;
 
     private List<ReferenciaSilaboMD> referencias;
 
@@ -71,18 +72,18 @@ public class SilaboMD {
         this.periodo = periodo;
     }
 
-    public List<UnidadSilaboMD> getUnidades() {
+    public Map<Integer, UnidadSilaboMD> getUnidades() {
         return unidades;
     }
 
-    public void setUnidades(List<UnidadSilaboMD> unidades) {
+    public void setUnidades(Map<Integer, UnidadSilaboMD> unidades) {
         this.unidades = unidades;
     }
 
     public List<ReferenciaSilaboMD> getReferencias() {
         return referencias;
     }
-
+    
     public void setReferencias(List<ReferenciaSilaboMD> referencias) {
         this.referencias = referencias;
     }

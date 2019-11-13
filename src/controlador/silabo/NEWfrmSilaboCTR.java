@@ -28,6 +28,11 @@ public class NEWfrmSilaboCTR {
 
     public void Init() {
         Effects.addInDesktopPane(vista, vtnPrin.getVtnPrin().getDpnlPrincipal());
+
+        System.out.println("-------------------");
+        System.out.println(modelo.getPeriodo().getNombre());
+        System.out.println(modelo.getMateria());
+        System.out.println("-------------------");
         InitEventos();
     }
 

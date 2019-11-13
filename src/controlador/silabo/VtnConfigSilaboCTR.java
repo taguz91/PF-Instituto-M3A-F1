@@ -9,13 +9,14 @@ import com.sun.istack.internal.Nullable;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Optional;
 import modelo.CONS;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.silabo.NEWCarreraBD;
 import modelo.silabo.NEWMateriaBD;
+import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.SilaboMD;
 import vista.silabos.VtnConfigSilabo;
@@ -26,7 +27,13 @@ import vista.silabos.VtnConfigSilabo;
  */
 public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
-    private final List<CarreraMD> carreras = NEWCarreraBD.single().getByUsername(CONS.USUARIO.getUsername());
+    /*
+        BASE DE DATOS
+     */
+    private final NEWCarreraBD CARRERA_BD = NEWCarreraBD.single();
+    private final NEWPeriodoLectivoBD PERIODO_BD = NEWPeriodoLectivoBD.single();
+
+    private final List<CarreraMD> carreras = CARRERA_BD.getByUsername(CONS.USUARIO.getUsername());
     private List<MateriaMD> materias;
     private List<SilaboMD> silabosRef;
     private final String MENSAJE_SIN_SILABO_PENDIENTE = "NO TIENE SILABOS PENDIENTES PARA ESTA CARRERA";
@@ -65,11 +72,15 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     @Nullable
     private int getIdMateria() throws NullPointerException {
-        return materias.stream()
-                .filter(mat -> mat.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
-                .findFirst()
+        return getMateria()
                 .map(c -> c.getId())
                 .orElse(0);
+    }
+
+    private Optional<MateriaMD> getMateria() throws NullPointerException {
+        return materias.stream()
+                .filter(mat -> mat.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
+                .findFirst();
     }
 
     private void cargarCmbCarreras() {
@@ -140,7 +151,10 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     }
 
     private void btnSiguiente(ActionEvent e) {
-        NEWfrmSilaboCTR form = new NEWfrmSilaboCTR(null, desktop);
+        modelo = new SilaboMD();
+        modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getIdCarrera()));
+        modelo.setMateria(getMateria().get());
+        NEWfrmSilaboCTR form = new NEWfrmSilaboCTR(modelo, desktop);
         form.Init();
     }
 

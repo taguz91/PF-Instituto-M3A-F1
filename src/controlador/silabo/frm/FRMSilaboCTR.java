@@ -16,7 +16,7 @@ import modelo.silabo.NEWUnidadSilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.tipoActividad.TipoActividadMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
-import vista.silabos.frmGestionSilabo;
+import vista.silabos.NEWFrmSilabo;
 
 /**
  *
@@ -24,7 +24,7 @@ import vista.silabos.frmGestionSilabo;
  */
 public class FRMSilaboCTR extends DCTR {
 
-    private final frmGestionSilabo FRM_GESTION = new frmGestionSilabo();
+    private final NEWFrmSilabo FRM_GESTION = new NEWFrmSilabo();
     // Conexiones a base de datos
     private final NEWSilaboBD SBD = NEWSilaboBD.single();
     private final NEWUnidadSilaboBD USBD = NEWUnidadSilaboBD.single();
@@ -47,7 +47,7 @@ public class FRMSilaboCTR extends DCTR {
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
-            SilaboMD silaboRefencia, 
+            SilaboMD silaboRefencia,
             int numUnidades
     ) {
         super(ctrPrin);
@@ -64,14 +64,14 @@ public class FRMSilaboCTR extends DCTR {
         existeSilabo();
         iniciarVentana();
     }
-    
-    private void iniciarVentana(){
+
+    private void iniciarVentana() {
         FRM_GESTION.setTitle(silaboReferencia.getMateria().getNombre());
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
     }
-    
-    private void iniciarCMBUnidad(){
+
+    private void iniciarCMBUnidad() {
         unidades.forEach(u -> {
             FRM_GESTION.getCmbUnidad()
                     .addItem("Unidad " + u.getNumeroUnidad());
@@ -116,13 +116,13 @@ public class FRMSilaboCTR extends DCTR {
     private void estadoBtnGuardar(boolean estado) {
         FRM_GESTION.getBtnGuardar().setEnabled(estado);
     }
-    
+
     /**
-     * Al seleccionar una unidad del combo realizamos todas
-     * las siguientes acciones.
+     * Al seleccionar una unidad del combo realizamos todas las siguientes
+     * acciones.
      */
-    private void mostrarUnidad(){
-        
+    private void mostrarUnidad() {
+
     }
 
     /**

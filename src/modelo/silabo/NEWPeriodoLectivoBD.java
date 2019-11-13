@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.mbd.IPeriodoLectivoBD;
 
@@ -85,6 +86,48 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
             CON.cerrarCONPS(ps);
         }
         return PS;
+    }
+
+    public PeriodoLectivoMD getUltimoPeriodoBy(int idCarrera) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"PeriodoLectivo\".id_carrera \n"
+                + "FROM\n"
+                + "	\"PeriodoLectivo\" \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
+                + "ORDER BY\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC \n"
+                + "	LIMIT 1"
+                + "";
+        PeriodoLectivoMD periodo = null;
+
+        ResultSet rs = CON.ejecutarQuery(SELECT, null);
+
+        try {
+            while (rs.next()) {
+                periodo = new PeriodoLectivoMD();
+
+                periodo.setID(rs.getInt("id_prd_lectivo"))
+                        .setNombre(rs.getString("prd_lectivo_nombre"));
+
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+
+                periodo.setCarrera(carrera);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWPeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return periodo;
+
     }
 
 }
