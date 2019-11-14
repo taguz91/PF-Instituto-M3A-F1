@@ -25,7 +25,7 @@ import vista.silabos.VtnSilabos;
  */
 public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
-    private NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
+    private final NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
 
     private List<CarreraMD> carreras;
 
@@ -34,6 +34,10 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista = new VtnSilabos();
 
         modelo = new SilaboMD();
+    }
+
+    public VtnSilabos getVista() {
+        return vista;
     }
 
     @Override
@@ -171,7 +175,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void btnNuevo(ActionEvent e) {
         VtnConfigSilaboCTR vtn = new VtnConfigSilaboCTR(desktop);
         vtn.Init();
-        vista.dispose();
+        vtn.setVtnSilabos(this);
     }
 
     private void btnEditar(ActionEvent e) {

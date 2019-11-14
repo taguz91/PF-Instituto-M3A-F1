@@ -37,10 +37,19 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     private List<MateriaMD> materias;
     private List<SilaboMD> silabosRef;
     private final String MENSAJE_SIN_SILABO_PENDIENTE = "NO TIENE SILABOS PENDIENTES PARA ESTA CARRERA";
+    private VtnSilabosCTR vtnSilabos;
 
     public VtnConfigSilaboCTR(VtnPrincipalCTR desktop) {
         super(desktop);
         vista = new VtnConfigSilabo();
+    }
+
+    public VtnSilabosCTR getVtnSilabos() {
+        return vtnSilabos;
+    }
+
+    public void setVtnSilabos(VtnSilabosCTR vtnSilabos) {
+        this.vtnSilabos = vtnSilabos;
     }
 
     @Override
@@ -168,6 +177,8 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
             ctr.nuevo(Integer.parseInt(vista.getSpnUnidades().getValue().toString()));
         }
+        vista.dispose();
+        vtnSilabos.getVista().dispose();
     }
 
     private void btnCancelar(ActionEvent e) {
