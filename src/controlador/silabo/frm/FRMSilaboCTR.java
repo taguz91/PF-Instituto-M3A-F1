@@ -90,7 +90,7 @@ public class FRMSilaboCTR extends DCTR {
         iniciarVentana();
     }
 
-    public void referenciado() {
+    public void referenciado(boolean conEvaluaciones) {
         NEWPeriodoLectivoBD PBD = NEWPeriodoLectivoBD.single();
         silabo.setPeriodo(PBD.getUltimoPorPeriodo(silabo.getPeriodo().getID()));
         cargarDatosSilabo();
@@ -171,10 +171,9 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     private void cargarDatosSilabo() {
-        // Igual para editar
         estrategias = EUBD.getBySilabo(silabo.getID());
-        // Igual al editar 
         referenciasSilabo = RSBD.getBySilabo(silabo.getID());
+        //evaluaciones = ;
     }
 
     private void estadoBtnGuardar(boolean estado) {
