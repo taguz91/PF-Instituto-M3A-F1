@@ -88,6 +88,42 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
         return PS;
     }
 
+    @Override
+    public PeriodoLectivoMD getUltimoPorPeriodo(int idPeriodo) {
+        String sql = "SELECT "
+                + "pr.id_prd_lectivo, "
+                + "pr.prd_lectivo_fecha_inicio, "
+                + "pr.prd_lectivo_fecha_fin, "
+                + "pr.prd_lectivo_nombre "
+                + "FROM public.\"PeriodoLectivo\" pr "
+                + "WHERE id_carrera IN ( "
+                + "SELECT id_carrera "
+                + "FROM public.\"PeriodoLectivo\" "
+                + "WHERE id_prd_lectivo = ? ) "
+                + "ORDER BY prd_lectivo_fecha_fin DESC "
+                + "LIMIT 1;";
+        PeriodoLectivoMD pl = null;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idPeriodo);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                pl = new PeriodoLectivoMD();
+                pl.setID(res.getInt(1));
+                pl.setFechaInicio(res.getDate(2).toLocalDate());
+                pl.setFechaFin(res.getDate(3).toLocalDate());
+                pl.setNombre(res.getString(4));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al consulta un periodo. \n"
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return pl;
+    }
+
     public PeriodoLectivoMD getUltimoPeriodoBy(int idCarrera) {
 
         String SELECT = ""

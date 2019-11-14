@@ -13,4 +13,6 @@ public interface IPeriodoLectivoBD {
     
     public List<PeriodoLectivoMD> getByCarrera(String nombre);
     
+    public PeriodoLectivoMD getUltimoPorPeriodo(int idPeriodo);
+    
 }

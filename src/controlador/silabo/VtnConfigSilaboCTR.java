@@ -107,14 +107,9 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     }
 
     private boolean migrarEvaluaciones() {
-
         String mensaje = "DESEA MIGRAR LAS EVALUCACIONES DEL SILABO ANTERIOR?";
         int resuesta = JOptionPane.showConfirmDialog(vista, mensaje, "IMPORTANTE!!!", 0);
-        if (resuesta == JOptionPane.YES_OPTION) {
-            return true;
-        }
-
-        return false;
+        return resuesta == JOptionPane.YES_OPTION;
     }
 
     /*
@@ -178,9 +173,9 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                     CONS.USUARIO.getPersona().getIdPersona(),
                     vista.getCmbPeriodoRef().getSelectedItem().toString()
             );
-
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
-            //ctr.referenciado(migrarEvaluaciones());
+
+            ctr.referenciado(migrarEvaluaciones());
 
         } else {
 

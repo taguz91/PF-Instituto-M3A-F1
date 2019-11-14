@@ -1,33 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package modelo.evaluacionSilabo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+import java.util.UUID;
 import modelo.tipoActividad.TipoActividadMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
- * 
+ *
  * @author Andres Ullauri
  */
 public class EvaluacionSilaboMD implements Serializable {
 
+    private final int idLocal = UUID.randomUUID().hashCode();
+
     private String indicador;
 
-
     private Integer idEvaluacion;
-    
 
     private String instrumento;
 
     private double valoracion;
-
 
     private LocalDate fechaEnvio;
 
@@ -38,17 +31,13 @@ public class EvaluacionSilaboMD implements Serializable {
     private UnidadSilaboMD idUnidad;
 
     public EvaluacionSilaboMD() {
-        
-       
+
         this.idTipoActividad = new TipoActividadMD();
         this.idUnidad = new UnidadSilaboMD();
     }
-    
-    
-    
 
     public EvaluacionSilaboMD(Integer idEvaluacion, String indicador, String instrumento, double valoracion, LocalDate fechaEnvio, LocalDate fechaPresentacion, TipoActividadMD idTipoActividad, UnidadSilaboMD idUnidad) {
-        this.idEvaluacion =idEvaluacion;
+        this.idEvaluacion = idEvaluacion;
         this.indicador = indicador;
         this.instrumento = instrumento;
         this.valoracion = valoracion;
@@ -121,9 +110,9 @@ public class EvaluacionSilaboMD implements Serializable {
     public void setIdUnidad(UnidadSilaboMD idUnidad) {
         this.idUnidad = idUnidad;
     }
-    
-    
-    
-    
-    
+
+    public int getIdLocal() {
+        return idLocal;
+    }
+
 }
