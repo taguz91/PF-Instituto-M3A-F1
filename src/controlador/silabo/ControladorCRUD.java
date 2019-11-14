@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import javax.swing.event.CaretEvent;
 import javax.swing.table.DefaultTableModel;
 import modelo.CONS;
 import modelo.ConexionBD;
@@ -34,14 +32,10 @@ import vista.silabos.frmSilabos;
  */
 public class ControladorCRUD {
 
-    private SilaboBD silabo;
-
     private final UsuarioBD usuario;
 
     private frmSilabos crud;
 
-    //private frmGestionSilabo gestion;
-    //private frmConfiguracionSilabo configuracion;
     private ConexionBD conexion;
 
     private RolBD rol;
@@ -157,7 +151,7 @@ public class ControladorCRUD {
             if (row != -1) {
 
                 eliminarSilabo();
-                cargarSilabosDocente();
+                cargarSilabosDocente(null);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un silabo", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -183,12 +177,12 @@ public class ControladorCRUD {
 
         });
 
-        //crud.getCmbCarrera().addActionListener(al -> cargarSilabosDocente());
+        crud.getCmbCarrera().addActionListener(this::cargarSilabosDocente);
         cargarComboCarreras();
 
-        crud.getBtnActualizar().addActionListener(this::btnAtualizar);
+        crud.getBtnActualizar().addActionListener(this::btnRefrescar);
 
-        cargarSilabosDocente();
+        cargarSilabosDocente(null);
         InitPermisos();
 
     }
@@ -211,7 +205,7 @@ public class ControladorCRUD {
         return carrerasDocente;
     }
 
-    public void cargarSilabosDocente() {
+    public void cargarSilabosDocente(ActionEvent e) {
         modeloTabla.setRowCount(0);
         try {
 
@@ -233,7 +227,7 @@ public class ControladorCRUD {
             silabosDocente.forEach(cargador());
 
             //crud.getTblSilabos().setModel(modeloTabla);
-        } catch (Exception e) {
+        } catch (Exception ex) {
 
             JOptionPane.showMessageDialog(null, "Usted no tiene carreras asignadas en el presente periodo", "Aviso", JOptionPane.ERROR_MESSAGE);
             crud.dispose();
@@ -341,9 +335,9 @@ public class ControladorCRUD {
                 .forEach(cargador());
     }
 
-    private void btnAtualizar(ActionEvent e) {
+    private void btnRefrescar(ActionEvent e) {
         new Thread(() -> {
-            cargarSilabosDocente();
+            cargarSilabosDocente(null);
         }).start();
     }
 
