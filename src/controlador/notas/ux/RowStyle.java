@@ -3,6 +3,7 @@ package controlador.notas.ux;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -13,9 +14,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class RowStyle extends DefaultTableCellRenderer {
 
     private final int columna;
+    private Map<String, Color> estados;
 
     public RowStyle(int columna) {
         this.columna = columna;
+    }
+
+    public void setEstados(Map<String, Color> estados) {
+        this.estados = estados;
     }
 
     @Override
@@ -26,14 +32,18 @@ public class RowStyle extends DefaultTableCellRenderer {
         try {
 
             String valor = table.getValueAt(row, this.columna).toString();
-
-            if (valor.equalsIgnoreCase("APROBADO")) {
-                setForeground(new Color(37, 107, 187));
-            } else if (valor.equalsIgnoreCase("REPROBADO")) {
-                setForeground(new Color(214, 48, 12));
+            if (estados != null) {
+                if (valor.equalsIgnoreCase("APROBADO")) {
+                    setForeground(new Color(37, 107, 187));
+                } else if (valor.equalsIgnoreCase("REPROBADO")) {
+                    setForeground(new Color(214, 48, 12));
+                } else {
+                    setForeground(new Color(0, 0, 0));
+                }
             } else {
-                setForeground(new Color(0, 0, 0));
+
             }
+
             setHorizontalAlignment(CENTER);
             setFont(new Font("Arial", Font.PLAIN, 11));
             table.setSelectionBackground(Color.lightGray);
@@ -45,6 +55,16 @@ public class RowStyle extends DefaultTableCellRenderer {
         }
 
         return this;
+    }
+
+    private void estilizarPorEstados(String valor) {
+        Color color = estados.entrySet()
+                .stream()
+                .filter(item -> item.getKey().equals(valor))
+                .map(c -> c.getValue())
+                .findFirst()
+                .orElse(null);
+        
     }
 
 }

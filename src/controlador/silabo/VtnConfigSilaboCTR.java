@@ -174,7 +174,9 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                     vista.getCmbPeriodoRef().getSelectedItem().toString()
             );
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+
             ctr.referenciado(migrarEvaluaciones());
+
         } else {
 
             modelo = new SilaboMD();
