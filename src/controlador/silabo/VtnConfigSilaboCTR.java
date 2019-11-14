@@ -178,10 +178,9 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                     CONS.USUARIO.getPersona().getIdPersona(),
                     vista.getCmbPeriodoRef().getSelectedItem().toString()
             );
-            migrarEvaluaciones();
 
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
-            ctr.referenciado();
+            ctr.referenciado(migrarEvaluaciones());
 
         } else {
 
@@ -195,7 +194,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                     Integer.parseInt(vista.getSpnUnidades().getValue().toString())
             );
         }
-        
+
         vista.dispose();
         vtnSilabos.getVista().dispose();
     }

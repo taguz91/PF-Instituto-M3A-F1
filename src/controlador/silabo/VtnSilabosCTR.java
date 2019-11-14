@@ -89,9 +89,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 tableM.getRowCount() + 1,
                 obj.getMateria().getNombre(),
                 obj.getPeriodo().getNombre(),
-                obj.getEstado(),
-                ""
-            });
+                obj.getFechaGeneracion(),
+                obj.getEstado(),});
         };
     }
 
@@ -181,7 +180,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private void btnEditar(ActionEvent e) {
         modelo = getSilaboSeleccionadoTbl();
-        System.out.println(modelo);
+
     }
 
     private void btnEliminar(ActionEvent e) {
@@ -192,17 +191,17 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         } else {
             JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
         }
-
     }
 
     private void cmbCarrera(ItemEvent e) {
 
         CarreraMD carrera = carreras.get(vista.getCmbCarrera().getSelectedIndex());
 
-        lista = SilaboBD.findBy(
+        lista = SILABO_CONN.findBy(
                 user.getPersona().getIdentificacion(), carrera.getId()
         );
         cargarTabla(cargador());
+
     }
 
     private void txtBuscar(CaretEvent e) {
