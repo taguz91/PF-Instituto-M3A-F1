@@ -317,7 +317,7 @@ ENSEÑANZA]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold='true'>UNIDAD DIDÁCTICA: "
 + $F{numero_unidad}
-+ " </style> \n\n"
++ "</style>" + "\n\n"
 + "<style isBold='true'>" 
 + $F{titulo_unidad} 
 + "</style>" +  "\n\n" +
@@ -328,7 +328,7 @@ $F{contenidos_unidad}]]></textFieldExpression>
 	<summary>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="359" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
+				<reportElement x="0" y="0" width="365" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>

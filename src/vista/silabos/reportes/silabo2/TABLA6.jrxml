@@ -317,7 +317,7 @@ ENSEÑANZA]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA["<style isBold='true'>UNIDAD DIDÁCTICA:  "
 + $F{numero_unidad}
-+ " </style> \n\n"
++ " </style>" + "\n\n"
 + "<style isBold='true'>" 
 + $F{titulo_unidad} 
 + "</style>" + "\n\n" 
