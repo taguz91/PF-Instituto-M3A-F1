@@ -180,7 +180,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
             );
 
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
-            ctr.referenciado(migrarEvaluaciones());
+            //ctr.referenciado(migrarEvaluaciones());
 
         } else {
 

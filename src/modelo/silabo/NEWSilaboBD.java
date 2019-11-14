@@ -503,10 +503,21 @@ public class NEWSilaboBD implements ISilaboBD {
                                 .setId(rs.getInt("id_materia"))
                                 .setNombre(rs.getString("materia_nombre"))
                 );
+                try {
+                    silabo.setFechaGeneracion(
+                            rs.getDate("fecha_silabo").toLocalDate()
+                    );
 
-                silabo.setFechaGeneracion(
-                        rs.getDate("fecha_silabo").toLocalDate()
-                );
+                } catch (NullPointerException e) {
+                    System.out.println(
+                            "NOT TIENE FECHA DE GENERACION: "
+                            + silabo.getID()
+                            + " "
+                            + silabo.getPeriodo().getNombre()
+                            + " "
+                            + silabo.getMateria().getNombre()
+                    );
+                }
 
                 silabos.add(silabo);
             }

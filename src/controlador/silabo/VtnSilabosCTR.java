@@ -14,7 +14,6 @@ import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.silabo.NEWSilaboBD;
-import modelo.silabo.SilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.validaciones.Validar;
 import vista.silabos.VtnSilabos;
@@ -84,13 +83,27 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private Consumer<SilaboMD> cargador() {
         return obj -> {
+            String estado = "";
+            switch (obj.getEstado()) {
+                case 0:
+                    estado = "PENDIENTE";
+                    break;
+                case 1:
+                    estado = "APROBADO";
+                    break;
+                case 2:
+                    estado = "REVISAR";
+                    break;
+            }
+
             tableM.addRow(new Object[]{
                 obj.getID(),
                 tableM.getRowCount() + 1,
                 obj.getMateria().getNombre(),
                 obj.getPeriodo().getNombre(),
                 obj.getFechaGeneracion(),
-                obj.getEstado(),});
+                estado
+            });
         };
     }
 

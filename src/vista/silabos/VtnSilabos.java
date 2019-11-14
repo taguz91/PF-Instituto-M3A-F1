@@ -102,9 +102,9 @@ public class VtnSilabos extends AbstracView {
         tbl.getTableHeader().setReorderingAllowed(false);
         srcSilabos.setViewportView(tbl);
         if (tbl.getColumnModel().getColumnCount() > 0) {
-            tbl.getColumnModel().getColumn(0).setMinWidth(0);
-            tbl.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tbl.getColumnModel().getColumn(0).setMaxWidth(0);
+            tbl.getColumnModel().getColumn(0).setMinWidth(40);
+            tbl.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tbl.getColumnModel().getColumn(0).setMaxWidth(40);
             tbl.getColumnModel().getColumn(1).setMinWidth(40);
             tbl.getColumnModel().getColumn(1).setPreferredWidth(40);
             tbl.getColumnModel().getColumn(1).setMaxWidth(40);
