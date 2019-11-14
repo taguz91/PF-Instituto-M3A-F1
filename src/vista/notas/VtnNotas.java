@@ -1,6 +1,8 @@
 package vista.notas;
 
 import controlador.notas.ux.RowStyle;
+import java.awt.Color;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,6 +27,14 @@ public class VtnNotas extends AbstracView {
     private void InitDiseño() {
         tblTrad.setRowHeight(23);
         tblDual.setRowHeight(23);
+        RowStyle rowStyleTrad = new RowStyle(13);
+        rowStyleTrad.setEstados(
+                new HashMap<String, Color>() {
+            {
+                
+            }
+        });
+
         tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
         tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
 

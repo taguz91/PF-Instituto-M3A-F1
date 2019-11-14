@@ -32,7 +32,7 @@ public class RowStyle extends DefaultTableCellRenderer {
         try {
 
             String valor = table.getValueAt(row, this.columna).toString();
-            if (estados != null) {
+            if (estados == null) {
                 if (valor.equalsIgnoreCase("APROBADO")) {
                     setForeground(new Color(37, 107, 187));
                 } else if (valor.equalsIgnoreCase("REPROBADO")) {
@@ -41,7 +41,7 @@ public class RowStyle extends DefaultTableCellRenderer {
                     setForeground(new Color(0, 0, 0));
                 }
             } else {
-
+                estilizarPorEstados(valor);
             }
 
             setHorizontalAlignment(CENTER);
@@ -64,7 +64,9 @@ public class RowStyle extends DefaultTableCellRenderer {
                 .map(c -> c.getValue())
                 .findFirst()
                 .orElse(null);
-        
+
+        setForeground(color);
+
     }
 
 }

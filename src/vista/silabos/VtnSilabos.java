@@ -1,5 +1,9 @@
 package vista.silabos;
 
+import controlador.notas.ux.RowStyle;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -25,6 +29,18 @@ public class VtnSilabos extends AbstracView {
         tbl.setRowHeight(23);
         centrarCabecera(tbl);
         centrarCeldas(tbl);
+
+        RowStyle rowStyle = new RowStyle(5);
+
+        rowStyle.setEstados(new HashMap<String, Color>() {
+            {
+                put("PENDIENTE", new Color(0, 0, 0));
+                put("APROBADO", new Color(37, 107, 187));
+                put("REVISAR", new Color(214, 48, 12));
+            }
+        });
+
+        tbl.setDefaultRenderer(Object.class, rowStyle);
 
     }
 
