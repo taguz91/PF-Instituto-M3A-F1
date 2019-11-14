@@ -51,7 +51,7 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-    
+
     // Consultar 
     public static List<SilaboMD> consultar(ConexionBD conexion, String[] clave) {
 
@@ -100,7 +100,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    
+
     // Revisar esta consulta
     public static List<SilaboMD> consultarCoordinador(ConexionBD conexion, int clave, String parametro) {
 
@@ -136,7 +136,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    
+
     // Revisar esta WEA 
     private static List<SilaboMD> consultarCoordinador(ConexionBD conexion, String clave) {
 
@@ -211,6 +211,7 @@ public class SilaboBD extends SilaboMD {
     }
 //Ya ahora si se guarda en la base
     // Pasado
+
     public static void guardarSilabo(ConexionBD conexion, FileInputStream fis, File f, SilaboMD s) {
 
         try {
@@ -230,7 +231,7 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-    
+
     // Pasado
     public static void guardarAnalitico(ConexionBD conexion, FileInputStream fis1, File fl, SilaboMD s) {
         try {
@@ -250,7 +251,7 @@ public class SilaboBD extends SilaboMD {
 
         }
     }
-    
+
     // Investigar esta WEA esta rarisimo
     public SilaboMD retornaSilabo(int id) {
         SilaboMD silabo = null;
@@ -275,7 +276,6 @@ public class SilaboBD extends SilaboMD {
         return silabo;
     }
 
-
     // Pasado
     public void aprobar(int silabo, int estado) {
 
@@ -295,7 +295,7 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-    
+
     // Pasada
     public void insertar(SilaboMD s) {
 
@@ -314,7 +314,7 @@ public class SilaboBD extends SilaboMD {
         }
 
     }
-    
+
     // Pasada
     public static List<SilaboMD> consultarSilabo1(ConexionBD conexion, String[] clave) {
 
@@ -336,7 +336,7 @@ public class SilaboBD extends SilaboMD {
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
             st.setString(3, clave[2]);
-            
+
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -354,7 +354,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    
+
     // Pasada
     public static List<SilaboMD> consultarSilabo2(ConexionBD conexion, String carrera, int id_persona) {
 
@@ -402,7 +402,7 @@ public class SilaboBD extends SilaboMD {
         }
         return silabos;
     }
-    
+
     // Pasada
     public static List<SilaboMD> consultarAnteriores(ConexionBD conexion, Integer[] clave) {
 
@@ -470,75 +470,6 @@ public class SilaboBD extends SilaboMD {
         }
 
         return silabo;
-    }
-
-    public static List<SilaboMD> findBy(String cedulaDocente, int idCarrera) {
-        String SELECT = ""
-                + "SELECT\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "	\"Materias\".id_materia,\n"
-                + "	\"Materias\".materia_nombre,\n"
-                + "	\"Silabo\".fecha_silabo,\n"
-                + "	\"Silabo\".estado_silabo,\n"
-                + "	\"Silabo\".id_silabo \n"
-                + "FROM\n"
-                + "	\"Silabo\"\n"
-                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
-                + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
-                + "	INNER JOIN (\n"
-                + "	SELECT DISTINCT\n"
-                + "		\"Cursos\".id_prd_lectivo,\n"
-                + "		\"Cursos\".id_materia \n"
-                + "	FROM\n"
-                + "		\"Cursos\"\n"
-                + "		INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
-                + "		INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
-                + "	WHERE\n"
-                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
-                + "		AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
-                + "	) AS info ON \"PeriodoLectivo\".id_prd_lectivo = info.id_prd_lectivo \n"
-                + "	AND \"Materias\".id_materia = info.id_materia \n"
-                + "ORDER BY\n"
-                + "	\"PeriodoLectivo\".id_prd_lectivo DESC,\n"
-                + "	\"Materias\".materia_nombre ASC"
-                + "";
-
-        List<SilaboMD> silabos = new ArrayList<>();
-
-        ConnDBPool pool = new ConnDBPool();
-        Connection conn = pool.getConnection();
-        ResultSet rs = pool.ejecutarQuery(SELECT, conn, null);
-
-        try {
-            while (rs.next()) {
-                SilaboMD silabo = new SilaboMD();
-
-                silabo.setID(rs.getInt("id_silabo"));
-                silabo.setEstado(rs.getInt("estado_silabo"));
-
-                silabo.setPeriodo(
-                        new PeriodoLectivoMD()
-                                .setID(rs.getInt("id_prd_lectivo"))
-                                .setNombre(rs.getString("prd_lectivo_nombre"))
-                );
-
-                silabo.setMateria(
-                        new MateriaMD()
-                                .setId(rs.getInt("id_materia"))
-                                .setNombre(rs.getString("materia_nombre"))
-                );
-
-                silabos.add(silabo);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            pool.closeStmt().close(rs).close(conn);
-        }
-
-        return silabos;
-
     }
 
 }

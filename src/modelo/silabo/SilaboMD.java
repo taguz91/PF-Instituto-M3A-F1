@@ -5,8 +5,9 @@
  */
 package modelo.silabo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
@@ -26,7 +27,11 @@ public class SilaboMD {
 
     private PeriodoLectivoMD periodo;
 
-    private Map<Integer, UnidadSilaboMD> unidades;
+    private LocalDate fechaGeneracion;
+
+    private LocalDateTime fechaActualizacion;
+
+    private List<UnidadSilaboMD> unidades;
 
     private List<ReferenciaSilaboMD> referencias;
 
@@ -72,11 +77,11 @@ public class SilaboMD {
         this.periodo = periodo;
     }
 
-    public Map<Integer, UnidadSilaboMD> getUnidades() {
+    public List<UnidadSilaboMD> getUnidades() {
         return unidades;
     }
 
-    public void setUnidades(Map<Integer, UnidadSilaboMD> unidades) {
+    public void setUnidades(List<UnidadSilaboMD> unidades) {
         this.unidades = unidades;
     }
 
@@ -86,6 +91,22 @@ public class SilaboMD {
 
     public void setReferencias(List<ReferenciaSilaboMD> referencias) {
         this.referencias = referencias;
+    }
+
+    public LocalDate getFechaGeneracion() {
+        return fechaGeneracion;
+    }
+
+    public void setFechaGeneracion(LocalDate fechaGeneracion) {
+        this.fechaGeneracion = fechaGeneracion;
+    }
+
+    public LocalDateTime getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
     @Override

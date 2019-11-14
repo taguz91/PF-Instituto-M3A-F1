@@ -245,6 +245,8 @@ public class ControladorCRUD {
                     smd.getID(),
                     estado2
                 });
+                
+                
 
             }
 
