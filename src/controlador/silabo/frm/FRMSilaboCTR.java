@@ -18,6 +18,7 @@ import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.referencias.ReferenciasMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 import modelo.silabo.NEWEstrategiaUnidadBD;
+import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWReferenciaSilaboBD;
 import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.NEWTipoActividadBD;
@@ -52,7 +53,7 @@ public class FRMSilaboCTR extends DCTR {
 
     // Titulo de las tablas  
     private static final String[] TITULO_GESTION = {
-        "Indicador", "Instrumento",
+        "IDL", "Indicador", "Instrumento",
         "Valoración", "Fecha Envío",
         "Fecha Presentación"
     };
@@ -90,6 +91,8 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     public void referenciado() {
+        NEWPeriodoLectivoBD PBD = NEWPeriodoLectivoBD.single();
+        silabo.setPeriodo(PBD.getUltimoPorPeriodo(silabo.getPeriodo().getID()));
         cargarDatosSilabo();
         iniciarSilabo();
         // Buscamos sin el id de las unidades
@@ -262,6 +265,7 @@ public class FRMSilaboCTR extends DCTR {
         evaluaciones.forEach(e -> {
             if (e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
                 Object[] row = {
+                    e.getIdLocal(),
                     e.getIndicador(),
                     e.getInstrumento(),
                     e.getValoracion(),
@@ -323,8 +327,9 @@ public class FRMSilaboCTR extends DCTR {
             if (unidadSelec.getFechaFinUnidad() == null) {
                 unidadSelec.setFechaInicioUnidad(fecha);
             } else {
-                if (unidadSelec.getFechaFinUnidad().isAfter(fecha) 
-                        || fecha.equals(unidadSelec.getFechaInicioUnidad())) {
+                if ((unidadSelec.getFechaFinUnidad().isAfter(fecha)
+                        || fecha.equals(unidadSelec.getFechaInicioUnidad()))
+                        && fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
                     unidadSelec.setFechaInicioUnidad(fecha);
                 } else {
                     errorFecha("Debe indicar una fecha de inicio correcta.");
@@ -345,9 +350,10 @@ public class FRMSilaboCTR extends DCTR {
             if (unidadSelec.getFechaInicioUnidad() == null) {
                 unidadSelec.setFechaFinUnidad(fecha);
             } else {
-                if (unidadSelec.getFechaInicioUnidad()
+                if ((unidadSelec.getFechaInicioUnidad()
                         .isBefore(fecha)
-                        || fecha.equals(unidadSelec.getFechaInicioUnidad())) {
+                        || fecha.equals(unidadSelec.getFechaInicioUnidad()))
+                        && fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
                     unidadSelec.setFechaFinUnidad(fecha);
                 } else {
                     errorFecha("Debe indicar una fecha de fin correcta.");
@@ -361,7 +367,7 @@ public class FRMSilaboCTR extends DCTR {
             }
         }
     }
-    
+
     private void errorFecha(String msg) {
         JOptionPane.showMessageDialog(
                 FRM_GESTION,
@@ -410,7 +416,6 @@ public class FRMSilaboCTR extends DCTR {
                 errorHoras("Las horas autonomas superan la hora total indicada en materia.");
             }
         }
-        System.out.println("AAAAAAAAA" + h);
     }
 
     private void validarHD() {
@@ -426,7 +431,6 @@ public class FRMSilaboCTR extends DCTR {
                 errorHoras("Las horas de docencia superan la hora total indicada en materia.");
             }
         }
-        System.out.println("DDDDDDDDDDDDDDDD" + h);
     }
 
     private void validarHP() {
@@ -442,7 +446,6 @@ public class FRMSilaboCTR extends DCTR {
                 errorHoras("Las horas practicas superan la hora total indicada en materia.");
             }
         }
-        System.out.println("PPPPPPPPPPP" + h);
     }
 
     private double getHoraSPN(JSpinner spn) {
