@@ -233,4 +233,24 @@ Copy "EstrategiasMetodologias"(
 From '/tmp/migrandopgsq/estrategiasplan.csv'
 delimiter AS ',' NULL AS '' CSV HEADER;
 
---
+
+--- AVANCES
+
+copy (
+  SELECT
+  id_unidadseguimiento,
+  id_unidad,
+  id_seguimientosilabo,
+  cumplimiento_porcentaje,
+  observaciones
+  FROM public."Unidad_Seguimiento"
+  WHERE id_seguimientosilabo IN (
+    SELECT
+    id_seguimientosilabo
+    FROM public."SeguimientoSilabo"
+    WHERE id_curso IN (
+      808, 821, 720
+    )
+  )
+)
+To '/tmp/migrandopgsq/avancesilabo.csv' with CSV HEADER;

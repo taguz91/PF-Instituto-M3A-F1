@@ -277,3 +277,61 @@ WHERE id_seguimientosilabo IN (
     )
   )
 );
+
+
+--- SILABO OLD
+AVANCE
+
+SELECT
+id_unidadseguimiento,
+id_unidad,
+id_seguimientosilabo,
+cumplimiento_porcentaje,
+observaciones
+FROM public."Unidad_Seguimiento"
+WHERE id_seguimientosilabo IN (
+  SELECT
+  id_seguimientosilabo
+  FROM public."SeguimientoSilabo"
+  WHERE id_curso IN (
+    808, 821, 720
+  )
+);
+
+
+SELECT
+id_unidadseguimiento,
+us.id_unidad,
+id_seguimientosilabo,
+cumplimiento_porcentaje,
+observaciones,
+numero_unidad
+FROM public."Unidad_Seguimiento" us
+JOIN public."UnidadSilabo" u ON u.id_unidad = us.id_unidad
+WHERE id_seguimientosilabo IN (
+  SELECT
+  id_seguimientosilabo
+  FROM public."SeguimientoSilabo"
+  WHERE id_curso IN (
+    808, 821, 720
+  )
+)
+ORDER BY numero_unidad;
+
+-- Nuevo silabo
+
+SELECT
+us.id_unidad,
+us.id_silabo,
+us.numero_unidad,
+us.objetivo_especifico_unidad,
+us.resultados_aprendizaje_unidad,
+us.contenidos_unidad,
+us.fecha_inicio_unidad,
+us.fecha_fin_unidad,
+us.horas_docencia_unidad,
+us.horas_practica_unidad,
+us.horas_autonomo_unidad,
+us.titulo_unidad
+FROM public."UnidadSilabo" us
+WHERE us.id_silabo = 2408;
