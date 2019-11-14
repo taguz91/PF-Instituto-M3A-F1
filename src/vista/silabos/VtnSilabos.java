@@ -34,7 +34,7 @@ public class VtnSilabos extends AbstracView {
                 put("REVISAR", new Color(214, 48, 12));
             }
         });
-        Color bgColor = new Color(232, 237, 234);
+        Color bgColor = new Color(252, 252, 252);
         rowStyle.setBgColor(bgColor);
 
         tbl.setDefaultRenderer(Object.class, rowStyle);
@@ -186,7 +186,7 @@ public class VtnSilabos extends AbstracView {
                     .addComponent(lblCarrera)
                     .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 

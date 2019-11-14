@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.mbd.ISilaboBD;
@@ -451,6 +452,18 @@ public class NEWSilaboBD implements ISilaboBD {
 
     public List<SilaboMD> findBy(String cedulaDocente, int idCarrera) {
         String SELECT = ""
+                + "WITH mis_periodos_materias AS (\n"
+                + "    SELECT DISTINCT\n"
+                + "        \"Cursos\".id_prd_lectivo,\n"
+                + "        \"Cursos\".id_materia \n"
+                + "    FROM\n"
+                + "        \"Cursos\"\n"
+                + "        INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "        INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "    WHERE\n"
+                + "        \"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "        AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
+                + ")\n"
                 + "SELECT\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
@@ -458,28 +471,21 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	\"Materias\".materia_nombre,\n"
                 + "	\"Silabo\".fecha_silabo,\n"
                 + "	\"Silabo\".estado_silabo,\n"
-                + "	\"Silabo\".id_silabo \n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "	\"Silabo\"\n"
                 + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
-                + "	INNER JOIN (\n"
-                + "	SELECT DISTINCT\n"
-                + "		\"Cursos\".id_prd_lectivo,\n"
-                + "		\"Cursos\".id_materia \n"
-                + "	FROM\n"
-                + "		\"Cursos\"\n"
-                + "		INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
-                + "		INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
-                + "	WHERE\n"
-                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
-                + "		AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
-                + "	) AS info ON \"PeriodoLectivo\".id_prd_lectivo = info.id_prd_lectivo \n"
-                + "	AND \"Materias\".id_materia = info.id_materia \n"
+                + "	INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
+                + "	INNER JOIN mis_periodos_materias ON \"PeriodoLectivo\".id_prd_lectivo = mis_periodos_materias.id_prd_lectivo \n"
+                + "	    AND \"Materias\".id_materia = mis_periodos_materias.id_materia \n"
                 + "ORDER BY\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo DESC,\n"
-                + "	\"Materias\".materia_nombre ASC"
+                + "    \"Materias\".materia_nombre ASC"
                 + "";
+
+        System.out.println(SELECT);
 
         List<SilaboMD> silabos = new ArrayList<>();
 
@@ -492,10 +498,14 @@ public class NEWSilaboBD implements ISilaboBD {
                 silabo.setID(rs.getInt("id_silabo"));
                 silabo.setEstado(rs.getInt("estado_silabo"));
 
+                CarreraMD carrera = new CarreraMD();
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
+
                 silabo.setPeriodo(
                         new PeriodoLectivoMD()
                                 .setID(rs.getInt("id_prd_lectivo"))
                                 .setNombre(rs.getString("prd_lectivo_nombre"))
+                                .setCarrera(carrera)
                 );
 
                 silabo.setMateria(

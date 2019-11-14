@@ -95,13 +95,16 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     estado = "REVISAR";
                     break;
             }
-
+            String fechaGeneracion = "SIN FECHA";
+            if (obj.getFechaGeneracion() != null) {
+                fechaGeneracion = obj.getFechaGeneracion().toString();
+            }
             tableM.addRow(new Object[]{
                 obj.getID(),
                 tableM.getRowCount() + 1,
                 obj.getMateria().getNombre(),
                 obj.getPeriodo().getNombre(),
-                obj.getFechaGeneracion(),
+                fechaGeneracion,
                 estado
             });
         };
@@ -122,67 +125,80 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 .get();
     }
 
+    private void imprimirSilabosDuales(SilaboMD silabo) {
+        Object[] opciones = new Object[]{
+            "Silabo Dual",
+            "Silabo Dual /semanas"
+        };
+
+        int opcion = JOptionPane.showOptionDialog(
+                vista,
+                "GENERAR SILABO",
+                "QUE TIPO DE SILABO DESEA GENERAR?",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                opciones,
+                "Cancelar"
+        );
+
+        switch (opcion) {
+
+            case 0://IMPRIME SILABO DUAL
+                SILABO_CONN.imprimirProgramaAnalitico(silabo);
+                break;
+
+            case 1://IMPRIME SILABO DUAL CON UN NUMERO DE SEMANAS
+                String semanas = JOptionPane.showInputDialog("Escriba el numero de semanas");
+
+                if (semanas != null) {
+
+                    if (Validar.esNumeros(semanas)) {
+                        int numSemanas = Integer.parseInt(semanas);
+                        if (numSemanas >= 6) {
+
+                            SILABO_CONN.imprimirProgramaAnaliticoConSemanas(silabo, numSemanas);
+
+                        } else {
+                            JOptionPane.showMessageDialog(vista, "Debe indicar mas de seis semanas de clases por periodo ");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(vista, "Solo puede ingresar numeros.");
+                    }
+
+                    break;
+
+                }
+        }
+    }
+
     /*
         EVENTOS
      */
     private void btnImprimir(ActionEvent e) {
+        new Thread(() -> {
 
-        int row = vista.getTbl().getSelectedRow();
+            int row = vista.getTbl().getSelectedRow();
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(vista, "DEBE SELECCIONAR UN SILABO PRIMERO!!", "Aviso", JOptionPane.ERROR_MESSAGE);
-        } else {
+            if (row == -1) {
+                JOptionPane.showMessageDialog(vista, "DEBE SELECCIONAR UN SILABO PRIMERO!!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            } else {
 
-            Object[] opciones = new Object[]{
-                "Silabo Dual",
-                "Silabo Tradicional",
-                "Silabo Dual /semanas"
-            };
+                SilaboMD silabo = getSilaboSeleccionadoTbl();
+                String modalidad = silabo.getPeriodo().getCarrera().getModalidad();
 
-            int opcion = JOptionPane.showOptionDialog(
-                    vista,
-                    "GENERAR SILABO",
-                    "GENERACION DE SILABO",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opciones,
-                    "Cancelar"
-            );
-            SilaboMD silabo = getSilaboSeleccionadoTbl();
-            switch (opcion) {
+                if (modalidad.equalsIgnoreCase("PRESENCIAL")
+                        || modalidad.equalsIgnoreCase("TRADICIONAL")) {
 
-                case 0://IMPRIME SILABO DUAL
-                    NEWSilaboBD.single().imprimirProgramaAnalitico(silabo);
-                    break;
+                    SILABO_CONN.imprimirSilabo(silabo);
+                } else {
+                    imprimirSilabosDuales(silabo);
+                }
 
-                case 1://IMPRIME SILABO TRADICIONAL
-                    NEWSilaboBD.single().imprimirSilabo(silabo);
-
-                    break;
-
-                case 2://IMPRIME SILABO DUAL CON UN NUMERO DE SEMANAS
-                    String semanas = JOptionPane.showInputDialog("Escriba el numero de semanas");
-                    if (semanas != null) {
-
-                        if (Validar.esNumeros(semanas)) {
-                            int numSemanas = Integer.parseInt(semanas);
-                            if (numSemanas >= 6) {
-
-                                NEWSilaboBD.single().imprimirProgramaAnaliticoConSemanas(silabo, numSemanas);
-
-                            } else {
-                                JOptionPane.showMessageDialog(vista, "Debe indicar mas de seis semanas de clases por periodo ");
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(vista, "Solo puede ingresar numeros.");
-                        }
-
-                        break;
-
-                    }
             }
-        }
+
+        }).start();
+
     }
 
     private void btnNuevo(ActionEvent e) {
@@ -197,13 +213,30 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnEliminar(ActionEvent e) {
-        boolean estado = SILABO_CONN.eliminar(getSilaboSeleccionadoTbl());
 
-        if (estado) {
-            JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
-        } else {
-            JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
+        SilaboMD silabo = getSilaboSeleccionadoTbl();
+
+        String MENSAJE_ELIMINAR = String.format(
+                "ESTA SEGURO DE ELIMINAR EL SILABO:\n"
+                + "PERIODO LECTIVO: %s\n"
+                + "MATERIA:%s\n"
+                + "RECUERDE QUE SI ELIMINA EL SILABO SE LE BORRARA:\n"
+                + "SUS AVANCES DE SILABO Y PLANES DE CLASE",
+                silabo.getPeriodo().getNombre(), silabo.getMateria().getNombre()
+        );
+
+        int opcionEliminado = JOptionPane.showConfirmDialog(vista, MENSAJE_ELIMINAR, "ESTA SEGURO?", JOptionPane.YES_NO_OPTION);
+
+        if (opcionEliminado == JOptionPane.YES_OPTION) {
+            boolean estado = SILABO_CONN.eliminar(silabo);
+
+            if (estado) {
+                JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
+            } else {
+                JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
+            }
         }
+
     }
 
     private void cmbCarrera(ItemEvent e) {

@@ -172,7 +172,7 @@ public class NEWMateriaBD implements IMateriaBD {
                 + "    ) \n"
                 + ");"
                 + "";
-        System.out.println(SELECT);
+        //System.out.println(SELECT);
         ResultSet rs = CON.ejecutarQuery(SELECT, null);
         List<MateriaMD> materias = new ArrayList<>();
         try {

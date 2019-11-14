@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.silabo;
 
 import controlador.Libraries.abstracts.AbstractVTN;
@@ -65,7 +60,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
         vista.getCmbAsignatura().addActionListener(this::cmbPeriodoRef);
         vista.getCmbPeriodoRef().addActionListener(this::validarPeriodoRef);
         vista.getBtnSiguiente().addActionListener(this::btnSiguiente);
-        vista.getBtnCancelar().addActionListener(this::btnCancelar);
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
     }
 
     /*
@@ -153,6 +148,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                 silabosRef.stream()
                         .map(c -> c.getPeriodo().getNombre())
                         .forEach(vista.getCmbPeriodoRef()::addItem);
+
             } else {
                 vista.getCmbPeriodoRef().setEnabled(false);
                 vista.getCmbPeriodoRef().addItem("NO TIENE PERIODOS DE REFERENCIA");
@@ -167,12 +163,15 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     private void btnSiguiente(ActionEvent e) {
         int indexCmbRef = vista.getCmbPeriodoRef().getSelectedIndex();
+
         if (indexCmbRef > 0) {
+
             modelo = NEWSilaboBD.single().getByCarreraPersonaPeriodo(
                     vista.getCmbCarrera().getSelectedItem().toString(),
                     CONS.USUARIO.getPersona().getIdPersona(),
                     vista.getCmbPeriodoRef().getSelectedItem().toString()
             );
+
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
 
             ctr.referenciado(migrarEvaluaciones());
@@ -180,7 +179,11 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
         } else {
 
             modelo = new SilaboMD();
-            modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getIdCarrera()));
+
+            modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(
+                    getIdCarrera()
+            ));
+
             modelo.setMateria(getMateria().get());
 
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
@@ -192,11 +195,5 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
         vista.dispose();
         vtnSilabos.getVista().dispose();
-    }
-
-    private void btnCancelar(ActionEvent e) {
-        vista.dispose();
-        VtnSilabosCTR vtn = new VtnSilabosCTR(desktop);
-        vtn.Init();
     }
 }

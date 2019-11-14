@@ -1,21 +1,17 @@
 package vista;
 
 import controlador.notas.ux.RowStyle;
+import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import modelo.CONS;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author Marcelo
+ * @author MrRainx
  */
-public abstract class AbstracView extends javax.swing.JInternalFrame {
+public abstract class AbstracView extends JInternalFrame {
 
     {
         this.setFrameIcon(CONS.getICONO());
