@@ -95,11 +95,18 @@ public class FRMSilaboCTR extends DCTR {
     public void referenciado(boolean conEvaluaciones) {
         NEWPeriodoLectivoBD PBD = NEWPeriodoLectivoBD.single();
         silabo.setPeriodo(PBD.getUltimoPorPeriodo(silabo.getPeriodo().getID()));
-        cargarDatosSilabo();
-        iniciarSilabo();
         // Buscamos sin el id de las unidades
         unidades = USBD.getBySilaboParaReferencia(silabo.getID());
-        evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
+        if (conEvaluaciones) {
+            System.out.println("EVALUACIONES..  ");
+            evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
+            evaluaciones.forEach(e -> {
+                System.out.println("Evaluaciones: " + e.getIndicador());
+            });
+        }
+
+        cargarDatosSilabo();
+        iniciarSilabo();
         iniciarVentana();
     }
 
@@ -154,7 +161,9 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getTblEstrategias()
                 .setModel(mdTblES);
         // Iniciamo los arrays para guardar las diferentes cosas
-        evaluaciones = new ArrayList<>();
+        if (evaluaciones == null) {
+            evaluaciones = new ArrayList<>();
+        }
         biblioteca = new ArrayList<>();
         tiposActividad = TABD.getAll();
         // Actualizamos el total de gestion que tenemos
