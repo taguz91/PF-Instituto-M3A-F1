@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+import modelo.evaluacionSilabo.NEWEvaluacionSilaboBD;
 import modelo.referencias.ReferenciasMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 import modelo.silabo.NEWEstrategiaUnidadBD;
@@ -42,6 +43,7 @@ public class FRMSilaboCTR extends DCTR {
     private final NEWEstrategiaUnidadBD EUBD = NEWEstrategiaUnidadBD.single();
     private final NEWReferenciaSilaboBD RSBD = NEWReferenciaSilaboBD.single();
     private final NEWTipoActividadBD TABD = NEWTipoActividadBD.single();
+    private final NEWEvaluacionSilaboBD EVBD = NEWEvaluacionSilaboBD.single();
 
     // Listas para guardar los contenidos del formulario 
     private List<UnidadSilaboMD> unidades;
@@ -93,10 +95,18 @@ public class FRMSilaboCTR extends DCTR {
     public void referenciado(boolean conEvaluaciones) {
         NEWPeriodoLectivoBD PBD = NEWPeriodoLectivoBD.single();
         silabo.setPeriodo(PBD.getUltimoPorPeriodo(silabo.getPeriodo().getID()));
-        cargarDatosSilabo();
-        iniciarSilabo();
         // Buscamos sin el id de las unidades
         unidades = USBD.getBySilaboParaReferencia(silabo.getID());
+        if (conEvaluaciones) {
+            System.out.println("EVALUACIONES..  ");
+            evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
+            evaluaciones.forEach(e -> {
+                System.out.println("Evaluaciones: " + e.getIndicador());
+            });
+        }
+
+        cargarDatosSilabo();
+        iniciarSilabo();
         iniciarVentana();
     }
 
@@ -104,6 +114,7 @@ public class FRMSilaboCTR extends DCTR {
         cargarDatosSilabo();
         // Buscamos con el id de unidades
         unidades = USBD.getBySilabo(silabo.getID());
+        evaluaciones = EVBD.getBySilabo(silabo.getID());
         iniciarVentana();
     }
 
@@ -150,7 +161,9 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getTblEstrategias()
                 .setModel(mdTblES);
         // Iniciamo los arrays para guardar las diferentes cosas
-        evaluaciones = new ArrayList<>();
+        if (evaluaciones == null) {
+            evaluaciones = new ArrayList<>();
+        }
         biblioteca = new ArrayList<>();
         tiposActividad = TABD.getAll();
         // Actualizamos el total de gestion que tenemos
