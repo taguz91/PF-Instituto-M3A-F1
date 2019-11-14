@@ -1,11 +1,16 @@
 package controlador.silabo.frm;
 
+import com.toedter.calendar.JDateChooser;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
@@ -20,6 +25,7 @@ import modelo.silabo.NEWUnidadSilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.tipoActividad.TipoActividadMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
+import modelo.validaciones.Validar;
 import vista.silabos.NEWFrmSilabo;
 
 /**
@@ -64,6 +70,10 @@ public class FRMSilaboCTR extends DCTR {
     private final SilaboMD silabo;
     // Para guardar la unidad  
     private UnidadSilaboMD unidadSelec;
+    // El numero de horas docencia, practica y autonomas 
+    private double numHD = 0;
+    private double numHP = 0;
+    private double numHA = 0;
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
@@ -101,10 +111,18 @@ public class FRMSilaboCTR extends DCTR {
         // Siempre iniciamos el estado del boton en falso para que 
         // no pueda guardar hasta realizar cambios
         estadoBtnGuardar(false);
-        FRM_GESTION.setTitle(silabo.getMateria().getNombre());
+        // Titulo de la unidad  
+        FRM_GESTION.setTitle(
+                silabo.getPeriodo().getNombre()
+                + " | "
+                + silabo.getMateria().getNombre()
+        );
+        actualizarHoras();
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
         mostrarUnidad();
+        iniciarEventoSPNHoras();
+        iniciarEventosFecha();
     }
 
     private void iniciarCMBUnidad() {
@@ -290,4 +308,186 @@ public class FRMSilaboCTR extends DCTR {
                 );
         FRM_GESTION.getLblAcumuladoGestion().setText(total + "/60");
     }
+
+    /**
+     * Validamos las fechas que ingresamos
+     */
+    private void iniciarEventosFecha() {
+        FRM_GESTION.getDchFechaInicio().addPropertyChangeListener(e -> validarFechaInicio());
+        FRM_GESTION.getDchFechaFin().addPropertyChangeListener(e -> validarFechaFin());
+    }
+
+    private void validarFechaInicio() {
+        LocalDate fecha = getFechaJDC(FRM_GESTION.getDchFechaInicio());
+        if (fecha != null) {
+            if (unidadSelec.getFechaFinUnidad() == null) {
+                unidadSelec.setFechaInicioUnidad(fecha);
+            } else {
+                if (unidadSelec.getFechaFinUnidad().isAfter(fecha) 
+                        || fecha.equals(unidadSelec.getFechaInicioUnidad())) {
+                    unidadSelec.setFechaInicioUnidad(fecha);
+                } else {
+                    errorFecha("Debe indicar una fecha de inicio correcta.");
+                    FRM_GESTION.getDchFechaInicio().setDate(Date
+                            .from(unidadSelec.getFechaFinUnidad()
+                                    .atStartOfDay(ZoneId.systemDefault())
+                                    .toInstant().minus(1, ChronoUnit.DAYS)
+                            )
+                    );
+                }
+            }
+        }
+    }
+
+    private void validarFechaFin() {
+        LocalDate fecha = getFechaJDC(FRM_GESTION.getDchFechaFin());
+        if (fecha != null) {
+            if (unidadSelec.getFechaInicioUnidad() == null) {
+                unidadSelec.setFechaFinUnidad(fecha);
+            } else {
+                if (unidadSelec.getFechaInicioUnidad()
+                        .isBefore(fecha)
+                        || fecha.equals(unidadSelec.getFechaInicioUnidad())) {
+                    unidadSelec.setFechaFinUnidad(fecha);
+                } else {
+                    errorFecha("Debe indicar una fecha de fin correcta.");
+                    FRM_GESTION.getDchFechaFin().setDate(Date
+                            .from(unidadSelec.getFechaFinUnidad()
+                                    .atStartOfDay(ZoneId.systemDefault())
+                                    .toInstant().plus(1, ChronoUnit.DAYS)
+                            )
+                    );
+                }
+            }
+        }
+    }
+    
+    private void errorFecha(String msg) {
+        JOptionPane.showMessageDialog(
+                FRM_GESTION,
+                msg,
+                "Fechas incorrectas",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    private LocalDate getFechaJDC(JDateChooser jdc) {
+        LocalDate fecha = null;
+        if (jdc.getDate() != null) {
+            fecha = jdc.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        return fecha;
+    }
+
+    // ***
+    // De aqui para abajo comienza todo lo que es spiners de hora 
+    // **
+    /**
+     * Este evento se usa para todos los SPN de horas al momento de actualizar
+     * la hora se actualiza en su modelo y en el lbl que nos muestra las horas
+     * totales
+     */
+    private void iniciarEventoSPNHoras() {
+        System.out.println("INICIANDO LOS ESPINERS ");
+        // Al actualizar horas autonomas 
+        FRM_GESTION.getSpnHautonomas().addChangeListener(e -> validarHA());
+        // Al actualizar horas docencia  
+        FRM_GESTION.getSpnHdocencia().addChangeListener(e -> validarHD());
+        // Al actualizar horas practicas  
+        FRM_GESTION.getSpnHpracticas().addChangeListener(e -> validarHP());
+    }
+
+    private void validarHA() {
+        double h = getHoraSPN(FRM_GESTION.getSpnHautonomas());
+        if (h >= 0 && h != unidadSelec.getHorasAutonomoUnidad()) {
+            double nh = h + numHA - unidadSelec.getHorasAutonomoUnidad();
+            if (nh <= silabo.getMateria().getHorasAutoEstudio()) {
+                numHA = nh;
+                unidadSelec.setHorasAutonomoUnidad(h);
+                reescribirHoras();
+            } else {
+                FRM_GESTION.getSpnHautonomas().setValue(unidadSelec.getHorasAutonomoUnidad());
+                errorHoras("Las horas autonomas superan la hora total indicada en materia.");
+            }
+        }
+        System.out.println("AAAAAAAAA" + h);
+    }
+
+    private void validarHD() {
+        double h = getHoraSPN(FRM_GESTION.getSpnHdocencia());
+        if (h >= 0 && h != unidadSelec.getHorasDocenciaUnidad()) {
+            double nh = h + numHD - unidadSelec.getHorasDocenciaUnidad();
+            if (nh <= silabo.getMateria().getHorasDocencia()) {
+                numHD = nh;
+                unidadSelec.setHorasDocenciaUnidad(h);
+                reescribirHoras();
+            } else {
+                FRM_GESTION.getSpnHdocencia().setValue(unidadSelec.getHorasDocenciaUnidad());
+                errorHoras("Las horas de docencia superan la hora total indicada en materia.");
+            }
+        }
+        System.out.println("DDDDDDDDDDDDDDDD" + h);
+    }
+
+    private void validarHP() {
+        double h = getHoraSPN(FRM_GESTION.getSpnHpracticas());
+        if (h >= 0 && h != unidadSelec.getHorasPracticaUnidad()) {
+            double nh = h + numHP - unidadSelec.getHorasPracticaUnidad();
+            if (nh <= silabo.getMateria().getHorasPracticas()) {
+                numHP = nh;
+                unidadSelec.setHorasPracticaUnidad(h);
+                reescribirHoras();
+            } else {
+                FRM_GESTION.getSpnHpracticas().setValue(unidadSelec.getHorasPracticaUnidad());
+                errorHoras("Las horas practicas superan la hora total indicada en materia.");
+            }
+        }
+        System.out.println("PPPPPPPPPPP" + h);
+    }
+
+    private double getHoraSPN(JSpinner spn) {
+        double h = -1;
+        String hs = spn.getValue().toString().trim();
+        if (Validar.esNumerosDecimales(hs)) {
+            h = Double.parseDouble(hs);
+        }
+        System.out.println("HORAS: " + hs);
+        return h;
+    }
+
+    private void errorHoras(String msg) {
+        JOptionPane.showMessageDialog(
+                FRM_GESTION,
+                msg,
+                "Horas no permitidas",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    /**
+     * Actualizamos las horas de materia que se muestra en el formulario
+     * consultando de todas las unidades que tenemos
+     */
+    private void actualizarHoras() {
+        unidades.forEach(u -> {
+            numHD += u.getHorasDocenciaUnidad();
+            numHA += u.getHorasAutonomoUnidad();
+            numHP += u.getHorasPracticaUnidad();
+        });
+        reescribirHoras();
+    }
+
+    /**
+     * Reescribimos los lbls con el numero de horas que tenemos en total
+     */
+    private void reescribirHoras() {
+        // Numero de horas de la materia 
+        FRM_GESTION.getLblTotalHdocencia().setText(numHD + "/" + silabo.getMateria().getHorasDocencia());
+        FRM_GESTION.getLblTotalHmateria().setText(numHA + "/" + silabo.getMateria().getHorasAutoEstudio());
+        FRM_GESTION.getLblTotalHpracticas().setText(numHP + "/" + silabo.getMateria().getHorasPracticas());
+    }
+
+    // ***
+    // Termina spinners de horas //
+    // **
 }

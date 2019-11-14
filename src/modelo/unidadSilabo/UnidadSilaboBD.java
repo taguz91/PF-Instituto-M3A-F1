@@ -46,9 +46,9 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
                 ps.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
             }
 
-            ps.setInt(7, u.getHorasDocenciaUnidad());
-            ps.setInt(8, u.getHorasPracticaUnidad());
-            ps.setInt(9, u.getHorasAutonomoUnidad());
+            ps.setDouble(7, u.getHorasDocenciaUnidad());
+            ps.setDouble(8, u.getHorasPracticaUnidad());
+            ps.setDouble(9, u.getHorasAutonomoUnidad());
 
             ps.setString(10, u.getTituloUnidad());
 

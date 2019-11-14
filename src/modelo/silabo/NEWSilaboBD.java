@@ -52,7 +52,17 @@ public class NEWSilaboBD implements ISilaboBD {
             + " fecha_silabo "
             + ") VALUES (?, ?, now());";
 
-    private static final String FROM_SILABO = ""
+    private static final String FROM_SILABO = "SELECT DISTINCT id_silabo, "
+            + "s.id_materia, "
+            + "m.materia_nombre, "
+            + "m.materia_horas_docencia, "
+            + "m.materia_horas_practicas, "
+            + "m.materia_horas_auto_estudio, "
+            + "estado_silabo, "
+            + "pr.id_prd_lectivo, "
+            + "pr.prd_lectivo_fecha_inicio, "
+            + "pr.prd_lectivo_fecha_fin, "
+            + "pr.prd_lectivo_nombre "
             + "FROM \"Silabo\" AS s\n"
             + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
             + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
@@ -80,10 +90,8 @@ public class NEWSilaboBD implements ISilaboBD {
             int idPersona,
             String nombrePeriodo
     ) {
-        SilaboMD SS = null;
-        String sql = "SELECT DISTINCT id_silabo,\n"
-                + "s.id_materia, m.materia_nombre "
-                + FROM_SILABO
+        SilaboMD s = null;
+        String sql = FROM_SILABO
                 + " crr.carrera_nombre = ? "
                 + " AND p.id_persona = ? "
                 + " AND prd_lectivo_nombre = ? ;";
@@ -94,22 +102,15 @@ public class NEWSilaboBD implements ISilaboBD {
             ps.setString(3, nombrePeriodo);
 
             ResultSet res = ps.executeQuery();
-
-            while (res.next()) {
-                SS = new SilaboMD();
-                SS.setID(res.getInt(1));
-                SS.getMateria().setId(res.getInt(2));
-                SS.getMateria().setNombre(res.getString(3));
-
-            }
+            s = getOneForFrm(res);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
-                    "Error al consultar. "
+                    "Error al consultar un unico silabo. "
                     + e.getMessage());
         } finally {
             CON.cerrarCONPS(ps);
         }
-        return SS;
+        return s;
     }
 
     @Override
@@ -120,17 +121,7 @@ public class NEWSilaboBD implements ISilaboBD {
 
         List<SilaboMD> SS = new ArrayList<>();
 
-        String sql = "SELECT DISTINCT id_silabo, "
-                + "s.id_materia, "
-                + "m.materia_nombre, "
-                + "m.materia_horas_docencia, "
-                + "m.materia_horas_practicas, "
-                + "m.materia_horas_auto_estudio, "
-                + "estado_silabo, "
-                + "pr.id_prd_lectivo, "
-                + "pr.prd_lectivo_fecha_inicio, "
-                + "pr.prd_lectivo_fecha_fin "
-                + FROM_SILABO
+        String sql = FROM_SILABO
                 + "WHERE crr.carrera_nombre = ? "
                 + "AND p.id_persona = ?;";
         PreparedStatement ps = CON.getPSPOOL(sql);
@@ -140,23 +131,7 @@ public class NEWSilaboBD implements ISilaboBD {
             ps.setInt(2, idPersona);
 
             ResultSet res = ps.executeQuery();
-
-            while (res.next()) {
-
-                SilaboMD s = new SilaboMD();
-                s.setID(res.getInt(1));
-                s.getMateria().setId(res.getInt(2));
-                s.getMateria().setNombre(res.getString(3));
-                s.getMateria().setHorasDocencia(res.getInt(4));
-                s.getMateria().setHorasPracticas(res.getInt(5));
-                s.getMateria().setHorasAutoEstudio(res.getInt(6));
-                s.setEstado(res.getInt(7));
-                s.getPeriodo().setID(res.getInt(8));
-                s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
-                s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
-
-                SS.add(s);
-            }
+            SS = getForFrm(res);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al consultar. "
@@ -173,16 +148,7 @@ public class NEWSilaboBD implements ISilaboBD {
             int idMateria
     ) {
         List<SilaboMD> SS = new ArrayList<>();
-        String sql = "SELECT DISTINCT id_silabo, "
-                + "s.id_materia, "
-                + "m.materia_nombre, "
-                + "m.materia_horas_docencia, "
-                + "m.materia_horas_practicas, "
-                + "m.materia_horas_auto_estudio, "
-                + "estado_silabo, "
-                + "pr.id_prd_lectivo, "
-                + "pr.prd_lectivo_nombre "
-                + FROM_SILABO
+        String sql = FROM_SILABO
                 + "WHERE m.id_materia = ? "
                 + "AND p.id_persona = ?;";
         PreparedStatement ps = CON.getPSPOOL(sql);
@@ -191,20 +157,7 @@ public class NEWSilaboBD implements ISilaboBD {
             ps.setInt(2, idPersona);
             ResultSet res = ps.executeQuery();
 
-            while (res.next()) {
-                SilaboMD s = new SilaboMD();
-                s.setID(res.getInt(1));
-                s.getMateria().setId(res.getInt(2));
-                s.getMateria().setNombre(res.getString(3));
-                s.getMateria().setHorasDocencia(res.getInt(4));
-                s.getMateria().setHorasPracticas(res.getInt(5));
-                s.getMateria().setHorasAutoEstudio(res.getInt(6));
-                s.setEstado(res.getInt(7));
-                s.getPeriodo().setID(res.getInt(8));
-                s.getPeriodo().setNombre(res.getString(9));
-
-                SS.add(s);
-            }
+            SS = getForFrm(res);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al consultar. "
@@ -237,13 +190,20 @@ public class NEWSilaboBD implements ISilaboBD {
     @Override
     public SilaboMD getSilaboById(int idSilabo) {
         SilaboMD s = null;
-        String sql = "SELECT id_silabo, "
-                + "id_materia, "
-                + "id_prd_lectivo, "
-                + "estado_silabo "
-                + "FROM public.\"Silabo\"\n"
-                + "WHERE id_silabo = ?;";
+        String sql = FROM_SILABO
+                + " s.id_silabo = ? ;";
         PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idSilabo);
+            ResultSet res = ps.executeQuery();
+            s = getOneForFrm(res);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al consultar para editar "
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
         return s;
     }
 
@@ -266,6 +226,62 @@ public class NEWSilaboBD implements ISilaboBD {
                 + " WHERE id_silabo = ?;";
         guardarPDF(sql, idSilabo, fis, f);
 
+    }
+
+    private List<SilaboMD> getForFrm(ResultSet res) {
+        List<SilaboMD> SS = new ArrayList<>();
+        if (res != null) {
+            try {
+                while (res.next()) {
+                    SilaboMD s = new SilaboMD();
+                    s.setID(res.getInt(1));
+                    s.getMateria().setId(res.getInt(2));
+                    s.getMateria().setNombre(res.getString(3));
+                    s.getMateria().setHorasDocencia(res.getInt(4));
+                    s.getMateria().setHorasPracticas(res.getInt(5));
+                    s.getMateria().setHorasAutoEstudio(res.getInt(6));
+                    s.setEstado(res.getInt(7));
+                    s.getPeriodo().setID(res.getInt(8));
+                    s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
+                    s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
+                    s.getPeriodo().setNombre(res.getString(11));
+
+                    SS.add(s);
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error al mapear la respuesta de silabo. "
+                        + e.getMessage());
+            }
+        }
+        return SS;
+    }
+
+    private SilaboMD getOneForFrm(ResultSet res) {
+        SilaboMD s = null;
+        if (res != null) {
+            try {
+                while (res.next()) {
+                    s = new SilaboMD();
+                    s.setID(res.getInt(1));
+                    s.getMateria().setId(res.getInt(2));
+                    s.getMateria().setNombre(res.getString(3));
+                    s.getMateria().setHorasDocencia(res.getInt(4));
+                    s.getMateria().setHorasPracticas(res.getInt(5));
+                    s.getMateria().setHorasAutoEstudio(res.getInt(6));
+                    s.setEstado(res.getInt(7));
+                    s.getPeriodo().setID(res.getInt(8));
+                    s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
+                    s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
+                    s.getPeriodo().setNombre(res.getString(11));
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error al obtener un silabo. "
+                        + e.getMessage());
+            }
+        }
+        return s;
     }
 
     private void guardarPDF(

@@ -323,9 +323,10 @@ public class NEWFrmSilabo extends AbstracView {
                     .addComponent(lblFechaPresentacionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dchFechaPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
 
@@ -542,7 +543,7 @@ public class NEWFrmSilabo extends AbstracView {
 
         btnSiguiente.setText("Siguiente");
 
-        spnHpracticas.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
+        spnHpracticas.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 100.0d, 1.0d));
 
         lblHorasPracticas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHorasPracticas.setText("Horas Prácticas:");
@@ -553,9 +554,9 @@ public class NEWFrmSilabo extends AbstracView {
         lblHorasAutonomas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblHorasAutonomas.setText("Horas Autónomas:");
 
-        spnHautonomas.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
+        spnHautonomas.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 100.0d, 1.0d));
 
-        spnHdocencia.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
+        spnHdocencia.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 100.0d, 1.0d));
 
         lblEstrategiasPredeterminadas.setText("Seleccione la(s) Estrategias de Enseñanza:");
 
@@ -695,7 +696,7 @@ public class NEWFrmSilabo extends AbstracView {
                         .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTotalHdocencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblTotalHmateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTotalHpracticas, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                            .addComponent(lblTotalHpracticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlUnidadLayout.createSequentialGroup()

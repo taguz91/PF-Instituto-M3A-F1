@@ -34,11 +34,11 @@ public class UnidadSilaboMD implements Serializable {
 
     private String contenidosUnidad;
 
-    private int horasDocenciaUnidad;
+    private double horasDocenciaUnidad;
 
-    private int horasPracticaUnidad;
+    private double horasPracticaUnidad;
 
-    private int horasAutonomoUnidad;
+    private double horasAutonomoUnidad;
 
     private List<EvaluacionSilaboMD> evaluacionSilaboList;
 
@@ -139,26 +139,40 @@ public class UnidadSilaboMD implements Serializable {
     public void setContenidosUnidad(String contenidosUnidad) {
         this.contenidosUnidad = contenidosUnidad;
     }
-
-    public int getHorasDocenciaUnidad() {
-        return horasDocenciaUnidad;
-    }
-
+    
     public void setHorasDocenciaUnidad(int horasDocenciaUnidad) {
         this.horasDocenciaUnidad = horasDocenciaUnidad;
     }
 
-    public int getHorasPracticaUnidad() {
+    public double getHorasDocenciaUnidad() {
+        return horasDocenciaUnidad;
+    }
+
+    public void setHorasDocenciaUnidad(double horasDocenciaUnidad) {
+        this.horasDocenciaUnidad = horasDocenciaUnidad;
+    }
+
+    public double getHorasPracticaUnidad() {
         return horasPracticaUnidad;
     }
+
+    public void setHorasPracticaUnidad(double horasPracticaUnidad) {
+        this.horasPracticaUnidad = horasPracticaUnidad;
+    }
+
+    public double getHorasAutonomoUnidad() {
+        return horasAutonomoUnidad;
+    }
+
+    public void setHorasAutonomoUnidad(double horasAutonomoUnidad) {
+        this.horasAutonomoUnidad = horasAutonomoUnidad;
+    }
+
 
     public void setHorasPracticaUnidad(int horasPracticaUnidad) {
         this.horasPracticaUnidad = horasPracticaUnidad;
     }
 
-    public int getHorasAutonomoUnidad() {
-        return horasAutonomoUnidad;
-    }
 
     public void setHorasAutonomoUnidad(int horasAutonomoUnidad) {
         this.horasAutonomoUnidad = horasAutonomoUnidad;

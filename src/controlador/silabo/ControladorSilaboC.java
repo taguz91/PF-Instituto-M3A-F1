@@ -474,35 +474,29 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         });
 
-        gestion.getDchFechaFin().addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-
-                UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-
-                if (gestion.getDchFechaFin().getDate() != null) {
-                    LocalDate fechaFin = gestion.getDchFechaFin().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-                    if (unidadSeleccionada.getFechaInicioUnidad() == null) {
+        gestion.getDchFechaFin().addPropertyChangeListener("date", (PropertyChangeEvent pce) -> {
+            UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
+            
+            if (gestion.getDchFechaFin().getDate() != null) {
+                LocalDate fechaFin = gestion.getDchFechaFin().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                
+                if (unidadSeleccionada.getFechaInicioUnidad() == null) {
+                    unidadSeleccionada.setFechaFinUnidad(fechaFin);
+                    actualizarUnidad(unidadSeleccionada);
+                } else {
+                    if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1, ChronoUnit.DAYS))
+                            || unidadSeleccionada.getFechaFinUnidad().equals(fechaFin)) {
+                        
                         unidadSeleccionada.setFechaFinUnidad(fechaFin);
                         actualizarUnidad(unidadSeleccionada);
                     } else {
-                        if (unidadSeleccionada.getFechaInicioUnidad().isBefore(fechaFin.plus(1, ChronoUnit.DAYS))
-                                || unidadSeleccionada.getFechaFinUnidad().equals(fechaFin)) {
-
-                            unidadSeleccionada.setFechaFinUnidad(fechaFin);
-                            actualizarUnidad(unidadSeleccionada);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
-
-                            gestion.getDchFechaFin().setDate(Date.from(unidadSeleccionada.getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
-                        }
+                        JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio", "Alerta", JOptionPane.WARNING_MESSAGE);
+                        
+                        gestion.getDchFechaFin().setDate(Date.from(unidadSeleccionada.getFechaInicioUnidad().atStartOfDay(ZoneId.systemDefault()).toInstant().plus(1, ChronoUnit.DAYS)));
                     }
-
                 }
 
             }
-
         });
 
         gestion.getDchFechaPresentacionAD().addPropertyChangeListener("date", new PropertyChangeListener() {
@@ -668,7 +662,9 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             }
 
         });
-
+        
+        
+/*
         gestion.getSpnHorasDocencia().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
@@ -719,30 +715,26 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         });
 
-        gestion.getSpnHorasAutonomas().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent ce) {
-
-                int acumuladoAutonomo = 0;
-                UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
-                for (UnidadSilaboMD umd : unidades) {
-                    if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
-                        acumuladoAutonomo = acumuladoAutonomo + umd.getHorasAutonomoUnidad();
-                    }
-
+        gestion.getSpnHorasAutonomas().addChangeListener((ChangeEvent ce) -> {
+            int acumuladoAutonomo = 0;
+            UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
+            for (UnidadSilaboMD umd : unidades) {
+                if (umd.getNumeroUnidad() != unidadSeleccionada.getNumeroUnidad()) {
+                    acumuladoAutonomo = acumuladoAutonomo + umd.getHorasAutonomoUnidad();
                 }
-
-                if ((acumuladoAutonomo + (int) gestion.getSpnHorasAutonomas().getValue()) > silabo.getMateria().getHorasAutoEstudio()) {
-                    gestion.getSpnHorasAutonomas().setValue(silabo.getMateria().getHorasAutoEstudio() - acumuladoAutonomo);
-                    JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getMateria().getHorasAutoEstudio() + " horas de gestión autónoma", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                }
-
-                unidadSeleccionada.setHorasAutonomoUnidad((int) (gestion.getSpnHorasAutonomas().getValue()));
 
             }
 
+            if ((acumuladoAutonomo + (int) gestion.getSpnHorasAutonomas().getValue()) > silabo.getMateria().getHorasAutoEstudio()) {
+                gestion.getSpnHorasAutonomas().setValue(silabo.getMateria().getHorasAutoEstudio() - acumuladoAutonomo);
+                JOptionPane.showMessageDialog(null, "Esta materia debe cumplir con el número exacto de " + silabo.getMateria().getHorasAutoEstudio() + " horas de gestión autónoma", "Aviso", JOptionPane.WARNING_MESSAGE);
+                
+            }
+            
+            unidadSeleccionada.setHorasAutonomoUnidad((int) (gestion.getSpnHorasAutonomas().getValue()));
         });
+        
+        */
 
         gestion.getLblAgregarUnidad().addMouseListener(new MouseAdapter() {
             @Override
@@ -1900,9 +1892,9 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
         boolean control = false;
 
         for (UnidadSilaboMD umd : unidades) {
-            totalDocencia = totalDocencia + umd.getHorasDocenciaUnidad();
+            /*totalDocencia = totalDocencia + umd.getHorasDocenciaUnidad();
             totalPractica = totalPractica + umd.getHorasPracticaUnidad();
-            totalAutonomo = totalAutonomo + umd.getHorasAutonomoUnidad();
+            totalAutonomo = totalAutonomo + umd.getHorasAutonomoUnidad();*/
         }
         if (totalDocencia == silaboNuevo.getMateria().getHorasDocencia()
                 && totalPractica == silaboNuevo.getMateria().getHorasPracticas()

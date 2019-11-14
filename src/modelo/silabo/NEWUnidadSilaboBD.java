@@ -149,7 +149,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 u.setObjetivoEspecificoUnidad(res.getString(7));
                 u.setResultadosAprendizajeUnidad(res.getString(8));
                 u.setContenidosUnidad(res.getString(9));
-                
+
                 US.add(u);
             }
         } catch (SQLException e) {
@@ -235,9 +235,9 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 ps.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
             }
 
-            ps.setInt(7, u.getHorasDocenciaUnidad());
-            ps.setInt(8, u.getHorasPracticaUnidad());
-            ps.setInt(9, u.getHorasAutonomoUnidad());
+            ps.setDouble(7, u.getHorasDocenciaUnidad());
+            ps.setDouble(8, u.getHorasPracticaUnidad());
+            ps.setDouble(9, u.getHorasAutonomoUnidad());
             ps.setInt(10, idSilabo);
             ps.setString(11, u.getTituloUnidad());
             idGenerado = CON.getIDGenerado(ps);

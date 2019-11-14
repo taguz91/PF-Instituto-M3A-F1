@@ -44,6 +44,11 @@ public class Validar {
         //Si la cadena no contine solo numeros se retorna falso
         return cadena.matches("[0-9]+");
     }
+    
+    public static boolean esNumerosDecimales(String cadena) {
+        //Si la cadena no contine solo numeros se retorna falso
+        return cadena.matches("[0-9\\.0-9]+");
+    }
 
     public static boolean esTelefono(String cadena) {
         return cadena.matches("[0-9]{7,13}");
