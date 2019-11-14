@@ -83,9 +83,14 @@ public class SilaboMD {
     public List<ReferenciaSilaboMD> getReferencias() {
         return referencias;
     }
-    
+
     public void setReferencias(List<ReferenciaSilaboMD> referencias) {
         this.referencias = referencias;
+    }
+
+    @Override
+    public String toString() {
+        return "SilaboMD{" + "ID=" + ID + ", materia=" + materia + ", estado=" + estado + ", periodo=" + periodo + ", unidades=" + unidades + ", referencias=" + referencias + '}';
     }
 
 }

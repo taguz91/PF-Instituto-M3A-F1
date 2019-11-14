@@ -140,16 +140,16 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             SilaboMD silabo = getSilaboSeleccionadoTbl();
             switch (opcion) {
 
-                case 0:
+                case 0://IMPRIME SILABO DUAL
                     NEWSilaboBD.single().imprimirProgramaAnalitico(silabo);
                     break;
 
-                case 1:
+                case 1://IMPRIME SILABO TRADICIONAL
                     NEWSilaboBD.single().imprimirSilabo(silabo);
 
                     break;
 
-                case 2:
+                case 2://IMPRIME SILABO DUAL CON UN NUMERO DE SEMANAS
                     String semanas = JOptionPane.showInputDialog("Escriba el numero de semanas");
                     if (semanas != null) {
 
@@ -160,11 +160,12 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                                 NEWSilaboBD.single().imprimirProgramaAnaliticoConSemanas(silabo, numSemanas);
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "Debe indicar mas de seis semanas de clases por periodo ");
+                                JOptionPane.showMessageDialog(vista, "Debe indicar mas de seis semanas de clases por periodo ");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Solo puede ingresar numeros.");
+                            JOptionPane.showMessageDialog(vista, "Solo puede ingresar numeros.");
                         }
+
                         break;
 
                     }
@@ -179,7 +180,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnEditar(ActionEvent e) {
-
+        modelo = getSilaboSeleccionadoTbl();
+        System.out.println(modelo);
     }
 
     private void btnEliminar(ActionEvent e) {
