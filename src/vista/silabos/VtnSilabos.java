@@ -3,7 +3,6 @@ package vista.silabos;
 import controlador.notas.ux.RowStyle;
 import java.awt.Color;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -13,13 +12,10 @@ import vista.AbstracView;
 
 /**
  *
- * @author Andres Ullauri
+ * @author MrRainx
  */
 public class VtnSilabos extends AbstracView {
 
-    /**
-     * Creates new form frmSilabos
-     */
     public VtnSilabos() {
         initComponents();
         InitDiseño();
@@ -31,7 +27,6 @@ public class VtnSilabos extends AbstracView {
         centrarCeldas(tbl);
 
         RowStyle rowStyle = new RowStyle(5);
-
         rowStyle.setEstados(new HashMap<String, Color>() {
             {
                 put("PENDIENTE", new Color(0, 0, 0));
@@ -39,6 +34,8 @@ public class VtnSilabos extends AbstracView {
                 put("REVISAR", new Color(214, 48, 12));
             }
         });
+        Color bgColor = new Color(232, 237, 234);
+        rowStyle.setBgColor(bgColor);
 
         tbl.setDefaultRenderer(Object.class, rowStyle);
 
@@ -125,7 +122,6 @@ public class VtnSilabos extends AbstracView {
             tbl.getColumnModel().getColumn(1).setPreferredWidth(40);
             tbl.getColumnModel().getColumn(1).setMaxWidth(40);
             tbl.getColumnModel().getColumn(3).setPreferredWidth(220);
-            tbl.getColumnModel().getColumn(3).setMaxWidth(220);
             tbl.getColumnModel().getColumn(4).setMinWidth(110);
             tbl.getColumnModel().getColumn(4).setPreferredWidth(110);
             tbl.getColumnModel().getColumn(4).setMaxWidth(110);

@@ -3,6 +3,7 @@ package vista.notas;
 import controlador.notas.ux.RowStyle;
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,15 +29,19 @@ public class VtnNotas extends AbstracView {
         tblTrad.setRowHeight(23);
         tblDual.setRowHeight(23);
         RowStyle rowStyleTrad = new RowStyle(13);
-        rowStyleTrad.setEstados(
-                new HashMap<String, Color>() {
+        RowStyle rowStyleDual = new RowStyle(12);
+        Map<String, Color> estados = new HashMap<String, Color>() {
             {
-                
+                put("APROBADO", new Color(37, 107, 187));
+                put("REPROBADO", new Color(214, 48, 12));
+                put("", new Color(0, 0, 0));
             }
-        });
+        };
 
-        tblTrad.setDefaultRenderer(Object.class, new RowStyle(13));
-        tblDual.setDefaultRenderer(Object.class, new RowStyle(12));
+        rowStyleTrad.setEstados(estados);
+        rowStyleDual.setEstados(estados);
+        tblTrad.setDefaultRenderer(Object.class, rowStyleTrad);
+        tblDual.setDefaultRenderer(Object.class, rowStyleDual);
 
         centrarCabecera(tblTrad);
 
