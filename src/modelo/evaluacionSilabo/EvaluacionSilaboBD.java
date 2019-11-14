@@ -58,7 +58,8 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
         }
 
     }
-
+    
+    // PASADO 
     public static List<EvaluacionSilaboMD> recuperarEvaluaciones(ConexionBD conexion, int aguja) {
         List<EvaluacionSilaboMD> evaluaciones = new ArrayList<>();
         try {

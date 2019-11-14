@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+import modelo.evaluacionSilabo.NEWEvaluacionSilaboBD;
 import modelo.referencias.ReferenciasMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 import modelo.silabo.NEWEstrategiaUnidadBD;
@@ -42,6 +43,7 @@ public class FRMSilaboCTR extends DCTR {
     private final NEWEstrategiaUnidadBD EUBD = NEWEstrategiaUnidadBD.single();
     private final NEWReferenciaSilaboBD RSBD = NEWReferenciaSilaboBD.single();
     private final NEWTipoActividadBD TABD = NEWTipoActividadBD.single();
+    private final NEWEvaluacionSilaboBD EVBD = NEWEvaluacionSilaboBD.single();
 
     // Listas para guardar los contenidos del formulario 
     private List<UnidadSilaboMD> unidades;
@@ -97,6 +99,7 @@ public class FRMSilaboCTR extends DCTR {
         iniciarSilabo();
         // Buscamos sin el id de las unidades
         unidades = USBD.getBySilaboParaReferencia(silabo.getID());
+        evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
         iniciarVentana();
     }
 
@@ -104,6 +107,7 @@ public class FRMSilaboCTR extends DCTR {
         cargarDatosSilabo();
         // Buscamos con el id de unidades
         unidades = USBD.getBySilabo(silabo.getID());
+        evaluaciones = EVBD.getBySilabo(silabo.getID());
         iniciarVentana();
     }
 
