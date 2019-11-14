@@ -28,7 +28,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="srcSilabos" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -42,16 +42,19 @@
                           <Group type="102" attributes="0">
                               <Component id="txtBuscar" min="-2" pref="330" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNuevo" min="-2" pref="70" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEditar" min="-2" pref="70" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminar" min="-2" pref="70" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="142" max="32767" attributes="0"/>
-                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnImprimir" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="btnNuevo1" alignment="1" min="-2" pref="80" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -63,20 +66,21 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnNuevo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEditar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEliminar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnImprimir" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCarrera" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="cmbCarrera" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnNuevo1" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="srcSilabos" pref="408" max="32767" attributes="0"/>
+              <Component id="srcSilabos" pref="289" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -187,6 +191,11 @@
     <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnNuevo1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Refrescar"/>
       </Properties>
     </Component>
   </SubComponents>

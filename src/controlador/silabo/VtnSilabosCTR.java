@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.event.CaretEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
@@ -42,9 +44,9 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     @Override
     public void Init() {
 
-        InitEventos();
         setTable(vista.getTbl());
         cargarCmbCarreras();
+        InitEventos();
         super.Init();
     }
 
@@ -55,6 +57,22 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getCmbCarrera().addItemListener(this::cmbCarrera);
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
         vista.getTxtBuscar().addCaretListener(this::txtBuscar);
+
+        tableM.addTableModelListener(new TableModelListener() {
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+                    active = true;
+                    cambiarEstado();
+                    active = false;
+                }
+
+            }
+
+        });
 
         List<String> estados = new ArrayList<>();
 
@@ -83,18 +101,6 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private Consumer<SilaboMD> cargador() {
         return obj -> {
-            String estado = "";
-            switch (obj.getEstado()) {
-                case 0:
-                    estado = "PENDIENTE";
-                    break;
-                case 1:
-                    estado = "APROBADO";
-                    break;
-                case 2:
-                    estado = "REVISAR";
-                    break;
-            }
             String fechaGeneracion = "SIN FECHA";
             if (obj.getFechaGeneracion() != null) {
                 fechaGeneracion = obj.getFechaGeneracion().toString();
@@ -105,7 +111,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 obj.getMateria().getNombre(),
                 obj.getPeriodo().getNombre(),
                 fechaGeneracion,
-                estado
+                SilaboMD.getEstadoStr(obj.getEstado())
             });
         };
     }
@@ -257,6 +263,19 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 .filter(item -> item.getPeriodo().getNombre().toLowerCase().contains(buscar)
                 || item.getMateria().getNombre().toLowerCase().contains(buscar)
                 ).forEach(cargador());
+    }
+
+    private void cambiarEstado() {
+        int colum = table.getSelectedColumn();
+        int row = getSelectedRow();
+        SilaboMD silabo = getSilaboSeleccionadoTbl();
+        String estado = table.getValueAt(row, colum).toString();
+
+        if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
+            silabo.setEstado(SilaboMD.getEstadoInt(estado));
+            cargarTabla(cargador());
+            System.out.println(silabo.getEstado());
+        }
     }
 
 }

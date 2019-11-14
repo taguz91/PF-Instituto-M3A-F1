@@ -109,6 +109,30 @@ public class SilaboMD {
         this.fechaActualizacion = fechaActualizacion;
     }
 
+    public static String getEstadoStr(int estado) {
+        switch (estado) {
+            case 0:
+                return "PENDIENTE";
+            case 1:
+                return "APROBADO";
+            case 2:
+                return "REVISAR";
+        }
+        return null;
+    }
+
+    public static Integer getEstadoInt(String estado) {
+        switch (estado) {
+            case "PENDIENTE":
+                return 0;
+            case "APROBADO":
+                return 1;
+            case "REVISAR":
+                return 2;
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "SilaboMD{" + "ID=" + ID + ", materia=" + materia + ", estado=" + estado + ", periodo=" + periodo + ", unidades=" + unidades + ", referencias=" + referencias + '}';
