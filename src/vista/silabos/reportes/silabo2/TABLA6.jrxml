@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e43316c5-a018-4cbb-ba2e-dd9c1875b142">
-	<property name="ireport.zoom" value="1.9487171000000056"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="37"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
@@ -45,7 +45,7 @@ from "UnidadSilabo" us where id_silabo=$P!{parameter1} ORDER BY numero_unidad as
 	<pageHeader>
 		<band height="87" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="84" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="751acbc9-24cf-456b-aeda-bc45b9c91965"/>
+				<reportElement mode="Opaque" x="0" y="0" width="97" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="751acbc9-24cf-456b-aeda-bc45b9c91965"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -61,7 +61,7 @@ OBJETIVO
 ESPECÍFICO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="84" y="0" width="94" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="a311e88a-b3f1-4739-8539-3aae5639ecfe"/>
+				<reportElement mode="Opaque" x="97" y="0" width="95" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="a311e88a-b3f1-4739-8539-3aae5639ecfe"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -77,7 +77,7 @@ RESULTADOS DE
 APRENDIZAJE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="178" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="32bf905f-771e-4bb7-807c-023e8cd2c067"/>
+				<reportElement mode="Opaque" x="192" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="32bf905f-771e-4bb7-807c-023e8cd2c067"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -89,7 +89,7 @@ APRENDIZAJE]]></text>
 				<text><![CDATA[FECHA INICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="202" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="90674e29-d33b-4073-bdcd-9398011dd5de"/>
+				<reportElement mode="Opaque" x="216" y="0" width="24" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="90674e29-d33b-4073-bdcd-9398011dd5de"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -101,7 +101,7 @@ APRENDIZAJE]]></text>
 				<text><![CDATA[FECHA FIN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="226" y="0" width="133" height="36" forecolor="#FFFFFF" backcolor="#006699" uuid="46d2729a-f918-4f7a-bd3b-7976ceb964fd"/>
+				<reportElement mode="Opaque" x="240" y="0" width="125" height="36" forecolor="#FFFFFF" backcolor="#006699" uuid="46d2729a-f918-4f7a-bd3b-7976ceb964fd"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -114,7 +114,7 @@ APRENDIZAJE]]></text>
 CONTENIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="226" y="36" width="133" height="51" forecolor="#FFFFFF" backcolor="#006699" uuid="aab4c120-a82c-4415-8772-1ce36fa4d32e"/>
+				<reportElement mode="Opaque" x="240" y="36" width="125" height="51" forecolor="#FFFFFF" backcolor="#006699" uuid="aab4c120-a82c-4415-8772-1ce36fa4d32e"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -128,7 +128,7 @@ CONTENIDOS]]></text>
 (UNIDADES Y TEMAS)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="359" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f449888d-2b29-443f-8db0-85dbbd0b537f"/>
+				<reportElement mode="Opaque" x="365" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="f449888d-2b29-443f-8db0-85dbbd0b537f"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -140,7 +140,7 @@ CONTENIDOS]]></text>
 				<text><![CDATA[N° HORAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="359" y="20" width="25" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="791dccdd-b120-4476-9c16-62bd7185ab36"/>
+				<reportElement mode="Opaque" x="365" y="20" width="25" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="791dccdd-b120-4476-9c16-62bd7185ab36"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -154,7 +154,7 @@ CONTENIDOS]]></text>
 				<text><![CDATA[DOCENTES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="384" y="20" width="23" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="07a69884-33c7-4e6f-9dec-df44825fbc41"/>
+				<reportElement mode="Opaque" x="390" y="20" width="23" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="07a69884-33c7-4e6f-9dec-df44825fbc41"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -168,7 +168,7 @@ CONTENIDOS]]></text>
 				<text><![CDATA[PRÁCTICAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="407" y="20" width="22" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="b08bd04e-aa6d-4855-b40b-1726aba71fd8"/>
+				<reportElement mode="Opaque" x="413" y="20" width="22" height="67" forecolor="#FFFFFF" backcolor="#006699" uuid="b08bd04e-aa6d-4855-b40b-1726aba71fd8"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -182,7 +182,7 @@ CONTENIDOS]]></text>
 				<text><![CDATA[AUTÓNOMAS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="429" y="0" width="126" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="06581f6b-fa0f-477d-9a33-2c41dfc3775d"/>
+				<reportElement mode="Opaque" x="435" y="0" width="120" height="87" forecolor="#FFFFFF" backcolor="#006699" uuid="06581f6b-fa0f-477d-9a33-2c41dfc3775d"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -202,7 +202,7 @@ ENSEÑANZA]]></text>
 	<detail>
 		<band height="135" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="84" height="135" isPrintWhenDetailOverflows="true" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="97" height="135" isPrintWhenDetailOverflows="true" uuid="a12caf5a-4b0b-4a38-937b-49e1389ce50c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -216,7 +216,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{objetivo_especifico_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="407" y="0" width="22" height="135" isPrintWhenDetailOverflows="true" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="413" y="0" width="22" height="135" isPrintWhenDetailOverflows="true" uuid="793cd37e-2c0e-47d2-a62b-870170d97170"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -228,7 +228,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="84" y="0" width="94" height="135" isPrintWhenDetailOverflows="true" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="97" y="0" width="95" height="135" isPrintWhenDetailOverflows="true" uuid="6da8971c-d685-4e86-b7ab-ea67cec4666d"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -242,7 +242,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="178" y="0" width="24" height="135" isPrintWhenDetailOverflows="true" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="192" y="0" width="24" height="135" isPrintWhenDetailOverflows="true" uuid="bec1ff65-c9ab-4b3a-aad2-54e9596e2122"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -254,7 +254,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="202" y="0" width="24" height="135" isPrintWhenDetailOverflows="true" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="216" y="0" width="24" height="135" isPrintWhenDetailOverflows="true" uuid="c1136e7f-2607-4a99-97c2-b2be85f929b0"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -266,7 +266,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{fecha_fin_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="359" y="0" width="25" height="135" isPrintWhenDetailOverflows="true" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="365" y="0" width="25" height="135" isPrintWhenDetailOverflows="true" uuid="c6686b1b-91a3-43d2-9b1a-31dd587de18c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -278,7 +278,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_docencia_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="384" y="0" width="23" height="135" isPrintWhenDetailOverflows="true" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="390" y="0" width="23" height="135" isPrintWhenDetailOverflows="true" uuid="09525355-17a4-4849-8eb5-09eb5c5142eb"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -290,7 +290,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="429" y="0" width="126" height="135" isPrintWhenDetailOverflows="true" uuid="86a97c76-37b2-456e-805c-eec1d5523ba5"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="435" y="0" width="120" height="135" isPrintWhenDetailOverflows="true" uuid="86a97c76-37b2-456e-805c-eec1d5523ba5"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -304,7 +304,7 @@ ENSEÑANZA]]></text>
 				<textFieldExpression><![CDATA[$F{estrategias}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="226" y="0" width="133" height="135" isPrintWhenDetailOverflows="true" uuid="cb2cc22d-534e-41e0-9708-8eaf56607dec"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="240" y="0" width="125" height="135" isPrintWhenDetailOverflows="true" uuid="cb2cc22d-534e-41e0-9708-8eaf56607dec"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -328,7 +328,7 @@ ENSEÑANZA]]></text>
 	<summary>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="359" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
+				<reportElement x="0" y="0" width="365" height="22" uuid="26837a53-549c-4f27-ae1a-5eb3e463a4e3"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -342,7 +342,7 @@ ENSEÑANZA]]></text>
 				<text><![CDATA[TOTAL HORAS CICLO]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="359" y="0" width="70" height="22" uuid="d07cbcab-dbe1-4bb2-b5b0-64fb60957ff0"/>
+				<reportElement x="365" y="0" width="70" height="22" uuid="d07cbcab-dbe1-4bb2-b5b0-64fb60957ff0"/>
 				<subreportParameter name="parameter1">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>

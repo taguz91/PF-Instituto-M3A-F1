@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0e5d21e-5378-47c6-8d68-b4f9aa976e8c">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="746"/>
-	<property name="ireport.y" value="388"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/plan_de_clase/"]]></defaultValueExpression>
 	</parameter>
@@ -267,7 +267,7 @@ EVALUACIÓN]]></text>
 + $F{consolidacion_arr}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="471" y="70" width="84" height="237" uuid="36bd924d-7866-4c3c-9032-7df321b7fa7c"/>
+				<reportElement stretchType="RelativeToBandHeight" x="471" y="68" width="84" height="239" uuid="36bd924d-7866-4c3c-9032-7df321b7fa7c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
