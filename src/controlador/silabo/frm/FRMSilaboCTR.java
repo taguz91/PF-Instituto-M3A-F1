@@ -370,7 +370,7 @@ public class FRMSilaboCTR extends DCTR {
                 } else {
                     errorFecha("Debe indicar una fecha de fin correcta.");
                     FRM_GESTION.getDchFechaFin().setDate(Date
-                            .from(unidadSelec.getFechaFinUnidad()
+                            .from(unidadSelec.getFechaInicioUnidad()
                                     .atStartOfDay(ZoneId.systemDefault())
                                     .toInstant().plus(1, ChronoUnit.DAYS)
                             )

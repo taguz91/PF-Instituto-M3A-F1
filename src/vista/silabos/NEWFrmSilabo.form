@@ -236,64 +236,46 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="tbpEvaluacion" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="scrObjetivos" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="scrContenidos" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblObjetivos" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblContenidos" alignment="0" min="-2" pref="410" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtBuscarEstrategias" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblAgregarEstrategia" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblEstrategiasPredeterminadas" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="scrResultados" pref="380" max="32767" attributes="0"/>
-                                  <Component id="lblResultados" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblUnidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbUnidad" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblAgregarUnidad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEliminarUnidad" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtTitulo" min="-2" pref="450" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblFechaFin" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="lblFechaInicio" min="-2" pref="200" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="dchFechaFin" min="-2" pref="120" max="-2" attributes="0"/>
+                                      <Component id="dchFechaInicio" min="-2" pref="170" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="lblFechaFin" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                      <Component id="lblFechaInicio" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="dchFechaInicio" min="-2" pref="120" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblHorasAutonomas" min="-2" pref="90" max="-2" attributes="0"/>
-                                          <Component id="lblHorasPracticas" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="lblUnidad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cmbUnidad" alignment="1" min="-2" pref="152" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblAgregarUnidad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblEliminarUnidad" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtTitulo" min="-2" pref="430" max="-2" attributes="0"/>
+                                          <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+                                              <Component id="lblHorasPracticas" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="dchFechaFin" min="-2" pref="170" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="lblHorasAutonomas" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -302,8 +284,7 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblHorasDocencia" min="-2" pref="90" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="401" max="-2" attributes="0"/>
                                       <Component id="spnHdocencia" min="-2" pref="60" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -313,7 +294,7 @@
                                   <Component id="lblTotalHmateria" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblTotalHpracticas" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
@@ -335,6 +316,32 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblAcumuladoGestion" min="-2" pref="76" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="scrObjetivos" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="scrContenidos" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblObjetivos" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblContenidos" alignment="0" min="-2" pref="410" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txtBuscarEstrategias" max="32767" attributes="0"/>
+                                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblAgregarEstrategia" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblEstrategiasPredeterminadas" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblHorasDocencia" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="scrResultados" pref="380" max="32767" attributes="0"/>
+                                      <Component id="lblResultados" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -343,45 +350,31 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblHorasDocencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="spnHdocencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTotalHdocencia" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblUnidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cmbUnidad" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtTitulo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="dchFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblFechaFin" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="dchFechaFin" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblHorasDocencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="spnHdocencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblTotalHdocencia" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblHorasPracticas" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="spnHpracticas" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblTotalHpracticas" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                      <Component id="txtTitulo" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblHorasAutonomas" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -389,13 +382,32 @@
                                           <Component id="lblTotalHmateria" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                      <Component id="lblFechaFin" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="lblAgregarUnidad" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblEliminarUnidad" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblUnidad" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="cmbUnidad" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="lblAgregarUnidad" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblEliminarUnidad" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="dchFechaInicio" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dchFechaFin" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -473,8 +485,9 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblFechaInicio">
               <Properties>
-                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="text" type="java.lang.String" value="Fecha de Inicio de Unidad:"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dchFechaInicio">
@@ -483,7 +496,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblFechaFin">
               <Properties>
-                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="text" type="java.lang.String" value="Fecha de Fin de Unidad:"/>
               </Properties>
             </Component>
