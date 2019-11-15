@@ -3,6 +3,7 @@ package controlador.alumno;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -100,6 +101,11 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
         vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
         vtnMallaAlm.getBtnReporteCarrera().addActionListener(e -> reportePorCarrera());
+
+        /*
+            AGREGADO POR DIEGO
+         */
+        vtnMallaAlm.getBtnRptEgresados().addActionListener(this::btnReporteEgresados);
 
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
                 vtnMallaAlm.getTxtBuscar().getText().trim()));
@@ -492,6 +498,15 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         } finally {
             vtnMallaAlm.setCursor(new Cursor(0));
         }
+    }
+
+    private void btnReporteEgresados(ActionEvent e) {
+        int r = JOptionPane.showOptionDialog(vtnMallaAlm, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
+                "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
+                    "Alumnos entre 90 a 100", "Reporte Completo", "Reporte Interciclo", "Tabla Final"},
+                "Cancelar");
+
     }
 
 }
