@@ -541,4 +541,52 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
+    public String getInformacion(SilaboMD silabo) {
+
+        String SELECT = ""
+                + "SELECT \n"
+                + "    DISTINCT ON ( \"Personas\".persona_identificacion ) \"Cursos\".id_docente,\n"
+                + "	(   \n"
+                + "        \"Personas\".persona_identificacion || '  |  ' || \n"
+                + "	    \"Personas\".persona_primer_apellido || ' ' ||\n"
+                + "	    \"Personas\".persona_primer_nombre\n"
+                + "    ) as docente,\n"
+                + "	(\n"
+                + "	    SELECT \n"
+                + "            string_agg ( \"Cursos\".curso_nombre, ', ' ) \n"
+                + "        FROM \n"
+                + "            \"Cursos\" \n"
+                + "	    WHERE\n"
+                + "		    \"Cursos\".id_prd_lectivo = " + silabo.getPeriodo().getID() + " \n"
+                + "            AND \"Cursos\".id_materia = " + silabo.getMateria().getId() + " \n"
+                + "            AND \"Docentes\".id_docente = id_docente \n"
+                + "	) as cursos\n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona \n"
+                + "WHERE\n"
+                + "	\"Cursos\".id_prd_lectivo = " + silabo.getPeriodo().getID() + " \n"
+                + "	AND \"Cursos\".id_materia = " + silabo.getMateria().getId()
+                + "";
+
+        String informacion = ""
+                + "Periodo Lectivo:\n"
+                + "     " + silabo.getPeriodo().getNombre() + "\n"
+                + "Materia:\n"
+                + "     " + silabo.getMateria().getNombre() + "\n"
+                + "Docentes:\n";
+
+        try {
+            ResultSet rs = CON.ejecutarQuery(SELECT);
+            while (rs.next()) {
+                informacion += "        " + rs.getString("docente") + "\n"
+                        + "Cursos: " + rs.getString("cursos") + "\n";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return informacion;
+    }
 }

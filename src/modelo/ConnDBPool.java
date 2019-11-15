@@ -233,6 +233,18 @@ public class ConnDBPool {
         return rs;
     }
 
+    public ResultSet ejecutarQuery(String sql) {
+        Connection conn = getConnection();
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return rs;
+    }
+
     public ConnDBPool close(Connection conn) {
         try {
             if (conn != null) {

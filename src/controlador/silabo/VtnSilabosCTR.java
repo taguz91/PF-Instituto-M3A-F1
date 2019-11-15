@@ -43,11 +43,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     @Override
     public void Init() {
-
         setTable(vista.getTbl());
         cargarCmbCarreras();
         InitEventos();
         super.Init();
+        cargarTabla(cargador());
     }
 
     private void InitEventos() {
@@ -57,6 +57,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getCmbCarrera().addItemListener(this::cmbCarrera);
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
         vista.getTxtBuscar().addCaretListener(this::txtBuscar);
+        vista.getBtnInformacion().addActionListener(this::btnInformacion);
 
         tableM.addTableModelListener(new TableModelListener() {
             boolean active = false;
@@ -75,11 +76,9 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         });
 
         List<String> estados = new ArrayList<>();
-
         estados.add("APROBADO");
         estados.add("PENDIENTE");
         estados.add("REVISAR");
-
         vista.getTbl()
                 .getColumnModel()
                 .getColumn(5)
@@ -274,8 +273,13 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
             silabo.setEstado(SilaboMD.getEstadoInt(estado));
             cargarTabla(cargador());
-            System.out.println(silabo.getEstado());
+            //TODO: AGREGAR EL METODO DE LA BASE DE DATOS PARA CAMBIAR EL ESTADO
         }
+    }
+
+    private void btnInformacion(ActionEvent e) {
+        String informacion = SILABO_CONN.getInformacion(getSilaboSeleccionadoTbl());
+        JOptionPane.showMessageDialog(vista, informacion, "INFORMACION DEL SILABO", JOptionPane.PLAIN_MESSAGE);
     }
 
 }
