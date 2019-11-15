@@ -603,4 +603,37 @@ public class NEWSilaboBD implements ISilaboBD {
 
         return CON.ejecutar(UPDATE) == null;
     }
+
+    public SilaboMD getDisponibilidad(int idSilabo) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"public\".\"Silabo\".editando,\n"
+                + "	\"public\".\"Personas\".persona_identificacion,\n"
+                + "	\"public\".\"Personas\".persona_primer_apellido,\n"
+                + "	\"public\".\"Personas\".persona_primer_nombre \n"
+                + "FROM\n"
+                + "	\"public\".\"Silabo\"\n"
+                + "	INNER JOIN \"public\".\"Personas\" ON \"public\".\"Personas\".id_persona = \"public\".\"Silabo\".editado_por \n"
+                + "WHERE\n"
+                + "	\"public\".\"Silabo\".id_silabo =" + idSilabo
+                + "";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        SilaboMD silabo = null;
+        try {
+            while (rs.next()) {
+                silabo = new SilaboMD();
+
+                silabo.setID(rs.getInt("id_silabo"));
+                silabo.setEditando(rs.getBoolean("editando"));
+                silabo.setEditando(rs.getBoolean("editado_por"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
 }

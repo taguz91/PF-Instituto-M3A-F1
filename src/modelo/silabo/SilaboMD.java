@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.PersonaMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -34,6 +35,12 @@ public class SilaboMD {
     private List<UnidadSilaboMD> unidades;
 
     private List<ReferenciaSilaboMD> referencias;
+
+    private boolean editando;
+
+    private PersonaMD editadoPor;
+
+    private LocalDateTime ultimaEdicion;
 
     public SilaboMD() {
         this.materia = new MateriaMD();
@@ -133,9 +140,33 @@ public class SilaboMD {
         return null;
     }
 
+    public boolean isEditando() {
+        return editando;
+    }
+
+    public void setEditando(boolean editando) {
+        this.editando = editando;
+    }
+
+    public PersonaMD getEditadoPor() {
+        return editadoPor;
+    }
+
+    public void setEditadoPor(PersonaMD editadoPor) {
+        this.editadoPor = editadoPor;
+    }
+
+    public LocalDateTime getUltimaEdicion() {
+        return ultimaEdicion;
+    }
+
+    public void setUltimaEdicion(LocalDateTime ultimaEdicion) {
+        this.ultimaEdicion = ultimaEdicion;
+    }
+
     @Override
     public String toString() {
-        return "SilaboMD{" + "ID=" + ID + ", materia=" + materia + ", estado=" + estado + ", periodo=" + periodo + ", unidades=" + unidades + ", referencias=" + referencias + '}';
+        return "SilaboMD{" + "ID=" + ID + ", materia=" + materia + ", estado=" + estado + ", periodo=" + periodo + ", fechaGeneracion=" + fechaGeneracion + ", fechaActualizacion=" + fechaActualizacion + ", unidades=" + unidades + ", referencias=" + referencias + ", editando=" + editando + ", editadoPor=" + editadoPor + ", ultimaEdicion=" + ultimaEdicion + '}';
     }
 
 }
