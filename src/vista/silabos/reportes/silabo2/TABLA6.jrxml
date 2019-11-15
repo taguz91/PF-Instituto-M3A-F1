@@ -148,7 +148,7 @@ CONTENIDOS]]></text>
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
-				<textElement rotation="Left">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[DOCENTES]]></text>
@@ -162,7 +162,7 @@ CONTENIDOS]]></text>
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
-				<textElement rotation="Left">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[PRÁCTICAS]]></text>
@@ -176,7 +176,7 @@ CONTENIDOS]]></text>
 					<bottomPen lineWidth="0.75" lineColor="#000000"/>
 					<rightPen lineWidth="0.75" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle" rotation="Left">
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[AUTÓNOMAS]]></text>
@@ -224,7 +224,9 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
@@ -250,7 +252,7 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" rotation="Left"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
 				<textFieldExpression><![CDATA[$F{fecha_inicio_unidad}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
@@ -262,7 +264,7 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" rotation="Left"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
 				<textFieldExpression><![CDATA[$F{fecha_fin_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -274,7 +276,9 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{horas_docencia_unidad}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -286,7 +290,9 @@ ENSEÑANZA]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{horas_practica_unidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
