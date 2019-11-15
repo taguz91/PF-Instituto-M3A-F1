@@ -22,6 +22,7 @@ import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.PersonaMD;
 import modelo.silabo.mbd.ISilaboBD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -578,14 +579,16 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "             " + silabo.getMateria().getNombre() + "\n\n"
                 + "         Docentes:\n";
 
+        ResultSet rs = CON.ejecutarQuery(SELECT);
         try {
-            ResultSet rs = CON.ejecutarQuery(SELECT);
             while (rs.next()) {
                 informacion += "             " + rs.getString("docente") + "\n"
                         + "             Cursos: " + rs.getString("cursos") + "\n\n";
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
         return informacion;
@@ -604,36 +607,41 @@ public class NEWSilaboBD implements ISilaboBD {
         return CON.ejecutar(UPDATE) == null;
     }
 
-    public SilaboMD getDisponibilidad(int idSilabo) {
+    public SilaboMD getDisponibilidad(SilaboMD silabo) {
 
         String SELECT = ""
                 + "SELECT\n"
-                + "	\"public\".\"Silabo\".editando,\n"
-                + "	\"public\".\"Personas\".persona_identificacion,\n"
-                + "	\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "	\"public\".\"Personas\".persona_primer_nombre \n"
+                + "	\"Silabo\".editando,\n"
+                + "	\"Personas\".persona_identificacion,\n"
+                + "	\"Personas\".persona_primer_apellido,\n"
+                + "	\"Personas\".persona_primer_nombre \n"
                 + "FROM\n"
-                + "	\"public\".\"Silabo\"\n"
-                + "	INNER JOIN \"public\".\"Personas\" ON \"public\".\"Personas\".id_persona = \"public\".\"Silabo\".editado_por \n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"Personas\" ON \"Personas\".id_persona = \"Silabo\".editado_por \n"
                 + "WHERE\n"
-                + "	\"public\".\"Silabo\".id_silabo =" + idSilabo
+                + "	\"Silabo\".id_silabo =" + silabo.getID()
                 + "";
 
         ResultSet rs = CON.ejecutarQuery(SELECT);
-        SilaboMD silabo = null;
         try {
             while (rs.next()) {
-                silabo = new SilaboMD();
-
-                silabo.setID(rs.getInt("id_silabo"));
                 silabo.setEditando(rs.getBoolean("editando"));
-                silabo.setEditando(rs.getBoolean("editado_por"));
+
+                PersonaMD persona = new PersonaMD();
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+
+                silabo.setEditadoPor(persona);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
-        return null;
+        return silabo;
     }
 
 }

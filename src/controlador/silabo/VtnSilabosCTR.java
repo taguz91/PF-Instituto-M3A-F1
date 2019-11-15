@@ -183,6 +183,21 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         );
     }
 
+    private void mensajeEditando() {
+        JOptionPane.showMessageDialog(
+                vista,
+                "EL SILABO NO ESTA DISPOBIBLE ACTUALMENTE\n\n"
+                + "" + modelo.getEditadoPor().getIdentificacion() + " "
+                + "" + modelo.getEditadoPor().getPrimerApellido() + " "
+                + "" + modelo.getEditadoPor().getPrimerNombre() + " \n\n"
+                + "ESTA TRABAJANDO EN EL SILABO"
+                + ""
+                + "",
+                "ALERTA!!",
+                JOptionPane.WARNING_MESSAGE
+        );
+    }
+
     /*
         EVENTOS
      */
@@ -222,7 +237,25 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnEditar(ActionEvent e) {
-        modelo = getSilaboSeleccionadoTbl();
+        try {
+
+            modelo = getSilaboSeleccionadoTbl();
+            if (modelo != null) {
+
+                modelo = SILABO_CONN.getDisponibilidad(modelo);
+
+                if (!modelo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
+                        || modelo.isEditando()) {
+                    mensajeEditando();
+                } else {
+
+                }
+
+            }
+
+        } catch (NullPointerException ex) {
+            //SI ENTRA AQUI ES PORQUE NO HAY NADIE EDITANDO
+        }
 
     }
 
@@ -232,14 +265,21 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         if (silabo != null) {
             String MENSAJE_ELIMINAR = String.format(
                     "ESTA SEGURO DE ELIMINAR EL SILABO:\n"
-                    + "PERIODO LECTIVO: %s\n"
+                    + "PERIODO LECTIVO:\n"
                     + "MATERIA:%s\n"
                     + "RECUERDE QUE SI ELIMINA EL SILABO SE LE BORRARA:\n"
                     + "SUS AVANCES DE SILABO Y PLANES DE CLASE",
-                    silabo.getPeriodo().getNombre(), silabo.getMateria().getNombre()
+                    //PARAMETROS
+                    silabo.getPeriodo().getNombre(),
+                    silabo.getMateria().getNombre()
             );
 
-            int opcionEliminado = JOptionPane.showConfirmDialog(vista, MENSAJE_ELIMINAR, "ESTA SEGURO?", JOptionPane.YES_NO_OPTION);
+            int opcionEliminado = JOptionPane.showConfirmDialog(
+                    vista,
+                    MENSAJE_ELIMINAR,
+                    "ESTA SEGURO?",
+                    JOptionPane.YES_NO_OPTION
+            );
 
             if (opcionEliminado == JOptionPane.YES_OPTION) {
                 boolean estado = SILABO_CONN.eliminar(silabo);
