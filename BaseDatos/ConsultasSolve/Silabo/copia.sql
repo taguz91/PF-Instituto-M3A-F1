@@ -88,6 +88,14 @@ BEGIN
     FROM public."EvaluacionSilabo"
     WHERE id_unidad = reg.id_unidad;
 
+    INSERT INTO public."ReferenciaSilabo"(
+      id_referencia,
+      id_silabo
+    ) SELECT  id_referencia,
+    id_silabo_gen
+    FROM public."ReferenciaSilabo"
+    WHERE id_silabo = id_silabo_param;
+
     RAISE NOTICE 'ID Unidad generada: % ', id_unidad_gen;
 
     FETCH unidades INTO reg;
