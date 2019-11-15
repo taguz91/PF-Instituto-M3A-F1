@@ -20,8 +20,6 @@ import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.ConexionBD;

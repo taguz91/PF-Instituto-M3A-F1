@@ -3,6 +3,7 @@ package vista.silabos;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -45,20 +46,12 @@ public class NEWFrmSilabo extends AbstracView {
         return cmbUnidad;
     }
 
-    public JDateChooser getDchFechaEnvio() {
-        return dchFechaEnvio;
-    }
-
     public JDateChooser getDchFechaFin() {
         return dchFechaFin;
     }
 
     public JDateChooser getDchFechaInicio() {
         return dchFechaInicio;
-    }
-
-    public JDateChooser getDchFechaPresentacion() {
-        return dchFechaPresentacion;
     }
 
     public JLabel getLblAcumuladoGestion() {
@@ -91,10 +84,6 @@ public class NEWFrmSilabo extends AbstracView {
 
     public JSpinner getSpnHpracticas() {
         return spnHpracticas;
-    }
-
-    public JSpinner getSpnValoracion() {
-        return spnValoracion;
     }
 
     public JTable getTblAprendizajeColaborativo() {
@@ -133,14 +122,6 @@ public class NEWFrmSilabo extends AbstracView {
         return txrResultados;
     }
 
-    public JTextArea getTxtIndicador() {
-        return txtIndicador;
-    }
-
-    public JTextField getTxtInstrumento() {
-        return txtInstrumento;
-    }
-
     public JTextField getTxttxtBuscarEstrategias() {
         return txtBuscarEstrategias;
     }
@@ -148,28 +129,19 @@ public class NEWFrmSilabo extends AbstracView {
     public JTextField getTxtTitulo() {
         return txtTitulo;
     }
-    
-    
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JTextField getTxtBuscarEstrategias() {
+        return txtBuscarEstrategias;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dlgAddActividad = new javax.swing.JDialog();
-        dchFechaPresentacion = new com.toedter.calendar.JDateChooser();
-        lblFechaPresentacionAD = new javax.swing.JLabel();
-        lblFechaEnvioAD = new javax.swing.JLabel();
-        dchFechaEnvio = new com.toedter.calendar.JDateChooser();
-        spnValoracion = new javax.swing.JSpinner();
-        lblValoracionAD = new javax.swing.JLabel();
-        lblInstrumentoAD = new javax.swing.JLabel();
-        txtInstrumento = new javax.swing.JTextField();
-        lblIndicadorAD = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtIndicador = new javax.swing.JTextArea();
-        lblAccionActividades = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlUnidad = new javax.swing.JPanel();
         cmbUnidad = new javax.swing.JComboBox<>();
@@ -227,108 +199,6 @@ public class NEWFrmSilabo extends AbstracView {
         lblTotalHmateria = new javax.swing.JLabel();
         txtBuscarEstrategias = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
-
-        lblFechaPresentacionAD.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFechaPresentacionAD.setText("Fecha Presentación:");
-
-        lblFechaEnvioAD.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblFechaEnvioAD.setText("Fecha Envío:");
-
-        spnValoracion.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, 60, 0.5d));
-
-        lblValoracionAD.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblValoracionAD.setText("Valoración:");
-
-        lblInstrumentoAD.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblInstrumentoAD.setText("Instrumento:");
-
-        lblIndicadorAD.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblIndicadorAD.setText("Indicador:");
-
-        txtIndicador.setColumns(20);
-        txtIndicador.setRows(5);
-        jScrollPane3.setViewportView(txtIndicador);
-
-        lblAccionActividades.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblAccionActividades.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAccionActividades.setText("${Accion Actual}");
-
-        jButton1.setText("Cancelar");
-
-        jButton2.setText("Guardar");
-
-        javax.swing.GroupLayout dlgAddActividadLayout = new javax.swing.GroupLayout(dlgAddActividad.getContentPane());
-        dlgAddActividad.getContentPane().setLayout(dlgAddActividadLayout);
-        dlgAddActividadLayout.setHorizontalGroup(
-            dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                        .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                        .addComponent(lblFechaEnvioAD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dchFechaEnvio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                        .addComponent(lblValoracionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnValoracion, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                        .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblFechaPresentacionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dchFechaPresentacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(182, 182, 182)
-                                .addComponent(jButton2))
-                            .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                    .addComponent(lblInstrumentoAD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtInstrumento))
-                                .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                                    .addComponent(lblIndicadorAD, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblAccionActividades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
-        );
-        dlgAddActividadLayout.setVerticalGroup(
-            dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgAddActividadLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblAccionActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblInstrumentoAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIndicadorAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValoracionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spnValoracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFechaEnvioAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dchFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFechaPresentacionAD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dchFechaPresentacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(dlgAddActividadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)))
-                .addContainerGap())
-        );
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -617,7 +487,6 @@ public class NEWFrmSilabo extends AbstracView {
         btnAgregar.setText("Agregar");
 
         btnQuitar.setText("Quitar");
-        btnQuitar.setEnabled(false);
 
         lblTotalHdocencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalHdocencia.setText("${actual}/${materia}");
@@ -666,7 +535,6 @@ public class NEWFrmSilabo extends AbstracView {
                                         .addGap(239, 239, 239)
                                         .addComponent(lblHorasPracticas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnlUnidadLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(dchFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblHorasAutonomas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -681,8 +549,7 @@ public class NEWFrmSilabo extends AbstracView {
                         .addGroup(pnlUnidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTotalHdocencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblTotalHmateria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTotalHpracticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, 0))
+                            .addComponent(lblTotalHpracticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlUnidadLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -692,11 +559,11 @@ public class NEWFrmSilabo extends AbstracView {
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar))
                     .addGroup(pnlUnidadLayout.createSequentialGroup()
-                        .addComponent(btnAgregar)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditar)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblTotalGestion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -834,33 +701,22 @@ public class NEWFrmSilabo extends AbstracView {
     private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbUnidad;
-    private com.toedter.calendar.JDateChooser dchFechaEnvio;
     private com.toedter.calendar.JDateChooser dchFechaFin;
     private com.toedter.calendar.JDateChooser dchFechaInicio;
-    private com.toedter.calendar.JDateChooser dchFechaPresentacion;
-    private javax.swing.JDialog dlgAddActividad;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblAccionActividades;
     private javax.swing.JLabel lblAcumuladoGestion;
     private javax.swing.JLabel lblAgregarEstrategia;
     private javax.swing.JLabel lblAgregarUnidad;
     private javax.swing.JLabel lblContenidos;
     private javax.swing.JLabel lblEliminarUnidad;
     private javax.swing.JLabel lblEstrategiasPredeterminadas;
-    private javax.swing.JLabel lblFechaEnvioAD;
     private javax.swing.JLabel lblFechaFin;
     private javax.swing.JLabel lblFechaInicio;
-    private javax.swing.JLabel lblFechaPresentacionAD;
     private javax.swing.JLabel lblHorasAutonomas;
     private javax.swing.JLabel lblHorasDocencia;
     private javax.swing.JLabel lblHorasPracticas;
-    private javax.swing.JLabel lblIndicadorAD;
-    private javax.swing.JLabel lblInstrumentoAD;
     private javax.swing.JLabel lblObjetivos;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JLabel lblTitulo;
@@ -869,7 +725,6 @@ public class NEWFrmSilabo extends AbstracView {
     private javax.swing.JLabel lblTotalHmateria;
     private javax.swing.JLabel lblTotalHpracticas;
     private javax.swing.JLabel lblUnidad;
-    private javax.swing.JLabel lblValoracionAD;
     private javax.swing.JPanel pnlAprendizajeColaborativo;
     private javax.swing.JPanel pnlAsistidaDocente;
     private javax.swing.JPanel pnlAutonoma;
@@ -885,7 +740,6 @@ public class NEWFrmSilabo extends AbstracView {
     private javax.swing.JSpinner spnHautonomas;
     private javax.swing.JSpinner spnHdocencia;
     private javax.swing.JSpinner spnHpracticas;
-    private javax.swing.JSpinner spnValoracion;
     private javax.swing.JTable tblAprendizajeColaborativo;
     private javax.swing.JTable tblAsistidaDocente;
     private javax.swing.JTable tblAutonoma;
@@ -896,8 +750,6 @@ public class NEWFrmSilabo extends AbstracView {
     private javax.swing.JTextArea txrObjetivos;
     private javax.swing.JTextArea txrResultados;
     private javax.swing.JTextField txtBuscarEstrategias;
-    private javax.swing.JTextArea txtIndicador;
-    private javax.swing.JTextField txtInstrumento;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 
