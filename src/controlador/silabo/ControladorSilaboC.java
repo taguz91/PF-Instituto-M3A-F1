@@ -271,7 +271,7 @@ public class ControladorSilaboC {
 
         bibliografia = new frmReferencias();
 
-        gestion.getBtnGuardar().setEnabled(false);
+        //gestion.getBtnGuardar().setEnabled(false);
 
         cambioSilabo = false;
 

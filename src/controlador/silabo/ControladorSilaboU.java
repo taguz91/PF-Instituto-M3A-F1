@@ -110,8 +110,7 @@ public class ControladorSilaboU {
 
     public void iniciarSilabo(SilaboMD silabo) {
 
-        gestion.getBtnGuardar().setEnabled(false);
-
+        //gestion.getBtnGuardar().setEnabled(false);
         cambioSilabo = false;
 
         unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo.getIdSilabo(), 1);

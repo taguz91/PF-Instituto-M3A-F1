@@ -1592,7 +1592,6 @@ public class frmGestionSilabo extends javax.swing.JInternalFrame {
         });
 
         btnGuardar.setText("Guardar");
-        btnGuardar.setEnabled(false);
 
         lblTotalGestion.setText("Total de Gestion de  Aula:");
 
