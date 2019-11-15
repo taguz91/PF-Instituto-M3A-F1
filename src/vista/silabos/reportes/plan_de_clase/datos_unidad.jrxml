@@ -13,7 +13,7 @@ from "UnidadSilabo" where id_unidad=$P!{id_unidad}]]>
 	<field name="numero_unidad" class="java.lang.Integer"/>
 	<field name="titulo_unidad" class="java.lang.String"/>
 	<field name="concat" class="java.lang.String"/>
-	<field name="duracion" class="java.lang.Integer"/>
+	<field name="duracion" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

@@ -23,9 +23,9 @@ from "UnidadSilabo" us where id_silabo=$P!{parameter1} ORDER BY numero_unidad as
 	<field name="contenidos_unidad" class="java.lang.String"/>
 	<field name="fecha_inicio_unidad" class="java.sql.Date"/>
 	<field name="fecha_fin_unidad" class="java.sql.Date"/>
-	<field name="horas_docencia_unidad" class="java.lang.Integer"/>
-	<field name="horas_practica_unidad" class="java.lang.Integer"/>
-	<field name="horas_autonomo_unidad" class="java.lang.Integer"/>
+	<field name="horas_docencia_unidad" class="java.math.BigDecimal"/>
+	<field name="horas_practica_unidad" class="java.math.BigDecimal"/>
+	<field name="horas_autonomo_unidad" class="java.math.BigDecimal"/>
 	<field name="titulo_unidad" class="java.lang.String"/>
 	<field name="estrategias" class="java.lang.String"/>
 	<background>

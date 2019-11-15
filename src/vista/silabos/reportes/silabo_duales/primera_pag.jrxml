@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1087"/>
+	<property name="ireport.y" value="602"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
@@ -37,17 +37,17 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 	<field name="materia_objetivo_especifico" class="java.lang.String"/>
 	<field name="materia_organizacion_curricular" class="java.lang.String"/>
 	<field name="materia_campo_formacion" class="java.lang.String"/>
-	<field name="materia_horas_docencia" class="java.lang.String"/>
-	<field name="materia_horas_practicas" class="java.lang.String"/>
-	<field name="materia_horas_auto_estudio" class="java.lang.String"/>
-	<field name="horas_sem_docen" class="java.lang.Double"/>
-	<field name="horas_sem_prac" class="java.lang.Double"/>
+	<field name="materia_horas_docencia" class="java.lang.Integer"/>
+	<field name="materia_horas_practicas" class="java.lang.Integer"/>
+	<field name="materia_horas_auto_estudio" class="java.lang.Integer"/>
+	<field name="horas_sem_docen" class="java.math.BigDecimal"/>
+	<field name="horas_sem_prac" class="java.math.BigDecimal"/>
 	<field name="current_date" class="java.sql.Date"/>
-	<field name="horas_sem_auto" class="java.lang.Double"/>
-	<field name="materia_total_horas" class="java.lang.String"/>
+	<field name="horas_sem_auto" class="java.math.BigDecimal"/>
+	<field name="materia_total_horas" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
 	<field name="carrera_modalidad" class="java.lang.String"/>
-	<field name="horas_semanales" class="java.lang.Double"/>
+	<field name="horas_semanales" class="java.math.BigDecimal"/>
 	<pageHeader>
 		<band height="65">
 			<image>
