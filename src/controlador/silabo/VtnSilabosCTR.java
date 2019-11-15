@@ -47,6 +47,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         cargarCmbCarreras();
         InitEventos();
         super.Init();
+        setLista();
         cargarTabla(cargador());
     }
 
@@ -117,17 +118,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private SilaboMD getSilaboSeleccionadoTbl() {
         int row = getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(vista, "DEBE SELECCIONAR UN SILABO PRIMERO!!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            SilaboMD silabo = new SilaboMD();
-            silabo.setID(0);
-            return silabo;
+        if (row != -1) {
+            int id = Integer.valueOf(table.getValueAt(row, 0).toString());
+            return lista.stream()
+                    .filter(item -> item.getID() == id)
+                    .findFirst()
+                    .get();
         }
-        int id = Integer.valueOf(table.getValueAt(row, 0).toString());
-        return lista.stream()
-                .filter(item -> item.getID() == id)
-                .findFirst()
-                .get();
+        return null;
     }
 
     private void imprimirSilabosDuales(SilaboMD silabo) {
@@ -177,6 +175,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         }
     }
 
+    private void setLista() {
+        CarreraMD carrera = carreras.get(vista.getCmbCarrera().getSelectedIndex());
+
+        lista = SILABO_CONN.findBy(
+                user.getPersona().getIdentificacion(), carrera.getId()
+        );
+    }
+
     /*
         EVENTOS
      */
@@ -190,14 +196,17 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             } else {
 
                 SilaboMD silabo = getSilaboSeleccionadoTbl();
-                String modalidad = silabo.getPeriodo().getCarrera().getModalidad();
+                if (silabo != null) {
+                    String modalidad = silabo.getPeriodo().getCarrera().getModalidad();
 
-                if (modalidad.equalsIgnoreCase("PRESENCIAL")
-                        || modalidad.equalsIgnoreCase("TRADICIONAL")) {
+                    if (modalidad.equalsIgnoreCase("PRESENCIAL")
+                            || modalidad.equalsIgnoreCase("TRADICIONAL")) {
 
-                    SILABO_CONN.imprimirSilabo(silabo);
-                } else {
-                    imprimirSilabosDuales(silabo);
+                        SILABO_CONN.imprimirSilabo(silabo);
+                    } else {
+                        imprimirSilabosDuales(silabo);
+                    }
+
                 }
 
             }
@@ -220,37 +229,34 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void btnEliminar(ActionEvent e) {
 
         SilaboMD silabo = getSilaboSeleccionadoTbl();
+        if (silabo != null) {
+            String MENSAJE_ELIMINAR = String.format(
+                    "ESTA SEGURO DE ELIMINAR EL SILABO:\n"
+                    + "PERIODO LECTIVO: %s\n"
+                    + "MATERIA:%s\n"
+                    + "RECUERDE QUE SI ELIMINA EL SILABO SE LE BORRARA:\n"
+                    + "SUS AVANCES DE SILABO Y PLANES DE CLASE",
+                    silabo.getPeriodo().getNombre(), silabo.getMateria().getNombre()
+            );
 
-        String MENSAJE_ELIMINAR = String.format(
-                "ESTA SEGURO DE ELIMINAR EL SILABO:\n"
-                + "PERIODO LECTIVO: %s\n"
-                + "MATERIA:%s\n"
-                + "RECUERDE QUE SI ELIMINA EL SILABO SE LE BORRARA:\n"
-                + "SUS AVANCES DE SILABO Y PLANES DE CLASE",
-                silabo.getPeriodo().getNombre(), silabo.getMateria().getNombre()
-        );
+            int opcionEliminado = JOptionPane.showConfirmDialog(vista, MENSAJE_ELIMINAR, "ESTA SEGURO?", JOptionPane.YES_NO_OPTION);
 
-        int opcionEliminado = JOptionPane.showConfirmDialog(vista, MENSAJE_ELIMINAR, "ESTA SEGURO?", JOptionPane.YES_NO_OPTION);
+            if (opcionEliminado == JOptionPane.YES_OPTION) {
+                boolean estado = SILABO_CONN.eliminar(silabo);
 
-        if (opcionEliminado == JOptionPane.YES_OPTION) {
-            boolean estado = SILABO_CONN.eliminar(silabo);
-
-            if (estado) {
-                JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
-            } else {
-                JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
+                if (estado) {
+                    JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
+                } else {
+                    JOptionPane.showMessageDialog(vista, "HA HABIDO UN PROBLEMA");
+                }
             }
+
         }
 
     }
 
     private void cmbCarrera(ItemEvent e) {
-
-        CarreraMD carrera = carreras.get(vista.getCmbCarrera().getSelectedIndex());
-
-        lista = SILABO_CONN.findBy(
-                user.getPersona().getIdentificacion(), carrera.getId()
-        );
+        setLista();
         cargarTabla(cargador());
 
     }
@@ -268,18 +274,26 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         int colum = table.getSelectedColumn();
         int row = getSelectedRow();
         SilaboMD silabo = getSilaboSeleccionadoTbl();
-        String estado = table.getValueAt(row, colum).toString();
 
-        if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
-            silabo.setEstado(SilaboMD.getEstadoInt(estado));
-            cargarTabla(cargador());
-            //TODO: AGREGAR EL METODO DE LA BASE DE DATOS PARA CAMBIAR EL ESTADO
+        if (silabo != null) {
+            String estado = table.getValueAt(row, colum).toString();
+
+            if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
+                silabo.setEstado(SilaboMD.getEstadoInt(estado));
+                cargarTabla(cargador());
+                //TODO: AGREGAR EL METODO DE LA BASE DE DATOS PARA CAMBIAR EL ESTADO
+            }
         }
     }
 
     private void btnInformacion(ActionEvent e) {
-        String informacion = SILABO_CONN.getInformacion(getSilaboSeleccionadoTbl());
-        JOptionPane.showMessageDialog(vista, informacion, "INFORMACION DEL SILABO", JOptionPane.PLAIN_MESSAGE);
+
+        SilaboMD silabo = getSilaboSeleccionadoTbl();
+        if (silabo != null) {
+            String informacion = SILABO_CONN.getInformacion(silabo);
+            JOptionPane.showMessageDialog(vista, informacion, "INFORMACION DEL SILABO", JOptionPane.PLAIN_MESSAGE);
+
+        }
     }
 
 }

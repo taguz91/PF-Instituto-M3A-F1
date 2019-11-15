@@ -571,17 +571,17 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "";
 
         String informacion = ""
-                + "Periodo Lectivo:\n"
-                + "     " + silabo.getPeriodo().getNombre() + "\n"
-                + "Materia:\n"
-                + "     " + silabo.getMateria().getNombre() + "\n"
-                + "Docentes:\n";
+                + "         Periodo Lectivo:\n"
+                + "             " + silabo.getPeriodo().getNombre() + "\n\n"
+                + "         Materia:\n"
+                + "             " + silabo.getMateria().getNombre() + "\n\n"
+                + "         Docentes:\n";
 
         try {
             ResultSet rs = CON.ejecutarQuery(SELECT);
             while (rs.next()) {
-                informacion += "        " + rs.getString("docente") + "\n"
-                        + "Cursos: " + rs.getString("cursos") + "\n";
+                informacion += "             " + rs.getString("docente") + "\n"
+                        + "             Cursos: " + rs.getString("cursos") + "\n\n";
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
