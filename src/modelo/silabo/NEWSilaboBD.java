@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
@@ -588,5 +589,18 @@ public class NEWSilaboBD implements ISilaboBD {
         }
 
         return informacion;
+    }
+
+    public boolean ediantoSilabo(int idSilabo, boolean estado) {
+
+        String UPDATE = ""
+                + "UPDATE \"Silabo\" \n"
+                + "SET editando = " + estado + ",\n"
+                + "editado_por = '" + CONS.USUARIO.getPersona().getIdPersona() + "' \n"
+                + "WHERE\n"
+                + "	id_silabo = " + idSilabo + ";"
+                + "";
+
+        return CON.ejecutar(UPDATE) == null;
     }
 }
