@@ -45,8 +45,8 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     public Integer getSelectedRow() {
         int row = table.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(vista, "SELECCIONE UNA FILA!!");
-            return null;
+            JOptionPane.showMessageDialog(vista, "DEBE SELECCIONA UN REGISTRO DE LA TABLA PRIMERO", "Aviso", JOptionPane.ERROR_MESSAGE);
+            return row;
         }
         return row;
     }

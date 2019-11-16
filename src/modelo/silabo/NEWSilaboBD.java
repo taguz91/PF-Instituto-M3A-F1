@@ -17,10 +17,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.CONS;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.PersonaMD;
 import modelo.silabo.mbd.ISilaboBD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -539,6 +541,107 @@ public class NEWSilaboBD implements ISilaboBD {
 
         return silabos;
 
+    }
+
+    public String getInformacion(SilaboMD silabo) {
+
+        String SELECT = ""
+                + "SELECT \n"
+                + "    DISTINCT ON ( \"Personas\".persona_identificacion ) \"Cursos\".id_docente,\n"
+                + "	(   \n"
+                + "        \"Personas\".persona_identificacion || '  |  ' || \n"
+                + "	    \"Personas\".persona_primer_apellido || ' ' ||\n"
+                + "	    \"Personas\".persona_primer_nombre\n"
+                + "    ) as docente,\n"
+                + "	(\n"
+                + "	    SELECT \n"
+                + "            string_agg ( \"Cursos\".curso_nombre, ', ' ) \n"
+                + "        FROM \n"
+                + "            \"Cursos\" \n"
+                + "	    WHERE\n"
+                + "		    \"Cursos\".id_prd_lectivo = " + silabo.getPeriodo().getID() + " \n"
+                + "            AND \"Cursos\".id_materia = " + silabo.getMateria().getId() + " \n"
+                + "            AND \"Docentes\".id_docente = id_docente \n"
+                + "	) as cursos\n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona \n"
+                + "WHERE\n"
+                + "	\"Cursos\".id_prd_lectivo = " + silabo.getPeriodo().getID() + " \n"
+                + "	AND \"Cursos\".id_materia = " + silabo.getMateria().getId()
+                + "";
+
+        String informacion = ""
+                + "         Periodo Lectivo:\n"
+                + "             " + silabo.getPeriodo().getNombre() + "\n\n"
+                + "         Materia:\n"
+                + "             " + silabo.getMateria().getNombre() + "\n\n"
+                + "         Docentes:\n";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        try {
+            while (rs.next()) {
+                informacion += "             " + rs.getString("docente") + "\n"
+                        + "             Cursos: " + rs.getString("cursos") + "\n\n";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return informacion;
+    }
+
+    public boolean ediantoSilabo(int idSilabo, boolean estado) {
+
+        String UPDATE = ""
+                + "UPDATE \"Silabo\" \n"
+                + "SET editando = " + estado + ",\n"
+                + "editado_por = '" + CONS.USUARIO.getPersona().getIdPersona() + "' \n"
+                + "WHERE\n"
+                + "	id_silabo = " + idSilabo + ";"
+                + "";
+
+        return CON.ejecutar(UPDATE) == null;
+    }
+
+    public SilaboMD getDisponibilidad(SilaboMD silabo) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"Silabo\".editando,\n"
+                + "	\"Personas\".persona_identificacion,\n"
+                + "	\"Personas\".persona_primer_apellido,\n"
+                + "	\"Personas\".persona_primer_nombre \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"Personas\" ON \"Personas\".id_persona = \"Silabo\".editado_por \n"
+                + "WHERE\n"
+                + "	\"Silabo\".id_silabo =" + silabo.getID()
+                + "";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        try {
+            while (rs.next()) {
+                silabo.setEditando(rs.getBoolean("editando"));
+
+                PersonaMD persona = new PersonaMD();
+                persona.setIdentificacion(rs.getString("persona_identificacion"));
+                persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
+
+                silabo.setEditadoPor(persona);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return silabo;
     }
 
 }
