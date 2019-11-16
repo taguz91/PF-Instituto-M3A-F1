@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import modelo.validaciones.Validar;
 
 /**
@@ -29,7 +31,6 @@ public class UtilsFRMSilaboCTR {
         if (Validar.esNumerosDecimales(hs)) {
             h = Double.parseDouble(hs);
         }
-        System.out.println("HORAS: " + hs);
         return h;
     }
 
@@ -75,6 +76,15 @@ public class UtilsFRMSilaboCTR {
             code = tbl.getValueAt(pos, 0).toString();
         }
         return code;
+    }
+    
+        
+    public String getTextFromTxt(JTextField jtf) {
+        return jtf.getText().trim();
+    }
+    
+    public String getTextFromTxa(JTextArea jta) {
+        return jta.getText().trim();
     }
 
 }

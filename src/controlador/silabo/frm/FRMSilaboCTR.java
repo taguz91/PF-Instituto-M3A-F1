@@ -2,6 +2,8 @@ package controlador.silabo.frm;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -11,6 +13,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
+import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
+import modelo.estrategiasAprendizaje.NEWEstrategiaAprendizajeBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.evaluacionSilabo.NEWEvaluacionSilaboBD;
@@ -46,6 +50,7 @@ public class FRMSilaboCTR extends DCTR {
     private final NEWReferenciaSilaboBD RSBD = NEWReferenciaSilaboBD.single();
     private final NEWTipoActividadBD TABD = NEWTipoActividadBD.single();
     private final NEWEvaluacionSilaboBD EVBD = NEWEvaluacionSilaboBD.single();
+    private final NEWEstrategiaAprendizajeBD EABD = NEWEstrategiaAprendizajeBD.single();
 
     // Utilidades en este formulario 
     private final UtilsFRMSilaboCTR UFRMSCTR = UtilsFRMSilaboCTR.single();
@@ -57,6 +62,8 @@ public class FRMSilaboCTR extends DCTR {
     protected List<TipoActividadMD> tiposActividad;
     protected List<ReferenciasMD> biblioteca;
     protected List<ReferenciaSilaboMD> referenciasSilabo;
+    // Listas para la tabla 
+    protected List<EstrategiasAprendizajeMD> todasEstrategias;
 
     // Titulo de las tablas  
     private static final String[] TITULO_GESTION = {
@@ -82,6 +89,8 @@ public class FRMSilaboCTR extends DCTR {
     private double numHD = 0;
     private double numHP = 0;
     private double numHA = 0;
+    // Para saber si estamos cambiando de unidad y controlar los change listeners 
+    private boolean cambioUnidad = false;
     // Bandera para saber en que panel de actividades estamos  
     private String actividadActual = "AD";
     // Total de las gestion 
@@ -127,14 +136,22 @@ public class FRMSilaboCTR extends DCTR {
         evaluaciones = EVBD.getBySilabo(silabo.getID());
         iniciarVentana();
     }
+    
+    private void estiloTablas() {
+        TblEstilo.columnaMedida(FRM_GESTION.getTblEstrategias(), 0, 20);
+        TblEstilo.ColumnaCentrar(FRM_GESTION.getTblEstrategias(), 0);
+    }
 
     /**
      * Comprobamos si existe o no un silabo anterior para iniciar el formulario
      */
     private void iniciarVentana() {
+        estiloTablas();
+        // Cargamos todas las estrategias  
+        todasEstrategias = EABD.getAll();
         // Siempre iniciamos el estado del boton en falso para que 
         // no pueda guardar hasta realizar cambios
-        estadoBtnGuardar(false);
+        // estadoBtnGuardar(false);
         // Titulo de la unidad  
         FRM_GESTION.setTitle(
                 silabo.getPeriodo().getNombre()
@@ -145,13 +162,57 @@ public class FRMSilaboCTR extends DCTR {
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
         mostrarUnidad();
+        // Iniciamos todas las acciones 
         iniciarAccionesActividades();
         iniciarEventoSPNHoras();
         iniciarEventosFecha();
+        iniciarEventosFormulario();
         // Con esto detectamos en que panel se encuentra actualmente
         detectarPanel();
     }
 
+    /**
+     * Eventos de todos los txt de nuestro formulario, al escribir reescribimos
+     * igual en el modelo
+     */
+    private void iniciarEventosFormulario() {
+        FRM_GESTION.getTxtTitulo().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                unidadSelec.setTituloUnidad(
+                        UFRMSCTR.getTextFromTxt(FRM_GESTION.getTxtTitulo())
+                );
+            }
+        });
+        FRM_GESTION.getTxrContenidos().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                unidadSelec.setContenidosUnidad(
+                        UFRMSCTR.getTextFromTxa(FRM_GESTION.getTxrContenidos())
+                );
+            }
+        });
+        FRM_GESTION.getTxrObjetivos().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                unidadSelec.setObjetivoEspecificoUnidad(
+                        UFRMSCTR.getTextFromTxa(FRM_GESTION.getTxrObjetivos())
+                );
+            }
+        });
+        FRM_GESTION.getTxrResultados().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                unidadSelec.setResultadosAprendizajeUnidad(
+                        UFRMSCTR.getTextFromTxa(FRM_GESTION.getTxrResultados())
+                );
+            }
+        });
+    }
+
+    /**
+     * Eventos de todas las acciones de las actividades
+     */
     private void iniciarAccionesActividades() {
         FRM_GESTION.getBtnAgregar().addActionListener(e -> nuevaActividad());
         FRM_GESTION.getBtnEditar().addActionListener(e -> editarActividad());
@@ -438,6 +499,8 @@ public class FRMSilaboCTR extends DCTR {
      * acciones.
      */
     private void mostrarUnidad() {
+        // Bandera para saber que estamos cambiando de unidad 
+        cambioUnidad = true;
         // Actualizamos la unidad seleccionada
         actualizarUnidadSeleccionada();
 
@@ -490,9 +553,22 @@ public class FRMSilaboCTR extends DCTR {
         );
 
         // Actualizamos las estrategias 
+        // cargarEstrategias();
         // Debemos revisar  lo de estrategias 
         // Actualizamos las evaluaciones 
         cargarEvaluaciones();
+        // Al terminar de cambiar de unidad 
+        cambioUnidad = false;
+    }
+
+    private void cargarEstrategias() {
+        mdTblES.setRowCount(0);
+        todasEstrategias.forEach(e -> {
+            mdTblES.addRow(new Object[]{
+                "|",
+                e.getDescripcionEstrategia()
+            });
+        });
     }
 
     /**
@@ -510,6 +586,9 @@ public class FRMSilaboCTR extends DCTR {
         totalGestion = 0;
 
         evaluaciones.forEach(e -> {
+            // Sumamos la valoracion de nuestras evaluaciones
+            totalGestion += e.getValoracion();
+
             if (e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
                 Object[] row = {
                     e.getIdLocal(),
@@ -520,8 +599,6 @@ public class FRMSilaboCTR extends DCTR {
                     e.getFechaPresentacion(),
                     e.getIdEvaluacion()
                 };
-                // Sumamos la valoracion de nuestras evaluaciones
-                totalGestion += e.getValoracion();
 
                 switch (e.getIdTipoActividad().getIdTipoActividad()) {
                     // "Asistido por el Docente"
@@ -544,9 +621,20 @@ public class FRMSilaboCTR extends DCTR {
                         break;
                 }
             }
+
+            // Mostramos solo las estrategias 
+        });
+
+        estrategias.forEach(e -> {
+            if (e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
+                mdTblES.addRow(new Object[]{
+                    "|",
+                    e.getIdEstrategia().getDescripcionEstrategia()
+                });
+            }
         });
         // Seteamos en el lbl  
-        FRM_GESTION.getLblAcumuladoGestion().setText(totalGestion + "/60");
+        FRM_GESTION.getLblAcumuladoGestion().setText(totalGestion + "/60.0");
     }
 
     /**
@@ -580,11 +668,20 @@ public class FRMSilaboCTR extends DCTR {
      * Validamos las fechas que ingresamos
      */
     private void iniciarEventosFecha() {
-        FRM_GESTION.getDchFechaInicio().addPropertyChangeListener(e -> validarFechaInicio());
-        FRM_GESTION.getDchFechaFin().addPropertyChangeListener(e -> validarFechaFin());
+        FRM_GESTION.getDchFechaInicio().addPropertyChangeListener(e -> {
+            if (!cambioUnidad) {
+                validarFechaInicio();
+            }
+        });
+        FRM_GESTION.getDchFechaFin().addPropertyChangeListener(e -> {
+            if (!cambioUnidad) {
+                validarFechaFin();
+            }
+        });
     }
 
     private void validarFechaInicio() {
+
         LocalDate fecha = UFRMSCTR.getFechaJDC(FRM_GESTION.getDchFechaInicio());
         if (fecha != null) {
             if (unidadSelec.getFechaFinUnidad() == null) {
