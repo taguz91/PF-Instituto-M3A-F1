@@ -49,6 +49,15 @@ public class NEWEvaluacionSilaboBD extends CONBD {
             + "indicador ) "
             + "	VALUES (?, ?, ?, ?, ?, ?, ?)";
 
+    private static final String UPDATE = "UPDATE public.\"EvaluacionSilabo\" "
+            + "SET indicador=?, "
+            + "id_tipo_actividad=?, "
+            + "instrumento=?, "
+            + "valoracion=?, "
+            + "fecha_envio=?, "
+            + "fecha_presentacion=? "
+            + " WHERE id_evaluacion=?;";
+
     public int guardar(EvaluacionSilaboMD evaluacion, int idUnidad) {
         PreparedStatement ps = CON.getPSID(INSERT);
         try {
@@ -59,6 +68,27 @@ public class NEWEvaluacionSilaboBD extends CONBD {
             ps.setDate(5, java.sql.Date.valueOf(evaluacion.getFechaEnvio()));
             ps.setDate(6, java.sql.Date.valueOf(evaluacion.getFechaPresentacion()));
             ps.setString(7, evaluacion.getIndicador());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No guardamos la evaluacion del silabo. \n"
+                    + e.getMessage(),
+                    "Error al consultar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return CON.getIDGenerado(ps);
+    }
+
+    public int editar(EvaluacionSilaboMD evaluacion) {
+        PreparedStatement ps = CON.getPSID(UPDATE);
+        try {
+            ps.setString(1, evaluacion.getIndicador());
+            ps.setInt(2, evaluacion.getIdTipoActividad().getIdTipoActividad());
+            ps.setString(3, evaluacion.getInstrumento());
+            ps.setDouble(4, evaluacion.getValoracion());
+            ps.setDate(5, java.sql.Date.valueOf(evaluacion.getFechaEnvio()));
+            ps.setDate(6, java.sql.Date.valueOf(evaluacion.getFechaPresentacion()));
+            ps.setInt(7, evaluacion.getIdEvaluacion());
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "No guardamos la evaluacion del silabo. \n"

@@ -6,17 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.ConnDBPool;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.silabo.mbd.IEstrategiaUnidadSilaboBD;
+import utils.CONBD;
 
 /**
  *
  * @author gus
  */
-public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
-
-    private final ConnDBPool CON = ConnDBPool.single();
+public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSilaboBD {
 
     private static NEWEstrategiaUnidadBD EUBD;
 
@@ -38,6 +36,29 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
         try {
             ps.setInt(1, idUnidad);
             ps.setInt(2, e.getEstrategia().getIdEstrategia());
+            idGenerado = CON.getIDGenerado(ps);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al guardar la estrategia unidad. \n"
+                    + ex.getMessage(),
+                    "Error estragia unidad",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return idGenerado;
+    }
+
+    public int editar(EstrategiasUnidadMD e) {
+        String sql = "UPDATE public.\"EstrategiasUnidad\" "
+                + "SET id_unidad=?, "
+                + "id_estrategia=? "
+                + "WHERE id_estrategia_unidad=?;";
+        PreparedStatement ps = CON.getPSID(sql);
+        int idGenerado = 0;
+        try {
+            ps.setInt(1, e.getUnidad().getIdUnidad());
+            ps.setInt(2, e.getEstrategia().getIdEstrategia());
+            ps.setInt(3, e.getIdEstrategiaUnidad());
             idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
@@ -110,7 +131,7 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
                 eu.getEstrategia().setDescripcionEstrategia(res.getString(1));
-                
+
                 EUS.add(eu);
             }
         } catch (SQLException e) {

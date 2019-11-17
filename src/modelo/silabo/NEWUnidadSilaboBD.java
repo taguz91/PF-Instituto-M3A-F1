@@ -252,4 +252,54 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return idGenerado;
     }
 
+    public int editar(UnidadSilaboMD u) {
+        String sql = "UPDATE public.\"UnidadSilabo\" SET "
+                + "numero_unidad=?, "
+                + "objetivo_especifico_unidad=?, "
+                + "resultados_aprendizaje_unidad=?, "
+                + "contenidos_unidad=?, "
+                + "fecha_inicio_unidad=?, "
+                + "fecha_fin_unidad=?, "
+                + "horas_docencia_unidad=?, "
+                + "horas_practica_unidad=?, "
+                + "horas_autonomo_unidad=?, "
+                + "titulo_unidad=? "
+                + "WHERE id_unidad=?;"
+                + "";
+        int idGenerado = 0;
+        PreparedStatement ps = CON.getPSID(sql);
+        try {
+            ps.setInt(1, u.getNumeroUnidad());
+            ps.setString(2, u.getObjetivoEspecificoUnidad());
+            ps.setString(3, u.getResultadosAprendizajeUnidad());
+            ps.setString(4, u.getContenidosUnidad());
+            if (u.getFechaInicioUnidad() == null) {
+                ps.setDate(5, null);
+            } else {
+                ps.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));
+            }
+
+            if (u.getFechaFinUnidad() == null) {
+                ps.setDate(6, null);
+            } else {
+                ps.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
+            }
+
+            ps.setDouble(7, u.getHorasDocenciaUnidad());
+            ps.setDouble(8, u.getHorasPracticaUnidad());
+            ps.setDouble(9, u.getHorasAutonomoUnidad());
+            ps.setString(10, u.getTituloUnidad());
+            ps.setInt(11, u.getIdUnidad());
+            idGenerado = CON.getIDGenerado(ps);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al guardar la unidad. \n"
+                    + e.getMessage(),
+                    "Error unidad",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return idGenerado;
+    }
+
 }

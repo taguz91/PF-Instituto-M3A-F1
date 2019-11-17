@@ -546,7 +546,12 @@ public class FRMSilaboCTR extends DCTR {
             ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos silabo con ID: " + silabo.getID());
             silabo.setID(silabo.getID());
             unidades.forEach(u -> {
-                int idUnidadGenerado = USBD.guardar(u, silabo.getID());
+                int idUnidadGenerado = u.getIdUnidad();
+                if (u.getIdUnidad() == 0) {
+                    idUnidadGenerado = USBD.guardar(u, silabo.getID());
+                } else {
+                    USBD.editar(u);
+                }
                 System.out.println("Guardamos unidad con ID: " + idUnidadGenerado);
                 ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos unidad con ID: " + idUnidadGenerado);
                 // Si se guardo la unidad guardamos
@@ -572,9 +577,13 @@ public class FRMSilaboCTR extends DCTR {
     private void guardarEstrategias(int idUnidadGenerado, int numeroUnidad) {
         estrategias.forEach(e -> {
             if (e.getUnidad().getNumeroUnidad() == numeroUnidad) {
-                int idEstrategiaGen = EUBD.guardar(e, idUnidadGenerado);
-                e.setIdEstrategiaUnidad(idEstrategiaGen);
-                System.out.println("Guardamos estrategia con ID: " + idEstrategiaGen);
+                if (e.getIdEstrategiaUnidad() == 0) {
+                    int idEstrategiaGen = EUBD.guardar(e, idUnidadGenerado);
+                    e.setIdEstrategiaUnidad(idEstrategiaGen);
+                } else {
+                    EUBD.editar(e);
+                }
+                System.out.println("Guardamos estrategia con ID: " + e.getIdEstrategiaUnidad());
             }
         });
     }
@@ -582,9 +591,13 @@ public class FRMSilaboCTR extends DCTR {
     private void guardarEvaluaciones(int idUnidadGenerado, int numeroUnidad) {
         evaluaciones.forEach(e -> {
             if (e.getIdUnidad().getNumeroUnidad() == numeroUnidad) {
-                int idEvaluacionGen = EVBD.guardar(e, idUnidadGenerado);
-                e.setIdEvaluacion(idEvaluacionGen);
-                System.out.println("Guardamos evaluaciones con ID: " + idEvaluacionGen);
+                if (e.getIdEvaluacion() == 0) {
+                    int idEvaluacionGen = EVBD.guardar(e, idUnidadGenerado);
+                    e.setIdEvaluacion(idEvaluacionGen);
+                } else {
+                    EVBD.editar(e);
+                }
+                System.out.println("Guardamos evaluaciones con ID: " + e.getIdEvaluacion());
             }
         });
     }
