@@ -115,4 +115,9 @@ public class EvaluacionSilaboMD implements Serializable {
         return idLocal;
     }
 
+    @Override
+    public String toString() {
+        return "EvaluacionSilaboMD{" + "idLocal=" + idLocal + ", indicador=" + indicador + ", idEvaluacion=" + idEvaluacion + ", instrumento=" + instrumento + ", valoracion=" + valoracion + ", fechaEnvio=" + fechaEnvio + ", fechaPresentacion=" + fechaPresentacion + ", idTipoActividad=" + idTipoActividad + ", idUnidad=" + idUnidad + '}';
+    }
+
 }
