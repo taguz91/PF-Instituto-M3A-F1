@@ -37,7 +37,7 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
         int idGenerado = 0;
         try {
             ps.setInt(1, idUnidad);
-            ps.setInt(2, e.getIdEstrategia().getIdEstrategia());
+            ps.setInt(2, e.getEstrategia().getIdEstrategia());
             idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
@@ -71,10 +71,10 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
 
-                eu.getIdUnidad().setIdUnidad(res.getInt(1));
-                eu.getIdUnidad().setNumeroUnidad(res.getInt(4));
-                eu.getIdEstrategia().setIdEstrategia(res.getInt(2));
-                eu.getIdEstrategia().setDescripcionEstrategia(res.getString(3));
+                eu.getUnidad().setIdUnidad(res.getInt(1));
+                eu.getUnidad().setNumeroUnidad(res.getInt(4));
+                eu.getEstrategia().setIdEstrategia(res.getInt(2));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(3));
 
                 EUS.add(eu);
             }
@@ -109,7 +109,7 @@ public class NEWEstrategiaUnidadBD implements IEstrategiaUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
-                eu.getIdEstrategia().setDescripcionEstrategia(res.getString(1));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(1));
                 
                 EUS.add(eu);
             }

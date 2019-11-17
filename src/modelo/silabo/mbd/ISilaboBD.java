@@ -11,7 +11,7 @@ import modelo.silabo.SilaboMD;
  */
 public interface ISilaboBD {
 
-    public int nuevoSilabo(SilaboMD s);
+    public int guardar(SilaboMD s);
 
     public SilaboMD getByCarreraPersonaPeriodo(
             String nombreCarrera,

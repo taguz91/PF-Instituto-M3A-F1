@@ -206,7 +206,7 @@ public class ControladorEditarPlanClases {
         fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
         modelo=new DefaultListModel();
         for (EstrategiasUnidadMD eu : lista) {
-            modelo.addElement(eu.getIdEstrategia().getDescripcionEstrategia());
+            modelo.addElement(eu.getEstrategia().getDescripcionEstrategia());
         }
         fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
     }

@@ -417,7 +417,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
                 UnidadSilaboMD unidadSeleccionada = seleccionarUnidad();
 
                 estrategias.removeIf(e -> {
-                    return e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad();
+                    return e.getUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad();
                 });
 
                 for (int i = 0; i < gestion.getLstEstrategiasPredeterminadas().getModel().getSize(); i++) {
@@ -1255,8 +1255,8 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
             for (EstrategiasUnidadMD emd : estrategias) {
 
-                if (emd.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
-                        && modeloEstrategias.get(i).toString().equals(emd.getIdEstrategia().getDescripcionEstrategia())) {
+                if (emd.getUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad()
+                        && modeloEstrategias.get(i).toString().equals(emd.getEstrategia().getDescripcionEstrategia())) {
 
                     item.setSelected(true);
 
@@ -1285,13 +1285,13 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         unidades.removeIf(u -> u.getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
-        estrategias.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
+        estrategias.removeIf(e -> e.getUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
         evaluaciones.removeIf(e -> e.getIdUnidad().getNumeroUnidad() == unidadSeleccionada.getNumeroUnidad());
 
         for (EstrategiasUnidadMD emd : estrategias) {
-            if (emd.getIdUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
-                emd.getIdUnidad().setNumeroUnidad(emd.getIdUnidad().getNumeroUnidad() - 1);
+            if (emd.getUnidad().getNumeroUnidad() > unidadSeleccionada.getNumeroUnidad()) {
+                emd.getUnidad().setNumeroUnidad(emd.getUnidad().getNumeroUnidad() - 1);
             }
         }
 
@@ -1710,7 +1710,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
             umd.setIdUnidad(UnidadSilaboBD.consultarUltima(conexion, umd.getIdSilabo().getID(), umd.getNumeroUnidad()).getIdUnidad());
             for (EstrategiasUnidadMD emd : estrategias) {
-                if (emd.getIdUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
+                if (emd.getUnidad().getNumeroUnidad() == umd.getNumeroUnidad()) {
                     EstrategiasUnidadBD ebd = new EstrategiasUnidadBD(conexion);
                     ebd.insertar(emd, umd.getIdUnidad());
                 }
@@ -1821,7 +1821,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
             }
 
             for (int j = 0; j < estrategias.size(); j++) {
-                if (estrategias.get(j).getIdUnidad().getNumeroUnidad() == (unidades.get(i).getNumeroUnidad())) {
+                if (estrategias.get(j).getUnidad().getNumeroUnidad() == (unidades.get(i).getNumeroUnidad())) {
                     contador++;
                 }
             }

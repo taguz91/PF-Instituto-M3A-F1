@@ -6,6 +6,7 @@
 package modelo.estrategiasAprendizaje;
 
 import java.util.List;
+import java.util.UUID;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 
 /**
@@ -13,6 +14,8 @@ import modelo.estrategiasUnidad.EstrategiasUnidadMD;
  * @author Andres Ullauri
  */
 public class EstrategiasAprendizajeMD {
+    
+    private final int idLocal = UUID.randomUUID().hashCode();
 
     private Integer idEstrategia;
 
@@ -51,6 +54,10 @@ public class EstrategiasAprendizajeMD {
 
     public void setEstrategiasUnidadList(List<EstrategiasUnidadMD> estrategiasUnidadList) {
         this.estrategiasUnidadList = estrategiasUnidadList;
+    }
+
+    public int getIdLocal() {
+        return idLocal;
     }
 
 }

@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.estrategiasUnidad;
 
 
 import java.io.Serializable;
+import java.util.UUID;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -15,21 +11,23 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  * @author Andres Ullauri
  */
 public class EstrategiasUnidadMD  implements Serializable{
+    
+    private final int idLocal = UUID.randomUUID().hashCode();
 
     private Integer idEstrategiaUnidad;
-    private EstrategiasAprendizajeMD idEstrategia;
+    private EstrategiasAprendizajeMD estrategia;
 
-    private UnidadSilaboMD idUnidad;
+    private UnidadSilaboMD unidad;
 
     public EstrategiasUnidadMD() {
-         this.idEstrategia = new EstrategiasAprendizajeMD();
-        this.idUnidad = new UnidadSilaboMD();
+         this.estrategia = new EstrategiasAprendizajeMD();
+        this.unidad = new UnidadSilaboMD();
     }
 
     public EstrategiasUnidadMD( EstrategiasAprendizajeMD idEstrategia, UnidadSilaboMD idUnidad) {
       
-        this.idEstrategia = idEstrategia;
-        this.idUnidad = idUnidad;
+        this.estrategia = idEstrategia;
+        this.unidad = idUnidad;
     }
 
     public Integer getIdEstrategiaUnidad() {
@@ -40,20 +38,24 @@ public class EstrategiasUnidadMD  implements Serializable{
         this.idEstrategiaUnidad = idEstrategiaUnidad;
     }
 
-    public EstrategiasAprendizajeMD getIdEstrategia() {
-        return idEstrategia;
+    public EstrategiasAprendizajeMD getEstrategia() {
+        return estrategia;
     }
 
-    public void setIdEstrategia(EstrategiasAprendizajeMD idEstrategia) {
-        this.idEstrategia = idEstrategia;
+    public void setEstrategia(EstrategiasAprendizajeMD idEstrategia) {
+        this.estrategia = idEstrategia;
     }
 
-    public UnidadSilaboMD getIdUnidad() {
-        return idUnidad;
+    public UnidadSilaboMD getUnidad() {
+        return unidad;
     }
 
-    public void setIdUnidad(UnidadSilaboMD idUnidad) {
-        this.idUnidad = idUnidad;
+    public void setUnidad(UnidadSilaboMD idUnidad) {
+        this.unidad = idUnidad;
+    }
+
+    public int getIdLocal() {
+        return idLocal;
     }
 
 }

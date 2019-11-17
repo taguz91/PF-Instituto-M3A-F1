@@ -40,7 +40,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
                     + "	 id_unidad, id_estrategia)\n"
                     + "	VALUES (" + iu + ", ?)");
 
-            st.setInt(1, e.getIdEstrategia().getIdEstrategia());
+            st.setInt(1, e.getEstrategia().getIdEstrategia());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -65,10 +65,10 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
 
-                eu.getIdUnidad().setIdUnidad(res.getInt(1));
-                eu.getIdUnidad().setNumeroUnidad(res.getInt(4));
-                eu.getIdEstrategia().setIdEstrategia(res.getInt(2));
-                eu.getIdEstrategia().setDescripcionEstrategia(res.getString(3));
+                eu.getUnidad().setIdUnidad(res.getInt(1));
+                eu.getUnidad().setNumeroUnidad(res.getInt(4));
+                eu.getEstrategia().setIdEstrategia(res.getInt(2));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(3));
 
                 lista.add(eu);
             }
@@ -97,7 +97,7 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             System.out.println(st);
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
-                eu.getIdEstrategia().setDescripcionEstrategia(res.getString(1));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(1));
                 lista.add(eu);
             }
 

@@ -62,8 +62,12 @@ public class FRMSilaboCTR extends DCTR {
     protected List<TipoActividadMD> tiposActividad;
     protected List<ReferenciasMD> biblioteca;
     protected List<ReferenciaSilaboMD> referenciasSilabo;
-    // Listas para la tabla 
+    // Listas para el buscador del combo 
     protected List<EstrategiasAprendizajeMD> todasEstrategias;
+    // Lista para la tabla
+    protected List<EstrategiasAprendizajeMD> filterEstrategias;
+    // Para validar si ya fue ingresada esta estrategia 
+    private boolean existeEstrategia;
 
     // Titulo de las tablas  
     private static final String[] TITULO_GESTION = {
@@ -120,13 +124,20 @@ public class FRMSilaboCTR extends DCTR {
         // Buscamos sin el id de las unidades
         unidades = USBD.getBySilaboParaReferencia(silabo.getID());
         if (conEvaluaciones) {
-            System.out.println("EVALUACIONES..  ");
             evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
         }
 
         cargarDatosSilabo();
         iniciarSilabo();
         iniciarVentana();
+        // Guardamos el silabo no mas ingresar. 
+        int idSilaboGen = SBD.guardar(silabo);
+        if (idSilaboGen > 0) {
+            silabo.setID(idSilaboGen);
+        } else {
+            silabo.setID(0);
+            UFRMSCTR.errorGuardarSilabo();
+        }
     }
 
     public void editar() {
@@ -136,7 +147,7 @@ public class FRMSilaboCTR extends DCTR {
         evaluaciones = EVBD.getBySilabo(silabo.getID());
         iniciarVentana();
     }
-    
+
     private void estiloTablas() {
         TblEstilo.columnaMedida(FRM_GESTION.getTblEstrategias(), 0, 20);
         TblEstilo.ColumnaCentrar(FRM_GESTION.getTblEstrategias(), 0);
@@ -146,6 +157,9 @@ public class FRMSilaboCTR extends DCTR {
      * Comprobamos si existe o no un silabo anterior para iniciar el formulario
      */
     private void iniciarVentana() {
+        // Acciones
+        FRM_GESTION.getBtnGuardar().addActionListener(e -> guardar());
+        // Tablas
         estiloTablas();
         // Cargamos todas las estrategias  
         todasEstrategias = EABD.getAll();
@@ -159,6 +173,9 @@ public class FRMSilaboCTR extends DCTR {
                 + silabo.getMateria().getNombre()
         );
         actualizarHoras();
+        // Iniciamos el cmb de las estrategias 
+        iniciarCmbEstrategiasConBuscador();
+        // Mostramos la ventana 
         ctrPrin.agregarVtn(FRM_GESTION);
         iniciarCMBUnidad();
         mostrarUnidad();
@@ -416,6 +433,56 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getCmbUnidad().addActionListener(e -> mostrarUnidad());
     }
 
+    private void iniciarCmbEstrategiasConBuscador() {
+        iniciarCmbEstrategias();
+        FRM_GESTION.getCmbEstrategias().getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int i = FRM_GESTION.getCmbEstrategias().getSelectedIndex();
+                String a = FRM_GESTION.getCmbEstrategias().getEditor().getItem().toString().trim();
+                if (e.getKeyCode() == 10) {
+                    if (i > 0) {
+                        agregarEstrategia(i);
+                    } else {
+                        if (a.length() >= 1) {
+                            buscarEstrategias(a);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void iniciarCmbEstrategias() {
+        FRM_GESTION.getCmbEstrategias().removeAllItems();
+        FRM_GESTION.getCmbEstrategias().addItem("");
+        FRM_GESTION.getCmbEstrategias().setEditable(true);
+        todasEstrategias.forEach(e -> {
+            FRM_GESTION.getCmbEstrategias().addItem(e.getDescripcionEstrategia());
+        });
+    }
+
+    private void buscarEstrategias(String aguja) {
+        filterEstrategias = null;
+        filterEstrategias = new ArrayList<>();
+        FRM_GESTION.getCmbEstrategias().removeAllItems();
+        FRM_GESTION.getCmbEstrategias().addItem(aguja);
+        todasEstrategias.forEach(e -> {
+            if (e.getDescripcionEstrategia().toLowerCase().contains(aguja.toLowerCase())) {
+                FRM_GESTION.getCmbEstrategias().addItem(e.getDescripcionEstrategia());
+                filterEstrategias.add(e);
+            }
+        });
+        FRM_GESTION.getCmbEstrategias().showPopup();
+    }
+
+    private void agregarEstrategia(int index) {
+        EstrategiasUnidadMD ne = new EstrategiasUnidadMD();
+        ne.setUnidad(unidadSelec);
+        ne.setEstrategia(filterEstrategias.get(index - 1));
+        llenarTblEstrategiasUnidad(ne);
+    }
+
     private void iniciarSilabo() {
         // Todos los modelos de las tablas  
         FRM_GESTION.getTblAprendizajeColaborativo()
@@ -457,6 +524,51 @@ public class FRMSilaboCTR extends DCTR {
 
     private void estadoBtnGuardar(boolean estado) {
         FRM_GESTION.getBtnGuardar().setEnabled(estado);
+    }
+
+    /**
+     * Guardamos todo la informacion sin validar
+     */
+    private void guardar() {
+        if (silabo.getID() == 0) {
+            int idSilaboGen = SBD.guardar(silabo);
+            silabo.setID(idSilaboGen);
+        }
+
+        System.out.println("INTENTANDO GUARDAR EL SILABO ");
+
+        if (silabo.getID() > 0) {
+            System.out.println("Guardamos silabo con ID: " + silabo.getID());
+            silabo.setID(silabo.getID());
+            unidades.forEach(u -> {
+                int idUnidadGenerado = USBD.guardar(u, silabo.getID());
+                System.out.println("Guardamos unidad con ID: " + idUnidadGenerado);
+                if (idUnidadGenerado > 0) {
+                    u.setIdUnidad(idUnidadGenerado);
+                    estrategias.forEach(e -> {
+                        if (e.getUnidad().getNumeroUnidad() == u.getNumeroUnidad()) {
+                            int idEstrategiaGen = EUBD.guardar(e, idUnidadGenerado);
+                            e.setIdEstrategiaUnidad(idEstrategiaGen);
+                            System.out.println("Guardamos estrategia con ID: " + idEstrategiaGen);
+                        }
+                    });
+
+                    evaluaciones.forEach(e -> {
+                        if (e.getIdUnidad().getNumeroUnidad() == u.getNumeroUnidad()) {
+                            int idEvaluacionGen = EVBD.guardar(e, idUnidadGenerado);
+                            e.setIdEvaluacion(idEvaluacionGen);
+                            System.out.println("Guardamos evaluaciones con ID: " + idEvaluacionGen);
+                        }
+                    });
+                } else {
+                    UFRMSCTR.errorGuardar("Algo salio mal. \n"
+                            + "No se pudo guardo la unidad " + u.getNumeroUnidad());
+                }
+            });
+        } else {
+            UFRMSCTR.errorGuardarSilabo();
+        }
+
     }
 
     /**
@@ -557,6 +669,8 @@ public class FRMSilaboCTR extends DCTR {
         // Debemos revisar  lo de estrategias 
         // Actualizamos las evaluaciones 
         cargarEvaluaciones();
+        // Cargamos todas las estrategias nuevamente  
+        iniciarCmbEstrategias();
         // Al terminar de cambiar de unidad 
         cambioUnidad = false;
     }
@@ -624,17 +738,51 @@ public class FRMSilaboCTR extends DCTR {
 
             // Mostramos solo las estrategias 
         });
+        llenarTblEstrategiasUnidad();
+        // Seteamos en el lbl  
+        FRM_GESTION.getLblAcumuladoGestion().setText(totalGestion + "/60.0");
+    }
 
+    private void llenarTblEstrategiasUnidad() {
+        mdTblES.setRowCount(0);
         estrategias.forEach(e -> {
-            if (e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
+            if (e.getUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
                 mdTblES.addRow(new Object[]{
                     "|",
-                    e.getIdEstrategia().getDescripcionEstrategia()
+                    e.getEstrategia().getDescripcionEstrategia()
                 });
             }
         });
-        // Seteamos en el lbl  
-        FRM_GESTION.getLblAcumuladoGestion().setText(totalGestion + "/60.0");
+    }
+
+    private void llenarTblEstrategiasUnidad(EstrategiasUnidadMD estrategiaNueva) {
+        mdTblES.setRowCount(0);
+        existeEstrategia = false;
+        estrategias.forEach(e -> {
+            if (e.getUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
+                // Vemos que no se repita la estrategia 
+                if (e.getEstrategia()
+                        .getDescripcionEstrategia()
+                        .equals(estrategiaNueva
+                                .getEstrategia()
+                                .getDescripcionEstrategia()
+                        )) {
+                    UFRMSCTR.errorEstrategia("Ya agrego esta estrategia en esta unidad.");
+                    existeEstrategia = true;
+                }
+                mdTblES.addRow(new Object[]{
+                    "|",
+                    e.getEstrategia().getDescripcionEstrategia()
+                });
+            }
+        });
+        if (!existeEstrategia) {
+            estrategias.add(estrategiaNueva);
+            mdTblES.addRow(new Object[]{
+                "|",
+                estrategiaNueva.getEstrategia().getDescripcionEstrategia()
+            });
+        }
     }
 
     /**

@@ -40,8 +40,8 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jScrollPane1" pref="620" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="492" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -198,19 +198,15 @@
                               </Group>
                               <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtTitulo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="lblHorasPracticas" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblTotalHpracticas" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txtTitulo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="lblHorasPracticas" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblTotalHpracticas" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                      <Component id="lblFechaFin" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="spnHpracticas" min="-2" max="-2" attributes="0"/>
@@ -242,6 +238,7 @@
                                   <Component id="dchFechaInicio" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblFechaInicio" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="dchFechaFin" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFechaFin" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -278,7 +275,7 @@
                               <Component id="jScrollPane2" min="-2" pref="193" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                      <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -289,7 +286,7 @@
                           <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="tbpEvaluacion" pref="160" max="32767" attributes="0"/>
+                      <Component id="tbpEvaluacion" pref="161" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -800,7 +797,6 @@
             <Component class="javax.swing.JButton" name="btnGuardar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTotalGestion">

@@ -3,6 +3,7 @@ package controlador.silabo;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
+import controlador.silabo.frm.FRMSilaboCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -244,11 +245,22 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
                 modelo = SILABO_CONN.getDisponibilidad(modelo);
 
-                if (!modelo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
+                if (!modelo.getEditadoPor()
+                        .getIdentificacion()
+                        .equals(CONS.USUARIO.getPersona()
+                                .getIdentificacion()
+                        )
                         || modelo.isEditando()) {
                     mensajeEditando();
                 } else {
-
+                    // Abrimos el formulario  
+                    modelo = SILABO_CONN.getSilaboById(
+                            Integer.valueOf(table.getValueAt(
+                                    table.getSelectedRow(), 0
+                            ).toString())
+                    );
+                    FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+                    ctr.editar();
                 }
 
             }

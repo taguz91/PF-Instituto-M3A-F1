@@ -39,20 +39,20 @@ public class EvaluacionSilaboBD extends EvaluacionSilaboMD {
     public void insertar(EvaluacionSilaboMD e, int iu) {
 
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"EvaluacionSilabo\"(\n"
+            PreparedStatement ps = conexion.getCon().prepareStatement("INSERT INTO public.\"EvaluacionSilabo\"(\n"
                     + "	 id_unidad, id_tipo_actividad, instrumento, valoracion, fecha_envio, fecha_presentacion, indicador)\n"
                     + "	VALUES ( "+iu+", ?, ?, ?, ?, ?, ?)");
 
-            st.setInt(1, e.getIdTipoActividad().getIdTipoActividad());
-            st.setString(2, e.getInstrumento());
+            ps.setInt(1, e.getIdTipoActividad().getIdTipoActividad());
+            ps.setString(2, e.getInstrumento());
 
-            st.setDouble(3, e.getValoracion());
-            st.setDate(4, java.sql.Date.valueOf(e.getFechaEnvio()));
-            st.setDate(5, java.sql.Date.valueOf(e.getFechaPresentacion()));
-            st.setString(6, e.getIndicador());
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
+            ps.setDouble(3, e.getValoracion());
+            ps.setDate(4, java.sql.Date.valueOf(e.getFechaEnvio()));
+            ps.setDate(5, java.sql.Date.valueOf(e.getFechaPresentacion()));
+            ps.setString(6, e.getIndicador());
+            ps.executeUpdate();
+            System.out.println(ps);
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(EvaluacionSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }

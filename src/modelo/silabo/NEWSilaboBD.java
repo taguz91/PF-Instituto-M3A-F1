@@ -77,13 +77,20 @@ public class NEWSilaboBD implements ISilaboBD {
             + "WHERE ";
 
     @Override
-    public int nuevoSilabo(SilaboMD s) {
+    public int guardar(SilaboMD s) {
         PreparedStatement ps = CON.getPSID(INSERT);
         try {
             ps.setInt(1, s.getMateria().getId());
             ps.setInt(2, s.getPeriodo().getID());
             return CON.getIDGenerado(ps);
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al guardar el silabo, \n"
+                    + e.getMessage()
+                    + e.getMessage(),
+                    "Error guardar",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return 0;
         }
     }

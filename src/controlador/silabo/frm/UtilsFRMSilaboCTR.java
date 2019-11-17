@@ -68,6 +68,31 @@ public class UtilsFRMSilaboCTR {
                 JOptionPane.ERROR_MESSAGE
         );
     }
+    
+    public void errorEstrategia(String msg) {
+        JOptionPane.showMessageDialog(
+                null,
+                msg,
+                "Error en estrategias",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+    
+    public void errorGuardar(String msg) {
+        JOptionPane.showMessageDialog(
+                null,
+                msg,
+                "Error al guardar",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+    
+    public void errorGuardarSilabo() {
+        errorGuardar("Algo salio mal, no pudimos guardar su silabo, "
+                    + "le recomendamos que verifique su conectividad con el servidor "
+                    + "de internet. \n"
+                    + "Vuelva a intentar guardar en unos segudos no cierre la ventana del silabo.");
+    }
 
     public String getIdLocalActividad(JTable tbl) {
         String code = "";

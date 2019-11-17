@@ -334,28 +334,25 @@ public class ConnDBPool {
                     JOptionPane.ERROR_MESSAGE
             );
         } finally {
-            try {
-                ps.getConnection().close();
-                ps.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Error al cerrar conexion. \n"
-                        + e.getMessage(),
-                        "Error servidor",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
+            cerrarCONPS(ps);
         }
     }
 
     public PreparedStatement getPSID(String sql) {
         try {
+            System.out.println("OBTENER EL PREPARED STATMENET CON ID ");
             return getConnection()
                     .prepareStatement(
                             sql,
                             Statement.RETURN_GENERATED_KEYS
                     );
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al crear el prepared statement para obtener un ID generado. "
+                    + e.getMessage(),
+                    "Error Prepared Statement",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return null;
         }
     }
@@ -363,6 +360,7 @@ public class ConnDBPool {
     public int getIDGenerado(PreparedStatement ps) {
         int id = 0;
         try {
+            ps.executeUpdate();
             ResultSet res = ps.getGeneratedKeys();
             if (res.next()) {
                 id = res.getInt(1);
@@ -374,6 +372,8 @@ public class ConnDBPool {
                     "Error ID",
                     JOptionPane.ERROR_MESSAGE
             );
+        } finally {
+            cerrarCONPS(ps);
         }
         return id;
     }
@@ -382,6 +382,12 @@ public class ConnDBPool {
         try {
             ps.getConnection().close();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al cerrar conexion. \n"
+                    + e.getMessage(),
+                    "Error servidor",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
