@@ -2,6 +2,7 @@ package controlador.silabo.frm;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
@@ -530,36 +531,30 @@ public class FRMSilaboCTR extends DCTR {
      * Guardamos todo la informacion sin validar
      */
     private void guardar() {
+        FRM_GESTION.getBtnGuardar().setEnabled(false);
+        FRM_GESTION.setEnabled(false);
+        ctrPrin.getVtnPrin().setCursor(new Cursor(3));
+        // SI no se guardo el silabo previamente se guarda aqui 
         if (silabo.getID() == 0) {
             int idSilaboGen = SBD.guardar(silabo);
             silabo.setID(idSilaboGen);
         }
 
-        System.out.println("INTENTANDO GUARDAR EL SILABO ");
-
+        // Necesitamos que el silabo este guardado para continuar. 
         if (silabo.getID() > 0) {
             System.out.println("Guardamos silabo con ID: " + silabo.getID());
+            ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos silabo con ID: " + silabo.getID());
             silabo.setID(silabo.getID());
             unidades.forEach(u -> {
                 int idUnidadGenerado = USBD.guardar(u, silabo.getID());
                 System.out.println("Guardamos unidad con ID: " + idUnidadGenerado);
+                ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos unidad con ID: " + idUnidadGenerado);
+                // Si se guardo la unidad guardamos
+                // estrategias y evaluaciones
                 if (idUnidadGenerado > 0) {
                     u.setIdUnidad(idUnidadGenerado);
-                    estrategias.forEach(e -> {
-                        if (e.getUnidad().getNumeroUnidad() == u.getNumeroUnidad()) {
-                            int idEstrategiaGen = EUBD.guardar(e, idUnidadGenerado);
-                            e.setIdEstrategiaUnidad(idEstrategiaGen);
-                            System.out.println("Guardamos estrategia con ID: " + idEstrategiaGen);
-                        }
-                    });
-
-                    evaluaciones.forEach(e -> {
-                        if (e.getIdUnidad().getNumeroUnidad() == u.getNumeroUnidad()) {
-                            int idEvaluacionGen = EVBD.guardar(e, idUnidadGenerado);
-                            e.setIdEvaluacion(idEvaluacionGen);
-                            System.out.println("Guardamos evaluaciones con ID: " + idEvaluacionGen);
-                        }
-                    });
+                    guardarEstrategias(idUnidadGenerado, u.getNumeroUnidad());
+                    guardarEvaluaciones(idUnidadGenerado, u.getNumeroUnidad());
                 } else {
                     UFRMSCTR.errorGuardar("Algo salio mal. \n"
                             + "No se pudo guardo la unidad " + u.getNumeroUnidad());
@@ -569,6 +564,29 @@ public class FRMSilaboCTR extends DCTR {
             UFRMSCTR.errorGuardarSilabo();
         }
 
+        FRM_GESTION.getBtnGuardar().setEnabled(true);
+        FRM_GESTION.setEnabled(true);
+        ctrPrin.getVtnPrin().setCursor(new Cursor(0));
+    }
+
+    private void guardarEstrategias(int idUnidadGenerado, int numeroUnidad) {
+        estrategias.forEach(e -> {
+            if (e.getUnidad().getNumeroUnidad() == numeroUnidad) {
+                int idEstrategiaGen = EUBD.guardar(e, idUnidadGenerado);
+                e.setIdEstrategiaUnidad(idEstrategiaGen);
+                System.out.println("Guardamos estrategia con ID: " + idEstrategiaGen);
+            }
+        });
+    }
+
+    private void guardarEvaluaciones(int idUnidadGenerado, int numeroUnidad) {
+        evaluaciones.forEach(e -> {
+            if (e.getIdUnidad().getNumeroUnidad() == numeroUnidad) {
+                int idEvaluacionGen = EVBD.guardar(e, idUnidadGenerado);
+                e.setIdEvaluacion(idEvaluacionGen);
+                System.out.println("Guardamos evaluaciones con ID: " + idEvaluacionGen);
+            }
+        });
     }
 
     /**
