@@ -238,35 +238,37 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void btnEditar(ActionEvent e) {
-        try {
 
-            modelo = getSilaboSeleccionadoTbl();
-            if (modelo != null) {
+        SilaboMD silabo = getSilaboSeleccionadoTbl();
+        if (silabo != null) {
+            System.out.println(silabo.getID());
+            silabo = SILABO_CONN.getDisponibilidad(silabo);
 
-                modelo = SILABO_CONN.getDisponibilidad(modelo);
+            if (silabo.getEditadoPor().getIdentificacion() != null) {
+                if (!silabo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
+                        || silabo.isEditando()) {
 
-                if (!modelo.getEditadoPor()
-                        .getIdentificacion()
-                        .equals(CONS.USUARIO.getPersona()
-                                .getIdentificacion()
-                        )
-                        || modelo.isEditando()) {
                     mensajeEditando();
+
                 } else {
                     // Abrimos el formulario  
-                    modelo = SILABO_CONN.getSilaboById(
-                            Integer.valueOf(table.getValueAt(
-                                    table.getSelectedRow(), 0
-                            ).toString())
+
+                    silabo = SILABO_CONN.getSilaboById(
+                            Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                     );
-                    FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
+
+                    FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
                     ctr.editar();
+
                 }
+
+            } else {
+
+                FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
+                ctr.editar();
 
             }
 
-        } catch (NullPointerException ex) {
-            //SI ENTRA AQUI ES PORQUE NO HAY NADIE EDITANDO
         }
 
     }

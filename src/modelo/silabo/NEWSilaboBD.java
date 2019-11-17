@@ -618,13 +618,16 @@ public class NEWSilaboBD implements ISilaboBD {
 
         String SELECT = ""
                 + "SELECT\n"
+                + "	\"Silabo\".id_silabo,\n"
                 + "	\"Silabo\".editando,\n"
-                + "	\"Personas\".persona_identificacion,\n"
-                + "	\"Personas\".persona_primer_apellido,\n"
-                + "	\"Personas\".persona_primer_nombre \n"
+                + "	( SELECT \"Personas\".persona_identificacion \n"
+                + "			FROM \"Personas\" WHERE id_persona = \"Silabo\".editado_por ) AS persona_identificacion,\n"
+                + "	( SELECT \"Personas\".persona_primer_apellido \n"
+                + "			FROM \"Personas\" WHERE id_persona = \"Silabo\".editado_por ) AS persona_primer_apellido,\n"
+                + "	( SELECT \"Personas\".persona_primer_nombre \n"
+                + "		FROM \"Personas\" WHERE id_persona = \"Silabo\".editado_por ) AS persona_primer_nombre \n"
                 + "FROM\n"
-                + "	\"Silabo\"\n"
-                + "	INNER JOIN \"Personas\" ON \"Personas\".id_persona = \"Silabo\".editado_por \n"
+                + "	\"Silabo\" \n"
                 + "WHERE\n"
                 + "	\"Silabo\".id_silabo =" + silabo.getID()
                 + "";
