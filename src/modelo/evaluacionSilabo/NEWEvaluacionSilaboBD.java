@@ -100,6 +100,12 @@ public class NEWEvaluacionSilaboBD extends CONBD {
         return CON.getIDGenerado(ps);
     }
 
+    public boolean eliminar(int idEvaluacion) {
+        String sql = "DELETE FROM public.\"EvaluacionSilabo\" "
+                + "WHERE id_evaluacion=?;";
+        return CON.deleteById(sql, idEvaluacion);
+    }
+
     public List<EvaluacionSilaboMD> getBySilabo(int idSilabo) {
         List<EvaluacionSilaboMD> ES = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(FROM_SILABO);

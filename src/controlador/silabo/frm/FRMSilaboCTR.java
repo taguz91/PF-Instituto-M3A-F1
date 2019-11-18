@@ -136,15 +136,17 @@ public class FRMSilaboCTR extends DCTR {
         cargarDatosSilabo();
         iniciarSilabo();
         iniciarVentana();
-        // Guardamos el silabo no mas ingresar. 
-        int idSilaboGen = SBD.guardar(silabo);
-        if (idSilaboGen > 0) {
-            silabo.setID(idSilaboGen);
-            guardar();
-        } else {
-            silabo.setID(0);
-            UFRMSCTR.errorGuardarSilabo();
-        }
+        // Guardamos el silabo al ingresar.
+        new Thread(() -> {
+            int idSilaboGen = SBD.guardar(silabo);
+            if (idSilaboGen > 0) {
+                silabo.setID(idSilaboGen);
+                guardar();
+            } else {
+                silabo.setID(0);
+                UFRMSCTR.errorGuardarSilabo();
+            }
+        }).start();
     }
 
     public void editar() {
@@ -386,18 +388,19 @@ public class FRMSilaboCTR extends DCTR {
         String code = getActividadSeleccionada();
         if (!"".equals(code)) {
             int r = JOptionPane.showConfirmDialog(FRM_ACCIONES, "Esta seguro de quitar la actividad.");
-
             if (r == JOptionPane.YES_OPTION) {
                 System.out.println("ELIMINADO BRO");
                 System.out.println("CODE: " + code);
                 seleccionPorIdLocal(code);
                 if (evaluacionSelec != null) {
                     System.out.println("Evaluacion: " + evaluacionSelec.toString());
+                    if (evaluacionSelec.getIdEvaluacion() > 0) {
+                        EVBD.eliminar(evaluacionSelec.getIdEvaluacion());
+                    }
                     evaluaciones.remove(evaluacionSelec);
                     cargarEvaluaciones();
                 }
             }
-
         } else {
             JOptionPane.showMessageDialog(
                     FRM_ACCIONES,
@@ -562,7 +565,6 @@ public class FRMSilaboCTR extends DCTR {
      */
     private void guardar() {
         FRM_GESTION.getBtnGuardar().setEnabled(false);
-        FRM_GESTION.setEnabled(false);
         ctrPrin.getVtnPrin().setCursor(new Cursor(3));
         // SI no se guardo el silabo previamente se guarda aqui 
         if (silabo.getID() == 0) {
@@ -600,7 +602,6 @@ public class FRMSilaboCTR extends DCTR {
         }
 
         FRM_GESTION.getBtnGuardar().setEnabled(true);
-        FRM_GESTION.setEnabled(true);
         ctrPrin.getVtnPrin().setCursor(new Cursor(0));
     }
 
