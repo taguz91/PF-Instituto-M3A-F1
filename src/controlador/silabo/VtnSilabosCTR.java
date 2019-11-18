@@ -14,8 +14,6 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import modelo.CONS;
-import modelo.carrera.CarreraBD;
-import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWSilaboBD;
@@ -36,7 +34,6 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     public VtnSilabosCTR(VtnPrincipalCTR desktop) {
         super(desktop);
         vista = new VtnSilabos();
-
         modelo = new SilaboMD();
     }
 
@@ -49,9 +46,10 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         setTable(vista.getTbl());
 
         if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-            periodos = PERIODO_CONN.getBy(
+            periodos = PERIODO_CONN.getMisPeriodosBy(
                     CONS.USUARIO.getPersona().getIdPersona()
             );
+            vista.getBtnEliminar().setEnabled(false);
 
         } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
@@ -93,11 +91,16 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         });
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR") || CONS.ROL.getNombre().equalsIgnoreCase("DEV");
-        
-        List<String> estados = new ArrayList<>();
-        estados.add("APROBADO");
-        estados.add("PENDIENTE");
-        estados.add("REVISAR");
+
+        List<String> estados = new ArrayList<String>() {
+            {
+                add("APROBADO");
+                add("PENDIENTE");
+                add("REVISAR");
+
+            }
+        };
+
         vista.getTbl()
                 .getColumnModel()
                 .getColumn(5)
@@ -228,6 +231,21 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         );
     }
 
+    private void validarEstadoParaEditar(SilaboMD silabo) {
+        if (silabo.getEstado() == SilaboMD.APROBADO) {
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "NO PUEDE EDITAR UN SILABO APROBADO",
+                    "ALERTA!!",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+
+            FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
+            ctr.editar();
+        }
+    }
+
     /*
         EVENTOS
      */
@@ -284,16 +302,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     silabo = SILABO_CONN.getSilaboById(
                             Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                     );
-                    FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
-                    ctr.editar();
+                    validarEstadoParaEditar(silabo);
                 }
 
             } else {
                 silabo = SILABO_CONN.getSilaboById(
                         Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                 );
-                FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
-                ctr.editar();
+                validarEstadoParaEditar(silabo);
             }
 
         }

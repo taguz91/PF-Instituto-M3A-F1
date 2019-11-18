@@ -31,14 +31,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblCarrera" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="jLabelPeriodo" min="-2" pref="120" max="-2" attributes="0"/>
                           <Component id="lblAsignatura" min="-2" pref="120" max="-2" attributes="0"/>
                           <Component id="lblPeriodoRef" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cmbPeriodoRef" min="-2" pref="336" max="-2" attributes="0"/>
-                          <Component id="cmbCarrera" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
+                          <Component id="cmbPeriodo" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
                           <Component id="cmbAsignatura" alignment="0" min="-2" pref="336" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -70,8 +70,8 @@
               <Component id="jLabel1" min="-2" pref="26" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCarrera" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="cmbCarrera" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="jLabelPeriodo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="cmbPeriodo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -102,13 +102,13 @@
     <Component class="javax.swing.JLabel" name="lblAsignatura">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Asignatura"/>
+        <Property name="text" type="java.lang.String" value="Asignatura:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCarrera">
+    <Component class="javax.swing.JLabel" name="jLabelPeriodo">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Carrera"/>
+        <Property name="text" type="java.lang.String" value="Periodo Lectivo:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnSiguiente">
@@ -124,7 +124,7 @@
     <Component class="javax.swing.JLabel" name="lblUnidades">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Unidades"/>
+        <Property name="text" type="java.lang.String" value="Unidades:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="spnUnidades">
@@ -137,10 +137,10 @@
     <Component class="javax.swing.JLabel" name="lblPeriodoRef">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Periodo de Referencia"/>
+        <Property name="text" type="java.lang.String" value="Periodo de Referencia:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmbCarrera">
+    <Component class="javax.swing.JComboBox" name="cmbPeriodo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
