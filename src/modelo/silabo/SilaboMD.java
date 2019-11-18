@@ -16,9 +16,13 @@ import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
  *
- * @author Andres Ullauri
+ * @author MrRainx
  */
 public class SilaboMD {
+
+    public static int PENDIENTE = 0;
+    public static int APROBADO = 1;
+    public static int REVISAR = 2;
 
     private Integer ID;
 

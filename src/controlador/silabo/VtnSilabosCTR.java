@@ -231,6 +231,21 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         );
     }
 
+    private void validarEstadoParaEditar(SilaboMD silabo) {
+        if (silabo.getEstado() == SilaboMD.APROBADO) {
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "NO PUEDE EDITAR UN SILABO APROBADO",
+                    "ALERTA!!",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        } else {
+
+            FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
+            ctr.editar();
+        }
+    }
+
     /*
         EVENTOS
      */
@@ -287,16 +302,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     silabo = SILABO_CONN.getSilaboById(
                             Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                     );
-                    FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
-                    ctr.editar();
+                    validarEstadoParaEditar(silabo);
                 }
 
             } else {
                 silabo = SILABO_CONN.getSilaboById(
                         Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                 );
-                FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, silabo);
-                ctr.editar();
+                validarEstadoParaEditar(silabo);
             }
 
         }
