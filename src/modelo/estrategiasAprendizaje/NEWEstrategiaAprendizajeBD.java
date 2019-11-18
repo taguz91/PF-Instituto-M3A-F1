@@ -96,6 +96,8 @@ public class NEWEstrategiaAprendizajeBD extends CONBD implements IEstrategiaApre
                     "Error al consultar",
                     JOptionPane.ERROR_MESSAGE
             );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return ES;
     }

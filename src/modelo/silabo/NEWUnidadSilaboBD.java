@@ -220,7 +220,6 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 + "?, ?, "
                 + "?, ?, "
                 + "?)";
-        int idGenerado = 0;
         PreparedStatement ps = CON.getPSID(sql);
         try {
             ps.setInt(1, u.getNumeroUnidad());
@@ -244,7 +243,6 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ps.setDouble(9, u.getHorasAutonomoUnidad());
             ps.setInt(10, idSilabo);
             ps.setString(11, u.getTituloUnidad());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la unidad. \n"
@@ -253,7 +251,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     public int editar(UnidadSilaboMD u) {
@@ -270,7 +268,6 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 + "titulo_unidad=? "
                 + "WHERE id_unidad=?;"
                 + "";
-        int idGenerado = 0;
         PreparedStatement ps = CON.getPSID(sql);
         try {
             ps.setInt(1, u.getNumeroUnidad());
@@ -294,7 +291,6 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ps.setDouble(9, u.getHorasAutonomoUnidad());
             ps.setString(10, u.getTituloUnidad());
             ps.setInt(11, u.getIdUnidad());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la unidad. \n"
@@ -303,7 +299,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     public boolean eliminar(int idUnidad) {

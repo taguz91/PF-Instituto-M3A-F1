@@ -37,6 +37,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             + "AND eu.id_estrategia = ea.id_estrategia "
             + "AND id_silabo=?;";
 
+    private static final String DELETE = "DELETE FROM public.\"EstrategiasUnidad\" "
+            + "WHERE id_estrategia_unidad = ?;";
+
     @Override
     public int guardar(EstrategiasUnidadMD e, int idUnidad) {
         String sql = "INSERT INTO public.\"EstrategiasUnidad\"("
@@ -44,11 +47,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                 + "id_estrategia) "
                 + "VALUES (?, ?);";
         PreparedStatement ps = CON.getPSID(sql);
-        int idGenerado = 0;
         try {
             ps.setInt(1, idUnidad);
             ps.setInt(2, e.getEstrategia().getIdEstrategia());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la estrategia unidad. \n"
@@ -57,7 +58,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     public int editar(EstrategiasUnidadMD e) {
@@ -65,11 +66,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                 + "SET id_estrategia=? "
                 + "WHERE id_estrategia_unidad=?;";
         PreparedStatement ps = CON.getPSID(sql);
-        int idGenerado = 0;
         try {
             ps.setInt(1, e.getEstrategia().getIdEstrategia());
             ps.setInt(2, e.getIdEstrategiaUnidad());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la estrategia unidad. \n"
@@ -78,7 +77,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     @Override
@@ -175,6 +174,42 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             CON.cerrarCONPS(ps);
         }
         return EUS;
+    }
+
+    public void eliminarAll(List<EstrategiasUnidadMD> estrategias) {
+        String sql = DELETE;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
+        estrategias.forEach(e -> {
+            try {
+                ps.setInt(1, e.getIdEstrategiaUnidad());
+                ps.addBatch();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "No pudimos agregar delete al banch\n"
+                        + ex.getMessage(),
+                        "Error al eliminar",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
+        try {
+            ps.executeBatch();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No ejecutamos el batch \n"
+                    + e.getMessage(),
+                    "Error al eliminar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+    }
+    
+    public boolean eliminar(int idEstrategiaUnidad){
+        return CON.deleteById(DELETE, idEstrategiaUnidad);
     }
 
 }

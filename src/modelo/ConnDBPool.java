@@ -313,7 +313,11 @@ public class ConnDBPool {
     // Metodos JOHNNY
     public PreparedStatement getPSPOOL(String sql) {
         try {
-            return getConnection().prepareStatement(sql);
+            if (!ds.isClosed()) {
+                return getConnection().prepareStatement(sql);
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error de conexion con el servidor. \n"
@@ -391,6 +395,21 @@ public class ConnDBPool {
                     JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+
+    public boolean deleteById(String sql, int id) {
+        PreparedStatement ps = getPSPOOL(sql);
+        try {
+            ps.setInt(1, id);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al eliminar registro. \n"
+                    + e.getMessage(),
+                    "Error servidor",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return noSQLPOOL(ps);
     }
 
 }
