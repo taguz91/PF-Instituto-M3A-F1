@@ -166,4 +166,41 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
 
     }
 
+    public List<PeriodoLectivoMD> getBy(int idPersona) {
+
+        String SELECT = ""
+                + "SELECT DISTINCT\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"PeriodoLectivo\".id_prd_lectivo = \"Cursos\".id_prd_lectivo \n"
+                + "WHERE\n"
+                + "	\"Docentes\".id_persona = " + idPersona + "\n"
+                + "	\n"
+                + "	ORDER BY \"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC"
+                + "";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
+        try {
+            while (rs.next()) {
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setID(rs.getInt("id_prd_lectivo"));
+                periodo.setNombre(rs.getString("prd_lectivo_nombre"));
+                lista.add(periodo);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWPeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+    }
+
 }
