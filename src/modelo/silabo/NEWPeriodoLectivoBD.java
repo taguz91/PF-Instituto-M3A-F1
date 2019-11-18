@@ -196,6 +196,8 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWPeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
         return lista;
