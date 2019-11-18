@@ -247,6 +247,12 @@ public class FRMSilaboCTR extends DCTR {
                 eliminarUnidad();
             }
         });
+        FRM_GESTION.getLblAgregarUnidad().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                agregarUnidad();
+            }
+        });
         FRM_GESTION.getCmbUnidad().addActionListener(e -> mostrarUnidad());
     }
 
@@ -281,7 +287,8 @@ public class FRMSilaboCTR extends DCTR {
             );
 
             if (guardando) {
-                evaluacionSelec.getIdUnidad().setNumeroUnidad(unidadSelec.getNumeroUnidad());
+                //evaluacionSelec.getIdUnidad().setNumeroUnidad(unidadSelec.getNumeroUnidad());
+                evaluacionSelec.setIdUnidad(unidadSelec);
                 evaluacionSelec.getIdTipoActividad().setIdTipoActividad(getIdTipoActividad());
                 evaluaciones.add(evaluacionSelec);
             }
@@ -895,6 +902,15 @@ public class FRMSilaboCTR extends DCTR {
                 estrategiaNueva.getEstrategia().getDescripcionEstrategia()
             });
         }
+    }
+    
+    
+    private void agregarUnidad() {
+        UnidadSilaboMD u = new UnidadSilaboMD();
+        u.setNumeroUnidad(unidades.size() + 1);
+        unidades.add(u);
+        FRM_GESTION.getCmbUnidad().addItem("Unidad " + u.getNumeroUnidad());
+        FRM_GESTION.getCmbUnidad().setSelectedIndex(unidades.size() - 1);
     }
 
     private void eliminarUnidad() {
