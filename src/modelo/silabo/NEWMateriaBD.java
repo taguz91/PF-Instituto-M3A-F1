@@ -134,21 +134,21 @@ public class NEWMateriaBD implements IMateriaBD {
         return MS;
     }
 
-    public List<MateriaMD> getMateriasSinSilabo(String cedulaDocente, int idCarrera) {
+    public List<MateriaMD> getMateriasSinSilabo(String cedulaDocente, int idPeriodo) {
         String SELECT = ""
                 + "WITH mis_materias AS (\n"
                 + "	SELECT\n"
                 + "		\"Materias\".id_materia,\n"
                 + "		\"Materias\".materia_nombre \n"
-                + "	FROM\n"
-                + "		\"Docentes\"\n"
-                + "		INNER JOIN \"DocentesMateria\" ON \"DocentesMateria\".id_docente = \"Docentes\".id_docente\n"
-                + "		INNER JOIN \"Materias\" ON \"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
-                + "	WHERE\n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Materias\" ON \"Materias\".id_materia = \"Cursos\".id_materia\n"
+                + "	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + "WHERE\n"
                 + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
-                + "		AND \"Materias\".id_carrera = " + idCarrera + " \n"
+                + "		AND \"Cursos\".id_prd_lectivo = " + idPeriodo + "\n"
                 + "	) \n"
-                + "SELECT\n"
+                + "SELECT DISTINCT\n"
                 + "	mis_materias.id_materia,\n"
                 + "	mis_materias.materia_nombre \n"
                 + "FROM\n"
@@ -166,13 +166,13 @@ public class NEWMateriaBD implements IMateriaBD {
                 + "        FROM \n"
                 + "            \"PeriodoLectivo\"\n"
                 + "        WHERE \n"
-                + "            id_carrera = " + idCarrera + " \n"
+                + "            id_prd_lectivo = " + idPeriodo + " \n"
                 + "        ORDER BY prd_lectivo_fecha_inicio DESC \n"
                 + "        LIMIT 1 \n"
                 + "    ) \n"
-                + ");"
+                + ");;"
                 + "";
-        //System.out.println(SELECT);
+        System.out.println(SELECT);
         ResultSet rs = CON.ejecutarQuery(SELECT, null);
         List<MateriaMD> materias = new ArrayList<>();
         try {
