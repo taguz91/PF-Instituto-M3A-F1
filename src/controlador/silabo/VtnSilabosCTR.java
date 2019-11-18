@@ -82,7 +82,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
                 if (!active && e.getType() == TableModelEvent.UPDATE) {
                     active = true;
-                    cambiarEstado();
+                    cmbTblEstado();
                     active = false;
                 }
 
@@ -368,7 +368,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 .forEach(cargador());
     }
 
-    private void cambiarEstado() {
+    private void cmbTblEstado() {
         int colum = table.getSelectedColumn();
         int row = getSelectedRow();
         SilaboMD silabo = getSilaboSeleccionadoTbl();
@@ -379,6 +379,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
                 silabo.setEstado(SilaboMD.getEstadoInt(estado));
                 cargarTabla(cargador());
+                SILABO_CONN.editarEstado(silabo);
                 //TODO: AGREGAR EL METODO DE LA BASE DE DATOS PARA CAMBIAR EL ESTADO
             }
         }

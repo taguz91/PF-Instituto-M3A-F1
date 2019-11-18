@@ -775,4 +775,18 @@ public class NEWSilaboBD implements ISilaboBD {
 
         return silabos;
     }
+
+    public boolean editarEstado(SilaboMD silabo) {
+
+        String UPDATE = ""
+                + "UPDATE \"Silabo\" \n"
+                + "SET estado_silabo = " + silabo.getEstado() + " \n"
+                + "WHERE\n"
+                + "	id_silabo = " + silabo.getID()
+                + "";
+
+        return CON.ejecutar(UPDATE) == null;
+
+    }
+
 }

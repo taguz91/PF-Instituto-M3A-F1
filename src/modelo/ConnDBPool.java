@@ -91,13 +91,7 @@ public class ConnDBPool {
             }
 
             stmt.executeUpdate();
-
-            parametros = null;
-//            System.out.println("*******************************************");
-//            System.out.println("*PreparedStatement ejecutado correctamente*");
-//            System.out.println("*******************************************");
-
-//            System.out.println("---->" + stmt.toString());
+            
             return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
