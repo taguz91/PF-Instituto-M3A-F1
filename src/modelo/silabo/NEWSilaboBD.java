@@ -492,6 +492,8 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	\"Materias\".materia_nombre ASC"
                 + "";
 
+        System.out.println(SELECT);
+
         List<SilaboMD> silabos = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT, null);
 
@@ -649,4 +651,51 @@ public class NEWSilaboBD implements ISilaboBD {
         return silabo;
     }
 
+    public SilaboMD getSilaboBy(MateriaMD materia, PeriodoLectivoMD periodo) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"Silabo\".id_materia,\n"
+                + "	\"Silabo\".id_prd_lectivo,\n"
+                + "	\"Materias\".materia_nombre,\n"
+                + "	\"Materias\".materia_horas_docencia,\n"
+                + "	\"Materias\".materia_horas_practicas,\n"
+                + "	\"Materias\".materia_horas_auto_estudio,\n"
+                + "	\"Silabo\".estado_silabo,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_fin \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "WHERE\n"
+                + "	id_prd_lectivo = " + periodo.getID() + " \n"
+                + "	AND id_materia = " + materia.getId()
+                + "";
+
+        SilaboMD silabo = null;
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                silabo = new SilaboMD();
+                silabo.setID(rs.getInt("id_silabo"));
+                materia.setHorasDocencia(rs.getInt("materia_horas_docencia"));
+                materia.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                materia.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
+                periodo.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                periodo.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
+                silabo.setMateria(materia);
+                silabo.setPeriodo(periodo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return silabo;
+
+    }
 }
