@@ -393,4 +393,19 @@ public class ConnDBPool {
         }
     }
 
+    public boolean deleteById(String sql, int id) {
+        PreparedStatement ps = getPSPOOL(sql);
+        try {
+            ps.setInt(1, id);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al eliminar registro. \n"
+                    + e.getMessage(),
+                    "Error servidor",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return noSQLPOOL(ps);
+    }
+
 }

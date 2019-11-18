@@ -177,4 +177,37 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
         return EUS;
     }
 
+    public void eliminarAll(List<EstrategiasUnidadMD> estrategias) {
+        String sql = "DELETE FROM public.\"EstrategiasUnidad\" "
+                + "WHERE id_estrategia_unidad = ?";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
+        estrategias.forEach(e -> {
+            try {
+                ps.setInt(1, e.getIdEstrategiaUnidad());
+                ps.addBatch();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "No pudimos agregar delete al banch\n"
+                        + ex.getMessage(),
+                        "Error al eliminar",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
+        try {
+            ps.executeBatch();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No ejecutamos el batch \n"
+                    + e.getMessage(),
+                    "Error al eliminar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+    }
+
 }
