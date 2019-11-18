@@ -278,7 +278,7 @@ EVALUACIÓN]]></text>
 + "\n\n <style fontSize='8' isBold='true'>Consolidación: </style>\n"
 + $F{consolidacion_arr}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="471" y="68" width="84" height="239" uuid="36bd924d-7866-4c3c-9032-7df321b7fa7c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -333,7 +333,7 @@ EVALUACIÓN]]></text>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="6" isBold="true"/>
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<text><![CDATA[Trabajo
@@ -368,10 +368,10 @@ Autónomo:]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="6" isBold="true"/>
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
-				<text><![CDATA[Objetivos:]]></text>
+				<text><![CDATA[Observaciones:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="63" y="0" width="492" height="36" isPrintWhenDetailOverflows="true" uuid="ba666120-442f-4c0f-91ee-659e29945044"/>
