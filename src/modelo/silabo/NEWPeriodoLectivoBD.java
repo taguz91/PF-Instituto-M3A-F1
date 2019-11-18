@@ -166,7 +166,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
 
     }
 
-    public List<PeriodoLectivoMD> getBy(int idPersona) {
+    public List<PeriodoLectivoMD> getMisPeriodosBy(int idPersona) {
 
         String SELECT = ""
                 + "SELECT DISTINCT\n"

@@ -35,6 +35,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     private final List<CarreraMD> carreras = CARRERA_BD.getByUsername(CONS.USUARIO.getUsername());
     private List<MateriaMD> materias;
     private List<SilaboMD> silabosRef;
+    private List<PeriodoLectivoMD> misPeriodos = PERIODO_BD.getMisPeriodosBy(CONS.USUARIO.getPersona().getIdPersona());
     private final String MENSAJE_SIN_SILABO_PENDIENTE = "NO TIENE SILABOS PENDIENTES PARA ESTA CARRERA";
     private VtnSilabosCTR vtnSilabos;
 
@@ -54,12 +55,12 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     @Override
     public void Init() {
         super.Init();
-        cargarCmbCarreras();
+        cargarCmbMisPeriodos();
         InitEventos();
     }
 
     private void InitEventos() {
-        vista.getCmbCarrera().addActionListener(this::cmbAsignatura);
+        vista.getCmbPeriodos().addActionListener(this::cmbAsignatura);
         vista.getCmbAsignatura().addActionListener(this::cmbPeriodoRef);
         vista.getCmbPeriodoRef().addActionListener(this::validarPeriodoRef);
         vista.getBtnSiguiente().addActionListener(this::btnSiguiente);
@@ -69,11 +70,11 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     /*
         METODOS
      */
-    private int getIdCarrera() {
-        return carreras.stream()
-                .filter(carrera -> carrera.getNombre().equals(vista.getCmbCarrera().getSelectedItem().toString()))
+    private int getIdPeriodo() {
+        return misPeriodos.stream()
+                .filter(periodos -> periodos.getNombre().equals(vista.getCmbPeriodos().getSelectedItem().toString()))
                 .findFirst()
-                .map(c -> c.getId())
+                .map(c -> c.getID())
                 .orElse(0);
 
     }
@@ -90,10 +91,10 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
                 .findFirst();
     }
 
-    private void cargarCmbCarreras() {
-        carreras.stream()
+    private void cargarCmbMisPeriodos() {
+        misPeriodos.stream()
                 .map(c -> c.getNombre())
-                .forEach(vista.getCmbCarrera()::addItem);
+                .forEach(vista.getCmbPeriodos()::addItem);
     }
 
     private void validarPeriodoRef(ActionEvent e) {
@@ -117,7 +118,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
         vista.getCmbAsignatura().removeAllItems();
         materias = NEWMateriaBD
                 .single()
-                .getMateriasSinSilabo(CONS.USUARIO.getPersona().getIdentificacion(), getIdCarrera());
+                .getMateriasSinSilabo(CONS.USUARIO.getPersona().getIdentificacion(), getIdPeriodo());
         materias.stream()
                 .map(c -> c.getNombre())
                 .forEach(vista.getCmbAsignatura()::addItem);
@@ -142,19 +143,19 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
             vista.getCmbPeriodoRef().removeAllItems();
             silabosRef = NEWSilaboBD
                     .single()
-                    .getSilaboRef(getIdCarrera(), getIdMateria());
+                    .getSilaboRef(getIdPeriodo(), getIdMateria());
 
             if (silabosRef.size() > 0) {
                 vista.getCmbPeriodoRef().setEnabled(true);
 
-                vista.getCmbPeriodoRef().addItem("SI TIENE PERIODOS DE REFERENCIA");
+                vista.getCmbPeriodoRef().addItem("SI TIENE PERIODOS DE REFERENCIA PARA COPIAR EL SILABO");
                 silabosRef.stream()
                         .map(c -> c.getPeriodo().getNombre())
                         .forEach(vista.getCmbPeriodoRef()::addItem);
 
             } else {
                 vista.getCmbPeriodoRef().setEnabled(false);
-                vista.getCmbPeriodoRef().addItem("NO TIENE PERIODOS DE REFERENCIA");
+                vista.getCmbPeriodoRef().addItem("NO TIENE PERIODOS DE REFERENCIA PARA COPIAR");
             }
 
         } catch (NullPointerException ex) {
@@ -195,7 +196,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
             modelo = new SilaboMD();
 
             modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(
-                    getIdCarrera()
+                    getIdPeriodo()
             ));
 
             modelo.setMateria(getMateria().get());

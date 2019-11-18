@@ -35,8 +35,8 @@ public class VtnConfigSilabo extends AbstracView {
         return cmbAsignatura;
     }
 
-    public JComboBox<String> getCmbCarrera() {
-        return cmbCarrera;
+    public JComboBox<String> getCmbPeriodos() {
+        return cmbPeriodo;
     }
 
     public JComboBox<String> getCmbPeriodoRef() {
@@ -52,13 +52,13 @@ public class VtnConfigSilabo extends AbstracView {
     private void initComponents() {
 
         lblAsignatura = new javax.swing.JLabel();
-        lblCarrera = new javax.swing.JLabel();
+        jLabelPeriodo = new javax.swing.JLabel();
         btnSiguiente = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblUnidades = new javax.swing.JLabel();
         spnUnidades = new javax.swing.JSpinner();
         lblPeriodoRef = new javax.swing.JLabel();
-        cmbCarrera = new javax.swing.JComboBox<>();
+        cmbPeriodo = new javax.swing.JComboBox<>();
         cmbAsignatura = new javax.swing.JComboBox<>();
         cmbPeriodoRef = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -70,22 +70,22 @@ public class VtnConfigSilabo extends AbstracView {
         setTitle("Generar Nuevo Silabo");
 
         lblAsignatura.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblAsignatura.setText("Asignatura");
+        lblAsignatura.setText("Asignatura:");
 
-        lblCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCarrera.setText("Carrera");
+        jLabelPeriodo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelPeriodo.setText("Periodo Lectivo:");
 
         btnSiguiente.setText("Siguiente");
 
         btnCancelar.setText("Cancelar");
 
         lblUnidades.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblUnidades.setText("Unidades");
+        lblUnidades.setText("Unidades:");
 
         spnUnidades.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         lblPeriodoRef.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblPeriodoRef.setText("Periodo de Referencia");
+        lblPeriodoRef.setText("Periodo de Referencia:");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Configuracion del Nuevo Silabo");
@@ -99,13 +99,13 @@ public class VtnConfigSilabo extends AbstracView {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPeriodoRef, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbPeriodoRef, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -128,8 +128,8 @@ public class VtnConfigSilabo extends AbstracView {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,11 +156,11 @@ public class VtnConfigSilabo extends AbstracView {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JComboBox<String> cmbAsignatura;
-    private javax.swing.JComboBox<String> cmbCarrera;
+    private javax.swing.JComboBox<String> cmbPeriodo;
     private javax.swing.JComboBox<String> cmbPeriodoRef;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelPeriodo;
     private javax.swing.JLabel lblAsignatura;
-    private javax.swing.JLabel lblCarrera;
     private javax.swing.JLabel lblPeriodoRef;
     private javax.swing.JLabel lblUnidades;
     private javax.swing.JSpinner spnUnidades;

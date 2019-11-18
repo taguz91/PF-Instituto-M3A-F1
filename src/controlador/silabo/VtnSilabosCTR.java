@@ -46,7 +46,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         setTable(vista.getTbl());
 
         if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-            periodos = PERIODO_CONN.getBy(
+            periodos = PERIODO_CONN.getMisPeriodosBy(
                     CONS.USUARIO.getPersona().getIdPersona()
             );
             vista.getBtnEliminar().setEnabled(false);
