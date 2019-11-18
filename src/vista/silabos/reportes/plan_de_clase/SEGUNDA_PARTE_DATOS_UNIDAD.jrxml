@@ -278,7 +278,7 @@ EVALUACIÓN]]></text>
 + "\n\n <style fontSize='8' isBold='true'>Consolidación: </style>\n"
 + $F{consolidacion_arr}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="471" y="68" width="84" height="239" uuid="36bd924d-7866-4c3c-9032-7df321b7fa7c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
