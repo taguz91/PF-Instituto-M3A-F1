@@ -127,6 +127,7 @@ public class FRMSilaboCTR extends DCTR {
         if (conEvaluaciones) {
             evaluaciones = EVBD.getBySilaboReferencia(silabo.getID());
         }
+        estrategias = EUBD.getBySilaboReferencia(silabo.getID());
 
         cargarDatosSilabo();
         iniciarSilabo();
@@ -142,11 +143,15 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     public void editar() {
-        cargarDatosSilabo();
         // Buscamos con el id de unidades
         unidades = USBD.getBySilabo(silabo.getID());
         evaluaciones = EVBD.getBySilabo(silabo.getID());
+        estrategias = EUBD.getBySilabo(silabo.getID());
+        cargarDatosSilabo();
+        iniciarSilabo();
         iniciarVentana();
+        System.out.println("Fecha Inicio " + silabo.getPeriodo().getFechaInicio());
+        System.out.println("Fecha Fin " + silabo.getPeriodo().getFechaFin());
     }
 
     private void estiloTablas() {
@@ -518,8 +523,7 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     private void cargarDatosSilabo() {
-        estrategias = EUBD.getBySilabo(silabo.getID());
-        referenciasSilabo = RSBD.getBySilabo(silabo.getID());
+        // referenciasSilabo = RSBD.getBySilabo(silabo.getID());
         //evaluaciones = ;
     }
 
@@ -662,7 +666,7 @@ public class FRMSilaboCTR extends DCTR {
         );
 
         // Actualizamos las fechas  
-        if (unidadSelec.getFechaFinUnidad() != null) {
+        if (unidadSelec.getFechaInicioUnidad() != null) {
             FRM_GESTION.getDchFechaInicio().setDate(
                     Date.from(unidadSelec.getFechaInicioUnidad()
                             .atStartOfDay(ZoneId.systemDefault())
@@ -866,6 +870,7 @@ public class FRMSilaboCTR extends DCTR {
             if (unidadSelec.getFechaFinUnidad() == null) {
                 unidadSelec.setFechaInicioUnidad(fecha);
             } else {
+                System.out.println("FECHA PERIODO: INICIIO: " + silabo.getPeriodo().getFechaInicio());
                 if ((unidadSelec.getFechaFinUnidad().isAfter(fecha)
                         || fecha.equals(unidadSelec.getFechaInicioUnidad()))
                         && fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {

@@ -55,8 +55,12 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
                 u.setContenidosUnidad(res.getString(5));
-                u.setFechaInicioUnidad(res.getDate(6).toLocalDate());
-                u.setFechaFinUnidad(res.getDate(7).toLocalDate());
+                if (res.getDate(6) != null) {
+                    u.setFechaInicioUnidad(res.getDate(6).toLocalDate());
+                }
+                if (res.getDate(7) != null) {
+                    u.setFechaFinUnidad(res.getDate(7).toLocalDate());
+                }
                 u.setHorasDocenciaUnidad(res.getInt(8));
                 u.setHorasPracticaUnidad(res.getInt(9));
                 u.setHorasAutonomoUnidad(res.getInt(10));

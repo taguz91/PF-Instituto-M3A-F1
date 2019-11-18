@@ -14,7 +14,7 @@ public class EstrategiasUnidadMD  implements Serializable{
     
     private final int idLocal = UUID.randomUUID().hashCode();
 
-    private Integer idEstrategiaUnidad;
+    private Integer idEstrategiaUnidad = 0;
     private EstrategiasAprendizajeMD estrategia;
 
     private UnidadSilaboMD unidad;

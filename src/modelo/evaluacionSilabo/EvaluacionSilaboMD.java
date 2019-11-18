@@ -16,7 +16,7 @@ public class EvaluacionSilaboMD implements Serializable {
 
     private String indicador;
 
-    private Integer idEvaluacion;
+    private Integer idEvaluacion = 0;
 
     private String instrumento;
 

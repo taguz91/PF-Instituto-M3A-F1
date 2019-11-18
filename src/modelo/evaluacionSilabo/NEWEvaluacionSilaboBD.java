@@ -113,8 +113,12 @@ public class NEWEvaluacionSilaboBD extends CONBD {
                 e.getIdTipoActividad().setIdTipoActividad(res.getInt(3));
                 e.setInstrumento(res.getString(4));
                 e.setValoracion(res.getDouble(5));
-                e.setFechaEnvio(res.getDate(6).toLocalDate());
-                e.setFechaPresentacion(res.getDate(7).toLocalDate());
+                if (res.getDate(6) != null) {
+                    e.setFechaEnvio(res.getDate(6).toLocalDate());
+                }
+                if (res.getDate(7) != null) {
+                    e.setFechaPresentacion(res.getDate(7).toLocalDate());
+                }
                 e.getIdUnidad().setNumeroUnidad(res.getInt(8));
                 ES.add(e);
             }

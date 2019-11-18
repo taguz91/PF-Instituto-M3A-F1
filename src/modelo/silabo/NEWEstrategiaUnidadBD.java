@@ -25,6 +25,18 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
         return EUBD;
     }
 
+    private static final String QUERYBYS = "SELECT id_estrategia_unidad, "
+            + "eu.id_unidad, "
+            + "eu.id_estrategia, "
+            + "ea.descripcion_estrategia, "
+            + "us.numero_unidad  "
+            + "FROM public.\"EstrategiasUnidad\" eu, "
+            + "public.\"UnidadSilabo\" us, "
+            + "public.\"EstrategiasAprendizaje\" ea "
+            + "WHERE eu.id_unidad = us.id_unidad "
+            + "AND eu.id_estrategia = ea.id_estrategia "
+            + "AND id_silabo=?;";
+
     @Override
     public int guardar(EstrategiasUnidadMD e, int idUnidad) {
         String sql = "INSERT INTO public.\"EstrategiasUnidad\"("
@@ -73,17 +85,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
 
     @Override
     public List<EstrategiasUnidadMD> getBySilabo(int idSilabo) {
-        String sql = "SELECT "
-                + "eu.id_unidad, "
-                + "eu.id_estrategia, "
-                + "ea.descripcion_estrategia, "
-                + "us.numero_unidad  "
-                + "FROM public.\"EstrategiasUnidad\" eu, "
-                + "public.\"UnidadSilabo\" us, "
-                + "public.\"EstrategiasAprendizaje\" ea "
-                + "WHERE eu.id_unidad = us.id_unidad "
-                + "AND eu.id_estrategia = ea.id_estrategia "
-                + "AND id_silabo=?;";
+        String sql = QUERYBYS;
         List<EstrategiasUnidadMD> EUS = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
@@ -91,11 +93,41 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
+                eu.setIdEstrategiaUnidad(res.getInt(1));
+                eu.getUnidad().setIdUnidad(res.getInt(2));
+                eu.getEstrategia().setIdEstrategia(res.getInt(3));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(4));
+                eu.getUnidad().setNumeroUnidad(res.getInt(5));
 
-                eu.getUnidad().setIdUnidad(res.getInt(1));
-                eu.getUnidad().setNumeroUnidad(res.getInt(4));
-                eu.getEstrategia().setIdEstrategia(res.getInt(2));
-                eu.getEstrategia().setDescripcionEstrategia(res.getString(3));
+                EUS.add(eu);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No consultamos estrategias por id silabo. \n"
+                    + e.getMessage(),
+                    "Error al consultar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return EUS;
+    }
+
+    public List<EstrategiasUnidadMD> getBySilaboReferencia(int idSilabo) {
+        String sql = QUERYBYS;
+        List<EstrategiasUnidadMD> EUS = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idSilabo);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
+                eu.setIdEstrategiaUnidad(0);
+                eu.getUnidad().setIdUnidad(res.getInt(2));
+                eu.getEstrategia().setIdEstrategia(res.getInt(3));
+                eu.getEstrategia().setDescripcionEstrategia(res.getString(4));
+                eu.getUnidad().setNumeroUnidad(res.getInt(5));
 
                 EUS.add(eu);
             }
