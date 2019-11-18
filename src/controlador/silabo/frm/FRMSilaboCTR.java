@@ -246,7 +246,14 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getLblEliminarUnidad().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                eliminarUnidad();
+                int r = JOptionPane.showConfirmDialog(
+                        FRM_ACCIONES,
+                        "Esta seguro de eliminar la Unidad "
+                        + unidadSelec.getNumeroUnidad()
+                );
+                if (r == JOptionPane.YES_OPTION) {
+                    eliminarUnidad();
+                }
             }
         });
         FRM_GESTION.getLblAgregarUnidad().addMouseListener(new MouseAdapter() {
@@ -955,6 +962,7 @@ public class FRMSilaboCTR extends DCTR {
             guardar();
             cargarCmbUnidad();
             mostrarUnidad();
+            llenarTblEstrategiasUnidad();
         }
         eliminandoUnidad = false;
     }
