@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0e5d21e-5378-47c6-8d68-b4f9aa976e8c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="59"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/plan_de_clase/"]]></defaultValueExpression>
 	</parameter>
@@ -64,7 +64,17 @@ AND id_unidad = $P!{id_unidad}
   FROM "EvaluacionSilabo" e, "UnidadSilabo" u
   WHERE e.id_unidad = u.id_unidad
   AND e.id_unidad= $P!{id_unidad}
-) AS instrumento_arr 
+) AS instrumento_arr , 
+
+(
+  SELECT trabajo_autonomo FROM "PlandeClases" 
+  where id_plan_clases=$P!{id_plan_clase}
+) as autonomo_plan , 
+
+(
+  select observaciones from "PlandeClases" 
+  where id_plan_clases=$P!{id_plan_clase}
+) AS observaciones_plan
 
 FROM "UnidadSilabo" 
 WHERE id_unidad =$P!{id_unidad}]]>
@@ -89,6 +99,8 @@ WHERE id_unidad =$P!{id_unidad}]]>
 	<field name="construccion_arr" class="java.lang.String"/>
 	<field name="consolidacion_arr" class="java.lang.String"/>
 	<field name="instrumento_arr" class="java.lang.String"/>
+	<field name="autonomo_plan" class="java.lang.String"/>
+	<field name="observaciones_plan" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -281,11 +293,9 @@ EVALUACIÓN]]></text>
 				<textFieldExpression><![CDATA[$F{instrumento_arr}]]></textFieldExpression>
 			</textField>
 		</band>
-	</detail>
-	<summary>
-		<band height="73">
+		<band height="37">
 			<staticText>
-				<reportElement x="393" y="1" width="44" height="36" uuid="591ce227-ffa9-4c8c-9b9d-fdc84b2b6f4e"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="393" y="1" width="44" height="36" isPrintWhenDetailOverflows="true" uuid="591ce227-ffa9-4c8c-9b9d-fdc84b2b6f4e"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -298,8 +308,8 @@ EVALUACIÓN]]></text>
 				</textElement>
 				<text><![CDATA[   Horas: ]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="437" y="1" width="118" height="36" uuid="017b0694-9961-4fca-93fc-b1d482599217"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="437" y="1" width="118" height="36" isPrintWhenDetailOverflows="true" uuid="017b0694-9961-4fca-93fc-b1d482599217"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -314,7 +324,7 @@ EVALUACIÓN]]></text>
 				<textFieldExpression><![CDATA[$F{horas_autonomo_unidad}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="63" height="37" uuid="eeeb5eaf-1044-4dce-ab75-27aee2a7408c"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="63" height="37" isPrintWhenDetailOverflows="true" uuid="eeeb5eaf-1044-4dce-ab75-27aee2a7408c"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -329,22 +339,55 @@ EVALUACIÓN]]></text>
 				<text><![CDATA[Trabajo
 Autónomo:]]></text>
 			</staticText>
-			<subreport>
-				<reportElement x="63" y="1" width="329" height="36" uuid="608a3230-350d-46ac-8b7d-e2c5880d1ef3"/>
-				<subreportParameter name="id_plan_clase">
-					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "trabajo autonomo.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="1" y="37" width="554" height="36" uuid="6b876bd1-06f9-4a1e-b5aa-f5eb15da4a73"/>
-				<subreportParameter name="id_plan_clase">
-					<subreportParameterExpression><![CDATA[$P{id_plan_clase}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "observaciones.jasper"]]></subreportExpression>
-			</subreport>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="63" y="0" width="330" height="37" isPrintWhenDetailOverflows="true" uuid="872690d0-7caf-4b3d-8f7b-62ea7c66b52b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="7"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{autonomo_plan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="36">
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="63" height="36" isPrintWhenDetailOverflows="true" uuid="e4508e08-3da1-454c-b054-ca0b0da4d9b5"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<text><![CDATA[Objetivos:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="63" y="0" width="492" height="36" isPrintWhenDetailOverflows="true" uuid="ba666120-442f-4c0f-91ee-659e29945044"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="7"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observaciones_plan}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
