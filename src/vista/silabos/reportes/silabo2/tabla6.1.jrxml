@@ -109,6 +109,7 @@
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph rightIndent="2"/>
 				</textElement>
 				<text><![CDATA[TOTAL EXÁMENES]]></text>
 			</staticText>
@@ -123,6 +124,7 @@
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph rightIndent="2"/>
 				</textElement>
 				<text><![CDATA[TOTAL GESTIÓN DE AULA]]></text>
 			</staticText>
@@ -137,6 +139,7 @@
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph rightIndent="2"/>
 				</textElement>
 				<text><![CDATA[TOTAL CICLO]]></text>
 			</staticText>
@@ -149,7 +152,7 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[60]]></textFieldExpression>
@@ -163,7 +166,7 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[40]]></textFieldExpression>
@@ -177,7 +180,7 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[100]]></textFieldExpression>

@@ -28,7 +28,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="srcSilabos" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
@@ -37,12 +37,14 @@
                           <Component id="lblBuscar" min="-2" pref="74" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtBuscar" max="32767" attributes="0"/>
                           <Component id="cmbPeriodo" min="-2" pref="292" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnNuevo" min="-2" pref="80" max="-2" attributes="0"/>
+
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -89,6 +91,7 @@
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="srcSilabos" pref="351" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+
           </Group>
       </Group>
     </DimensionLayout>
@@ -211,6 +214,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Informacion"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnActualizar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Refrescar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

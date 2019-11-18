@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5ff756fa-6869-45b1-b237-2a7ae9835a26">
-	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plan_clase" class="java.lang.String"/>
@@ -14,7 +14,7 @@
 	<title>
 		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="14" uuid="4ef0b93c-452d-4a36-9b5b-1a059366929b"/>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="14" uuid="4ef0b93c-452d-4a36-9b5b-1a059366929b"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -32,7 +32,7 @@
 	<detail>
 		<band height="22">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="555" height="22" uuid="4a19dbfe-31c3-4360-9fb3-1a52bde931ec"/>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="22" uuid="4a19dbfe-31c3-4360-9fb3-1a52bde931ec"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.0"/>

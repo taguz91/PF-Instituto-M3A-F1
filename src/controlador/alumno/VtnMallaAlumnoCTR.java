@@ -3,6 +3,7 @@ package controlador.alumno;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -100,6 +101,11 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
         vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
         vtnMallaAlm.getBtnReporteCarrera().addActionListener(e -> reportePorCarrera());
+
+        /*
+            AGREGADO POR DIEGO
+         */
+        vtnMallaAlm.getBtnRptEgresados().addActionListener(this::btnReporteEgresados);
 
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
                 vtnMallaAlm.getTxtBuscar().getText().trim()));
@@ -308,7 +314,6 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 vtnMallaAlm.getCmbEstado().setEnabled(true);
                 if (!cargados) {
                     cargados = true;
-                    System.out.println("Se cargan los ciclos");
                     cargarCmbEstado();
                     ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
                     cargarCmbCiclos(ciclos);
@@ -446,7 +451,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             mallaAlm.cargarMallaPorCarrera(carreras.get(pos - 1).getId());
             vtnMallaAlm.setCursor(new Cursor(3));
             reporteGrande();
-            
+
         } else {
             JOptionPane.showMessageDialog(vtnMallaAlm, "Seleccione una carrera.");
         }
@@ -475,7 +480,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 reporteGrande();
             }
         } else {
-            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No tenemos datos para mostrar el reporte.");
+            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar la carrera y un alumno.");
         }
     }
 
@@ -487,12 +492,21 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             parametro.put("consulta", mallaAlm.getSql());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
-            
+
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         } finally {
             vtnMallaAlm.setCursor(new Cursor(0));
         }
+    }
+
+    private void btnReporteEgresados(ActionEvent e) {
+        int r = JOptionPane.showOptionDialog(vtnMallaAlm, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
+                "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
+                    "Alumnos entre 90 a 100", "Reporte Completo", "Reporte Interciclo", "Tabla Final"},
+                "Cancelar");
+
     }
 
 }

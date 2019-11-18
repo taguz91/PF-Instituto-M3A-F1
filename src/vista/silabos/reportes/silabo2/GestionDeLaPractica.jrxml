@@ -32,7 +32,7 @@ ORDER BY u.numero_unidad]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[UNIDAD 
 DIDÁCTICA]]></text>
 			</staticText>
@@ -58,7 +58,7 @@ PRESENTACIÓN]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -107,15 +107,15 @@ DE ENVIO]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="68" splitType="Stretch">
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="466" y="0" width="89" height="67" uuid="ceacc1c4-6847-4374-a113-41ecc8f04eb8"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToBandHeight" x="466" y="0" width="89" height="67" uuid="ceacc1c4-6847-4374-a113-41ecc8f04eb8"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -142,8 +142,8 @@ DE ENVIO]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="208" y="0" width="105" height="67" uuid="e278f838-3ea9-4437-91ed-abc99ef1829b"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="208" y="0" width="105" height="67" uuid="e278f838-3ea9-4437-91ed-abc99ef1829b"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -156,8 +156,8 @@ DE ENVIO]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="388" y="0" width="78" height="67" uuid="82e35136-30ba-4a25-9be0-4732782f8eb9"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement stretchType="RelativeToBandHeight" x="388" y="0" width="78" height="67" uuid="82e35136-30ba-4a25-9be0-4732782f8eb9"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -170,8 +170,8 @@ DE ENVIO]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_envio}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="313" y="0" width="75" height="67" uuid="64745d40-cf2e-47ea-af2e-32ce2ac094c7"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="313" y="0" width="75" height="67" uuid="64745d40-cf2e-47ea-af2e-32ce2ac094c7"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -184,8 +184,8 @@ DE ENVIO]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valoracion}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="41" y="0" width="104" height="67" uuid="468d08c7-6767-48b0-baee-ee5d742d0813"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="41" y="0" width="104" height="67" uuid="468d08c7-6767-48b0-baee-ee5d742d0813"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -199,7 +199,7 @@ DE ENVIO]]></text>
 				<textFieldExpression><![CDATA[$F{indicador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="41" height="67" uuid="43b374b7-0cf5-4bae-a89b-7545ac1e1f4c"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="41" height="67" uuid="43b374b7-0cf5-4bae-a89b-7545ac1e1f4c"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
@@ -207,7 +207,9 @@ DE ENVIO]]></text>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<text><![CDATA[Gestion de la practica]]></text>
 			</staticText>
 		</band>

@@ -733,6 +733,7 @@ public class ControladorSilaboU {
         });
         vista.getBtnGuardar().addActionListener(e -> ejecutar(e));
 
+
         vista.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
 
         mostrarUnidad();

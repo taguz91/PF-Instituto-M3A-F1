@@ -226,7 +226,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         bibliografia = new frmReferencias();
 
-        gestion.getBtnGuardar().setEnabled(false);
+        //gestion.getBtnGuardar().setEnabled(false);
 
         cambioSilabo = false;
 
@@ -934,7 +934,7 @@ public class ControladorSilaboC extends AbstractSilaboCTR {
 
         });
 
-        gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
+        //gestion.getBtnGuardar().addActionListener(e -> ejecutar(e));
         gestion.getBtnSiguiente().addActionListener(e -> ejecutar3(e, silabo));
 
         cargarEstrategias(unidades.get(0));

@@ -7,11 +7,23 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select count(ac.id_almn_curso)
-	from  
-	"AlumnoCurso" ac join "Cursos" c ON c.id_curso=ac.id_curso 
-	join "Alumnos"  a on ac.id_alumno=a.id_alumno join "Personas" p on p.id_persona=a.id_persona
-	where  C.id_curso=$P!{id_curso} and  ROUND(ac.almn_curso_nota_final,1)<70 and  ac.almn_curso_asistencia ILIKE '%Asiste%' and ac.almn_curso_activo IS TRUE]]>
+		<![CDATA[SELECT
+	"count" ( * ) 
+FROM
+	"AlumnoCurso"
+WHERE
+	"AlumnoCurso".almn_curso_activo IS TRUE 
+	AND "AlumnoCurso".almn_curso_asistencia ILIKE '%ASISTE%' 
+	AND ROUND( "AlumnoCurso".almn_curso_nota_final, 1 ) < (
+	SELECT
+		round( ( tipo_nota_valor_maximo / 100 ) * 70, 2 ) AS "MINIMO" 
+	FROM
+		"TipoDeNota" 
+	WHERE
+		"TipoDeNota".id_prd_lectivo = ( SELECT "Cursos".id_prd_lectivo FROM "Cursos" WHERE "Cursos".id_curso = $P!{id_curso} ) 
+		AND "TipoDeNota".tipo_nota_nombre ='NOTA FINAL' 
+	) 
+	AND "AlumnoCurso".id_curso = $P!{id_curso};]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<background>

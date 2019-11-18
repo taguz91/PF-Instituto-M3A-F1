@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.331000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="660"/>
+	<property name="ireport.y" value="936"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo2/"]]></defaultValueExpression>
@@ -480,7 +480,7 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 				<reportElement x="0" y="7" width="100" height="1" uuid="892f2362-887e-487b-b96f-f2ffe3d3d9bc"/>
 			</break>
 			<subreport>
-				<reportElement x="7" y="19" width="519" height="45" uuid="30f461d9-9cef-4105-8f9e-bec237141dee"/>
+				<reportElement x="10" y="19" width="519" height="45" uuid="30f461d9-9cef-4105-8f9e-bec237141dee"/>
 				<subreportParameter name="id_materia">
 					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -647,9 +647,9 @@ m.id_carrera=c.id_carrera and id_materia=$P!{parameter1}]]>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="494" y="0" width="61" height="20" uuid="804bec07-eee5-464b-9409-acf16beaadd3"/>
+				<reportElement x="494" y="0" width="61" height="15" uuid="804bec07-eee5-464b-9409-acf16beaadd3"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
