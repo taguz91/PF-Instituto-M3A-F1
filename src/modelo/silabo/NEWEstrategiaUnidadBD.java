@@ -37,6 +37,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             + "AND eu.id_estrategia = ea.id_estrategia "
             + "AND id_silabo=?;";
 
+    private static final String DELETE = "DELETE FROM public.\"EstrategiasUnidad\" "
+            + "WHERE id_estrategia_unidad = ?;";
+
     @Override
     public int guardar(EstrategiasUnidadMD e, int idUnidad) {
         String sql = "INSERT INTO public.\"EstrategiasUnidad\"("
@@ -178,8 +181,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
     }
 
     public void eliminarAll(List<EstrategiasUnidadMD> estrategias) {
-        String sql = "DELETE FROM public.\"EstrategiasUnidad\" "
-                + "WHERE id_estrategia_unidad = ?";
+        String sql = DELETE;
         PreparedStatement ps = CON.getPSPOOL(sql);
 
         estrategias.forEach(e -> {
@@ -208,6 +210,10 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
         } finally {
             CON.cerrarCONPS(ps);
         }
+    }
+    
+    public boolean eliminar(int idEstrategiaUnidad){
+        return CON.deleteById(DELETE, idEstrategiaUnidad);
     }
 
 }

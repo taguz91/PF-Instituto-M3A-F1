@@ -313,7 +313,11 @@ public class ConnDBPool {
     // Metodos JOHNNY
     public PreparedStatement getPSPOOL(String sql) {
         try {
-            return getConnection().prepareStatement(sql);
+            if (!ds.isClosed()) {
+                return getConnection().prepareStatement(sql);
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error de conexion con el servidor. \n"

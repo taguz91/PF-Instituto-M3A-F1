@@ -836,8 +836,9 @@ public class FRMSilaboCTR extends DCTR {
                             + FRM_GESTION.getTblEstrategias()
                                     .getValueAt(s, 0).toString()
                     );
-                    eliminarEstrategia(FRM_GESTION.getTblEstrategias()
-                            .getValueAt(s, 0).toString()
+                    eliminarEstrategia(
+                            FRM_GESTION.getTblEstrategias()
+                                    .getValueAt(s, 0).toString()
                     );
                 }
                 llenarTblEstrategiasUnidad();
@@ -847,6 +848,9 @@ public class FRMSilaboCTR extends DCTR {
 
     private void eliminarEstrategia(String idLocal) {
         estrategias.removeIf(e -> {
+            if (e.getIdLocal() == Integer.parseInt(idLocal)) {
+                EUBD.eliminar(e.getIdEstrategiaUnidad());
+            }
             return e.getIdLocal() == Integer.parseInt(idLocal);
         });
     }
