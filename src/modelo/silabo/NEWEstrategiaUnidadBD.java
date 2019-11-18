@@ -47,11 +47,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                 + "id_estrategia) "
                 + "VALUES (?, ?);";
         PreparedStatement ps = CON.getPSID(sql);
-        int idGenerado = 0;
         try {
             ps.setInt(1, idUnidad);
             ps.setInt(2, e.getEstrategia().getIdEstrategia());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la estrategia unidad. \n"
@@ -60,7 +58,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     public int editar(EstrategiasUnidadMD e) {
@@ -68,11 +66,9 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                 + "SET id_estrategia=? "
                 + "WHERE id_estrategia_unidad=?;";
         PreparedStatement ps = CON.getPSID(sql);
-        int idGenerado = 0;
         try {
             ps.setInt(1, e.getEstrategia().getIdEstrategia());
             ps.setInt(2, e.getIdEstrategiaUnidad());
-            idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la estrategia unidad. \n"
@@ -81,7 +77,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
                     JOptionPane.ERROR_MESSAGE
             );
         }
-        return idGenerado;
+        return CON.getIDGenerado(ps);
     }
 
     @Override
