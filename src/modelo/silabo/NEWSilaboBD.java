@@ -693,6 +693,8 @@ public class NEWSilaboBD implements ISilaboBD {
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
         return silabo;
