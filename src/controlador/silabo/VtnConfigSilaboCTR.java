@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import modelo.CONS;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWCarreraBD;
 import modelo.silabo.NEWMateriaBD;
 import modelo.silabo.NEWPeriodoLectivoBD;
@@ -29,6 +30,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
      */
     private final NEWCarreraBD CARRERA_BD = NEWCarreraBD.single();
     private final NEWPeriodoLectivoBD PERIODO_BD = NEWPeriodoLectivoBD.single();
+    private final NEWSilaboBD SILABO_CON = NEWSilaboBD.single();
 
     private final List<CarreraMD> carreras = CARRERA_BD.getByUsername(CONS.USUARIO.getUsername());
     private List<MateriaMD> materias;
@@ -169,11 +171,20 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
         if (indexCmbRef > 0) {
 
-            modelo = NEWSilaboBD.single().getByCarreraPersonaPeriodo(
-                    vista.getCmbCarrera().getSelectedItem().toString(),
-                    CONS.USUARIO.getPersona().getIdPersona(),
-                    vista.getCmbPeriodoRef().getSelectedItem().toString()
-            );
+            MateriaMD materia = materias.stream()
+                    .filter(item -> item.getNombre().equals(vista.getCmbAsignatura().getSelectedItem().toString()))
+                    .findFirst()
+                    .get();
+
+            PeriodoLectivoMD periodo = silabosRef.stream()
+                    .filter(item -> item.getPeriodo().getNombre().equalsIgnoreCase(vista.getCmbPeriodoRef().getSelectedItem().toString()))
+                    .map(c -> c.getPeriodo())
+                    .findFirst()
+                    .get();
+
+            modelo = new SilaboMD();
+
+            modelo = SILABO_CON.getSilaboBy(materia, periodo);
 
             FRMSilaboCTR ctr = new FRMSilaboCTR(desktop, modelo);
 
