@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
@@ -157,8 +159,6 @@ public class FRMSilaboCTR extends DCTR {
         cargarDatosSilabo();
         iniciarSilabo();
         iniciarVentana();
-        System.out.println("Fecha Inicio " + silabo.getPeriodo().getFechaInicio());
-        System.out.println("Fecha Fin " + silabo.getPeriodo().getFechaFin());
     }
 
     private void estiloTablas() {
@@ -170,6 +170,13 @@ public class FRMSilaboCTR extends DCTR {
      * Comprobamos si existe o no un silabo anterior para iniciar el formulario
      */
     private void iniciarVentana() {
+        // Evento para detectar cuando se cierre la ventana  
+        FRM_GESTION.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosing(InternalFrameEvent e) {
+                cambioUnidad = true;
+            }
+        });
         // Acciones
         FRM_GESTION.getBtnGuardar().addActionListener(e -> guardar());
         // Tablas
@@ -429,8 +436,6 @@ public class FRMSilaboCTR extends DCTR {
         if (!"".equals(code)) {
             int r = JOptionPane.showConfirmDialog(FRM_ACCIONES, "Esta seguro de quitar la actividad.");
             if (r == JOptionPane.YES_OPTION) {
-                System.out.println("ELIMINADO BRO");
-                System.out.println("CODE: " + code);
                 seleccionPorIdLocal(code);
                 if (evaluacionSelec != null) {
                     System.out.println("Evaluacion: " + evaluacionSelec.toString());
@@ -1055,7 +1060,8 @@ public class FRMSilaboCTR extends DCTR {
                 // La fecha de inicio debe ser mayor a la fecha fin 
                 if (fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
                     msg = "La fecha de inicio debe ser mayor a la "
-                            + "fecha de inicio del periodo. \n";
+                            + "fecha de inicio del periodo. "
+                            + fecha + "\n";
                     valido = false;
                 }
                 // La fecha de fin inicio ser anterior a la fecha de fin de periodo.
@@ -1111,8 +1117,10 @@ public class FRMSilaboCTR extends DCTR {
                 }
 
                 if (!valido) {
-                    UFRMSCTR.errorFecha("Debe indicar una fecha de "
-                            + "fin correcta. \n " + msg);
+                    UFRMSCTR.errorFecha(
+                            "Debe indicar una fecha de fin correcta. \n"
+                            + msg
+                    );
                     FRM_GESTION.getDchFechaFin().setDate(Date
                             .from(unidadSelec.getFechaInicioUnidad()
                                     .atStartOfDay(ZoneId.systemDefault())
