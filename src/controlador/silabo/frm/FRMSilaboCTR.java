@@ -903,8 +903,7 @@ public class FRMSilaboCTR extends DCTR {
             });
         }
     }
-    
-    
+
     private void agregarUnidad() {
         UnidadSilaboMD u = new UnidadSilaboMD();
         u.setNumeroUnidad(unidades.size() + 1);
