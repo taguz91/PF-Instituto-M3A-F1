@@ -700,4 +700,79 @@ public class NEWSilaboBD implements ISilaboBD {
         return silabo;
 
     }
+
+    public List<SilaboMD> getSilabosPeriodo(int idPeriodo) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"Materias\".id_materia,\n"
+                + "	\"Materias\".materia_nombre,\n"
+                + "	\"Silabo\".fecha_silabo,\n"
+                + "	\"Silabo\".estado_silabo,\n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"Carreras\".carrera_modalidad \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
+                + "	INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo =  " + idPeriodo + "\n"
+                + "ORDER BY\n"
+                + "	\"PeriodoLectivo\".id_prd_lectivo DESC,\n"
+                + "	\"Materias\".materia_nombre ASC"
+                + "";
+
+        List<SilaboMD> silabos = new ArrayList<>();
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                SilaboMD silabo = new SilaboMD();
+
+                silabo.setID(rs.getInt("id_silabo"));
+                silabo.setEstado(rs.getInt("estado_silabo"));
+
+                CarreraMD carrera = new CarreraMD();
+                carrera.setModalidad(rs.getString("carrera_modalidad"));
+
+                silabo.setPeriodo(
+                        new PeriodoLectivoMD()
+                                .setID(rs.getInt("id_prd_lectivo"))
+                                .setNombre(rs.getString("prd_lectivo_nombre"))
+                                .setCarrera(carrera)
+                );
+
+                silabo.setMateria(
+                        new MateriaMD()
+                                .setId(rs.getInt("id_materia"))
+                                .setNombre(rs.getString("materia_nombre"))
+                );
+                try {
+                    silabo.setFechaGeneracion(
+                            rs.getDate("fecha_silabo").toLocalDate()
+                    );
+
+                } catch (NullPointerException e) {
+                    System.out.println(
+                            "NOT TIENE FECHA DE GENERACION: "
+                            + silabo.getID()
+                            + " "
+                            + silabo.getPeriodo().getNombre()
+                            + " "
+                            + silabo.getMateria().getNombre()
+                    );
+                }
+
+                silabos.add(silabo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return silabos;
+    }
 }

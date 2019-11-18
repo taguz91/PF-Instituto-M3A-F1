@@ -53,7 +53,9 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     CONS.USUARIO.getPersona().getIdPersona()
             );
 
-        } else {
+        } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+
+            periodos = PERIODO_CONN.getPeriodosCoordinador(CONS.USUARIO.getPersona().getIdPersona());
 
         }
 
@@ -72,6 +74,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
         vista.getTxtBuscar().addCaretListener(this::txtBuscar);
         vista.getBtnInformacion().addActionListener(this::btnInformacion);
+        vista.getBtnRefresh().addActionListener(this::btnRefresh);
 
         tableM.addTableModelListener(new TableModelListener() {
             boolean active = false;
@@ -89,6 +92,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
         });
 
+        boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR") || CONS.ROL.getNombre().equalsIgnoreCase("DEV");
+        
         List<String> estados = new ArrayList<>();
         estados.add("APROBADO");
         estados.add("PENDIENTE");
@@ -96,7 +101,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getTbl()
                 .getColumnModel()
                 .getColumn(5)
-                .setCellEditor(new ComboBoxCellEditor(true, estados));
+                .setCellEditor(new ComboBoxCellEditor(estado, estados));
     }
 
     /*
@@ -107,6 +112,12 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         periodos.stream()
                 .map(c -> c.getNombre())
                 .forEach(vista.getCmbPeriodo()::addItem);
+    }
+
+    private PeriodoLectivoMD getPeriodoCmb() {
+        return periodos.stream().filter(item -> item.getNombre().equalsIgnoreCase(vista.getCmbPeriodo().getSelectedItem().toString()))
+                .findFirst()
+                .get();
     }
 
     private Consumer<SilaboMD> cargador() {
@@ -188,10 +199,18 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void setLista() {
         PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
                 .getSelectedIndex());
+        if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
+            lista = SILABO_CONN.findBy(
+                    user.getPersona().getIdentificacion(), periodo.getID()
+            );
+        } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
-        lista = SILABO_CONN.findBy(
-                user.getPersona().getIdentificacion(), periodo.getID()
-        );
+            lista = SILABO_CONN.getSilabosPeriodo(
+                    getPeriodoCmb().getID()
+            );
+
+        }
+
     }
 
     private void mensajeEditando() {
@@ -315,6 +334,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
         }
 
+        btnRefresh(e);
+
     }
 
     private void cmbCarrera(ItemEvent e) {
@@ -327,8 +348,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         tableM.setRowCount(0);
         String buscar = vista.getTxtBuscar().getText().toLowerCase();
         lista.stream()
-                .filter(item -> item.getMateria().getNombre().toLowerCase().contains(buscar)
-                ).forEach(cargador());
+                .filter(item -> item.getMateria().getNombre().toLowerCase().contains(buscar))
+                .forEach(cargador());
     }
 
     private void cambiarEstado() {
@@ -355,6 +376,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             JOptionPane.showMessageDialog(vista, informacion, "INFORMACION DEL SILABO", JOptionPane.PLAIN_MESSAGE);
 
         }
+    }
+
+    private void btnRefresh(ActionEvent e) {
+        setLista();
+        cargarTabla(cargador());
     }
 
 }
