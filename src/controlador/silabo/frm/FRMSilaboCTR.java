@@ -250,6 +250,7 @@ public class FRMSilaboCTR extends DCTR {
                         FRM_ACCIONES,
                         "Esta seguro de eliminar la Unidad "
                         + unidadSelec.getNumeroUnidad()
+                        + " no tendra opcion de recuperarla."
                 );
                 if (r == JOptionPane.YES_OPTION) {
                     eliminarUnidad();
@@ -283,8 +284,12 @@ public class FRMSilaboCTR extends DCTR {
                 guardando = true;
                 evaluacionSelec = new EvaluacionSilaboMD();
             }
-            evaluacionSelec.setIndicador(FRM_ACCIONES.getTxtIndicador().getText());
-            evaluacionSelec.setInstrumento(FRM_ACCIONES.getTxtInstrumento().getText());
+            evaluacionSelec.setIndicador(
+                    FRM_ACCIONES.getTxtIndicador().getText()
+            );
+            evaluacionSelec.setInstrumento(
+                    FRM_ACCIONES.getTxtInstrumento().getText()
+            );
             evaluacionSelec.setValoracion(Double.parseDouble(
                     FRM_ACCIONES.getSpnValoracion().getValue().toString()
             ));
@@ -296,7 +301,6 @@ public class FRMSilaboCTR extends DCTR {
             );
 
             if (guardando) {
-                //evaluacionSelec.getIdUnidad().setNumeroUnidad(unidadSelec.getNumeroUnidad());
                 evaluacionSelec.setIdUnidad(unidadSelec);
                 evaluacionSelec.getIdTipoActividad().setIdTipoActividad(getIdTipoActividad());
                 evaluaciones.add(evaluacionSelec);
@@ -319,10 +323,11 @@ public class FRMSilaboCTR extends DCTR {
             UFRMSCTR.errorFrmEvaluacion("Debe ingresar todos los campos");
         }
 
+        String msg = "";
+
         if (valido) {
             String valor = FRM_ACCIONES.getSpnValoracion().getValue().toString();
             valido = Validar.esNumerosDecimales(valor);
-            System.out.println("Valor: " + valor);
             if (!valido) {
                 UFRMSCTR.errorFrmEvaluacion("La valoracion de la actividad es incorrecta.");
             }
@@ -332,10 +337,38 @@ public class FRMSilaboCTR extends DCTR {
             LocalDate fe = UFRMSCTR.getFechaJDC(FRM_ACCIONES.getDchFechaEnvio());
             LocalDate fp = UFRMSCTR.getFechaJDC(FRM_ACCIONES.getDchFechaPresentacion());
             if (fp.isBefore(fe)) {
-                UFRMSCTR.errorFrmEvaluacion("La fecha de presentación debe ser despues "
-                        + "de la de envio.");
+                msg += "La fecha de presentación debe ser despues de la de envio.\n";
                 valido = false;
             }
+            if (valido) {
+                if (unidadSelec.getFechaFinUnidad() != null) {
+                    if (fe.isAfter(unidadSelec.getFechaFinUnidad())) {
+                        msg += "La fecha de envio debe ser "
+                                + "antes del fin de la unidad.\n";
+                        valido = false;
+                    }
+                    if (fp.isAfter(unidadSelec.getFechaFinUnidad())) {
+                        msg += "La fecha de presentacion no debe ser superior "
+                                + "a la fecha de fin de unidad";
+                        valido = false;
+                    }
+                }
+                if (unidadSelec.getFechaInicioUnidad() != null) {
+                    if (fe.isBefore(unidadSelec.getFechaInicioUnidad())) {
+                        msg += "La fecha de envio no puede ser anterior a "
+                                + "la fecha de inicio de la unidad.\n";
+                        valido = false;
+                    }
+                    if (fp.isBefore(unidadSelec.getFechaInicioUnidad())) {
+                        msg += "La fecha de presentacion no debe ser anterior "
+                                + "a la fecha de inicio del periodo.\n";
+                        valido = false;
+                    }
+                }
+            }
+        }
+        if (!valido) {
+            UFRMSCTR.errorFrmEvaluacion(msg);
         }
         return valido;
     }
