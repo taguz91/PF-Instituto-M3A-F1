@@ -5,6 +5,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -102,6 +104,8 @@ public class FRMSilaboCTR extends DCTR {
     private double totalGestion = 0;
     // Actividad seleccionada al dar click en editar o eliminar 
     private EvaluacionSilaboMD evaluacionSelec;
+    // Banderas 
+    boolean eliminandoUnidad = false;// Para saber cuando se esta eliminando una unidad
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
@@ -136,6 +140,7 @@ public class FRMSilaboCTR extends DCTR {
         int idSilaboGen = SBD.guardar(silabo);
         if (idSilaboGen > 0) {
             silabo.setID(idSilaboGen);
+            guardar();
         } else {
             silabo.setID(0);
             UFRMSCTR.errorGuardarSilabo();
@@ -183,13 +188,15 @@ public class FRMSilaboCTR extends DCTR {
         iniciarCmbEstrategiasConBuscador();
         // Mostramos la ventana 
         ctrPrin.agregarVtn(FRM_GESTION);
-        iniciarCMBUnidad();
+        cargarCmbUnidad();
         mostrarUnidad();
         // Iniciamos todas las acciones 
         iniciarAccionesActividades();
         iniciarEventoSPNHoras();
         iniciarEventosFecha();
         iniciarEventosFormulario();
+        iniciarEventosUnidad();
+        iniciarTblEstrategia();
         // Con esto detectamos en que panel se encuentra actualmente
         detectarPanel();
     }
@@ -231,6 +238,16 @@ public class FRMSilaboCTR extends DCTR {
                 );
             }
         });
+    }
+
+    private void iniciarEventosUnidad() {
+        FRM_GESTION.getLblEliminarUnidad().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminarUnidad();
+            }
+        });
+        FRM_GESTION.getCmbUnidad().addActionListener(e -> mostrarUnidad());
     }
 
     /**
@@ -430,13 +447,15 @@ public class FRMSilaboCTR extends DCTR {
         }
     }
 
-    private void iniciarCMBUnidad() {
+    private void cargarCmbUnidad() {
+        FRM_GESTION.getCmbUnidad().removeAllItems();
         unidades.forEach(u -> {
             FRM_GESTION.getCmbUnidad()
                     .addItem("Unidad " + u.getNumeroUnidad());
         });
-        FRM_GESTION.getCmbUnidad().setSelectedIndex(0);
-        FRM_GESTION.getCmbUnidad().addActionListener(e -> mostrarUnidad());
+        if (unidades.size() > 0) {
+            FRM_GESTION.getCmbUnidad().setSelectedIndex(0);
+        }
     }
 
     private void iniciarCmbEstrategiasConBuscador() {
@@ -636,9 +655,11 @@ public class FRMSilaboCTR extends DCTR {
      * Para obtener la unidad seleccionada
      */
     private void actualizarUnidadSeleccionada() {
-        unidadSelec = unidades.get(
-                FRM_GESTION.getCmbUnidad().getSelectedIndex()
-        );
+        if (unidades.size() > 0) {
+            unidadSelec = unidades.get(
+                    FRM_GESTION.getCmbUnidad().getSelectedIndex()
+            );
+        }
     }
 
     /**
@@ -648,76 +669,67 @@ public class FRMSilaboCTR extends DCTR {
     private void mostrarUnidad() {
         // Bandera para saber que estamos cambiando de unidad 
         cambioUnidad = true;
-        // Actualizamos la unidad seleccionada
-        actualizarUnidadSeleccionada();
+        if (unidades.size() > 0 && !eliminandoUnidad) {
+            // Actualizamos la unidad seleccionada
+            actualizarUnidadSeleccionada();
 
-        // Actualizamos los txt del formulario 
-        FRM_GESTION.getTxtTitulo().setText(
-                unidadSelec.getTituloUnidad()
-        );
-        FRM_GESTION.getTxrContenidos().setText(
-                unidadSelec.getContenidosUnidad()
-        );
-        FRM_GESTION.getTxrObjetivos().setText(
-                unidadSelec.getObjetivoEspecificoUnidad()
-        );
-        FRM_GESTION.getTxrResultados().setText(
-                unidadSelec.getResultadosAprendizajeUnidad()
-        );
-
-        // Actualizamos las fechas  
-        if (unidadSelec.getFechaInicioUnidad() != null) {
-            FRM_GESTION.getDchFechaInicio().setDate(
-                    Date.from(unidadSelec.getFechaInicioUnidad()
-                            .atStartOfDay(ZoneId.systemDefault())
-                            .toInstant()
-                    )
+            // Actualizamos los txt del formulario 
+            FRM_GESTION.getTxtTitulo().setText(
+                    unidadSelec.getTituloUnidad()
             );
-        } else {
-            FRM_GESTION.getDchFechaInicio().setDate(null);
-        }
-
-        if (unidadSelec.getFechaFinUnidad() != null) {
-            FRM_GESTION.getDchFechaFin().setDate(
-                    Date.from(unidadSelec.getFechaFinUnidad()
-                            .atStartOfDay(ZoneId.systemDefault())
-                            .toInstant()
-                    )
+            FRM_GESTION.getTxrContenidos().setText(
+                    unidadSelec.getContenidosUnidad()
             );
-        } else {
-            FRM_GESTION.getDchFechaFin().setDate(null);
+            FRM_GESTION.getTxrObjetivos().setText(
+                    unidadSelec.getObjetivoEspecificoUnidad()
+            );
+            FRM_GESTION.getTxrResultados().setText(
+                    unidadSelec.getResultadosAprendizajeUnidad()
+            );
+
+            // Actualizamos las fechas  
+            if (unidadSelec.getFechaInicioUnidad() != null) {
+                FRM_GESTION.getDchFechaInicio().setDate(
+                        Date.from(unidadSelec.getFechaInicioUnidad()
+                                .atStartOfDay(ZoneId.systemDefault())
+                                .toInstant()
+                        )
+                );
+            } else {
+                FRM_GESTION.getDchFechaInicio().setDate(null);
+            }
+
+            if (unidadSelec.getFechaFinUnidad() != null) {
+                FRM_GESTION.getDchFechaFin().setDate(
+                        Date.from(unidadSelec.getFechaFinUnidad()
+                                .atStartOfDay(ZoneId.systemDefault())
+                                .toInstant()
+                        )
+                );
+            } else {
+                FRM_GESTION.getDchFechaFin().setDate(null);
+            }
+
+            // Actualizamos las horas de docencia  
+            FRM_GESTION.getSpnHdocencia().setValue(
+                    unidadSelec.getHorasDocenciaUnidad()
+            );
+            FRM_GESTION.getSpnHpracticas().setValue(
+                    unidadSelec.getHorasPracticaUnidad()
+            );
+            FRM_GESTION.getSpnHautonomas().setValue(
+                    unidadSelec.getHorasAutonomoUnidad()
+            );
+
+            // Actualizamos las estrategias 
+            // Debemos revisar  lo de estrategias 
+            // Actualizamos las evaluaciones 
+            cargarEvaluaciones();
+            // Cargamos todas las estrategias nuevamente  
+            iniciarCmbEstrategias();
         }
-
-        // Actualizamos las horas de docencia  
-        FRM_GESTION.getSpnHdocencia().setValue(
-                unidadSelec.getHorasDocenciaUnidad()
-        );
-        FRM_GESTION.getSpnHpracticas().setValue(
-                unidadSelec.getHorasPracticaUnidad()
-        );
-        FRM_GESTION.getSpnHautonomas().setValue(
-                unidadSelec.getHorasAutonomoUnidad()
-        );
-
-        // Actualizamos las estrategias 
-        // cargarEstrategias();
-        // Debemos revisar  lo de estrategias 
-        // Actualizamos las evaluaciones 
-        cargarEvaluaciones();
-        // Cargamos todas las estrategias nuevamente  
-        iniciarCmbEstrategias();
         // Al terminar de cambiar de unidad 
         cambioUnidad = false;
-    }
-
-    private void cargarEstrategias() {
-        mdTblES.setRowCount(0);
-        todasEstrategias.forEach(e -> {
-            mdTblES.addRow(new Object[]{
-                "|",
-                e.getDescripcionEstrategia()
-            });
-        });
     }
 
     /**
@@ -778,12 +790,73 @@ public class FRMSilaboCTR extends DCTR {
         FRM_GESTION.getLblAcumuladoGestion().setText(totalGestion + "/60.0");
     }
 
+    private void iniciarTblEstrategia() {
+        FRM_GESTION.getTblEstrategias().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int s = FRM_GESTION.getTblEstrategias().getSelectedRow();
+                if (s >= 0) {
+                    String estrategia = FRM_GESTION.getTblEstrategias()
+                            .getValueAt(s, 1).toString();
+                    if (estrategia.length() > 0) {
+                        if (estrategia.length() > 23) {
+                            FRM_GESTION.getLblEstrategiaSelec().setText(
+                                    estrategia.substring(0, 23) + "..."
+                            );
+                        } else {
+                            FRM_GESTION.getLblEstrategiaSelec().setText(estrategia);
+                        }
+
+                        FRM_GESTION.getLblEstrategiaSelec().setToolTipText(
+                                estrategia
+                        );
+                    }
+                }
+            }
+        });
+        FRM_GESTION.getLblQuitarEstrategia().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminarEstrategias();
+            }
+        });
+    }
+
+    private void eliminarEstrategias() {
+        int[] ss = FRM_GESTION.getTblEstrategias().getSelectedRows();
+        if (ss.length > 0) {
+            int r = JOptionPane.showConfirmDialog(
+                    FRM_ACCIONES,
+                    "¿Esta seguro de eliminar " + ss.length
+                    + " estrategias de la unidad actual?"
+            );
+            if (r == JOptionPane.YES_OPTION) {
+                for (int s : ss) {
+                    System.out.println("Eliminamos estrategias : "
+                            + FRM_GESTION.getTblEstrategias()
+                                    .getValueAt(s, 0).toString()
+                    );
+                    eliminarEstrategia(FRM_GESTION.getTblEstrategias()
+                            .getValueAt(s, 0).toString()
+                    );
+                }
+                llenarTblEstrategiasUnidad();
+            }
+        }
+    }
+
+    private void eliminarEstrategia(String idLocal) {
+        estrategias.removeIf(e -> {
+            return e.getIdLocal() == Integer.parseInt(idLocal);
+        });
+    }
+
     private void llenarTblEstrategiasUnidad() {
         mdTblES.setRowCount(0);
         estrategias.forEach(e -> {
             if (e.getUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
                 mdTblES.addRow(new Object[]{
-                    "|",
+                    e.getIdLocal(),
                     e.getEstrategia().getDescripcionEstrategia()
                 });
             }
@@ -806,7 +879,7 @@ public class FRMSilaboCTR extends DCTR {
                     existeEstrategia = true;
                 }
                 mdTblES.addRow(new Object[]{
-                    "|",
+                    e.getIdLocal(),
                     e.getEstrategia().getDescripcionEstrategia()
                 });
             }
@@ -814,10 +887,56 @@ public class FRMSilaboCTR extends DCTR {
         if (!existeEstrategia) {
             estrategias.add(estrategiaNueva);
             mdTblES.addRow(new Object[]{
-                "|",
+                estrategiaNueva.getIdLocal(),
                 estrategiaNueva.getEstrategia().getDescripcionEstrategia()
             });
         }
+    }
+
+    private void eliminarUnidad() {
+        eliminandoUnidad = true;
+        // Eliminamos de la base 
+        boolean eliminado = true;
+        if (unidadSelec.getIdUnidad() > 0) {
+            eliminado = USBD.eliminar(unidadSelec.getIdUnidad());
+        }
+
+        if (eliminado) {
+            // Eliminamos localmente 
+            estrategias.removeIf(e -> {
+                return e.getUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad();
+            });
+            evaluaciones.removeIf(e -> {
+                return e.getIdUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad();
+            });
+            estrategias.forEach(e -> {
+                if (e.getUnidad().getNumeroUnidad() > unidadSelec.getNumeroUnidad()) {
+                    e.getUnidad().setNumeroUnidad(e.getUnidad().getNumeroUnidad() - 1);
+                }
+            });
+            evaluaciones.forEach(e -> {
+                if (e.getIdUnidad().getNumeroUnidad() > unidadSelec.getNumeroUnidad()) {
+                    e.getIdUnidad().setNumeroUnidad(e.getIdUnidad().getNumeroUnidad() - 1);
+                }
+            });
+
+            int numUnidad = unidadSelec.getNumeroUnidad();
+
+            unidades.removeIf(u -> {
+                return u.getNumeroUnidad() == unidadSelec.getNumeroUnidad();
+            });
+
+            unidades.forEach(u -> {
+                if (u.getNumeroUnidad() > numUnidad) {
+                    u.setNumeroUnidad(u.getNumeroUnidad() - 1);
+                }
+            });
+            // Guardamos luego de eliminar  
+            guardar();
+            cargarCmbUnidad();
+            mostrarUnidad();
+        }
+        eliminandoUnidad = false;
     }
 
     /**
@@ -870,19 +989,37 @@ public class FRMSilaboCTR extends DCTR {
             if (unidadSelec.getFechaFinUnidad() == null) {
                 unidadSelec.setFechaInicioUnidad(fecha);
             } else {
-                System.out.println("FECHA PERIODO: INICIIO: " + silabo.getPeriodo().getFechaInicio());
-                if ((unidadSelec.getFechaFinUnidad().isAfter(fecha)
-                        || fecha.equals(unidadSelec.getFechaInicioUnidad()))
-                        && fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
-                    unidadSelec.setFechaInicioUnidad(fecha);
-                } else {
-                    UFRMSCTR.errorFecha("Debe indicar una fecha de inicio correcta.");
+                boolean valido = true;
+                String msg = "";
+                // La fecha de inicio debe ser mayor a la fecha fin 
+                if (fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
+                    msg = "La fecha de inicio debe ser mayor a la "
+                            + "fecha de inicio del periodo. \n";
+                    valido = false;
+                }
+                // La fecha de fin inicio ser anterior a la fecha de fin de periodo.
+                if (fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
+                    msg += "La fecha de fin inicio ser anterior a la "
+                            + "fecha de fin de periodo. \n";
+                }
+                // La fecha de inicio de la unidad debe ser anterior a la fecha de fin de la unidad.
+                if (unidadSelec.getFechaFinUnidad().isAfter(fecha)) {
+                    msg += "La fecha de inicio de la unidad debe ser anterior a "
+                            + "la fecha de fin de la unidad.\n";
+                    valido = false;
+                }
+
+                if (!valido) {
+                    UFRMSCTR.errorFecha("Debe indicar una fecha de inicio correcta.\n"
+                            + msg);
                     FRM_GESTION.getDchFechaInicio().setDate(Date
                             .from(unidadSelec.getFechaFinUnidad()
                                     .atStartOfDay(ZoneId.systemDefault())
                                     .toInstant().minus(1, ChronoUnit.DAYS)
                             )
                     );
+                } else {
+                    unidadSelec.setFechaInicioUnidad(fecha);
                 }
             }
         }
@@ -894,19 +1031,35 @@ public class FRMSilaboCTR extends DCTR {
             if (unidadSelec.getFechaInicioUnidad() == null) {
                 unidadSelec.setFechaFinUnidad(fecha);
             } else {
-                if ((unidadSelec.getFechaInicioUnidad()
-                        .isBefore(fecha)
-                        || fecha.equals(unidadSelec.getFechaInicioUnidad()))
-                        && fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
-                    unidadSelec.setFechaFinUnidad(fecha);
-                } else {
-                    UFRMSCTR.errorFecha("Debe indicar una fecha de fin correcta.");
+                boolean valido = true;
+                // Aqui agregaremos los mensajes de error  
+                String msg = "";
+                // La fecha de fin debe ser mayor a la fecha de inicio del periodo
+                if (fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
+                    msg = "La fecha de fin debe ser mayor a la fecha de inicio del periodo. \n";
+                    valido = false;
+                }
+                // La fecha de fin debe ser anterior a la fecha de fin de periodo.
+                if (fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
+                    msg += "La fecha de fin debe ser anterior a la fecha de fin de periodo. \n";
+                }
+                // La fecha de inicio de la unidad debe ser posterior a la fecha de fin.
+                if (unidadSelec.getFechaInicioUnidad().isBefore(fecha)) {
+                    msg += "La fecha de inicio de la unidad debe ser posterior a la fecha de fin.\n";
+                    valido = false;
+                }
+
+                if (!valido) {
+                    UFRMSCTR.errorFecha("Debe indicar una fecha de "
+                            + "fin correcta. \n " + msg);
                     FRM_GESTION.getDchFechaFin().setDate(Date
                             .from(unidadSelec.getFechaInicioUnidad()
                                     .atStartOfDay(ZoneId.systemDefault())
                                     .toInstant().plus(1, ChronoUnit.DAYS)
                             )
                     );
+                } else {
+                    unidadSelec.setFechaFinUnidad(fecha);
                 }
             }
         }
@@ -921,7 +1074,6 @@ public class FRMSilaboCTR extends DCTR {
      * totales
      */
     private void iniciarEventoSPNHoras() {
-        System.out.println("INICIANDO LOS ESPINERS ");
         // Al actualizar horas autonomas 
         FRM_GESTION.getSpnHautonomas().addChangeListener(e -> validarHA());
         // Al actualizar horas docencia  

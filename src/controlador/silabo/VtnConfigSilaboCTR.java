@@ -3,6 +3,7 @@ package controlador.silabo;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import controlador.silabo.frm.FRMSilaboCTR;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Optional;
@@ -163,6 +164,8 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     private void btnSiguiente(ActionEvent e) {
         int indexCmbRef = vista.getCmbPeriodoRef().getSelectedIndex();
+        // Cursor de carga 
+        desktop.getVtnPrin().setCursor(new Cursor(3));
 
         if (indexCmbRef > 0) {
 

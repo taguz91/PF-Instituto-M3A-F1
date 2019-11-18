@@ -323,9 +323,10 @@ public class ConnDBPool {
         }
     }
 
-    public void noSQLPOOL(PreparedStatement ps) {
+    public boolean noSQLPOOL(PreparedStatement ps) {
+        int res = 0;
         try {
-            ps.executeUpdate();
+            res = ps.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al ejecutar el script. \n"
@@ -336,6 +337,7 @@ public class ConnDBPool {
         } finally {
             cerrarCONPS(ps);
         }
+        return res > 0;
     }
 
     public PreparedStatement getPSID(String sql) {

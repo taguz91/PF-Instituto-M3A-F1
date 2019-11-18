@@ -62,15 +62,13 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
 
     public int editar(EstrategiasUnidadMD e) {
         String sql = "UPDATE public.\"EstrategiasUnidad\" "
-                + "SET id_unidad=?, "
-                + "id_estrategia=? "
+                + "SET id_estrategia=? "
                 + "WHERE id_estrategia_unidad=?;";
         PreparedStatement ps = CON.getPSID(sql);
         int idGenerado = 0;
         try {
-            ps.setInt(1, e.getUnidad().getIdUnidad());
-            ps.setInt(2, e.getEstrategia().getIdEstrategia());
-            ps.setInt(3, e.getIdEstrategiaUnidad());
+            ps.setInt(1, e.getEstrategia().getIdEstrategia());
+            ps.setInt(2, e.getIdEstrategiaUnidad());
             idGenerado = CON.getIDGenerado(ps);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,

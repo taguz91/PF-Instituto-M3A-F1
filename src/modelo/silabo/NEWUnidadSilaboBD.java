@@ -306,4 +306,22 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return idGenerado;
     }
 
+    public boolean eliminar(int idUnidad) {
+        String sql = "DELETE FROM public.\"UnidadSilabo\" "
+                + "WHERE id_unidad = ?;";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idUnidad);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No eliminamos unidad con ID:"
+                    + idUnidad + " \n"
+                    + e.getMessage(),
+                    "Error unidad",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return CON.noSQLPOOL(ps);
+    }
+
 }
