@@ -18,7 +18,7 @@ import modelo.silabo.SilaboMD;
  */
 public class UnidadSilaboMD implements Serializable {
 
-    private Integer idUnidad;
+    private Integer idUnidad = 0;
 
     private int numeroUnidad;
 
