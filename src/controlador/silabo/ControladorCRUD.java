@@ -176,7 +176,7 @@ public class ControladorCRUD {
 
         });
 
-        crud.getCmbCarrera().addActionListener(al -> cargarSilabosDocente());
+        crud.getCmbPeriodo().addActionListener(al -> cargarSilabosDocente());
 
         cargarComboCarreras();
 
@@ -197,7 +197,7 @@ public class ControladorCRUD {
         }
 
         carrerasDocente.forEach((cmd) -> {
-            crud.getCmbCarrera().addItem(cmd.getNombre());
+            crud.getCmbPeriodo().addItem(cmd.getNombre());
         });
 
         return carrerasDocente;
@@ -210,7 +210,7 @@ public class ControladorCRUD {
 
             modeloTabla = (DefaultTableModel) crud.getTbl().getModel();
 
-            String[] parametros = {crud.getCmbCarrera().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
+            String[] parametros = {crud.getCmbPeriodo().getSelectedItem().toString(), crud.getTxtBuscar().getText(), String.valueOf(usuario.getPersona().getIdPersona())};
             //
 
             if (esCoordinador) {
@@ -277,7 +277,7 @@ public class ControladorCRUD {
         }
 
         CarreraMD carrera = CarrerasBDS.consultar(conexion, usuario.getUsername()).stream().
-                filter(c -> c.getNombre().equals(crud.getCmbCarrera().getSelectedItem().toString())).findFirst().get();
+                filter(c -> c.getNombre().equals(crud.getCmbPeriodo().getSelectedItem().toString())).findFirst().get();
 
         List<PeriodoLectivoMD> periodosCarrera = PeriodoLectivoBDS.consultar(conexion, carrera.getId());
         PeriodoLectivoMD ultimo = periodosCarrera.stream().findFirst().get();

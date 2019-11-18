@@ -587,22 +587,22 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<PeriodoLectivoMD> selectPeriodoWhere(int idDocente) {
         String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
-                + "\"public\".\"Carreras\".carrera_nombre,\n"
-                + "\"public\".\"Carreras\".carrera_modalidad,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_estado,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_activo,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_fecha_fin\n"
+                + "\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "\"PeriodoLectivo\".id_carrera,\n"
+                + "\"Carreras\".carrera_nombre,\n"
+                + "\"Carreras\".carrera_modalidad,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_estado,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_activo,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_fecha_fin\n"
                 + "FROM\n"
-                + "\"public\".\"PeriodoLectivo\"\n"
-                + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
-                + "INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Cursos\".id_docente = \"public\".\"Docentes\".id_docente\n"
+                + "\"PeriodoLectivo\"\n"
+                + "INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
+                + "INNER JOIN \"Cursos\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "WHERE\n"
-                + " \"public\".\"Docentes\".id_docente = ?";
+                + " \"Docentes\".id_docente = ?";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -675,15 +675,15 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "\"PeriodoLectivo\" p1\n"
-                + "	INNER JOIN \"public\".\"Carreras\" ON p1.id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "	INNER JOIN \"Carreras\" ON p1.id_carrera = \"Carreras\".id_carrera \n"
                 + "WHERE\n"
                 + "	7 != (\n"
                 + "	SELECT\n"
                 + "		\"count\" ( * ) \n"
                 + "	FROM\n"
-                + "		\"public\".\"TipoDeNota\" AS t2\n"
-                + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "		\"TipoDeNota\" AS t2\n"
+                + "		INNER JOIN \"PeriodoLectivo\" ON t2.id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera \n"
                 + "	WHERE\n"
                 + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
                 + "		AND ( \"Carreras\".carrera_modalidad ='PRESENCIAL' OR \"Carreras\".carrera_modalidad ='TRADICIONAL' ) \n"
@@ -692,9 +692,9 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	SELECT\n"
                 + "		\"count\" ( * ) \n"
                 + "	FROM\n"
-                + "		\"public\".\"TipoDeNota\" AS t2\n"
-                + "		INNER JOIN \"public\".\"PeriodoLectivo\" ON t2.id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "		INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "		\"TipoDeNota\" AS t2\n"
+                + "		INNER JOIN \"PeriodoLectivo\" ON t2.id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera \n"
                 + "	WHERE\n"
                 + "		t2.id_prd_lectivo = p1.id_prd_lectivo \n"
                 + "	AND ( \"Carreras\".carrera_modalidad ='DUAL' OR \"Carreras\".carrera_modalidad ='DUAL FOCALIZADA' ) \n"
@@ -746,7 +746,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "	\"Carreras\".carrera_modalidad \n"
                 + "FROM\n"
                 + "	\"PeriodoLectivo\" \n"
-                + "	INNER JOIN \"public\".\"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera \n"
+                + "	INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera \n"
                 + "WHERE\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = ?";
         Map<String, PeriodoLectivoMD> map = new HashMap<>();
@@ -785,19 +785,19 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public List<PeriodoLectivoMD> buscarNumSemanas(int idDocente, int idPrd) {
         String SELECT = "SELECT DISTINCT\n"
-                + " \"public\".\"Docentes\".id_docente,\n"
-                + " \"public\".\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + " \"Docentes\".id_docente,\n"
+                + " \"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + " (prd_lectivo_fecha_fin - prd_lectivo_fecha_inicio)/7 AS semanas\n"
                 + " FROM\n"
-                + " \"public\".\"Carreras\"\n"
-                + " INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
-                + " INNER JOIN \"public\".\"Cursos\" ON \"public\".\"Cursos\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + " INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_docente = \"public\".\"Cursos\".id_docente\n"
-                + " INNER JOIN \"public\".\"Materias\" ON \"public\".\"Materias\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
-                + " INNER JOIN \"public\".\"SesionClase\" ON \"public\".\"SesionClase\".id_curso = \"public\".\"Cursos\".id_curso\n"
+                + " \"Carreras\"\n"
+                + " INNER JOIN \"PeriodoLectivo\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
+                + " INNER JOIN \"Cursos\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + " INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + " INNER JOIN \"Materias\" ON \"Materias\".id_carrera = \"Carreras\".id_carrera\n"
+                + " INNER JOIN \"SesionClase\" ON \"SesionClase\".id_curso = \"Cursos\".id_curso\n"
                 + " WHERE\n"
-                + " \"public\".\"Cursos\".id_docente = " + idDocente + " AND\n"
-                + " \"public\".\"PeriodoLectivo\".id_prd_lectivo = " + idPrd + "";
+                + " \"Cursos\".id_docente = " + idDocente + " AND\n"
+                + " \"PeriodoLectivo\".id_prd_lectivo = " + idPrd + "";
         List<PeriodoLectivoMD> semana = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);

@@ -16,6 +16,8 @@ import javax.swing.event.TableModelListener;
 import modelo.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.SilaboMD;
 import modelo.validaciones.Validar;
@@ -28,8 +30,8 @@ import vista.silabos.VtnSilabos;
 public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private final NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
-
-    private List<CarreraMD> carreras;
+    private final NEWPeriodoLectivoBD PERIODO_CONN = NEWPeriodoLectivoBD.single();
+    private List<PeriodoLectivoMD> periodos;
 
     public VtnSilabosCTR(VtnPrincipalCTR desktop) {
         super(desktop);
@@ -45,7 +47,17 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     @Override
     public void Init() {
         setTable(vista.getTbl());
-        cargarCmbCarreras();
+
+        if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
+            periodos = PERIODO_CONN.getBy(
+                    CONS.USUARIO.getPersona().getIdPersona()
+            );
+
+        } else {
+
+        }
+
+        cargarCmbPeriodo();
         InitEventos();
         super.Init();
         setLista();
@@ -56,7 +68,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getBtnNuevo().addActionListener(this::btnNuevo);
         vista.getBtnEditar().addActionListener(this::btnEditar);
         vista.getBtnEliminar().addActionListener(this::btnEliminar);
-        vista.getCmbCarrera().addItemListener(this::cmbCarrera);
+        vista.getCmbPeriodo().addItemListener(this::cmbCarrera);
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
         vista.getTxtBuscar().addCaretListener(this::txtBuscar);
         vista.getBtnInformacion().addActionListener(this::btnInformacion);
@@ -90,14 +102,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     /*
         METODOS
      */
-    private void cargarCmbCarreras() {
-        carreras = CarreraBD.findBy(
-                CONS.USUARIO.getPersona().getIdentificacion()
-        );
+    private void cargarCmbPeriodo() {
 
-        carreras.stream()
+        periodos.stream()
                 .map(c -> c.getNombre())
-                .forEach(vista.getCmbCarrera()::addItem);
+                .forEach(vista.getCmbPeriodo()::addItem);
     }
 
     private Consumer<SilaboMD> cargador() {
@@ -177,10 +186,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void setLista() {
-        CarreraMD carrera = carreras.get(vista.getCmbCarrera().getSelectedIndex());
+        PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
+                .getSelectedIndex());
 
         lista = SILABO_CONN.findBy(
-                user.getPersona().getIdentificacion(), carrera.getId()
+                user.getPersona().getIdentificacion(), periodo.getID()
         );
     }
 
@@ -317,8 +327,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         tableM.setRowCount(0);
         String buscar = vista.getTxtBuscar().getText().toLowerCase();
         lista.stream()
-                .filter(item -> item.getPeriodo().getNombre().toLowerCase().contains(buscar)
-                || item.getMateria().getNombre().toLowerCase().contains(buscar)
+                .filter(item -> item.getMateria().getNombre().toLowerCase().contains(buscar)
                 ).forEach(cargador());
     }
 

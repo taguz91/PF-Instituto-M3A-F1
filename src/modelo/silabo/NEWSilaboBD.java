@@ -459,21 +459,19 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
-    public List<SilaboMD> findBy(String cedulaDocente, int idCarrera) {
+    public List<SilaboMD> findBy(String cedulaDocente, int idPeriodo) {
         String SELECT = ""
                 + "WITH mis_periodos_materias AS (\n"
-                + "    SELECT DISTINCT\n"
-                + "        \"Cursos\".id_prd_lectivo,\n"
-                + "        \"Cursos\".id_materia \n"
-                + "    FROM\n"
-                + "        \"Cursos\"\n"
-                + "        INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
-                + "        INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
-                + "    WHERE\n"
-                + "        \"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
-                + "        AND \"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
-                + ")\n"
-                + "SELECT\n"
+                + "	SELECT DISTINCT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_materia \n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "		AND \"Cursos\".id_prd_lectivo = " + idPeriodo + " \n"
+                + "	) SELECT\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "	\"Materias\".id_materia,\n"
@@ -488,16 +486,13 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
                 + "	INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
                 + "	INNER JOIN mis_periodos_materias ON \"PeriodoLectivo\".id_prd_lectivo = mis_periodos_materias.id_prd_lectivo \n"
-                + "	    AND \"Materias\".id_materia = mis_periodos_materias.id_materia \n"
+                + "	AND \"Materias\".id_materia = mis_periodos_materias.id_materia \n"
                 + "ORDER BY\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo DESC,\n"
-                + "    \"Materias\".materia_nombre ASC"
+                + "	\"Materias\".materia_nombre ASC"
                 + "";
 
-        System.out.println(SELECT);
-
         List<SilaboMD> silabos = new ArrayList<>();
-
         ResultSet rs = CON.ejecutarQuery(SELECT, null);
 
         try {
