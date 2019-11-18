@@ -671,8 +671,8 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	INNER JOIN \"Materias\" ON \"Silabo\".id_materia = \"Materias\".id_materia\n"
                 + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
                 + "WHERE\n"
-                + "	id_prd_lectivo = " + periodo.getID() + " \n"
-                + "	AND id_materia = " + materia.getId()
+                + "	\"PeriodoLectivo\".id_prd_lectivo = " + periodo.getID() + " \n"
+                + "	AND \"Materias\".id_materia = " + materia.getId()
                 + "";
 
         SilaboMD silabo = null;
