@@ -325,10 +325,8 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         });
 
         btnAgregarBibliografiaBase.setText("Agregar >>");
-        btnAgregarBibliografiaBase.setEnabled(false);
 
         btnQuitarBibliografiaBase.setText("<< Quitar");
-        btnQuitarBibliografiaBase.setEnabled(false);
 
         cmbBiblioteca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Biblioteca Física ISTA", "Biblioteca de Convenios" }));
 
@@ -349,23 +347,22 @@ public class frmReferencias extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblRecursos)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(scrBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblBuscar)
-                                        .addComponent(lblBibliotecs))
-                                    .addGap(26, 26, 26)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtBuscar)
-                                        .addComponent(cmbBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblBuscar)
+                                    .addComponent(lblBibliotecs))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtBuscar)
+                                    .addComponent(cmbBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(scrBiblioteca))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAgregarBibliografiaBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnQuitarBibliografiaBase, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                            .addComponent(btnQuitarBibliografiaBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblBibliografiaComplementaria)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,7 +398,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
                                 .addComponent(btnAgregarBibliografiaBase)
                                 .addGap(19, 19, 19)
                                 .addComponent(btnQuitarBibliografiaBase)
-                                .addGap(350, 350, 350))
+                                .addGap(347, 347, 347))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblBuscar)

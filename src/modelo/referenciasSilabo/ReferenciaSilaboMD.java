@@ -16,7 +16,7 @@ import modelo.silabo.SilaboMD;
  */
 public class ReferenciaSilaboMD implements Serializable {
 
-    private Integer idReferenciaSilabo;
+    private Integer idReferenciaSilabo = 0;
 
     private ReferenciasMD idReferencia;
 

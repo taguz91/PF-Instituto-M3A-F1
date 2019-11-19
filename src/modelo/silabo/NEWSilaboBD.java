@@ -776,6 +776,7 @@ public class NEWSilaboBD implements ISilaboBD {
         return silabos;
     }
 
+
     public boolean editarEstado(SilaboMD silabo) {
 
         String UPDATE = ""
@@ -787,6 +788,20 @@ public class NEWSilaboBD implements ISilaboBD {
 
         return CON.ejecutar(UPDATE) == null;
 
+    }
+
+
+    public void setFechaEdicion(int idSilabo) {
+        String sql = "UPDATE public.\"Silabo\"\n"
+                + "SET fecha_silabo=?, utima_edicion_bd= now()\n"
+                + " WHERE id_silabo=?;";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+            ps.setInt(2, idSilabo);
+            CON.noSQLPOOL(ps);
+        } catch (SQLException e) {
+        }
     }
 
 }

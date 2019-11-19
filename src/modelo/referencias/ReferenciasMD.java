@@ -1,19 +1,16 @@
-
-
 package modelo.referencias;
 
 import java.util.List;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 
-
 public class ReferenciasMD {
-    
-    private Integer idReferencia;
+
+    private Integer idReferencia = 0;
 
     private String codigoReferencia;
 
     private String descripcionReferencia;
- 
+
     private String tipoReferencia;
 
     private boolean existeEnBiblioteca;
@@ -23,8 +20,8 @@ public class ReferenciasMD {
     public ReferenciasMD() {
     }
 
-    public ReferenciasMD( String codigoReferencia, String descripcionReferencia, String tipoReferencia) {
-        
+    public ReferenciasMD(String codigoReferencia, String descripcionReferencia, String tipoReferencia) {
+
         this.codigoReferencia = codigoReferencia;
         this.descripcionReferencia = descripcionReferencia;
         this.tipoReferencia = tipoReferencia;
@@ -77,6 +74,5 @@ public class ReferenciasMD {
     public void setReferenciaSilaboList(List<ReferenciaSilaboMD> referenciaSilaboList) {
         this.referenciaSilaboList = referenciaSilaboList;
     }
-    
-    
+
 }
