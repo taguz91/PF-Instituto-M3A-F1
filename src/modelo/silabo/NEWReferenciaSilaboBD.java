@@ -48,9 +48,16 @@ public class NEWReferenciaSilaboBD extends CONBD implements IReferenciaSilaboBD 
         return idGenerado;
     }
 
+    public boolean eliminar(int idReferenciaSilabo) {
+        String sql = "DELETE FROM public.\"ReferenciaSilabo\" "
+                + "WHERE id_referencia_silabo = ?;";
+        return CON.deleteById(sql, idReferenciaSilabo);
+    }
+
     @Override
     public List<ReferenciaSilaboMD> getBySilabo(int idSilabo) {
-        String sql = "SELECT rs.id_referencia, "
+        String sql = "SELECT id_referencia_silabo, "
+                + "rs.id_referencia, "
                 + "r.tipo_referencia, "
                 + "r.descripcion_referencia, "
                 + "r.existe_en_biblioteca "
@@ -65,10 +72,11 @@ public class NEWReferenciaSilaboBD extends CONBD implements IReferenciaSilaboBD 
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 ReferenciaSilaboMD r = new ReferenciaSilaboMD();
-                r.getIdReferencia().setIdReferencia(res.getInt(1));
-                r.getIdReferencia().setTipoReferencia(res.getString(2));
-                r.getIdReferencia().setDescripcionReferencia(res.getString(3));
-                r.getIdReferencia().setExisteEnBiblioteca(res.getBoolean(4));
+                r.setIdReferenciaSilabo(res.getInt(1));
+                r.getIdReferencia().setIdReferencia(res.getInt(2));
+                r.getIdReferencia().setTipoReferencia(res.getString(3));
+                r.getIdReferencia().setDescripcionReferencia(res.getString(4));
+                r.getIdReferencia().setExisteEnBiblioteca(res.getBoolean(5));
 
                 RS.add(r);
             }

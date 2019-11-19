@@ -139,16 +139,14 @@ public class FRMSilaboCTR extends DCTR {
         iniciarSilabo();
         iniciarVentana();
         // Guardamos el silabo al ingresar.
-        new Thread(() -> {
-            int idSilaboGen = SBD.guardar(silabo);
-            if (idSilaboGen > 0) {
-                silabo.setID(idSilaboGen);
-                guardar();
-            } else {
-                silabo.setID(0);
-                UFRMSCTR.errorGuardarSilabo();
-            }
-        }).start();
+        int idSilaboGen = SBD.guardar(silabo);
+        if (idSilaboGen > 0) {
+            silabo.setID(idSilaboGen);
+            guardar();
+        } else {
+            silabo.setID(0);
+            UFRMSCTR.errorGuardarSilabo();
+        }
     }
 
     public void editar() {
@@ -179,6 +177,7 @@ public class FRMSilaboCTR extends DCTR {
         });
         // Acciones
         FRM_GESTION.getBtnGuardar().addActionListener(e -> guardar());
+        FRM_GESTION.getBtnSiguiente().addActionListener(e -> agregarBibliografia());
         // Tablas
         estiloTablas();
         // Cargamos todas las estrategias  
@@ -586,7 +585,6 @@ public class FRMSilaboCTR extends DCTR {
     private void crearSilaboNuevo(int numUnidades) {
         unidades = new ArrayList<>();
         estrategias = new ArrayList<>();
-        referenciasSilabo = new ArrayList<>();
         // Agregamos el numero de unidades que indico 
         // en el formulario de configuracion
         for (int i = 1; i <= numUnidades; i++) {
@@ -606,48 +604,71 @@ public class FRMSilaboCTR extends DCTR {
     }
 
     /**
+     * Agregamos la bibliografia base
+     */
+    private void agregarBibliografia() {
+        // Guardamos el silabo al ingresar.
+        if (silabo.getID() > 0) {
+            // Aqui antes de guardar se debe validar que todo este correcto bro 
+            guardar();
+            FRMReferenciaSilaboCTR ctrReferencias = new FRMReferenciaSilaboCTR(
+                    ctrPrin,
+                    silabo,
+                    FRM_GESTION
+            );
+            ctrReferencias.iniciar();
+        } else {
+            silabo.setID(SBD.guardar(silabo));
+            UFRMSCTR.errorGuardarSilabo();
+        }
+    }
+
+    /**
      * Guardamos todo la informacion sin validar
      */
     private void guardar() {
-        FRM_GESTION.getBtnGuardar().setEnabled(false);
-        ctrPrin.getVtnPrin().setCursor(new Cursor(3));
-        // SI no se guardo el silabo previamente se guarda aqui 
-        if (silabo.getID() == 0) {
-            int idSilaboGen = SBD.guardar(silabo);
-            silabo.setID(idSilaboGen);
-        }
+        new Thread(() -> {
+            FRM_GESTION.getBtnGuardar().setEnabled(false);
+            ctrPrin.getVtnPrin().setCursor(new Cursor(3));
 
-        // Necesitamos que el silabo este guardado para continuar. 
-        if (silabo.getID() > 0) {
-            System.out.println("Guardamos silabo con ID: " + silabo.getID());
-            ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos silabo con ID: " + silabo.getID());
-            silabo.setID(silabo.getID());
-            unidades.forEach(u -> {
-                int idUnidadGenerado = u.getIdUnidad();
-                if (u.getIdUnidad() == 0) {
-                    idUnidadGenerado = USBD.guardar(u, silabo.getID());
-                } else {
-                    USBD.editar(u);
-                }
-                System.out.println("Guardamos unidad con ID: " + idUnidadGenerado);
-                ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos unidad con ID: " + idUnidadGenerado);
-                // Si se guardo la unidad guardamos
-                // estrategias y evaluaciones
-                if (idUnidadGenerado > 0) {
-                    u.setIdUnidad(idUnidadGenerado);
-                    guardarEstrategias(idUnidadGenerado, u.getNumeroUnidad());
-                    guardarEvaluaciones(idUnidadGenerado, u.getNumeroUnidad());
-                } else {
-                    UFRMSCTR.errorGuardar("Algo salio mal. \n"
-                            + "No se pudo guardo la unidad " + u.getNumeroUnidad());
-                }
-            });
-        } else {
-            UFRMSCTR.errorGuardarSilabo();
-        }
+            // SI no se guardo el silabo previamente se guarda aqui 
+            if (silabo.getID() == 0) {
+                int idSilaboGen = SBD.guardar(silabo);
+                silabo.setID(idSilaboGen);
+            }
 
-        FRM_GESTION.getBtnGuardar().setEnabled(true);
-        ctrPrin.getVtnPrin().setCursor(new Cursor(0));
+            // Necesitamos que el silabo este guardado para continuar. 
+            if (silabo.getID() > 0) {
+                System.out.println("Guardamos silabo con ID: " + silabo.getID());
+                ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos silabo con ID: " + silabo.getID());
+                silabo.setID(silabo.getID());
+                unidades.forEach(u -> {
+                    int idUnidadGenerado = u.getIdUnidad();
+                    if (u.getIdUnidad() == 0) {
+                        idUnidadGenerado = USBD.guardar(u, silabo.getID());
+                    } else {
+                        USBD.editar(u);
+                    }
+                    System.out.println("Guardamos unidad con ID: " + idUnidadGenerado);
+                    ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos unidad con ID: " + idUnidadGenerado);
+                    // Si se guardo la unidad guardamos
+                    // estrategias y evaluaciones
+                    if (idUnidadGenerado > 0) {
+                        u.setIdUnidad(idUnidadGenerado);
+                        guardarEstrategias(idUnidadGenerado, u.getNumeroUnidad());
+                        guardarEvaluaciones(idUnidadGenerado, u.getNumeroUnidad());
+                    } else {
+                        UFRMSCTR.errorGuardar("Algo salio mal. \n"
+                                + "No se pudo guardo la unidad " + u.getNumeroUnidad());
+                    }
+                });
+            } else {
+                UFRMSCTR.errorGuardarSilabo();
+            }
+
+            FRM_GESTION.getBtnGuardar().setEnabled(true);
+            ctrPrin.getVtnPrin().setCursor(new Cursor(0));
+        }).start();
     }
 
     private void guardarEstrategias(int idUnidadGenerado, int numeroUnidad) {
@@ -926,19 +947,19 @@ public class FRMSilaboCTR extends DCTR {
         estrategias.forEach(e -> {
             if (e.getUnidad().getNumeroUnidad() == unidadSelec.getNumeroUnidad()) {
                 // Vemos que no se repita la estrategia 
-                if (e.getEstrategia()
+                if (!e.getEstrategia()
                         .getDescripcionEstrategia()
                         .equals(estrategiaNueva
                                 .getEstrategia()
                                 .getDescripcionEstrategia()
                         )) {
-                    UFRMSCTR.errorEstrategia("Ya agrego esta estrategia en esta unidad.");
+                    mdTblES.addRow(new Object[]{
+                        e.getIdLocal(),
+                        e.getEstrategia().getDescripcionEstrategia()
+                    });
+                } else {
                     existeEstrategia = true;
                 }
-                mdTblES.addRow(new Object[]{
-                    e.getIdLocal(),
-                    e.getEstrategia().getDescripcionEstrategia()
-                });
             }
         });
         if (!existeEstrategia) {
@@ -947,6 +968,8 @@ public class FRMSilaboCTR extends DCTR {
                 estrategiaNueva.getIdLocal(),
                 estrategiaNueva.getEstrategia().getDescripcionEstrategia()
             });
+        } else {
+            UFRMSCTR.errorEstrategia("Ya agrego esta estrategia en esta unidad.");
         }
     }
 

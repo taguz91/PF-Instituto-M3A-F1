@@ -38,27 +38,25 @@
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblRecursos" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="scrBiblioteca" min="-2" pref="526" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblBuscar" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblBibliotecs" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtBuscar" max="32767" attributes="0"/>
-                                      <Component id="cmbBiblioteca" min="-2" pref="433" max="-2" attributes="0"/>
-                                  </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblBuscar" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblBibliotecs" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtBuscar" max="32767" attributes="0"/>
+                                  <Component id="cmbBiblioteca" min="-2" pref="433" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="scrBiblioteca" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnAgregarBibliografiaBase" max="32767" attributes="0"/>
-                          <Component id="btnQuitarBibliografiaBase" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="btnQuitarBibliografiaBase" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -103,7 +101,7 @@
                               <Component id="btnAgregarBibliografiaBase" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Component id="btnQuitarBibliografiaBase" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -269,13 +267,11 @@
     <Component class="javax.swing.JButton" name="btnAgregarBibliografiaBase">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar &gt;&gt;"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnQuitarBibliografiaBase">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;&lt; Quitar"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbBiblioteca">
