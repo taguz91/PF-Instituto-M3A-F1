@@ -336,7 +336,6 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "ORDER BY\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC "
                 + "";
-        System.out.println(SELECT);
 
         List<SilaboMD> silabosRef = new ArrayList<>();
 
