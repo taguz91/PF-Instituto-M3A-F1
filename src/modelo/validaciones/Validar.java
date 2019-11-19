@@ -169,7 +169,7 @@ public class Validar {
     }
 
     public static boolean esVersion(String entrada) {
-        return entrada.matches("[0-9]{1}+\\.+[0-9]{1,2}") || entrada.matches("[0-9]{1}+\\.+[0-9]{1,2}+\\.+[0-9]{1,2}");
+        return entrada.matches("[0-9]{1,3}+\\.+[0-9]{1,2}") || entrada.matches("[0-9]{1}+\\.+[0-9]{1,2}+\\.+[0-9]{1,2}");
     }
 
     public static boolean esDescripcion(String entrada) {
