@@ -56,15 +56,14 @@ public class Descarga {
                     o.write(b);
                 }
             }
-            System.out.println("Terminamos de descargar");
 
             o.close();
             i.close();
             todoBien = true;
         } catch (IOException e) {
-            System.out.println("ELE " + e.getMessage());
             JOptionPane.showMessageDialog(null, "No pudimos conectarnos para realizar la descarga, \n"
-                    + "compruebe su conexion a internet.");
+                    + "compruebe su conexion a internet. \n"
+                    + e.getMessage());
         }
 
     }
