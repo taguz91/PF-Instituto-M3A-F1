@@ -535,6 +535,40 @@ public class FRMSilaboCTR extends DCTR {
                 }
             }
         });
+        // SI le damos click para que se agrege una estrategia  
+        FRM_GESTION.getCmbEstrategias().addActionListener(e -> {
+            int i = FRM_GESTION.getCmbEstrategias().getSelectedIndex();
+            if (i > 0) {
+                agregarEstrategia(i);
+            }
+        });
+        // Si le damos a mas y esta seleccionado uno se agrega, 
+        // si no existe se guarda en la base de datos
+        FRM_GESTION.getLblAgregarEstrategia().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int i = FRM_GESTION.getCmbEstrategias().getSelectedIndex();
+                if (i > 0) {
+                    agregarEstrategia(i);
+                } else {
+                    String estrategia = FRM_GESTION.getCmbEstrategias()
+                            .getEditor().getItem().toString().trim();
+                    EstrategiasAprendizajeMD ea = new EstrategiasAprendizajeMD();
+                    ea.setDescripcionEstrategia(estrategia);
+                    int idGenerado = EABD.guardar(ea);
+                    if (idGenerado > 0) {
+                        ea.setIdEstrategia(idGenerado);
+                        agregarEstrategia(ea);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                FRM_ACCIONES,
+                                "Error al crear una nueva estrategia vuelva "
+                                + "a intentarlo mas tarde."
+                        );
+                    }
+                }
+            }
+        });
     }
 
     private void iniciarCmbEstrategias() {
@@ -564,6 +598,13 @@ public class FRMSilaboCTR extends DCTR {
         EstrategiasUnidadMD ne = new EstrategiasUnidadMD();
         ne.setUnidad(unidadSelec);
         ne.setEstrategia(filterEstrategias.get(index - 1));
+        llenarTblEstrategiasUnidad(ne);
+    }
+
+    private void agregarEstrategia(EstrategiasAprendizajeMD estrategia) {
+        EstrategiasUnidadMD ne = new EstrategiasUnidadMD();
+        ne.setUnidad(unidadSelec);
+        ne.setEstrategia(estrategia);
         llenarTblEstrategiasUnidad(ne);
     }
 
