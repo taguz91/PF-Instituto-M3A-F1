@@ -52,12 +52,14 @@ public class VtnDitoolCTR {
         this.vtnPrincipal = null;
         this.vtnDitool.setIconImage(icono.getImage());
     }
-    
+
     /**
-     * Este constructor nos funciona cuando utilizamos el actualizador desde la ventana principal del sistema.
+     * Este constructor nos funciona cuando utilizamos el actualizador desde la
+     * ventana principal del sistema.
+     *
      * @param version
      * @param vtnPrin
-     * @param vtnPrincipal 
+     * @param vtnPrincipal
      */
     public VtnDitoolCTR(VersionMD version, VtnDitool vtnPrin, VtnPrincipal vtnPrincipal) {
         this.icono = new ImageIcon(getClass().getResource("/vista/img/update.png"));
@@ -126,7 +128,6 @@ public class VtnDitoolCTR {
                     vtnDitool.getLblFondo().setIcon(estado);
                     dormir(500);
                 }
-                System.out.println("Sigue funcionando la animacion del DITOOL");
             }
         }).start();
     }
@@ -160,13 +161,13 @@ public class VtnDitoolCTR {
 
     public void crearVersion() {
         Object[] opt;
-        
-        if(vtnPrincipal == null){
+
+        if (vtnPrincipal == null) {
             opt = new Object[]{"Actualizar", "Abrir", "Salir"};
-        }else{
+        } else {
             opt = new Object[]{"Actualizar", "Cancelar", "Salir"};
         }
-        
+
         int s = JOptionPane.showOptionDialog(vtnDitool,
                 "\n"
                 + "¿Tiene una actualizacion pendiente del sistema?\n"
@@ -181,9 +182,9 @@ public class VtnDitoolCTR {
                 altualizarSistema();
                 break;
             case 1:
-                if(vtnPrincipal == null){
+                if (vtnPrincipal == null) {
                     ejecutarPrograma();
-                }else{
+                } else {
                     habilitarPrograma();
                 }
                 break;
@@ -191,7 +192,7 @@ public class VtnDitoolCTR {
                 System.exit(0);
                 break;
             default:
-                if(vtnPrincipal != null){
+                if (vtnPrincipal != null) {
                     vtnPrincipal.setEnabled(true);
                 }
                 cerrarTodo();
@@ -364,12 +365,12 @@ public class VtnDitoolCTR {
     private void silenciar() {
         sonido.close();
     }
-    
-    private void cerrarVentana(){
+
+    private void cerrarVentana() {
         vtnDitool.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                vtnPrincipal.setEnabled(true); 
+                vtnPrincipal.setEnabled(true);
             }
 
         });
