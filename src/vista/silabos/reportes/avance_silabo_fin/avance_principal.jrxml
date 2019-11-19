@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1bbd19a5-ae14-4f85-994c-245def644ff2">
 	<property name="ireport.zoom" value="0.9090909090909097"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="11"/>
+	<property name="ireport.y" value="349"/>
 	<parameter name="id_curso" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -225,7 +225,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Informe Parcial]]></text>
+				<text><![CDATA[Informe Final]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="40" width="145" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="e787768e-3176-4b9f-b940-93884ef3fce7"/>

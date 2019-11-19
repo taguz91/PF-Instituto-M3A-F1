@@ -108,6 +108,8 @@ public class FRMSilaboCTR extends DCTR {
     private EvaluacionSilaboMD evaluacionSelec;
     // Banderas 
     boolean eliminandoUnidad = false;// Para saber cuando se esta eliminando una unidad
+    // Error mensaje en silabo
+    private String msgErrorSilabo;
 
     public FRMSilaboCTR(
             VtnPrincipalCTR ctrPrin,
@@ -610,21 +612,81 @@ public class FRMSilaboCTR extends DCTR {
      * Agregamos la bibliografia base
      */
     private void agregarBibliografia() {
-        // Guardamos el silabo al ingresar.
-        if (silabo.getID() > 0) {
-            // Aqui antes de guardar se debe validar que todo este correcto bro 
-            guardar();
-            FRMReferenciaSilaboCTR ctrReferencias = new FRMReferenciaSilaboCTR(
-                    ctrPrin,
-                    silabo,
-                    FRM_GESTION,
-                    cambioUnidad
-            );
-            ctrReferencias.iniciar();
-        } else {
-            silabo.setID(SBD.guardar(silabo));
-            UFRMSCTR.errorGuardarSilabo();
+        if (validarSilabo()) {
+            if (silabo.getID() > 0) {
+                // Aqui antes de guardar se debe validar que todo este correcto bro 
+                guardar();
+                FRMReferenciaSilaboCTR ctrReferencias = new FRMReferenciaSilaboCTR(
+                        ctrPrin,
+                        silabo,
+                        FRM_GESTION,
+                        cambioUnidad
+                );
+                ctrReferencias.iniciar();
+            } else {
+                // Guardamos el silabo al ingresar.
+                silabo.setID(SBD.guardar(silabo));
+                UFRMSCTR.errorGuardarSilabo();
+            }
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    private boolean validarSilabo() {
+        msgErrorSilabo = "";
+        if (totalGestion < 60 || totalGestion > 60) {
+            msgErrorSilabo += "Debe cumplir 60 puntos en su total de gestion.\n";
+        }
+
+        if (numHD < silabo.getMateria().getHorasDocencia()) {
+            msgErrorSilabo += "Debe cumplir las horas establecidas en "
+                    + "horas docencia en materia "
+                    + silabo.getMateria().getHorasDocencia() + "\n";
+        }
+
+        if (numHA < silabo.getMateria().getHorasAutoEstudio()) {
+            msgErrorSilabo += "Debe cumplir las horas establecidas en "
+                    + "horas de autoestudio en materia "
+                    + silabo.getMateria().getHorasAutoEstudio() + "\n";
+        }
+
+        if (numHP < silabo.getMateria().getHorasPracticas()) {
+            msgErrorSilabo += "Debe cumplir las horas establecidas en "
+                    + "horas practicas en materia "
+                    + silabo.getMateria().getHorasPracticas() + "\n";
+        }
+
+        unidades.forEach(u -> {
+            if (u.getFechaInicioUnidad() == null) {
+                msgErrorSilabo += "Debe ingresar la fecha  de inicio "
+                        + "de la unidad " + u.getNumeroUnidad() + "\n";
+            }
+            if (u.getFechaFinUnidad() == null) {
+                msgErrorSilabo += "Debe ingresar la fecha  de fin "
+                        + "de la unidad " + u.getNumeroUnidad() + "\n";
+            }
+            if (u.getContenidosUnidad().trim().length() == 0) {
+                msgErrorSilabo += "Debe ingresar  el contenido "
+                        + "de la unidad " + u.getNumeroUnidad() + "\n";
+            }
+            if (u.getObjetivoEspecificoUnidad().trim().length() == 0) {
+                msgErrorSilabo += "Debe ingresar  el objetivo "
+                        + "de la unidad " + u.getNumeroUnidad() + "\n";
+            }
+            if (u.getResultadosAprendizajeUnidad().trim().length() == 0) {
+                msgErrorSilabo += "Debe ingresar  el resultado "
+                        + "de aprendizaje de la unidad "
+                        + u.getNumeroUnidad() + "\n";
+            }
+            if (u.getTituloUnidad().trim().length() == 0) {
+                msgErrorSilabo += "Debe ingresar  el titulo "
+                        + "de la unidad " + u.getNumeroUnidad() + "\n";
+            }
+        });
+        return msgErrorSilabo.length() > 0;
     }
 
     /**
