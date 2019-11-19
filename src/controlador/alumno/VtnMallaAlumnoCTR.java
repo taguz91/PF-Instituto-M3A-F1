@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,7 @@ import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
+import utils.Descarga;
 import vista.alumno.VtnMallaAlumno;
 
 /**
@@ -124,6 +126,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             }
         });
         vtnMallaAlm.getBtnReporteMallaAlumno().addActionListener(e -> llamaReporteMallaALumno());
+        vtnMallaAlm.getBtnExportarExcel().addActionListener(e -> clickReporteExcel());
         //Validacion del buscador
         vtnMallaAlm.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnMallaAlm.getTxtBuscar(),
                 vtnMallaAlm.getBtnBuscar()));
@@ -506,7 +509,40 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
                     "Alumnos entre 90 a 100", "Reporte Completo", "Reporte Interciclo", "Tabla Final"},
                 "Cancelar");
+    }
 
+    private void clickReporteExcel() {
+        if (mallas.size() > 0 || vtnMallaAlm.getCmbCarreras().getSelectedIndex() > 0) {
+            String url = "malla/reporte/";
+            String nombre;
+            int as = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
+            int cs = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
+            if (as > 0) {
+                url += "alumno/" + alumnos.get(as - 1).getId();
+                nombre = mallas.get(0).getAlumnoCarrera()
+                        .getAlumno().getIdentificacion();
+            } else if (cs > 0) {
+                url += "carrera/" + carreras.get(cs - 1).getId();
+                nombre = vtnMallaAlm.getCmbCarreras().getSelectedItem().toString();
+            } else {
+                url += "alumno/" + mallas.get(0).getAlumnoCarrera().getId();
+                nombre = mallas.get(0).getAlumnoCarrera()
+                        .getAlumno().getIdentificacion();
+            }
+            nombre += "-" + LocalDate.now().toString();
+            url += "/" + CONS.USUARIO.getUsername();
+            Descarga.excel(
+                    nombre,
+                    url,
+                    "El reporte de malla no pudo ser descargado."
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    vtnMallaAlm,
+                    "Debe buscar un alumno o seleccionar una "
+                    + "carrera para poder exportar el reporte."
+            );
+        }
     }
 
 }

@@ -64,12 +64,14 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblResultados" min="-2" pref="280" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblResultados" min="-2" pref="187" max="-2" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnExportarExcel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnRptEgresados" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnReporteCarrera" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="btnReporteMallaAlumno" min="-2" max="-2" attributes="0"/>
@@ -113,6 +115,7 @@
                   <Component id="btnReporteMallaAlumno" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReporteCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRptEgresados" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnExportarExcel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -251,6 +254,11 @@
     <Component class="javax.swing.JButton" name="btnRptEgresados">
       <Properties>
         <Property name="text" type="java.lang.String" value="Egresados"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnExportarExcel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exportar Excel"/>
       </Properties>
     </Component>
   </SubComponents>

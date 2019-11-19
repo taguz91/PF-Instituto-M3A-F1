@@ -16,10 +16,11 @@ import vista.version.VtnDitool;
 public class run {
 
     public static void main(String[] args) {
+
         if (!iniciaEstilo("Windows")) {
             iniciaEstilo("Nimbus");
         }
-        System.out.println("Modo desarrollo: "+CONS.M_DESARROLLO);
+        System.out.println("Modo desarrollo: " + CONS.M_DESARROLLO);
         if (CONS.M_DESARROLLO) {
             System.out.println("Iniciamos en modo desarrollo");
             EventQueue.invokeLater(() -> {
@@ -29,7 +30,7 @@ public class run {
         } else {
             VtnDitool vtnDitool = new VtnDitool();
             vtnDitool.setTitle("Ditool | Version instalada: ");
-                DitoolBD di = new DitoolBD("tsds", "TDSoftware158");
+            DitoolBD di = new DitoolBD("tsds", "TDSoftware158");
             VersionMD v = di.consultarUltimaVersion();
             if (v != null) {
                 VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool);

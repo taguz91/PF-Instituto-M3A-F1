@@ -8,6 +8,9 @@
 /lib/
 #Txt readme
 README.TXT
+# Aqui guardamos los excel
+/excel/
+*.xlsx
 
 
 #Foto creada temporalmente
