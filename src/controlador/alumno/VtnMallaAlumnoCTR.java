@@ -447,6 +447,15 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
 
         CONS.activarBtns(vtnMallaAlm.getBtnActualizarNota(), vtnMallaAlm.getBtnIngNota(),
                 vtnMallaAlm.getBtnReporteMallaAlumno());
+        if (CONS.ROL.getNombre().equalsIgnoreCase("Coordinador")
+                || CONS.ROL.getNombre().equalsIgnoreCase("Dev")
+                || CONS.ROL.getNombre().equalsIgnoreCase("Secreataria")
+                || CONS.ROL.getNombre().equalsIgnoreCase("Secretario")
+                || CONS.ROL.getNombre().equalsIgnoreCase("Coordinada/o")) {
+            vtnMallaAlm.getBtnExportarExcel().setEnabled(true);
+        } else {
+            vtnMallaAlm.getBtnExportarExcel().setEnabled(false);
+        }
     }
 
     private void reportePorCarrera() {
