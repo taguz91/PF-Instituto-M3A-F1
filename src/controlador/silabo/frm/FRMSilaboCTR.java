@@ -433,7 +433,10 @@ public class FRMSilaboCTR extends DCTR {
     private void eliminarActividad() {
         String code = getActividadSeleccionada();
         if (!"".equals(code)) {
-            int r = JOptionPane.showConfirmDialog(FRM_ACCIONES, "Esta seguro de quitar la actividad.");
+            int r = JOptionPane.showConfirmDialog(
+                    FRM_ACCIONES,
+                    "Esta seguro de quitar la actividad."
+            );
             if (r == JOptionPane.YES_OPTION) {
                 seleccionPorIdLocal(code);
                 if (evaluacionSelec != null) {
@@ -614,7 +617,8 @@ public class FRMSilaboCTR extends DCTR {
             FRMReferenciaSilaboCTR ctrReferencias = new FRMReferenciaSilaboCTR(
                     ctrPrin,
                     silabo,
-                    FRM_GESTION
+                    FRM_GESTION,
+                    cambioUnidad
             );
             ctrReferencias.iniciar();
         } else {
@@ -635,6 +639,8 @@ public class FRMSilaboCTR extends DCTR {
             if (silabo.getID() == 0) {
                 int idSilaboGen = SBD.guardar(silabo);
                 silabo.setID(idSilaboGen);
+            } else {
+                SBD.setFechaEdicion(silabo.getID());
             }
 
             // Necesitamos que el silabo este guardado para continuar. 

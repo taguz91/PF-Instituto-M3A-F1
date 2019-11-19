@@ -16,6 +16,7 @@ import modelo.referencias.NEWReferenciasBD;
 import modelo.referencias.ReferenciasMD;
 import modelo.referenciasSilabo.ReferenciaSilaboMD;
 import modelo.silabo.NEWReferenciaSilaboBD;
+import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.SilaboMD;
 import vista.silabos.NEWFrmSilabo;
 import vista.silabos.frmReferencias;
@@ -36,6 +37,7 @@ public class FRMReferenciaSilaboCTR extends DCTR {
     // Conexiones a la base de datos
     private final NEWReferenciasBD REBD = NEWReferenciasBD.single();
     private final NEWReferenciaSilaboBD RSBD = NEWReferenciaSilaboBD.single();
+    private final NEWSilaboBD SBD = NEWSilaboBD.single();
     // Para la biblioteca  
     private List<ReferenciasMD> todasReferenciasBiblioteca;
     private List<ReferenciasMD> referenciasBuscadas;
@@ -49,7 +51,8 @@ public class FRMReferenciaSilaboCTR extends DCTR {
     private boolean existeReferencia = false;
     // Modelo de la lista  
     private final DefaultListModel mdlRS = new DefaultListModel();
-
+    // Para las validaciones de las fechas que el change da problemas  
+    private boolean cambioUnidad;
     // Modelos de la tabla que usaremos  
     private final DefaultTableModel mdTblBiblio = TblEstilo.modelTblSinEditar(new String[]{
         "Código", "Referencia"
@@ -58,7 +61,8 @@ public class FRMReferenciaSilaboCTR extends DCTR {
     public FRMReferenciaSilaboCTR(
             VtnPrincipalCTR ctrPrin,
             SilaboMD silabo,
-            NEWFrmSilabo FRM_SILABO
+            NEWFrmSilabo FRM_SILABO,
+            boolean cambioUnidad
     ) {
         super(ctrPrin);
         this.silabo = silabo;
@@ -73,9 +77,11 @@ public class FRMReferenciaSilaboCTR extends DCTR {
                 "Complementaria"
         );
         this.FRM_SILABO = FRM_SILABO;
+        this.cambioUnidad = cambioUnidad;
     }
 
     public void iniciar() {
+        cambioUnidad = true;
         FRM_SILABO.setVisible(false);
         iniciarVentana();
         cargarReferenciasSilabo();
@@ -134,6 +140,7 @@ public class FRMReferenciaSilaboCTR extends DCTR {
         FRM_REF.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameClosing(InternalFrameEvent e) {
+                cambioUnidad = false;
                 FRM_SILABO.setVisible(true);
             }
         });
@@ -333,6 +340,9 @@ public class FRMReferenciaSilaboCTR extends DCTR {
 
     private void guardar() {
         if (referenciasSilabo.size() > 2) {
+            // Seteamos que ya no estan editando el silabo 
+            SBD.ediantoSilabo(silabo.getID(), false);
+            SBD.setFechaEdicion(silabo.getID());
             referenciasSilabo.forEach(r -> {
                 if (r.getIdReferenciaSilabo() == 0
                         && r.getIdReferencia()
