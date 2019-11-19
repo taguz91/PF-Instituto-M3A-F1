@@ -311,22 +311,30 @@ public class NEWSilaboBD implements ISilaboBD {
         }
     }
 
-    public List<SilaboMD> getSilaboRef(int idCarrera, int idMateria) {
+    public List<SilaboMD> getSilaboRef(int idPeriodo, int idMateria) {
         String SELECT = ""
-                + "SELECT\n"
-                + "	\"Silabo\".id_silabo,\n"
-                + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_nombre \n"
+                + "WITH mi_carrera AS ( \n"
+                + "    SELECT \n"
+                + "        \"Carreras\".id_carrera\n"
+                + "    FROM \n"
+                + "        \"PeriodoLectivo\" \n"
+                + "        INNER JOIN \"Carreras\" ON \"Carreras\".id_carrera = \"PeriodoLectivo\".id_carrera \n"
+                + "    WHERE \n"
+                + "        \"PeriodoLectivo\".id_prd_lectivo = " + idPeriodo + " \n"
+                + ") SELECT\n"
+                + "    \"Silabo\".id_silabo,\n"
+                + "    \"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "    \"PeriodoLectivo\".prd_lectivo_nombre \n"
                 + "FROM\n"
                 + "	\"Silabo\"\n"
-                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Silabo\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN mi_carrera ON mi_carrera.id_carrera = \"PeriodoLectivo\".id_carrera \n"
                 + "WHERE\n"
-                + "	\"PeriodoLectivo\".id_carrera = " + idCarrera + " \n"
+                + "	\"PeriodoLectivo\".id_carrera = mi_carrera.id_carrera \n"
                 + "	AND \"Silabo\".id_materia = " + idMateria + " \n"
-                + "	AND \"PeriodoLectivo\".id_prd_lectivo <> ( SELECT \"PeriodoLectivo\".id_prd_lectivo FROM \"PeriodoLectivo\" WHERE \"PeriodoLectivo\".id_carrera = 2 ORDER BY \"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC LIMIT 1 ) \n"
+                + "	AND \"Silabo\".id_prd_lectivo <> " + idPeriodo + "\n"
                 + "ORDER BY\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC \n"
-                + "	LIMIT 1"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC "
                 + "";
 
         List<SilaboMD> silabosRef = new ArrayList<>();
@@ -776,7 +784,6 @@ public class NEWSilaboBD implements ISilaboBD {
         return silabos;
     }
 
-
     public boolean editarEstado(SilaboMD silabo) {
 
         String UPDATE = ""
@@ -789,7 +796,6 @@ public class NEWSilaboBD implements ISilaboBD {
         return CON.ejecutar(UPDATE) == null;
 
     }
-
 
     public void setFechaEdicion(int idSilabo) {
         String sql = "UPDATE public.\"Silabo\"\n"

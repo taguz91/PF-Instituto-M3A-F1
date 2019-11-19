@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import modelo.CONS;
-import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.silabo.NEWCarreraBD;
 import modelo.silabo.NEWMateriaBD;
 import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWSilaboBD;
@@ -28,14 +26,12 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
     /*
         BASE DE DATOS
      */
-    private final NEWCarreraBD CARRERA_BD = NEWCarreraBD.single();
     private final NEWPeriodoLectivoBD PERIODO_BD = NEWPeriodoLectivoBD.single();
     private final NEWSilaboBD SILABO_CON = NEWSilaboBD.single();
 
-    private final List<CarreraMD> carreras = CARRERA_BD.getByUsername(CONS.USUARIO.getUsername());
     private List<MateriaMD> materias;
     private List<SilaboMD> silabosRef;
-    private List<PeriodoLectivoMD> misPeriodos = PERIODO_BD.getMisPeriodosBy(CONS.USUARIO.getPersona().getIdPersona());
+    private final List<PeriodoLectivoMD> misPeriodos = PERIODO_BD.getMisPeriodosBy(CONS.USUARIO.getPersona().getIdPersona());
     private final String MENSAJE_SIN_SILABO_PENDIENTE = "NO TIENE SILABOS PENDIENTES PARA ESTA CARRERA";
     private VtnSilabosCTR vtnSilabos;
 
