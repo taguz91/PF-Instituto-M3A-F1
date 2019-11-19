@@ -536,10 +536,13 @@ public class FRMSilaboCTR extends DCTR {
             }
         });
         // SI le damos click para que se agrege una estrategia  
-        FRM_GESTION.getCmbEstrategias().addActionListener(e -> {
-            int i = FRM_GESTION.getCmbEstrategias().getSelectedIndex();
-            if (i > 0) {
-                agregarEstrategia(i);
+        FRM_GESTION.getCmbEstrategias().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int i = FRM_GESTION.getCmbEstrategias().getSelectedIndex();
+                if (i > 0) {
+                    agregarEstrategia(i);
+                }
             }
         });
         // Si le damos a mas y esta seleccionado uno se agrega, 
