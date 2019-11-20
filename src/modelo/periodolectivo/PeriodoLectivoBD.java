@@ -65,9 +65,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" SET "
                 + " id_carrera = " + c.getId() + ", "
-                + "prd_lectivo_nombre = '" + p.getNombre() + " "
-                + Meses(p.getFechaInicio()) + "  "
-                + Meses(p.getFechaFin()) + "',"
+                + "prd_lectivo_nombre = '" + p.getNombre() + "',"
                 + "prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', "
                 + "prd_lectivo_fecha_fin = '" + p.getFechaFin() + "', "
                 + "prd_lectivo_observacion = '" + p.getObservacion() + "' "

@@ -286,7 +286,9 @@ public class NEWSilaboBD implements ISilaboBD {
                     s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
                     s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
                     s.getPeriodo().setNombre(res.getString(11));
-                    s.getPeriodo().setFechaFinClases(res.getDate(12).toLocalDate());
+                    if (res.getDate(12) != null) {
+                        s.getPeriodo().setFechaFinClases(res.getDate(12).toLocalDate());
+                    }
                 }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,
