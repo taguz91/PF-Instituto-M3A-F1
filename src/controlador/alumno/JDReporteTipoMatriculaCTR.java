@@ -2,7 +2,7 @@ package controlador.alumno;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -94,7 +94,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         if (tipo.length() == 0) {
             tipo = "TODOS";
         }
-        String nombre = tipo + LocalDateTime.now().toString()
+        String nombre = tipo + LocalDate.now().toString()
                 .replace(":", "|")
                 .replace(".", "");
         Descarga.excelWithPost(
