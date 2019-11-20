@@ -11,6 +11,7 @@ BEGIN
     WHERE id_prd_lectivo = new.id_prd_lectivo
   );
 
+  RETURN NEW;
 END;
 $set_coordinador$ LANGUAGE plpgsql;
 

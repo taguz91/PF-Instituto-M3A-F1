@@ -729,6 +729,7 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                     internal.dispose();
+                    numVtns--;
                 }
             }
 
