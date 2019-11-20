@@ -9,7 +9,7 @@ public class PeriodoLectivoMD {
     private int id;
     private String nombre, observacion;
     private boolean activo, estado;
-    private LocalDate fechaInicio, fechaFin;
+    private LocalDate fechaInicio, fechaFin, fechaFinClases;
     private int NumSemanas;
 
     private int NumDias;
@@ -128,6 +128,14 @@ public class PeriodoLectivoMD {
     public PeriodoLectivoMD set(Consumer<PeriodoLectivoMD> consumer) {
         consumer.accept(this);
         return this;
+    }
+
+    public LocalDate getFechaFinClases() {
+        return fechaFinClases;
+    }
+
+    public void setFechaFinClases(LocalDate fechaFinClases) {
+        this.fechaFinClases = fechaFinClases;
     }
 
 }

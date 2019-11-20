@@ -40,60 +40,77 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
 
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
         String nsql = "INSERT INTO public.\"PeriodoLectivo\"(\n"
-                + "id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin, prd_lectivo_observacion, prd_lectivo_activo, prd_lectivo_estado)"
-                + " VALUES( " + c.getId() + ", '" + p.getNombre().toUpperCase() + " " + Meses(p.getFechaInicio()) + "   " + Meses(p.getFechaFin()) + "', '" + p.getFechaInicio()
-                + "', '" + p.getFechaFin() + "', '" + p.getObservacion().toUpperCase() + "', true, true);";
+                + "id_carrera, "
+                + "prd_lectivo_nombre, "
+                + "prd_lectivo_fecha_inicio, "
+                + "prd_lectivo_fecha_fin, "
+                + "prd_lectivo_observacion, "
+                + "prd_lectivo_activo, "
+                + "prd_lectivo_estado )"
+                + " VALUES( "
+                + "" + c.getId() + ", "
+                + "'" + p.getNombre().toUpperCase()
+                + " " + Meses(p.getFechaInicio())
+                + "  " + Meses(p.getFechaFin()) + "', "
+                + "'" + p.getFechaInicio() + "', "
+                + "'" + p.getFechaFin() + "', "
+                + "'" + p.getObservacion().toUpperCase() + "', "
+                + "true, "
+                + "true"
+                + ");";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
-        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " id_carrera = " + c.getId() + ", prd_lectivo_nombre = '"
-                + p.getNombre() + " "
-                + Meses(p.getFechaInicio())
-                + "  "
+        String nsql = "UPDATE public.\"PeriodoLectivo\" SET "
+                + " id_carrera = " + c.getId() + ", "
+                + "prd_lectivo_nombre = '" + p.getNombre() + " "
+                + Meses(p.getFechaInicio()) + "  "
                 + Meses(p.getFechaFin()) + "',"
-                + " prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', prd_lectivo_fecha_fin = '" + p.getFechaFin()
-                + "', prd_lectivo_observacion = '" + p.getObservacion()
-                + "' WHERE id_prd_lectivo = " + p.getID() + ";";
+                + "prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', "
+                + "prd_lectivo_fecha_fin = '" + p.getFechaFin() + "', "
+                + "prd_lectivo_observacion = '" + p.getObservacion() + "' "
+                + "WHERE id_prd_lectivo = " + p.getID() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return conecta.nosql(ps) == null;
     }
 
     public boolean eliminarPeriodo(PeriodoLectivoMD p) {
-        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_activo = false"
+        String nsql = "UPDATE public.\"PeriodoLectivo\" "
+                + "SET prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getID() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
-        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_estado = false"
-                + " WHERE id_prd_lectivo = " + p.getID() + ";";
+        String nsql = "UPDATE public.\"PeriodoLectivo\" "
+                + "SET prd_lectivo_estado = false "
+                + "WHERE id_prd_lectivo = " + p.getID() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
 
     public boolean abrirPeriodo(int id) {
-        String nsql = "UPDATE public.\"PeriodoLectivo\" SET\n"
-                + " prd_lectivo_estado = true"
-                + " WHERE id_prd_lectivo = " + id + ";";
+        String nsql = "UPDATE public.\"PeriodoLectivo\" "
+                + "SET  prd_lectivo_estado = true"
+                + "WHERE id_prd_lectivo = " + id + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
     }
 
     public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
-        String sql = "SELECT p.id_prd_lectivo, c.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, \n"
-                + "p.prd_lectivo_fecha_fin, p.prd_lectivo_estado, c.carrera_nombre FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c"
-                + " USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
+        String sql = "SELECT "
+                + " p.id_prd_lectivo, "
+                + "c.id_carrera, "
+                + "p.prd_lectivo_nombre, "
+                + "p.prd_lectivo_fecha_inicio, "
+                + "p.prd_lectivo_fecha_fin, "
+                + "p.prd_lectivo_estado, "
+                + "c.carrera_nombre "
+                + "FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c "
+                + "USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
@@ -121,9 +138,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     }
 
     public List<PeriodoLectivoMD> periodoDocente(int aguja) {
-        String sql = "SELECT DISTINCT p.prd_lectivo_nombre, p.id_prd_lectivo FROM (public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo)) JOIN\n"
-                + "public.\"Docentes\" d USING(id_docente)\n"
-                + "WHERE d.id_docente = " + aguja + " AND p.prd_lectivo_activo = true;";
+        String sql = "SELECT "
+                + "DISTINCT "
+                + "p.prd_lectivo_nombre, "
+                + "p.id_prd_lectivo "
+                + "FROM ( public.\"PeriodoLectivo\" p JOIN public.\"Cursos\" c USING(id_prd_lectivo) ) "
+                + "JOIN public.\"Docentes\" d USING(id_docente) "
+                + "WHERE d.id_docente = " + aguja + " "
+                + "AND p.prd_lectivo_activo = true;";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
