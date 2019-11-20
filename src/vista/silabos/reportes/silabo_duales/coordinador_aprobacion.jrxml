@@ -3,11 +3,31 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="ID_CARR" class="java.lang.String"/>
+	<parameter name="ID_CARR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select concat(a.docente_abreviatura,' ',p.persona_primer_apellido,' ',p.persona_primer_nombre) as nombreCoordinador from "Carreras" c , "Docentes" a, "Personas" p where c.id_docente_coordinador=a.id_docente and a.id_persona=p.id_persona AND C.id_carrera=$P!{ID_CARR}]]>
+		<![CDATA[SELECT CONCAT (
+a.docente_abreviatura, 
+' ', 
+p.persona_primer_apellido, 
+' ',
+p.persona_primer_nombre
+) as nombreCoordinador ,
+
+CASE WHEN p.persona_identificacion = '0302298138' THEN 
+'COORDINADOR/A ENCARGADA DE LA CARRERA'
+ELSE 'COORDINADOR/A DE LA CARRERA'
+END AS coordinador_carrera
+
+FROM "Carreras" c , "Docentes" a, "Personas" p 
+WHERE c.id_docente_coordinador = a.id_docente 
+AND a.id_persona = p.id_persona 
+AND C.id_carrera = $P{ID_CARR};
+]]>
 	</queryString>
 	<field name="nombrecoordinador" class="java.lang.String"/>
+	<field name="coordinador_carrera" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -25,18 +45,17 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[APROBADO POR ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="42" width="277" height="20" uuid="892f485a-ed77-4b81-9f1c-cc8926a8ce2f"/>
+			<textField>
+				<reportElement x="0" y="42" width="277" height="20" uuid="b1779865-e9bb-43bb-af47-45466dc38972"/>
 				<box>
-					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[COORDINADOR/A DE LA CARRERA]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{coordinador_carrera}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
