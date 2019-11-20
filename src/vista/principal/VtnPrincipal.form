@@ -162,9 +162,9 @@
                     <Property name="text" type="java.lang.String" value="Plan de clase"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtGestionAcademica">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Biblioteca"/>
+                    <Property name="text" type="java.lang.String" value="Cuadro de Gestion Academica"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
@@ -251,6 +251,11 @@
             <MenuItem class="javax.swing.JMenuItem" name="mnCtReportesEstado">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Estado Asistencia"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Biblioteca"/>
               </Properties>
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="mnFichas">
