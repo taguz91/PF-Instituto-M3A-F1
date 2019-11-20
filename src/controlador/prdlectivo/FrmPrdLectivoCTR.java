@@ -125,18 +125,17 @@ public class FrmPrdLectivoCTR extends DCTR {
     //Habilita el Botón Guardar si es que estan con datos lo componentes
     public void habilitarGuardar() {
         String carrera, nombre, observacion;
-
         carrera = frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString();
         nombre = frmPrdLectivo.getTxt_Nombre().getText();
         observacion = frmPrdLectivo.getTxtObservacion().getText();
 
-        if (carrera.equals("|SELECCIONE|") == false || nombre.equals("") == false
+        if (carrera.equals("|SELECCIONE|") == false
+                || nombre.equals("") == false
                 || observacion.equals("") == false) {
             frmPrdLectivo.getBtn_Guardar().setEnabled(true);
         } else {
             frmPrdLectivo.getBtn_Guardar().setEnabled(false);
         }
-
     }
 
     //Inicia los JDateChooser en la fecha actual
@@ -184,6 +183,7 @@ public class FrmPrdLectivoCTR extends DCTR {
 
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
+        LocalDate fechaFinClases = convertirDate(frmPrdLectivo.getJdcFechaFinClases().getDate());
 
         if (dia_Inicio.isAfter(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true) {
             error = true;
@@ -193,12 +193,20 @@ public class FrmPrdLectivoCTR extends DCTR {
             frmPrdLectivo.getLbl_ErrFecFin().setVisible(false);
         }
 
-        if (error == true) {
-            JOptionPane.showMessageDialog(null, "Advertencia!! Revise que esten ingresados correctamente los campos");
-            iniciarComponentes();
+        if (fechaFinClases == null) {
+            error = true;
+            JOptionPane.showMessageDialog(
+                    frmPrdLectivo,
+                    "Debe ingresar la fecha de fin de clases.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        if (error) {
             habilitarGuardar();
         } else {
-            if (editar == false) {
+            if (!editar) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
@@ -219,7 +227,7 @@ public class FrmPrdLectivoCTR extends DCTR {
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(bdPerLectivo, carrera);
                 periodo.setID(id_PeriodoLectivo);
-                if (bdPerLectivo.editarPeriodo(periodo, carrera) == true) {
+                if (bdPerLectivo.editarPeriodo(periodo, carrera)) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
@@ -278,18 +286,38 @@ public class FrmPrdLectivoCTR extends DCTR {
     public void editar(PeriodoLectivoMD mdPerLectivo, CarreraMD mdCarrera) {
         id_PeriodoLectivo = mdPerLectivo.getID();
         editar = true;
-        Calendar calendar_Inicio = Calendar.getInstance();
-        calendar_Inicio.clear();
-        calendar_Inicio.set(mdPerLectivo.getFechaInicio().getYear(), mdPerLectivo.getFechaInicio().getMonthValue() - 1, mdPerLectivo.getFechaInicio().getDayOfMonth());
-        Calendar calendar_Fin = Calendar.getInstance();
-        calendar_Fin.clear();
-        calendar_Fin.set(mdPerLectivo.getFechaFin().getYear(), mdPerLectivo.getFechaFin().getMonthValue() - 1, mdPerLectivo.getFechaFin().getDayOfMonth());
+        Calendar fechaIni = Calendar.getInstance();
+        fechaIni.clear();
+        fechaIni.set(
+                mdPerLectivo.getFechaInicio().getYear(),
+                mdPerLectivo.getFechaInicio().getMonthValue() - 1,
+                mdPerLectivo.getFechaInicio().getDayOfMonth()
+        );
+        Calendar fechaFin = Calendar.getInstance();
+        fechaFin.clear();
+        fechaFin.set(
+                mdPerLectivo.getFechaFin().getYear(),
+                mdPerLectivo.getFechaFin().getMonthValue() - 1,
+                mdPerLectivo.getFechaFin().getDayOfMonth()
+        );
+
+        Calendar fechaClasesFin = Calendar.getInstance();
+        fechaClasesFin.clear();
+
+        if (mdPerLectivo.getFechaFinClases() != null) {
+            fechaClasesFin.set(
+                    mdPerLectivo.getFechaFinClases().getYear(),
+                    mdPerLectivo.getFechaFinClases().getMonthValue(),
+                    mdPerLectivo.getFechaFinClases().getDayOfMonth()
+            );
+        }
 
         frmPrdLectivo.getCbx_Carreras().setSelectedItem(mdCarrera.getNombre());
         frmPrdLectivo.getTxt_Nombre().setText(mdPerLectivo.getNombre());
-        frmPrdLectivo.getJdc_FechaInicio().setCalendar(calendar_Inicio);
-        frmPrdLectivo.getJdc_FechaFin().setCalendar(calendar_Fin);
+        frmPrdLectivo.getJdc_FechaInicio().setCalendar(fechaIni);
+        frmPrdLectivo.getJdc_FechaFin().setCalendar(fechaFin);
         frmPrdLectivo.getTxtObservacion().setText(mdPerLectivo.getObservacion());
+        frmPrdLectivo.getJdcFechaFinClases().setCalendar(fechaClasesFin);
         habilitarGuardar();
     }
 

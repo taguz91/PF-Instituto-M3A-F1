@@ -727,6 +727,7 @@ public class VtnPrincipalCTR {
                 if (numVtns > 5) {
                     errorNumVentanas();
                     internal.dispose();
+                    numVtns--;
                 }
             }
 
@@ -877,7 +878,6 @@ public class VtnPrincipalCTR {
 
         //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
         //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
-
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
 
