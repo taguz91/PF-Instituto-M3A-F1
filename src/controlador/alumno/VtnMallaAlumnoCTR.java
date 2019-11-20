@@ -8,7 +8,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -539,7 +538,9 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 nombre = mallas.get(0).getAlumnoCarrera()
                         .getAlumno().getIdentificacion();
             }
-            nombre += "-" + LocalDateTime.now().toString().replace(":", "|");
+            nombre += "-" + LocalDateTime.now().toString()
+                    .replace(":", "|")
+                    .replace(".", "");
             url += "/" + CONS.USUARIO.getUsername();
             Descarga.excel(
                     nombre,
