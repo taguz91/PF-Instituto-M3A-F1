@@ -116,6 +116,11 @@ public class FRMSilaboCTR extends DCTR {
             SilaboMD silabo
     ) {
         super(ctrPrin);
+        if (silabo.getPeriodo().getFechaFinClases() == null) {
+            silabo.getPeriodo().setFechaFinClases(
+                    silabo.getPeriodo().getFechaFin()
+            );
+        }
         this.silabo = silabo;
         FRM_ACCIONES = new NEWFrmAcciones(ctrPrin.getVtnPrin(), false);
         FRM_ACCIONES.setLocationRelativeTo(FRM_GESTION);
@@ -137,7 +142,6 @@ public class FRMSilaboCTR extends DCTR {
         }
         estrategias = EUBD.getBySilaboReferencia(silabo.getID());
 
-        cargarDatosSilabo();
         iniciarSilabo();
         iniciarVentana();
         // Guardamos el silabo al ingresar.
@@ -156,7 +160,6 @@ public class FRMSilaboCTR extends DCTR {
         unidades = USBD.getBySilabo(silabo.getID());
         evaluaciones = EVBD.getBySilabo(silabo.getID());
         estrategias = EUBD.getBySilabo(silabo.getID());
-        cargarDatosSilabo();
         iniciarSilabo();
         iniciarVentana();
     }
@@ -641,15 +644,6 @@ public class FRMSilaboCTR extends DCTR {
             us.setNumeroUnidad(i);
             unidades.add(us);
         }
-    }
-
-    private void cargarDatosSilabo() {
-        // referenciasSilabo = RSBD.getBySilabo(silabo.getID());
-        //evaluaciones = ;
-    }
-
-    private void estadoBtnGuardar(boolean estado) {
-        FRM_GESTION.getBtnGuardar().setEnabled(estado);
     }
 
     /**
@@ -1196,9 +1190,9 @@ public class FRMSilaboCTR extends DCTR {
                 if (fecha.isBefore(silabo.getPeriodo().getFechaInicio())) {
                     msg = "La fecha de inicio debe ser mayor a la "
                             + "fecha de inicio del periodo. \n"
-                            + "Fecha inicio: " + fecha 
-                            + "  Fecha periodo: " + 
-                            silabo.getPeriodo().getFechaInicio() + "\n";
+                            + "Fecha inicio: " + fecha
+                            + "  Fecha periodo: "
+                            + silabo.getPeriodo().getFechaInicio() + "\n";
                     valido = false;
                 }
                 // La fecha de inicio ser anterior a la fecha de fin de periodo.
@@ -1250,6 +1244,14 @@ public class FRMSilaboCTR extends DCTR {
                 // La fecha de fin de la unidad debe ser posterior a la fecha de inicio.
                 if (!fecha.isAfter(unidadSelec.getFechaInicioUnidad())) {
                     msg += "La fecha de fin de la unidad debe ser posterior a la fecha de inicio.\n";
+                    valido = false;
+                }
+
+                // La fecha de fin de la unidad debe ser anterior a la fecha de fin del periodo 
+                if (silabo.getPeriodo().getFechaFinClases().isBefore(fecha)
+                        || !silabo.getPeriodo().getFechaFinClases().equals(fecha)) {
+                    msg += "La fecha de fin de la unidad no debe ser superior a la "
+                            + "fecha de fin de clases.\n";
                     valido = false;
                 }
 
