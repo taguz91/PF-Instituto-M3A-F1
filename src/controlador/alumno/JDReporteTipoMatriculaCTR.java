@@ -2,11 +2,13 @@ package controlador.alumno;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import utils.Descarga;
 import vista.alumno.JDReporteTipoMatricula;
 
 /**
@@ -53,27 +55,55 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 p.getNombre()
             });
         });
-    }    
-    
+    }
+
     private void seleccioneTipoMatricula() {
         Object np = JOptionPane.showInputDialog(
                 null,
-                "Seleccione el tipo de matricula", 
+                "Seleccione el tipo de matricula",
                 "Tipos de matricula",
-                JOptionPane.QUESTION_MESSAGE, 
+                JOptionPane.QUESTION_MESSAGE,
                 null,
-                TIPO_MATRICULAS, 
+                TIPO_MATRICULAS,
                 "Seleccione"
         );
-        
+
         if (np == null) {
             // No se lecciono nada 
         } else if (np.equals("Seleccione")) {
             // Cargamos todos los alumnos 
             // sin importar su tipo de matricula
+            reporteJSON("");
         } else {
-            
+            reporteJSON(np.toString());
         }
+    }
+
+    private void reporteJSON(String tipo) {
+        int[] ss = vtn.getTblPeriodos().getSelectedRows();
+        String nombre = "";
+        String ids = "[";
+        for (int s : ss) {
+            ids += periodos.get(s).getID() + ",";
+            nombre += periodos.get(s)
+                    .getNombre().substring(0, 4)
+                    + " | ";
+        }
+        ids = ids.substring(0, ids.length() - 1);
+        ids += "]";
+        String JSON = "{\"ids_periodos\":" + ids
+                + ", \"tipo_matricula\": "
+                + "\"" + tipo + "\"}";
+        System.out.println("JSON: " + JSON);
+        nombre += LocalDateTime.now().toString();
+        Descarga.excelWithPost(
+                nombre,
+                "matriculas/reporte/tipo-matricula",
+                JSON,
+                "Error al descargar el reporte "
+                + "por tipo de matricula, vuelva a "
+                + "intentarlo mas tarde."
+        );
     }
 
 }
