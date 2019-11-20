@@ -24,7 +24,7 @@ public class SilaboMD {
     public static int APROBADO = 1;
     public static int REVISAR = 2;
 
-    private Integer ID;
+    private Integer ID = 0;
 
     private MateriaMD materia;
 
