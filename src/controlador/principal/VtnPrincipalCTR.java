@@ -726,11 +726,12 @@ public class VtnPrincipalCTR {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
                 numVtns++;
+                /*
                 if (numVtns > 5) {
                     errorNumVentanas();
                     internal.dispose();
-                    numVtns--;
-                }
+                    numVtns = 0;
+                }*/
             }
 
             @Override
