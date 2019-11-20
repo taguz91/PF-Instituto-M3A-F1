@@ -730,7 +730,7 @@ public class FRMSilaboCTR extends DCTR {
                         + "de la unidad " + u.getNumeroUnidad() + "\n";
             }
         });
-        return msgErrorSilabo.length() > 0;
+        return msgErrorSilabo.trim().length() == 0;
     }
 
     /**
@@ -1192,20 +1192,22 @@ public class FRMSilaboCTR extends DCTR {
             } else {
                 boolean valido = true;
                 String msg = "";
-                // La fecha de inicio debe ser mayor a la fecha fin 
-                if (fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
+                // La fecha de inicio debe ser menor a la fecha fin  
+                if (fecha.isBefore(silabo.getPeriodo().getFechaInicio())) {
                     msg = "La fecha de inicio debe ser mayor a la "
-                            + "fecha de inicio del periodo. "
-                            + fecha + "\n";
+                            + "fecha de inicio del periodo. \n"
+                            + "Fecha inicio: " + fecha 
+                            + "  Fecha periodo: " + 
+                            silabo.getPeriodo().getFechaInicio() + "\n";
                     valido = false;
                 }
-                // La fecha de fin inicio ser anterior a la fecha de fin de periodo.
-                if (fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
+                // La fecha de inicio ser anterior a la fecha de fin de periodo.
+                if (!fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
                     msg += "La fecha de fin inicio ser anterior a la "
                             + "fecha de fin de periodo. \n";
                 }
-                // La fecha de inicio de la unidad debe ser anterior a la fecha de fin de la unidad.
-                if (unidadSelec.getFechaFinUnidad().isAfter(fecha)) {
+                // La fecha inicio debe ser anterior a la fecha fin de la unidad
+                if (!fecha.isBefore(unidadSelec.getFechaFinUnidad())) {
                     msg += "La fecha de inicio de la unidad debe ser anterior a "
                             + "la fecha de fin de la unidad.\n";
                     valido = false;
@@ -1237,17 +1239,17 @@ public class FRMSilaboCTR extends DCTR {
                 // Aqui agregaremos los mensajes de error  
                 String msg = "";
                 // La fecha de fin debe ser mayor a la fecha de inicio del periodo
-                if (fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
+                if (!fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
                     msg = "La fecha de fin debe ser mayor a la fecha de inicio del periodo. \n";
                     valido = false;
                 }
                 // La fecha de fin debe ser anterior a la fecha de fin de periodo.
-                if (fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
+                if (!fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
                     msg += "La fecha de fin debe ser anterior a la fecha de fin de periodo. \n";
                 }
-                // La fecha de inicio de la unidad debe ser posterior a la fecha de fin.
-                if (unidadSelec.getFechaInicioUnidad().isBefore(fecha)) {
-                    msg += "La fecha de inicio de la unidad debe ser posterior a la fecha de fin.\n";
+                // La fecha de fin de la unidad debe ser posterior a la fecha de inicio.
+                if (!fecha.isAfter(unidadSelec.getFechaInicioUnidad())) {
+                    msg += "La fecha de fin de la unidad debe ser posterior a la fecha de inicio.\n";
                     valido = false;
                 }
 

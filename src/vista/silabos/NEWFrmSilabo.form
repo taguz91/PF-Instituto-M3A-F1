@@ -66,8 +66,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="dchFechaInicio" min="-2" pref="170" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                                      <Component id="lblFechaFin" pref="112" max="32767" attributes="0"/>
-                                      <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
+                                      <Component id="lblFechaFin" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="dchFechaFin" min="-2" pref="170" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -107,9 +107,14 @@
                                               <Component id="lblTotalHdocencia" min="-2" pref="119" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
-                                              <Component id="lblHorasAutonomas" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="spnHautonomas" min="-2" pref="60" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="lblHorasAutonomas" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="spnHautonomas" min="-2" pref="60" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Component id="spnHpracticas" min="-2" pref="60" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="lblTotalHpracticas" alignment="1" pref="0" max="32767" attributes="0"/>
@@ -117,7 +122,7 @@
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -174,9 +179,7 @@
                                       <Component id="lblEstrategiasPredeterminadas" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                                       <Component id="lblHorasPracticas" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="spnHpracticas" min="-2" pref="60" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
