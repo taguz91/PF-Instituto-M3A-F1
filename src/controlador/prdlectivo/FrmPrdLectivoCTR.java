@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -41,7 +39,6 @@ public class FrmPrdLectivoCTR extends DCTR {
         this.frmPrdLectivo = frmPrdLectivo;
         //Cambiamos el estado del cursos  
         this.bdPerLectivo = new PeriodoLectivoBD(ctrPrin.getConecta());
-
     }
 
     //Ejerce la funcionalidad de esta Ventana
@@ -49,34 +46,21 @@ public class FrmPrdLectivoCTR extends DCTR {
         ctrPrin.agregarVtn(frmPrdLectivo);
         CmbValidar combo_Carreras = new CmbValidar(frmPrdLectivo.getCbx_Carreras(), frmPrdLectivo.getLbl_ErrCarrera());
 
-        ActionListener Cancelar = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmPrdLectivo.dispose();
-                ctrPrin.cerradoJIF();
-            }
+        ActionListener Cancelar = (ActionEvent e) -> {
+            frmPrdLectivo.dispose();
+            ctrPrin.cerradoJIF();
         };
 
-        ActionListener rellenarNombre = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
+        ActionListener rellenarNombre = (ActionEvent e) -> {
+            if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
 
-                    for (int i = 0; i < carreras.size(); i++) {
-                        if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals(carreras.get(i).getNombre().toUpperCase())) {
-                            Font negrita = new Font("Tahoma", Font.BOLD, 13);
-                            frmPrdLectivo.getTxt_Nombre().setFont(negrita);
-                            frmPrdLectivo.getTxt_Nombre().setText(carreras.get(i).getCodigo());
-                        }
+                for (int i = 0; i < carreras.size(); i++) {
+                    if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals(carreras.get(i).getNombre().toUpperCase())) {
+                        Font negrita = new Font("Tahoma", Font.BOLD, 13);
+                        frmPrdLectivo.getTxt_Nombre().setFont(negrita);
+                        frmPrdLectivo.getTxt_Nombre().setText(carreras.get(i).getCodigo());
                     }
                 }
-            }
-        };
-
-        PropertyChangeListener habilitar_Guardar = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                habilitarGuardar();
             }
         };
 
@@ -157,13 +141,14 @@ public class FrmPrdLectivoCTR extends DCTR {
 
     //Inicia los JDateChooser en la fecha actual
     public void iniciarFechas() {
-
         LocalDate fechaActual = LocalDate.now();
         Date fechaHoy = Date.from(fechaActual.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         frmPrdLectivo.getJdc_FechaInicio().setDateFormatString("dd/MM/yyyy");
         frmPrdLectivo.getJdc_FechaFin().setDateFormatString("dd/MM/yyyy");
+        frmPrdLectivo.getJdcFechaFinClases().setDateFormatString("dd/MM/yyyy");
         frmPrdLectivo.getJdc_FechaInicio().setDate(fechaHoy);
         frmPrdLectivo.getJdc_FechaFin().setDate(fechaHoy);
+        frmPrdLectivo.getJdcFechaFinClases().setDate(fechaHoy);
     }
 
     //Inicializa ocultos los labels de error 
@@ -186,28 +171,19 @@ public class FrmPrdLectivoCTR extends DCTR {
 
     //Convierte una Date en un LocalDate
     public LocalDate convertirDate(Date fecha) {
-        return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        if (fecha != null) {
+            return Instant.ofEpochMilli(fecha.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        } else {
+            return null;
+        }
     }
 
     //Guarda o Edita el Período Lectivo basándose en la variable boolean Local
     public void guardarPeriodo() {
-
-        String carreras, nombre_Periodo, observacion, fecha_Inicio, fecha_Fin;
         boolean error = false;
-        LocalDate fechaActual = LocalDate.now();
 
-        carreras = frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString();
-        nombre_Periodo = frmPrdLectivo.getTxt_Nombre().getText();
-//        fecha_Inicio = frmPrdLectivo.getJdc_FechaInicio().toString();
-//        String fec[] = fecha_Inicio.split("/");
-        observacion = frmPrdLectivo.getTxtObservacion().getText();
-//        fecha_Fin = frmPrdLectivo.getJdc_FechaFin().toString();
-//        String fec_Fin[] = fecha_Fin.split("/");
-//        System.out.println("FECHA: " + fecha_Inicio);
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
-//        LocalDate dia_Inicio = LocalDate.of(Integer.parseInt(20+fec[2]), Integer.parseInt(fec[1]), Integer.parseInt(fec[0]));
-//        LocalDate dia_Fin = LocalDate.of(Integer.parseInt(20+fec_Fin[2]), Integer.parseInt(fec_Fin[1]), Integer.parseInt(fec_Fin[0]));
 
         if (dia_Inicio.isAfter(dia_Fin) == true || dia_Inicio.isEqual(dia_Fin) == true) {
             error = true;
@@ -228,17 +204,17 @@ public class FrmPrdLectivoCTR extends DCTR {
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(periodo, carrera);
                 if (bdPerLectivo.guardarPeriodo(periodo, carrera) == true) {
-                    JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
+                    JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
-                    
+
                     VtnTipoNotasCTR controlador = new VtnTipoNotasCTR(ctrPrin.getVtnPrin());
                     controlador.Init();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error en grabar los datos");
+                    JOptionPane.showMessageDialog(null, "Error en guardar los datos");
                 }
             } else {
-                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                PeriodoLectivoMD periodo;
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(bdPerLectivo, carrera);
@@ -260,10 +236,21 @@ public class FrmPrdLectivoCTR extends DCTR {
 
         LocalDate dia_Inicio = convertirDate(frmPrdLectivo.getJdc_FechaInicio().getDate());
         LocalDate dia_Fin = convertirDate(frmPrdLectivo.getJdc_FechaFin().getDate());
+        LocalDate finClases = convertirDate(frmPrdLectivo.getJdcFechaFinClases().getDate());
 
         periodo.setNombre(frmPrdLectivo.getTxt_Nombre().getText() + " ");
-        periodo.setFechaInicio(dia_Inicio);
-        periodo.setFechaFin(dia_Fin);
+        if (dia_Inicio != null) {
+            periodo.setFechaInicio(dia_Inicio);
+        }
+
+        if (dia_Fin != null) {
+            periodo.setFechaFin(dia_Fin);
+        }
+
+        if (finClases != null) {
+            periodo.setFechaFinClases(finClases);
+        }
+
         periodo.setObservacion(frmPrdLectivo.getTxtObservacion().getText());
         return periodo;
     }
@@ -279,9 +266,9 @@ public class FrmPrdLectivoCTR extends DCTR {
     public String sacarIniciales(String palabra) {
         String nombre = "";
         String palabras[] = palabra.split(" ");
-        for (int i = 0; i < palabras.length; i++) {
-            if (palabras[i].length() > 3) {
-                nombre = nombre + palabras[i].charAt(0);
+        for (String p : palabras) {
+            if (p.length() > 3) {
+                nombre = nombre + p.charAt(0);
             }
         }
         return nombre;
