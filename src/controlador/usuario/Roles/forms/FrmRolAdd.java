@@ -5,7 +5,7 @@ import controlador.principal.VtnPrincipalCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 
 /**
  *

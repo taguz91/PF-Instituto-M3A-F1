@@ -3,7 +3,7 @@ package controlador.curso;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;

@@ -5,7 +5,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import modelo.CONS;
+import utils.CONS;
 
 /**
  *

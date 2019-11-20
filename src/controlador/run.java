@@ -4,7 +4,7 @@ import controlador.login.LoginCTR;
 import controlador.version.VtnDitoolCTR;
 import java.awt.EventQueue;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.version.DitoolBD;
 import modelo.version.VersionMD;
 import vista.version.VtnDitool;

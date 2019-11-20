@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.UsuarioBD;

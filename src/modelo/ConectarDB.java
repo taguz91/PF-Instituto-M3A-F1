@@ -1,5 +1,6 @@
 package modelo;
 
+import utils.CONS;
 import controlador.principal.ConexionesCTR;
 import java.awt.Cursor;
 import java.sql.CallableStatement;

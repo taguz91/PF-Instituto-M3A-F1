@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.alumno.AlumnoCursoRetiradoBD;
 import modelo.alumno.AlumnoCursoRetiradoMD;
 import modelo.estilo.TblEstilo;

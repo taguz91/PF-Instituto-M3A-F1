@@ -2,7 +2,7 @@ package controlador.version;
 
 import java.io.File;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.version.VersionMD;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;

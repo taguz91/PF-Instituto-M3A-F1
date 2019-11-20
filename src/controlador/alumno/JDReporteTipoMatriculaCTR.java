@@ -81,13 +81,9 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
 
     private void reporteJSON(String tipo) {
         int[] ss = vtn.getTblPeriodos().getSelectedRows();
-        String nombre = "";
         String ids = "[";
         for (int s : ss) {
             ids += periodos.get(s).getID() + ",";
-            nombre += periodos.get(s)
-                    .getNombre().substring(0, 4)
-                    + " | ";
         }
         ids = ids.substring(0, ids.length() - 1);
         ids += "]";
@@ -95,7 +91,10 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 + ", \"tipo_matricula\": "
                 + "\"" + tipo + "\"}";
         System.out.println("JSON: " + JSON);
-        nombre += LocalDateTime.now().toString();
+        if (tipo.length() == 0) {
+            tipo = "TODOS";
+        }
+        String nombre = tipo + LocalDateTime.now().toString();
         Descarga.excelWithPost(
                 nombre,
                 "matriculas/reporte/tipo-matricula",

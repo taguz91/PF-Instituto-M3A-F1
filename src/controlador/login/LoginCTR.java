@@ -5,7 +5,7 @@ import controlador.usuario.VtnSelectRolCTR;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.UsuarioBD;

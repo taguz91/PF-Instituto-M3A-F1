@@ -16,7 +16,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.version.VersionMD;
 import vista.principal.VtnPrincipal;
 import vista.version.VtnDitool;

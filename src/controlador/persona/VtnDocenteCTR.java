@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.estilo.TblEstilo;
 import modelo.docente.RolDocenteBD;
 import modelo.docente.RolPeriodoBD;

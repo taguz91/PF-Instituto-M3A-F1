@@ -3,7 +3,7 @@ package controlador.usuario.forms;
 import controlador.Libraries.Effects;
 import controlador.usuario.VtnUsuarioCTR;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 

@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWMateriaBD;

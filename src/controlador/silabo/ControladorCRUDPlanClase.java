@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConexionBD;
 import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;

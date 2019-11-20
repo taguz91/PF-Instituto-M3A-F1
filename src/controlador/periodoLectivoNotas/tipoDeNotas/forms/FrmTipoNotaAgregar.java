@@ -5,7 +5,7 @@ import controlador.periodoLectivoNotas.tipoDeNotas.VtnTipoNotasCTR;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.tipoDeNotas.FrmTipoNota;
 import vista.principal.VtnPrincipal;

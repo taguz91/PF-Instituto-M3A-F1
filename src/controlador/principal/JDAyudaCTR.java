@@ -2,7 +2,7 @@ package controlador.principal;
 
 import controlador.estilo.CambioPnlCTR;
 import javax.swing.JLabel;
-import modelo.CONS;
+import utils.CONS;
 import vista.principal.JDAyuda;
 import vista.principal.PnlAyuda;
 import vista.principal.VtnPrincipal;

@@ -5,7 +5,7 @@ import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.estilo.TblEstilo;

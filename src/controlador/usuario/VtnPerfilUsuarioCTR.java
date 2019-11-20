@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.usuario.UsuarioBD;
 import vista.usuario.VtnPerfilUsuario;
 

@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;

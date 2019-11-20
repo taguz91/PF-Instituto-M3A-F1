@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JFrame;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;

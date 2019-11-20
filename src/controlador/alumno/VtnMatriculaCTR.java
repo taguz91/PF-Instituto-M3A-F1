@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
 import modelo.estilo.TblEstilo;

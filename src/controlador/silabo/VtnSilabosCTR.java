@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import modelo.CONS;
+import utils.CONS;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWPeriodoLectivoBD;
 import modelo.silabo.NEWSilaboBD;

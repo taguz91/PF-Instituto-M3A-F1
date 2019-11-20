@@ -9,7 +9,7 @@ import static java.lang.Thread.sleep;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;

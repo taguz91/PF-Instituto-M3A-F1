@@ -9,7 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import javax.swing.JOptionPane;
-import modelo.CONS;
 
 /**
  *

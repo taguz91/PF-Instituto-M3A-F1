@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import vista.tipoDeNotas.FrmTipoNota;

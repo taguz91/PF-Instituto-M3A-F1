@@ -10,7 +10,7 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.querys.Querys;

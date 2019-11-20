@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import modelo.CONS;
+import utils.CONS;
 import modelo.accesosDelRol.AccesosDelRolBD;
 import modelo.usuario.RolBD;
 import vista.accesos.FrmAccesosDeRol;

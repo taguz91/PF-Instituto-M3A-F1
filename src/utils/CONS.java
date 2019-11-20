@@ -1,4 +1,4 @@
-package modelo;
+package utils;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -18,8 +18,7 @@ import modelo.usuario.UsuarioBD;
 /**
  *
  * @author JOHNNY, MrRainx
- */
-public class CONS {
+ */public class CONS {
 
     //Modo del proyecto 
     public static final boolean M_DESARROLLO = false;
@@ -49,6 +48,7 @@ public class CONS {
     public static final String DB_IP = "190.11.21.51";
     
     public static final String URL_API = "http://35.192.7.211:8000/";
+    //public static final String URL_API = "http://192.168.137.1:8000/";
 
     public static String getBDUser() {
         return "tsds";

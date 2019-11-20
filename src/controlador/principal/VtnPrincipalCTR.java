@@ -68,7 +68,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.usuario.RolBD;

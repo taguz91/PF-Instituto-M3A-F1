@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.materia.MateriaMD;

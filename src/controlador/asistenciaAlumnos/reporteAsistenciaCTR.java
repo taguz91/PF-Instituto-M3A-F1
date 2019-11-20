@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import modelo.CONS;
+import utils.CONS;
 import vista.asistenciaAlumnos.FrmAsistencia;
 
 /**

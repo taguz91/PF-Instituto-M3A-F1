@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.CONS;
+import utils.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.docente.DocenteMateriaBD;
