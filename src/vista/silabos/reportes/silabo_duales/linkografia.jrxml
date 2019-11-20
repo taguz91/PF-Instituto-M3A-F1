@@ -52,6 +52,9 @@
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion_referencia}]]></textFieldExpression>
 			</textField>
 		</band>

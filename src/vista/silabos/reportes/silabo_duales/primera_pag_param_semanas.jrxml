@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4044ac4-c228-434b-99de-049d0590ec33">
 	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="830"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="parameter1" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/silabo_duales/"]]></defaultValueExpression>
@@ -12,8 +12,7 @@
 		<defaultValueExpression><![CDATA[18]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[
-SELECT
+		<![CDATA[SELECT
 CASE m.materia_ciclo
 WHEN 1 THEN 'PRIMERO'
 WHEN 2 THEN 'SEGUNDO'
@@ -57,8 +56,7 @@ ROUND( CAST(
 1) AS horas_semanales
 FROM "Materias" m,"Carreras" c
 WHERE m.id_carrera = c.id_carrera
-AND id_materia = $P!{parameter1};
-]]>
+AND id_materia = $P!{parameter1};]]>
 	</queryString>
 	<field name="ciclo" class="java.lang.String"/>
 	<field name="id_carrera" class="java.lang.Integer"/>
@@ -221,7 +219,7 @@ AND id_materia = $P!{parameter1};
 				</textElement>
 				<text><![CDATA[Período Académico: ]]></text>
 			</staticText>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="10" y="45" width="535" height="20" uuid="cfc9688e-32b5-4520-8c36-1dc8cd96b424"/>
 				<box>
 					<pen lineWidth="0.75"/>
