@@ -1234,12 +1234,12 @@ public class FRMSilaboCTR extends DCTR {
                 String msg = "";
                 // La fecha de fin debe ser mayor a la fecha de inicio del periodo
                 if (!fecha.isAfter(silabo.getPeriodo().getFechaInicio())) {
-                    msg = "La fecha de fin debe ser mayor a la fecha de inicio del periodo. \n";
+                    msg = "La fecha de fin debe ser mayor a la fecha de inicio del periodo.\n";
                     valido = false;
                 }
                 // La fecha de fin debe ser anterior a la fecha de fin de periodo.
                 if (!fecha.isBefore(silabo.getPeriodo().getFechaFin())) {
-                    msg += "La fecha de fin debe ser anterior a la fecha de fin de periodo. \n";
+                    msg += "La fecha de fin debe ser anterior a la fecha de fin de periodo. \\n";
                 }
                 // La fecha de fin de la unidad debe ser posterior a la fecha de inicio.
                 if (!fecha.isAfter(unidadSelec.getFechaInicioUnidad())) {
@@ -1249,7 +1249,7 @@ public class FRMSilaboCTR extends DCTR {
 
                 // La fecha de fin de la unidad debe ser anterior a la fecha de fin del periodo 
                 if (silabo.getPeriodo().getFechaFinClases().isBefore(fecha)
-                        || !silabo.getPeriodo().getFechaFinClases().equals(fecha)) {
+                        && !silabo.getPeriodo().getFechaFinClases().equals(fecha)) {
                     msg += "La fecha de fin de la unidad no debe ser superior a la "
                             + "fecha de fin de clases.\n";
                     valido = false;
