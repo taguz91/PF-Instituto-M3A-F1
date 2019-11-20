@@ -161,6 +161,12 @@ public class VtnMatriculaCTR extends DVtnCTR {
         vtnMatri.getBtnAnular().addActionListener(e -> clickAnular());
         vtnMatri.getBtnCartaCompromiso().addActionListener(e -> clickCartaCompromiso());
         vtnMatri.getBtnNumMatricula().addActionListener(e -> clickNumMatricula());
+        vtnMatri.getBtnReporteTipoMatricula().addActionListener(e -> abrirJDReporteTipoMatricula());
+    }
+    
+    private void abrirJDReporteTipoMatricula(){
+        JDReporteTipoMatriculaCTR ctr = new JDReporteTipoMatriculaCTR(ctrPrin, periodos);
+        ctr.iniciar();
     }
 
     /**
