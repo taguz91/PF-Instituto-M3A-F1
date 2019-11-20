@@ -34,6 +34,7 @@ public class VtnNotas extends AbstracView {
             {
                 put("APROBADO", new Color(37, 107, 187));
                 put("REPROBADO", new Color(214, 48, 12));
+                put("RETIRADO", new Color(0, 0, 0));
                 put("", new Color(0, 0, 0));
             }
         };
