@@ -8,7 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -528,8 +528,10 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             int cs = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
             if (as > 0) {
                 url += "alumno/" + alumnos.get(as - 1).getId();
+
                 nombre = mallas.get(0).getAlumnoCarrera()
                         .getAlumno().getIdentificacion();
+
             } else if (cs > 0) {
                 url += "carrera/" + carreras.get(cs - 1).getId();
                 nombre = vtnMallaAlm.getCmbCarreras().getSelectedItem().toString();
@@ -538,10 +540,13 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 nombre = mallas.get(0).getAlumnoCarrera()
                         .getAlumno().getIdentificacion();
             }
-            nombre += "-" + LocalDateTime.now().toString()
+
+            nombre += "-" + LocalDate.now().toString()
                     .replace(":", "|")
                     .replace(".", "");
+
             url += "/" + CONS.USUARIO.getUsername();
+
             Descarga.excel(
                     nombre,
                     url,
