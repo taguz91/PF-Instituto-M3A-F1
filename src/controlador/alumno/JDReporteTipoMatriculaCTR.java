@@ -94,7 +94,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         if (tipo.length() == 0) {
             tipo = "TODOS";
         }
-        String nombre = tipo + LocalDateTime.now().toString();
+        String nombre = tipo + LocalDateTime.now().toString().replace(":", "|");
         Descarga.excelWithPost(
                 nombre,
                 "matriculas/reporte/tipo-matricula",

@@ -539,7 +539,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 nombre = mallas.get(0).getAlumnoCarrera()
                         .getAlumno().getIdentificacion();
             }
-            nombre += "-" + LocalDateTime.now().toString();
+            nombre += "-" + LocalDateTime.now().toString().replace(":", "|");
             url += "/" + CONS.USUARIO.getUsername();
             Descarga.excel(
                     nombre,

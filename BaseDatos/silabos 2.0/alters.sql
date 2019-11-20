@@ -6,6 +6,4 @@ ALTER TABLE "public"."Silabo"
 -- Agregamos el docente coordinador de este silabo
 
 ALTER TABLE public."Silabo"
-ADD COLUMN id_coordinador INTEGER;
-
--- 
+ADD COLUMN id_docente_coordinador INTEGER;
