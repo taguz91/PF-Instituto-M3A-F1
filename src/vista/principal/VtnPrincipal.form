@@ -133,30 +133,42 @@
                 <Property name="text" type="java.lang.String" value="Roles periodo"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
+            <Menu class="javax.swing.JMenu" name="jMenu2">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+B"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Silabos"/>
+                <Property name="text" type="java.lang.String" value="Documentos Academicos"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MnCAvanceSilabo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Avance de Silabo"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+K"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Plan de clase"/>
-              </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+B"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Silabos"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MnCAvanceSilabo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Avance de Silabo"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+K"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Plan de clase"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Biblioteca"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <Menu class="javax.swing.JMenu" name="mnNotas">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -183,14 +195,6 @@
                     <Property name="text" type="java.lang.String" value="Registro de notas"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mnCtActivarNotas">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Consultar activaci&#xf3;n de notas"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtActivarNotasActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtRendimientoAcademico">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rendimiento Acad&#xe9;mico"/>
@@ -198,40 +202,42 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
+            <Menu class="javax.swing.JMenu" name="jMenu3">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_User_Groups_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Administracion"/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtRoles">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Roles usuarios"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Historial usuarios"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MnBiblioteca">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Biblioteca"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtAccesos">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Accesos"/>
-              </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtUsuarios">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_User_Groups_20px.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Usuarios"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtRoles">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_Protect_20px.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Roles usuarios"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtHistorialUsers">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_Analyze_20px_1.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Historial usuarios"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtAccesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Accesos"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMiPerfil">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Mi Perfil"/>

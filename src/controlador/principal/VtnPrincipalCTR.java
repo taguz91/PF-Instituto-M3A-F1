@@ -233,7 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
         vtnPrin.getMnCtNotasDuales().addActionListener(e -> btnNotasDuales(e));
-        vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
+        //vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
         vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
         vtnPrin.getMnCtReportesEstado().addActionListener(e -> mnctReportesEstado(e));
@@ -875,8 +875,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
 
-        vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_J, ActionEvent.CTRL_MASK));
+        //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
+        //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
