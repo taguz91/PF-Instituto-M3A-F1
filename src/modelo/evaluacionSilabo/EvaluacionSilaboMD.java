@@ -30,6 +30,17 @@ public class EvaluacionSilaboMD implements Serializable {
 
     private UnidadSilaboMD idUnidad;
 
+    private Integer formato;
+
+    private String observacion;
+
+    /*
+        CONSTANTES
+    FORMATOS:
+     */
+    public static Integer FISICO = 0;
+    public static Integer DIGITAL = 1;
+
     public EvaluacionSilaboMD() {
 
         this.idTipoActividad = new TipoActividadMD();
@@ -113,6 +124,31 @@ public class EvaluacionSilaboMD implements Serializable {
 
     public int getIdLocal() {
         return idLocal;
+    }
+
+    public Integer getFormato() {
+        return formato;
+    }
+
+    public void setFormato(Integer formato) {
+        this.formato = formato;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public static String formatoToString(Integer formato) {
+        if (formato.equals(FISICO)) {
+            return "FISICO";
+        } else if (formato.equals(DIGITAL)) {
+            return "DIGITAL";
+        }
+        return "";
     }
 
     @Override

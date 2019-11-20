@@ -43,6 +43,7 @@ import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
+import controlador.silabo.gestionActividades.VtnGestionActividadesCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
@@ -246,6 +247,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
         vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
         vtnPrin.getBtnCambiarRol().addActionListener(e -> btnCambiarRol(e));
+        vtnPrin.getMnCtGestionAcademica().addActionListener(this::btnGestionAcademica);
         //esto es para el avance de silabo
         //vtnPrin.getMnCAvanceSilabo().addActionListener(ak ->c);
 
@@ -877,7 +879,6 @@ public class VtnPrincipalCTR {
 
         //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
         //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
-
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
 
@@ -1257,6 +1258,13 @@ public class VtnPrincipalCTR {
     private void btnComprobantes(ActionEvent e) {
         VtnComprobantesCTR vtn = new VtnComprobantesCTR(this);
         vtn.Init();
+    }
+
+    private void btnGestionAcademica(ActionEvent e) {
+
+        VtnGestionActividadesCTR vtn = new VtnGestionActividadesCTR(this);
+        vtn.Init();
+
     }
 
 }

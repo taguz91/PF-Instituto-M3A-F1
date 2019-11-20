@@ -809,4 +809,63 @@ public class NEWSilaboBD implements ISilaboBD {
         }
     }
 
+    public List<SilaboMD> getMisSilabosBy(String cedulaDocente) {
+        String SELECT = ""
+                + "WITH mis_periodos_materias AS (\n"
+                + "	SELECT DISTINCT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_materia,\n"
+                + "		\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "		\"Materias\".materia_nombre \n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + "		INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia \n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "	) SELECT\n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"Silabo\".id_prd_lectivo,\n"
+                + "	\"Silabo\".id_materia,\n"
+                + "	mis_periodos_materias.prd_lectivo_nombre,\n"
+                + "	mis_periodos_materias.materia_nombre \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN mis_periodos_materias ON \"Silabo\".id_prd_lectivo = mis_periodos_materias.id_prd_lectivo \n"
+                + "	AND \"Silabo\".id_materia = mis_periodos_materias.id_materia"
+                + "";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        List<SilaboMD> misSilabos = new ArrayList<>();
+
+        try {
+            while (rs.next()) {
+
+                SilaboMD silabo = new SilaboMD();
+                silabo.setID(rs.getInt("id_silabo"));
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setID(rs.getInt("id_prd_lectivo"))
+                        .setNombre(rs.getString("prd_lectivo_nombre"));
+                silabo.setPeriodo(periodo);
+
+                MateriaMD materia = new MateriaMD();
+                materia.setId(rs.getInt("id_materia"));
+                materia.setNombre(rs.getString("materia_nombre"));
+                silabo.setMateria(materia);
+
+                misSilabos.add(silabo);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return misSilabos;
+
+    }
 }
