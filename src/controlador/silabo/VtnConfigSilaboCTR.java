@@ -75,6 +75,13 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
     }
 
+    private PeriodoLectivoMD getPeriodo() {
+        return misPeriodos.stream()
+                .filter(item -> item.getID() == getIdPeriodo())
+                .findFirst()
+                .orElse(null);
+    }
+
     private int getIdMateria() throws NullPointerException {
         return getMateria()
                 .map(c -> c.getId())
@@ -191,9 +198,7 @@ public class VtnConfigSilaboCTR extends AbstractVTN<VtnConfigSilabo, SilaboMD> {
 
             modelo = new SilaboMD();
 
-            modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(
-                    getIdPeriodo()
-            ));
+            modelo.setPeriodo(PERIODO_BD.getUltimoPeriodoBy(getPeriodo().getCarrera().getId()));
 
             modelo.setMateria(getMateria().get());
 

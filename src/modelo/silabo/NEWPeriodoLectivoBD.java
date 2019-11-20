@@ -129,7 +129,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
-                + "	\"PeriodoLectivo\".id_carrera \n"
+                + "	\"PeriodoLectivo\".id_carrera, \n"
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio, "
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_fin, "
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre "
@@ -150,7 +150,9 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 periodo = new PeriodoLectivoMD();
 
                 periodo.setID(rs.getInt("id_prd_lectivo"))
-                        .setNombre(rs.getString("prd_lectivo_nombre"));
+                        .setNombre(rs.getString("prd_lectivo_nombre"))
+                        .setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate())
+                        .setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
@@ -174,7 +176,8 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "SELECT DISTINCT\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio,\n"
+                + "	\"PeriodoLectivo\".id_carrera\n"
                 + "FROM\n"
                 + "	\"Cursos\"\n"
                 + "	INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
@@ -193,6 +196,9 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setID(rs.getInt("id_prd_lectivo"));
                 periodo.setNombre(rs.getString("prd_lectivo_nombre"));
+                CarreraMD carrera = new CarreraMD();
+                carrera.setId(rs.getInt("id_carrera"));
+                periodo.setCarrera(carrera);
                 lista.add(periodo);
 
             }
