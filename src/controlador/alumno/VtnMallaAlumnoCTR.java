@@ -448,7 +448,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 vtnMallaAlm.getBtnReporteMallaAlumno());
         if (CONS.ROL.getNombre().equalsIgnoreCase("Coordinador")
                 || CONS.ROL.getNombre().equalsIgnoreCase("Dev")
-                || CONS.ROL.getNombre().equalsIgnoreCase("Secreataria")
+                || CONS.ROL.getNombre().equalsIgnoreCase("Secretaria")
                 || CONS.ROL.getNombre().equalsIgnoreCase("Secretario")
                 || CONS.ROL.getNombre().equalsIgnoreCase("Coordinada/o")) {
             vtnMallaAlm.getBtnExportarExcel().setEnabled(true);
