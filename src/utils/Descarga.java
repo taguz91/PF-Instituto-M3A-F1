@@ -21,6 +21,7 @@ public class Descarga {
             String url,
             String error
     ) {
+        
         new Thread(() -> {
             File carpeta = new File("excel/");
             if (!carpeta.exists()) {
@@ -33,7 +34,7 @@ public class Descarga {
                     );
                 }
             }
-
+            
             File fil = new File("excel/" + nombreArchivo + ".xlsx");
             try {
                 URLConnection conn = new URL(
@@ -86,7 +87,7 @@ public class Descarga {
                 }
             }
 
-            File fil = new File("excel/" + nombreArchivo + ".xlsx");
+            File fil = new File(nombreArchivo + ".xlsx");
             try {
                 HttpURLConnection conn = (HttpURLConnection) new URL(
                         CONS.URL_API + url

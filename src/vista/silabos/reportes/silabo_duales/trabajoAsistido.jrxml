@@ -6,7 +6,7 @@
 	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT e.instrumento,u.numero_unidad,e.id_evaluacion,e.id_unidad,e.indicador,e.id_tipo_actividad,e.valoracion,e.fecha_presentacion,e.fecha_envio FROM "EvaluacionSilabo" e,"UnidadSilabo" u where id_tipo_actividad=1 and e.id_unidad=u.id_unidad 
-and u.id_silabo=$P!{parameter1}]]>
+and u.id_silabo=$P!{parameter1}  ORDER BY u.numero_unidad]]>
 	</queryString>
 	<field name="instrumento" class="java.lang.String"/>
 	<field name="numero_unidad" class="java.lang.Integer"/>
