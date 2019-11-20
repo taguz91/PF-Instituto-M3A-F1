@@ -340,6 +340,7 @@ public class FRMReferenciaSilaboCTR extends DCTR {
 
     private void guardar() {
         if (referenciasSilabo.size() > 2) {
+            cambioUnidad = true;
             // Seteamos que ya no estan editando el silabo 
             SBD.ediantoSilabo(silabo.getID(), false);
             SBD.setFechaEdicion(silabo.getID());
