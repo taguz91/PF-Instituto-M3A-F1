@@ -43,12 +43,12 @@ import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
-import controlador.silabo.gestionActividades.VtnGestionActividadesCTR;
+import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
 import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
-import controlador.usuario.VtnSelectRolCTR;
+import controlador.login.VtnSelectRolCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import controlador.version.VtnDitoolCTR;
 import controlador.vistaReportes.VtnEstadosCTR;
@@ -1263,7 +1263,7 @@ public class VtnPrincipalCTR {
 
     private void btnGestionAcademica(ActionEvent e) {
 
-        VtnGestionActividadesCTR vtn = new VtnGestionActividadesCTR(this);
+        VtnSeguimientoEvaluacionCTR vtn = new VtnSeguimientoEvaluacionCTR(this);
         vtn.Init();
 
     }

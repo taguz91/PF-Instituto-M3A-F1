@@ -5,10 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
 import modelo.silabo.mbd.ICursoBD;
+import utils.CONS;
 
 /**
  *
@@ -111,6 +114,56 @@ public class NEWCursoBD implements ICursoBD {
             CON.cerrarCONPS(ps);
         }
         return CS;
+    }
+
+    public List<CursoMD> getFaltantesSeguimientoEval(SilaboMD silabo) {
+
+        String SELECT = ""
+                + "WITH mis_cursos AS (\n"
+                + "	SELECT\n"
+                + "		\"Cursos\".id_curso,\n"
+                + "		\"Cursos\".curso_nombre \n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente \n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + CONS.USUARIO.getPersona().getIdentificacion() + "' \n"
+                + "		AND \"Cursos\".id_prd_lectivo = " + silabo.getPeriodo().getID() + " \n"
+                + "		AND \"Cursos\".id_materia = " + silabo.getMateria().getId() + " \n"
+                + "	) \n"
+                + "SELECT\n"
+                + "    mis_cursos.id_curso,\n"
+                + "    mis_cursos.curso_nombre\n"
+                + "FROM\n"
+                + "    mis_cursos \n"
+                + "WHERE\n"
+                + "    mis_cursos.id_curso NOT IN ( \n"
+                + "        SELECT \n"
+                + "            \"SeguimientoEvaluacion\".id_curso \n"
+                + "        FROM \n"
+                + "            \"SeguimientoEvaluacion\" \n"
+                + "            INNER JOIN mis_cursos ON mis_cursos.id_curso = \"SeguimientoEvaluacion\".id_curso \n"
+                + "    )"
+                + "";
+
+        List<CursoMD> lista = new ArrayList<>();
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                CursoMD curso = new CursoMD();
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("curso_nombre"));
+                lista.add(curso);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWCursoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
     }
 
 }

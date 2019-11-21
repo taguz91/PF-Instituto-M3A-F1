@@ -168,6 +168,11 @@ public class SilaboMD {
         this.ultimaEdicion = ultimaEdicion;
     }
 
+    public String nombrePeriodoMateria() {
+
+        return periodo.getNombre() + " " + materia.getNombre();
+    }
+
     @Override
     public String toString() {
         return "SilaboMD{" + "ID=" + ID + ", materia=" + materia + ", estado=" + estado + ", periodo=" + periodo + ", fechaGeneracion=" + fechaGeneracion + ", fechaActualizacion=" + fechaActualizacion + ", unidades=" + unidades + ", referencias=" + referencias + ", editando=" + editando + ", editadoPor=" + editadoPor + ", ultimaEdicion=" + ultimaEdicion + '}';

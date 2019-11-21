@@ -18,7 +18,8 @@ import modelo.usuario.UsuarioBD;
 /**
  *
  * @author JOHNNY, MrRainx
- */public class CONS {
+ */
+public class CONS {
 
     //Modo del proyecto 
     public static final boolean M_DESARROLLO = false;
@@ -46,7 +47,7 @@ import modelo.usuario.UsuarioBD;
     public static String BD_PASS = "TDSoftware158";
     public static String BD_URL = "jdbc:postgresql://34.68.63.254:18587/ista";
     public static final String DB_IP = "190.11.21.51";
-    
+
     public static final String URL_API = "http://35.192.7.211:8000/";
     //public static final String URL_API = "http://192.168.137.1:8000/";
 

@@ -24,6 +24,7 @@ import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.PersonaMD;
 import modelo.silabo.mbd.ISilaboBD;
+import modelo.unidadSilabo.UnidadSilaboMD;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -809,14 +810,15 @@ public class NEWSilaboBD implements ISilaboBD {
         }
     }
 
-    public List<SilaboMD> getMisSilabosBy(String cedulaDocente) {
+    public synchronized List<SilaboMD> getMisSilabosConUnidadesBy(String cedulaDocente) {
         String SELECT = ""
                 + "WITH mis_periodos_materias AS (\n"
                 + "	SELECT DISTINCT\n"
                 + "		\"Cursos\".id_prd_lectivo,\n"
                 + "		\"Cursos\".id_materia,\n"
                 + "		\"PeriodoLectivo\".prd_lectivo_nombre,\n"
-                + "		\"Materias\".materia_nombre \n"
+                + "		\"Materias\".materia_nombre, \n"
+                + "             \"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
                 + "	FROM\n"
                 + "		\"Cursos\"\n"
                 + "		INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
@@ -829,11 +831,102 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	\"Silabo\".id_prd_lectivo,\n"
                 + "	\"Silabo\".id_materia,\n"
                 + "	mis_periodos_materias.prd_lectivo_nombre,\n"
-                + "	mis_periodos_materias.materia_nombre \n"
+                + "	mis_periodos_materias.materia_nombre, \n"
+                + "	mis_periodos_materias.prd_lectivo_fecha_inicio \n"
                 + "FROM\n"
                 + "	\"Silabo\"\n"
                 + "	INNER JOIN mis_periodos_materias ON \"Silabo\".id_prd_lectivo = mis_periodos_materias.id_prd_lectivo \n"
-                + "	AND \"Silabo\".id_materia = mis_periodos_materias.id_materia"
+                + "	AND \"Silabo\".id_materia = mis_periodos_materias.id_materia\n"
+                + "ORDER BY \n"
+                + "     mis_periodos_materias.prd_lectivo_fecha_inicio DESC"
+                + "";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        List<SilaboMD> misSilabos = new ArrayList<>();
+
+        try {
+            while (rs.next()) {
+
+                SilaboMD silabo = new SilaboMD();
+                silabo.setID(rs.getInt("id_silabo"));
+
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
+                periodo.setID(rs.getInt("id_prd_lectivo"))
+                        .setNombre(rs.getString("prd_lectivo_nombre"));
+                silabo.setPeriodo(periodo);
+
+                MateriaMD materia = new MateriaMD();
+                materia.setId(rs.getInt("id_materia"));
+                materia.setNombre(rs.getString("materia_nombre"));
+                silabo.setMateria(materia);
+
+                List<UnidadSilaboMD> unidades = NEWUnidadSilaboBD
+                        .single()
+                        .getSimpleBySilabo(silabo.getID());
+
+                silabo.setUnidades(unidades);
+
+                misSilabos.add(silabo);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return misSilabos;
+
+    }
+
+    public static SilaboMD mapper(ResultSet rs) {
+        SilaboMD silabo = new SilaboMD();
+
+        try {
+            Integer ID = rs.getInt("id_silabo");
+
+            if (ID != null) {
+                silabo.setID(ID);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return silabo;
+
+    }
+
+    public synchronized List<SilaboMD> getMisSilabosby(String cedulaDocente) {
+        String SELECT = ""
+                + "WITH mis_periodos_materias AS (\n"
+                + "	SELECT DISTINCT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_materia,\n"
+                + "		\"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "		\"Materias\".materia_nombre, \n"
+                + "             \"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN \"Docentes\" ON \"Docentes\".id_docente = \"Cursos\".id_docente\n"
+                + "		INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "		INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia \n"
+                + "	WHERE\n"
+                + "		\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "	) SELECT\n"
+                + "	\"Silabo\".id_silabo,\n"
+                + "	\"Silabo\".id_prd_lectivo,\n"
+                + "	\"Silabo\".id_materia,\n"
+                + "	mis_periodos_materias.prd_lectivo_nombre,\n"
+                + "	mis_periodos_materias.materia_nombre, \n"
+                + "	mis_periodos_materias.prd_lectivo_fecha_inicio \n"
+                + "FROM\n"
+                + "	\"Silabo\"\n"
+                + "	INNER JOIN mis_periodos_materias ON \"Silabo\".id_prd_lectivo = mis_periodos_materias.id_prd_lectivo \n"
+                + "	AND \"Silabo\".id_materia = mis_periodos_materias.id_materia\n"
+                + "ORDER BY \n"
+                + "     mis_periodos_materias.prd_lectivo_fecha_inicio DESC"
                 + "";
 
         ResultSet rs = CON.ejecutarQuery(SELECT);
@@ -866,6 +959,6 @@ public class NEWSilaboBD implements ISilaboBD {
         }
 
         return misSilabos;
-
     }
+
 }
