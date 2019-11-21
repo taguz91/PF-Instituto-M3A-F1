@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.Retirado;
 import modelo.alumno.RetiradoBD;
@@ -58,7 +59,8 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
     private void iniciarVtn() {
         mdTbl = TblEstilo.modelTblSinEditar(TITULO);
         vtn.getTblRetirados().setModel(mdTbl);
-        vtn.getBtnEditar().addActionListener(e -> editar());
+        vtn.getBtnEditar().addActionListener(e -> clickEditar());
+        vtn.getBtnEliminar().addActionListener(e -> clickEliminar());
         vtn.getCmbCarrera().addActionListener(e -> clickPeriodo());
         vtn.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -92,10 +94,22 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
         }
     }
 
-    private void editar() {
+    private void clickEditar() {
         int posFila = vtn.getTblRetirados().getSelectedRow();
         if (posFila >= 0) {
             RCTR.editar(retiradosBuscado.get(posFila));
+        } else {
+            errorNoSeleccionoFila();
+        }
+    }
+
+    private void clickEliminar() {
+        int posFila = vtn.getTblRetirados().getSelectedRow();
+        if (posFila >= 0) {
+            if (RBD.eliminar(retiradosBuscado.get(posFila).getId())) {
+                JOptionPane.showMessageDialog(vtn, "Eliminamos correctamente.");
+                mdTbl.removeRow(posFila);
+            }
         } else {
             errorNoSeleccionoFila();
         }

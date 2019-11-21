@@ -78,6 +78,12 @@ public class RetiradoBD extends CONBD {
         return CON.getIDGenerado(ps);
     }
 
+    public boolean eliminar(int idRetirado) {
+        String sql = "DELETE FROM alumno.\"Retirados\" "
+                + "WHERE id_retirado = ?;";
+        return CON.deleteById(sql, idRetirado);
+    }
+
     public Retirado getById(int idRetiro) {
         String sql = "SELECT\n"
                 + "id_retiro,\n"

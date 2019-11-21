@@ -43,6 +43,10 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
         return txtBuscar;
     }
 
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,6 +65,7 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         lblResultados = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -91,6 +96,8 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
 
         btnEditar.setText("Editar");
 
+        btnEliminar.setText("Eliminar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,6 +121,8 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cmbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)))
                 .addContainerGap())
         );
@@ -124,7 +133,9 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBuscar)
                     .addComponent(jLabel1)
-                    .addComponent(btnEditar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditar)
+                        .addComponent(btnEliminar))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -144,6 +155,7 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cmbCarrera;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
