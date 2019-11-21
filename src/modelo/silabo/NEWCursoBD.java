@@ -116,7 +116,7 @@ public class NEWCursoBD implements ICursoBD {
         return CS;
     }
 
-    public List<CursoMD> getFaltantesSeguimientoEval(SilaboMD silabo) {
+    public List<CursoMD> getFaltantesSeguimientoEval(SilaboMD silabo, int idUnidad) {
 
         String SELECT = ""
                 + "WITH mis_cursos AS (\n"
@@ -143,9 +143,12 @@ public class NEWCursoBD implements ICursoBD {
                 + "        FROM \n"
                 + "            \"SeguimientoEvaluacion\" \n"
                 + "            INNER JOIN mis_cursos ON mis_cursos.id_curso = \"SeguimientoEvaluacion\".id_curso \n"
+                + "            INNER JOIN \"EvaluacionSilabo\" ON \"EvaluacionSilabo\".id_evaluacion =  \"SeguimientoEvaluacion\".id_evaluacion	\n"
+                + "        WHERE\n"
+                + "            \"EvaluacionSilabo\".id_unidad = " + idUnidad + "\n"
                 + "    )"
                 + "";
-
+        System.out.println(SELECT);
         List<CursoMD> lista = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
