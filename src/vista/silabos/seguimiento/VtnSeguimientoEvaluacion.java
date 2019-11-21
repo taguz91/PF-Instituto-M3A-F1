@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.silabos.actividades;
+package vista.silabos.seguimiento;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,12 +16,12 @@ import vista.AbstracView;
  *
  * @author MrRainx
  */
-public class VtnActividadesGestion extends AbstracView {
+public class VtnSeguimientoEvaluacion extends AbstracView {
 
     /**
      * Creates new form VtnActividadesGestion
      */
-    public VtnActividadesGestion() {
+    public VtnSeguimientoEvaluacion() {
         initComponents();
         InitDiseño();
     }
@@ -46,15 +46,11 @@ public class VtnActividadesGestion extends AbstracView {
 
     }
 
-    public JButton getBtnGuardarObs() {
-        return btnGuardarObs;
-    }
-
     public JButton getBtnImprimir() {
         return btnImprimir;
     }
 
-    public JComboBox<String> getCmbPeriodo() {
+    public JComboBox<String> getCmbSilabo() {
         return cmbSilabo;
     }
 
@@ -74,6 +70,18 @@ public class VtnActividadesGestion extends AbstracView {
         return txtObservacion;
     }
 
+    public JButton getBtnAgregar() {
+        return btnAgregar;
+    }
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,11 +95,17 @@ public class VtnActividadesGestion extends AbstracView {
         tbl = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservacion = new javax.swing.JTextArea();
-        btnGuardarObs = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setText("Buscar:");
 
-        cmbSilabo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Periodo Lectivo" }));
+        cmbSilabo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Silabos" }));
 
         cmbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidades" }));
 
@@ -99,17 +113,14 @@ public class VtnActividadesGestion extends AbstracView {
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Unidad", "Instrumento", "Valoracion", "Tipo"
+                "ID", "Unidad", "Instrumento", "Tipo Actividad", "Valoracion", "Formato"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -122,12 +133,12 @@ public class VtnActividadesGestion extends AbstracView {
             tbl.getColumnModel().getColumn(0).setMinWidth(50);
             tbl.getColumnModel().getColumn(0).setPreferredWidth(50);
             tbl.getColumnModel().getColumn(0).setMaxWidth(50);
-            tbl.getColumnModel().getColumn(1).setMinWidth(50);
-            tbl.getColumnModel().getColumn(1).setPreferredWidth(50);
-            tbl.getColumnModel().getColumn(1).setMaxWidth(50);
-            tbl.getColumnModel().getColumn(4).setMinWidth(80);
-            tbl.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tbl.getColumnModel().getColumn(4).setMaxWidth(80);
+            tbl.getColumnModel().getColumn(1).setMinWidth(45);
+            tbl.getColumnModel().getColumn(1).setPreferredWidth(45);
+            tbl.getColumnModel().getColumn(1).setMaxWidth(45);
+            tbl.getColumnModel().getColumn(5).setMinWidth(80);
+            tbl.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(5).setMaxWidth(80);
         }
 
         txtObservacion.setColumns(20);
@@ -135,7 +146,11 @@ public class VtnActividadesGestion extends AbstracView {
         txtObservacion.setRows(5);
         jScrollPane2.setViewportView(txtObservacion);
 
-        btnGuardarObs.setText("Guardar Observacion");
+        btnAgregar.setText("Agregar");
+
+        btnEditar.setText("Editar");
+
+        btnEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,25 +159,27 @@ public class VtnActividadesGestion extends AbstracView {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnImprimir))
+                        .addComponent(txtBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmbSilabo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnGuardarObs)
-                                .addGap(60, 60, 60)))))
+                        .addComponent(cmbSilabo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnImprimir)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -172,21 +189,19 @@ public class VtnActividadesGestion extends AbstracView {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbSilabo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(3, 3, 3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuardarObs, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -194,7 +209,9 @@ public class VtnActividadesGestion extends AbstracView {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGuardarObs;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JComboBox<String> cmbSilabo;
     private javax.swing.JComboBox<String> cmbUnidad;

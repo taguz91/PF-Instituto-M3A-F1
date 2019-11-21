@@ -38,9 +38,6 @@ public class EvaluacionSilaboMD implements Serializable {
         CONSTANTES
     FORMATOS:
      */
-    public static Integer FISICO = 0;
-    public static Integer DIGITAL = 1;
-
     public EvaluacionSilaboMD() {
 
         this.idTipoActividad = new TipoActividadMD();
@@ -140,15 +137,6 @@ public class EvaluacionSilaboMD implements Serializable {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
-    }
-
-    public static String formatoToString(Integer formato) {
-        if (formato.equals(FISICO)) {
-            return "FISICO";
-        } else if (formato.equals(DIGITAL)) {
-            return "DIGITAL";
-        }
-        return "";
     }
 
     @Override

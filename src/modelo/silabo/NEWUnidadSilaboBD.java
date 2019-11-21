@@ -3,12 +3,16 @@ package modelo.silabo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.silabo.mbd.IUnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -318,6 +322,126 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             );
         }
         return CON.noSQLPOOL(ps);
+    }
+
+    public static UnidadSilaboMD mapper(ResultSet rs) {
+        UnidadSilaboMD unidad = new UnidadSilaboMD();
+
+        try {
+
+            try {
+                Integer id = rs.getInt("id_unidad");
+                unidad.setIdUnidad(id);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+
+                Integer idSilabo = rs.getInt("id_silabo");
+
+                //TODO SilaboMD.mapper();
+            } catch (PSQLException e) {
+            }
+
+            try {
+                Integer numero = rs.getInt("numero_unidad");
+                unidad.setNumeroUnidad(numero);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                String objetivoEspecifico = rs.getString("objetivo_especifico_unidad");
+                unidad.setObjetivoEspecificoUnidad(objetivoEspecifico);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                String resultadosAprendizaje = rs.getString("resultados_aprendizaje_unidad");
+                unidad.setResultadosAprendizajeUnidad(resultadosAprendizaje);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                String contenidos = rs.getString("contenidos_unidad");
+                unidad.setContenidosUnidad(contenidos);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                LocalDate fechaInicio = rs.getDate("fecha_inicio_unidad").toLocalDate();
+                unidad.setFechaFinUnidad(fechaInicio);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                LocalDate fechaFin = rs.getDate("fecha_fin_unidad").toLocalDate();
+                unidad.setFechaFinUnidad(fechaFin);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                Double horasDocencia = rs.getDouble("horas_docencia_unidad");
+                unidad.setHorasDocenciaUnidad(horasDocencia);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                Double horasPractica = rs.getDouble("horas_practica_unidad");
+                unidad.setHorasPracticaUnidad(horasPractica);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
+                Double horasAutonomas = rs.getDouble("horas_autonomo_unidad");
+                unidad.setHorasAutonomoUnidad(horasAutonomas);
+
+            } catch (PSQLException e) {
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWUnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return unidad;
+
+    }
+
+    public List<UnidadSilaboMD> getSimpleBySilabo(int idSilabo) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"UnidadSilabo\".id_unidad,\n"
+                + "	\"UnidadSilabo\".numero_unidad,\n"
+                + "	\"UnidadSilabo\".titulo_unidad \n"
+                + "FROM\n"
+                + "	\"UnidadSilabo\" \n"
+                + "WHERE\n"
+                + "	\"UnidadSilabo\".id_silabo = " + idSilabo
+                + "";
+        List<UnidadSilaboMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                lista.add(mapper(rs));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWUnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
     }
 
 }

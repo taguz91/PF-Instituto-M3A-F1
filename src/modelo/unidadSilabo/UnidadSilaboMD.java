@@ -43,16 +43,16 @@ public class UnidadSilaboMD implements Serializable {
     private List<EvaluacionSilaboMD> evaluacionSilaboList;
 
     private SilaboMD idSilabo;
-    
+
     private boolean bandera;
 
     public UnidadSilaboMD() {
-        this.idSilabo=new SilaboMD();
-        this.bandera=false;
+        this.idSilabo = new SilaboMD();
+        this.bandera = false;
     }
 
-    public UnidadSilaboMD( int numeroUnidad, String tituloUnidad, LocalDate fechaInicioUnidad, LocalDate fechaFinUnidad, String objetivoEspecificoUnidad, String resultadosAprendizajeUnidad, String contenidosUnidad, int horasDocenciaUnidad, int horasPracticaUnidad, int horasAutonomoUnidad) {
-        
+    public UnidadSilaboMD(int numeroUnidad, String tituloUnidad, LocalDate fechaInicioUnidad, LocalDate fechaFinUnidad, String objetivoEspecificoUnidad, String resultadosAprendizajeUnidad, String contenidosUnidad, int horasDocenciaUnidad, int horasPracticaUnidad, int horasAutonomoUnidad) {
+
         this.numeroUnidad = numeroUnidad;
         this.tituloUnidad = tituloUnidad;
         this.fechaInicioUnidad = fechaInicioUnidad;
@@ -63,7 +63,7 @@ public class UnidadSilaboMD implements Serializable {
         this.horasDocenciaUnidad = horasDocenciaUnidad;
         this.horasPracticaUnidad = horasPracticaUnidad;
         this.horasAutonomoUnidad = horasAutonomoUnidad;
-        this.bandera=false;
+        this.bandera = false;
     }
 
     public boolean isBandera() {
@@ -73,8 +73,6 @@ public class UnidadSilaboMD implements Serializable {
     public void setBandera(boolean bandera) {
         this.bandera = bandera;
     }
-    
-    
 
     public Integer getIdUnidad() {
         return idUnidad;
@@ -139,7 +137,7 @@ public class UnidadSilaboMD implements Serializable {
     public void setContenidosUnidad(String contenidosUnidad) {
         this.contenidosUnidad = contenidosUnidad;
     }
-    
+
     public void setHorasDocenciaUnidad(int horasDocenciaUnidad) {
         this.horasDocenciaUnidad = horasDocenciaUnidad;
     }
@@ -168,11 +166,9 @@ public class UnidadSilaboMD implements Serializable {
         this.horasAutonomoUnidad = horasAutonomoUnidad;
     }
 
-
     public void setHorasPracticaUnidad(int horasPracticaUnidad) {
         this.horasPracticaUnidad = horasPracticaUnidad;
     }
-
 
     public void setHorasAutonomoUnidad(int horasAutonomoUnidad) {
         this.horasAutonomoUnidad = horasAutonomoUnidad;
@@ -194,5 +190,9 @@ public class UnidadSilaboMD implements Serializable {
         this.idSilabo = idSilabo;
     }
 
-    
+    @Override
+    public String toString() {
+        return "UnidadSilaboMD{" + "idUnidad=" + idUnidad + ", numeroUnidad=" + numeroUnidad + ", tituloUnidad=" + tituloUnidad + ", fechaInicioUnidad=" + fechaInicioUnidad + ", fechaFinUnidad=" + fechaFinUnidad + ", objetivoEspecificoUnidad=" + objetivoEspecificoUnidad + ", resultadosAprendizajeUnidad=" + resultadosAprendizajeUnidad + ", contenidosUnidad=" + contenidosUnidad + ", horasDocenciaUnidad=" + horasDocenciaUnidad + ", horasPracticaUnidad=" + horasPracticaUnidad + ", horasAutonomoUnidad=" + horasAutonomoUnidad + ", evaluacionSilaboList=" + evaluacionSilaboList + ", idSilabo=" + idSilabo + ", bandera=" + bandera + '}';
+    }
+
 }
