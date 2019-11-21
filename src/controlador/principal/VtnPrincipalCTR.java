@@ -12,7 +12,8 @@ import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
 import controlador.alumno.VtnAlumnoMatriculaCTR;
-import controlador.alumno.VtnAlumnosRetiradosCTR;
+import controlador.alumno.VtnAlumnoRetiradosCTR;
+import controlador.alumno.VtnMatriculasAnuladasCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
 import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
@@ -84,6 +85,7 @@ import vista.alumno.VtnAlumnoCarrera;
 import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
 import vista.alumno.VtnAlumnoMatricula;
+import vista.alumno.VtnAlumnoRetirados;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
@@ -102,7 +104,7 @@ import vista.prdlectivo.FrmPrdLectivo;
 import vista.prdlectivo.VtnPrdLectivo;
 import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
-import vista.alumno.VtnAlumnosRetirados;
+import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
 import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.fichas.salud.VtnFichaSalud;
@@ -200,6 +202,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
         vtnPrin.getMnCtAlmnMatri().addActionListener(e -> abrirVtnAlumnoMatricula());
+        vtnPrin.getMnCtAlumnosRetirados().addActionListener(e -> abrirVtnAlumnoRetirado());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -372,6 +375,11 @@ public class VtnPrincipalCTR {
 
     }
 
+    public void abrirVtnAlumnoRetirado() {
+        VtnAlumnoRetiradosCTR ctr = new VtnAlumnoRetiradosCTR(this);
+        ctr.iniciar();
+    }
+
     public void abrirVtnAlumnoCurso() {
         VtnAlumnoCurso vtnAlmnCurso = new VtnAlumnoCurso();
         eventoInternal(vtnAlmnCurso);
@@ -453,10 +461,10 @@ public class VtnPrincipalCTR {
     }
 
     public void abrirVtnAlmnRetirados() {
-        VtnAlumnosRetirados vtn = new VtnAlumnosRetirados();
+        VtnMatriculasAnuladas vtn = new VtnMatriculasAnuladas();
         eventoInternal(vtn);
         if (numVtns < 5) {
-            VtnAlumnosRetiradosCTR ctr = new VtnAlumnosRetiradosCTR(this, vtn);
+            VtnMatriculasAnuladasCTR ctr = new VtnMatriculasAnuladasCTR(this, vtn);
             ctr.iniciar();
         } else {
             errorNumVentanas();

@@ -11,12 +11,12 @@ import javax.swing.JTextField;
  *
  * @author Johnny
  */
-public class VtnAlumnosRetirados extends javax.swing.JInternalFrame {
+public class VtnMatriculasAnuladas extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VtnAlumnosClase
      */
-    public VtnAlumnosRetirados() {
+    public VtnMatriculasAnuladas() {
         initComponents();
     }
 

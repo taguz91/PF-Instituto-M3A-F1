@@ -14,12 +14,13 @@ CREATE TABLE alumno."Egresados" (
 
 CREATE TABLE alumno."Retirados" (
   id_retiro SERIAL NOT NULL,
-  id_almn_carrera INTEGER NOT NULL,
+  id_almn_carrera INTEGER NOT NULL UNIQUE,
   id_prd_lectivo INTEGER NOT NULL,
-  fecha_retiro TIMESTAMP NOT NULL DEFAULT now(),
+  fecha_retiro DATE NOT NULL DEFAULT now(),
   motivo_retiro TEXT NOT NULL DEFAULT '',
   retiro_activo BOOLEAN NOT NULL DEFAULT 'true'
 ) WITH (OIDS = FALSE);
 
 
--- Agregamos alumno
+-- Agregamos a malla dos nuevos estados
+-- Retirados X

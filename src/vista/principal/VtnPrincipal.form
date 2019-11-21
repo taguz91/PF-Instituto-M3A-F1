@@ -80,6 +80,11 @@
                 <Property name="text" type="java.lang.String" value="Inscripci&#xf3;n"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosRetirados">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alumnos Retirados"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMatricula">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -499,7 +504,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
           </Group>
           <Component id="dpnlPrincipal" alignment="0" max="32767" attributes="0"/>

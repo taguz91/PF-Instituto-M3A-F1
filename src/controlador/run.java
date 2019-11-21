@@ -38,6 +38,7 @@ public class run {
             } else {
                 JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso al servidor. \n"
                         + "Ponganse en contacto con el administrador de la base de datos.");
+                System.exit(0);
             }
         }
 

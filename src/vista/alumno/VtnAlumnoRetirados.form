@@ -32,9 +32,7 @@
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblResultados" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="376" max="-2" attributes="0"/>
-                      <Component id="lblEstado" min="-2" pref="97" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="487" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -51,14 +49,7 @@
                           <Component id="cmbCarrera" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnRetirar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnIngresar" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="cbxEliminados" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -72,25 +63,18 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnRetirar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                   <Component id="txtBuscar" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cmbCarrera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbxEliminados" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="303" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblResultados" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="lblEstado" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-              </Group>
+              <Component id="lblResultados" min="-2" pref="23" max="-2" attributes="0"/>
               <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -106,7 +90,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblAlmnCarrera">
+        <Component class="javax.swing.JTable" name="tblRetirados">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
@@ -152,28 +136,9 @@
         <Property name="text" type="java.lang.String" value="0 Resultados obtenidos."/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnIngresar">
+    <Component class="javax.swing.JButton" name="btnEditar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ingresar"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEstado">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="99" green="ff" red="99" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Estado"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="cbxEliminados">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ver eliminados"/>
-        <Property name="horizontalTextPosition" type="int" value="2"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnRetirar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Retirar"/>
+        <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
     </Component>
   </SubComponents>

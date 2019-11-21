@@ -46,7 +46,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_fecha_fin, "
                 + "prd_lectivo_observacion, "
                 + "prd_lectivo_activo, "
-                + "prd_lectivo_estado )"
+                + "prd_lectivo_estado,"
+                + "prd_lectivo_fecha_fin_clases )"
                 + " VALUES( "
                 + "" + c.getId() + ", "
                 + "'" + p.getNombre().toUpperCase()
@@ -56,7 +57,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "'" + p.getFechaFin() + "', "
                 + "'" + p.getObservacion().toUpperCase() + "', "
                 + "true, "
-                + "true"
+                + "true, "
+                + "'" + p.getFechaFinClases() + "' "
                 + ");";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
@@ -68,7 +70,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 + "prd_lectivo_nombre = '" + p.getNombre() + "',"
                 + "prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', "
                 + "prd_lectivo_fecha_fin = '" + p.getFechaFin() + "', "
-                + "prd_lectivo_observacion = '" + p.getObservacion() + "' "
+                + "prd_lectivo_observacion = '" + p.getObservacion() + "', "
+                + "prd_lectivo_fecha_fin_clases = '" + p.getFechaFinClases() + "' "
                 + "WHERE id_prd_lectivo = " + p.getID() + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         return conecta.nosql(ps) == null;
@@ -297,10 +300,19 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     }
 
     public PeriodoLectivoMD capturarPerLectivo(int ID) {
-        String sql = "SELECT p.id_prd_lectivo, p.id_carrera, p.prd_lectivo_nombre, p.prd_lectivo_fecha_inicio, "
-                + "p.prd_lectivo_fecha_fin, p.prd_lectivo_observacion, c.carrera_nombre, p.prd_lectivo_estado"
-                + " FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c USING(id_carrera)"
-                + " WHERE p.id_prd_lectivo = "
+        String sql = "SELECT "
+                + "p.id_prd_lectivo, "
+                + "p.id_carrera, "
+                + "p.prd_lectivo_nombre, "
+                + "p.prd_lectivo_fecha_inicio, "
+                + "p.prd_lectivo_fecha_fin, "
+                + "p.prd_lectivo_observacion, "
+                + "c.carrera_nombre, "
+                + "p.prd_lectivo_estado,"
+                + "p.prd_lectivo_fecha_fin_clases "
+                + "FROM public.\"PeriodoLectivo\" p "
+                + "JOIN public.\"Carreras\" c USING(id_carrera) "
+                + "WHERE p.id_prd_lectivo = "
                 + ID + " AND prd_lectivo_activo = true;";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
@@ -317,6 +329,7 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 m.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 m.setCarrera(carrera);
+                m.setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
             }
             rs.close();
             ps.getConnection().close();

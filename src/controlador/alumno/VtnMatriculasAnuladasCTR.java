@@ -13,15 +13,15 @@ import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.validaciones.Validar;
-import vista.alumno.VtnAlumnosRetirados;
+import vista.alumno.VtnMatriculasAnuladas;
 
 /**
  *
  * @author Johnny
  */
-public class VtnAlumnosRetiradosCTR extends DVtnCTR {
+public class VtnMatriculasAnuladasCTR extends DVtnCTR {
 
-    private final VtnAlumnosRetirados vtnAR;
+    private final VtnMatriculasAnuladas vtnAR;
 
     private final AlumnoCursoRetiradoBD acrb;
     private ArrayList<AlumnoCursoRetiradoMD> almsCursosRetirados;
@@ -34,8 +34,8 @@ public class VtnAlumnosRetiradosCTR extends DVtnCTR {
      * @param ctrPrin
      * @param vtnAR
      */
-    public VtnAlumnosRetiradosCTR(VtnPrincipalCTR ctrPrin,
-            VtnAlumnosRetirados vtnAR) {
+    public VtnMatriculasAnuladasCTR(VtnPrincipalCTR ctrPrin,
+            VtnMatriculasAnuladas vtnAR) {
         super(ctrPrin);
         this.vtnAR = vtnAR;
         this.acrb = new AlumnoCursoRetiradoBD(ctrPrin.getConecta());
