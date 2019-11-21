@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
-import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
-import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
 
 /**
@@ -18,16 +16,9 @@ import modelo.persona.AlumnoMD;
 public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     private final ConectarDB conecta;
-    //Para consulta alumno 
-    private final AlumnoBD alm;
-    //Para consultar carreras  
-    private final CarreraBD car;
 
     public AlumnoCarreraBD(ConectarDB conecta) {
         this.conecta = conecta;
-        //Inicializamos la clases que usaremos
-        this.alm = new AlumnoBD(conecta);
-        this.car = new CarreraBD(conecta);
     }
 
     public boolean guardar() {

@@ -7,3 +7,7 @@ ALTER TABLE "public"."Silabo"
 
 ALTER TABLE public."Silabo"
 ADD COLUMN id_docente_coordinador INTEGER;
+
+
+ALTER TABLE public."MallaAlumno"
+ADD COLUMN malla_almn_activo NOT NULL DEFAULT 'true';

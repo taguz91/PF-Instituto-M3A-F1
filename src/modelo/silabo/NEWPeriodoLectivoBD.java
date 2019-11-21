@@ -133,6 +133,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio, "
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_fin, "
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre "
+                + "     \"PeriodoLectivo\".prd_lectivo_fecha_fin_clases "
                 + "FROM\n"
                 + "	\"PeriodoLectivo\" \n"
                 + "WHERE\n"
@@ -152,7 +153,8 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 periodo.setID(rs.getInt("id_prd_lectivo"))
                         .setNombre(rs.getString("prd_lectivo_nombre"))
                         .setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate())
-                        .setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+                        .setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate())
+                        .setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));

@@ -67,7 +67,8 @@ public class NEWSilaboBD implements ISilaboBD {
             + "pr.id_prd_lectivo, "
             + "pr.prd_lectivo_fecha_inicio, "
             + "pr.prd_lectivo_fecha_fin, "
-            + "pr.prd_lectivo_nombre "
+            + "pr.prd_lectivo_nombre, "
+            + "pr.prd_lectivo_fecha_fin_clases "
             + "FROM \"Silabo\" AS s\n"
             + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
             + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
@@ -286,6 +287,9 @@ public class NEWSilaboBD implements ISilaboBD {
                     s.getPeriodo().setFechaInicio(res.getDate(9).toLocalDate());
                     s.getPeriodo().setFechaFin(res.getDate(10).toLocalDate());
                     s.getPeriodo().setNombre(res.getString(11));
+                    if (res.getDate(12) != null) {
+                        s.getPeriodo().setFechaFinClases(res.getDate(12).toLocalDate());
+                    }
                 }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,
