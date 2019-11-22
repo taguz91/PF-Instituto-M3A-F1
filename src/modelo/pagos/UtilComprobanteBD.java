@@ -8,4 +8,6 @@ import utils.CONBD;
  */
 public class UtilComprobanteBD extends CONBD {
     
+    
+    
 }
