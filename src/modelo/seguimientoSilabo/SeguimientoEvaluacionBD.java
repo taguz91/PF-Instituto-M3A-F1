@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
+import modelo.curso.CursoMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
+import modelo.tipoActividad.TipoActividadMD;
+import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
  *
@@ -85,20 +88,34 @@ public class SeguimientoEvaluacionBD {
 
     }
 
-    public List<SeguimientoEvaluacionMD> getSeguimientos(int idUnidad, int idCurso, List<EvaluacionSilaboMD> evaluaciones) {
+    public List<SeguimientoEvaluacionMD> getSeguimientosBy(int idCurso, int idUnidad) {
         String SELECT = ""
                 + "SELECT\n"
-                + "     \"SeguimientoEvaluacion\".\"id\",\n"
-                + "     \"SeguimientoEvaluacion\".id_evaluacion,\n"
-                + "     \"SeguimientoEvaluacion\".formato,\n"
-                + "     \"SeguimientoEvaluacion\".observacion"
+                + "	\"SeguimientoEvaluacion\".\"id\",\n"
+                + "	\"SeguimientoEvaluacion\".formato,\n"
+                + "	\"SeguimientoEvaluacion\".observacion,\n"
+                + "	\"SeguimientoEvaluacion\".feha_creacion,\n"
+                + "	\"SeguimientoEvaluacion\".fecha_edicion,\n"
+                + "	\"SeguimientoEvaluacion\".id_evaluacion,\n"
+                + "	\"EvaluacionSilabo\".instrumento,\n"
+                + "	\"EvaluacionSilabo\".valoracion,\n"
+                + "	\"Cursos\".id_curso,\n"
+                + "	\"Cursos\".curso_nombre,\n"
+                + "	\"UnidadSilabo\".id_unidad,\n"
+                + "	\"UnidadSilabo\".numero_unidad,\n"
+                + "	\"UnidadSilabo\".titulo_unidad \n"
                 + "FROM\n"
                 + "	\"SeguimientoEvaluacion\"\n"
-                + "	INNER JOIN \"EvaluacionSilabo\" ON \"EvaluacionSilabo\".id_evaluacion = \"SeguimientoEvaluacion\".id_evaluacion \n"
+                + "	INNER JOIN \"EvaluacionSilabo\" ON \"SeguimientoEvaluacion\".id_evaluacion = \"EvaluacionSilabo\".id_evaluacion\n"
+                + "	INNER JOIN \"Cursos\" ON \"SeguimientoEvaluacion\".id_curso = \"Cursos\".id_curso\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"UnidadSilabo\" ON \"EvaluacionSilabo\".id_unidad = \"UnidadSilabo\".id_unidad \n"
                 + "WHERE\n"
-                + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad + " \n"
-                + "	AND \"SeguimientoEvaluacion\".id_curso = " + idCurso
+                + "	\"Cursos\".id_curso = " + idCurso + "\n"
+                + "     AND \"UnidadSilabo\".id_unidad = " + idUnidad
                 + "";
+
+        System.out.println(SELECT);
 
         List<SeguimientoEvaluacionMD> lista = new ArrayList<>();
 
@@ -109,17 +126,34 @@ public class SeguimientoEvaluacionBD {
 
                 SeguimientoEvaluacionMD seguimiento = new SeguimientoEvaluacionMD();
                 seguimiento.setID(rs.getInt("id"));
-
-                int idEvaluacion = rs.getInt("id_evaluacion");
-                seguimiento.setEvaluacion(
-                        evaluaciones.stream()
-                                .filter(item -> item.getIdEvaluacion() == idEvaluacion)
-                                .findFirst()
-                                .get()
-                );
-
                 seguimiento.setFormato(rs.getInt("formato"));
                 seguimiento.setObservacion(rs.getString("observacion"));
+                seguimiento.setFechaCreacion(rs.getTimestamp("feha_creacion").toLocalDateTime());
+
+                seguimiento.setFechaEdicion(rs.getTimestamp("fecha_edicion").toLocalDateTime());
+
+                CursoMD curso = new CursoMD();
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("curso_nombre"));
+
+                seguimiento.setCurso(curso);
+
+                EvaluacionSilaboMD evaluacion = new EvaluacionSilaboMD();
+
+                evaluacion.setIdEvaluacion(rs.getInt("id_evaluacion"));
+                evaluacion.setInstrumento(rs.getString("instrumento"));
+                evaluacion.setValoracion(rs.getDouble("valoracion"));
+                UnidadSilaboMD unidad = new UnidadSilaboMD();
+                unidad.setIdUnidad(rs.getInt("id_unidad"));
+                unidad.setNumeroUnidad(rs.getInt("numero_unidad"));
+                unidad.setTituloUnidad(rs.getString("titulo_unidad"));
+
+                TipoActividadMD tipo = new TipoActividadMD();
+
+                evaluacion.setIdUnidad(unidad);
+
+                seguimiento.setEvaluacion(evaluacion);
+
                 lista.add(seguimiento);
             }
         } catch (SQLException ex) {

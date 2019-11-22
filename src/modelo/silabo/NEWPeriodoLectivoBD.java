@@ -1,8 +1,10 @@
 package modelo.silabo;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -130,10 +132,10 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "SELECT\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
                 + "	\"PeriodoLectivo\".id_carrera, \n"
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio, "
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_fin, "
-                + "	\"PeriodoLectivo\".prd_lectivo_nombre "
-                + "     \"PeriodoLectivo\".prd_lectivo_fecha_fin_clases "
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio, \n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_fin, \n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre, \n"
+                + "     \"PeriodoLectivo\".prd_lectivo_fecha_fin_clases \n"
                 + "FROM\n"
                 + "	\"PeriodoLectivo\" \n"
                 + "WHERE\n"
@@ -144,6 +146,8 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "";
         PeriodoLectivoMD periodo = null;
 
+        System.out.println(SELECT);
+
         ResultSet rs = CON.ejecutarQuery(SELECT, null);
 
         try {
@@ -153,8 +157,12 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 periodo.setID(rs.getInt("id_prd_lectivo"))
                         .setNombre(rs.getString("prd_lectivo_nombre"))
                         .setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate())
-                        .setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate())
-                        .setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
+                        .setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
+
+                Date fechaFinClases = rs.getDate("prd_lectivo_fecha_fin_clases");
+                if (fechaFinClases != null) {
+                    periodo.setFechaFinClases(fechaFinClases.toLocalDate());
+                }
 
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));

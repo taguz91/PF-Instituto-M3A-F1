@@ -25,8 +25,6 @@ public class CONS {
     public static final boolean M_DESARROLLO = true;
     //Nombre de las propiedadesde la base de matos
     public static final String BD_DATABASE = "database", BD_IP = "ip", BD_PUERTO = "port";
-    //Direccion de las propiedades de base de datos
-    public static final String BD_DIR = "configuracion.properties";
     //Nombre de las propiedades la version
     public static final String V_AUTOR = "Autor", V_NOMBRE = "Nombre", V_VERSION = "Version",
             V_NOTAS = "Notas", V_FECHA = "Fecha";
@@ -44,15 +42,15 @@ public class CONS {
      */
     public static final String BD_NAME = "ista";
     //public static final String BD_NAME = "BDnotas";
-    public static String BD_PASS = "Holapostgres";
-    public static String BD_URL = "jdbc:postgresql://localhost:5432/ista";
-    public static final String DB_IP = "localhost";
+    public static String BD_PASS = "TDSoftware158";
+    public static String BD_URL = "jdbc:postgresql://34.68.63.254:18587/ista";
+    public static final String DB_IP = "190.11.21.51";
 
     public static final String URL_API = "http://35.192.7.211:8000/";
     //public static final String URL_API = "http://192.168.137.1:8000/";
 
     public static String getBDUser() {
-        return "postgres";
+        return "tsds";
     }
 
     //Obtenemos la direccion 

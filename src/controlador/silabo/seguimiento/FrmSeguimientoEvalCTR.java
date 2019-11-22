@@ -63,6 +63,16 @@ public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion,
 
         this.evaluaciones = EVAL_CONN.getByUnidad(unidad.getIdUnidad(), curso.getId());
 
+        if (this.evaluaciones.isEmpty()) {
+            vista.dispose();
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "TODAVIA NO HA CREADO INFORMES PARA ESTA UNIDAD",
+                    "AVISO",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+
         InitEventos();
 
         cargarCmbEvaluaciones();
@@ -161,7 +171,7 @@ public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion,
         });
 
         CONS.THREAD_POOL.shutdown();
-        
+
         vista.dispose();
     }
 
