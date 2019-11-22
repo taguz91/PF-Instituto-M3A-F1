@@ -11,6 +11,8 @@ import controlador.alumno.VtnAlumnoCursoCTR;
 import controlador.curso.VtnCursoCTR;
 import controlador.alumno.FrmAlumnoCursoCTR;
 import controlador.alumno.VtnAlumnoCarreraCTR;
+import controlador.alumno.VtnAlumnoEgresadosCTR;
+import controlador.alumno.VtnAlumnoGraduadoCTR;
 import controlador.alumno.VtnAlumnoMatriculaCTR;
 import controlador.alumno.VtnAlumnoRetiradosCTR;
 import controlador.alumno.VtnMatriculasAnuladasCTR;
@@ -203,6 +205,8 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtAccesos().addActionListener(e -> abrirVtnAccesos());
         vtnPrin.getMnCtAlmnMatri().addActionListener(e -> abrirVtnAlumnoMatricula());
         vtnPrin.getMnCtAlumnosRetirados().addActionListener(e -> abrirVtnAlumnoRetirado());
+        vtnPrin.getMnCtAlumnosEgresados().addActionListener(e -> abrirVtnEgresados());
+        vtnPrin.getMnCtAlumnosGraduados().addActionListener(e -> abrirVtnGraduados());
 
         //Para abrir los formularios 
         vtnPrin.getBtnPersona().addActionListener(e -> abrirFrmPersona());
@@ -679,6 +683,16 @@ public class VtnPrincipalCTR {
         } else {
             errorNumVentanas();
         }
+    }
+
+    private void abrirVtnEgresados() {
+        VtnAlumnoEgresadosCTR ctr = new VtnAlumnoEgresadosCTR(this);
+        ctr.iniciar();
+    }
+
+    private void abrirVtnGraduados() {
+        VtnAlumnoGraduadoCTR ctr = new VtnAlumnoGraduadoCTR(this);
+        ctr.iniciar();
     }
 
     private ArrayList<String> estilos;

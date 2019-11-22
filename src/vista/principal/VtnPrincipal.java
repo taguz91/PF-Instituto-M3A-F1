@@ -388,6 +388,14 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnCtAlumnosRetirados;
     }
 
+    public JMenuItem getMnCtAlumnosEgresados() {
+        return mnCtAlumnosEgresados;
+    }
+
+    public JMenuItem getMnCtAlumnosGraduados() {
+        return mnCtAlumnosGraduados;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -399,6 +407,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         btngEstilo = new javax.swing.ButtonGroup();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         pnlMenu = new javax.swing.JPanel();
         btnDocente = new javax.swing.JButton();
         btnAlumno = new javax.swing.JButton();
@@ -431,18 +440,21 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas = new javax.swing.JMenu();
         mnCtPersona = new javax.swing.JMenuItem();
         mnCtDocente = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
         mnCtAlumno = new javax.swing.JMenuItem();
+        mnCtInscripcion = new javax.swing.JMenuItem();
+        mnCtAlumnosRetirados = new javax.swing.JMenuItem();
+        mnCtMallaAlumno = new javax.swing.JMenuItem();
+        mnCtAlumnosEgresados = new javax.swing.JMenuItem();
+        mnCtAlumnosGraduados = new javax.swing.JMenuItem();
         mnCtCarrera = new javax.swing.JMenuItem();
         mnCtCurso = new javax.swing.JMenuItem();
         mnCtPrdLectivo = new javax.swing.JMenuItem();
         mnCtMateria = new javax.swing.JMenuItem();
-        mnCtInscripcion = new javax.swing.JMenuItem();
-        mnCtAlumnosRetirados = new javax.swing.JMenuItem();
         mnCtMatricula = new javax.swing.JMenuItem();
         mnCtAlmnRetirados = new javax.swing.JMenuItem();
         mnCtAlmnMatri = new javax.swing.JMenuItem();
         mnCtListaAlumnos = new javax.swing.JMenuItem();
-        mnCtMallaAlumno = new javax.swing.JMenuItem();
         mnCtDocenteMateria = new javax.swing.JMenuItem();
         mnCtRolesPeriodo = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -493,6 +505,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnEstilo = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -777,9 +791,30 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocente.setText("Docente");
         mnTipoNotas.add(mnCtDocente);
 
+        jMenu4.setText("Alumno");
+
         mnCtAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_20px.png"))); // NOI18N
-        mnCtAlumno.setText("Alumno");
-        mnTipoNotas.add(mnCtAlumno);
+        mnCtAlumno.setText("Todos");
+        jMenu4.add(mnCtAlumno);
+
+        mnCtInscripcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Resume_20px.png"))); // NOI18N
+        mnCtInscripcion.setText("Inscripción");
+        jMenu4.add(mnCtInscripcion);
+
+        mnCtAlumnosRetirados.setText("Retirados");
+        jMenu4.add(mnCtAlumnosRetirados);
+
+        mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
+        mnCtMallaAlumno.setText("Malla alumnos");
+        jMenu4.add(mnCtMallaAlumno);
+
+        mnCtAlumnosEgresados.setText("Egresados");
+        jMenu4.add(mnCtAlumnosEgresados);
+
+        mnCtAlumnosGraduados.setText("Graduados");
+        jMenu4.add(mnCtAlumnosGraduados);
+
+        mnTipoNotas.add(jMenu4);
 
         mnCtCarrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Graduation_Cap_20px.png"))); // NOI18N
         mnCtCarrera.setText("Carrera");
@@ -797,13 +832,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMateria.setText("Materia");
         mnTipoNotas.add(mnCtMateria);
 
-        mnCtInscripcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Resume_20px.png"))); // NOI18N
-        mnCtInscripcion.setText("Inscripción");
-        mnTipoNotas.add(mnCtInscripcion);
-
-        mnCtAlumnosRetirados.setText("Alumnos Retirados");
-        mnTipoNotas.add(mnCtAlumnosRetirados);
-
         mnCtMatricula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Documents_20px.png"))); // NOI18N
         mnCtMatricula.setText("Matricula");
         mnTipoNotas.add(mnCtMatricula);
@@ -818,10 +846,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtListaAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Classroom_20px.png"))); // NOI18N
         mnCtListaAlumnos.setText("Lista general alumnos");
         mnTipoNotas.add(mnCtListaAlumnos);
-
-        mnCtMallaAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Report_Card_20px.png"))); // NOI18N
-        mnCtMallaAlumno.setText("Malla alumnos");
-        mnTipoNotas.add(mnCtMallaAlumno);
 
         mnCtDocenteMateria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Literature_20px.png"))); // NOI18N
         mnCtDocenteMateria.setText("Materia docentes");
@@ -1091,7 +1115,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1103,6 +1129,8 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtAlmnMatri;
     private javax.swing.JMenuItem mnCtAlmnRetirados;
     private javax.swing.JMenuItem mnCtAlumno;
+    private javax.swing.JMenuItem mnCtAlumnosEgresados;
+    private javax.swing.JMenuItem mnCtAlumnosGraduados;
     private javax.swing.JMenuItem mnCtAlumnosRetirados;
     private javax.swing.JMenuItem mnCtAsistencia;
     private javax.swing.JMenuItem mnCtCarrera;

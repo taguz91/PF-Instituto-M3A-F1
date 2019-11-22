@@ -11,15 +11,15 @@ import modelo.alumno.Egresado;
  *
  * @author gus
  */
-public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
+public class VtnAlumnoGraduadoCTR extends AVtnAlumnoEgresadoCTR {
 
     private static final String[] TITULO = {
-        "Carrera", "Periodo", 
-        "Cédula", "Alumno", 
-        "Fecha egreso", "Graduado"
+        "Carrera", "Periodo",
+        "Cédula", "Alumno",
+        "Fecha Graduacion"
     };
 
-    public VtnAlumnoEgresadosCTR(VtnPrincipalCTR ctrPrin) {
+    public VtnAlumnoGraduadoCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
     }
 
@@ -27,12 +27,12 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
         iniciarVtn(TITULO);
         cargarDatos();
         iniciarBuscador();
-        vtn.setTitle("Alumnos Egresados");
+        vtn.setTitle("Alumnos Graduados");
         ctrPrin.agregarVtn(vtn);
     }
 
     private void cargarDatos() {
-        todosEgresados = EBD.getAllEgresados();
+        todosEgresados = EBD.getAllGraduados();
         egresados = todosEgresados;
         llenarTbl(egresados);
     }
@@ -73,8 +73,7 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
                     + " " + r.getAlmnCarrera().getAlumno().getSegundoApellido()
                     + " " + r.getAlmnCarrera().getAlumno().getPrimerNombre()
                     + " " + r.getAlmnCarrera().getAlumno().getSegundoNombre(),
-                    r.getFechaEgreso().toString(),
-                    r.isGraduado() ? "Si" : "No"
+                    r.getFechaGraduacion().toString()
                 };
                 mdTbl.addRow(valores);
             });
