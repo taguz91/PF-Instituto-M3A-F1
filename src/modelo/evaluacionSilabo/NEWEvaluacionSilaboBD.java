@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.seguimientoSilabo.SeguimientoEvaluacionMD;
 import modelo.tipoActividad.TipoActividadMD;
 import utils.CONBD;
 
@@ -175,7 +176,7 @@ public class NEWEvaluacionSilaboBD extends CONBD {
         return ES;
     }
 
-    public List<EvaluacionSilaboMD> getByUnidad(int idUnidad) {
+    public List<EvaluacionSilaboMD> getByUnidad(int idUnidad, int idCurso) {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"EvaluacionSilabo\".id_evaluacion,\n"
@@ -186,13 +187,20 @@ public class NEWEvaluacionSilaboBD extends CONBD {
                 + "	\"EvaluacionSilabo\".fecha_presentacion,\n"
                 + "	\"TipoActividad\".nombre_tipo_actividad,\n"
                 + "	\"TipoActividad\".nombre_subtipo_actividad,\n"
-                + "	\"EvaluacionSilabo\".id_tipo_actividad \n"
+                + "	\"EvaluacionSilabo\".id_tipo_actividad,\n"
+                + "     \"SeguimientoEvaluacion\".\"id\", \n"
+                + "	\"SeguimientoEvaluacion\".formato,\n"
+                + "	\"SeguimientoEvaluacion\".observacion \n"
                 + "FROM\n"
                 + "	\"EvaluacionSilabo\"\n"
-                + "	INNER JOIN \"TipoActividad\" ON \"EvaluacionSilabo\".id_tipo_actividad = \"TipoActividad\".id_tipo_actividad \n"
+                + "	INNER JOIN \"TipoActividad\" ON \"EvaluacionSilabo\".id_tipo_actividad = \"TipoActividad\".id_tipo_actividad\n"
+                + "	INNER JOIN \"SeguimientoEvaluacion\" ON \"SeguimientoEvaluacion\".id_evaluacion = \"EvaluacionSilabo\".id_evaluacion \n"
                 + "WHERE\n"
-                + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad
+                + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad + "\n"
+                + "	AND \"SeguimientoEvaluacion\".id_curso = " + idCurso
                 + "";
+
+        System.out.println(SELECT);
 
         List<EvaluacionSilaboMD> lista = new ArrayList<>();
 
@@ -216,6 +224,16 @@ public class NEWEvaluacionSilaboBD extends CONBD {
                 tipoActividad.setNombreSubtipoActividad(rs.getString("nombre_subtipo_actividad"));
 
                 evaluacion.setIdTipoActividad(tipoActividad);
+
+                SeguimientoEvaluacionMD seguimiento = new SeguimientoEvaluacionMD();
+
+                seguimiento.setID(rs.getInt("id"));
+                seguimiento.setFormato(rs.getInt("formato"));
+                seguimiento.setObservacion(rs.getString("observacion"));
+
+                evaluacion.setSeguimientoEvaluacion(seguimiento);
+                seguimiento.setEvaluacion(evaluacion);
+
                 lista.add(evaluacion);
             }
         } catch (SQLException ex) {

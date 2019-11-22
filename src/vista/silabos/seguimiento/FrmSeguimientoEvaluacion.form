@@ -73,11 +73,11 @@
                       <EmptySpace type="separate" max="32767" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane2" pref="128" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="193" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="153" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="150" max="32767" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSaveCont" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSaveExit" alignment="3" min="-2" max="-2" attributes="0"/>

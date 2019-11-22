@@ -7,9 +7,9 @@ package modelo.seguimientoSilabo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
@@ -63,11 +63,23 @@ public class SeguimientoEvaluacionBD {
         return object;
     }
 
+    public boolean copiarSeguimientos(int idCurso, int idUnidad, int idCursoRef) {
+
+        String CALL = ""
+                + "CALL \"copiar_seguimientos_eval\" ( " + idCurso + "," + idUnidad + " , " + idCursoRef + ");"
+                + "";
+
+        return CON.ejecutar(CALL) != null;
+
+    }
+
     public boolean crearSeguimientos(int idUnidad, int idCurso) {
 
         String CALL = ""
                 + "CALL \"crear_seguimienntos_evaluaciones\"(" + idUnidad + " ," + idCurso + ")"
                 + "";
+
+        System.out.println(CALL);
 
         return CON.ejecutar(CALL) != null;
 
@@ -97,6 +109,7 @@ public class SeguimientoEvaluacionBD {
 
                 SeguimientoEvaluacionMD seguimiento = new SeguimientoEvaluacionMD();
                 seguimiento.setID(rs.getInt("id"));
+
                 int idEvaluacion = rs.getInt("id_evaluacion");
                 seguimiento.setEvaluacion(
                         evaluaciones.stream()
@@ -104,6 +117,7 @@ public class SeguimientoEvaluacionBD {
                                 .findFirst()
                                 .get()
                 );
+
                 seguimiento.setFormato(rs.getInt("formato"));
                 seguimiento.setObservacion(rs.getString("observacion"));
                 lista.add(seguimiento);
@@ -115,6 +129,20 @@ public class SeguimientoEvaluacionBD {
         }
 
         return lista;
+    }
+
+    public boolean editar(SeguimientoEvaluacionMD seguimiento) {
+        String UPDATE = ""
+                + "UPDATE \"SeguimientoEvaluacion\" \n"
+                + "SET \n"
+                + "     \"formato\" = " + seguimiento.getFormato() + ",\n"
+                + "     \"observacion\" = '" + seguimiento.getObservacion() + "', \n"
+                + "     \"fecha_edicion\" = '" + java.sql.Timestamp.valueOf(LocalDateTime.now()) + "'"
+                + "WHERE\n"
+                + "	\"id\" = " + seguimiento.getID()
+                + "";
+
+        return CON.ejecutar(UPDATE) == null;
     }
 
 }
