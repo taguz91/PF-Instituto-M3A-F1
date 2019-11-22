@@ -39,6 +39,9 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu4">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8_User_20px.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Alumno"/>
               </Properties>
               <SubComponents>
@@ -60,6 +63,9 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosRetirados">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8-persona-mareada-20.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Retirados"/>
                   </Properties>
                 </MenuItem>
@@ -73,11 +79,17 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosEgresados">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8-diploma-20.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Egresados"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosGraduados">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8-estudiante-masculino-20.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Graduados"/>
                   </Properties>
                 </MenuItem>
@@ -162,6 +174,9 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="jMenu2">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/vista/img/icons8-carpeta-de-documentos-20.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Documentos Academicos"/>
               </Properties>
               <SubComponents>

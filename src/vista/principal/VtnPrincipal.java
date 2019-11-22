@@ -791,6 +791,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtDocente.setText("Docente");
         mnTipoNotas.add(mnCtDocente);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_20px.png"))); // NOI18N
         jMenu4.setText("Alumno");
 
         mnCtAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_User_20px.png"))); // NOI18N
@@ -801,6 +802,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtInscripcion.setText("Inscripción");
         jMenu4.add(mnCtInscripcion);
 
+        mnCtAlumnosRetirados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-persona-mareada-20.png"))); // NOI18N
         mnCtAlumnosRetirados.setText("Retirados");
         jMenu4.add(mnCtAlumnosRetirados);
 
@@ -808,9 +810,11 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtMallaAlumno.setText("Malla alumnos");
         jMenu4.add(mnCtMallaAlumno);
 
+        mnCtAlumnosEgresados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-diploma-20.png"))); // NOI18N
         mnCtAlumnosEgresados.setText("Egresados");
         jMenu4.add(mnCtAlumnosEgresados);
 
+        mnCtAlumnosGraduados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-estudiante-masculino-20.png"))); // NOI18N
         mnCtAlumnosGraduados.setText("Graduados");
         jMenu4.add(mnCtAlumnosGraduados);
 
@@ -855,6 +859,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRolesPeriodo.setText("Roles periodo");
         mnTipoNotas.add(mnCtRolesPeriodo);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-carpeta-de-documentos-20.png"))); // NOI18N
         jMenu2.setText("Documentos Academicos");
 
         mnCtSilabos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));

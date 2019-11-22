@@ -3,9 +3,11 @@ package modelo.alumno;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ConectarDB;
+import modelo.ConnDBPool;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
 
@@ -18,6 +20,8 @@ public class MatriculaBD extends MatriculaMD {
     private String sql = "", nsql = "";
 
     private final ConectarDB conecta;
+
+    private final ConnDBPool CON = ConnDBPool.single();
 
     public MatriculaBD(ConectarDB conecta) {
         this.conecta = conecta;
@@ -230,6 +234,43 @@ public class MatriculaBD extends MatriculaMD {
             }
         }
         return nombres;
+    }
+
+    public String getMatriculasAPagar(int idAlmnCarrera) {
+        String msg = "";
+        String query = "SELECT  \n"
+                + "prd_lectivo_nombre,\n"
+                + "matricula_fecha, \n"
+                + "matricula_tipo\n"
+                + "FROM public.\"Matricula\" m\n"
+                + "JOIN public.\"PeriodoLectivo\" pl \n"
+                + "ON m.id_prd_lectivo = pl.id_prd_lectivo \n"
+                + "WHERE matricula_tipo <> 'ORDINARIA' \n"
+                + "AND id_alumno = (\n"
+                + " SELECT id_alumno \n"
+                + " FROM public.\"AlumnosCarrera\" \n"
+                + " WHERE id_almn_carrera = ?\n"
+                + ");";
+        PreparedStatement ps = CON.getPSPOOL(query);
+        try {
+            ps.setInt(1, idAlmnCarrera);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                LocalDateTime lct = res.getTimestamp("matricula_fecha").toLocalDateTime();
+                msg += "Periodo: " + res.getString("prd_lectivo_nombre")
+                        + "  Fecha: " + lct.getDayOfMonth() + "/"
+                        + lct.getMonthValue() + "/"
+                        + lct.getYear() + " "
+                        + " Tipo matricula: " + res.getString("matricula_tipo") + "\n";
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No pudimos mapear la respuesta "
+                    + "de  matriculas a pagar."
+            );
+        }
+        return msg;
     }
 
 }

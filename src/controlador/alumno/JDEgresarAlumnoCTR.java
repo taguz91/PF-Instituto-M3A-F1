@@ -14,6 +14,7 @@ import modelo.alumno.Egresado;
 import modelo.alumno.EgresadoBD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
+import modelo.alumno.MatriculaBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.alumno.JDEgresarAlumno;
 
@@ -34,11 +35,13 @@ public class JDEgresarAlumnoCTR extends DCTR {
     // Para saber que matriculas nos quedan por pagar antes de ingresarnos como egresados. 
     private final MallaAlumnoBD MABD;
     private ArrayList<MallaAlumnoMD> mallaAlumno;
+    private final MatriculaBD MTBD;
 
     public JDEgresarAlumnoCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.FRM = new JDEgresarAlumno(ctrPrin.getVtnPrin(), false);
         this.MABD = new MallaAlumnoBD(ctrPrin.getConecta());
+        this.MTBD = new MatriculaBD(ctrPrin.getConecta());
     }
 
     public void ingresar(int idAlmnCarrera) {
@@ -54,6 +57,11 @@ public class JDEgresarAlumnoCTR extends DCTR {
                 + "# Matricula: " + ma.getMallaNumMatricula() + "  "
                 + "Materia: " + ma.getMateria().getNombre() + " \n")
                 .reduce(msg, String::concat);
+
+        String matriculasPagar = MTBD.getMatriculasAPagar(idAlmnCarrera);
+        if (matriculasPagar.length() > 0) {
+            msg += "\nMatriculas a pagar: \n" + matriculasPagar;
+        }
         if (msg.length() > 0) {
             JOptionPane.showMessageDialog(
                     FRM,
