@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.alumno.AlumnoCarreraBD;
@@ -30,6 +29,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     private final AlumnoCarreraBD almnCar;
     private ArrayList<AlumnoCarreraMD> almnsCarr;
     private final JDRetirarAlumnoCTR RCTR;
+    JDEgresarAlumnoCTR ECTR;
     // Para los retirados 
     private final RetiradoBD RBD = RetiradoBD.single();
     private List<Retirado> retirados;
@@ -52,6 +52,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
         this.almnCar = new AlumnoCarreraBD(ctrPrin.getConecta());
         this.carr = new CarreraBD(ctrPrin.getConecta());
         this.RCTR = new JDRetirarAlumnoCTR(ctrPrin);
+        this.ECTR = new JDEgresarAlumnoCTR(ctrPrin);
     }
 
     /**
@@ -93,6 +94,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
                 vtnAlmCar.getBtnBuscar()));
         ctrPrin.agregarVtn(vtnAlmCar);
         vtnAlmCar.getBtnRetirar().addActionListener(e -> abrirFRMRetirado());
+        vtnAlmCar.getBtnEgresar().addActionListener(e -> abrirFrmEgresado());
         InitPermisos();
     }
 
@@ -100,6 +102,15 @@ public class VtnAlumnoCarreraCTR extends DCTR {
         int posFila = vtnAlmCar.getTblAlmnCarrera().getSelectedRow();
         if (posFila >= 0) {
             RCTR.ingresar(almnsCarr.get(posFila));
+        } else {
+            errorNoSeleccionoFila();
+        }
+    }
+    
+    private void abrirFrmEgresado() {
+        int posFila = vtnAlmCar.getTblAlmnCarrera().getSelectedRow();
+        if (posFila >= 0) {
+            ECTR.ingresar(almnsCarr.get(posFila).getId());
         } else {
             errorNoSeleccionoFila();
         }

@@ -21,10 +21,39 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
         this.conecta = conecta;
     }
 
+    private static final String BASEQUERY_ALMNCARRERA = "SELECT "
+            + "id_almn_carrera, "
+            + "ac.id_alumno, "
+            + "ac.id_carrera, "
+            + "almn_carrera_fecha_registro, "
+            + "persona_primer_nombre, "
+            + "persona_segundo_nombre, "
+            + "persona_primer_apellido, "
+            + "persona_segundo_apellido, "
+            + "persona_identificacion, "
+            + "carrera_codigo "
+            + "FROM public.\"AlumnosCarrera\" ac, "
+            + "public.\"Alumnos\" a, "
+            + "public.\"Personas\" p, "
+            + "public.\"Carreras\" c "
+            + "WHERE  a.id_alumno = ac.id_alumno AND "
+            + "p.id_persona = a.id_persona AND "
+            + "c.id_carrera = ac.id_carrera AND "
+            + "carrera_activo = true ";
+
+    private static final String ENQUERY_ALMNCARRERA = " AND id_almn_carrera NOT IN ("
+            + " SELECT id_almn_carrera FROM alumno.\"Retirados\" "
+            + ") AND id_almn_carrera NOT IN ("
+            + " SELECT id_almn_carrera FROM alumno.\"Egresados\");";
+
     public boolean guardar() {
-        String nsql = "INSERT INTO public.\"AlumnosCarrera\"(\n"
-                + "	id_alumno, id_carrera, almn_carrera_fecha_registro)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getCarrera().getId() + ", "
+        String nsql = "INSERT INTO public.\"AlumnosCarrera\"( "
+                + "id_alumno, "
+                + "id_carrera, "
+                + "almn_carrera_fecha_registro"
+                + ") VALUES ( "
+                + getAlumno().getId_Alumno() + ", "
+                + getCarrera().getId() + ", "
                 + " now() );";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
@@ -37,7 +66,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
 
     public String estaMatriculadoEn(int idAlm) {
         String carrera = "";
-        String sql = "SELECT DISTINCT carrera_nombre\n"
+        String sql = "SELECT DISTINCT carrera_nombre "
                 + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, \n"
                 + "public.\"Carreras\" c\n"
                 + "WHERE ma.id_almn_carrera = ac.id_almn_carrera\n"
@@ -62,27 +91,16 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarrera() {
-        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
-                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_identificacion, carrera_codigo\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
-                + "public.\"Carreras\" c\n"
-                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
-                + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND carrera_activo = true \n"
-                + "AND almn_carrera_activo = true;";
+        String sql = BASEQUERY_ALMNCARRERA
+                + " AND almn_carrera_activo = true "
+                + ENQUERY_ALMNCARRERA;
         return consultarAlumnoCarrera(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraEliminados() {
-        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
-                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_identificacion, carrera_codigo\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
-                + "public.\"Carreras\" c\n"
-                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
-                + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND almn_carrera_activo = false;";
+        String sql = BASEQUERY_ALMNCARRERA
+                + " AND almn_carrera_activo = false "
+                + ENQUERY_ALMNCARRERA;
         return consultarAlumnoCarrera(sql);
     }
 
@@ -93,59 +111,51 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
      * @return
      */
     public ArrayList<AlumnoCarreraMD> cargarAlumnoCarreraPorCarrera(int idCarrera) {
-        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
-                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_identificacion, carrera_codigo\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
-                + "public.\"Carreras\" c\n"
-                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
-                + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND \n"
-                + "ac.id_carrera = " + idCarrera + ";";
+        String sql = BASEQUERY_ALMNCARRERA + " AND almn_carrera_activo = true "
+                + "AND ac.id_carrera = " + idCarrera + " "
+                + ENQUERY_ALMNCARRERA;
         return consultarAlumnoCarrera(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> buscar(String aguja) {
-        String sql = "SELECT id_almn_carrera, ac.id_alumno, ac.id_carrera, almn_carrera_fecha_registro, \n"
-                + "persona_primer_nombre, persona_segundo_nombre, persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_identificacion, carrera_codigo\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p,\n"
-                + "public.\"Carreras\" c\n"
-                + "WHERE  a.id_alumno = ac.id_alumno AND \n"
-                + "p.id_persona = a.id_persona AND \n"
-                + "c.id_carrera = ac.id_carrera AND (\n"
+        String sql = BASEQUERY_ALMNCARRERA + "AND almn_carrera_activo = true  "
+                + "AND ( "
                 + "	carrera_codigo ILIKE '%" + aguja + "%' OR \n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido\n"
                 + "	ILIKE '%" + aguja + "%'\n"
                 + "	OR persona_identificacion ILIKE '%" + aguja + "%'\n"
-                + ") AND persona_activa = true AND carrera_activo = true;";
+                + ") AND persona_activa = true AND carrera_activo = true "
+                + ENQUERY_ALMNCARRERA;
         return consultarAlumnoCarrera(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> buscarAlumnoCarrera(int idCarrera, String aguja) {
-        String sql = "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-                + "persona_primer_nombre, persona_segundo_nombre,\n"
-                + "persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_celular, persona_correo, persona_identificacion\n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p, \n"
-                + "public.\"Carreras\" c\n"
-                + "WHERE a.id_alumno = ac.id_alumno AND\n"
-                + "p.id_persona = a.id_persona AND\n"
+        String sql = BASEQUERY_ALMNCARRERA + " AND almn_carrera_activo = true AND "
                 + "ac.id_carrera = " + idCarrera + " AND "
                 + "c.id_carrera = ac.id_carrera AND (\n"
-                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' || "
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR\n"
                 + "	persona_identificacion ILIKE '%" + aguja + "%') "
-                + "AND persona_activa = true AND carrera_activo = true;";
+                + "AND persona_activa = true AND carrera_activo = true "
+                + ENQUERY_ALMNCARRERA;
         return consultarAlumnoCarreraTbl(sql);
     }
 
     public ArrayList<AlumnoCarreraMD> buscarAlumnoCarreraParaFrm(int idCarrera, String aguja) {
-        String sql = "SELECT id_almn_carrera, ac.id_carrera, ac.id_alumno, a.id_persona, \n"
-                + "persona_primer_nombre, persona_segundo_nombre,\n"
-                + "persona_primer_apellido, persona_segundo_apellido, persona_identificacion \n"
-                + "FROM public.\"AlumnosCarrera\" ac, public.\"Alumnos\" a, public.\"Personas\" p \n"
+        String sql = "SELECT "
+                + "id_almn_carrera, "
+                + "ac.id_carrera, "
+                + "ac.id_alumno, "
+                + "a.id_persona, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "persona_identificacion "
+                + "FROM public.\"AlumnosCarrera\" ac, "
+                + "public.\"Alumnos\" a, "
+                + "public.\"Personas\" p "
                 + "WHERE a.id_alumno = ac.id_alumno AND\n"
                 + "p.id_persona = a.id_persona AND\n"
                 + "ac.id_carrera = " + idCarrera + " AND (\n"
@@ -153,7 +163,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "	persona_primer_apellido || ' ' || persona_segundo_apellido ILIKE '%" + aguja + "%' OR "
                 + "     persona_primer_nombre || ' ' || persona_primer_apellido ILIKE '%" + aguja + "%' OR \n"
                 + "	persona_identificacion ILIKE '%" + aguja + "%') "
-                + "AND persona_activa = true;";
+                + "AND persona_activa = true "
+                + ENQUERY_ALMNCARRERA;
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);

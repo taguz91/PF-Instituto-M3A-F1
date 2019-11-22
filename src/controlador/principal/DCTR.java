@@ -19,7 +19,6 @@ public class DCTR {
     protected void abrirJD(JDialog jd) {
         jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
         jd.setVisible(true);
-        ctrPrin.eventoJDCerrar(jd);
     }
     
     protected void errorNoSeleccionoFila() {
