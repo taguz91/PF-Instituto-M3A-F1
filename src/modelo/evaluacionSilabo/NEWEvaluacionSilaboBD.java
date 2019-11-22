@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.tipoActividad.TipoActividadMD;
 import utils.CONBD;
 
 /**
@@ -170,6 +173,59 @@ public class NEWEvaluacionSilaboBD extends CONBD {
             CON.cerrarCONPS(ps);
         }
         return ES;
+    }
+
+    public List<EvaluacionSilaboMD> getByUnidad(int idUnidad) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"EvaluacionSilabo\".id_evaluacion,\n"
+                + "	\"EvaluacionSilabo\".indicador,\n"
+                + "	\"EvaluacionSilabo\".instrumento,\n"
+                + "	\"EvaluacionSilabo\".valoracion,\n"
+                + "	\"EvaluacionSilabo\".fecha_envio,\n"
+                + "	\"EvaluacionSilabo\".fecha_presentacion,\n"
+                + "	\"TipoActividad\".nombre_tipo_actividad,\n"
+                + "	\"TipoActividad\".nombre_subtipo_actividad,\n"
+                + "	\"EvaluacionSilabo\".id_tipo_actividad \n"
+                + "FROM\n"
+                + "	\"EvaluacionSilabo\"\n"
+                + "	INNER JOIN \"TipoActividad\" ON \"EvaluacionSilabo\".id_tipo_actividad = \"TipoActividad\".id_tipo_actividad \n"
+                + "WHERE\n"
+                + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad
+                + "";
+
+        List<EvaluacionSilaboMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                EvaluacionSilaboMD evaluacion = new EvaluacionSilaboMD();
+
+                evaluacion.setIdEvaluacion(rs.getInt("id_evaluacion"));
+                evaluacion.setIndicador(rs.getString("indicador"));
+                evaluacion.setInstrumento(rs.getString("instrumento"));
+                evaluacion.setValoracion(rs.getDouble("valoracion"));
+                evaluacion.setFechaEnvio(rs.getDate("fecha_envio").toLocalDate());
+                evaluacion.setFechaPresentacion(rs.getDate("fecha_presentacion").toLocalDate());
+
+                TipoActividadMD tipoActividad = new TipoActividadMD();
+
+                tipoActividad.setIdTipoActividad(rs.getInt("id_tipo_actividad"));
+                tipoActividad.setNombreTipoActividad(rs.getString("nombre_tipo_actividad"));
+                tipoActividad.setNombreSubtipoActividad(rs.getString("nombre_subtipo_actividad"));
+
+                evaluacion.setIdTipoActividad(tipoActividad);
+                lista.add(evaluacion);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWEvaluacionSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
     }
 
 }

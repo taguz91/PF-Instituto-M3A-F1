@@ -5,11 +5,16 @@
  */
 package controlador.silabo.seguimiento;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.curso.CursoMD;
+import modelo.seguimientoSilabo.SeguimientoEvaluacionBD;
 import modelo.seguimientoSilabo.SeguimientoEvaluacionMD;
 import modelo.silabo.NEWCursoBD;
 import modelo.silabo.NEWSilaboBD;
@@ -25,11 +30,14 @@ import vista.silabos.seguimiento.VtnConfigSeguimientoEval;
 public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimientoEval, SeguimientoEvaluacionMD> {
 
     private final NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
+    private final SeguimientoEvaluacionBD CONN = SeguimientoEvaluacionBD.sigle();
     private final NEWCursoBD CURSO_CONN = NEWCursoBD.single();
 
     private List<SilaboMD> misSilabos = null;
 
     private List<CursoMD> misCursos = null;
+
+    private List<CursoMD> cursosRef = null;
 
     public VtnConfigSeguimientoEvalCTR(VtnPrincipalCTR desktop) {
         super(desktop);
@@ -40,22 +48,50 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
     public void Init() {
         super.Init(); //To change body of generated methods, choose Tools | Templates.
 
+        InitEventos();
         misSilabos = SILABO_CONN.getMisSilabosConUnidadesBy(CONS.USUARIO.getPersona().getIdentificacion());
         cargarCmbSilabos();
-        InitEventos();
     }
 
     private void InitEventos() {
 
         vista.getCmbSilabo().addItemListener(this::cmbUnidades);
         vista.getCmbUnidad().addItemListener(this::cmbCursos);
+        vista.getBtnSiguiente().addActionListener(this::btnSiguiente);
 
     }
 
     /*
         OPERACIONES
      */
-    private void validar() {
+    private void validarCmbCursos() {
+        vista.getCmbCurso().removeAllItems();
+        vista.getCmbCursoRef().removeAllItems();
+        if (misCursos.size() < 1) {
+            vista.getCmbCurso().setEnabled(false);
+            vista.getCmbCurso().addItem("UNIDAD COMPLETADA");
+            vista.getBtnSiguiente().setEnabled(false);
+        } else {
+            vista.getCmbCurso().setEnabled(true);
+            vista.getBtnSiguiente().setEnabled(true);
+            cursosRef = CURSO_CONN.getDeReferenciaSeguimientoEval(getUnidad().getIdUnidad());
+            if (cursosRef.size() < 1) {
+
+                vista.getCmbCursoRef().addItem("NO TIENE");
+                vista.getCmbCursoRef().setEnabled(false);
+
+            } else {
+                vista.getCmbCursoRef().setEnabled(true);
+                vista.getCmbCursoRef().addItem("SI TIENE CURSOS DE REFERENCIA");
+                cargarCursosRef();
+            }
+        }
+    }
+
+    private void cargarCursosRef() {
+        cursosRef.stream()
+                .map(c -> c.getNombre())
+                .forEach(vista.getCmbCursoRef()::addItem);
     }
 
     private void cargarCmbSilabos() {
@@ -80,6 +116,19 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
                 .orElse(null);
     }
 
+    private CursoMD getCurso() {
+        return misCursos.stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbCurso().getSelectedItem().toString()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private CursoMD getCursoRef() {
+        return cursosRef.stream()
+                .filter(item -> item.getNombre().equals(vista.getCmbCursoRef().getSelectedItem().toString()))
+                .findFirst()
+                .orElse(null);
+    }
 
     /*
         EVENTOS
@@ -96,16 +145,47 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
     private void cmbCursos(ItemEvent e) {
         try {
 
-            vista.getCmbCurso().removeAllItems();
             misCursos = CURSO_CONN.getFaltantesSeguimientoEval(
                     getSilabo(),
                     getUnidad().getIdUnidad()
             );
+            this.validarCmbCursos();
             misCursos.stream()
                     .map(c -> c.getNombre())
                     .forEach(vista.getCmbCurso()::addItem);
         } catch (NullPointerException ex) {
         }
+
+    }
+
+    private void btnSiguiente(ActionEvent e) {
+        new Thread(() -> {
+
+            Effects.setLoadCursor(vista);
+
+            FrmSeguimientoEvalCTR form = new FrmSeguimientoEvalCTR(
+                    desktop,
+                    getSilabo(),
+                    getUnidad(),
+                    getCurso()
+            );
+
+            if (vista.getCmbCursoRef().getSelectedIndex() > 0) {
+
+            } else {
+                CONN.crearSeguimientos(getUnidad().getIdUnidad(), getCurso().getId());
+            }
+
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(VtnConfigSeguimientoEvalCTR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Effects.setDefaultCursor(vista);
+            form.Init();
+            vista.dispose();
+
+        }).start();
 
     }
 }

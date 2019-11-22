@@ -7,9 +7,13 @@ package modelo.seguimientoSilabo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConnDBPool;
+import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 
 /**
  *
@@ -64,9 +68,53 @@ public class SeguimientoEvaluacionBD {
         String CALL = ""
                 + "CALL \"crear_seguimienntos_evaluaciones\"(" + idUnidad + " ," + idCurso + ")"
                 + "";
-        
+
         return CON.ejecutar(CALL) != null;
 
+    }
+
+    public List<SeguimientoEvaluacionMD> getSeguimientos(int idUnidad, int idCurso, List<EvaluacionSilaboMD> evaluaciones) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "     \"SeguimientoEvaluacion\".\"id\",\n"
+                + "     \"SeguimientoEvaluacion\".id_evaluacion,\n"
+                + "     \"SeguimientoEvaluacion\".formato,\n"
+                + "     \"SeguimientoEvaluacion\".observacion"
+                + "FROM\n"
+                + "	\"SeguimientoEvaluacion\"\n"
+                + "	INNER JOIN \"EvaluacionSilabo\" ON \"EvaluacionSilabo\".id_evaluacion = \"SeguimientoEvaluacion\".id_evaluacion \n"
+                + "WHERE\n"
+                + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad + " \n"
+                + "	AND \"SeguimientoEvaluacion\".id_curso = " + idCurso
+                + "";
+
+        List<SeguimientoEvaluacionMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                SeguimientoEvaluacionMD seguimiento = new SeguimientoEvaluacionMD();
+                seguimiento.setID(rs.getInt("id"));
+                int idEvaluacion = rs.getInt("id_evaluacion");
+                seguimiento.setEvaluacion(
+                        evaluaciones.stream()
+                                .filter(item -> item.getIdEvaluacion() == idEvaluacion)
+                                .findFirst()
+                                .get()
+                );
+                seguimiento.setFormato(rs.getInt("formato"));
+                seguimiento.setObservacion(rs.getString("observacion"));
+                lista.add(seguimiento);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeguimientoEvaluacionBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
     }
 
 }

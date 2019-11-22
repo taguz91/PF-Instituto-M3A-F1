@@ -3,6 +3,7 @@ package modelo.evaluacionSilabo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
+import modelo.seguimientoSilabo.SeguimientoEvaluacionMD;
 import modelo.tipoActividad.TipoActividadMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -30,14 +31,8 @@ public class EvaluacionSilaboMD implements Serializable {
 
     private UnidadSilaboMD idUnidad;
 
-    private Integer formato;
+    private SeguimientoEvaluacionMD seguimientoEvaluacion;
 
-    private String observacion;
-
-    /*
-        CONSTANTES
-    FORMATOS:
-     */
     public EvaluacionSilaboMD() {
 
         this.idTipoActividad = new TipoActividadMD();
@@ -123,20 +118,25 @@ public class EvaluacionSilaboMD implements Serializable {
         return idLocal;
     }
 
-    public Integer getFormato() {
-        return formato;
+    public SeguimientoEvaluacionMD getSeguimientoEvaluacion() {
+        return seguimientoEvaluacion;
     }
 
-    public void setFormato(Integer formato) {
-        this.formato = formato;
+    public void setSeguimientoEvaluacion(SeguimientoEvaluacionMD seguimientoEvaluacion) {
+        this.seguimientoEvaluacion = seguimientoEvaluacion;
     }
 
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public String descripcionTextArea() {
+        return "Informacion de la Actividad:\n"
+                + " -Indicador: " + indicador + "\n"
+                + " -Instrumento: " + instrumento + "\n"
+                + " -Valoracion: " + valoracion + "\n"
+                + " -Fecha de envio: " + fechaEnvio + "\n"
+                + " -Fecha de entrega: " + fechaPresentacion + "\n"
+                + "Tipo de Actividad: \n"
+                + " -Tipo: " + idTipoActividad.getNombreTipoActividad() + "\n"
+                + " -SubTipo: " + idTipoActividad.getNombreSubtipoActividad() + "\n"
+                + "";
     }
 
     @Override
