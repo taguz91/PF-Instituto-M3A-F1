@@ -41,7 +41,6 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
-import controlador.silabo.ControladorCRUD;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
@@ -52,6 +51,7 @@ import controlador.usuario.VtnHistorialUserCTR;
 import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.login.VtnSelectRolCTR;
+import controlador.pagos.FRMComprobanteCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import controlador.version.VtnDitoolCTR;
 import controlador.vistaReportes.VtnEstadosCTR;
@@ -87,7 +87,6 @@ import vista.alumno.VtnAlumnoCarrera;
 import vista.curso.FrmCurso;
 import vista.alumno.VtnAlumnoCurso;
 import vista.alumno.VtnAlumnoMatricula;
-import vista.alumno.VtnAlumnoRetirados;
 import vista.curso.VtnCurso;
 import vista.alumno.VtnMallaAlumno;
 import vista.docente.FrmDocenteMateria;
@@ -233,6 +232,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgRolesPeriodo().addActionListener(e -> abrirFrmRolesPeriodos());
         vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
+        vtnPrin.getMnIgComprobantePago().addActionListener(e -> abrirFrmComprobantePago());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -619,6 +619,11 @@ public class VtnPrincipalCTR {
             FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(frm, this);
             ctrFrm.iniciar();
         }
+    }
+    
+    public void abrirFrmComprobantePago() {
+        FRMComprobanteCTR ctr = new FRMComprobanteCTR(this);
+        ctr.iniciar();
     }
 
     public void abrirVtnAccesos() {

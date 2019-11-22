@@ -2,8 +2,6 @@ package controlador.pagos;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
-import java.util.function.Consumer;
-import modelo.pagos.ComprobanteBD;
 import modelo.pagos.ComprobanteMD;
 import vista.pagos.VtnComprobantes;
 
