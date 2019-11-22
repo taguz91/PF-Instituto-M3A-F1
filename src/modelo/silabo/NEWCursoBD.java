@@ -138,7 +138,7 @@ public class NEWCursoBD implements ICursoBD {
                 + "    mis_cursos \n"
                 + "WHERE\n"
                 + "    mis_cursos.id_curso NOT IN ( \n"
-                + "        SELECT \n"
+                + "        SELECT DISTINCT \n"
                 + "            \"SeguimientoEvaluacion\".id_curso \n"
                 + "        FROM \n"
                 + "            \"SeguimientoEvaluacion\" \n"
@@ -149,6 +149,78 @@ public class NEWCursoBD implements ICursoBD {
                 + "    )"
                 + "";
         System.out.println(SELECT);
+        List<CursoMD> lista = new ArrayList<>();
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                CursoMD curso = new CursoMD();
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("curso_nombre"));
+                lista.add(curso);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWCursoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
+    }
+
+    public List<CursoMD> getDeReferenciaSeguimientoEval(int idUnidad) {
+
+        String SELECT = ""
+                + "SELECT DISTINCT\n"
+                + "	\"Cursos\".id_curso,\n"
+                + "	\"Cursos\".curso_nombre \n"
+                + "FROM\n"
+                + "	\"SeguimientoEvaluacion\"\n"
+                + "	INNER JOIN \"EvaluacionSilabo\" ON \"EvaluacionSilabo\".id_evaluacion = \"SeguimientoEvaluacion\".id_evaluacion\n"
+                + "	INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"SeguimientoEvaluacion\".id_curso \n"
+                + "WHERE\n"
+                + "	id_unidad = " + idUnidad
+                + "";
+
+        List<CursoMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+
+                CursoMD curso = new CursoMD();
+
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("curso_nombre"));
+                lista.add(curso);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWCursoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
+    }
+
+    public List<CursoMD> getMisCursosBy(String cedulaDocente, int idPeriodo, int idMateria) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"Cursos\".id_curso,\n"
+                + "	\"Cursos\".curso_nombre \n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente \n"
+                + "WHERE\n"
+                + "	\"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "	AND \"Cursos\".id_prd_lectivo = " + idPeriodo + " \n"
+                + "	AND \"Cursos\".id_materia = " + idMateria
+                + "";
         List<CursoMD> lista = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
 

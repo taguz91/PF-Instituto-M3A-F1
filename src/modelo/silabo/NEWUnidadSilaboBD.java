@@ -337,6 +337,13 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             }
 
             try {
+                String titulo = rs.getString("titulo_unidad");
+                unidad.setTituloUnidad(titulo);
+
+            } catch (PSQLException e) {
+            }
+
+            try {
 
                 Integer idSilabo = rs.getInt("id_silabo");
 

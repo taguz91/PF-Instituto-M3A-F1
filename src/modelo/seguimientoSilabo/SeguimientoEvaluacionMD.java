@@ -96,6 +96,18 @@ public class SeguimientoEvaluacionMD {
         return "";
     }
 
+    public static int formatoToInt(String formato) {
+
+        if (formato.equalsIgnoreCase("FISICO")) {
+            return 0;
+        } else if (formato.equalsIgnoreCase("DIGITAL")) {
+            return 1;
+        }
+
+        return 1;
+
+    }
+
     @Override
     public String toString() {
         return "SeguimientoEvaluacionMD{" + "ID=" + ID + ", formato=" + formato + ", observacion=" + observacion + ", fechaEdicion=" + fechaEdicion + ", fechaCreacion=" + fechaCreacion + ", curso=" + curso + ", evaluacion=" + evaluacion + '}';
