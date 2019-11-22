@@ -83,7 +83,7 @@ public class EgresadoBD extends CONBD {
     public List<PeriodoLectivoMD> getPeriodoByIdAlmnCarrera(int idAlmnCarrera) {
         List<PeriodoLectivoMD> pls = new ArrayList<>();
         String sql = "SELECT\n"
-                + "id_prd_lectivo,\n"
+                + "pl.id_prd_lectivo,\n"
                 + "prd_lectivo_nombre\n"
                 + "FROM public.\"PeriodoLectivo\" pl\n"
                 + "JOIN public.\"Matricula\" m ON pl.id_prd_lectivo = m.id_prd_lectivo\n"
@@ -95,7 +95,7 @@ public class EgresadoBD extends CONBD {
                 + "  SELECT id_alumno\n"
                 + "  FROM public.\"AlumnosCarrera\"\n"
                 + "  WHERE id_almn_carrera = ?\n"
-                + ") ORDER BY prd_lectivo_fecha_fin;";
+                + ") ORDER BY prd_lectivo_fecha_fin DESC;";
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ps.setInt(1, idAlmnCarrera);
@@ -221,7 +221,7 @@ public class EgresadoBD extends CONBD {
     }
 
     public List<Egresado> getAllGraduados() {
-        return getForTblEgresados(
+        return getForTblGraduados(
                 CON.getPSPOOL(BASEQUERY_TBLGRADUADOS + ENQUERY_TBLGRADUADOS)
         );
     }

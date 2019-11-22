@@ -53,6 +53,8 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnEgresar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnRetirar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnIngresar" min="-2" max="-2" attributes="0"/>
@@ -75,6 +77,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnIngresar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnRetirar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEgresar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="txtBuscar" alignment="1" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
@@ -174,6 +177,11 @@
     <Component class="javax.swing.JButton" name="btnRetirar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Retirar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnEgresar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Egresar"/>
       </Properties>
     </Component>
   </SubComponents>

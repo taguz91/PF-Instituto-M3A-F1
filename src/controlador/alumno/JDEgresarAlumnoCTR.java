@@ -51,7 +51,7 @@ public class JDEgresarAlumnoCTR extends DCTR {
         cargarCmbPeriodo();
         FRM.getJdcFechaEgreso().setDateFormatString("dd/MM/yyyy");
         FRM.getJdcFechaGraduacion().setDateFormatString("dd/MM/yyyy");
-        FRM.getBtnGuardar().addActionListener(e -> guardar());
+        FRM.getBtnGuardar().addActionListener(ev -> guardar());
         abrirJD(FRM);
     }
 
@@ -83,6 +83,7 @@ public class JDEgresarAlumnoCTR extends DCTR {
 
             if (idGenerado > 0) {
                 JOptionPane.showMessageDialog(FRM, msg);
+                FRM.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(FRM, "No pudimos realizar la accion.");
             }
