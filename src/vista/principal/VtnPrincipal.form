@@ -9,6 +9,11 @@
         <Property name="text" type="java.lang.String" value="jMenuItem1"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem3"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuCrud">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mnTipoNotas">
@@ -32,14 +37,52 @@
                 <Property name="text" type="java.lang.String" value="Docente"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumno">
+            <Menu class="javax.swing.JMenu" name="jMenu4">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_User_20px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Alumno"/>
               </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumno">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_User_20px.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Todos"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtInscripcion">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Inscripci&#xf3;n"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosRetirados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Retirados"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/vista/img/icons8_Report_Card_20px.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Malla alumnos"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosEgresados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Egresados"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosGraduados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Graduados"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtCarrera">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -72,19 +115,6 @@
                 <Property name="text" type="java.lang.String" value="Materia"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtInscripcion">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Resume_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Inscripci&#xf3;n"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtAlumnosRetirados">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Alumnos Retirados"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtMatricula">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -112,14 +142,6 @@
                   <Image iconType="3" name="/vista/img/icons8_Classroom_20px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Lista general alumnos"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnCtMallaAlumno">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8_Report_Card_20px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Malla alumnos"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtDocenteMateria">

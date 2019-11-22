@@ -87,7 +87,65 @@ graduado=?,
 fecha_graduacion=?
  WHERE id_egresado=?;
 
- UPDATE alumno."Egresados" SET 
+ UPDATE alumno."Egresados" SET
  id_prd_lectivo=?,
  fecha_egreso=?
   WHERE id_egresado=?;
+
+-- Alumnos
+
+-- Johnnatan Ribera
+
+-- Egresados
+SELECT
+id_egresado,
+e.id_almn_carrera,
+persona_primer_nombre,
+persona_segundo_nombre,
+persona_primer_apellido,
+persona_segundo_apellido,
+persona_identificacion,
+carrera_codigo,
+prd_lectivo_nombre,
+fecha_egreso,
+graduado
+FROM alumno."Egresados" e
+JOIN public."AlumnosCarrera" ac
+ON e.id_almn_carrera = ac.id_almn_carrera
+JOIN public."Carreras" c
+ON c.id_carrera = ac.id_carrera
+JOIN public."PeriodoLectivo" pl
+ON pl.id_prd_lectivo = e.id_prd_lectivo
+JOIN public."Alumnos" a
+ON ac.id_alumno = a.id_alumno
+JOIN public."Personas" p
+ON p.id_persona = a.id_persona
+WHERE graduado = false
+ORDER BY fecha_egreso DESC;
+
+-- Graduados
+
+SELECT
+id_egresado,
+e.id_almn_carrera,
+persona_primer_nombre,
+persona_segundo_nombre,
+persona_primer_apellido,
+persona_segundo_apellido,
+persona_identificacion,
+carrera_codigo,
+prd_lectivo_nombre,
+fecha_graduacion
+FROM alumno."Egresados" e
+JOIN public."AlumnosCarrera" ac
+ON e.id_almn_carrera = ac.id_almn_carrera
+JOIN public."Carreras" c
+ON c.id_carrera = ac.id_carrera
+JOIN public."PeriodoLectivo" pl
+ON pl.id_prd_lectivo = e.id_prd_lectivo
+JOIN public."Alumnos" a
+ON ac.id_alumno = a.id_alumno
+JOIN public."Personas" p
+ON p.id_persona = a.id_persona
+WHERE graduado = true
+ORDER BY fecha_graduacion DESC;

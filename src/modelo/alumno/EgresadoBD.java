@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.AlumnoMD;
 import utils.CONBD;
 
 /**
@@ -24,6 +26,59 @@ public class EgresadoBD extends CONBD {
         }
         return EBD;
     }
+
+    public static final String BASEQUERY_TBLEGRESADOS = "SELECT\n"
+            + "id_egresado,\n"
+            + "e.id_almn_carrera,\n"
+            + "persona_primer_nombre,\n"
+            + "persona_segundo_nombre,\n"
+            + "persona_primer_apellido,\n"
+            + "persona_segundo_apellido,\n"
+            + "persona_identificacion,\n"
+            + "carrera_codigo,\n"
+            + "prd_lectivo_nombre,\n"
+            + "fecha_egreso,\n"
+            + "graduado\n"
+            + "FROM alumno.\"Egresados\" e\n"
+            + "JOIN public.\"AlumnosCarrera\" ac\n"
+            + "ON e.id_almn_carrera = ac.id_almn_carrera\n"
+            + "JOIN public.\"Carreras\" c\n"
+            + "ON c.id_carrera = ac.id_carrera\n"
+            + "JOIN public.\"PeriodoLectivo\" pl\n"
+            + "ON pl.id_prd_lectivo = e.id_prd_lectivo\n"
+            + "JOIN public.\"Alumnos\" a\n"
+            + "ON ac.id_alumno = a.id_alumno\n"
+            + "JOIN public.\"Personas\" p\n"
+            + "ON p.id_persona = a.id_persona\n"
+            + "WHERE graduado = false ";
+
+    public static final String ENQUERY_TBLEGRESADOS = " ORDER BY fecha_egreso DESC;";
+
+    public static final String BASEQUERY_TBLGRADUADOS = "SELECT\n"
+            + "id_egresado,\n"
+            + "e.id_almn_carrera,\n"
+            + "persona_primer_nombre,\n"
+            + "persona_segundo_nombre,\n"
+            + "persona_primer_apellido,\n"
+            + "persona_segundo_apellido,\n"
+            + "persona_identificacion,\n"
+            + "carrera_codigo,\n"
+            + "prd_lectivo_nombre,\n"
+            + "fecha_graduacion\n"
+            + "FROM alumno.\"Egresados\" e\n"
+            + "JOIN public.\"AlumnosCarrera\" ac\n"
+            + "ON e.id_almn_carrera = ac.id_almn_carrera\n"
+            + "JOIN public.\"Carreras\" c\n"
+            + "ON c.id_carrera = ac.id_carrera\n"
+            + "JOIN public.\"PeriodoLectivo\" pl\n"
+            + "ON pl.id_prd_lectivo = e.id_prd_lectivo\n"
+            + "JOIN public.\"Alumnos\" a\n"
+            + "ON ac.id_alumno = a.id_alumno\n"
+            + "JOIN public.\"Personas\" p\n"
+            + "ON p.id_persona = a.id_persona\n"
+            + "WHERE graduado = true  ";
+
+    public static final String ENQUERY_TBLGRADUADOS = " ORDER BY fecha_graduacion DESC;";
 
     public List<PeriodoLectivoMD> getPeriodoByIdAlmnCarrera(int idAlmnCarrera) {
         List<PeriodoLectivoMD> pls = new ArrayList<>();
@@ -157,6 +212,111 @@ public class EgresadoBD extends CONBD {
             );
         }
         return CON.getIDGenerado(ps);
+    }
+
+    public List<Egresado> getAllEgresados() {
+        return getForTblEgresados(
+                CON.getPSPOOL(BASEQUERY_TBLEGRESADOS + ENQUERY_TBLEGRESADOS)
+        );
+    }
+
+    public List<Egresado> getAllGraduados() {
+        return getForTblEgresados(
+                CON.getPSPOOL(BASEQUERY_TBLGRADUADOS + ENQUERY_TBLGRADUADOS)
+        );
+    }
+
+    private List<Egresado> getForTblEgresados(PreparedStatement ps) {
+        List<Egresado> es = new ArrayList<>();
+        try {
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                Egresado e = new Egresado();
+                e.setFechaEgreso(res.getDate("fecha_egreso").toLocalDate());
+                e.setId(res.getInt("id_egresado"));
+                e.setGraduado(res.getBoolean("graduado"));
+
+                AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                ac.setId(res.getInt("id_almn_carrera"));
+
+                AlumnoMD a = new AlumnoMD();
+                a.setPrimerNombre(res.getString("persona_primer_nombre"));
+                a.setSegundoNombre(res.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(res.getString("persona_primer_apellido"));
+                a.setSegundoApellido(res.getString("persona_segundo_apellido"));
+                a.setIdentificacion(res.getString("persona_identificacion"));
+
+                ac.setAlumno(a);
+
+                CarreraMD c = new CarreraMD();
+                c.setCodigo(res.getString("carrera_codigo"));
+
+                ac.setCarrera(c);
+
+                PeriodoLectivoMD pl = new PeriodoLectivoMD();
+                pl.setNombre(res.getString("prd_lectivo_nombre"));
+
+                e.setAlmnCarrera(ac);
+                e.setPeriodo(pl);
+
+                es.add(e);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al mapear los egresados.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return es;
+    }
+
+    private List<Egresado> getForTblGraduados(PreparedStatement ps) {
+        List<Egresado> es = new ArrayList<>();
+        try {
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                Egresado e = new Egresado();
+                e.setFechaGraduacion(res.getDate("fecha_graduacion").toLocalDate());
+                e.setId(res.getInt("id_egresado"));
+
+                AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                ac.setId(res.getInt("id_almn_carrera"));
+
+                AlumnoMD a = new AlumnoMD();
+                a.setPrimerNombre(res.getString("persona_primer_nombre"));
+                a.setSegundoNombre(res.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(res.getString("persona_primer_apellido"));
+                a.setSegundoApellido(res.getString("persona_segundo_apellido"));
+                a.setIdentificacion(res.getString("persona_identificacion"));
+
+                ac.setAlumno(a);
+
+                CarreraMD c = new CarreraMD();
+                c.setCodigo(res.getString("carrera_codigo"));
+
+                ac.setCarrera(c);
+
+                PeriodoLectivoMD pl = new PeriodoLectivoMD();
+                pl.setNombre(res.getString("prd_lectivo_nombre"));
+
+                e.setAlmnCarrera(ac);
+                e.setPeriodo(pl);
+
+                es.add(e);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al mapear los egresados.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return es;
     }
 
 }
