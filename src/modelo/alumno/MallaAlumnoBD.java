@@ -307,13 +307,21 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumnoParaEstado(int idAlumnoCarrera) {
-        sql = "SELECT id_malla_alumno, ma.id_materia, ma.id_almn_carrera, malla_almn_ciclo, \n"
-                + "malla_almn_num_matricula, \n"
-                + "materia_nombre, malla_almn_estado \n"
-                + "FROM public.\"MallaAlumno\" ma, public.\"AlumnosCarrera\" ac, public.\"Materias\" m\n"
-                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
-                + "m.id_materia = ma.id_materia AND\n"
-                + "ac.id_almn_carrera = " + idAlumnoCarrera + ";";
+        sql = "SELECT "
+                + "id_malla_alumno, "
+                + "ma.id_materia, "
+                + "ma.id_almn_carrera, "
+                + "malla_almn_ciclo, "
+                + "malla_almn_num_matricula, "
+                + "materia_nombre, "
+                + "malla_almn_estado "
+                + "FROM public.\"MallaAlumno\" ma, "
+                + "public.\"AlumnosCarrera\" ac, "
+                + "public.\"Materias\" m "
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera "
+                + "AND m.id_materia = ma.id_materia "
+                + "AND ac.id_almn_carrera = " + idAlumnoCarrera + " "
+                + "ORDER BY malla_almn_ciclo;";
         return consultarMallaParaEstado();
     }
 

@@ -225,6 +225,12 @@ public class EgresadoBD extends CONBD {
                 CON.getPSPOOL(BASEQUERY_TBLGRADUADOS + ENQUERY_TBLGRADUADOS)
         );
     }
+    
+    public boolean eliminar(int idEgresado) {
+        String sql = "DELETE FROM alumno.\"Egresados\" "
+                + "WHERE id_egresado = ?;";
+        return CON.deleteById(sql, idEgresado);
+    }
 
     private List<Egresado> getForTblEgresados(PreparedStatement ps) {
         List<Egresado> es = new ArrayList<>();

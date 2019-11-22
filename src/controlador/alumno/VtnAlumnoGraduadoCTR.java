@@ -11,7 +11,7 @@ import modelo.alumno.Egresado;
  *
  * @author gus
  */
-public class VtnAlumnoGraduadoCTR extends AVtnAlumnoEgresadoCTR {
+public class VtnAlumnoGraduadoCTR extends AVtnAlumnoEgresadoCTR implements IAlumnoEgresadoVTNCTR {
 
     private static final String[] TITULO = {
         "Carrera", "Periodo",
@@ -19,16 +19,21 @@ public class VtnAlumnoGraduadoCTR extends AVtnAlumnoEgresadoCTR {
         "Fecha Graduacion"
     };
 
+    private final JDEgresarAlumnoCTR ECTR;
+
     public VtnAlumnoGraduadoCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
+        this.ECTR = new JDEgresarAlumnoCTR(ctrPrin);
     }
 
     public void iniciar() {
-        iniciarVtn(TITULO);
+        iniciarVtn(TITULO, this);
         cargarDatos();
         iniciarBuscador();
+        iniciarAcciones();
         vtn.setTitle("Alumnos Graduados");
         ctrPrin.agregarVtn(vtn);
+        vtnCargada = true;
     }
 
     private void cargarDatos() {
@@ -61,7 +66,8 @@ public class VtnAlumnoGraduadoCTR extends AVtnAlumnoEgresadoCTR {
         llenarTbl(egresados);
     }
 
-    private void llenarTbl(List<Egresado> egresados) {
+    @Override
+    public void llenarTbl(List<Egresado> egresados) {
         mdTbl.setRowCount(0);
         if (egresados != null) {
             egresados.forEach(r -> {

@@ -106,7 +106,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
             errorNoSeleccionoFila();
         }
     }
-    
+
     private void abrirFrmEgresado() {
         int posFila = vtnAlmCar.getTblAlmnCarrera().getSelectedRow();
         if (posFila >= 0) {

@@ -11,11 +11,11 @@ import modelo.alumno.Egresado;
  *
  * @author gus
  */
-public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
+public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlumnoEgresadoVTNCTR {
 
     private static final String[] TITULO = {
-        "Carrera", "Periodo", 
-        "Cédula", "Alumno", 
+        "Carrera", "Periodo",
+        "Cédula", "Alumno",
         "Fecha egreso", "Graduado"
     };
 
@@ -24,11 +24,13 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
     }
 
     public void iniciar() {
-        iniciarVtn(TITULO);
+        iniciarVtn(TITULO, this);
         cargarDatos();
         iniciarBuscador();
+        iniciarAcciones();
         vtn.setTitle("Alumnos Egresados");
         ctrPrin.agregarVtn(vtn);
+        vtnCargada = true;
     }
 
     private void cargarDatos() {
@@ -61,7 +63,8 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR {
         llenarTbl(egresados);
     }
 
-    private void llenarTbl(List<Egresado> egresados) {
+    @Override
+    public void llenarTbl(List<Egresado> egresados) {
         mdTbl.setRowCount(0);
         if (egresados != null) {
             egresados.forEach(r -> {
