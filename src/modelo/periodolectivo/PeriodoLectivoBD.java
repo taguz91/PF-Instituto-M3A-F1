@@ -594,9 +594,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         try {
             while (rst.next()) {
                 fi = rst.getDate("prd_lectivo_fecha_inicio").toLocalDate();
-                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-                System.out.println(fi);
-                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             }
             return fi;
         } catch (SQLException e) {
@@ -604,17 +601,6 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         } finally {
             pool.close(conn);
         }
-        /*
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    fi = rs.getDate("prd_lectivo_fecha_inicio").toLocalDate();
-                }
-                ps.getConnection().close();
-            } catch (SQLException e) {
-                System.out.println("No pudimos consultar fecha inicio del periodo: " + e.getMessage());
-            }
-        }*/
         return fi;
     }
 

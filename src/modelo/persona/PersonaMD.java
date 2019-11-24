@@ -474,6 +474,13 @@ public class PersonaMD {
         return getPrimerNombre() + " " + getSegundoNombre() + " " + getPrimerApellido() + " " + getSegundoApellido();
     }
 
+    public String getApellidosNombres() {
+        return getPrimerApellido() + " "
+                + getSegundoApellido() + " "
+                + getPrimerNombre() + " "
+                + getSegundoNombre();
+    }
+
     public String getNombreCorto() {
         return getPrimerNombre() + " " + getPrimerApellido();
     }
