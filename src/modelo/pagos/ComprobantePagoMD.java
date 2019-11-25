@@ -13,7 +13,7 @@ import modelo.persona.AlumnoMD;
  */
 public class ComprobantePagoMD {
 
-    private Integer id;
+    private Integer id = 0;
     private PeriodoLectivoMD periodo;
     private AlumnoMD alumno;
     private Image comprobante;

@@ -38,13 +38,25 @@ public class UtilComprobanteBD extends CONBD {
                 + "  SELECT id_almn_carrera\n"
                 + "  FROM public.\"AlumnosCarrera\"\n"
                 + "  WHERE id_alumno = ?\n"
-                + ") AND ( malla_almn_num_matricula > 1\n"
-                + "OR malla_almn_estado = 'R' )\n"
-                + "ORDER BY materia_ciclo;";
+                + ") AND (\n"
+                + "  malla_almn_num_matricula > 1 OR (\n"
+                + "    malla_almn_estado = 'R'\n"
+                + "    AND malla_almn_num_matricula = 1\n"
+                + "  )\n"
+                + ") AND id_malla_alumno NOT IN (\n"
+                + "  SELECT id_malla_alumno\n"
+                + "  FROM pago.\"PagoMateria\"\n"
+                + "  WHERE id_comprobante IN (\n"
+                + "    SELECT id_comprobante\n"
+                + "    FROM pago.\"ComprobantePago\"\n"
+                + "    WHERE id_alumno = ?\n"
+                + "  )\n"
+                + ") ORDER BY materia_ciclo;";
         List<MallaAlumnoMD> ms = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ps.setInt(1, idAlumno);
+            ps.setInt(2, idAlumno);
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 MallaAlumnoMD ma = new MallaAlumnoMD();

@@ -25,6 +25,20 @@ WHERE id_alumno IN (
   persona_primer_apellido ILIKE ?
 ) ORDER BY persona_primer_apellido;
 
+
+-- Consultamos el comprobante por alumno y periodo
+SELECT
+id_comprobante_pago,
+comprobante,
+comprobante_total,
+comprobante_codigo,
+comprobante_fecha_pago,
+comprobante_observaciones
+FROM pago."ComprobantePago"
+WHERE id_prd_lectivo = ?
+AND id_alumno ?;
+
+
 -- Consultamos las materias que tenemos pagos pendientes
 
 SELECT
@@ -40,6 +54,16 @@ WHERE id_almn_carrera IN (
   FROM public."AlumnosCarrera"
   WHERE id_alumno = ?
 ) AND (
-  malla_almn_num_matricula > 1
-  OR malla_almn_estado = 'R' )
-ORDER BY materia_ciclo;
+  malla_almn_num_matricula > 1 OR (
+    malla_almn_estado = 'R'
+    AND malla_almn_num_matricula = 1
+  )
+) AND id_malla_alumno NOT IN (
+  SELECT id_malla_alumno
+  FROM pago."PagoMateria"
+  WHERE id_comprobante IN (
+    SELECT id_comprobante
+    FROM pago."ComprobantePago"
+    WHERE id_alumno = ?
+  )
+) ORDER BY materia_ciclo;

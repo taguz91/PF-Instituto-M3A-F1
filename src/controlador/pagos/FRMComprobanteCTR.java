@@ -18,10 +18,14 @@ import javax.swing.table.DefaultTableModel;
 import modelo.alumno.CMBAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.estilo.TblEstilo;
+import modelo.pagos.ComprobantePagoBD;
+import modelo.pagos.ComprobantePagoMD;
+import modelo.pagos.PagoMateriaMD;
 import modelo.pagos.UtilComprobanteBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.periodolectivo.CMBPeriodoLectivoBD;
 import modelo.persona.AlumnoMD;
+import modelo.validaciones.Validar;
 import vista.pagos.FrmComprobantes;
 
 /**
@@ -31,6 +35,9 @@ import vista.pagos.FrmComprobantes;
 public class FRMComprobanteCTR extends DCTR {
 
     private final FrmComprobantes FRM = new FrmComprobantes();
+    // Para guardar 
+    private ComprobantePagoMD cp;
+    private List<PagoMateriaMD> pms;
     // Lista de objetos  
     private List<PeriodoLectivoMD> pls;
     private List<AlumnoMD> as;
@@ -39,6 +46,7 @@ public class FRMComprobanteCTR extends DCTR {
     private final CMBPeriodoLectivoBD PLBD = CMBPeriodoLectivoBD.single();
     private final CMBAlumnoBD CABD = CMBAlumnoBD.single();
     private final UtilComprobanteBD UCBD = UtilComprobanteBD.single();
+    private final ComprobantePagoBD CPBD = ComprobantePagoBD.single();
     // Modelo de las tablas 
     private DefaultTableModel mdTblAlum, mdTblMate;
     // Para guardar la foto  
@@ -60,6 +68,7 @@ public class FRMComprobanteCTR extends DCTR {
 
     private void iniciarAcciones() {
         FRM.getBtnBuscarImagen().addActionListener(e -> buscarImagen());
+        FRM.getBtnGuardar().addActionListener(e -> guardar());
     }
 
     private void inicarTbls() {
@@ -78,6 +87,7 @@ public class FRMComprobanteCTR extends DCTR {
         pls.forEach(pl -> {
             FRM.getCmbPeriodo().addItem(pl.getNombre());
         });
+        cp = new ComprobantePagoMD();
     }
 
     private void iniciarBuscarAlumno() {
@@ -150,7 +160,8 @@ public class FRMComprobanteCTR extends DCTR {
         FRM.getTblAlumnos().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                cargarMateriasByAlumno();
+                cargarMateriasAlumno();
+                existeComprobantePago();
             }
         });
         FRM.getCmbMaterias().addActionListener(e -> {
@@ -160,7 +171,7 @@ public class FRMComprobanteCTR extends DCTR {
         });
     }
 
-    private void cargarMateriasByAlumno() {
+    private void cargarMateriasAlumno() {
         int posAlmn = FRM.getTblAlumnos().getSelectedRow();
         if (posAlmn >= 0) {
             FRM.getLblAlumno().setText(as.get(posAlmn).getApellidosNombres());
@@ -183,6 +194,26 @@ public class FRMComprobanteCTR extends DCTR {
         }
     }
 
+    private void existeComprobantePago() {
+        int posAlmn = FRM.getTblAlumnos().getSelectedRow();
+        int posPeriodo = FRM.getCmbPeriodo().getSelectedIndex();
+        if (posAlmn >= 0 && posPeriodo > 0) {
+            cp = CPBD.getByAlumnoPeriodo(
+                    as.get(posAlmn).getId_Alumno(),
+                    pls.get(posPeriodo - 1).getID()
+            );
+            if (cp.getComprobante() != null) {
+                Image icono = cp.getComprobante().getScaledInstance(
+                        FRM.getLblImagen().getWidth(),
+                        FRM.getLblImagen().getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                FRM.getLblImagen().setIcon(new ImageIcon(icono));
+                FRM.getLblImagen().updateUI();
+            }
+        }
+    }
+
     private void selectMateria() {
         int posMateria = FRM.getCmbMaterias().getSelectedIndex();
         if (posMateria >= 0 && ms.size() > 0) {
@@ -190,6 +221,30 @@ public class FRMComprobanteCTR extends DCTR {
                     ms.get(posMateria).getMallaNumMatricula() + ""
             );
         }
+    }
+
+    private void guardar() {
+        int posAlmn = FRM.getTblAlumnos().getSelectedRow();
+        int posPeriodo = FRM.getCmbPeriodo().getSelectedIndex();
+        if (posAlmn >= 0 && posPeriodo > 0) {
+            cp.setPeriodo(pls.get(posPeriodo - 1));
+            cp.setAlumno(as.get(posAlmn));
+            
+        } else {
+            JOptionPane.showMessageDialog(
+                    FRM,
+                    "No tenemos datos que guardar, "
+                    + "debe llenar el formulario."
+            );
+        }
+    }
+    
+    private boolean frmValido(){
+        boolean valido = !FRM.getTxtCodigo().getText().equals("");
+        if (!Validar.esNumerosDecimales(FRM.getTxtMontoTotal().getText())) {
+            valido = false;
+        }
+        return valido;
     }
 
 }
