@@ -38,6 +38,21 @@ FROM pago."ComprobantePago"
 WHERE id_prd_lectivo = ?
 AND id_alumno ?;
 
+-- Consultamos los pagos por comprobante
+
+SELECT
+id_pago_materia,
+pm.id_malla_alumno,
+pago_materia,
+pago_numero_matricula,
+materia_nombre
+FROM pago."PagoMateria" pm
+JOIN public."MallaAlumno" ma
+ON ma.id_malla_alumno = pm.id_malla_alumno
+JOIN public."Materias" m
+ON m.id_materia = ma.id_materia
+WHERE id_comprobante = ?;
+
 
 -- Consultamos las materias que tenemos pagos pendientes
 

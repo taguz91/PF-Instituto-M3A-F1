@@ -95,12 +95,10 @@ public class ComprobantePagoBD extends CONBD {
         try {
             ps.setInt(1, cp.getPeriodo().getID());
             ps.setInt(2, cp.getAlumno().getId_Alumno());
-            if (cp.getLongBytes() != 0 && cp.getFile() != null) {
-                ps.setBinaryStream(3, cp.getFile(), cp.getLongBytes());
-            }
+            ps.setBinaryStream(3, cp.getFile(), cp.getLongBytes());
             ps.setDouble(4, cp.getTotal());
             ps.setString(5, cp.getCodigo());
-            ps.setTimestamp(6, Timestamp.valueOf(cp.getFechaPago()));
+            ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(7, cp.getObservaciones());
             ps.setString(8, CONS.USUARIO.getUsername());
         } catch (SQLException e) {
@@ -122,7 +120,7 @@ public class ComprobantePagoBD extends CONBD {
                 + "comprobante_fecha_pago,\n"
                 + "comprobante_observaciones\n"
                 + "FROM pago.\"ComprobantePago\"\n"
-                + "WHERE id_alumno ? \n"
+                + "WHERE id_alumno = ? \n"
                 + "AND id_prd_lectivo = ?;";
         InputStream is;
         ComprobantePagoMD cp = new ComprobantePagoMD();

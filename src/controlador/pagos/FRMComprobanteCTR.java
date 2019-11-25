@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,6 +21,7 @@ import modelo.alumno.MallaAlumnoMD;
 import modelo.estilo.TblEstilo;
 import modelo.pagos.ComprobantePagoBD;
 import modelo.pagos.ComprobantePagoMD;
+import modelo.pagos.PagoMateriaBD;
 import modelo.pagos.PagoMateriaMD;
 import modelo.pagos.UtilComprobanteBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -47,6 +49,7 @@ public class FRMComprobanteCTR extends DCTR {
     private final CMBAlumnoBD CABD = CMBAlumnoBD.single();
     private final UtilComprobanteBD UCBD = UtilComprobanteBD.single();
     private final ComprobantePagoBD CPBD = ComprobantePagoBD.single();
+    private final PagoMateriaBD PMBD = PagoMateriaBD.single();
     // Modelo de las tablas 
     private DefaultTableModel mdTblAlum, mdTblMate;
     // Para guardar la foto  
@@ -69,6 +72,7 @@ public class FRMComprobanteCTR extends DCTR {
     private void iniciarAcciones() {
         FRM.getBtnBuscarImagen().addActionListener(e -> buscarImagen());
         FRM.getBtnGuardar().addActionListener(e -> guardar());
+        FRM.getBtnAdd().addActionListener(e -> agregarMateria());
     }
 
     private void inicarTbls() {
@@ -177,13 +181,7 @@ public class FRMComprobanteCTR extends DCTR {
             FRM.getLblAlumno().setText(as.get(posAlmn).getApellidosNombres());
             cursorCarga(FRM);
             ms = UCBD.getByAlumno(as.get(posAlmn).getId_Alumno());
-            FRM.getCmbMaterias().removeAllItems();
-            ms.forEach(m -> {
-                FRM.getCmbMaterias().addItem(
-                        m.getMateria().getCodigo() + " | "
-                        + m.getMateria().getNombre()
-                );
-            });
+            llenarCmbMateria(ms);
             cursorNormal(FRM);
             selectMateria();
         } else {
@@ -211,6 +209,20 @@ public class FRMComprobanteCTR extends DCTR {
                 FRM.getLblImagen().setIcon(new ImageIcon(icono));
                 FRM.getLblImagen().updateUI();
             }
+            FRM.getTxtCodigo().setText(cp.getCodigo());
+            FRM.getTxtObservaciones().setText(cp.getObservaciones());
+            FRM.getTxtMontoTotal().setText(cp.getTotal() + "");
+            fis = null;
+            lonBytes = 0;
+            // Malla 
+            if (cp.getId() != 0) {
+                pms = PMBD.getByComprobante(cp.getId());
+                llenarTblMateria(pms);
+            } else {
+                pms = null;
+                pms = new ArrayList<>();
+                mdTblMate.setRowCount(0);
+            }
         }
     }
 
@@ -226,10 +238,44 @@ public class FRMComprobanteCTR extends DCTR {
     private void guardar() {
         int posAlmn = FRM.getTblAlumnos().getSelectedRow();
         int posPeriodo = FRM.getCmbPeriodo().getSelectedIndex();
-        if (posAlmn >= 0 && posPeriodo > 0) {
+        if (posAlmn >= 0 && posPeriodo > 0 && frmValido()) {
             cp.setPeriodo(pls.get(posPeriodo - 1));
             cp.setAlumno(as.get(posAlmn));
-            
+            cp.setTotal(
+                    Double.parseDouble(FRM.getTxtMontoTotal().getText())
+            );
+            cp.setObservaciones(
+                    FRM.getTxtObservaciones().getText()
+            );
+            cp.setFile(fis);
+            cp.setLongBytes(lonBytes);
+            cp.setCodigo(
+                    FRM.getTxtCodigo().getText()
+            );
+            cursorCarga(FRM);
+            if (cp.getId() == 0) {
+                int idGenerado = CPBD.guardar(cp);
+                if (idGenerado > 0) {
+                    cp.setId(idGenerado);
+                    guardarPagos();
+                    JOptionPane.showMessageDialog(
+                            FRM,
+                            "Guardamos correctamente el comprobante."
+                    );
+                }
+            } else {
+                if (CPBD.editar(cp) > 0) {
+                    guardarPagos();
+                    JOptionPane.showMessageDialog(
+                            FRM,
+                            "Editamos correctamente el comprobante."
+                    );
+                }
+                if (fis != null && lonBytes != 0) {
+                    CPBD.editarFoto(cp);
+                }
+            }
+            cursorNormal(FRM);
         } else {
             JOptionPane.showMessageDialog(
                     FRM,
@@ -238,13 +284,86 @@ public class FRMComprobanteCTR extends DCTR {
             );
         }
     }
-    
-    private boolean frmValido(){
+
+    private void guardarPagos() {
+        pms.forEach(p -> {
+            if (p.getId() != 0) {
+                PMBD.editar(p);
+            } else {
+                PMBD.guardar(p);
+            }
+        });
+    }
+
+    private boolean frmValido() {
         boolean valido = !FRM.getTxtCodigo().getText().equals("");
         if (!Validar.esNumerosDecimales(FRM.getTxtMontoTotal().getText())) {
+            FRM.getLblEstado().setText("Debe ingresar un monto valido");
             valido = false;
         }
         return valido;
+    }
+
+    private void agregarMateria() {
+        PagoMateriaMD pm = new PagoMateriaMD();
+        int posMateria = FRM.getCmbMaterias().getSelectedIndex();
+        if (posMateria >= 0
+                && !FRM.getCmbMaterias().getSelectedItem().toString().equals("No tiene materias pendientes.")
+                && frmMateriaValida()) {
+
+            pm.setComprobante(cp);
+            pm.setMallaAlumno(ms.get(posMateria));
+            pm.setNumMatricula(
+                    Integer.parseInt(FRM.getTxtNoMatricula().getText())
+            );
+            pm.setPago(
+                    Double.parseDouble(FRM.getTxtMonto().getText())
+            );
+            pms.add(pm);
+            ms.remove(posMateria);
+            FRM.getTxtMonto().setText("");
+            FRM.getTxtNoMatricula().setText("");
+            llenarCmbMateria(ms);
+            llenarTblMateria(pms);
+        } else {
+            JOptionPane.showMessageDialog(
+                    FRM,
+                    "No tenemos todos los datos "
+                    + "necesarios para agregar la materia."
+            );
+        }
+    }
+
+    private boolean frmMateriaValida() {
+        return Validar.esNumeros(FRM.getTxtNoMatricula().getText())
+                && Validar.esNumerosDecimales(FRM.getTxtMonto().getText());
+    }
+
+    private void llenarCmbMateria(List<MallaAlumnoMD> ms) {
+        FRM.getCmbMaterias().removeAllItems();
+        ms.forEach(m -> {
+            FRM.getCmbMaterias().addItem(
+                    m.getMateria().getCodigo() + " | "
+                    + m.getMateria().getNombre()
+            );
+        });
+        // Si no tenemos agregamos que no existen materias
+        if (ms.isEmpty()) {
+            FRM.getCmbMaterias().addItem("No tiene materias pendientes.");
+        }
+    }
+
+    private void llenarTblMateria(List<PagoMateriaMD> pms) {
+        mdTblMate.setRowCount(0);
+        // "Materia", "# Matricula", "Monto"
+        pms.forEach(pm -> {
+            Object[] r = {
+                pm.getMallaAlumno().getMateria().getNombre(),
+                pm.getNumMatricula(),
+                pm.getPago()
+            };
+            mdTblMate.addRow(r);
+        });
     }
 
 }
