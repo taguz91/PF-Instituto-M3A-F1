@@ -27,3 +27,5 @@ ALTER TABLE public."Sialbo" ADD UNIQUE(id_materia, id_prd_lectivo);
 ALTER TABLE public."AlumnoCursoRetirados" ADD UNIQUE(id_almn_curso);
 --SOlo puede tener un tipo de nota en un periodo
 ALTER TABLE public."Notas" ADD UNIQUE(id_almn_curso, id_tipo_nota);
+-- Solo puede existir el mismo codigo en una carrera -- MI-PROTER
+ALTER TABLE public."Materias" ADD UNIQUE(id_carrera, materia_codigo);

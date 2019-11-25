@@ -41,7 +41,7 @@ public class DCTR {
         Cursor c = new Cursor(0);
         jif.setCursor(c);
         ctrPrin.getVtnPrin().setCursor(c);
-        vtnCargada = false;
+        vtnCargada = true;
     }
 
 }

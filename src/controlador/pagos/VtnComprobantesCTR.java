@@ -13,7 +13,6 @@ public class VtnComprobantesCTR extends AbstractVTN<VtnComprobantes, Comprobante
 
     public VtnComprobantesCTR(VtnPrincipalCTR desktop) {
         super(desktop);
-
     }
     /*
     @Override

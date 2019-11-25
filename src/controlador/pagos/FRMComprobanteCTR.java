@@ -153,7 +153,11 @@ public class FRMComprobanteCTR extends DCTR {
                 cargarMateriasByAlumno();
             }
         });
-        FRM.getCmbMaterias().addActionListener(e -> selectMateria());
+        FRM.getCmbMaterias().addActionListener(e -> {
+            if (vtnCargada) {
+                selectMateria();
+            }
+        });
     }
 
     private void cargarMateriasByAlumno() {
@@ -170,6 +174,7 @@ public class FRMComprobanteCTR extends DCTR {
                 );
             });
             cursorNormal(FRM);
+            selectMateria();
         } else {
             JOptionPane.showMessageDialog(
                     null,
@@ -177,14 +182,14 @@ public class FRMComprobanteCTR extends DCTR {
             );
         }
     }
-    
-    private void selectMateria(){
-        int posMateria  = FRM.getCmbMaterias().getSelectedIndex();
+
+    private void selectMateria() {
+        int posMateria = FRM.getCmbMaterias().getSelectedIndex();
         if (posMateria >= 0 && ms.size() > 0) {
-            
+            FRM.getTxtNoMatricula().setText(
+                    ms.get(posMateria).getMallaNumMatricula() + ""
+            );
         }
     }
-    
-    
 
 }
