@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Seguimientos" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5dd01bb-e97c-4bdd-be26-3ba1de9cd7e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCurso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idUnidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idTipoActividad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"public"."SeguimientoEvaluacion"."id",
+	"public"."SeguimientoEvaluacion".id_curso,
+	"public"."SeguimientoEvaluacion".id_evaluacion,
+	"public"."SeguimientoEvaluacion".formato,
+	"public"."SeguimientoEvaluacion".observacion,
+	"public"."SeguimientoEvaluacion".feha_creacion,
+	"public"."SeguimientoEvaluacion".fecha_edicion,
+	"public"."EvaluacionSilabo".indicador,
+	"public"."EvaluacionSilabo".id_tipo_actividad,
+	"public"."EvaluacionSilabo".instrumento,
+	"public"."EvaluacionSilabo".valoracion,
+	"public"."EvaluacionSilabo".fecha_envio,
+	"public"."EvaluacionSilabo".fecha_presentacion 
+FROM
+	"public"."SeguimientoEvaluacion"
+	INNER JOIN "public"."EvaluacionSilabo" ON "public"."SeguimientoEvaluacion".id_evaluacion = "public"."EvaluacionSilabo".id_evaluacion
+	WHERE
+	"EvaluacionSilabo".id_unidad = $P{idUnidad}
+	AND "SeguimientoEvaluacion".id_curso = $P{idCurso}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="id_curso" class="java.lang.Integer"/>
+	<field name="id_evaluacion" class="java.lang.Integer"/>
+	<field name="formato" class="java.lang.Integer"/>
+	<field name="observacion" class="java.lang.String"/>
+	<field name="feha_creacion" class="java.sql.Timestamp"/>
+	<field name="fecha_edicion" class="java.sql.Timestamp"/>
+	<field name="indicador" class="java.lang.String"/>
+	<field name="id_tipo_actividad" class="java.lang.Integer"/>
+	<field name="instrumento" class="java.lang.String"/>
+	<field name="valoracion" class="java.math.BigDecimal"/>
+	<field name="fecha_envio" class="java.sql.Date"/>
+	<field name="fecha_presentacion" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="59" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
