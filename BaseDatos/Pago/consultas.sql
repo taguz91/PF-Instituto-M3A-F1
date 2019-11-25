@@ -29,15 +29,17 @@ WHERE id_alumno IN (
 
 SELECT
 id_malla_alumno,
+malla_almn_num_matricula,
 materia_nombre,
 materia_codigo
-FROM publc."MallaAlumno" ma
+FROM public."MallaAlumno" ma
 JOIN public."Materias" m
 ON ma.id_materia = m.id_materia
-WHERE malla_almn_pago_pendiente = true
-AND id_almn_carrera IN (
+WHERE id_almn_carrera IN (
   SELECT id_almn_carrera
   FROM public."AlumnosCarrera"
   WHERE id_alumno = ?
-) AND malla_almn_pago_pendiente = true  
+) AND (
+  malla_almn_num_matricula > 1
+  OR malla_almn_estado = 'R' )
 ORDER BY materia_ciclo;

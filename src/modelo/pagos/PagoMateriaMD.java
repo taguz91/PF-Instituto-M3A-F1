@@ -6,18 +6,14 @@ import modelo.alumno.MallaAlumnoMD;
  *
  * @author MrRainx
  */
-public class PagoMD {
+public class PagoMateriaMD {
 
     private Integer id;
-    private ComprobanteMD comprobante;
+    private ComprobantePagoMD comprobante;
     private MallaAlumnoMD mallaAlumno;
-    private String observaciones;
     private Double pago;
     private Integer numMatricula;
     private Boolean activo;
-
-    public PagoMD() {
-    }
 
     public Integer getId() {
         return id;
@@ -27,11 +23,11 @@ public class PagoMD {
         this.id = id;
     }
 
-    public ComprobanteMD getComprobante() {
+    public ComprobantePagoMD getComprobante() {
         return comprobante;
     }
 
-    public void setComprobante(ComprobanteMD comprobante) {
+    public void setComprobante(ComprobantePagoMD comprobante) {
         this.comprobante = comprobante;
     }
 
@@ -41,14 +37,6 @@ public class PagoMD {
 
     public void setMallaAlumno(MallaAlumnoMD mallaAlumno) {
         this.mallaAlumno = mallaAlumno;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
     }
 
     public Double getPago() {
