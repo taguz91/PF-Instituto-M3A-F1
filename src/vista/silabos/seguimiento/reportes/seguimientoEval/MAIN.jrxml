@@ -9,11 +9,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\diego\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\seguimiento\\reportes\\seguimientoEval\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="idCurso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	"Cursos".curso_nombre,
-	"SeguimientoEvaluacion".formato,
-	"SeguimientoEvaluacion".observacion,
 	"Materias".materia_nombre,
 	"PeriodoLectivo".prd_lectivo_nombre,
 	"UnidadSilabo".numero_unidad,
@@ -22,19 +22,12 @@ FROM
 	"UnidadSilabo"
 	INNER JOIN "Silabo" ON "UnidadSilabo".id_silabo = "Silabo".id_silabo 
 	AND "UnidadSilabo".id_silabo = "Silabo".id_silabo
-	INNER JOIN "EvaluacionSilabo" ON "EvaluacionSilabo".id_unidad = "UnidadSilabo".id_unidad
-	INNER JOIN "SeguimientoEvaluacion" ON "SeguimientoEvaluacion".id_evaluacion = "EvaluacionSilabo".id_evaluacion
-	INNER JOIN "Cursos" ON "SeguimientoEvaluacion".id_curso = "Cursos".id_curso
 	INNER JOIN "Materias" ON "Silabo".id_materia = "Materias".id_materia 
-	AND "Cursos".id_materia = "Materias".id_materia
 	INNER JOIN "PeriodoLectivo" ON "Silabo".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo 
-	AND "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo 
+
 WHERE
 	"UnidadSilabo".id_unidad = $P!{idUnidadSilabo}]]>
 	</queryString>
-	<field name="curso_nombre" class="java.lang.String"/>
-	<field name="formato" class="java.lang.Integer"/>
-	<field name="observacion" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
 	<field name="numero_unidad" class="java.lang.Integer"/>
@@ -120,7 +113,16 @@ WHERE
 	<detail>
 		<band height="201" splitType="Stretch">
 			<subreport>
-				<reportElement x="396" y="0" width="200" height="100" uuid="3beade48-c980-48ad-9247-3ca5c9f99d56"/>
+				<reportElement x="0" y="0" width="802" height="201" uuid="2d870a9e-885c-4646-81ba-6835b8efbb60"/>
+				<subreportParameter name="idCurso">
+					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidad">
+					<subreportParameterExpression><![CDATA[$P{idUnidadSilabo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idTipoActividad">
+					<subreportParameterExpression><![CDATA[1]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Seguimientos.jasper"]]></subreportExpression>
 			</subreport>
