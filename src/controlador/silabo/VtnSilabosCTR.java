@@ -1,5 +1,6 @@
 package controlador.silabo;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
@@ -252,6 +253,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void btnImprimir(ActionEvent e) {
         new Thread(() -> {
 
+            Effects.setLoadCursor(vista);
+
+            vista.getLblEstado().setVisible(true);
+            vista.getLblEstado().setText("SE ESTA IMPRIMIENTO EL SILABO ESPERE POR FAVOR");
+            vista.getBtnImprimir().setEnabled(false);
             int row = vista.getTbl().getSelectedRow();
 
             if (row == -1) {
@@ -273,7 +279,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 }
 
             }
-
+            System.out.println("------------>" + 1);
+            vista.getBtnImprimir().setEnabled(true);
+            vista.getLblEstado().setText("");
+            Effects.setDefaultCursor(vista);
+            System.out.println("------------>" + 2);
         }).start();
 
     }

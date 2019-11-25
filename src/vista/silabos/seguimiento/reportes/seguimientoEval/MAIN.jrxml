@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f755f3f-d357-44c4-8cd4-577e5588cd7a">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="72"/>
+	<parameter name="idUnidadSilabo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\diego\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\seguimiento\\reportes\\seguimientoEval\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	"Cursos".curso_nombre,
+	"SeguimientoEvaluacion".formato,
+	"SeguimientoEvaluacion".observacion,
+	"Materias".materia_nombre,
+	"PeriodoLectivo".prd_lectivo_nombre,
+	"UnidadSilabo".numero_unidad,
+	"UnidadSilabo".titulo_unidad 
+FROM
+	"UnidadSilabo"
+	INNER JOIN "Silabo" ON "UnidadSilabo".id_silabo = "Silabo".id_silabo 
+	AND "UnidadSilabo".id_silabo = "Silabo".id_silabo
+	INNER JOIN "EvaluacionSilabo" ON "EvaluacionSilabo".id_unidad = "UnidadSilabo".id_unidad
+	INNER JOIN "SeguimientoEvaluacion" ON "SeguimientoEvaluacion".id_evaluacion = "EvaluacionSilabo".id_evaluacion
+	INNER JOIN "Cursos" ON "SeguimientoEvaluacion".id_curso = "Cursos".id_curso
+	INNER JOIN "Materias" ON "Silabo".id_materia = "Materias".id_materia 
+	AND "Cursos".id_materia = "Materias".id_materia
+	INNER JOIN "PeriodoLectivo" ON "Silabo".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo 
+	AND "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo 
+WHERE
+	"UnidadSilabo".id_unidad = $P!{idUnidadSilabo}]]>
+	</queryString>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="formato" class="java.lang.Integer"/>
+	<field name="observacion" class="java.lang.String"/>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="numero_unidad" class="java.lang.Integer"/>
+	<field name="titulo_unidad" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="86" width="334" height="20" uuid="bfb0092c-750b-48bb-a936-4266427709d5"/>
+				<textFieldExpression><![CDATA["PERIODO LECTIVO: "+ $F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="86" width="361" height="20" uuid="6aa30eeb-ca78-4bcf-9284-0307cdc2adb5"/>
+				<textFieldExpression><![CDATA["MATERIA: "+$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="3" width="152" height="20" uuid="11e46bd5-b683-4851-a8d9-26f2bf350364"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UNIDAD "+$F{numero_unidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="39" width="588" height="20" uuid="8071b33d-29d8-43bf-bc2f-d3ac7b2d3c15"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo_unidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="41" width="219" height="20" forecolor="#FFFFFF" backcolor="#115FAC" uuid="56a998b6-c64f-4053-b3b0-818f22748756"/>
+				<box>
+					<pen lineWidth="1.25" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#000000"/>
+					<leftPen lineWidth="1.25" lineColor="#000000"/>
+					<bottomPen lineWidth="1.25" lineColor="#000000"/>
+					<rightPen lineWidth="1.25" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ACTIVIDADES DE APRENDIZAJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="219" y="41" width="100" height="20" forecolor="#FFFFFF" backcolor="#115FAC" uuid="11c2a115-1c84-4e54-adaf-b8263afcb292"/>
+				<box>
+					<pen lineWidth="1.25" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#000000"/>
+					<leftPen lineWidth="1.25" lineColor="#000000"/>
+					<bottomPen lineWidth="1.25" lineColor="#000000"/>
+					<rightPen lineWidth="1.25" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EVALUACÍON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="319" y="41" width="483" height="20" forecolor="#FFFFFF" backcolor="#115FAC" uuid="bf974765-1e52-4c2c-a4ed-f138cc2cafc9"/>
+				<box>
+					<pen lineWidth="1.25" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#000000"/>
+					<leftPen lineWidth="1.25" lineColor="#000000"/>
+					<bottomPen lineWidth="1.25" lineColor="#000000"/>
+					<rightPen lineWidth="1.25" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[TIPO DE EVIDENCIA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="201" splitType="Stretch">
+			<subreport>
+				<reportElement x="396" y="0" width="200" height="100" uuid="3beade48-c980-48ad-9247-3ca5c9f99d56"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Seguimientos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

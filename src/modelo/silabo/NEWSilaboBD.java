@@ -225,7 +225,7 @@ public class NEWSilaboBD implements ISilaboBD {
         String sql = "UPDATE public.\"Silabo\" "
                 + " SET documento_analitico = ? "
                 + " WHERE id_silabo = ?;";
-        guardarPDF(sql, idSilabo, fis, f);
+        //guardarPDF(sql, idSilabo, fis, f);
     }
 
     @Override
@@ -237,7 +237,7 @@ public class NEWSilaboBD implements ISilaboBD {
         String sql = "UPDATE public.\"Silabo\" "
                 + " SET documento_silabo = ? "
                 + " WHERE id_silabo = ?;";
-        guardarPDF(sql, idSilabo, fis, f);
+        //guardarPDF(sql, idSilabo, fis, f);
 
     }
 
@@ -380,7 +380,7 @@ public class NEWSilaboBD implements ISilaboBD {
             OutputStream output = new FileOutputStream(pdf);
             JasperExportManager.exportReportToPdfStream(jasPDF, output);
             FileInputStream fis = new FileInputStream(pdf);
-            guardarPDFSilabo(silabo.getID(), fis, pdf);
+            //guardarPDFSilabo(silabo.getID(), fis, pdf);
         } catch (FileNotFoundException | JRException e) {
             JOptionPane.showMessageDialog(null, "Error guardar PDF: " + e);
         }
