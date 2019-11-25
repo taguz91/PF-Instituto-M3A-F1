@@ -31,6 +31,7 @@ public class DCTR {
     }
     
     protected void cursorCarga(JInternalFrame jif){
+        vtnCargada = false;
         Cursor c = new Cursor(3);
         jif.setCursor(c);
         ctrPrin.getVtnPrin().setCursor(c);
@@ -40,6 +41,7 @@ public class DCTR {
         Cursor c = new Cursor(0);
         jif.setCursor(c);
         ctrPrin.getVtnPrin().setCursor(c);
+        vtnCargada = false;
     }
 
 }

@@ -9,7 +9,7 @@ CREATE TABLE pago."PagoMateria"(
   pago_materia NUMERIC(8, 4) NOT NULL DEFAULT '0.0',
   pago_numero_matricula INT NOT NULL DEFAULT 2,
   pago_materia_activo BOOLEAN NOT NULL DEFAULT 'false',
-  CONSTRAINT pago_materia_pk PRIMARY KEY("id_pago")
+  CONSTRAINT pago_materia_pk PRIMARY KEY("id_pago_materia")
 ) WITH (OIDS = FALSE);
 
 CREATE TABLE pago."ComprobantePago"(
@@ -23,7 +23,7 @@ CREATE TABLE pago."ComprobantePago"(
   comprobante_observaciones TEXT DEFAULT '',
   comprobante_usuario_ingreso character varying(50) NOT NULL DEFAULT 'ADMIN',
   comprobante_activo BOOLEAN NOT NULL DEFAULT 'true',
-  CONSTRAINT comprobante_pk PRIMARY KEY("id_comprobante")
+  CONSTRAINT comprobante_pk PRIMARY KEY("id_comprobante_pago")
 ) WITH (OIDS = FALSE);
 
 

@@ -2,14 +2,14 @@ package controlador.pagos;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
-import modelo.pagos.ComprobanteMD;
+import modelo.pagos.ComprobantePagoMD;
 import vista.pagos.VtnComprobantes;
 
 /**
  *
  * @author MrRainx
  */
-public class VtnComprobantesCTR extends AbstractVTN<VtnComprobantes, ComprobanteMD> {
+public class VtnComprobantesCTR extends AbstractVTN<VtnComprobantes, ComprobantePagoMD> {
 
     public VtnComprobantesCTR(VtnPrincipalCTR desktop) {
         super(desktop);

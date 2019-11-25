@@ -11,24 +11,23 @@ import modelo.persona.AlumnoMD;
  *
  * @author MrRainx
  */
-public class ComprobanteMD {
+public class ComprobantePagoMD {
 
     private Integer id;
     private PeriodoLectivoMD periodo;
     private AlumnoMD alumno;
     private Image comprobante;
-    private FileInputStream file;
-    private int longBytes;
     private Double total;
     private String codigo;
+    private String observaciones;
     private LocalDateTime fechaPago;
     private String usuarioIngreso;
     private Boolean activo;
-
-    private List<PagoMD> pagos;
-
-    public ComprobanteMD() {
-    }
+    // Para subir la foto 
+    private FileInputStream file = null;
+    private int longBytes = 0;
+    // Lista comprobantes 
+    private List<PagoMateriaMD> pagos;
 
     public Integer getId() {
         return id;
@@ -62,22 +61,6 @@ public class ComprobanteMD {
         this.comprobante = comprobante;
     }
 
-    public FileInputStream getFile() {
-        return file;
-    }
-
-    public void setFile(FileInputStream file) {
-        this.file = file;
-    }
-
-    public int getLongBytes() {
-        return longBytes;
-    }
-
-    public void setLongBytes(int longBytes) {
-        this.longBytes = longBytes;
-    }
-
     public Double getTotal() {
         return total;
     }
@@ -92,6 +75,14 @@ public class ComprobanteMD {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public LocalDateTime getFechaPago() {
@@ -118,11 +109,27 @@ public class ComprobanteMD {
         this.activo = activo;
     }
 
-    public List<PagoMD> getPagos() {
+    public FileInputStream getFile() {
+        return file;
+    }
+
+    public void setFile(FileInputStream file) {
+        this.file = file;
+    }
+
+    public int getLongBytes() {
+        return longBytes;
+    }
+
+    public void setLongBytes(int longBytes) {
+        this.longBytes = longBytes;
+    }
+
+    public List<PagoMateriaMD> getPagos() {
         return pagos;
     }
 
-    public void setPagos(List<PagoMD> pagos) {
+    public void setPagos(List<PagoMateriaMD> pagos) {
         this.pagos = pagos;
     }
 
