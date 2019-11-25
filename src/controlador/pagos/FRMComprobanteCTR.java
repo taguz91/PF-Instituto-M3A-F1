@@ -2,9 +2,15 @@ package controlador.pagos;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.CMBAlumnoBD;
@@ -29,6 +35,9 @@ public class FRMComprobanteCTR extends DCTR {
     private final CMBAlumnoBD CABD = CMBAlumnoBD.single();
     // Modelo de las tablas 
     private DefaultTableModel mdTblAlum, mdTblMate;
+    // Para guardar la foto  
+    private FileInputStream fis = null;
+    private int lonBytes = 0;
 
     public FRMComprobanteCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -38,7 +47,12 @@ public class FRMComprobanteCTR extends DCTR {
         iniciarCmbPeriodo();
         inicarTbls();
         iniciarBuscarAlumno();
+        iniciarAcciones();
         ctrPrin.agregarVtn(FRM);
+    }
+
+    private void iniciarAcciones() {
+        FRM.getBtnBuscarImagen().addActionListener(e -> buscarImagen());
     }
 
     private void inicarTbls() {
@@ -92,6 +106,37 @@ public class FRMComprobanteCTR extends DCTR {
                     FRM,
                     "Debe seleccionar un periodo antes de buscar."
             );
+        }
+    }
+
+    // Para buscar el comprobante 
+    private void buscarImagen() {
+        JFileChooser j = new JFileChooser();
+        j.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = j.showOpenDialog(null);
+        if (estado == JFileChooser.APPROVE_OPTION) {
+            FRM.getLblImagen().setIcon(null);
+            try {
+                //Para guardar la foto  
+                fis = new FileInputStream(j.getSelectedFile());
+                lonBytes = (int) j.getSelectedFile().length();
+
+                System.out.println("Longitud de foto buscada " + lonBytes);
+                System.out.println("FIle input stream " + fis);
+
+                Image icono = ImageIO.read(j.getSelectedFile())
+                        .getScaledInstance(
+                                FRM.getLblImagen().getWidth(),
+                                FRM.getLblImagen().getHeight(),
+                                Image.SCALE_SMOOTH
+                        );
+                FRM.getLblImagen().setIcon(new ImageIcon(icono));
+                FRM.getLblImagen().updateUI();
+            } catch (IOException e) {
+                //mensaje humane getMesagge()
+                JOptionPane.showMessageDialog(null, "No se puedo cargar la imagen");
+                System.out.println("Nose puedo cargar la imagen" + e.getMessage());
+            }
         }
     }
 

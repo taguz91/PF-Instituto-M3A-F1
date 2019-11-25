@@ -72,7 +72,33 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "WHERE ma.id_almn_carrera = ac.id_almn_carrera\n"
                 + "AND ac.id_alumno = " + idAlm + " \n"
                 + "AND c.id_carrera = ac.id_carrera\n"
-                + "AND malla_almn_estado <> 'C';";
+                + "AND malla_almn_estado <> 'C' "
+                + "AND malla_almn_estado <> 'X';";
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    carrera = carrera + rs.getString("carrera_nombre") + "\n";
+                }
+            }
+            ps.getConnection().close();
+        } catch (SQLException e) {
+            System.out.println("No pudimos consultar alumnos");
+            System.out.println(e.getMessage());
+
+        }
+        return carrera;
+    }
+
+    public String estaMatriculadoEn(int idAlm, int idCarrera) {
+        String carrera = "";
+        String sql = "SELECT DISTINCT carrera_nombre "
+                + "FROM public.\"AlumnosCarrera\" ac, \n"
+                + "public.\"Carreras\" c\n"
+                + "WHERE c.id_carrera = ac.id_carrera \n"
+                + "AND ac.id_alumno = " + idAlm + " \n"
+                + "AND c.id_carrera = " + idCarrera + ";";
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         try {

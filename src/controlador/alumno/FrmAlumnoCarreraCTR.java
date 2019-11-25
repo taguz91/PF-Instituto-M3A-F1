@@ -119,7 +119,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
             int posAlm = frmAlmCarrera.getTblAlumnos().getSelectedRow();
             int posCar = frmAlmCarrera.getCmbCarreras().getSelectedIndex();
 
-            boolean guardar = !buscarSiEstaMatriculado(posAlm);
+            boolean guardar = !buscarSiEstaMatriculado(posAlm, posAlm);
 
             if (posAlm < 0 || posCar < 1) {
                 guardar = false;
@@ -149,11 +149,17 @@ public class FrmAlumnoCarreraCTR extends DCTR {
         }
     }
 
-    private boolean buscarSiEstaMatriculado(int posAlmn) {
-        carrera = almnCarrera.estaMatriculadoEn(alumnos.get(posAlmn).getId_Alumno());
+    private boolean buscarSiEstaMatriculado(int posAlmn, int posCar) {
+        carrera = almnCarrera.estaMatriculadoEn(
+                alumnos.get(posAlmn).getId_Alumno(),
+                carreras.get(posCar - 1).getId()
+        );
         if (carrera.length() > 1) {
-            JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), alumnos.get(posAlmn).getNombreCompleto() + "\n"
-                    + "Se encuentra matriculado en: \n" + carrera);
+            JOptionPane.showMessageDialog(
+                    ctrPrin.getVtnPrin(),
+                    alumnos.get(posAlmn).getNombreCompleto() + "\n"
+                    + "Se encuentra matriculado en: \n" + carrera
+            );
             return true;
         } else {
             return false;
@@ -165,8 +171,9 @@ public class FrmAlumnoCarreraCTR extends DCTR {
      */
     private void clickAlumno() {
         int posAlmn = frmAlmCarrera.getTblAlumnos().getSelectedRow();
-        if (posAlmn >= 0) {
-            matriculado = buscarSiEstaMatriculado(posAlmn);
+        int posCar = frmAlmCarrera.getCmbCarreras().getSelectedIndex();
+        if (posAlmn >= 0 && posCar > 0) {
+            matriculado = buscarSiEstaMatriculado(posAlmn, posCar);
         }
     }
 
