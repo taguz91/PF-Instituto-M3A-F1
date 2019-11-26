@@ -197,7 +197,9 @@ public class NEWEvaluacionSilaboBD extends CONBD {
                 + "	INNER JOIN \"SeguimientoEvaluacion\" ON \"SeguimientoEvaluacion\".id_evaluacion = \"EvaluacionSilabo\".id_evaluacion \n"
                 + "WHERE\n"
                 + "	\"EvaluacionSilabo\".id_unidad = " + idUnidad + "\n"
-                + "	AND \"SeguimientoEvaluacion\".id_curso = " + idCurso
+                + "	AND \"SeguimientoEvaluacion\".id_curso = " + idCurso + "\n"
+                + "ORDER BY \n"
+                + "     \"SeguimientoEvaluacion\".\"id\""
                 + "";
 
         System.out.println(SELECT);
