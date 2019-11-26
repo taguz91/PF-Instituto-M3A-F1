@@ -16,15 +16,14 @@ p.persona_primer_nombre
 ) as nombreCoordinador ,
 
 CASE WHEN p.persona_identificacion = '0302298138' THEN 
-'COORDINADOR/A ENCARGADA DE LA CARRERA'
+'COORDINADOR/A (E) DE LA CARRERA'
 ELSE 'COORDINADOR/A DE LA CARRERA'
 END AS coordinador_carrera
 
 FROM "Carreras" c , "Docentes" a, "Personas" p 
 WHERE c.id_docente_coordinador = a.id_docente 
 AND a.id_persona = p.id_persona 
-AND C.id_carrera = $P{ID_CARR};
-]]>
+AND C.id_carrera = $P{ID_CARR};]]>
 	</queryString>
 	<field name="nombrecoordinador" class="java.lang.String"/>
 	<field name="coordinador_carrera" class="java.lang.String"/>

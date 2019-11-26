@@ -38,7 +38,8 @@ public class EgresadoBD extends CONBD {
             + "carrera_codigo,\n"
             + "prd_lectivo_nombre,\n"
             + "fecha_egreso,\n"
-            + "graduado\n"
+            + "graduado, "
+            + "trabajo_titulacion \n"
             + "FROM alumno.\"Egresados\" e\n"
             + "JOIN public.\"AlumnosCarrera\" ac\n"
             + "ON e.id_almn_carrera = ac.id_almn_carrera\n"
@@ -124,13 +125,15 @@ public class EgresadoBD extends CONBD {
         String sql = "INSERT INTO alumno.\"Egresados\"(\n"
                 + "id_almn_carrera,\n"
                 + "id_prd_lectivo,\n"
-                + "fecha_egreso)\n"
-                + "VALUES (?, ?, ?);";
+                + "fecha_egreso, "
+                + "trabajo_titulacion)\n"
+                + "VALUES (?, ?, ?, ?);";
         PreparedStatement ps = CON.getPSID(sql);
         try {
             ps.setInt(1, e.getAlmnCarrera().getId());
             ps.setInt(2, e.getPeriodo().getID());
             ps.setDate(3, Date.valueOf(e.getFechaEgreso()));
+            ps.setBoolean(4, e.isTrabajoTitulacion());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -145,14 +148,16 @@ public class EgresadoBD extends CONBD {
         String sql = "UPDATE alumno.\"Egresados\" SET \n"
                 + " id_prd_lectivo=?,\n"
                 + " fecha_egreso=?, "
-                + " graduado=? \n"
+                + " graduado=?,"
+                + " trabajo_titulacion=? \n"
                 + "  WHERE id_egresado=?;";
         PreparedStatement ps = CON.getPSID(sql);
         try {
             ps.setInt(1, e.getPeriodo().getID());
             ps.setDate(2, Date.valueOf(e.getFechaEgreso()));
             ps.setBoolean(3, e.isGraduado());
-            ps.setInt(4, e.getId());
+            ps.setBoolean(4, e.isTrabajoTitulacion());
+            ps.setInt(5, e.getId());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -169,8 +174,9 @@ public class EgresadoBD extends CONBD {
                 + "id_prd_lectivo,\n"
                 + "fecha_egreso,\n"
                 + "graduado,\n"
-                + "fecha_graduacion )\n"
-                + "VALUES (?, ?, ?, ?, ?);";
+                + "fecha_graduacion,"
+                + "trabajo_titulacion )\n"
+                + "VALUES (?, ?, ?, ?, ?, ?);";
         PreparedStatement ps = CON.getPSID(sql);
         try {
             ps.setInt(1, e.getAlmnCarrera().getId());
@@ -178,6 +184,7 @@ public class EgresadoBD extends CONBD {
             ps.setDate(3, Date.valueOf(e.getFechaEgreso()));
             ps.setBoolean(4, e.isGraduado());
             ps.setDate(5, Date.valueOf(e.getFechaGraduacion()));
+            ps.setBoolean(6, e.isTrabajoTitulacion());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -194,7 +201,8 @@ public class EgresadoBD extends CONBD {
                 + "id_prd_lectivo=?,\n"
                 + "fecha_egreso=?,\n"
                 + "graduado=?,\n"
-                + "fecha_graduacion=?\n"
+                + "fecha_graduacion=?, "
+                + "trabajo_titulacion=? \n"
                 + " WHERE id_egresado=?;";
         PreparedStatement ps = CON.getPSID(sql);
         try {
@@ -203,7 +211,8 @@ public class EgresadoBD extends CONBD {
             ps.setDate(3, Date.valueOf(e.getFechaEgreso()));
             ps.setBoolean(4, e.isGraduado());
             ps.setDate(5, Date.valueOf(e.getFechaGraduacion()));
-            ps.setInt(6, e.getId());
+            ps.setBoolean(6, e.isTrabajoTitulacion());
+            ps.setInt(7, e.getId());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -241,6 +250,7 @@ public class EgresadoBD extends CONBD {
                 e.setFechaEgreso(res.getDate("fecha_egreso").toLocalDate());
                 e.setId(res.getInt("id_egresado"));
                 e.setGraduado(res.getBoolean("graduado"));
+                e.setTrabajoTitulacion(res.getBoolean("trabajo_titulacion"));
 
                 AlumnoCarreraMD ac = new AlumnoCarreraMD();
                 ac.setId(res.getInt("id_almn_carrera"));

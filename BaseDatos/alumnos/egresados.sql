@@ -24,3 +24,5 @@ CREATE TABLE alumno."Retirados" (
 
 -- Agregamos a malla dos nuevos estados
 -- Retirados X
+
+ALTER TABLE alumno."Egresados" ADD COLUMN trabajo_titulacion BOOLEAN DEFAULT 'false';

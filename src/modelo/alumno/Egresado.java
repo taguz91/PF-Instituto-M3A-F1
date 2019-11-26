@@ -15,6 +15,7 @@ public class Egresado {
     private LocalDate fechaEgreso;
     private boolean graduado;
     private LocalDate fechaGraduacion;
+    private boolean trabajoTitulacion;
 
     public int getId() {
         return id;
@@ -62,6 +63,14 @@ public class Egresado {
 
     public void setFechaGraduacion(LocalDate fechaGraduacion) {
         this.fechaGraduacion = fechaGraduacion;
+    }
+
+    public boolean isTrabajoTitulacion() {
+        return trabajoTitulacion;
+    }
+
+    public void setTrabajoTitulacion(boolean trabajoTitulacion) {
+        this.trabajoTitulacion = trabajoTitulacion;
     }
 
 }

@@ -28,7 +28,14 @@
 		coor.id_docente = r.id_docente_coordinador 
 	) AS COORDINADOR,
 	( SELECT numero_unidad FROM "UnidadSilabo" WHERE "UnidadSilabo".id_unidad = $P!{id_unidad} ) AS "UNIDAD_SILABO",
-	( SELECT fecha_generacion FROM "PlandeClases" WHERE id_plan_clases =$P!{id_plan_clase} ) AS fecha_generacion 
+	( SELECT fecha_generacion FROM "PlandeClases" WHERE id_plan_clases =$P!{id_plan_clase} ) AS fecha_generacion,
+
+
+CASE WHEN p.persona_identificacion = '0302298138' THEN 
+'COORDINADOR/A (E) DE LA CARRERA'
+ELSE 'COORDINADOR/A DE LA CARRERA'
+END AS coordinador_carrera
+
 FROM
 	"Docentes" d
 	JOIN "Personas" P ON d.id_persona = P.id_persona
@@ -48,6 +55,7 @@ WHERE
 	<field name="coordinador" class="java.lang.String"/>
 	<field name="UNIDAD_SILABO" class="java.lang.Integer"/>
 	<field name="fecha_generacion" class="java.sql.Date"/>
+	<field name="coordinador_carrera" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -429,20 +437,6 @@ WHERE
 				<text><![CDATA[Firma]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="361" y="0" width="194" height="15" uuid="bc78137f-5461-408a-88c5-11abb748c52b"/>
-				<box>
-					<pen lineWidth="0.75"/>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR/A DE LA CARRERA]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="361" y="15" width="50" height="15" uuid="e5e45cc8-45aa-45b9-89b7-0d551d0b42cd"/>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -477,6 +471,20 @@ WHERE
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_generacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="0" width="194" height="15" uuid="64ce3245-17e9-4149-a971-37daf101fb3b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coordinador_carrera}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

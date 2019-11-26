@@ -121,6 +121,7 @@ public class JDEgresarAlumnoCTR extends DCTR {
             egresado.setPeriodo(ps.get(posPeriodo));
             egresado.setFechaEgreso(getFechaJDC(FRM.getJdcFechaEgreso()));
             egresado.setGraduado(FRM.getCbxGraduado().isSelected());
+            egresado.setTrabajoTitulacion(FRM.getCbxTrabajoTitulacion().isSelected());
             egresado.setFechaGraduacion(getFechaJDC(FRM.getJdcFechaGraduacion()));
             int idGenerado;
             String msg;
