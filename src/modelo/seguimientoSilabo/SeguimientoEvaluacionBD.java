@@ -97,25 +97,27 @@ public class SeguimientoEvaluacionBD {
                 + "	\"SeguimientoEvaluacion\".feha_creacion,\n"
                 + "	\"SeguimientoEvaluacion\".fecha_edicion,\n"
                 + "	\"SeguimientoEvaluacion\".id_evaluacion,\n"
+                + "	\"EvaluacionSilabo\".indicador,\n"
                 + "	\"EvaluacionSilabo\".instrumento,\n"
                 + "	\"EvaluacionSilabo\".valoracion,\n"
                 + "	\"Cursos\".id_curso,\n"
                 + "	\"Cursos\".curso_nombre,\n"
                 + "	\"UnidadSilabo\".id_unidad,\n"
                 + "	\"UnidadSilabo\".numero_unidad,\n"
-                + "	\"UnidadSilabo\".titulo_unidad \n"
+                + "	\"UnidadSilabo\".titulo_unidad, \n"
+                + "	\"TipoActividad\".nombre_tipo_actividad,\n"
+                + "	\"TipoActividad\".nombre_subtipo_actividad \n"
                 + "FROM\n"
                 + "	\"SeguimientoEvaluacion\"\n"
                 + "	INNER JOIN \"EvaluacionSilabo\" ON \"SeguimientoEvaluacion\".id_evaluacion = \"EvaluacionSilabo\".id_evaluacion\n"
                 + "	INNER JOIN \"Cursos\" ON \"SeguimientoEvaluacion\".id_curso = \"Cursos\".id_curso\n"
                 + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "	INNER JOIN \"UnidadSilabo\" ON \"EvaluacionSilabo\".id_unidad = \"UnidadSilabo\".id_unidad \n"
+                + "	INNER JOIN \"TipoActividad\" ON \"TipoActividad\".id_tipo_actividad = \"EvaluacionSilabo\".id_tipo_actividad\n"
                 + "WHERE\n"
                 + "	\"Cursos\".id_curso = " + idCurso + "\n"
                 + "     AND \"UnidadSilabo\".id_unidad = " + idUnidad
                 + "";
-
-        System.out.println(SELECT);
 
         List<SeguimientoEvaluacionMD> lista = new ArrayList<>();
 
@@ -142,6 +144,7 @@ public class SeguimientoEvaluacionBD {
 
                 evaluacion.setIdEvaluacion(rs.getInt("id_evaluacion"));
                 evaluacion.setInstrumento(rs.getString("instrumento"));
+                evaluacion.setIndicador(rs.getString("indicador"));
                 evaluacion.setValoracion(rs.getDouble("valoracion"));
                 UnidadSilaboMD unidad = new UnidadSilaboMD();
                 unidad.setIdUnidad(rs.getInt("id_unidad"));
@@ -149,7 +152,10 @@ public class SeguimientoEvaluacionBD {
                 unidad.setTituloUnidad(rs.getString("titulo_unidad"));
 
                 TipoActividadMD tipo = new TipoActividadMD();
+                tipo.setNombreTipoActividad(rs.getString("nombre_tipo_actividad"));
+                tipo.setNombreSubtipoActividad(rs.getString("nombre_subtipo_actividad"));
 
+                evaluacion.setIdTipoActividad(tipo);
                 evaluacion.setIdUnidad(unidad);
 
                 seguimiento.setEvaluacion(evaluacion);

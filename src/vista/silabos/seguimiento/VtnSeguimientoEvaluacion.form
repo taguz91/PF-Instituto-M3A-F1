@@ -42,25 +42,21 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnEditar" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnEliminar" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel3" min="-2" pref="50" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmbUnidad" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cmbCursos" min="-2" pref="100" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jLabel3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cmbUnidad" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cmbCursos" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -78,7 +74,6 @@
                   <Component id="btnImprimir" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="btnAgregar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="btnEditar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -95,7 +90,7 @@
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="359" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="363" max="32767" attributes="0"/>
                   <Component id="jScrollPane2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -223,11 +218,6 @@
     <Component class="javax.swing.JButton" name="btnEditar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnEliminar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbCursos">

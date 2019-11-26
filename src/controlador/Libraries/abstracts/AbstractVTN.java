@@ -25,6 +25,7 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     protected M modelo;
     protected DefaultTableModel tableM;
     protected List<M> lista;
+    protected boolean showTableMessage = true;
 
     protected final UsuarioMD user = CONS.USUARIO;
 
@@ -45,7 +46,9 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     public Integer getSelectedRow() {
         int row = table.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(vista, "DEBE SELECCIONA UN REGISTRO DE LA TABLA PRIMERO", "Aviso", JOptionPane.ERROR_MESSAGE);
+            if (showTableMessage) {
+                JOptionPane.showMessageDialog(vista, "DEBE SELECCIONA UN REGISTRO DE LA TABLA PRIMERO", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }
             return row;
         }
         return row;

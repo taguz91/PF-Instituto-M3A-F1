@@ -5,6 +5,7 @@
  */
 package modelo.seguimientoSilabo;
 
+import controlador.Libraries.Middlewares;
 import java.time.LocalDateTime;
 import modelo.curso.CursoMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
@@ -81,6 +82,25 @@ public class SeguimientoEvaluacionMD {
 
     public EvaluacionSilaboMD getEvaluacion() {
         return evaluacion;
+    }
+
+    public String getTxtAreaDescripcion() {
+        return "        DESCRIPCIÓN     \n"
+                + "-UNIDAD " + evaluacion.getIdUnidad().getNumeroUnidad() + "\n"
+                + "     " + evaluacion.getIdUnidad().getTituloUnidad() + "\n\n"
+                + "CURSO:\n"
+                + "     " + curso.getNombre() + "\n\n"
+                + "EVALUACION:\n"
+                + " -Indicador:\n    " + evaluacion.getIndicador() + "\n"
+                + " -Instrumento:\n    " + evaluacion.getInstrumento() + "\n"
+                + " -Valoracion:\n    " + evaluacion.getValoracion() + "\n\n"
+                + "GESTION ACADEMICA:\n"
+                + " -Formato:\n    " + formatoToString(formato) + "\n"
+                + " -Observaciones:\n    " + observacion + "\n\n"
+                + " -Fecha de Creacion:\n    " + Middlewares.simpleDateFormat(fechaCreacion) + "\n"
+                + " -Ultima Edición:\n    " + Middlewares.simpleDateFormat(fechaEdicion)
+                + ""
+                + "";
     }
 
     public void setEvaluacion(EvaluacionSilaboMD evaluacion) {
