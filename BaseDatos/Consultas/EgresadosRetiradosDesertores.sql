@@ -179,3 +179,53 @@ WHERE m.id_prd_lectivo BETWEEN 20 AND 30
 
 ORDER BY carrera_nombre,
 carrera_codigo
+
+-- Alumnos por carrera
+
+
+
+SELECT
+'' AS "CÓDIGO DEL IST",
+'ISTA' AS "NOMBRE DEL INSTITUTO",
+'AZUAY' AS "PROVINCIA",
+carrera_codigo AS "CÓDIGO DE LA CARRERA",
+carrera_nombre AS "CARRERA",
+carrera_modalidad AS "MODALIDAD DE ESTUDIOS",
+'' AS "TIPO DE IDENTIFICACIÓN",
+consultar_pais(p.id_lugar_natal) AS "NACIONALIDAD",
+p.persona_identificacion AS "NRO. DE IDENTIFICACIÓN",
+p.persona_primer_apellido || ' ' ||
+p.persona_segundo_apellido || ' ' ||
+p.persona_primer_nombre || ' ' ||
+p.persona_segundo_nombre AS "APELLIDOS Y NOMBRES", (
+  SELECT MAX(fecha_asistencia)
+  FROM public."Asistencia"
+  WHERE id_almn_curso = ac.id_almn_curso
+  AND numero_faltas = 0
+) AS "FECHA DE LA ULTIMA ASISTENCIA A CLASES",
+materia_nombre
+
+FROM public."Matricula" m
+JOIN public."Alumnos" a
+ON a.id_alumno = m.id_alumno
+JOIN public."Personas" p
+ON p.id_persona = a.id_persona
+JOIN public."PeriodoLectivo" pl
+ON pl.id_prd_lectivo = m.id_prd_lectivo
+JOIN public."Carreras" c
+ON c.id_carrera = pl.id_carrera
+JOIN public."AlumnoCurso" ac
+ON ac.id_alumno = m.id_alumno
+JOIN public."Cursos" cr
+ON cr.id_curso = ac.id_curso
+JOIN public."Materias" mt
+ON mt.id_materia = cr.id_materia
+WHERE m.id_prd_lectivo BETWEEN 20 AND 30
+AND (
+  almn_curso_asistencia ILIKE '%Desertor%'
+  OR almn_curso_asistencia ILIKE '%Retirado%'
+) AND carrera_codigo = 'TDS'
+
+
+ORDER BY carrera_nombre,
+carrera_codigo;
