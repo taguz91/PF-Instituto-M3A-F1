@@ -5,6 +5,7 @@
  */
 package controlador.silabo.seguimiento;
 
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import modelo.curso.CursoMD;
 import modelo.seguimientoSilabo.SeguimientoEvaluacionBD;
@@ -74,6 +77,8 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
 
             }
         });
+
+        vista.getBtnImprimir().addActionListener(this::btnImprimir);
     }
 
     /*
@@ -182,6 +187,21 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
 
         FrmSeguimientoEvalCTR form = new FrmSeguimientoEvalCTR(desktop, getSilabo(), getUnidad(), getCurso());
         form.Init();
+
+    }
+
+    private void btnImprimir(ActionEvent e) {
+
+        Map params = new HashMap();
+
+        params.put("idCurso", getCurso().getId());
+        params.put("idUnidadSilabo", getUnidad().getIdUnidad());
+
+        Middlewares.generarReporte(
+                getClass().getResource("/vista/silabos/seguimiento/reportes/seguimientoEval/MAIN.jasper"),
+                "Cuadro de Gestion de Actividades",
+                params
+        );
 
     }
 }

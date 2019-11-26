@@ -1,9 +1,7 @@
 package controlador.Libraries;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,62 +32,22 @@ public final class Middlewares {
     /**
      *
      * @param path direccion del reporte
-     * @param QUERY Sentencia SQL con la que se generara el reporte
-     * @param tituloVentana Titulo de la ventana del ReporViewer
+     * @param title Titulo de la ventana del ReporViewer
+     * @param params
      */
-    public static void generarReporteDefault(String path, String QUERY, String tituloVentana) {
+    public static void generarReporte(URL path, String title, Map params) {
         try {
-
-            Map parameter = new HashMap();
-
-            parameter.put("consulta", QUERY);
-
-            JasperReport jasper = (JasperReport) JRLoader.loadObjectFromFile(path);
-
-            conn = pool.getConnection();
-            JasperPrint print = JasperFillManager.fillReport(jasper, parameter, conn);
-
-            JasperViewer view = new JasperViewer(print, false);
-
-            view.setTitle(tituloVentana);
-
-            view.setVisible(true);
-
-        } catch (JRException ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            pool.close(conn);
-        }
-    }
-
-    /**
-     *
-     * @param path direccion del reporte
-     * @param tituloVentana Titulo de la ventana del ReporViewer
-     * @param parametros
-     */
-    static JasperReport prueba;
-
-    public static void generarReporte(URL path, String tituloVentana, Map parametros) {
-        try {
-//            (JasperReport) JRLoader.loadObject();
 
             JasperReport jasper = (JasperReport) JRLoader.loadObject(path);
-
-            System.out.println("PATH ---------->" + path);
             conn = pool.getConnection();
-            JasperPrint print = JasperFillManager.fillReport(jasper, parametros, conn);
+            JasperPrint print = JasperFillManager.fillReport(jasper, params, conn);
 
             JasperViewer view = new JasperViewer(print, false);
 
-            view.setTitle(tituloVentana);
-
+            view.setTitle(title);
             view.setVisible(true);
 
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-            JOptionPane.showMessageDialog(null, "PATH\n" + path);
-            JOptionPane.showMessageDialog(null, "PATH PROYECTO" + getProjectPath());
             System.out.println(ex.getMessage());
         } finally {
             pool.close(conn);
@@ -122,18 +80,5 @@ public final class Middlewares {
     public static BiFunction<JTable, String, Integer> getNombre = (tabla, nombre) -> {
         return tabla.getColumnModel().getColumnIndex(nombre);
     };
-
-    public static boolean isConnected() {
-        try {
-
-            URL ruta = new URL("http://www.google.es");
-            URLConnection rutaC = ruta.openConnection();
-            rutaC.connect();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-
-    }
 
 }

@@ -128,7 +128,7 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="0" y="36" width="69" height="64" uuid="1a7f9a9d-9021-4a3a-a724-bab82b151290"/>
-				<imageExpression><![CDATA["D:\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\img\\logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["vista/notas/reportesPresencial/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

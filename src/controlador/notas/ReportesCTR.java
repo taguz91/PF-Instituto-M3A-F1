@@ -3,7 +3,6 @@ package controlador.notas;
 import controlador.Libraries.Middlewares;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 
 import vista.notas.VtnNotas;
 
@@ -154,8 +153,8 @@ public class ReportesCTR {
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Tabla Final", parametros);
 
     }
-    
-        public void generarReporteInterciclo() {
+
+    public void generarReporteInterciclo() {
         String nombrePeriodo = vista.getCmbPeriodoLectivo().getSelectedItem().toString();
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();

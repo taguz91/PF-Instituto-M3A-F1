@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f755f3f-d357-44c4-8cd4-577e5588cd7a">
-	<property name="ireport.zoom" value="4.177248169415695"/>
-	<property name="ireport.x" value="52"/>
-	<property name="ireport.y" value="106"/>
+	<property name="ireport.zoom" value="28.102436848064674"/>
+	<property name="ireport.x" value="403"/>
+	<property name="ireport.y" value="3216"/>
 	<parameter name="idUnidadSilabo" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\seguimiento\\reportes\\seguimientoEval\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["./vista/silabos/seguimiento/reportes/seguimientoEval/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idCurso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -109,9 +109,9 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="28" splitType="Stretch">
+		<band splitType="Stretch">
 			<subreport>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="28" uuid="ae2649ba-ed1b-4d8d-bba5-045cffea86e9"/>
+				<reportElement x="0" y="0" width="802" height="0" uuid="b9e75393-0d63-4e6e-a9aa-89eeac065bf2"/>
 				<subreportParameter name="idCurso">
 					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -125,9 +125,9 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Seguimientos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="28">
+		<band>
 			<subreport>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="28" uuid="3ccd9a20-96dc-4506-80c8-e4ccb5a24360"/>
+				<reportElement x="0" y="0" width="802" height="0" uuid="90e8c740-7938-4202-bffc-cd568edeabb2"/>
 				<subreportParameter name="idCurso">
 					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -141,9 +141,9 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Seguimientos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="28">
+		<band>
 			<subreport>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="28" uuid="65232c52-ee42-4890-a7dd-7f1dd58fe78e"/>
+				<reportElement x="0" y="0" width="802" height="0" uuid="66843709-8889-47b1-86fd-6b1567d99db3"/>
 				<subreportParameter name="idCurso">
 					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -157,9 +157,9 @@ WHERE
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Seguimientos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="28">
+		<band>
 			<subreport>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="28" uuid="f3fb417b-f857-41e2-8763-149b5ca0a074"/>
+				<reportElement x="0" y="0" width="802" height="0" uuid="ff338c64-142c-46a8-b750-456848b0c1b8"/>
 				<subreportParameter name="idCurso">
 					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
 				</subreportParameter>
