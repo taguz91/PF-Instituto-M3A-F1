@@ -12,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.AvanceSilabo.SeguimientoSilaboMD;
 import modelo.curso.CursoMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.evaluacionSilabo.NEWEvaluacionSilaboBD;
@@ -27,7 +26,7 @@ import vista.silabos.seguimiento.FrmSeguimientoEvaluacion;
  *
  * @author MrRainx
  */
-public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion, SeguimientoSilaboMD> {
+public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion, SeguimientoEvaluacionMD> {
 
     private final SeguimientoEvaluacionBD CONN = SeguimientoEvaluacionBD.sigle();
     private final NEWEvaluacionSilaboBD EVAL_CONN = NEWEvaluacionSilaboBD.single();
@@ -107,12 +106,15 @@ public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion,
      */
     private EvaluacionSilaboMD getEvaluacion() {
 
-        return evaluaciones.get(vista.getCmbEval().getSelectedIndex());
+        return evaluaciones.stream()
+                .filter(item -> item.getSeguimientoEvaluacion().getNombreCmb().equals(vista.getCmbEval().getSelectedItem().toString()))
+                .findFirst()
+                .get();
     }
 
     private void cargarCmbEvaluaciones() {
         this.evaluaciones.stream()
-                .map(c -> c.getInstrumento())
+                .map(c -> c.getSeguimientoEvaluacion().getNombreCmb())
                 .forEach(vista.getCmbEval()::addItem);
     }
 

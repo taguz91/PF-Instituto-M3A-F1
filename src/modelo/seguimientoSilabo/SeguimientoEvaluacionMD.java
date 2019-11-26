@@ -108,6 +108,10 @@ public class SeguimientoEvaluacionMD {
 
     }
 
+    public String getNombreCmb() {
+        return ID + "| " + evaluacion.getInstrumento();
+    }
+
     @Override
     public String toString() {
         return "SeguimientoEvaluacionMD{" + "ID=" + ID + ", formato=" + formato + ", observacion=" + observacion + ", fechaEdicion=" + fechaEdicion + ", fechaCreacion=" + fechaCreacion + ", curso=" + curso + ", evaluacion=" + evaluacion + '}';
