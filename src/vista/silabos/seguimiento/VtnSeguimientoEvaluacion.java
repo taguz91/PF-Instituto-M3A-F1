@@ -39,7 +39,7 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
         Map<String, Color> estados = new HashMap<String, Color>() {
             {
                 put("DIGITAL", new Color(37, 107, 187));
-                put("FISICO", new Color(37, 107, 187));
+                put("FÍSICO", new Color(37, 107, 187));
 
             }
         };
