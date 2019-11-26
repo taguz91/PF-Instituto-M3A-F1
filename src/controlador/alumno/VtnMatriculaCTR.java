@@ -381,6 +381,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculadosPeriodo.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("periodo", periodos.get(posCombo - 1).getID());
+                parametro.put("periodo_titulo", periodos.get(posPrd - 1).getNombre());
                 ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
@@ -468,7 +469,8 @@ public class VtnMatriculaCTR extends DVtnCTR {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repMatriculasPeriodo.jasper"));
             Map parametro = new HashMap();
             parametro.put("periodo", periodos.get(posPrd - 1).getID());
-            System.out.println("Parametros: " + parametro);
+            parametro.put("periodo_titulo", periodos.get(posPrd - 1).getNombre());
+            System.out.println("Parametros: " + parametro.toString());
             ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
