@@ -91,3 +91,16 @@ WHERE id_almn_carrera IN (
   WHERE id_alumno = ?
 ) AND malla_almn_pago_pendiente = true
 ORDER BY materia_ciclo;
+
+-- Consultamos las materias que no cursamos
+SELECT
+id_malla_alumno,
+malla_almn_num_matricula,
+materia_nombre,
+materia_ciclo
+FROM public."MallaAlumno" ma
+JOIN public."Materias" m
+ON ma.id_materia = m.id_materia
+WHERE id_almn_carrera = ?
+AND malla_almn_estado <> 'C'
+ORDER BY materia_ciclo;

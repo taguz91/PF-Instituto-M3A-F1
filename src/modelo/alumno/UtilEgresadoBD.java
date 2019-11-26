@@ -36,10 +36,47 @@ public class UtilEgresadoBD extends CONBD {
                 + "WHERE id_almn_carrera = ? "
                 + "AND malla_almn_pago_pendiente = true\n"
                 + "ORDER BY materia_ciclo;";
-        List<MallaAlumnoMD> mas = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ps.setInt(1, idAlumnoCarrera);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al pasar id alumno carrera a la consulta"
+                    + e.getMessage()
+            );
+        }
+        return getMallaInfo(ps);
+    }
+
+    public List<MallaAlumnoMD> getMateriasNoCursadas(int idAlumnoCarrera) {
+        String sql = "SELECT\n"
+                + "id_malla_alumno,\n"
+                + "malla_almn_num_matricula,\n"
+                + "materia_nombre,\n"
+                + "materia_ciclo\n"
+                + "FROM public.\"MallaAlumno\" ma\n"
+                + "JOIN public.\"Materias\" m\n"
+                + "ON ma.id_materia = m.id_materia\n"
+                + "WHERE id_almn_carrera = ?  \n"
+                + "AND malla_almn_estado <> 'C'\n"
+                + "ORDER BY materia_ciclo;";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, idAlumnoCarrera);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al pasar id alumno carrera a la consulta"
+                    + e.getMessage()
+            );
+        }
+        return getMallaInfo(ps);
+    }
+
+    private List<MallaAlumnoMD> getMallaInfo(PreparedStatement ps) {
+        List<MallaAlumnoMD> mas = new ArrayList<>();
+        try {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 MallaAlumnoMD ma = new MallaAlumnoMD();

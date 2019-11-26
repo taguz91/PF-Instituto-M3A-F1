@@ -51,23 +51,40 @@ public class JDEgresarAlumnoCTR extends DCTR {
         ac.setId(idAlmnCarrera);
         egresado.setAlmnCarrera(ac);
         iniciarVtn();
-        mallaAlumno = UEBD.getMateriasNoPagadas(idAlmnCarrera);
         String msg = "";
-        msg = mallaAlumno.stream().filter((ma) -> (ma.getMallaNumMatricula() > 1))
-                .map((ma) -> "Ciclo: " + ma.getMallaCiclo() + "  "
-                + "# Matricula: " + ma.getMallaNumMatricula() + "  "
-                + "Materia: " + ma.getMateria().getNombre() + " \n")
-                .reduce(msg, String::concat);
+        mallaAlumno = UEBD.getMateriasNoCursadas(idAlmnCarrera);
+        if (mallaAlumno.isEmpty()) {
+            mallaAlumno = UEBD.getMateriasNoPagadas(idAlmnCarrera);
 
-        String matriculasPagar = MTBD.getMatriculasAPagar(idAlmnCarrera);
-        if (matriculasPagar.length() > 0) {
-            msg += "\nMatriculas a pagar: \n" + matriculasPagar;
+            msg = mallaAlumno.stream().map((ma)
+                    -> "Ciclo: " + ma.getMateria().getCiclo() + "  "
+                    + "# Matricula: " + ma.getMallaNumMatricula() + "  "
+                    + "Materia: " + ma.getMateria().getNombre() + " \n")
+                    .reduce(msg, String::concat);
+
+            if (msg.length() > 0) {
+                msg = "Matricula que tiene pendiente su pago:\n" + msg;
+            }
+
+            String matriculasPagar = MTBD.getMatriculasAPagar(idAlmnCarrera);
+            if (matriculasPagar.length() > 0) {
+                msg += "\nMatriculas a pagar: \n" + matriculasPagar;
+            }
+
+        } else {
+            msg = mallaAlumno.stream().map((ma)
+                    -> "Ciclo: " + ma.getMateria().getCiclo() + "  "
+                    + "# Matricula: " + ma.getMallaNumMatricula() + "  "
+                    + "Materia: " + ma.getMateria().getNombre() + " \n")
+                    .reduce(msg, String::concat);
+            msg = "Materias que aun no cursa.\n" + msg;
+            FRM.getBtnGuardar().setEnabled(false);
         }
+
         if (msg.length() > 0) {
             JOptionPane.showMessageDialog(
                     FRM,
-                    "Matriculas que debe cancelar. \n"
-                    + msg
+                    msg
             );
         }
     }
