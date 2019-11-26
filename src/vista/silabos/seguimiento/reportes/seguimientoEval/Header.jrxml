@@ -1,29 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f16fe3c8-92ee-4da5-a683-77d1adca48a0">
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCurso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TITULO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    "Materias".materia_nombre,
+    "PeriodoLectivo".prd_lectivo_nombre,
+    (
+        "Docentes".docente_abreviatura ||' ' ||
+        "Personas".persona_primer_apellido || ' ' ||
+        "Personas".persona_segundo_apellido ||' '||
+        "Personas".persona_primer_nombre || ' ' ||
+        "Personas".persona_segundo_nombre
+    )   AS "PROFESOR",
+    "Cursos".curso_nombre,
+    "Carreras".carrera_nombre
+FROM
+    "Cursos"
+    INNER JOIN "Docentes" ON "Cursos".id_docente = "Docentes".id_docente
+    INNER JOIN "Personas" ON "Docentes".id_persona = "Personas".id_persona
+    INNER JOIN "PeriodoLectivo" ON "Cursos".id_prd_lectivo = "PeriodoLectivo".id_prd_lectivo
+    INNER JOIN "Materias" ON "Cursos".id_materia = "Materias".id_materia
+    INNER JOIN "Carreras" ON "PeriodoLectivo".id_carrera = "Carreras".id_carrera AND "Materias".id_carrera = "Carreras".id_carrera
+WHERE
+    "Cursos".id_curso = $P{idCurso}]]>
+	</queryString>
+	<field name="materia_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="PROFESOR" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="carrera_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="126" splitType="Stretch">
+			<staticText>
+				<reportElement x="454" y="62" width="64" height="20" uuid="d52659f7-837a-4376-80fd-0af9248ecc56"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="518" y="62" width="275" height="20" uuid="1d90030a-2e86-471e-92e0-e198fc7db77a"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="454" y="82" width="64" height="20" uuid="2362ec6f-3a87-44f2-8ba2-42ef693c4479"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Asignatura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="163" y="82" width="278" height="20" uuid="d5881c2d-b9f1-4f31-abee-dd984498e546"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{carrera_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="112" y="62" width="85" height="20" uuid="7c23747c-a14f-4d03-89a3-9e7b19c07839"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Período Lectivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="82" width="51" height="20" uuid="0bda19db-19f7-4a26-9cc3-0ec361e6cd3c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Carrera:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="518" y="82" width="275" height="20" uuid="38be2cdf-4e2c-4be8-8eda-33b1d378d90c"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{materia_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-21" y="0" width="842" height="22" forecolor="#006699" uuid="5f80ea50-c0c0-4485-bccd-778112362f9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="18" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SUPERIOR TECNOLÓGICO DEL AZUAY]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="197" y="62" width="244" height="20" uuid="4db20b30-d407-4761-8949-42d68d6a2632"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="112" y="104" width="33" height="20" uuid="cd9b2cb4-61a0-4041-990e-38e30b2f468a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Ciclo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="104" width="41" height="20" uuid="3a0f526c-6c42-4de4-b9d6-bf43eaa4b062"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="22" width="802" height="40" uuid="71444fca-9524-4b33-a56c-d117906abfb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
 </jasperReport>
