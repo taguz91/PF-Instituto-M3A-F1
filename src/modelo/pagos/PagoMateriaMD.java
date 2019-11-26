@@ -8,7 +8,7 @@ import modelo.alumno.MallaAlumnoMD;
  */
 public class PagoMateriaMD {
 
-    private Integer id;
+    private Integer id = 0;
     private ComprobantePagoMD comprobante;
     private MallaAlumnoMD mallaAlumno;
     private Double pago;
