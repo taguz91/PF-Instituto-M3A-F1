@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -28,6 +29,7 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
     public VtnSeguimientoEvaluacion() {
         initComponents();
         InitDiseño();
+        lblEstado.setVisible(false);
     }
 
     private void InitDiseño() {
@@ -85,6 +87,11 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
         return cmbCursos;
     }
 
+    public JLabel getLblEstado() {
+        return lblEstado;
+    }
+    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,6 +111,7 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -120,11 +128,11 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
 
             },
             new String [] {
-                "ID", "Unidad", "Instrumento", "Tipo Actividad", "Valoracion", "Formato"
+                "ID", "Unidad", "Instrumento", "Tipo Actividad", "Valoración", "Formato"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -140,9 +148,12 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
             tbl.getColumnModel().getColumn(1).setMinWidth(45);
             tbl.getColumnModel().getColumn(1).setPreferredWidth(45);
             tbl.getColumnModel().getColumn(1).setMaxWidth(45);
-            tbl.getColumnModel().getColumn(5).setMinWidth(80);
-            tbl.getColumnModel().getColumn(5).setPreferredWidth(80);
-            tbl.getColumnModel().getColumn(5).setMaxWidth(80);
+            tbl.getColumnModel().getColumn(4).setMinWidth(60);
+            tbl.getColumnModel().getColumn(4).setPreferredWidth(60);
+            tbl.getColumnModel().getColumn(4).setMaxWidth(60);
+            tbl.getColumnModel().getColumn(5).setMinWidth(70);
+            tbl.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tbl.getColumnModel().getColumn(5).setMaxWidth(70);
         }
 
         txtDescripcion.setEditable(false);
@@ -162,6 +173,11 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
         jLabel3.setText("Unidades:");
 
         jLabel4.setText("Cursos:");
+
+        lblEstado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblEstado.setForeground(new java.awt.Color(0, 204, 0));
+        lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEstado.setText("SE ESTA IMPRIMIENDO EL REPORTE ESPERE POR FAVOR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,7 +201,8 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnImprimir)
-                        .addGap(9, 9, 9)))
+                        .addGap(9, 9, 9))
+                    .addComponent(lblEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -222,8 +239,11 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
 
@@ -244,6 +264,7 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblEstado;
     private javax.swing.JTable tbl;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextArea txtDescripcion;

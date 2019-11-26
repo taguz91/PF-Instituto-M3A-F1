@@ -90,14 +90,14 @@ public class SeguimientoEvaluacionMD {
                 + "     " + evaluacion.getIdUnidad().getTituloUnidad() + "\n\n"
                 + "CURSO:\n"
                 + "     " + curso.getNombre() + "\n\n"
-                + "EVALUACION:\n"
+                + "EVALUACIÓN:\n"
                 + " -Indicador:\n    " + evaluacion.getIndicador() + "\n"
                 + " -Instrumento:\n    " + evaluacion.getInstrumento() + "\n"
-                + " -Valoracion:\n    " + evaluacion.getValoracion() + "\n\n"
-                + "GESTION ACADEMICA:\n"
+                + " -Valoración:\n    " + evaluacion.getValoracion() + "\n\n"
+                + "GESTIÓN ACADEMICA:\n"
                 + " -Formato:\n    " + formatoToString(formato) + "\n"
                 + " -Observaciones:\n    " + observacion + "\n\n"
-                + " -Fecha de Creacion:\n    " + Middlewares.simpleDateFormat(fechaCreacion) + "\n"
+                + " -Fecha de Creación:\n    " + Middlewares.simpleDateFormat(fechaCreacion) + "\n"
                 + " -Ultima Edición:\n    " + Middlewares.simpleDateFormat(fechaEdicion)
                 + ""
                 + "";
@@ -109,7 +109,7 @@ public class SeguimientoEvaluacionMD {
 
     public static String formatoToString(Integer formato) {
         if (formato.equals(FISICO)) {
-            return "FISICO";
+            return "FÍSICO";
         } else if (formato.equals(DIGITAL)) {
             return "DIGITAL";
         }
@@ -118,7 +118,7 @@ public class SeguimientoEvaluacionMD {
 
     public static int formatoToInt(String formato) {
 
-        if (formato.equalsIgnoreCase("FISICO")) {
+        if (formato.equalsIgnoreCase("FÍSICO")) {
             return 0;
         } else if (formato.equalsIgnoreCase("DIGITAL")) {
             return 1;
