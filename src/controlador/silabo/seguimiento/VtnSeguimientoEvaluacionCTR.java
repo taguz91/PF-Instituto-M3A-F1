@@ -10,13 +10,12 @@ import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import javax.swing.event.ListSelectionEvent;
 import modelo.curso.CursoMD;
 import modelo.seguimientoSilabo.SeguimientoEvaluacionBD;
 import modelo.seguimientoSilabo.SeguimientoEvaluacionMD;
@@ -69,14 +68,7 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
 
         vista.getBtnEditar().addActionListener(this::btnEditar);
 
-        vista.getTbl().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                System.out.println(getSelectedRow());
-
-            }
-        });
+        vista.getTbl().getSelectionModel().addListSelectionListener(this::tblChangeSelect);
 
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
     }
@@ -96,8 +88,14 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
         }
     }
 
-    private SeguimientoEvaluacionMD getSeguimiento() {
-        return lista.get(getSelectedRow());
+    private SeguimientoEvaluacionMD getSeguimiento() throws ArrayIndexOutOfBoundsException {
+
+        Integer ID = Integer.valueOf(tableM.getValueAt(getSelectedRow(), 0).toString());
+
+        return lista.stream()
+                .filter(item -> item.getID().equals(ID))
+                .findFirst()
+                .get();
     }
 
     private SilaboMD getSilabo() {
@@ -202,6 +200,18 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
                 "Cuadro de Gestion de Actividades",
                 params
         );
+
+    }
+
+    private void tblChangeSelect(ListSelectionEvent e) {
+
+        try {
+            showTableMessage = false;
+            vista.getTxtDescripcion().setText(getSeguimiento().getTxtAreaDescripcion());
+
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            showTableMessage = true;
+        }
 
     }
 }

@@ -3,10 +3,11 @@ package controlador.Libraries;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.Map;
 import java.util.function.BiFunction;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.ConnDBPool;
 import net.sf.jasperreports.engine.JRException;
@@ -80,5 +81,10 @@ public final class Middlewares {
     public static BiFunction<JTable, String, Integer> getNombre = (tabla, nombre) -> {
         return tabla.getColumnModel().getColumnIndex(nombre);
     };
+
+    public static String simpleDateFormat(LocalDateTime date) {
+        return date.getDayOfWeek().getValue() + "-" + date.getMonth().getValue() + "-" + date.getYear();
+
+    }
 
 }
