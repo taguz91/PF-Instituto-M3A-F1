@@ -145,7 +145,7 @@ WHERE id_unidad =$P!{id_unidad}]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ESTRATEGIAS 
 METODOLÓGICAS]]></text>
@@ -160,7 +160,7 @@ METODOLÓGICAS]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONTENIDOS]]></text>
 			</staticText>
@@ -205,7 +205,7 @@ APRENDIZAJE]]></text>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RECURSOS]]></text>
 			</staticText>
