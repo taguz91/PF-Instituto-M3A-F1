@@ -45,7 +45,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="66" splitType="Stretch">
+		<band height="65" splitType="Stretch">
 			<subreport>
 				<reportElement x="-20" y="0" width="843" height="65" uuid="ccd9e52e-b9c5-42d3-abdb-c0a19bc1f082"/>
 				<subreportParameter name="idCurso">
