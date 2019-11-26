@@ -82,7 +82,7 @@ public class FrmSeguimientoEvaluacion extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
 
-        cmbFormato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FISICO", "DIGITAL" }));
+        cmbFormato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FÍSICO", "DIGITAL" }));
 
         jLabel1.setText("Formato:");
 

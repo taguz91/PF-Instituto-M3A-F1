@@ -5,6 +5,7 @@
  */
 package controlador.silabo.seguimiento;
 
+import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
@@ -190,16 +191,25 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
 
     private void btnImprimir(ActionEvent e) {
 
-        Map params = new HashMap();
+        new Thread(() -> {
 
-        params.put("idCurso", getCurso().getId());
-        params.put("idUnidadSilabo", getUnidad().getIdUnidad());
+            Effects.setLoadCursor(vista);
+            vista.getLblEstado().setVisible(true);
 
-        Middlewares.generarReporte(
-                getClass().getResource("/vista/silabos/seguimiento/reportes/seguimientoEval/MAIN.jasper"),
-                "Cuadro de Gestion de Actividades",
-                params
-        );
+            Map params = new HashMap();
+
+            params.put("idCurso", getCurso().getId());
+            params.put("idUnidadSilabo", getUnidad().getIdUnidad());
+
+            Middlewares.generarReporte(
+                    getClass().getResource("/vista/silabos/seguimiento/reportes/seguimientoEval/MAIN.jasper"),
+                    "Cuadro de Gestion de Actividades",
+                    params
+            );
+
+            vista.getLblEstado().setVisible(false);
+            Effects.setDefaultCursor(vista);
+        }).start();
 
     }
 
