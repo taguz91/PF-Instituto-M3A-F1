@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f755f3f-d357-44c4-8cd4-577e5588cd7a">
-	<property name="ireport.zoom" value="1.771561000000008"/>
-	<property name="ireport.x" value="409"/>
-	<property name="ireport.y" value="249"/>
+	<property name="ireport.zoom" value="4.177248169415695"/>
+	<property name="ireport.x" value="52"/>
+	<property name="ireport.y" value="106"/>
 	<parameter name="idUnidadSilabo" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\diego\\Documents\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\seguimiento\\reportes\\seguimientoEval\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["D:\\GitHub\\PF-Instituto-M3A-F1\\src\\vista\\silabos\\seguimiento\\reportes\\seguimientoEval\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="idCurso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -45,9 +45,9 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="106" splitType="Stretch">
+		<band height="66" splitType="Stretch">
 			<subreport>
-				<reportElement x="-20" y="0" width="843" height="106" uuid="ccd9e52e-b9c5-42d3-abdb-c0a19bc1f082"/>
+				<reportElement x="-20" y="0" width="843" height="65" uuid="ccd9e52e-b9c5-42d3-abdb-c0a19bc1f082"/>
 				<subreportParameter name="idCurso">
 					<subreportParameterExpression><![CDATA[$P{idCurso}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -60,7 +60,7 @@ WHERE
 		</band>
 	</title>
 	<pageHeader>
-		<band height="7" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="28" splitType="Stretch">
@@ -90,7 +90,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[EVALUACÍON]]></text>
+				<text><![CDATA[EVALUACIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="407" y="1" width="395" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="bf974765-1e52-4c2c-a4ed-f138cc2cafc9"/>
@@ -181,20 +181,20 @@ WHERE
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="125" splitType="Stretch">
+		<band height="83" splitType="Stretch">
 			<textField>
-				<reportElement x="65" y="105" width="249" height="20" uuid="37eab2c9-d670-49c5-ae68-e5c7c594c681"/>
+				<reportElement x="65" y="63" width="249" height="20" uuid="37eab2c9-d670-49c5-ae68-e5c7c594c681"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{DOCENTE}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="481" y="94" width="249" height="1" uuid="5e7e5952-3411-4775-a0a1-665c972969cf"/>
+				<reportElement x="481" y="52" width="249" height="1" uuid="5e7e5952-3411-4775-a0a1-665c972969cf"/>
 			</line>
 			<line>
-				<reportElement x="65" y="95" width="249" height="1" uuid="2407d8c4-993e-442c-8812-ad2d3bbbc512"/>
+				<reportElement x="65" y="53" width="249" height="1" uuid="2407d8c4-993e-442c-8812-ad2d3bbbc512"/>
 			</line>
 			<staticText>
-				<reportElement x="481" y="105" width="249" height="20" uuid="d8cc24db-e345-4be9-944b-1a9e58043171"/>
+				<reportElement x="481" y="63" width="249" height="20" uuid="d8cc24db-e345-4be9-944b-1a9e58043171"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[REVISADO]]></text>
 			</staticText>
