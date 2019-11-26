@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Seguimientos" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5dd01bb-e97c-4bdd-be26-3ba1de9cd7e2">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000057"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idCurso" class="java.lang.Integer">
@@ -14,61 +14,212 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-	"public"."SeguimientoEvaluacion"."id",
-	"public"."SeguimientoEvaluacion".id_curso,
-	"public"."SeguimientoEvaluacion".id_evaluacion,
-	"public"."SeguimientoEvaluacion".formato,
-	"public"."SeguimientoEvaluacion".observacion,
-	"public"."SeguimientoEvaluacion".feha_creacion,
-	"public"."SeguimientoEvaluacion".fecha_edicion,
-	"public"."EvaluacionSilabo".indicador,
-	"public"."EvaluacionSilabo".id_tipo_actividad,
-	"public"."EvaluacionSilabo".instrumento,
-	"public"."EvaluacionSilabo".valoracion,
-	"public"."EvaluacionSilabo".fecha_envio,
-	"public"."EvaluacionSilabo".fecha_presentacion 
+	"SeguimientoEvaluacion".observacion,
+	"EvaluacionSilabo".id_tipo_actividad,
+	"EvaluacionSilabo".instrumento,
+	"EvaluacionSilabo".valoracion,
+	UPPER("TipoActividad".nombre_tipo_actividad) AS "nombre_tipo_actividad",
+	UPPER("TipoActividad".nombre_subtipo_actividad) AS "nombre_subtipo_actividad" ,
+	"SeguimientoEvaluacion".id_evaluacion,
+	"UnidadSilabo".numero_unidad,
+	"EvaluacionSilabo".indicador,
+	"UnidadSilabo".titulo_unidad,
+	(
+        CASE
+            "SeguimientoEvaluacion".formato
+        WHEN 0 THEN
+            'FÍSICO'
+        WHEN 1 THEN
+            'DIGITAL'
+        END
+    )AS "formato"
 FROM
-	"public"."SeguimientoEvaluacion"
-	INNER JOIN "public"."EvaluacionSilabo" ON "public"."SeguimientoEvaluacion".id_evaluacion = "public"."EvaluacionSilabo".id_evaluacion
-	WHERE
+	"SeguimientoEvaluacion"
+	INNER JOIN "EvaluacionSilabo" ON "SeguimientoEvaluacion".id_evaluacion = "EvaluacionSilabo".id_evaluacion
+	INNER JOIN "TipoActividad" ON "EvaluacionSilabo".id_tipo_actividad = "TipoActividad".id_tipo_actividad
+	INNER JOIN "UnidadSilabo" ON "EvaluacionSilabo".id_unidad = "UnidadSilabo".id_unidad
+WHERE
 	"EvaluacionSilabo".id_unidad = $P{idUnidad}
-	AND "SeguimientoEvaluacion".id_curso = $P{idCurso}]]>
+	AND "SeguimientoEvaluacion".id_curso = $P{idCurso}
+	AND "TipoActividad".id_tipo_actividad = $P{idTipoActividad}]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer"/>
-	<field name="id_curso" class="java.lang.Integer"/>
-	<field name="id_evaluacion" class="java.lang.Integer"/>
-	<field name="formato" class="java.lang.Integer"/>
 	<field name="observacion" class="java.lang.String"/>
-	<field name="feha_creacion" class="java.sql.Timestamp"/>
-	<field name="fecha_edicion" class="java.sql.Timestamp"/>
-	<field name="indicador" class="java.lang.String"/>
 	<field name="id_tipo_actividad" class="java.lang.Integer"/>
 	<field name="instrumento" class="java.lang.String"/>
 	<field name="valoracion" class="java.math.BigDecimal"/>
-	<field name="fecha_envio" class="java.sql.Date"/>
-	<field name="fecha_presentacion" class="java.sql.Date"/>
+	<field name="nombre_tipo_actividad" class="java.lang.String"/>
+	<field name="nombre_subtipo_actividad" class="java.lang.String"/>
+	<field name="id_evaluacion" class="java.lang.Integer"/>
+	<field name="numero_unidad" class="java.lang.Integer"/>
+	<field name="indicador" class="java.lang.String"/>
+	<field name="titulo_unidad" class="java.lang.String"/>
+	<field name="formato" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="59" splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="1" width="235" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="90b803bd-f8c1-47e3-a9f6-2b4eb1467018"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#115FAC"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_subtipo_actividad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="538" y="1" width="264" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="492458c1-1e8c-4d69-9a70-2edf5434c2a7"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#115FAC"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="407" y="1" width="74" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="6c524277-1581-44ba-8ac6-2b35e85e12d1"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#115FAC"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[VALORACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="235" y="1" width="172" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="e10500f6-28b9-497c-a1f5-d0b6ebf7885e"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#115FAC"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[INSTRUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="481" y="1" width="57" height="27" forecolor="#FFFFFF" backcolor="#115FAC" uuid="11031276-f73c-46f0-881a-b635db314d3e"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.25" lineColor="#115FAC"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[FORMATO]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="59" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="235" y="0" width="172" height="59" isPrintWhenDetailOverflows="true" uuid="7c26c09a-ce3d-4b01-a41b-8d4bee8ae554"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{instrumento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="538" y="0" width="264" height="59" uuid="fc669006-0787-4fdd-8ea1-31b531faef2b"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="481" y="0" width="57" height="59" isPrintWhenDetailOverflows="true" uuid="3695d3c8-7d87-480c-b327-093b36ac3f25"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{formato}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="32" height="59" isPrintWhenDetailOverflows="true" uuid="5f5aace2-2953-4a1e-830d-41409c4bec79"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_tipo_actividad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="32" y="0" width="203" height="59" isPrintWhenDetailOverflows="true" uuid="710a731e-d31b-4a3b-84eb-2ce1410b9ba4"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{indicador}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="407" y="0" width="74" height="59" isPrintWhenDetailOverflows="true" uuid="fce72c70-0365-45e9-a87a-3c5777141f37"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{valoracion}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

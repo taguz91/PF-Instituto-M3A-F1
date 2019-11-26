@@ -37,6 +37,12 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="tabPane" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblResultados" min="-2" pref="190" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                      <Component id="lblEstado" min="-2" pref="445" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbl_periodolectivo" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
                           <Component id="lbl_ciclo" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
@@ -76,24 +82,14 @@
                               </Group>
                           </Group>
                       </Group>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="txtBuscar" min="-2" pref="172" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="txtBuscar" alignment="0" min="-2" pref="172" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblResultados" min="-2" pref="190" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
-                      <Component id="lblEstado" min="-2" pref="445" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnImprimir1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -152,14 +148,11 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabPane" pref="396" max="32767" attributes="0"/>
+              <Component id="tabPane" pref="400" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblResultados" min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="lblEstado" min="-2" pref="23" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="btnImprimir1" min="-2" pref="22" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblResultados" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblEstado" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -365,7 +358,7 @@
                     <Column editable="false" title="S.Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Aporte 1" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. Interciclo" type="java.lang.Object"/>
-                    <Column editable="false" title="T. Interciclo" type="java.lang.Object"/>
+                    <Column editable="false" title="Interciclo" type="java.lang.Object"/>
                     <Column editable="true" title="Aporte 2" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. Final" type="java.lang.Object"/>
                     <Column editable="true" title="Ex. Recuperacion" type="java.lang.Object"/>
@@ -408,7 +401,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="55" prefWidth="-1" resizable="true">
+                    <Column maxWidth="55" minWidth="55" prefWidth="55" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -418,27 +411,27 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
+                    <Column maxWidth="55" minWidth="55" prefWidth="55" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="55" minWidth="55" prefWidth="55" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="60" minWidth="60" prefWidth="60" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="100" minWidth="80" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="55" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="100" minWidth="80" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
+                    <Column maxWidth="60" minWidth="60" prefWidth="60" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -448,17 +441,17 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="50" prefWidth="-1" resizable="true">
+                    <Column maxWidth="50" minWidth="50" prefWidth="50" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="60" prefWidth="-1" resizable="true">
+                    <Column maxWidth="60" minWidth="60" prefWidth="60" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="70" prefWidth="-1" resizable="true">
+                    <Column maxWidth="60" minWidth="60" prefWidth="60" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -608,10 +601,5 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnImprimir1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Informacion de los Tipos de Nota"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

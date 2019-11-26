@@ -145,7 +145,6 @@ public class VtnNotas extends AbstracView {
         tblTrad = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDual = new javax.swing.JTable();
-        btnImprimir1 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -215,7 +214,7 @@ public class VtnNotas extends AbstracView {
 
             },
             new String [] {
-                "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "T. Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
+                "No.", "Cedula", "P. Apellido", "S.Apellido", "P.Nombre", "S.Nombre", "Aporte 1", "Ex. Interciclo", "Interciclo", "Aporte 2", "Ex. Final", "Ex. Recuperacion", "Not. Final", "Estado", "Faltas", "% Faltas", "Asistencia"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -240,27 +239,35 @@ public class VtnNotas extends AbstracView {
             tblTrad.getColumnModel().getColumn(4).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(5).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(6).setMinWidth(55);
-            tblTrad.getColumnModel().getColumn(6).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(6).setPreferredWidth(55);
+            tblTrad.getColumnModel().getColumn(6).setMaxWidth(55);
             tblTrad.getColumnModel().getColumn(7).setMinWidth(80);
             tblTrad.getColumnModel().getColumn(7).setMaxWidth(100);
-            tblTrad.getColumnModel().getColumn(8).setMinWidth(80);
-            tblTrad.getColumnModel().getColumn(8).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(8).setMinWidth(55);
+            tblTrad.getColumnModel().getColumn(8).setPreferredWidth(55);
+            tblTrad.getColumnModel().getColumn(8).setMaxWidth(55);
             tblTrad.getColumnModel().getColumn(9).setMinWidth(55);
-            tblTrad.getColumnModel().getColumn(9).setMaxWidth(100);
-            tblTrad.getColumnModel().getColumn(10).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(10).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(9).setPreferredWidth(55);
+            tblTrad.getColumnModel().getColumn(9).setMaxWidth(55);
+            tblTrad.getColumnModel().getColumn(10).setMinWidth(60);
+            tblTrad.getColumnModel().getColumn(10).setPreferredWidth(60);
+            tblTrad.getColumnModel().getColumn(10).setMaxWidth(60);
             tblTrad.getColumnModel().getColumn(11).setMinWidth(80);
             tblTrad.getColumnModel().getColumn(11).setMaxWidth(100);
-            tblTrad.getColumnModel().getColumn(12).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(12).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(12).setMinWidth(60);
+            tblTrad.getColumnModel().getColumn(12).setPreferredWidth(60);
+            tblTrad.getColumnModel().getColumn(12).setMaxWidth(60);
             tblTrad.getColumnModel().getColumn(13).setMinWidth(85);
             tblTrad.getColumnModel().getColumn(13).setMaxWidth(100);
             tblTrad.getColumnModel().getColumn(14).setMinWidth(50);
-            tblTrad.getColumnModel().getColumn(14).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(14).setPreferredWidth(50);
+            tblTrad.getColumnModel().getColumn(14).setMaxWidth(50);
             tblTrad.getColumnModel().getColumn(15).setMinWidth(60);
-            tblTrad.getColumnModel().getColumn(15).setMaxWidth(100);
-            tblTrad.getColumnModel().getColumn(16).setMinWidth(70);
-            tblTrad.getColumnModel().getColumn(16).setMaxWidth(100);
+            tblTrad.getColumnModel().getColumn(15).setPreferredWidth(60);
+            tblTrad.getColumnModel().getColumn(15).setMaxWidth(60);
+            tblTrad.getColumnModel().getColumn(16).setMinWidth(60);
+            tblTrad.getColumnModel().getColumn(16).setPreferredWidth(60);
+            tblTrad.getColumnModel().getColumn(16).setMaxWidth(60);
         }
 
         tabPane.addTab("Carrera Tradicional", tabDuales);
@@ -308,8 +315,6 @@ public class VtnNotas extends AbstracView {
 
         tabPane.addTab("Carreras Duales", jScrollPane1);
 
-        btnImprimir1.setText("Ver Informacion de los Tipos de Nota");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -318,6 +323,11 @@ public class VtnNotas extends AbstracView {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tabPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_periodolectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,20 +358,12 @@ public class VtnNotas extends AbstracView {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnVerNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 3, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(113, 113, 113)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnImprimir1)))
+                                .addGap(52, 52, 52)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -403,13 +405,11 @@ public class VtnNotas extends AbstracView {
                             .addComponent(lblHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnImprimir1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -419,7 +419,6 @@ public class VtnNotas extends AbstracView {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnImprimir;
-    private javax.swing.JButton btnImprimir1;
     private javax.swing.JButton btnVerNotas;
     private javax.swing.JComboBox<String> cmbAsignatura;
     private javax.swing.JComboBox<String> cmbCiclo;

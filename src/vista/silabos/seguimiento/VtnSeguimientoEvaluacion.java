@@ -5,6 +5,10 @@
  */
 package vista.silabos.seguimiento;
 
+import controlador.notas.ux.RowStyle;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -28,20 +32,19 @@ public class VtnSeguimientoEvaluacion extends AbstracView {
 
     private void InitDiseño() {
         tbl.setRowHeight(19);
-        /*
-        RowStyle rowStyle = new RowStyle(13);
+
+        RowStyle rowStyle = new RowStyle(5);
         Map<String, Color> estados = new HashMap<String, Color>() {
             {
-                put("APROBADO", new Color(37, 107, 187));
-                put("REPROBADO", new Color(214, 48, 12));
-                put("RETIRADO", new Color(0, 0, 0));
-                put("", new Color(0, 0, 0));
+                put("DIGITAL", new Color(37, 107, 187));
+                put("FISICO", new Color(37, 107, 187));
+
             }
         };
 
         rowStyle.setEstados(estados);
-        //tbl.setDefaultRenderer(Object.class, rowStyle);
-         */
+        tbl.setDefaultRenderer(Object.class, rowStyle);
+
         centrarCabecera(tbl);
 
     }
