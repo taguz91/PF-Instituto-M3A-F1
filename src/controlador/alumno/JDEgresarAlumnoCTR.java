@@ -5,7 +5,6 @@ import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,6 +14,7 @@ import modelo.alumno.EgresadoBD;
 import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
+import modelo.alumno.UtilEgresadoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.alumno.JDEgresarAlumno;
 
@@ -34,8 +34,9 @@ public class JDEgresarAlumnoCTR extends DCTR {
     private boolean editar = false;
     // Para saber que matriculas nos quedan por pagar antes de ingresarnos como egresados. 
     private final MallaAlumnoBD MABD;
-    private ArrayList<MallaAlumnoMD> mallaAlumno;
+    private List<MallaAlumnoMD> mallaAlumno;
     private final MatriculaBD MTBD;
+    private final UtilEgresadoBD UEBD = UtilEgresadoBD.single();
 
     public JDEgresarAlumnoCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -50,7 +51,7 @@ public class JDEgresarAlumnoCTR extends DCTR {
         ac.setId(idAlmnCarrera);
         egresado.setAlmnCarrera(ac);
         iniciarVtn();
-        mallaAlumno = MABD.buscarMallaAlumnoParaEstado(idAlmnCarrera);
+        mallaAlumno = UEBD.getMateriasNoPagadas(idAlmnCarrera);
         String msg = "";
         msg = mallaAlumno.stream().filter((ma) -> (ma.getMallaNumMatricula() > 1))
                 .map((ma) -> "Ciclo: " + ma.getMallaCiclo() + "  "
