@@ -49,6 +49,8 @@ public class FRMReferenciaSilaboCTR extends DCTR {
     private List<ReferenciaSilaboMD> referenciasSilabo;
     // Para validar si existe o no la estrategia  
     private boolean existeReferencia = false;
+    // Para saber si tenemos  complementaria y linkografia 
+    private boolean tieneComple = false, tieneLinko = false;
     // Modelo de la lista  
     private final DefaultListModel mdlRS = new DefaultListModel();
     // Para las validaciones de las fechas que el change da problemas  
@@ -99,6 +101,7 @@ public class FRMReferenciaSilaboCTR extends DCTR {
                     );
                     linkografia.setIdReferencia(r.getIdReferencia().getIdReferencia());
                     r.setIdReferencia(linkografia);
+                    tieneLinko = true;
                 }
                 if (r.getIdReferencia().getTipoReferencia().equals("Complementaria")) {
                     complementaria.setDescripcionReferencia(
@@ -106,17 +109,26 @@ public class FRMReferenciaSilaboCTR extends DCTR {
                     );
                     complementaria.setIdReferencia(r.getIdReferencia().getIdReferencia());
                     r.setIdReferencia(complementaria);
+                    tieneComple = true;
                 }
                 if (r.getIdReferencia().getTipoReferencia().equals("Base")) {
                     mdlRS.addElement("• " + r.getIdReferencia().getDescripcionReferencia());
                 }
             });
-        } else {
-            ReferenciaSilaboMD rl = new ReferenciaSilaboMD(linkografia, silabo);
-            ReferenciaSilaboMD rc = new ReferenciaSilaboMD(complementaria, silabo);
-            referenciasSilabo.add(rl);
-            referenciasSilabo.add(rc);
         }
+
+        if (!tieneLinko) {
+            ReferenciaSilaboMD rl = new ReferenciaSilaboMD(linkografia, silabo);
+            referenciasSilabo.add(rl);
+            System.out.println("AGregamos linko");
+        }
+        if (!tieneComple) {
+            ReferenciaSilaboMD rc = new ReferenciaSilaboMD(complementaria, silabo);
+            referenciasSilabo.add(rc);
+            System.out.println("Agregamos comple");
+        }
+        // Agregamos complementaria linkografia 
+
         FRM_REF.getTxrLinkografia().setText(
                 linkografia.getDescripcionReferencia()
         );
@@ -354,7 +366,8 @@ public class FRMReferenciaSilaboCTR extends DCTR {
                         .getTipoReferencia().equals("Linkografia")
                         || r.getIdReferencia()
                                 .getTipoReferencia().equals("Complementaria")) {
-                    if (r.getIdReferenciaSilabo() > 0) {
+                    System.out.println("TENEMOS LINK Y COMPLEMENT");
+                    if (r.getIdReferencia().getIdReferencia() > 0) {
                         REBD.editarNoBase(r.getIdReferencia());
                     } else {
                         int idGenerado = REBD.guardarNoBase(r.getIdReferencia());
