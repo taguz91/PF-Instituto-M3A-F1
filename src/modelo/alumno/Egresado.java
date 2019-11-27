@@ -15,7 +15,7 @@ public class Egresado {
     private LocalDate fechaEgreso;
     private boolean graduado;
     private LocalDate fechaGraduacion;
-    private boolean trabajoTitulacion;
+    private boolean trabajoTitulacion = false;
 
     public int getId() {
         return id;
