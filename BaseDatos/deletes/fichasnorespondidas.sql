@@ -65,7 +65,7 @@ WHERE pf.id_persona IN (
   )
 );
 
--- Reporte de las personas que no llenan la ficha --- 
+-- Reporte de las personas que no llenan la ficha ---
 
 SELECT
 persona_identificacion AS "IDENTIFICACIÓN",
@@ -73,6 +73,7 @@ persona_primer_apellido || ' ' ||
 persona_segundo_apellido || ' ' ||
 persona_primer_nombre || ' ' ||
 persona_segundo_nombre AS "ALUMNO",
+persona_correo AS "CORREO",
 prd_lectivo_nombre AS "PERIODO",
 persona_ficha_fecha_ingreso AS "FECHA INGRESO",
 persona_ficha_fecha_modificacion AS "FECHA ULTIMA MODIFICACION"
@@ -95,6 +96,7 @@ persona_primer_apellido || ' ' ||
 persona_segundo_apellido || ' ' ||
 persona_primer_nombre || ' ' ||
 persona_segundo_nombre AS "ALUMNO",
+persona_correo AS "CORREO",
 prd_lectivo_nombre AS "PERIODO",
 NULL AS "FECHA INGRESO",
 NULL AS "FECHA ULTIMA MODIFICACION"
