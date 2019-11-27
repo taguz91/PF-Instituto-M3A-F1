@@ -13,6 +13,8 @@ import modelo.alumno.RetiradoBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
+import utils.CONS;
+import utils.Descarga;
 import vista.alumno.VtnAlumnoRetirados;
 
 /**
@@ -61,6 +63,7 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
         vtn.getTblRetirados().setModel(mdTbl);
         vtn.getBtnEditar().addActionListener(e -> clickEditar());
         vtn.getBtnEliminar().addActionListener(e -> clickEliminar());
+        vtn.getBtnRepRetirados().addActionListener(e -> clickReportePorPeriodo());
         vtn.getCmbCarrera().addActionListener(e -> clickPeriodo());
         vtn.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
@@ -157,6 +160,10 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
                 vtn.getCmbCarrera().addItem(c.getCodigo());
             });
         }
+    }
+
+    private void clickReportePorPeriodo() {
+        
     }
 
 }
