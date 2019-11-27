@@ -98,6 +98,8 @@ public class JDEgresarAlumnoCTR extends DCTR {
                     getDateFromLocalDate(e.getFechaEgreso())
             );
         }
+
+        FRM.getCbxTrabajoTitulacion().setSelected(e.isTrabajoTitulacion());
         if (e.isGraduado() && e.getFechaGraduacion() != null) {
             FRM.getCbxGraduado().setSelected(true);
             FRM.getJdcFechaGraduacion().setDate(

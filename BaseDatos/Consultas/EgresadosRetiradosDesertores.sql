@@ -43,7 +43,8 @@ p.persona_segundo_apellido || ' ' ||
 p.persona_primer_nombre || ' ' ||
 p.persona_segundo_nombre AS "APELLIDOS Y NOMBRES",
 consultar_pais(p.id_lugar_natal) AS "NACIONALIDAD",
-'' AS "TRABAJO DE TITULACIÓN FINALIZADO S/N"
+CASE WHEN trabajo_titulacion THEN 'SI' ELSE 'NO' END
+AS "TRABAJO DE TITULACIÓN FINALIZADO S/N"
 
 FROM alumno."Egresados" e
 JOIN public."AlumnosCarrera" ac
