@@ -176,7 +176,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnReporteTipoMatricula">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tipo Matricula"/>
+            <Property name="text" type="java.lang.String" value="Reportes Excel"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -5,7 +5,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.alumno.Egresado;
+import utils.CONS;
+import utils.Descarga;
 
 /**
  *
@@ -28,9 +31,14 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
         cargarDatos();
         iniciarBuscador();
         iniciarAcciones();
+        iniciarClicks();
         vtn.setTitle("Alumnos Egresados");
         ctrPrin.agregarVtn(vtn);
         vtnCargada = true;
+    }
+
+    private void iniciarClicks() {
+        vtn.getBtnRepPeriodo().addActionListener(e -> clickReportePorPeriodo());
     }
 
     private void cargarDatos() {
@@ -82,6 +90,24 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
                 mdTbl.addRow(valores);
             });
             vtn.getLblResultados().setText(egresados.size() + " Resultados obtenidos.");
+        }
+    }
+
+    private void clickReportePorPeriodo() {
+        int posPeriodo = vtn.getCmbPeriodo().getSelectedIndex();
+        if (posPeriodo > 0) {
+            String url = "alumnos/reporte/egresados/" + periodos.get(posPeriodo - 1).getID();
+            String nombre = vtn.getCmbPeriodo().getSelectedItem()
+                    .toString().replace(" ", "")
+                    .replace("/", "-") + " | Egresados";
+
+            Descarga.excel(
+                    nombre,
+                    url,
+                    "El reporte de egresados no lo pudimos descargar.\n"
+            );
+        } else {
+            JOptionPane.showMessageDialog(vtn, "No selecciono un periodo lectivo para el reporte.");
         }
     }
 

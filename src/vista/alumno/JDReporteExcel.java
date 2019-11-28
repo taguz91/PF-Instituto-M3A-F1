@@ -7,7 +7,7 @@ import javax.swing.JTable;
  *
  * @author gus
  */
-public class JDReporteTipoMatricula extends javax.swing.JDialog {
+public class JDReporteExcel extends javax.swing.JDialog {
 
     /**
      * Creates new form JDReporteTipoMatricula
@@ -15,7 +15,7 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public JDReporteTipoMatricula(java.awt.Frame parent, boolean modal) {
+    public JDReporteExcel(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -26,6 +26,10 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
 
     public JTable getTblPeriodos() {
         return tblPeriodos;
+    }
+
+    public JButton getBtnEgresados() {
+        return btnEgresados;
     }
 
     /**
@@ -42,6 +46,7 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
         btnReporte = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeriodos = new javax.swing.JTable();
+        btnEgresados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,7 +56,7 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Seleccione los periodos para sacar el reporte de los alumnos");
 
-        btnReporte.setText("Reporte en Excel");
+        btnReporte.setText("Tipo Matricula");
 
         tblPeriodos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,6 +71,8 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblPeriodos);
 
+        btnEgresados.setText("Egresados");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,6 +84,8 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnReporte)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEgresados)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -91,7 +100,9 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReporte)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReporte)
+                    .addComponent(btnEgresados))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addContainerGap())
@@ -101,6 +112,7 @@ public class JDReporteTipoMatricula extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEgresados;
     private javax.swing.JButton btnReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

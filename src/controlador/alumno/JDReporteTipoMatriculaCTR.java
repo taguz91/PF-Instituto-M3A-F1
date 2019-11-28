@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import utils.Descarga;
-import vista.alumno.JDReporteTipoMatricula;
+import vista.alumno.JDReporteExcel;
 
 /**
  *
@@ -22,7 +22,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
     private final DefaultTableModel mdTbl = TblEstilo
             .modelTblSinEditar(new String[]{"Periodo"});
     // Ventana  
-    private final JDReporteTipoMatricula vtn;
+    private final JDReporteExcel vtn;
     // Opciones del combo de tipo matricula
     private final String[] TIPO_MATRICULAS = {
         "Seleccione",
@@ -37,12 +37,13 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
     ) {
         super(ctrPrin);
         this.periodos = periodos;
-        this.vtn = new JDReporteTipoMatricula(ctrPrin.getVtnPrin(), false);
+        this.vtn = new JDReporteExcel(ctrPrin.getVtnPrin(), false);
     }
 
     public void iniciar() {
         iniciarTbl();
         vtn.getBtnReporte().addActionListener(e -> seleccioneTipoMatricula());
+        vtn.getBtnEgresados().addActionListener(e -> clickReporteEgresados());
         vtn.setLocationRelativeTo(ctrPrin.getVtnPrin());
         vtn.setVisible(true);
         ctrPrin.eventoJDCerrar(vtn);
@@ -90,7 +91,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         String JSON = "{\"ids_periodos\":" + ids
                 + ", \"tipo_matricula\": "
                 + "\"" + tipo + "\"}";
-        System.out.println("JSON: " + JSON);
+
         if (tipo.length() == 0) {
             tipo = "TODOS";
         }
@@ -104,6 +105,32 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 "Error al descargar el reporte "
                 + "por tipo de matricula, vuelva a "
                 + "intentarlo mas tarde."
+        );
+    }
+
+    private void clickReporteEgresados() {
+        int[] ss = vtn.getTblPeriodos().getSelectedRows();
+        String ids = "[";
+        for (int s : ss) {
+            ids += periodos.get(s).getID() + ",";
+        }
+        ids = ids.substring(0, ids.length() - 1);
+        ids += "]";
+
+        String JSON = "{\"idsPeriodos\":" + ids
+                + ", \"tipoReporte\": "
+                + "\"EGRESADOS\"}";
+
+        String url = "alumnos/reporte/egresados/";
+        String nombre = "Egresados" + LocalDate.now().toString()
+                .replace(":", "|")
+                .replace(".", "");
+
+        Descarga.excelWithPost(
+                nombre,
+                url,
+                JSON,
+                "El reporte de egresados no lo pudimos descargar.\n"
         );
     }
 
