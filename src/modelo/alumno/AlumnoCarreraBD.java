@@ -31,7 +31,8 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             + "persona_primer_apellido, "
             + "persona_segundo_apellido, "
             + "persona_identificacion, "
-            + "carrera_codigo "
+            + "carrera_codigo, "
+            + "p.id_persona  "
             + "FROM public.\"AlumnosCarrera\" ac, "
             + "public.\"Alumnos\" a, "
             + "public.\"Personas\" p, "
@@ -39,7 +40,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             + "WHERE  a.id_alumno = ac.id_alumno AND "
             + "p.id_persona = a.id_persona AND "
             + "c.id_carrera = ac.id_carrera AND "
-            + "carrera_activo = true ";
+            + "carrera_activo = true  ";
 
     private static final String ENQUERY_ALMNCARRERA = " AND id_almn_carrera NOT IN ("
             + " SELECT id_almn_carrera FROM alumno.\"Retirados\" "
@@ -144,7 +145,7 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
     }
 
     public ArrayList<AlumnoCarreraMD> buscar(String aguja) {
-        String sql = BASEQUERY_ALMNCARRERA + "AND almn_carrera_activo = true  "
+        String sql = BASEQUERY_ALMNCARRERA + " AND almn_carrera_activo = true  "
                 + "AND ( "
                 + "	carrera_codigo ILIKE '%" + aguja + "%' OR \n"
                 + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"

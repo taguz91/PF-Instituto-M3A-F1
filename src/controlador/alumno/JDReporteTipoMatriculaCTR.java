@@ -121,7 +121,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 + ", \"tipoReporte\": "
                 + "\"EGRESADOS\"}";
 
-        String url = "alumnos/reporte/egresados/";
+        String url = "alumnos/reporte/estados/finales";
         String nombre = "Egresados" + LocalDate.now().toString()
                 .replace(":", "|")
                 .replace(".", "");
