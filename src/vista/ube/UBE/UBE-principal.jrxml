@@ -33,6 +33,15 @@ ORDER BY id_prd_lectivo ;]]>
 	<field name="Hombres" class="java.lang.Long"/>
 	<field name="Mujeres" class="java.lang.Long"/>
 	<field name="Total Matriculados" class="java.lang.Long"/>
+	<variable name="Total Matriculados_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total Matriculados}]]></variableExpression>
+	</variable>
+	<variable name="Mujeres_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{Mujeres}]]></variableExpression>
+	</variable>
+	<variable name="Hombres_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{Hombres}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -177,4 +186,55 @@ ORDER BY id_prd_lectivo ;]]>
 			</textField>
 		</band>
 	</detail>
+	<summary>
+		<band height="20">
+			<textField>
+				<reportElement x="475" y="0" width="80" height="20" uuid="a116ecea-6bce-466b-b4a4-8649d8e74ce0"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Total Matriculados_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="235" y="0" width="80" height="20" forecolor="#006699" uuid="69923d71-f3b0-4e35-bdc3-2dd89643b314"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="395" y="0" width="80" height="20" uuid="5b636411-0c90-44b4-a313-d5e0e8ce4c46"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Mujeres_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="80" height="20" uuid="03cba291-3694-405b-a0cf-725510e79c2b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Hombres_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>
