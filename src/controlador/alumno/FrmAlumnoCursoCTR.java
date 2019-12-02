@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
+import modelo.alumno.UtilEgresadoBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.SesionClaseBD;
@@ -99,6 +101,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
     //Para guardar la carrera en la que se esta trabajando 
     private CarreraMD carrera;
     private final CarreraBD car;
+    // Listado de las 
+    private List<MallaAlumnoMD> mallaAlmnNoPagadas;
+    private final UtilEgresadoBD UEBD = UtilEgresadoBD.single();
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -494,8 +499,35 @@ public class FrmAlumnoCursoCTR extends DCTR {
             //Buscamos la malla completa
             mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAl).getId());
             //Vemos si el alumno esta matriculado en una materia
-            //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAl).getId(), "M");
             mallaMatriculadas = filtrarMalla(mallaCompleta, "M");
+            // Consultamos las materias que tiene pendiente un pago  
+            String msg = "";
+            mallaAlmnNoPagadas = UEBD.getMateriasNoPagadas(
+                    alumnosCarrera.get(posAl).getId()
+            );
+            msg = mallaAlmnNoPagadas.stream().map((ma)
+                    -> "Ciclo: " + ma.getMateria().getCiclo() + "  "
+                    + "# Matricula: " + ma.getMallaNumMatricula() + "  "
+                    + "Materia: " + ma.getMateria().getNombre() + " \n")
+                    .reduce(msg, String::concat);
+
+            if (msg.length() > 0) {
+                msg = "Matricula que tiene pendiente su pago:\n" + msg;
+            }
+
+            String matriculasPagar = matri.getMatriculasAPagar(alumnosCarrera.get(posAl).getId());
+            if (matriculasPagar.length() > 0) {
+                msg += "\nMatriculas a pagar: \n" + matriculasPagar;
+            }
+
+            // Aqui validamos si tiene pagos pendientes no le dejamos matricular 
+            if (msg.length() > 0) {
+                JOptionPane.showMessageDialog(
+                        frmAlmCurso,
+                        msg
+                );
+            }
+
             if (!mallaMatriculadas.isEmpty()) {
                 //Borramos los cursos que posiblemente carguemos antes
                 frmAlmCurso.getCmbCurso().removeAllItems();
