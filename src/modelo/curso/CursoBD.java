@@ -425,23 +425,76 @@ public class CursoBD extends CursoMD {
     }
 
     /**
-     * Para consultar los cursos para un formulario
+     * Para consultar los cursos en los que se puede matricular un alumno
      *
      * @param nombre
      * @param idPrdLectivo
+     * @param idAlumno
      * @return
      */
-    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
-        String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
-                + "curso_capacidad, curso_ciclo, "
-                + "( SELECT count(*)\n"
-                + "  FROM public.\"AlumnoCurso\"\n"
+    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(
+            String nombre,
+            int idPrdLectivo,
+            int idAlumno
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
                 + "  WHERE id_curso = c.id_curso "
-                + "AND almn_curso_activo = true) \n"
-                + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
-                + "WHERE curso_nombre = '" + nombre + "' AND\n"
-                + "m.id_materia = c.id_materia AND\n"
-                + "id_prd_lectivo = " + idPrdLectivo + " AND curso_activo = true;";
+                + "  AND almn_curso_activo = true "
+                + ") "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE curso_nombre = '" + nombre + "' "
+                + " AND m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true "
+                + " AND c.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE id_alumno = " + idAlumno + " "
+                + "  AND acr.id_curso IN ( "
+                + "   SELECT id_curso "
+                + "   FROM public.\"Cursos\" "
+                + "   WHERE id_prd_lectivo = " + idPrdLectivo
+                + "  ) "
+                + " );";
+        System.out.println(sql);
+        return getCursosCmb(sql, nombre);
+    }
+
+    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(
+            String nombre,
+            int idPrdLectivo
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
+                + "  WHERE id_curso = c.id_curso "
+                + "  AND almn_curso_activo = true "
+                + ") "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE curso_nombre = '" + nombre + "' "
+                + " AND m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true; ";
+        return getCursosCmb(sql, nombre);
+    }
+
+    private ArrayList<CursoMD> getCursosCmb(String sql, String nombre) {
         ArrayList<CursoMD> cursos = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
@@ -462,15 +515,15 @@ public class CursoBD extends CursoMD {
                     cursos.add(c);
                 }
                 ps.getConnection().close();
-                return cursos;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos por periodo lectivo");
-            System.out.println(e.getMessage());
-            return null;
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al consultar cursos."
+                    + e.getMessage()
+            );
         }
+        return cursos;
     }
 
     public CursoMD extraerId(String nombre) {

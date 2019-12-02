@@ -131,8 +131,11 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      * @param curso
      */
     private void cambiarACurso(String curso) {
-        cursos = cur.buscarCursosPorNombreYPrdLectivo(curso,
-                matricula.getPeriodo().getID());
+        // Aqui pasamos 0 porque no queremos que filtre por alumno que lo ingnore 
+        cursos = cur.buscarCursosPorNombreYPrdLectivo(
+                curso,
+                matricula.getPeriodo().getID()
+        );
         int[] selecs = jd.getTblClasesActuales().getSelectedRows();
         for (int s : selecs) {
             for (int i = 0; i < cursos.size(); i++) {
