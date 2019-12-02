@@ -403,6 +403,11 @@
                 <Property name="text" type="java.lang.String" value="Matr&#xed;cula"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnIgMatriculaEspecial">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Matricula Especial"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mnIgComprobantePago">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

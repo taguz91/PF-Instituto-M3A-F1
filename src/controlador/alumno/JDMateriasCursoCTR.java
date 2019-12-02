@@ -22,12 +22,13 @@ public class JDMateriasCursoCTR extends DCTR {
     //Guardaremos los cursos que consultamos
     private ArrayList<CursoMD> cursos;
     private DefaultTableModel mdTbl;
-    
+
     /**
-     * Un jd de informacion en el que indicamos 
-     * las materias y profesores que tienen en este curso.
+     * Un jd de informacion en el que indicamos las materias y profesores que
+     * tienen en este curso.
+     *
      * @param almCurso
-     * @param ctrPrin 
+     * @param ctrPrin
      */
     public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -35,10 +36,10 @@ public class JDMateriasCursoCTR extends DCTR {
         this.cur = new CursoBD(ctrPrin.getConecta());
         this.jdMat = new JDMateriasCurso(ctrPrin.getVtnPrin(), false);
     }
-    
+
     /**
-     * Iniciamos todas las dependecias de esta ventana 
-     * Agregamos el jd a la ventana
+     * Iniciamos todas las dependecias de esta ventana Agregamos el jd a la
+     * ventana
      */
     public void iniciar() {
         jdMat.setLocationRelativeTo(ctrPrin.getVtnPrin());
@@ -53,20 +54,20 @@ public class JDMateriasCursoCTR extends DCTR {
         buscar();
         ctrPrin.eventoJDCerrar(jdMat);
     }
-    
+
     /**
-     * Buscamos todos los cursos de este alumno 
-     * por nombre de curso
+     * Buscamos todos los cursos de este alumno por nombre de curso
      */
     private void buscar() {
         cursos = cur.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
                 almCurso.getCurso().getNombre());
         llenarTbl(cursos);
     }
-    
+
     /**
      * Llenamos la tabla con la info que nos devuelve.
-     * @param cursos 
+     *
+     * @param cursos
      */
     private void llenarTbl(ArrayList<CursoMD> cursos) {
         mdTbl.setRowCount(0);

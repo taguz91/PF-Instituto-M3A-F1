@@ -727,15 +727,12 @@ public class AlumnoBD extends AlumnoMD {
                     almns.add(al);
                 }
                 ps.getConnection().close();
-                return almns;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
             System.out.println("No se pudo consultar alumnos");
             System.out.println(e.getMessage());
-            return null;
         }
+        return almns;
     }
 
 }

@@ -447,7 +447,8 @@ public class CursoBD extends CursoMD {
                 + "  FROM public.\"AlumnoCurso\" "
                 + "  WHERE id_curso = c.id_curso "
                 + "  AND almn_curso_activo = true "
-                + ") "
+                + "), "
+                + "curso_nombre "
                 + "FROM public.\"Cursos\" c, "
                 + "public.\"Materias\" m "
                 + "WHERE curso_nombre = '" + nombre + "' "
@@ -484,7 +485,8 @@ public class CursoBD extends CursoMD {
                 + "  FROM public.\"AlumnoCurso\" "
                 + "  WHERE id_curso = c.id_curso "
                 + "  AND almn_curso_activo = true "
-                + ") "
+                + "), "
+                + "curso_nombre "
                 + "FROM public.\"Cursos\" c, "
                 + "public.\"Materias\" m "
                 + "WHERE curso_nombre = '" + nombre + "' "
@@ -492,6 +494,29 @@ public class CursoBD extends CursoMD {
                 + " AND id_prd_lectivo = " + idPrdLectivo
                 + " AND curso_activo = true; ";
         return getCursosCmb(sql, nombre);
+    }
+
+    public ArrayList<CursoMD> buscarCursosPorPeriodo(
+            int idPrdLectivo
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
+                + "  WHERE id_curso = c.id_curso "
+                + "  AND almn_curso_activo = true "
+                + "), "
+                + "curso_nombre "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true; ";
+        return getCursosCmb(sql, "");
     }
 
     private ArrayList<CursoMD> getCursosCmb(String sql, String nombre) {
@@ -509,7 +534,7 @@ public class CursoBD extends CursoMD {
                     c.setMateria(m);
                     c.setCapacidad(rs.getInt("curso_capacidad"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
-                    c.setNombre(nombre);
+                    c.setNombre(rs.getString("curso_nombre"));
                     c.setNumMatriculados(rs.getInt(6));
 
                     cursos.add(c);

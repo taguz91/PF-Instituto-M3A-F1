@@ -36,7 +36,7 @@ public class FrmCarreraCTR extends DCTR {
     private ArrayList<DocenteMD> docentes;
 
     //Todas las modalidades que puede tener una carrera  
-    private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL"};
+    private final String[] MODALIDADES = {"PRESENCIAL", "SEMIPRESENCIAL", "DISTANCIA", "DUAL", "ESPECIAL"};
 
     //Modelo de la tabla 
     private DefaultTableModel mdTbl;
@@ -46,7 +46,7 @@ public class FrmCarreraCTR extends DCTR {
         this.frmCarrera = frmCarrera;
         this.docen = new DocenteBD(ctrPrin.getConecta());
     }
-    
+
     /**
      * Iniciamos todas las dependencias de este formulario
      */
@@ -79,7 +79,7 @@ public class FrmCarreraCTR extends DCTR {
 
         ctrPrin.agregarVtn(frmCarrera);
     }
-    
+
     /**
      * Todas las validaciones del formulario
      */
@@ -92,7 +92,7 @@ public class FrmCarreraCTR extends DCTR {
                 frmCarrera.getLblErrorCodigo()));
         frmCarrera.getTxtSemanas().addKeyListener(new TxtVNumeros(frmCarrera.getTxtSemanas()));
     }
-    
+
     /**
      * Ocultamos todos los errores de este formulario
      */
@@ -100,7 +100,7 @@ public class FrmCarreraCTR extends DCTR {
         frmCarrera.getLblErrorCodigo().setVisible(false);
         frmCarrera.getLblErrorNombre().setVisible(false);
     }
-    
+
     /**
      * Guardamos y salimos de este formulario
      */
@@ -111,20 +111,21 @@ public class FrmCarreraCTR extends DCTR {
         }
 
     }
-    
+
     /**
-     * Solo receteamos los campos 
+     * Solo receteamos los campos
      */
     private void guardarYContinuar() {
         if (guardar()) {
             borrarCampos();
         }
     }
-    
+
     /**
-     * AL darle a guardar, validamos todo el formulario si existen errores 
-     * no permitimos guardar
-     * @return 
+     * AL darle a guardar, validamos todo el formulario si existen errores no
+     * permitimos guardar
+     *
+     * @return
      */
     private boolean guardar() {
         boolean guardar = true;
@@ -182,10 +183,11 @@ public class FrmCarreraCTR extends DCTR {
         }
         return guardar;
     }
-    
+
     /**
      * Buscamos en docentes para poderlo asignar como coordinador
-     * @param aguja 
+     *
+     * @param aguja
      */
     private void buscarDocentes(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
@@ -193,10 +195,11 @@ public class FrmCarreraCTR extends DCTR {
             llenarTblDocentes(docentes);
         }
     }
-    
+
     /**
      * Llenamos la tabla de docentes para poderlos seleecionar
-     * @param docentes 
+     *
+     * @param docentes
      */
     private void llenarTblDocentes(ArrayList<DocenteMD> docentes) {
         mdTbl.setRowCount(0);
@@ -213,12 +216,12 @@ public class FrmCarreraCTR extends DCTR {
 
     //Usada para el validar  
     private final Calendar fechaIni = Calendar.getInstance();
-    
+
     /**
-     * Para editar la carrera, 
-     * Recibe una carrera desde la ventana  
-     * Cagramos todos los datos 
-     * @param carrera 
+     * Para editar la carrera, Recibe una carrera desde la ventana Cagramos
+     * todos los datos
+     *
+     * @param carrera
      */
     public void editar(CarreraMD carrera) {
         frmCarrera.getTxtNombre().setText(carrera.getNombre());
@@ -239,7 +242,7 @@ public class FrmCarreraCTR extends DCTR {
         editar = true;
         idCarrera = carrera.getId();
     }
-    
+
     /**
      * Borramos todos los campos de este formulario
      */
@@ -252,7 +255,7 @@ public class FrmCarreraCTR extends DCTR {
         mdTbl.setRowCount(0);
 
     }
-    
+
     /**
      * Cargamos el combo de modalidades, con todas las que tiene el instituto
      */
