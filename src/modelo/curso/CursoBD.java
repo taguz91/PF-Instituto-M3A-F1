@@ -570,6 +570,30 @@ public class CursoBD extends CursoMD {
         return consultarNombreCursos(sql);
     }
 
+    public ArrayList<Integer> cargarCiclosPorPeriodo(int idPrdLectivo) {
+        String sql = "SELECT DISTINCT curso_ciclo "
+                + "FROM public.\"Cursos\" "
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "AND  curso_activo = true "
+                + "ORDER BY curso_ciclo;";
+        ArrayList<Integer> ciclos = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    ciclos.add(rs.getInt(1));
+                }
+                ps.getConnection().close();
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar los nombres de todos los cursos");
+            System.out.println(e.getMessage());
+
+        }
+        return ciclos;
+    }
+
     /**
      * Cargamos los el nombre de los cursos por periodo
      *
