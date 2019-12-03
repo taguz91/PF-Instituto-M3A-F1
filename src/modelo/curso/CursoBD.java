@@ -461,11 +461,7 @@ public class CursoBD extends CursoMD {
                 + "  JOIN public.\"Cursos\" cr "
                 + "  ON acr.id_curso = cr.id_curso "
                 + "  WHERE id_alumno = " + idAlumno + " "
-                + "  AND acr.id_curso IN ( "
-                + "   SELECT id_curso "
-                + "   FROM public.\"Cursos\" "
-                + "   WHERE id_prd_lectivo = " + idPrdLectivo
-                + "  ) "
+                + "  AND cr.id_prd_lectivo = " + idPrdLectivo + " "
                 + " );";
         System.out.println(sql);
         return getCursosCmb(sql, nombre);
@@ -496,8 +492,9 @@ public class CursoBD extends CursoMD {
         return getCursosCmb(sql, nombre);
     }
 
-    public ArrayList<CursoMD> buscarCursosPorPeriodo(
-            int idPrdLectivo
+    public ArrayList<CursoMD> buscarCursosPorPeriodoAlumno(
+            int idPrdLectivo,
+            int idAlumno
     ) {
         String sql = "SELECT "
                 + "id_curso, "
@@ -515,7 +512,22 @@ public class CursoBD extends CursoMD {
                 + "public.\"Materias\" m "
                 + "WHERE m.id_materia = c.id_materia "
                 + " AND id_prd_lectivo = " + idPrdLectivo
-                + " AND curso_activo = true; ";
+                + " AND curso_activo = true "
+                + " AND m.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE acr.id_alumno = " + idAlumno + " "
+                + "  AND almn_curso_nota_final >= 70 "
+                + " ) AND m.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE acr.id_alumno = " + idAlumno + " "
+                + "  AND cr.id_prd_lectivo = " + idPrdLectivo + " "
+                + ") ";
         return getCursosCmb(sql, "");
     }
 

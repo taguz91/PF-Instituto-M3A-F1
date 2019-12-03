@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.MatriculaBD;
+import modelo.alumno.MatriculaMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -34,13 +37,20 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
     // BD 
     private final AlumnoBD ALBD;
     private final CursoBD CRBD;
+    private final AlumnoCursoBD ACBD;
+    private final MatriculaBD MTBD;
     // Formulario 
     private final FrmAlumnoCursoEspecial FRM = new FrmAlumnoCursoEspecial();
+    // Para los mensajes de confirmacion
+    private String materiasMatricula = "";
+    private int numMateria = 0;
 
     public FrmAlumnoCursoEspecialCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         ALBD = new AlumnoBD(ctrPrin.getConecta());
         CRBD = new CursoBD(ctrPrin.getConecta());
+        ACBD = new AlumnoCursoBD(ctrPrin.getConecta());
+        MTBD = new MatriculaBD(ctrPrin.getConecta());
         css = new ArrayList<>();
     }
 
@@ -60,6 +70,7 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
         FRM.getBtnPasarTodos().addActionListener(e -> pasarTodos());
         FRM.getBtnRegresar1().addActionListener(e -> regresarUno());
         FRM.getBtnRegresarTodos().addActionListener(e -> regresarTodos());
+        FRM.getBtnGuardar().addActionListener(e -> guardar());
     }
 
     private void iniciarCmbPeriodo() {
@@ -69,15 +80,6 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
         pls = PLBD.cargarPeriodoEspecial();
         pls.forEach(e -> {
             FRM.getCmbPrdLectivo().addItem(e.getNombre());
-        });
-        // Evento al seleccionar un periodo
-        FRM.getCmbPrdLectivo().addActionListener(e -> {
-            if (vtnCargada) {
-                int posPrd = FRM.getCmbPrdLectivo().getSelectedIndex();
-                tcs = CRBD.cargarCursosPorPeriodo(
-                        pls.get(posPrd - 1).getID()
-                );
-            }
         });
     }
 
@@ -140,7 +142,7 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
     private void clickAlumno() {
         int posAlmn = FRM.getTblAlumnos().getSelectedRow();
         int posPrd = FRM.getCmbPrdLectivo().getSelectedIndex();
-        if (posAlmn >= 0) {
+        if (posAlmn >= 0 && posPrd > 0) {
             ncs = CRBD.cargarNombreCursosPorPeriodo(
                     pls.get(posPrd - 1).getID(),
                     0,
@@ -153,18 +155,20 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
                 FRM.getCmbCurso().addItem(c);
             });
             vtnCargada = true;
+
+            tcs = CRBD.buscarCursosPorPeriodoAlumno(
+                    pls.get(posPrd - 1).getID(),
+                    als.get(posAlmn).getId_Alumno()
+            );
         }
     }
 
     private void iniciarTbls() {
-        String[] TMP = {"Materia", "Nota"};
-        String[] TMS = {"Materia"};
+        String[] TM = {"Materia"};
         String[] TAL = {"Cedula", "Nombre"};
-        mdTblMP = iniciarTbl(FRM.getTblMateriasPen(), TMP);
-        mdTblMS = iniciarTbl(FRM.getTblMateriasSelec(), TMS);
+        mdTblMP = iniciarTbl(FRM.getTblMateriasPen(), TM);
+        mdTblMS = iniciarTbl(FRM.getTblMateriasSelec(), TM);
         mdTblAlm = iniciarTbl(FRM.getTblAlumnos(), TAL);
-        // Medidas de la columna  de nota 
-        TblEstilo.columnaMedida(FRM.getTblMateriasPen(), 1, 60);
         // Evento click en tabla alumnos  
         FRM.getTblAlumnos().addMouseListener(new MouseAdapter() {
             @Override
@@ -226,6 +230,60 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
             Object[] r = {c.getMateria().getNombre()};
             mdTblMS.addRow(r);
         });
+    }
+
+    private void guardar() {
+        boolean guardar = !css.isEmpty();
+        int posAlm = FRM.getTblAlumnos().getSelectedRow();
+        int posPrd = FRM.getCmbPrdLectivo().getSelectedIndex();
+        if (guardar) {
+            // Receteamos todos 
+            ACBD.borrarMatricula();
+            materiasMatricula = "";
+            numMateria = 1;
+            css.forEach(c -> {
+                ACBD.agregarMatricula(
+                        als.get(posAlm).getId_Alumno(),
+                        c.getId(),
+                        1
+                );
+
+                materiasMatricula = materiasMatricula + numMateria + ": "
+                        + "  Curso: " + c.getNombre()
+                        + "  Matricula: " + c.getNumMatricula()
+                        + "  Materia: " + c.getMateria().getNombre()
+                        + "    \n";
+                numMateria++;
+            });
+
+            int r = JOptionPane.showConfirmDialog(ctrPrin.getVtnPrin(), "Se matricula a: \n"
+                    + als.get(posAlm).getNombreCorto() + "\n"
+                    + "Periodo: \n" + pls.get(posPrd - 1).getNombre() + "\n"
+                    + "En las siguientes materias: \n" + materiasMatricula);
+
+            if (r == JOptionPane.YES_OPTION) {
+
+                MatriculaMD m = MTBD.buscarMatriculaAlmnPrd(
+                        als.get(posAlm).getId_Alumno(),
+                        pls.get(posPrd - 1).getID()
+                );
+
+                if (m == null) {
+                    MTBD.setAlumno(als.get(posAlm));
+                    MTBD.setPeriodo(pls.get(posPrd - 1));
+                    MTBD.setTipo("ORDINARIA");
+                    MTBD.ingresar();
+                }
+
+                if (ACBD.guardarAlmnCurso()) {
+                    JOptionPane.showMessageDialog(FRM, "Guadamos correctamente.");
+                } else {
+                    JOptionPane.showMessageDialog(FRM, "No pudimos guardar.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(FRM, "El formulario contiene errores.");
+        }
     }
 
 }

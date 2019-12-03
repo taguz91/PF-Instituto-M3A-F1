@@ -323,8 +323,10 @@ public class FrmAlumnoCursoCTR extends DCTR {
             if (r == JOptionPane.YES_OPTION) {
 
                 //Se ingresa matricula
-                MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                        periodos.get(posPrd - 1).getID());
+                MatriculaMD m = matri.buscarMatriculaAlmnPrd(
+                        alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+                        periodos.get(posPrd - 1).getID()
+                );
 
                 if (m == null) {
                     matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
