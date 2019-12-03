@@ -43,7 +43,7 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
-import controlador.silabo.ControladorCRUDPlanClase;
+import controlador.silabo.planesDeClase.ControladorCRUDPlanClase;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;

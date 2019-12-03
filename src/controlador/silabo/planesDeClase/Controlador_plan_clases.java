@@ -1,4 +1,4 @@
-package controlador.silabo;
+package controlador.silabo.planesDeClase;
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

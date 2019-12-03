@@ -1,5 +1,5 @@
 
-package controlador.silabo;
+package controlador.silabo.planesDeClase;
 
 
 import com.placeholder.PlaceHolder;

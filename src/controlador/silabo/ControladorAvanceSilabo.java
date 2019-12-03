@@ -5,6 +5,7 @@
  */
 package controlador.silabo;
 
+import controlador.silabo.planesDeClase.ControladorConfiguracion_plan_clases;
 import com.placeholder.PlaceHolder;
 import java.util.List;
 import modelo.silabo.CursoMDS;
