@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,7 @@ import modelo.alumno.MallaAlumnoBD;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
+import modelo.alumno.UtilEgresadoBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.SesionClaseBD;
@@ -99,6 +101,9 @@ public class FrmAlumnoCursoCTR extends DCTR {
     //Para guardar la carrera en la que se esta trabajando 
     private CarreraMD carrera;
     private final CarreraBD car;
+    // Listado de las 
+    private List<MallaAlumnoMD> mallaAlmnNoPagadas;
+    private final UtilEgresadoBD UEBD = UtilEgresadoBD.single();
 
     /**
      * Constructor del sistema. Esta nos sirve para matricular un estudiante en
@@ -210,7 +215,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
         frmAlmCurso.getBtnPendientes().addActionListener(e -> mostrarInformacion("P"));
         frmAlmCurso.getBtnHorarioAlmn().addActionListener(e -> horarioAlmn());
         frmAlmCurso.getBtnGuardar().addActionListener(e -> guardar());
-        
+
         // Acciones de choques de horas
         frmAlmCurso.getBtnChoques().addActionListener(e -> mostrarChoque());
 
@@ -298,7 +303,11 @@ public class FrmAlumnoCursoCTR extends DCTR {
             numMateria = 1;
             cursosSelec.forEach(c -> {
                 //almnCurso.ingresarAlmnCurso(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId_curso());
-                almnCurso.agregarMatricula(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(), c.getId(), c.getNumMatricula());
+                almnCurso.agregarMatricula(
+                        alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+                        c.getId(),
+                        c.getNumMatricula()
+                );
                 materiasMatricula = materiasMatricula + numMateria + ": "
                         + "  Curso: " + c.getNombre()
                         + "  Matricula: " + c.getNumMatricula()
@@ -314,12 +323,12 @@ public class FrmAlumnoCursoCTR extends DCTR {
             if (r == JOptionPane.YES_OPTION) {
 
                 //Se ingresa matricula
-                MatriculaMD m = matri.buscarMatriculaAlmnPrd(alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
-                        periodos.get(posPrd - 1).getID());
+                MatriculaMD m = matri.buscarMatriculaAlmnPrd(
+                        alumnosCarrera.get(posAlm).getAlumno().getId_Alumno(),
+                        periodos.get(posPrd - 1).getID()
+                );
 
-                if (m != null) {
-                    System.out.println("Ya esta matriculado: ");
-                } else {
+                if (m == null) {
                     matri.setAlumno(alumnosCarrera.get(posAlm).getAlumno());
                     matri.setPeriodo(periodos.get(posPrd - 1));
                     matri.setTipo(frmAlmCurso.getCmbTipoMatricula().getSelectedItem().toString());
@@ -457,8 +466,10 @@ public class FrmAlumnoCursoCTR extends DCTR {
     private void buscarAlumnos(String aguja) {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         if (posPrd > 0 && Validar.esLetrasYNumeros(aguja)) {
-            alumnosCarrera = almCar.buscarAlumnoCarreraParaFrm(periodos.get(posPrd - 1).getCarrera().getId(),
-                    aguja);
+            alumnosCarrera = almCar.buscarAlumnoCarreraParaFrm(
+                    periodos.get(posPrd - 1).getCarrera().getId(),
+                    aguja
+            );
             llenarTblAlumnos(alumnosCarrera);
         }
     }
@@ -490,8 +501,35 @@ public class FrmAlumnoCursoCTR extends DCTR {
             //Buscamos la malla completa
             mallaCompleta = mallaAlm.buscarMallaAlumnoParaEstado(alumnosCarrera.get(posAl).getId());
             //Vemos si el alumno esta matriculado en una materia
-            //materiasAlmn = mallaAlm.buscarMateriasAlumnoPorEstado(alumnosCarrera.get(posAl).getId(), "M");
             mallaMatriculadas = filtrarMalla(mallaCompleta, "M");
+            // Consultamos las materias que tiene pendiente un pago  
+            String msg = "";
+            mallaAlmnNoPagadas = UEBD.getMateriasNoPagadas(
+                    alumnosCarrera.get(posAl).getId()
+            );
+            msg = mallaAlmnNoPagadas.stream().map((ma)
+                    -> "Ciclo: " + ma.getMateria().getCiclo() + "  "
+                    + "# Matricula: " + ma.getMallaNumMatricula() + "  "
+                    + "Materia: " + ma.getMateria().getNombre() + " \n")
+                    .reduce(msg, String::concat);
+
+            if (msg.length() > 0) {
+                msg = "Matricula que tiene pendiente su pago:\n" + msg;
+            }
+
+            String matriculasPagar = matri.getMatriculasAPagar(alumnosCarrera.get(posAl).getId());
+            if (matriculasPagar.length() > 0) {
+                msg += "\nMatriculas a pagar: \n" + matriculasPagar;
+            }
+
+            // Aqui validamos si tiene pagos pendientes no le dejamos matricular 
+            if (msg.length() > 0) {
+                JOptionPane.showMessageDialog(
+                        frmAlmCurso,
+                        msg
+                );
+            }
+
             if (!mallaMatriculadas.isEmpty()) {
                 //Borramos los cursos que posiblemente carguemos antes
                 frmAlmCurso.getCmbCurso().removeAllItems();
@@ -546,7 +584,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
 
         //Si no esta matriculado miramos la materias que a cursado 
         mallaCursadas = filtrarMalla(mallaCompleta, "C");
-        System.out.println("Materias cursadas con mi funcion. " + mallaCursadas.size());
         if (mallaCursadas != null) {
             for (int i = 0; i < mallaCursadas.size(); i++) {
                 if (mallaCursadas.get(i).getMallaCiclo() > cicloCursado) {
@@ -744,17 +781,22 @@ public class FrmAlumnoCursoCTR extends DCTR {
     private void cargarMaterias() {
         int posPrd = frmAlmCurso.getCmbPrdLectivo().getSelectedIndex();
         int posCurso = frmAlmCurso.getCmbCurso().getSelectedIndex();
+        int posAlm = frmAlmCurso.getTblAlumnos().getSelectedRow();
         //Borramos los datos existentes
 
-        if (posPrd > 0 && posCurso > 0) {
+        if (posPrd > 0 && posCurso > 0 && posAlm >= 0) {
             cursosPen = cur.buscarCursosPorNombreYPrdLectivo(
                     frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getID());
+                    periodos.get(posPrd - 1).getID(),
+                    alumnosCarrera.get(posAlm).getAlumno().getId_Alumno()
+            );
             //Cargamos todos los requisitos de este ciclo en esta carrera
             requisitos = matReq.buscarRequisitosPorCarrera(periodos.get(posPrd - 1).getCarrera().getId());
             //Cargamos el horario de este curso 
-            hcurso = sesion.cargarHorarioCurso(frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
-                    periodos.get(posPrd - 1).getID());
+            hcurso = sesion.cargarHorarioCurso(
+                    frmAlmCurso.getCmbCurso().getSelectedItem().toString(),
+                    periodos.get(posPrd - 1).getID()
+            );
             clasificarMateriasPendientes(cursosPen);
         } else {
             mdMatPen.setRowCount(0);
@@ -1215,7 +1257,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
                     // Mostramos los choques 
                     choques = "Dia que choca: " + hc.getDia() + "\n"
                             + "Choca hora de: " + hc.getHoraIni() + " || " + hc.getHoraFin() + " \n \n";
-                    
+
                     // System.out.println("Dia que choca: " + hc.getDia());
                     // System.out.println("Choca hora de: " + hc.getHoraIni() + " || " + hc.getHoraFin());
                 }

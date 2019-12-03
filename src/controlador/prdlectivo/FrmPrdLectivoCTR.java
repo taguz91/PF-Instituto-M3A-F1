@@ -222,10 +222,10 @@ public class FrmPrdLectivoCTR extends DCTR {
                     JOptionPane.showMessageDialog(null, "Error en guardar los datos");
                 }
             } else {
-                PeriodoLectivoMD periodo;
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
-                periodo = pasarDatos(bdPerLectivo, carrera);
+                periodo = pasarDatos(periodo, carrera);
                 periodo.setID(id_PeriodoLectivo);
                 if (bdPerLectivo.editarPeriodo(periodo, carrera)) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");

@@ -11,10 +11,16 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT DISTINCT c.curso_ciclo,
-               persona_primer_apellido||' '||persona_segundo_apellido||' '|| persona_primer_nombre||' '||
-               persona_segundo_nombre as Alumno, persona_identificacion,p.persona_correo,
-               p.persona_celular, pr.prd_lectivo_nombre
-               FROM public."AlumnoCurso" ac, public."Alumnos" a, public."Personas" p, 
+persona_primer_apellido || ' ' || 
+persona_segundo_apellido AS apellidos, 
+persona_primer_nombre || ' ' ||
+persona_segundo_nombre AS nombres, 
+persona_identificacion,
+p.persona_correo,
+p.persona_celular, 
+pr.prd_lectivo_nombre
+FROM public."AlumnoCurso" ac, 
+public."Alumnos" a, public."Personas" p, 
                public."Cursos" c, public."PeriodoLectivo" pr
                WHERE a.id_alumno = ac.id_alumno AND 
                p.id_persona = a.id_persona AND
@@ -23,10 +29,11 @@
                pr.prd_lectivo_nombre = $P{periodo} AND
                ac.id_curso = c.id_curso 
 AND almn_curso_activo=true
-               ORDER BY Alumno;]]>
+               ORDER BY apellidos;]]>
 	</queryString>
 	<field name="curso_ciclo" class="java.lang.Integer"/>
-	<field name="alumno" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
 	<field name="persona_correo" class="java.lang.String"/>
 	<field name="persona_celular" class="java.lang.String"/>
@@ -164,11 +171,17 @@ AND almn_curso_activo=true
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="92" y="0" width="243" height="20" uuid="b8226dff-c465-4539-b06b-b705469a6350"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="92" y="0" width="122" height="20" uuid="b8226dff-c465-4539-b06b-b705469a6350"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[' '+$F{alumno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="403" y="0" width="1" height="20" uuid="088ff345-bc2d-4c9f-9488-ef11461c5b0f"/>
@@ -179,6 +192,19 @@ AND almn_curso_activo=true
 			<line>
 				<reportElement x="24" y="0" width="1" height="20" uuid="09649b32-f811-4b35-a2ce-e539256befad"/>
 			</line>
+			<textField>
+				<reportElement x="214" y="0" width="122" height="20" uuid="5b3392fa-60d8-451e-9c33-320ef5a3905c"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

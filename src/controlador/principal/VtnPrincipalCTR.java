@@ -3,6 +3,7 @@ package controlador.principal;
 import controlador.version.JDVersionCTR;
 import controlador.Libraries.Effects;
 import controlador.accesos.VtnAccesosCTR;
+import controlador.alumno.FrmAlumnoCursoEspecialCTR;
 import controlador.alumno.FrmAlumnoCarreraCTR;
 import controlador.carrera.FrmCarreraCTR;
 import controlador.carrera.VtnCarreraCTR;
@@ -233,6 +234,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnIgMateria().addActionListener(e -> abrirFrmMateria());
         vtnPrin.getMnBiblioteca().addActionListener(e -> abrirVentanaBiblioteca());
         vtnPrin.getMnIgComprobantePago().addActionListener(e -> abrirFrmComprobantePago());
+        vtnPrin.getMnIgMatriculaEspecial().addActionListener(e -> abrirFrmMatriculaEspecial());
 
         //menus grupo 16
         vtnPrin.getMnCtUsuarios().addActionListener(e -> mnCtUsuarios(e));
@@ -619,6 +621,11 @@ public class VtnPrincipalCTR {
             FrmDocenteMateriaCTR ctrFrm = new FrmDocenteMateriaCTR(frm, this);
             ctrFrm.iniciar();
         }
+    }
+    
+    public void abrirFrmMatriculaEspecial() {
+        FrmAlumnoCursoEspecialCTR ctr = new FrmAlumnoCursoEspecialCTR(this);
+        ctr.iniciar();
     }
     
     public void abrirFrmComprobantePago() {

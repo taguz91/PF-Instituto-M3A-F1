@@ -13,8 +13,9 @@ import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import utils.CONBD;
 
-public class PeriodoLectivoBD extends PeriodoLectivoMD {
+public class PeriodoLectivoBD extends CONBD {
 
     private ConectarDB conecta;
     //Para guardar carrera en un periodo  
@@ -25,6 +26,14 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
+    private static PeriodoLectivoBD PLBD;
+
+    public static PeriodoLectivoBD single() {
+        if (PLBD == null) {
+            PLBD = new PeriodoLectivoBD();
+        }
+        return PLBD;
+    }
 
     {
         pool = new ConnDBPool();
@@ -437,6 +446,22 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return consultarParaCmb(sql);
     }
 
+    public List<PeriodoLectivoMD> cargarPeriodoEspecial() {
+        String sql = "SELECT "
+                + "id_prd_lectivo, "
+                + "pl.id_carrera, "
+                + "prd_lectivo_nombre "
+                + "FROM public.\"PeriodoLectivo\" pl "
+                + "JOIN public.\"Carreras\" c "
+                + "ON c.id_carrera = pl.id_carrera "
+                + "WHERE "
+                + "prd_lectivo_activo = true "
+                + "AND prd_lectivo_estado = true "
+                + "AND carrera_modalidad = 'ESPECIAL' "
+                + "ORDER BY prd_lectivo_fecha_inicio DESC;";
+        return consultarParaCmb(sql);
+    }
+
     /**
      * Consulta para combo, unicamente se busca: id, id_carrera, nombre del
      * periodo
@@ -447,8 +472,8 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
     private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
         try {
+            ResultSet rs = conecta.sql(ps);
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
                 p.setID(rs.getInt("id_prd_lectivo"));
@@ -461,12 +486,11 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
             }
             rs.close();
             ps.getConnection().close();
-            return prds;
         } catch (SQLException ex) {
             System.out.println("No pudimos consultar periodos para combo");
             System.out.println(ex.getMessage());
-            return null;
         }
+        return prds;
     }
 
     public PeriodoLectivoMD capturarIdPeriodo(String nombrePer) {
@@ -658,19 +682,19 @@ public class PeriodoLectivoBD extends PeriodoLectivoMD {
         return lista;
     }
 
-    public List<PeriodoLectivoBD> selectIdNombreAll() {
+    public List<PeriodoLectivoMD> selectIdNombreAll() {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
                 + "ORDER BY prd_lectivo_fecha_inicio";
 
-        List<PeriodoLectivoBD> lista = new ArrayList<>();
+        List<PeriodoLectivoMD> lista = new ArrayList<>();
         conn = pool.getConnection();
         rst = pool.ejecutarQuery(SELECT, conn, null);
 
         try {
             while (rst.next()) {
-                PeriodoLectivoBD periodo = new PeriodoLectivoBD();
+                PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 periodo.setID(rst.getInt("id_prd_lectivo"));
                 periodo.setNombre(rst.getString("prd_lectivo_nombre"));
                 lista.add(periodo);

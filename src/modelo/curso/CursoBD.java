@@ -425,23 +425,113 @@ public class CursoBD extends CursoMD {
     }
 
     /**
-     * Para consultar los cursos para un formulario
+     * Para consultar los cursos en los que se puede matricular un alumno
      *
      * @param nombre
      * @param idPrdLectivo
+     * @param idAlumno
      * @return
      */
-    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(String nombre, int idPrdLectivo) {
-        String sql = "SELECT id_curso, c.id_materia, materia_nombre, "
-                + "curso_capacidad, curso_ciclo, "
-                + "( SELECT count(*)\n"
-                + "  FROM public.\"AlumnoCurso\"\n"
+    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(
+            String nombre,
+            int idPrdLectivo,
+            int idAlumno
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
                 + "  WHERE id_curso = c.id_curso "
-                + "AND almn_curso_activo = true) \n"
-                + "FROM public.\"Cursos\" c, public.\"Materias\" m\n"
-                + "WHERE curso_nombre = '" + nombre + "' AND\n"
-                + "m.id_materia = c.id_materia AND\n"
-                + "id_prd_lectivo = " + idPrdLectivo + " AND curso_activo = true;";
+                + "  AND almn_curso_activo = true "
+                + "), "
+                + "curso_nombre "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE curso_nombre = '" + nombre + "' "
+                + " AND m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true "
+                + " AND c.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE id_alumno = " + idAlumno + " "
+                + "  AND cr.id_prd_lectivo = " + idPrdLectivo + " "
+                + " );";
+        System.out.println(sql);
+        return getCursosCmb(sql, nombre);
+    }
+
+    public ArrayList<CursoMD> buscarCursosPorNombreYPrdLectivo(
+            String nombre,
+            int idPrdLectivo
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
+                + "  WHERE id_curso = c.id_curso "
+                + "  AND almn_curso_activo = true "
+                + "), "
+                + "curso_nombre "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE curso_nombre = '" + nombre + "' "
+                + " AND m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true; ";
+        return getCursosCmb(sql, nombre);
+    }
+
+    public ArrayList<CursoMD> buscarCursosPorPeriodoAlumno(
+            int idPrdLectivo,
+            int idAlumno
+    ) {
+        String sql = "SELECT "
+                + "id_curso, "
+                + "c.id_materia, "
+                + "materia_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "( SELECT count(*) "
+                + "  FROM public.\"AlumnoCurso\" "
+                + "  WHERE id_curso = c.id_curso "
+                + "  AND almn_curso_activo = true "
+                + "), "
+                + "curso_nombre "
+                + "FROM public.\"Cursos\" c, "
+                + "public.\"Materias\" m "
+                + "WHERE m.id_materia = c.id_materia "
+                + " AND id_prd_lectivo = " + idPrdLectivo
+                + " AND curso_activo = true "
+                + " AND m.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE acr.id_alumno = " + idAlumno + " "
+                + "  AND almn_curso_nota_final >= 70 "
+                + " ) AND m.id_materia NOT IN ("
+                + "  SELECT cr.id_materia "
+                + "  FROM public.\"AlumnoCurso\" acr "
+                + "  JOIN public.\"Cursos\" cr "
+                + "  ON acr.id_curso = cr.id_curso "
+                + "  WHERE acr.id_alumno = " + idAlumno + " "
+                + "  AND cr.id_prd_lectivo = " + idPrdLectivo + " "
+                + ") ";
+        return getCursosCmb(sql, "");
+    }
+
+    private ArrayList<CursoMD> getCursosCmb(String sql, String nombre) {
         ArrayList<CursoMD> cursos = new ArrayList();
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
@@ -456,21 +546,21 @@ public class CursoBD extends CursoMD {
                     c.setMateria(m);
                     c.setCapacidad(rs.getInt("curso_capacidad"));
                     c.setCiclo(rs.getInt("curso_ciclo"));
-                    c.setNombre(nombre);
+                    c.setNombre(rs.getString("curso_nombre"));
                     c.setNumMatriculados(rs.getInt(6));
 
                     cursos.add(c);
                 }
                 ps.getConnection().close();
-                return cursos;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos por periodo lectivo");
-            System.out.println(e.getMessage());
-            return null;
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al consultar cursos."
+                    + e.getMessage()
+            );
         }
+        return cursos;
     }
 
     public CursoMD extraerId(String nombre) {
@@ -568,6 +658,30 @@ public class CursoBD extends CursoMD {
                 + "WHERE id_prd_lectivo = " + idPrdLectivo + " AND  curso_activo = true \n"
                 + "ORDER BY curso_nombre;";
         return consultarNombreCursos(sql);
+    }
+
+    public ArrayList<Integer> cargarCiclosPorPeriodo(int idPrdLectivo) {
+        String sql = "SELECT DISTINCT curso_ciclo "
+                + "FROM public.\"Cursos\" "
+                + "WHERE id_prd_lectivo = " + idPrdLectivo + " "
+                + "AND  curso_activo = true "
+                + "ORDER BY curso_ciclo;";
+        ArrayList<Integer> ciclos = new ArrayList();
+        PreparedStatement ps = conecta.getPS(sql);
+        ResultSet rs = conecta.sql(ps);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    ciclos.add(rs.getInt(1));
+                }
+                ps.getConnection().close();
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron cargar los nombres de todos los cursos");
+            System.out.println(e.getMessage());
+
+        }
+        return ciclos;
     }
 
     /**

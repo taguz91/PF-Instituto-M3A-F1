@@ -119,7 +119,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
             int posAlm = frmAlmCarrera.getTblAlumnos().getSelectedRow();
             int posCar = frmAlmCarrera.getCmbCarreras().getSelectedIndex();
 
-            boolean guardar = !buscarSiEstaMatriculado(posAlm, posAlm);
+            boolean guardar = !buscarSiEstaMatriculado(posAlm, posCar);
 
             if (posAlm < 0 || posCar < 1) {
                 guardar = false;
@@ -154,7 +154,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
                 alumnos.get(posAlmn).getId_Alumno(),
                 carreras.get(posCar - 1).getId()
         );
-        if (carrera.length() > 1) {
+        if (carrera.length() > 0) {
             JOptionPane.showMessageDialog(
                     ctrPrin.getVtnPrin(),
                     alumnos.get(posAlmn).getNombreCompleto() + "\n"

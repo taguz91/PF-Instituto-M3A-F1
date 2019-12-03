@@ -400,6 +400,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnIgComprobantePago;
     }
 
+    public JMenuItem getMnIgMatriculaEspecial() {
+        return mnIgMatriculaEspecial;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -493,6 +497,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgMateria = new javax.swing.JMenuItem();
         mnIgInscripcion = new javax.swing.JMenuItem();
         mnIgMatricula = new javax.swing.JMenuItem();
+        mnIgMatriculaEspecial = new javax.swing.JMenuItem();
         mnIgComprobantePago = new javax.swing.JMenuItem();
         mnIgDocenteMt = new javax.swing.JMenuItem();
         mnIgRolesPeriodo = new javax.swing.JMenuItem();
@@ -994,6 +999,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgMatricula.setText("Matrícula");
         mnIngresar.add(mnIgMatricula);
 
+        mnIgMatriculaEspecial.setText("Matricula Especial");
+        mnIngresar.add(mnIgMatriculaEspecial);
+
         mnIgComprobantePago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-tarjeta-bancaria-faltante-20.png"))); // NOI18N
         mnIgComprobantePago.setText("Comprobante pago");
         mnIngresar.add(mnIgComprobantePago);
@@ -1185,6 +1193,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnIgInscripcion;
     private javax.swing.JMenuItem mnIgMateria;
     private javax.swing.JMenuItem mnIgMatricula;
+    private javax.swing.JMenuItem mnIgMatriculaEspecial;
     private javax.swing.JMenuItem mnIgNotas1;
     private javax.swing.JMenuItem mnIgPersona;
     private javax.swing.JMenuItem mnIgPlandeClase;

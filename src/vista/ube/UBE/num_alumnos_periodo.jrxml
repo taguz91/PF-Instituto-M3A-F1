@@ -3,44 +3,83 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_carrera" class="java.lang.Integer">
+	<parameter name="id_periodo" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-prd_lectivo_nombre AS "Periodo Lectivo",
-(SELECT count(*)
- FROM public."Matricula" m, public."Alumnos" a, public."Personas" p
- WHERE m.id_prd_lectivo = pl.id_prd_lectivo
- AND a.id_alumno = m.id_alumno
- AND p.id_persona = a.id_persona
- AND p.persona_sexo ILIKE '%H%') AS "Hombres",
- (SELECT count(*)
- FROM public."Matricula" m, public."Alumnos" a, public."Personas" p
- WHERE m.id_prd_lectivo = pl.id_prd_lectivo
- AND a.id_alumno = m.id_alumno
- AND p.id_persona = a.id_persona
- AND p.persona_sexo ILIKE '%M%') AS "Mujeres",
- (SELECT count(*)
- FROM public."Matricula"
- WHERE id_prd_lectivo = pl.id_prd_lectivo) AS "Total Matriculados"
+c.id_prd_lectivo,
+prd_lectivo_nombre,
+curso_nombre, (
+  SELECT COUNT(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE persona_activa = true
+  AND persona_sexo ILIKE '%M%'
+  AND id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos"
+    WHERE id_prd_lectivo = c.id_prd_lectivo
+    AND curso_nombre = c.curso_nombre
+  )
+) AS num_mujeres, (
+  SELECT COUNT(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE persona_activa = true
+  AND persona_sexo ILIKE '%H%'
+  AND id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos"
+    WHERE id_prd_lectivo = c.id_prd_lectivo
+    AND curso_nombre = c.curso_nombre
+  )
+) AS num_hombres, (
+  SELECT COUNT(DISTINCT id_alumno)
+  FROM public."AlumnoCurso"
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos"
+    WHERE id_prd_lectivo = c.id_prd_lectivo
+    AND curso_nombre = c.curso_nombre
+  )
+) AS total_alumnos
 
-FROM public."PeriodoLectivo" pl
-WHERE pl.id_carrera = $P{id_carrera}
-ORDER BY id_prd_lectivo ;]]>
+FROM public."Cursos" c
+JOIN public."PeriodoLectivo" pl
+ON pl.id_prd_lectivo = c.id_prd_lectivo
+WHERE c.id_prd_lectivo = $P{id_periodo}
+GROUP BY
+c.id_prd_lectivo,
+prd_lectivo_nombre,
+curso_nombre
+ORDER BY
+prd_lectivo_nombre,
+curso_nombre;]]>
 	</queryString>
-	<field name="Periodo Lectivo" class="java.lang.String"/>
-	<field name="Hombres" class="java.lang.Long"/>
-	<field name="Mujeres" class="java.lang.Long"/>
-	<field name="Total Matriculados" class="java.lang.Long"/>
-	<variable name="Total Matriculados_1" class="java.lang.Long" resetType="Page" calculation="Sum">
-		<variableExpression><![CDATA[$F{Total Matriculados}]]></variableExpression>
+	<field name="id_prd_lectivo" class="java.lang.Integer"/>
+	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="curso_nombre" class="java.lang.String"/>
+	<field name="num_mujeres" class="java.lang.Long"/>
+	<field name="num_hombres" class="java.lang.Long"/>
+	<field name="total_alumnos" class="java.lang.Long"/>
+	<variable name="total_alumnos_1" class="java.lang.Long" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_alumnos}]]></variableExpression>
 	</variable>
-	<variable name="Mujeres_1" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{Mujeres}]]></variableExpression>
+	<variable name="num_mujeres_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{num_mujeres}]]></variableExpression>
 	</variable>
-	<variable name="Hombres_1" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{Hombres}]]></variableExpression>
+	<variable name="num_hombres_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{num_hombres}]]></variableExpression>
+	</variable>
+	<variable name="num_mujeres_2" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{num_mujeres}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -65,7 +104,7 @@ ORDER BY id_prd_lectivo ;]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="56" splitType="Stretch">
+		<band height="71" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="20" uuid="554e426c-3286-4eba-87b8-36f96e5d7492"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -74,7 +113,7 @@ ORDER BY id_prd_lectivo ;]]>
 				<text><![CDATA[UNIDAD DE BIENESTAR ESTUDIANTIL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="36" width="315" height="20" forecolor="#006699" uuid="858205fc-2649-4837-a860-39b32f9c1e53"/>
+				<reportElement x="0" y="51" width="315" height="20" forecolor="#006699" uuid="858205fc-2649-4837-a860-39b32f9c1e53"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -85,10 +124,10 @@ ORDER BY id_prd_lectivo ;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Periodo Lectivo]]></text>
+				<text><![CDATA[Curso]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="315" y="36" width="80" height="20" forecolor="#006699" uuid="da05f451-a427-4e7c-bda2-a0c772c6044e"/>
+				<reportElement x="315" y="51" width="80" height="20" forecolor="#006699" uuid="da05f451-a427-4e7c-bda2-a0c772c6044e"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -102,7 +141,7 @@ ORDER BY id_prd_lectivo ;]]>
 				<text><![CDATA[Hombres]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="395" y="36" width="80" height="20" forecolor="#006699" uuid="980ca6aa-0f1b-4fe7-ab7c-64cc508f7738"/>
+				<reportElement x="395" y="51" width="80" height="20" forecolor="#006699" uuid="980ca6aa-0f1b-4fe7-ab7c-64cc508f7738"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -116,7 +155,7 @@ ORDER BY id_prd_lectivo ;]]>
 				<text><![CDATA[Mujeres]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="475" y="36" width="80" height="20" forecolor="#006699" uuid="c8608122-7095-49cd-99b4-91ebc8405b60"/>
+				<reportElement x="475" y="51" width="80" height="20" forecolor="#006699" uuid="c8608122-7095-49cd-99b4-91ebc8405b60"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -129,6 +168,20 @@ ORDER BY id_prd_lectivo ;]]>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="555" height="20" uuid="49871cc2-73e7-4d69-897f-430c4a86683b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -146,7 +199,7 @@ ORDER BY id_prd_lectivo ;]]>
 					<font isBold="false"/>
 					<paragraph leftIndent="2" rightIndent="2" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Periodo Lectivo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{curso_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="315" y="0" width="80" height="20" uuid="f5ace044-180a-4df6-a77f-d0aea0dbd8e8"/>
@@ -158,7 +211,7 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Hombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{num_hombres}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="395" y="0" width="80" height="20" uuid="2920ad9b-eebe-47d6-bbcc-2d6a8eefdc61"/>
@@ -170,7 +223,7 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Mujeres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{num_mujeres}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="475" y="0" width="80" height="20" uuid="45d56c4f-ca5d-4844-8ff4-803a3bf5f8df"/>
@@ -182,14 +235,14 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{Total Matriculados}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total_alumnos}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="20">
 			<textField>
-				<reportElement x="475" y="0" width="80" height="20" uuid="a116ecea-6bce-466b-b4a4-8649d8e74ce0"/>
+				<reportElement x="475" y="0" width="80" height="20" uuid="a73b755d-1fdf-4fca-a131-45026526259c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -197,10 +250,10 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{Total Matriculados_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{total_alumnos_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="235" y="0" width="80" height="20" forecolor="#006699" uuid="69923d71-f3b0-4e35-bdc3-2dd89643b314"/>
+				<reportElement x="235" y="0" width="80" height="20" forecolor="#006699" uuid="bde87275-10b1-422e-8ade-2d1920425500"/>
 				<box>
 					<pen lineWidth="0.75" lineColor="#000000"/>
 					<topPen lineWidth="0.75" lineColor="#000000"/>
@@ -214,7 +267,7 @@ ORDER BY id_prd_lectivo ;]]>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="395" y="0" width="80" height="20" uuid="5b636411-0c90-44b4-a313-d5e0e8ce4c46"/>
+				<reportElement x="315" y="0" width="80" height="20" uuid="fae64f4b-12b2-410e-9101-d0d0bcc42373"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -222,10 +275,10 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{Mujeres_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{num_hombres_1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="0" width="80" height="20" uuid="03cba291-3694-405b-a0cf-725510e79c2b"/>
+				<reportElement x="395" y="0" width="80" height="20" uuid="3d2d5597-7ea1-4d68-aea0-5b51fb99e1c0"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -233,7 +286,7 @@ ORDER BY id_prd_lectivo ;]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{Hombres_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{num_mujeres_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

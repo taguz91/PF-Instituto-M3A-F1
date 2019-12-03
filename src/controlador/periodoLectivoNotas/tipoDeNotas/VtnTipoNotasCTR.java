@@ -15,6 +15,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.tipoDeNota.TipoDeNotaBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import vista.tipoDeNotas.FrmTipoNota;
@@ -32,7 +33,7 @@ public class VtnTipoNotasCTR {
     private TipoDeNotaBD modelo;
 
     private List<TipoDeNotaBD> listaTiposNotas;
-    private List<PeriodoLectivoBD> listaPeriodos;
+    private List<PeriodoLectivoMD> listaPeriodos;
     private DefaultTableModel tablaTiposNotas;
 
     private final PeriodoLectivoBD periodo;

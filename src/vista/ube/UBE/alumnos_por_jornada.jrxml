@@ -3,10 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_jornada" class="java.lang.String">
+	<parameter name="id_jornada" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="id_carrera" class="java.lang.String">
+	<parameter name="id_carrera" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -88,10 +88,10 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[num jornada]]></text>
+				<text><![CDATA[Cursos]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="30" width="355" height="20" forecolor="#006699" uuid="f9f53ff8-6fe2-4e3e-804c-55a23908f288"/>
@@ -102,10 +102,10 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[prd_lectivo_nombre]]></text>
+				<text><![CDATA[Periodo Lectivo]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="455" y="30" width="100" height="20" forecolor="#006699" uuid="c6761e5b-0d7b-4ba5-b683-6e02e5dfac29"/>
@@ -116,10 +116,10 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[almn jornada]]></text>
+				<text><![CDATA[Alumnos]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -134,7 +134,9 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{prd_lectivo_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -146,7 +148,7 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{num_jornada}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -158,7 +160,7 @@ prd_lectivo_fecha_inicio DESC;]]>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{alum_jornada}]]></textFieldExpression>
 			</textField>
 		</band>

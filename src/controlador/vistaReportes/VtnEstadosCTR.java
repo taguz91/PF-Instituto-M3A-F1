@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.carrera.CarreraBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
+import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.querys.Querys;
 import vista.vistaReportes.VtnEstadosR;
 
@@ -26,7 +27,7 @@ public class VtnEstadosCTR {
     private final VtnEstadosR vista;
     private final PeriodoLectivoBD modelo;
     private final CarreraBD carrera;
-    private List<PeriodoLectivoBD> periodos;
+    private List<PeriodoLectivoMD> periodos;
     private DefaultTableModel tabla;
 
     public VtnEstadosCTR(VtnPrincipalCTR desktop) {

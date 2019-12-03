@@ -47,10 +47,12 @@ AND m.id_alumno IN (
         FROM public."Cursos"
         WHERE id_prd_lectivo = 21
       )
+      AND almn_curso_activo = true
     ) AS "reprobo"
     FROM public."AlumnoCurso" acd
     WHERE (almn_curso_asistencia ILIKE '%Desertor%'
     OR almn_curso_asistencia ILIKE '%Retirado%' )
+    AND almn_curso_activo = true
     GROUP BY id_alumno
   ) AS "SU" WHERE reprobo = true
 ) AND a.id_alumno NOT IN (

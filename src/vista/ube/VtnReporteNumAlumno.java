@@ -16,14 +16,6 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public JButton getBtnJornadaCiclo() {
-        return btnJornadaCiclo;
-    }
-
-    public JButton getBtnRepCarreraPrd() {
-        return btnRepCarreraPrd;
-    }
-
     public JComboBox<String> getCmbCarrera() {
         return cmbCarrera;
     }
@@ -40,6 +32,22 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
         return cmbPeriodo;
     }
 
+    public JButton getBtnPorCarrera() {
+        return btnPorCarrera;
+    }
+
+    public JButton getBtnPorCiclo() {
+        return btnPorCiclo;
+    }
+
+    public JButton getBtnPorJornada() {
+        return btnPorJornada;
+    }
+
+    public JButton getBtnPorPeriodo() {
+        return btnPorPeriodo;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,13 +62,15 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
         cmbCarrera = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         cmbPeriodo = new javax.swing.JComboBox<>();
-        btnRepCarreraPrd = new javax.swing.JButton();
+        btnPorPeriodo = new javax.swing.JButton();
+        btnPorCarrera = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         cmbJornada = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cmbCiclo = new javax.swing.JComboBox<>();
-        btnJornadaCiclo = new javax.swing.JButton();
+        btnPorCiclo = new javax.swing.JButton();
+        btnPorJornada = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -78,7 +88,9 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
 
         cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnRepCarreraPrd.setText("Reporte");
+        btnPorPeriodo.setText("Reporte por Periodo");
+
+        btnPorCarrera.setText("Reporte por Carrera");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,17 +98,22 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRepCarreraPrd)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(159, 159, 159)
-                            .addComponent(jLabel2))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnPorCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbCarrera, 0, 200, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPorPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,7 +128,9 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
                     .addComponent(cmbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRepCarreraPrd)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPorPeriodo)
+                    .addComponent(btnPorCarrera))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -125,7 +144,9 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
 
         cmbCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnJornadaCiclo.setText("Reporte");
+        btnPorCiclo.setText("Reporte por Ciclo");
+
+        btnPorJornada.setText("Reporte por Jornada");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -135,17 +156,18 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbCiclo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(158, 158, 158)
                         .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnJornadaCiclo)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbJornada, 0, 200, Short.MAX_VALUE)
+                            .addComponent(btnPorJornada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPorCiclo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbCiclo, 0, 200, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -160,7 +182,9 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
                     .addComponent(cmbJornada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnJornadaCiclo)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPorCiclo)
+                    .addComponent(btnPorJornada))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -190,8 +214,10 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnJornadaCiclo;
-    private javax.swing.JButton btnRepCarreraPrd;
+    private javax.swing.JButton btnPorCarrera;
+    private javax.swing.JButton btnPorCiclo;
+    private javax.swing.JButton btnPorJornada;
+    private javax.swing.JButton btnPorPeriodo;
     private javax.swing.JComboBox<String> cmbCarrera;
     private javax.swing.JComboBox<String> cmbCiclo;
     private javax.swing.JComboBox<String> cmbJornada;

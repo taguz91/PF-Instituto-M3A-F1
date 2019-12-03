@@ -6,22 +6,18 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.curso.CursoBD;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
-import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.ube.VtnReporteNumAlumno;
 
 /**
@@ -46,9 +42,9 @@ public class VtnReporteNumAlumnoCTR {
     public void iniciar() {
         inicarCmbs();
         ctrPrin.agregarVtn(vtn);
-        vtn.getBtnRepCarreraPrd().addActionListener(e -> imprimirPrimer());
-        vtn.getBtnJornadaCiclo().addActionListener(e -> imprimirSeg());
-
+        vtn.getBtnPorCarrera().addActionListener(e -> reportePorCarrera());
+        vtn.getBtnPorJornada().addActionListener(e -> reporteCarreraJornada());
+        vtn.getBtnPorPeriodo().addActionListener(e -> reportePeriodo());
     }
 
     private void inicarCmbs() {
@@ -82,8 +78,8 @@ public class VtnReporteNumAlumnoCTR {
     private void clickPeriodo() {
         int sel = vtn.getCmbPeriodo().getSelectedIndex();
         if (sel > 0) {
-            MateriaBD MBD = new MateriaBD(ctrPrin.getConecta());
-            ciclos = MBD.cargarCiclosCarrera(periodos.get(sel - 1).getCarrera().getId());
+            CursoBD MBD = new CursoBD(ctrPrin.getConecta());
+            ciclos = MBD.cargarCiclosPorPeriodo(periodos.get(sel - 1).getCarrera().getId());
             llenarCmbCiclos(ciclos);
         }
 
@@ -91,11 +87,9 @@ public class VtnReporteNumAlumnoCTR {
 
     private void llenarCmbCiclos(ArrayList<Integer> ciclos) {
         iniciarCmb(vtn.getCmbCiclo());
-        if (ciclos != null) {
-            ciclos.forEach(c -> {
-                vtn.getCmbCiclo().addItem(c + "");
-            });
-        }
+        ciclos.forEach(c -> {
+            vtn.getCmbCiclo().addItem(c + "");
+        });
     }
 
     private void iniciarCmbPeriodo() {
@@ -135,50 +129,71 @@ public class VtnReporteNumAlumnoCTR {
         cmb.addItem("Seleccione");
     }
 
-    private void imprimirPrimer() {
-//        int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-//        if (seleccion >= 0) {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/UBE-principal.jasper"));
-            Map parametro = new HashMap();
-
-            parametro.put("id_carrera", String.valueOf("2"));
-
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, ctrPrin.getConecta().devolverConexion());
-            JasperViewer pv = new JasperViewer(jp, false);
-            pv.setVisible(true);
-            pv.setTitle("Número de alumnos por carrera");
-            //principal.add(pv);
-        } catch (JRException ex) {
-            Logger.getLogger(VtnReporteNumAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
+    private void reportePorCarrera() {
+        int posCarrera = vtn.getCmbCarrera().getSelectedIndex();
+        if (posCarrera > 0) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/UBE-principal.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("id_carrera", carreras.get(posCarrera - 1).getId());
+                ctrPrin.getConecta().mostrarReporte(
+                        jr,
+                        parametro,
+                        "Número de alumnos por carrera"
+                );
+            } catch (JRException ex) {
+                System.out.println("Error reporte: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtn, "Debe seleccionar una carrera");
         }
-
-//        } else {
-//            JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
-//        }
     }
 
-    private void imprimirSeg() {
-//        int seleccion = fCrud_plan_Clases.getTlbTablaPLC().getSelectedRow();
-//        if (seleccion >= 0) {
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/ube2/alumnos_por_jornada.jasper"));
-            Map parametro = new HashMap();
+    private void reporteCarreraJornada() {
+        int posCarrera = vtn.getCmbCarrera().getSelectedIndex();
+        int posJornada = vtn.getCmbJornada().getSelectedIndex();
 
-            parametro.put("id_carrera", String.valueOf("2"));
-            parametro.put("id_jornada", String.valueOf("2"));
+        if (posCarrera > 0 && posJornada > 0) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/alumnos_por_jornada.jasper"));
+                Map parametro = new HashMap();
 
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, ctrPrin.getConecta().devolverConexion());
-            JasperViewer pv = new JasperViewer(jp, false);
-            pv.setVisible(true);
-            pv.setTitle("Número de alumnos por jornada");
-            //principal.add(pv);
-        } catch (JRException ex) {
-            Logger.getLogger(VtnReporteNumAlumnoCTR.class.getName()).log(Level.SEVERE, null, ex);
+                parametro.put("id_carrera", carreras.get(posCarrera - 1).getId());
+                parametro.put("id_jornada", jornadas.get(posJornada - 1).getId());
+
+                ctrPrin.getConecta().mostrarReporte(
+                        jr,
+                        parametro,
+                        "Número de alumnos por jornada"
+                );
+
+            } catch (JRException ex) {
+                System.out.println("Error con el reporte por carrera y jornada. " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtn, "Debe seleccionar una carrera y una jornada.");
         }
-
-//        } else {
-//            JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
-//        }
     }
+
+    private void reportePeriodo() {
+        int posPeriodo = vtn.getCmbPeriodo().getSelectedIndex();
+
+        if (posPeriodo > 0) {
+            try {
+                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/num_alumnos_periodo.jasper"));
+                Map parametro = new HashMap();
+                parametro.put("id_periodo", periodos.get(posPeriodo - 1).getID());
+                ctrPrin.getConecta().mostrarReporte(
+                        jr,
+                        parametro,
+                        "Número de alumnos por jornada"
+                );
+            } catch (JRException ex) {
+                System.out.println("Error con el reporte por carrera y jornada. " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtn, "Debe seleccionar un periodo.");
+        }
+    }
+
 }
