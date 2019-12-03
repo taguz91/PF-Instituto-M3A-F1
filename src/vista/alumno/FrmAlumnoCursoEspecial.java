@@ -51,10 +51,6 @@ public class FrmAlumnoCursoEspecial extends javax.swing.JInternalFrame {
         return cmbPrdLectivo;
     }
 
-    public JLabel getLblError() {
-        return lblError;
-    }
-
     public JTable getTblAlumnos() {
         return tblAlumnos;
     }
@@ -102,7 +98,6 @@ public class FrmAlumnoCursoEspecial extends javax.swing.JInternalFrame {
         btnRegresarTodos = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
-        lblError = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -263,26 +258,19 @@ public class FrmAlumnoCursoEspecial extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
 
-        lblError.setForeground(new java.awt.Color(204, 0, 0));
-        lblError.setText("Debe seleccionar un período lectivo.");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(lblError))
+                .addComponent(btnGuardar)
                 .addGap(0, 13, Short.MAX_VALUE))
         );
 
@@ -335,7 +323,6 @@ public class FrmAlumnoCursoEspecial extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel lblError;
     private javax.swing.JTable tblAlumnos;
     private javax.swing.JTable tblMateriasPen;
     private javax.swing.JTable tblMateriasSelec;

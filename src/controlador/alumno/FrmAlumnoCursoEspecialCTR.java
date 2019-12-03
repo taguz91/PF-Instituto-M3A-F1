@@ -14,7 +14,6 @@ import modelo.alumno.MatriculaBD;
 import modelo.alumno.MatriculaMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
-import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoBD;
@@ -236,6 +235,11 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
         boolean guardar = !css.isEmpty();
         int posAlm = FRM.getTblAlumnos().getSelectedRow();
         int posPrd = FRM.getCmbPrdLectivo().getSelectedIndex();
+
+        if (posAlm < 0 && posPrd < 1) {
+            guardar = false;
+        }
+
         if (guardar) {
             // Receteamos todos 
             ACBD.borrarMatricula();
@@ -277,6 +281,7 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
 
                 if (ACBD.guardarAlmnCurso()) {
                     JOptionPane.showMessageDialog(FRM, "Guadamos correctamente.");
+                    recetearFrm();
                 } else {
                     JOptionPane.showMessageDialog(FRM, "No pudimos guardar.");
                 }
@@ -284,6 +289,16 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
         } else {
             JOptionPane.showMessageDialog(FRM, "El formulario contiene errores.");
         }
+    }
+
+    private void recetearFrm() {
+        css = new ArrayList<>();
+        csp = css;
+        FRM.getTxtBuscar().setText("");
+        mdTblAlm.setRowCount(0);
+        mdTblMP.setRowCount(0);
+        mdTblMS.setRowCount(0);
+        FRM.getCmbCurso().removeAllItems();
     }
 
 }
