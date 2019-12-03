@@ -176,6 +176,8 @@ public class ReportesExcel {
             excel.exportarExcel(columnsName, rows, reportName);
         } catch (SQLException ex) {
             Logger.getLogger(ReportesExcel.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
     }
