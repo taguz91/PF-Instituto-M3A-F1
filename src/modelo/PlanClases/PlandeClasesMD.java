@@ -16,24 +16,26 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  * @author ANDRES BERMEO
  */
 public class PlandeClasesMD {
-   private Integer id_plan_clases;
-   private CursoMD id_curso;
-   private UnidadSilaboMD id_unidad;
-   private String observaciones;
-   private LocalDate fecha_revision;
-   private LocalDate fecha_generacion;
-   private LocalDate fecha_cierre;
-   private String trabajo_autonomo;
-   private int estado_plan;
 
-   //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
-   private MateriaMD id_materia;
-   private PersonaMD id_persona;
+    private Integer id_plan_clases;
+    private CursoMD id_curso;
+    private UnidadSilaboMD id_unidad;
+    private String observaciones;
+    private LocalDate fecha_revision;
+    private LocalDate fecha_generacion;
+    private LocalDate fecha_cierre;
+    private String trabajo_autonomo;
+    private int estado_plan;
+
+    //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
+    private MateriaMD id_materia;
+    private PersonaMD id_persona;
+
     public PlandeClasesMD() {
-        this.id_curso=new CursoMD();
-        this.id_unidad=new UnidadSilaboMD();
-        this.id_materia=new MateriaMD();
-        this.id_persona=new PersonaMD();
+        this.id_curso = new CursoMD();
+        this.id_unidad = new UnidadSilaboMD();
+        this.id_materia = new MateriaMD();
+        this.id_persona = new PersonaMD();
     }
 
     public PlandeClasesMD(CursoMD id_curso, UnidadSilaboMD id_unidad) {
@@ -48,7 +50,7 @@ public class PlandeClasesMD {
         this.id_persona = id_persona;
     }
 
-    public Integer getId_plan_clases() {
+    public Integer getID() {
         return id_plan_clases;
     }
 
@@ -136,9 +138,13 @@ public class PlandeClasesMD {
         this.estado_plan = estado_plan;
     }
 
-    
-    
-   
-   
-   
+    public String descripcion() {
+        return "<html>"
+                + "Curso: "
+                + "<br><center>" + id_curso.getNombre() + "</center><br>"
+                + "Materia: "
+                + "<br><center>" + id_materia.getNombre() + "</center>"
+                + "</html>";
+    }
+
 }

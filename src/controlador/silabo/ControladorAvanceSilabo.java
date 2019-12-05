@@ -5,12 +5,13 @@
  */
 package controlador.silabo;
 
+import controlador.silabo.planesDeClase.ControladorConfiguracion_plan_clases;
 import com.placeholder.PlaceHolder;
 import java.util.List;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.MateriasBDS;
 import vista.silabos.frmAvanceSilabo;
-import vista.silabos.frmPlanClase;
+import vista.silabos.planesDeClase.frmPlanClase;
 import modelo.ConexionBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;

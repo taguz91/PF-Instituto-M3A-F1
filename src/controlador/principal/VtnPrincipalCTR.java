@@ -43,7 +43,7 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
-import controlador.silabo.ControladorCRUDPlanClase;
+import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
@@ -622,12 +622,12 @@ public class VtnPrincipalCTR {
             ctrFrm.iniciar();
         }
     }
-    
+
     public void abrirFrmMatriculaEspecial() {
         FrmAlumnoCursoEspecialCTR ctr = new FrmAlumnoCursoEspecialCTR(this);
         ctr.iniciar();
     }
-    
+
     public void abrirFrmComprobantePago() {
         FRMComprobanteCTR ctr = new FRMComprobanteCTR(this);
         ctr.iniciar();
@@ -667,8 +667,9 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, rolSeleccionado, conexion, vtnPrin);
+        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
+        cP.setDesktop(this);
 
     }
 

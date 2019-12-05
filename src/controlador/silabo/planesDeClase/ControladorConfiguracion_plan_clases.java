@@ -1,4 +1,4 @@
-package controlador.silabo;
+package controlador.silabo.planesDeClase;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmConfiguraciónPlanClase;
+import vista.silabos.planesDeClase.frmConfiguraciónPlanClase;
 
 public class ControladorConfiguracion_plan_clases {
     private int id_silabo=-1;

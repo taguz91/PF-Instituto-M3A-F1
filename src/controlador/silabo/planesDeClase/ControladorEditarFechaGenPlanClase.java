@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.planesDeClase;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
@@ -61,7 +61,7 @@ public class ControladorEditarFechaGenPlanClase {
     }
     private void actualizarFecha(){
         try {
-            new PlandeClasesBD(conexion).editarFechageneracoion(planMD.getId_plan_clases(),feditar.getDch_fecha_g().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            new PlandeClasesBD(conexion).editarFechageneracoion(planMD.getID(),feditar.getDch_fecha_g().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             JOptionPane.showMessageDialog(null, "Se actualizó exitosamente", "Exitoso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             System.out.println();

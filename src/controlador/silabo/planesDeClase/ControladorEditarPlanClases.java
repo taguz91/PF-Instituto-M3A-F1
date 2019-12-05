@@ -1,9 +1,10 @@
-package controlador.silabo;
+
+package controlador.silabo.planesDeClase;
+
+
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import vista.silabos.frmPlanClase;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -11,12 +12,10 @@ import java.awt.event.MouseEvent;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelo.ConexionBD;
@@ -40,68 +39,67 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmPlanClase.CheckListItem;
-import vista.silabos.frmPlanClase.CheckListRenderer;
+import vista.silabos.planesDeClase.frmPlanClase.CheckListItem;
+import vista.silabos.planesDeClase.frmPlanClase;
 
 
-public class Controlador_plan_clases {
-    
-    private PlandeClasesBD plan_clase;
+
+
+public class ControladorEditarPlanClases {
     private final UsuarioBD usuario;
-    private PlandeClasesMD plan_claseMD;
-    private ConexionBD conexion;
-    private final VtnPrincipal vtnPrincipal;
     private frmPlanClase fPlanClase;
-    private SilaboMD silabo;
+    private PlandeClasesMD planClaseMD;
+    private VtnPrincipal principal;
+    private ConexionBD conexion;
     private CursoMD curso;
-    private RecursosPlanClasesMD recursos_planMD;
-    private EstrategiasMetodologicasMD estrate_metoMD;
-    private List<EvaluacionSilaboMD> lista_evualacion_unidad;
-    private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas_antici;
-    private List<RecursosPlanClasesMD> lista_recursoMD;
-    private List<RecursosPlanClasesMD> lista_recursoMD1;
+    private SilaboMD silabo;
     private UnidadSilaboMD unidadsilabo;
+    private PlandeClasesMD plan_claseMD;
     private List<CursoMDS> lista_curso;
-    private List<UnidadSilaboMD> lista_unidadsilabo;
+    private List<PlandeClasesMD> lista_plan;
+    private List<RecursosPlanClasesMD> lista_recursoMD;
+     private List<RecursosPlanClasesMD> lista_recursoMD1;
+    private List<RecursosPlanClasesMD> lista_recursoBD;
     private List<EstrategiasUnidadMD> lista_estrategiasSilabo;
+    private List<UnidadSilaboMD> lista_unidadsilabo;
     private List<EvaluacionSilaboMD> lista_evaluacionesSilabo;
+      private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas_antici;
+    private List<EstrategiasMetodologicasMD> lista_estrategias_metodologicas;
+    private List<EvaluacionSilaboMD> lista_evualacion_unidad;
     private DefaultListModel modelo;
     
-     ArrayList array_Anticipacion=new ArrayList();
+    ArrayList array_Anticipacion=new ArrayList();
     ArrayList array_Construccion=new ArrayList();
     ArrayList array_Consolidacion=new ArrayList();
     DefaultListModel modelo_anticipacion;
     DefaultListModel modelo_Construccion;
     DefaultListModel modelo_Consolidacion;
-    public Controlador_plan_clases(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo,
-            UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
-        this.silabo=silabo;
-        this.curso=curso;
-        this.unidadsilabo=unidadsilabo;
-        this.usuario = usuario;
-        this.vtnPrincipal = vtnPrincipal;
-        this.conexion = conexion;
-    }
 
-    public void iniciaControlador() {
-        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO"+silabo.getID()+" -------------- ID_UNIDAD"+unidadsilabo.getIdUnidad());
-        conexion.conectar();
+    public ControladorEditarPlanClases(UsuarioBD usuario,PlandeClasesMD planClaseMD, VtnPrincipal principal, ConexionBD conexion, CursoMD curso, SilaboMD silabo, UnidadSilaboMD unidadsilabo) {
+         this.usuario = usuario;
+        this.planClaseMD = planClaseMD;
+        this.principal = principal;
+        this.conexion = conexion;
+        this.curso = curso;
+        this.silabo = silabo;
+        this.unidadsilabo = unidadsilabo;
+    }
+    
+    public void iniciaControlador(){
+         conexion.conectar();
         fPlanClase = new frmPlanClase();
-        vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
-        fPlanClase.setTitle(silabo.getMateria().getNombre());
+        principal.getDpnlPrincipal().add(fPlanClase);
+        fPlanClase.setTitle("EDITAR "+silabo.getMateria().getNombre());
         fPlanClase.show();
-        fPlanClase.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
-                (vtnPrincipal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
-         fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
-             fPlanClase.dispose();
-           ControladorConfiguracion_plan_clases cp=new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal, conexion);
-           cp.iniciarControlaador();
-            
-         });
-          PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su descripción.......");
-           IniciaPlanClase(silabo, curso, unidadsilabo);
-          
-      
+         PlaceHolder holder = new PlaceHolder(fPlanClase.getTxt_estrategias(), "Escriba su descripcion.......");
+        fPlanClase.setLocation((principal.getDpnlPrincipal().getSize().width - fPlanClase.getSize().width) / 2,
+                (principal.getDpnlPrincipal().getSize().height - fPlanClase.getSize().height) / 2);
+        
+        fPlanClase.getBtnCancelarPC().addActionListener(a1 -> {
+            fPlanClase.dispose();
+            principal.getMnCtPlandeClase().doClick();
+        });
+        fPlanClase.getBtnCancelarPC().setText("Cancelar");
         fPlanClase.getBtnAgregarPC().addActionListener(ba->{
             int limite=120;
             if(fPlanClase.getTxt_estrategias().getText().length()>=limite){
@@ -113,10 +111,10 @@ public class Controlador_plan_clases {
         fPlanClase.getBtnQuitarPC().addActionListener(qp->{
             eliminarEstrategiasMto();
         });
-        fPlanClase.getBtnEditar().addActionListener(be->{
+        fPlanClase.getBtnEditar().addActionListener((be) -> {
             editarEstrategiasMTO();
-        });
-        fPlanClase.getJlisRecursos().addMouseListener(new MouseAdapter() {
+        } );
+          fPlanClase.getJlisRecursos().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent event ){
                 lista_recursoMD1=new ArrayList();
@@ -135,7 +133,7 @@ public class Controlador_plan_clases {
                         Optional<RecursosMD> recursoSeleccionado=RecursosBD.consultarRecursos(conexion).stream().
                                 filter(r -> r.getNombre_recursos().equals(recurso)).findFirst();
                         
-                        lista_recursoMD1.add(new RecursosPlanClasesMD(recursoSeleccionado.get()));
+                        lista_recursoMD1.add(new RecursosPlanClasesMD(planClaseMD,recursoSeleccionado.get()));
                        
                         System.out.println(recursoSeleccionado.get().getNombre_recursos()+"-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
                     }
@@ -144,7 +142,7 @@ public class Controlador_plan_clases {
                         
             }
          });
-        
+          
          fPlanClase.getTxt_estrategias().addKeyListener(new KeyAdapter() {
              @Override
              public void keyTyped(KeyEvent e){
@@ -155,36 +153,42 @@ public class Controlador_plan_clases {
                  }
              }
 });
-         
-//
-
-        fPlanClase.getBtmnGuardarPc().addActionListener(e -> ejecutar(e));
         
-        
-        lista_estrategias_metodologicas_antici=new ArrayList<>();
-
-        
-     }
+         fPlanClase.getBtmnGuardarPc().addActionListener(e -> ejecutar(e));
+         iniciaPlanClase(planClaseMD, curso, silabo, unidadsilabo);
+          lista_estrategias_metodologicas_antici=new ArrayList<>();
+    }
     
-    private void IniciaPlanClase(SilaboMD silabo,CursoMD curso,UnidadSilaboMD unidadsilabo){
-      lista_curso=CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
+    private void iniciaPlanClase(PlandeClasesMD planclase,CursoMD curso,SilaboMD silabo,UnidadSilaboMD unidadsilabo){
+        lista_curso=CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
         cargarCamposCursoCarreraDocente(lista_curso);
         
-      lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
+        
+        
+        lista_estrategias_metodologicas_antici=EstrategiasMetodologicasBD.consultarEstrategiasMetologicas(conexion, planclase.getID());
+        System.out.println(lista_estrategias_metodologicas_antici.size()+"---->>>tamaño desde la base de datos");
+        lista_unidadsilabo=UnidadSilaboBD.consultarSilaboUnidades(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
         cargarCamposUnidades(lista_unidadsilabo);
         
-     
+        lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
+        CargarEvaluacionesInstrumento(lista_estrategiasSilabo); 
+        
+       lista_plan=PlandeClasesBD.consultarPlanClaseObservacion(conexion, planclase.getID());
+        cargarCampoObservacion(lista_plan);
         
         
-      lista_estrategiasSilabo=EstrategiasUnidadBD.cargarEstrategiasPlanClae(conexion, silabo.getID(), unidadsilabo.getNumeroUnidad());
-        CargarEvaluacionesInstrumento(lista_estrategiasSilabo);
         
-      lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
-      CargarRecursos(lista_recursoMD);
+       lista_recursoBD=RecursosPlanClasesBD.consultarRecursosPlanClase(conexion, planclase.getID());
        
-      
+        lista_recursoMD1=lista_recursoBD;
+        
+       lista_recursoMD=RecursosPlanClasesBD.consultarRecursos(conexion);
+       CargarRecursos(lista_recursoMD);
+       
+       lista_estrategias_metodologicas=EstrategiasMetodologicasBD.consultarEstrategiasMetologicas(conexion, planclase.getID());
+        cargarEstrategiaPlanClase(lista_estrategias_metodologicas);
     }
-    public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
+     public  void cargarCamposCursoCarreraDocente(List<CursoMDS> lista){
         for (CursoMDS cursoMDS : lista) {
         fPlanClase.getTxtCarrera().setText(cursoMDS.getId_carrera().getNombre());
         fPlanClase.getTxtCarrera().setEnabled(false);
@@ -198,8 +202,15 @@ public class Controlador_plan_clases {
         fPlanClase.getTxtCicloParalelo().setEnabled(false);
         }
     }
-    
-    public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
+     private void CargarEvaluacionesInstrumento(List<EstrategiasUnidadMD> lista){
+        fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
+        modelo=new DefaultListModel();
+        for (EstrategiasUnidadMD eu : lista) {
+            modelo.addElement(eu.getEstrategia().getDescripcionEstrategia());
+        }
+        fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
+    }
+       public void cargarCamposUnidades(List<UnidadSilaboMD> lista_unidades){
         for (UnidadSilaboMD lista_unidad : lista_unidades) {
            fPlanClase.getTxrObjetivoPC().setText(lista_unidad.getObjetivoEspecificoUnidad());
            fPlanClase.getTxrObjetivoPC().setEnabled(false);
@@ -230,74 +241,110 @@ public class Controlador_plan_clases {
         }
     }
     
-    
-    
-    private void CargarEvaluacionesInstrumento(List<EstrategiasUnidadMD> lista){
-        fPlanClase.getJlistInstrumentoEvaluacion().removeAll();
-        modelo=new DefaultListModel();
-        for (EstrategiasUnidadMD eu : lista) {
-            modelo.addElement(eu.getEstrategia().getDescripcionEstrategia());
-        }
-        fPlanClase.getJlistInstrumentoEvaluacion().setModel(modelo);
-    }
-    
-    private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
+
+      
+     private void CargarRecursos(List<RecursosPlanClasesMD> lista_recursoMD){    
      fPlanClase.getJlisRecursos().removeAll();
      DefaultListModel modeloRecursos = new DefaultListModel();
-     fPlanClase.getJlisRecursos().setCellRenderer(new CheckListRenderer());
+     fPlanClase.getJlisRecursos().setCellRenderer(new frmPlanClase.CheckListRenderer());
      fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+     
        for (RecursosPlanClasesMD lista_recurso_md : lista_recursoMD) {
-           modeloRecursos.addElement(new CheckListItem(lista_recurso_md.getId_recursos().getNombre_recursos()));
+           modeloRecursos.addElement(new frmPlanClase.CheckListItem(lista_recurso_md.getId_recursos().getNombre_recursos()));
        }
-       fPlanClase.getJlisRecursos().setModel(modeloRecursos);
+        for (int i = 0; i < fPlanClase.getJlisRecursos().getModel().getSize(); i++) {
+                    CheckListItem item=(CheckListItem) fPlanClase.getJlisRecursos().getModel().getElementAt(i);
+                    for (RecursosPlanClasesMD recursosPlanClasesMD : lista_recursoBD) {
+                             if (modeloRecursos.get(i).toString().equals(recursosPlanClasesMD.getId_recursos().getNombre_recursos())) {
+                            item.setSelected(true);
+                        }
+                       }
+                   
+                }
        
    }
-    
      
-    public boolean guardar_plan_de_clase(){
-        try{
+    
+     private void cargarCampoObservacion(List<PlandeClasesMD> lista_pla){
+         for (PlandeClasesMD plandeClasesMD : lista_pla) {
+             fPlanClase.getTxrObservacionesPc().setText(plandeClasesMD.getObservaciones());
+             fPlanClase.getTxrTrabajoAutonomo().setText(plandeClasesMD.getTrabajo_autonomo());
+         }
+     }
+     
+     private void cargarEstrategiaPlanClase(List<EstrategiasMetodologicasMD> lista_estrategias_metodo){
+
+        modelo_anticipacion= new DefaultListModel();
+        modelo_Construccion = new DefaultListModel();
+        modelo_Consolidacion = new DefaultListModel(); 
+         for (int i = 0; i < lista_estrategias_metodo.size(); i++) {
+             if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Anticipacion")){
+                 modelo_anticipacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                 
+                 array_Anticipacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                 
+                 
+             }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Construccion")){
+                 modelo_Construccion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                 
+                 array_Construccion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                 
+             }else if(lista_estrategias_metodo.get(i).getTipo_estrategias_metodologicas().equals("Consolidacion")){
+                 
+                modelo_Consolidacion.addElement(lista_estrategias_metodo.get(i).getNombre_estrategia());
+                array_Consolidacion.add(lista_estrategias_metodo.get(i).getNombre_estrategia());
+             }
+             
+         }
+                 fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
+                 fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
+                 fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+     }
+     
+     public boolean actualizarPlanClase(){
+         try{
+        new PlandeClasesBD(conexion).eliminarPlanClase(planClaseMD);
+        
         plan_claseMD=new PlandeClasesMD(curso, unidadsilabo);
         plan_claseMD.getId_curso().setId(curso.getId());
         plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
         plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
         plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
-        if (new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)==true) {
-        insertarRecursosPlanClases();
-        insertarEstrategiasMetodologicas();
+       if(new PlandeClasesBD(conexion).insertarPlanClases(plan_claseMD)==true);  
+        actualizarRecusosPlanClases();
+        actulizarEstrategiasMetodologicas();
         return true;
-         }
-        }catch(Exception e){
+         }catch(Exception e){
             System.out.println("Fallo al guardar");
         }
-            return false;
-        }
-    private void insertarRecursosPlanClases(){
-        plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
-        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
-        for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
-            recursoPlam.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
-            RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
-             rcp.insertarRecursosPlanClases2(recursoPlam, recursoPlam.getId_plan_clases().getId_plan_clases());
-        }
-        
-    }
-    
-   
-   
+         return false;
+     }
      
-//    public EstrategiasUnidadMD estrategiaSeleccionado(){
-//        String item=fPlanClase.getCmbxEstrategiasPC().getSelectedItem().toString();
-//        Optional<EstrategiasUnidadMD> estrate_selecc=lista_estrategiasSilabo.stream().
-//                filter(r -> r.getIdEstrategia().getDescripcionEstrategia().equals(item)).findFirst();
-//        return estrate_selecc.get();
-//    }
-    
-    private void agregarEstrategiasMetologicas(){
-        
+     
+     private void actualizarRecusosPlanClases(){
+         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getID());
+        for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
+            recursoPlam.getId_plan_clases().setId_plan_clases(plan_claseMD.getID());
+            RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
+             rcp.insertarRecursosPlanClases2(recursoPlam, recursoPlam.getId_plan_clases().getID());
+        }
+     }
+     
+
+     
+    public void recargarElemwentos(){
+        modelo_anticipacion.removeAllElements();
+        for (int i = 0; i < array_Anticipacion.size(); i++) {
+            modelo_anticipacion.addElement(array_Anticipacion.get(i));
+            System.out.println(array_Anticipacion+"-----------------------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<array_recargado_ANTICIPACION");
+        }
+    }
+     private void agregarEstrategiasMetologicas(){
         modelo_anticipacion= new DefaultListModel();
         modelo_Construccion = new DefaultListModel();
-        modelo_Consolidacion = new DefaultListModel();
-        if (fPlanClase.getListConsolidacionPC().isShowing()) {
+        modelo_Consolidacion = new DefaultListModel();        
+         if (fPlanClase.getListConsolidacionPC().isShowing()) {//Anticipacion
             if (fPlanClase.getTxt_estrategias().getText().equals("")
                     || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -309,14 +356,15 @@ public class Controlador_plan_clases {
                 } else {
                     array_Consolidacion.add(fPlanClase.getTxt_estrategias().getText());
                     for (int i = 0; i < array_Consolidacion.size(); i++) {
-                        modelo_Consolidacion.addElement(array_Consolidacion.get(i));
+                       modelo_Consolidacion.addElement(array_Consolidacion.get(i));
                     }
                     fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
                     fPlanClase.getTxt_estrategias().setText("");
                 }
+                
             }
             
-        } else if(fPlanClase.getListAnticipacionPC().isShowing()){
+        } else if(fPlanClase.getListAnticipacionPC().isShowing()){//Construccion
             if (fPlanClase.getTxt_estrategias().getText().equals("")
                     || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -328,13 +376,14 @@ public class Controlador_plan_clases {
                 } else {
                     array_Anticipacion.add(fPlanClase.getTxt_estrategias().getText());
                     for (int i = 0; i < array_Anticipacion.size(); i++) {
-                       modelo_anticipacion.addElement(array_Anticipacion.get(i));
+                        modelo_anticipacion.addElement(array_Anticipacion.get(i));
                     }
                     fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
                     fPlanClase.getTxt_estrategias().setText("");
                 }
             }
-        } else if(fPlanClase.getListConstruccionPC().isShowing()){
+           
+        } else if(fPlanClase.getListConstruccionPC().isShowing()){//Consolidacion
             if (fPlanClase.getTxt_estrategias().getText().equals("")
                     || fPlanClase.getTxt_estrategias().getText().equals("Escriba su estrategia.......")) {
                 JOptionPane.showMessageDialog(fPlanClase,"Ingrese una estrategia", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -346,51 +395,53 @@ public class Controlador_plan_clases {
                 } else {
                     array_Construccion.add(fPlanClase.getTxt_estrategias().getText());
                     for (int i = 0; i < array_Construccion.size(); i++) {
-                       modelo_Construccion.addElement(array_Construccion.get(i));
+                        modelo_Construccion.addElement(array_Construccion.get(i));
                     }
                     fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
                     fPlanClase.getTxt_estrategias().setText("");
                 }
+                
             }
         }
     }
     private void eliminarEstrategiasMto(){
+        
          try {
             String indice;
             String indice2;
             String indice3;
             
-            if (fPlanClase.getListAnticipacionPC().isShowing()) {
-                 if (fPlanClase.getListAnticipacionPC().getSelectedIndex()==-1) {
+            if (fPlanClase.getListConsolidacionPC().isShowing()) {
+                 if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
+                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemento a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    indice=fPlanClase.getListConsolidacionPC().getSelectedValue();
+                    modelo_Consolidacion.removeElement(indice);
+                    array_Consolidacion.remove(indice);
+                    fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
+                    
+                    recargarElemwentos3();
+                }
+            }else if (fPlanClase.getListAnticipacionPC().isShowing()){
+                if (fPlanClase.getListAnticipacionPC().getSelectedIndex()==-1) {
                     JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    indice=fPlanClase.getListAnticipacionPC().getSelectedValue();
-                    modelo_anticipacion.removeElement(indice);
-                    array_Anticipacion.remove(indice);
+                    indice2=fPlanClase.getListAnticipacionPC().getSelectedValue();
+                    modelo_anticipacion.removeElement(indice2);
+                    array_Anticipacion.remove(indice2);
                     fPlanClase.getListAnticipacionPC().setModel(modelo_anticipacion);
-                    
                     recargarElemwentos();
                 }
             }else if (fPlanClase.getListConstruccionPC().isShowing()){
                 if (fPlanClase.getListConstruccionPC().getSelectedIndex()==-1) {
                     JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    indice2=fPlanClase.getListConstruccionPC().getSelectedValue();
-                    modelo_Construccion.removeElement(indice2);
-                    array_Construccion.remove(indice2);
+                    indice3=fPlanClase.getListConstruccionPC().getSelectedValue();
+                    modelo_Construccion.removeElement(indice3);
+                    array_Construccion.remove(indice3);
                     fPlanClase.getListConstruccionPC().setModel(modelo_Construccion);
-                    recargarElemwentos2();
-                }
-            }else if (fPlanClase.getListConsolidacionPC().isShowing()){
-                if (fPlanClase.getListConsolidacionPC().getSelectedIndex()==-1) {
-                    JOptionPane.showMessageDialog(fPlanClase,"Seleccione el elemneto a quitar", "ERROR", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    indice3=fPlanClase.getListConsolidacionPC().getSelectedValue();
-                    modelo_Consolidacion.removeElement(indice3);
-                    array_Consolidacion.remove(indice3);
-                    fPlanClase.getListConsolidacionPC().setModel(modelo_Consolidacion);
                     
-                    recargarElemwentos3();
+                    recargarElemwentos2();
                 }
             }
         } catch (Exception e) {
@@ -399,7 +450,7 @@ public class Controlador_plan_clases {
         
     }
     
-    public void editarEstrategiasMTO(){
+     public void editarEstrategiasMTO(){
         String inx;
         if (fPlanClase.getListAnticipacionPC().isShowing()) {
             if (fPlanClase.getListAnticipacionPC().getSelectedIndex()==-1) {
@@ -448,16 +499,6 @@ public class Controlador_plan_clases {
             }
         }
     }
-    
-    public void recargarElemwentos(){
-        modelo_anticipacion.removeAllElements();
-        for (int i = 0; i < array_Anticipacion.size(); i++) {
-            modelo_anticipacion.addElement(array_Anticipacion.get(i));
-            
-           
-        }
-    }
-    
     public void recargarElemwentos2(){
         modelo_Construccion.removeAllElements();
         for (int i = 0; i < array_Construccion.size(); i++) {
@@ -471,32 +512,8 @@ public class Controlador_plan_clases {
         }
     }
     
-    
-    private boolean validarCampos(){
-         boolean valid=true;
-        if(fPlanClase.getTxrTrabajoAutonomo().getText().length()==0){
-            
-            valid= false;
-        }
-        if(lista_recursoMD1==null ){
-            valid=false;
-        }
-        if(fPlanClase.getListAnticipacionPC().getModel().getSize()<=0 && fPlanClase.getListConstruccionPC().getModel().getSize()<=0 &&
-                fPlanClase.getListConsolidacionPC().getModel()
-                        .getSize()<=0){
-            valid=false;
-        }
-        
-
-            
-
-        return valid;
-    
-    }
-    
-      
-    private void insertarEstrategiasMetodologicas(){
-
+     private void actulizarEstrategiasMetodologicas(){
+                   
                          for (int j = 0; j < fPlanClase.getListAnticipacionPC().getModel().getSize(); j++) {
                            if(fPlanClase.getListAnticipacionPC().getModel().getSize()>0){
                           String nombre=fPlanClase.getListAnticipacionPC().getModel().getElementAt(j).toString();
@@ -527,20 +544,37 @@ public class Controlador_plan_clases {
                         }          
         
         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
-        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getID());
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
-            em.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
+            em.getId_plan_clases().setId_plan_clases(plan_claseMD.getID());
             EstrategiasMetodologicasBD embd= new EstrategiasMetodologicasBD(conexion);
-              embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getId_plan_clases());
+              embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getID());
         }
+     }
+     
+     private boolean validarCampos(){
+         boolean valid=true;
+        if(fPlanClase.getTxrTrabajoAutonomo().getText().length()==0){
+            
+            valid= false;
+        }
+        if(lista_recursoMD1==null ){
+            valid=false;
+        }
+        if(fPlanClase.getListAnticipacionPC().getModel().getSize()<=0 && fPlanClase.getListConstruccionPC().getModel().getSize()<=0 &&
+                fPlanClase.getListConsolidacionPC().getModel()
+                        .getSize()<=0){
+            valid=false;
+        }
+        
 
+            
+
+        return valid;
+    
     }
-    
-    
-
-    
-    
-    private boolean accion=true;
+     
+      private boolean accion=true;
      private void ejecutar(ActionEvent e) {
 
         if (accion) {
@@ -550,7 +584,7 @@ public class Controlador_plan_clases {
                         boolean aux=false;
                         fPlanClase.getBtmnGuardarPc().setEnabled(false);
                         fPlanClase.getBtnCancelarPC().setEnabled(false);
-                        vtnPrincipal.getLblEstado().setText("                                  Guardando su plan de clase! Espere por favor...........");
+                        principal.getLblEstado().setText("                                  Guardando su plan de clase! Espere por favor...........");
                         
                     try {
                         Thread.sleep(400);
@@ -558,12 +592,12 @@ public class Controlador_plan_clases {
                         Logger.getLogger(Controlador_plan_clases.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    aux=guardar_plan_de_clase();
+                    aux=actualizarPlanClase();
                     
                     if(aux==true){
                          JOptionPane.showMessageDialog(fPlanClase, "Se guardó correctamente!");
                          fPlanClase.dispose();
-                         vtnPrincipal.getMnCtPlandeClase().doClick();
+                        principal.getMnCtPlandeClase().doClick();
                     }else{
                         JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo! ", "Aviso", JOptionPane.ERROR_MESSAGE);
                         fPlanClase.getBtmnGuardarPc().setEnabled(true);
@@ -575,7 +609,7 @@ public class Controlador_plan_clases {
 
                 
 
-                vtnPrincipal.getLblEstado().setText("");
+                principal.getLblEstado().setText("");
                 accion = true;
 
             }).start();
@@ -583,6 +617,3 @@ public class Controlador_plan_clases {
 
     }
 }
-
-
-

@@ -223,9 +223,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Registro Notas Duales"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnCtNotasDualesActionPerformed"/>
-                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
                   <Properties>
@@ -240,6 +237,11 @@
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtRendimientoAcademico">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rendimiento Acad&#xe9;mico"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Registro Notas Finales"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>

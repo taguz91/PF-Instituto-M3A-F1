@@ -50,7 +50,7 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD{
 "	  set id_recurso =? \n" +
 "	WHERE id_plan_clases=? and id_recurso=?");
             st.setInt(1, rP.getId_recursos().getId_recurso());
-            st.setInt(2, rP.getId_plan_clases().getId_plan_clases());
+            st.setInt(2, rP.getId_plan_clases().getID());
             st.setInt(3, rP.getId_recursos().getId_recurso());
             st.executeUpdate();
             System.out.println(st);

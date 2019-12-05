@@ -4,16 +4,20 @@ import utils.CONS;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -92,7 +96,7 @@ public class ConnDBPool {
             }
 
             stmt.executeUpdate();
-            
+
             return null;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -233,11 +237,8 @@ public class ConnDBPool {
     public ResultSet ejecutarQuery(String sql, Map<Integer, Object> parametros) {
         Connection conn = getConnection();
         try {
-            if (parametros == null) {
-                stmt = conn.prepareStatement(sql);
-            } else {
-                stmt = prepararStatement(sql, conn, parametros);
-            }
+
+            stmt = prepararStatement(sql, conn, parametros);
             rs = stmt.executeQuery();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -405,6 +406,14 @@ public class ConnDBPool {
             );
         }
         return noSQLPOOL(ps);
+    }
+
+    public String useINsql(List<Integer> ids, String statement) {
+        String sqlIn = ids.stream()
+                .map(x -> String.valueOf(x))
+                .collect(Collectors.joining(",", "(", ")"));
+
+        return statement.replace("(?)", sqlIn);
     }
 
 }

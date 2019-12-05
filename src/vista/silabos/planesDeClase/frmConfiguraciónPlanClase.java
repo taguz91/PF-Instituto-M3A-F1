@@ -1,4 +1,4 @@
-package vista.silabos;
+package vista.silabos.planesDeClase;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

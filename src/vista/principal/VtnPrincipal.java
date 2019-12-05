@@ -475,6 +475,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtRendimientoAcademico = new javax.swing.JMenuItem();
+        mnCtNotas1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
@@ -893,11 +894,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.setText("Notas");
 
         mnCtNotasDuales.setText("Registro Notas Duales");
-        mnCtNotasDuales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCtNotasDualesActionPerformed(evt);
-            }
-        });
         mnNotas.add(mnCtNotasDuales);
 
         mnCtTipoNotas.setText("Tipos de notas");
@@ -908,6 +904,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         mnCtRendimientoAcademico.setText("Rendimiento Académico");
         mnNotas.add(mnCtRendimientoAcademico);
+
+        mnCtNotas1.setText("Registro Notas Finales");
+        mnNotas.add(mnCtNotas1);
 
         mnTipoNotas.add(mnNotas);
 
@@ -1104,10 +1103,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mnIgPrdLectivoActionPerformed
 
-    private void mnCtNotasDualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCtNotasDualesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mnCtNotasDualesActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MnBiblioteca;
@@ -1170,6 +1165,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtMiPerfil;
     private javax.swing.JMenuItem mnCtNotas;
+    private javax.swing.JMenuItem mnCtNotas1;
     private javax.swing.JMenuItem mnCtNotasDuales;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPlandeClase;
