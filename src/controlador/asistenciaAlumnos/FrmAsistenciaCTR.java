@@ -2,7 +2,6 @@ package controlador.asistenciaAlumnos;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.vistaReportes.ReporteEstadoAlumCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -50,7 +49,7 @@ public class FrmAsistenciaCTR {
 
     // CALCULOS SEMANAS
     private static int semanas;
-    private static ArrayList<Integer> listadias = new ArrayList<>();
+    private static final ArrayList<Integer> listadias = new ArrayList<>();
     private static int num_horas;
     private static String dia_String;
     private static int dia;
