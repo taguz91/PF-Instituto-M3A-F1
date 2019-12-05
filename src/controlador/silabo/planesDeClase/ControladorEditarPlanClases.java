@@ -39,8 +39,8 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmPlanClase.CheckListItem;
-import vista.silabos.frmPlanClase;
+import vista.silabos.planesDeClase.frmPlanClase.CheckListItem;
+import vista.silabos.planesDeClase.frmPlanClase;
 
 
 

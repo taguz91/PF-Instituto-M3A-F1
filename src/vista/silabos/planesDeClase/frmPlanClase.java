@@ -1,4 +1,4 @@
-package vista.silabos;
+package vista.silabos.planesDeClase;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import javax.swing.ImageIcon;

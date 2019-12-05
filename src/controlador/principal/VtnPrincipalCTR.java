@@ -43,7 +43,7 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
-import controlador.silabo.planesDeClase.ControladorCRUDPlanClase;
+import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
@@ -667,7 +667,7 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        ControladorCRUDPlanClase cP = new ControladorCRUDPlanClase(usuario, rolSeleccionado, conexion, vtnPrin);
+        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
 
     }

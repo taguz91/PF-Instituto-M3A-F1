@@ -2,7 +2,7 @@ package controlador.silabo.planesDeClase;
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import vista.silabos.frmPlanClase;
+import vista.silabos.planesDeClase.frmPlanClase;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -40,8 +40,8 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmPlanClase.CheckListItem;
-import vista.silabos.frmPlanClase.CheckListRenderer;
+import vista.silabos.planesDeClase.frmPlanClase.CheckListItem;
+import vista.silabos.planesDeClase.frmPlanClase.CheckListRenderer;
 
 
 public class Controlador_plan_clases {

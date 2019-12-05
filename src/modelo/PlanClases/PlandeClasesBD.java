@@ -1,4 +1,4 @@
-  package modelo.PlanClases;
+package modelo.PlanClases;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.persona.PersonaMD;
@@ -17,7 +17,22 @@ import modelo.unidadSilabo.UnidadSilaboMD;
 
 public class PlandeClasesBD extends PlandeClasesMD {
 
+    private final ConnDBPool CON = ConnDBPool.single();
+
+    private static PlandeClasesBD INSTANCE = null;
+
+    public static PlandeClasesBD single() {
+        if (INSTANCE == null) {
+            INSTANCE = new PlandeClasesBD();
+        }
+
+        return INSTANCE;
+    }
+
     private ConexionBD conexion;
+
+    public PlandeClasesBD() {
+    }
 
     public PlandeClasesBD(ConexionBD conexion) {
         this.conexion = conexion;
@@ -61,7 +76,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return true;
     }
 
-    public boolean editarFechageneracoion(int  idpla,LocalDate fecha) {
+    public boolean editarFechageneracoion(int idpla, LocalDate fecha) {
 
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"PlandeClases\"\n"
@@ -260,6 +275,72 @@ public class PlandeClasesBD extends PlandeClasesMD {
             Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return planClase;
+    }
+
+    public List<CursoMD> cursosSinPlanes(int idPlanClasesRef) {
+        String SELECT = ""
+                + "WITH mi_plan AS (\n"
+                + "	SELECT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_docente,\n"
+                + "		\"Cursos\".id_materia \n"
+                + "	FROM\n"
+                + "		\"PlandeClases\"\n"
+                + "		INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"PlandeClases\".id_curso \n"
+                + "	WHERE\n"
+                + "		\"PlandeClases\".id_plan_clases = " + idPlanClasesRef + " \n"
+                + "	),\n"
+                + "	mis_cursos AS (\n"
+                + "	SELECT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_docente,\n"
+                + "		\"Cursos\".id_materia,\n"
+                + "		\"Cursos\".curso_nombre,\n"
+                + "		\"Cursos\".id_curso \n"
+                + "	FROM\n"
+                + "		\"Cursos\"\n"
+                + "		INNER JOIN mi_plan ON mi_plan.id_prd_lectivo = \"Cursos\".id_prd_lectivo \n"
+                + "		AND mi_plan.id_materia = \"Cursos\".id_materia \n"
+                + "		AND mi_plan.id_docente = \"Cursos\".id_docente \n"
+                + "	),\n"
+                + "	mis_planes AS ( \n"
+                + "     SELECT \n"
+                + "             mis_cursos.* \n"
+                + "     FROM \n"
+                + "             \"PlandeClases\" \n"
+                + "             INNER JOIN mis_cursos ON mis_cursos.id_curso = \"PlandeClases\".id_curso \n"
+                + "     ) \n"
+                + "SELECT\n"
+                + "    mis_cursos.id_curso,\n"
+                + "    mis_cursos.curso_nombre\n"
+                + "FROM\n"
+                + "	mis_cursos \n"
+                + "WHERE\n"
+                + "	mis_cursos.id_curso NOT IN ( SELECT id_curso FROM mis_planes )"
+                + "";
+
+        List<CursoMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                CursoMD curso = new CursoMD();
+
+                curso.setId(rs.getInt("id_curso"));
+                curso.setNombre(rs.getString("cursos_nombre"));
+
+                lista.add(curso);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
     }
 
     public void aprobarPlanClase(int id_plan, int estado) {
