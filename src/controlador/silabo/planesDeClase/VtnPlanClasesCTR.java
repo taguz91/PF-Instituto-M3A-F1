@@ -5,6 +5,7 @@
  */
 package controlador.silabo.planesDeClase;
 
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -55,26 +56,38 @@ import vista.silabos.frmCargando1;
 public class VtnPlanClasesCTR {
 
     private final UsuarioBD usuario;
-    private ConexionBD conexion;
+    private final ConexionBD conexion;
     private final VtnPrincipal principal;
     private VtnPlanClase vista;
     private List<SilaboMD> silabosDocente;
-    private List<CarreraMD> carreras_docente;
-    private List<JornadaMD> lista_jornadas;
-    private List<PlandeClasesMD> lista_plan_clases;
+    private List<CarreraMD> carrerasDocente;
+    private List<JornadaMD> jornadas;
+    private List<PlandeClasesMD> planes;
     private List<PeriodoLectivoMD> periodosCarrera;
     private List<UnidadSilaboMD> unidadesSilabo;
     private List<CursoMD> lista_curso;
-    private int id_periodo_lectivo = -1;
+    private int idPeriodo = -1;
     private boolean esCordinador = false;
     private PlandeClasesMD planMD;
-    private RolBD rol;
+    private final RolBD rol;
+
+    private VtnPrincipalCTR desktop;
+
+    private final PlandeClasesBD CON = PlandeClasesBD.single();
 
     public VtnPlanClasesCTR(UsuarioBD usuario, RolBD rol, ConexionBD conexion, VtnPrincipal principal) {
         this.usuario = usuario;
         this.conexion = conexion;
         this.principal = principal;
         this.rol = rol;
+    }
+
+    public VtnPrincipalCTR getDesktop() {
+        return desktop;
+    }
+
+    public void setDesktop(VtnPrincipalCTR desktop) {
+        this.desktop = desktop;
     }
 
     public void iniciaControlador() {
@@ -193,16 +206,16 @@ public class VtnPlanClasesCTR {
             if (esCordinador) {
                 String[] parametros1 = {vista.getCmb_Carreras().getSelectedItem().toString(), vista.getCmbJornadas().getSelectedItem().toString(), vista.getTxtBuscarPLC().getText(),
                     String.valueOf(getid_periodo())};
-                lista_plan_clases = PlandeClasesBD.consultarPlanClaseCoordinador(conexion, parametros1);
+                planes = PlandeClasesBD.consultarPlanClaseCoordinador(conexion, parametros1);
             } else {
 
-                lista_plan_clases = PlandeClasesBD.consultarPlanClase(conexion, parametros);
+                planes = PlandeClasesBD.consultarPlanClase(conexion, parametros);
             }
             for (int j = vista.getTbl().getModel().getRowCount() - 1; j >= 0; j--) {
                 modelotabla.removeRow(j);
             }
 
-            for (PlandeClasesMD plc : lista_plan_clases) {
+            for (PlandeClasesMD plc : planes) {
                 String estado = null;
                 Boolean estadoB = null;
 
@@ -214,7 +227,7 @@ public class VtnPlanClasesCTR {
                     estadoB = true;
                 }
                 modelotabla.addRow(new Object[]{
-                    plc.getId_plan_clases(), plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_unidad().getIdUnidad(),
+                    plc.getID(), plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_unidad().getIdUnidad(),
                     estado, estadoB, plc.getFecha_generacion()
                 });
             }
@@ -241,14 +254,14 @@ public class VtnPlanClasesCTR {
 
     private void CARGAR_COMBO_CARRERAS() {
         vista.getCmb_Carreras().removeAllItems();
-        carreras_docente = new ArrayList<>();
+        carrerasDocente = new ArrayList<>();
         if (esCordinador) {
-            carreras_docente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
+            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
         } else {
-            carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+            carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
         }
 
-        carreras_docente.forEach((cmd) -> {
+        carrerasDocente.forEach((cmd) -> {
             vista.getCmb_Carreras().addItem(cmd.getNombre());
         });
 
@@ -257,8 +270,8 @@ public class VtnPlanClasesCTR {
 
     private void CARGAR_JORNADAS() {
         vista.getCmbJornadas().removeAllItems();
-        lista_jornadas = JornadasDB.consultarJornadas(conexion);
-        lista_jornadas.forEach((lj) -> {
+        jornadas = JornadasDB.consultarJornadas(conexion);
+        jornadas.forEach((lj) -> {
             vista.getCmbJornadas().addItem(lj.getNombre());
         });
 
@@ -266,8 +279,8 @@ public class VtnPlanClasesCTR {
 
     private PlandeClasesMD plan_clas_selecc() {
         int seleccion = vista.getTbl().getSelectedRow();
-        Optional<PlandeClasesMD> plan_clase_selec = lista_plan_clases.stream().
-                filter(pl -> pl.getId_plan_clases() == Integer.parseInt(vista.getTbl().getValueAt(seleccion, 0).toString())).findFirst();
+        Optional<PlandeClasesMD> plan_clase_selec = planes.stream().
+                filter(pl -> pl.getID() == Integer.parseInt(vista.getTbl().getValueAt(seleccion, 0).toString())).findFirst();
 
         return plan_clase_selec.get();
     }
@@ -309,7 +322,7 @@ public class VtnPlanClasesCTR {
 
                 parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getId_unidad().getIdUnidad()));
                 parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getId_curso().getId()));
-                parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getId_plan_clases()));
+                parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getID()));
 
                 JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
                 JasperViewer pv = new JasperViewer(jp, false);
@@ -334,10 +347,10 @@ public class VtnPlanClasesCTR {
                 .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                    id_periodo_lectivo = obj.getID();
+                    idPeriodo = obj.getID();
                 });
 
-        return id_periodo_lectivo;
+        return idPeriodo;
     }
 
     public List<SilaboMD> cargar_silabo() {
@@ -418,7 +431,15 @@ public class VtnPlanClasesCTR {
 
             int idPlan = (Integer) vista.getTbl().getValueAt(row, 0);
 
-            System.out.println(idPlan);
+            VtnCopiarPlanCTR vtn = new VtnCopiarPlanCTR(desktop);
+
+            vtn.setModelo(
+                    planes.stream()
+                            .filter(item -> item.getID().equals(idPlan))
+                            .findFirst()
+                            .get()
+            );
+            vtn.Init();
 
         }
     }

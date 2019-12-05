@@ -48,7 +48,7 @@ public class PlandeClasesMD {
         this.id_persona = id_persona;
     }
 
-    public Integer getId_plan_clases() {
+    public Integer getID() {
         return id_plan_clases;
     }
 

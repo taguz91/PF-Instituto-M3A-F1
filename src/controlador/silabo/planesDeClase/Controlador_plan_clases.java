@@ -273,11 +273,11 @@ public class Controlador_plan_clases {
         }
     private void insertarRecursosPlanClases(){
         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
-        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getID());
         for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
-            recursoPlam.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
+            recursoPlam.getId_plan_clases().setId_plan_clases(plan_claseMD.getID());
             RecursosPlanClasesBD rcp=new RecursosPlanClasesBD(conexion);
-             rcp.insertarRecursosPlanClases2(recursoPlam, recursoPlam.getId_plan_clases().getId_plan_clases());
+             rcp.insertarRecursosPlanClases2(recursoPlam, recursoPlam.getId_plan_clases().getID());
         }
         
     }
@@ -527,11 +527,11 @@ public class Controlador_plan_clases {
                         }          
         
         plan_claseMD=PlandeClasesBD.consultarUltimoPlanClase(conexion,curso.getId(),unidadsilabo.getIdUnidad());
-        plan_claseMD.setId_plan_clases(plan_claseMD.getId_plan_clases());
+        plan_claseMD.setId_plan_clases(plan_claseMD.getID());
         for(EstrategiasMetodologicasMD em:lista_estrategias_metodologicas_antici){
-            em.getId_plan_clases().setId_plan_clases(plan_claseMD.getId_plan_clases());
+            em.getId_plan_clases().setId_plan_clases(plan_claseMD.getID());
             EstrategiasMetodologicasBD embd= new EstrategiasMetodologicasBD(conexion);
-              embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getId_plan_clases());
+              embd.insertarEstrategiasMetodologicas2(em, em.getId_plan_clases().getID());
         }
 
     }

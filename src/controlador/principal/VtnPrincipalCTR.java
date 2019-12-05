@@ -622,12 +622,12 @@ public class VtnPrincipalCTR {
             ctrFrm.iniciar();
         }
     }
-    
+
     public void abrirFrmMatriculaEspecial() {
         FrmAlumnoCursoEspecialCTR ctr = new FrmAlumnoCursoEspecialCTR(this);
         ctr.iniciar();
     }
-    
+
     public void abrirFrmComprobantePago() {
         FRMComprobanteCTR ctr = new FRMComprobanteCTR(this);
         ctr.iniciar();
@@ -669,6 +669,7 @@ public class VtnPrincipalCTR {
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
         VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, conexion, vtnPrin);
         cP.iniciaControlador();
+        cP.setDesktop(this);
 
     }
 

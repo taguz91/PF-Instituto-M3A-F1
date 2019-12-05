@@ -211,7 +211,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
     public void eliminarPlanClase(PlandeClasesMD pl) {
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("delete from \"PlandeClases\" where id_plan_clases=?");
-            st.setInt(1, pl.getId_plan_clases());
+            st.setInt(1, pl.getID());
             st.executeUpdate();
             System.out.println(st);
             st.close();
@@ -328,7 +328,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 CursoMD curso = new CursoMD();
 
                 curso.setId(rs.getInt("id_curso"));
-                curso.setNombre(rs.getString("cursos_nombre"));
+                curso.setNombre(rs.getString("curso_nombre"));
 
                 lista.add(curso);
 

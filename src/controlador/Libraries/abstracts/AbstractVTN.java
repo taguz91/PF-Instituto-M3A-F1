@@ -39,6 +39,30 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
 
     }
 
+    public V getVista() {
+        return vista;
+    }
+
+    public void setVista(V vista) {
+        this.vista = vista;
+    }
+
+    public M getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(M modelo) {
+        this.modelo = modelo;
+    }
+
+    public List<M> getLista() {
+        return lista;
+    }
+
+    public void setLista(List<M> lista) {
+        this.lista = lista;
+    }
+
     public DefaultTableModel getTableM() {
         return tableM;
     }
