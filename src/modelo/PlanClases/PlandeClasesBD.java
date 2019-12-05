@@ -343,6 +343,14 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
     }
 
+    public boolean copiarPlabes(int idPlanRef, int idCursoCopiar) {
+
+        String CALL = ""
+                + "CALL \"copiar_plan_de_clases\"(" + idPlanRef + " ," + idCursoCopiar + ")"
+                + "";
+        return CON.ejecutar(CALL) != null;
+    }
+
     public void aprobarPlanClase(int id_plan, int estado) {
         try {
             PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public .\"PlandeClases\"\n"

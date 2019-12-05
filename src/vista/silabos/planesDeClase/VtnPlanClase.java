@@ -5,6 +5,10 @@
  */
 package vista.silabos.planesDeClase;
 
+import controlador.notas.ux.RowStyle;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,6 +24,28 @@ public class VtnPlanClase extends AbstracView {
 
     public VtnPlanClase() {
         initComponents();
+        InitDiseño();
+
+    }
+
+    private void InitDiseño() {
+        tbl.setRowHeight(23);
+        RowStyle rowStyleTrad = new RowStyle(0);
+
+        Map<String, Color> estados = new HashMap<String, Color>() {
+            {
+                put("APROBADO", new Color(37, 107, 187));
+                put("REPROBADO", new Color(214, 48, 12));
+                put("RETIRADO", new Color(0, 0, 0));
+                put("", new Color(0, 0, 0));
+            }
+        };
+
+        rowStyleTrad.setEstados(estados);
+
+        tbl.setDefaultRenderer(Object.class, rowStyleTrad);
+
+        centrarCabecera(tbl);
 
     }
 
@@ -80,11 +106,11 @@ public class VtnPlanClase extends AbstracView {
     }
 
     public JTable getTbl() {
-        return tlbTablaPLC;
+        return tbl;
     }
 
     public void setTlbTablaPLC(JTable tlbTablaPLC) {
-        this.tlbTablaPLC = tlbTablaPLC;
+        this.tbl = tlbTablaPLC;
     }
 
     public JTextField getTxtBuscarPLC() {
@@ -129,7 +155,7 @@ public class VtnPlanClase extends AbstracView {
         CmbJornadas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tlbTablaPLC = new javax.swing.JTable();
+        tbl = new javax.swing.JTable();
         Cmb_periodos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         btnImplimirPlan = new javax.swing.JButton();
@@ -153,7 +179,7 @@ public class VtnPlanClase extends AbstracView {
 
         jLabel2.setText("Jornada:");
 
-        tlbTablaPLC.setModel(new javax.swing.table.DefaultTableModel(
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -176,24 +202,29 @@ public class VtnPlanClase extends AbstracView {
                 return canEdit [columnIndex];
             }
         });
-        tlbTablaPLC.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tlbTablaPLC.getTableHeader().setResizingAllowed(false);
-        tlbTablaPLC.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tlbTablaPLC);
-        if (tlbTablaPLC.getColumnModel().getColumnCount() > 0) {
-            tlbTablaPLC.getColumnModel().getColumn(0).setMinWidth(0);
-            tlbTablaPLC.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tlbTablaPLC.getColumnModel().getColumn(0).setMaxWidth(0);
-            tlbTablaPLC.getColumnModel().getColumn(1).setPreferredWidth(250);
-            tlbTablaPLC.getColumnModel().getColumn(1).setMaxWidth(250);
-            tlbTablaPLC.getColumnModel().getColumn(3).setPreferredWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(3).setMaxWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(4).setPreferredWidth(50);
-            tlbTablaPLC.getColumnModel().getColumn(4).setMaxWidth(50);
-            tlbTablaPLC.getColumnModel().getColumn(5).setPreferredWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(5).setMaxWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tlbTablaPLC.getColumnModel().getColumn(6).setMaxWidth(80);
+        tbl.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbl.getTableHeader().setResizingAllowed(false);
+        tbl.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tbl);
+        if (tbl.getColumnModel().getColumnCount() > 0) {
+            tbl.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl.getColumnModel().getColumn(0).setMaxWidth(0);
+            tbl.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tbl.getColumnModel().getColumn(1).setMaxWidth(250);
+            tbl.getColumnModel().getColumn(3).setMinWidth(50);
+            tbl.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tbl.getColumnModel().getColumn(3).setMaxWidth(50);
+            tbl.getColumnModel().getColumn(4).setMinWidth(50);
+            tbl.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tbl.getColumnModel().getColumn(4).setMaxWidth(50);
+            tbl.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(5).setMaxWidth(80);
+            tbl.getColumnModel().getColumn(6).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(6).setMaxWidth(80);
+            tbl.getColumnModel().getColumn(7).setMinWidth(80);
+            tbl.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tbl.getColumnModel().getColumn(7).setMaxWidth(80);
         }
 
         jLabel3.setText("Periodo:");
@@ -291,7 +322,7 @@ public class VtnPlanClase extends AbstracView {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbBuscarPLC;
-    private javax.swing.JTable tlbTablaPLC;
+    private javax.swing.JTable tbl;
     private javax.swing.JTextField txtBuscarPLC;
     // End of variables declaration//GEN-END:variables
 }

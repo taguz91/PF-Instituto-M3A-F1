@@ -431,15 +431,27 @@ public class VtnPlanClasesCTR {
 
             int idPlan = (Integer) vista.getTbl().getValueAt(row, 0);
 
-            VtnCopiarPlanCTR vtn = new VtnCopiarPlanCTR(desktop);
+            System.out.println("------------>" + idPlan);
 
-            vtn.setModelo(
-                    planes.stream()
-                            .filter(item -> item.getID().equals(idPlan))
-                            .findFirst()
-                            .get()
-            );
-            vtn.Init();
+            PlandeClasesMD plan = planes.stream()
+                    .filter(item -> item.getID().equals(idPlan))
+                    .findFirst()
+                    .get();
+            List<CursoMD> cursos = CON.cursosSinPlanes(plan.getID());
+
+            if (cursos.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "NO TIENE CURSOS PENDIENTES",
+                        "AVISO!!",
+                        JOptionPane.OK_OPTION
+                );
+            } else {
+                VtnCopiarPlanCTR vtn = new VtnCopiarPlanCTR(desktop);
+                vtn.setModelo(plan);
+                vtn.setCursos(cursos);
+                vtn.Init();
+            }
 
         }
     }
