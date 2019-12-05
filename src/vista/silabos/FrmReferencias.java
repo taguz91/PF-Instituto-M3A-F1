@@ -7,7 +7,6 @@ package vista.silabos;
 
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,12 +23,12 @@ import vista.silabos.MyCellRenderer.WordWrapCellRenderer;
  *
  * @author Andres Ullauri
  */
-public class frmReferencias extends javax.swing.JInternalFrame {
+public class FrmReferencias extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmReferencias
      */
-    public frmReferencias() {
+    public FrmReferencias() {
         initComponents();
 
         MyCellRenderer cellRenderer = new MyCellRenderer(300);
@@ -376,7 +375,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblBibliografiaBase)
@@ -409,7 +408,7 @@ public class frmReferencias extends javax.swing.JInternalFrame {
                                     .addComponent(lblBibliotecs))
                                 .addGap(18, 18, 18)
                                 .addComponent(scrBiblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFinalizar)
                     .addComponent(btnAtras)
