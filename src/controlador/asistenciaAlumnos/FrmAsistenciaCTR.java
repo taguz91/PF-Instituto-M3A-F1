@@ -488,6 +488,7 @@ public class FrmAsistenciaCTR {
                     desktop.getLblEstado().setText(" ");
                 }).start();
             }
+            JOptionPane.showMessageDialog(desktop, "Guardamos correctamente la asistencia.");
         } else {
             JOptionPane.showMessageDialog(vista, "Los datos no se han guardado \n"
                     + " Verifique el numero de Faltas insertado"
