@@ -14,7 +14,7 @@ import modelo.ReferenciasB.ReferenciasMD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmBibliografia;
 import vista.silabos.frmEditarBiblioteca;
-import vista.silabos.frmReferencias;
+import vista.silabos.FrmReferencias;
 
 public class ControladorEditar {
 

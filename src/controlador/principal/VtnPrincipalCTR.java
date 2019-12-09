@@ -44,7 +44,6 @@ import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.ControladorCRUDAvanceSilabo;
 import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
-import controlador.silabo.ControladorSilaboC;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
@@ -681,9 +680,8 @@ public class VtnPrincipalCTR {
 
     private void controladorIngreso() {
 
-        ControladorSilaboC c = new ControladorSilaboC(null, vtnPrin, new ConexionBD(conecta));
-
-        c.iniciarControlador();
+        VtnSilabosCTR vtn = new VtnSilabosCTR(this);
+        vtn.Init();
 
     }
 

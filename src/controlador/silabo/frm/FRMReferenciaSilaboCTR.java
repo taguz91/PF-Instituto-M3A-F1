@@ -19,7 +19,7 @@ import modelo.silabo.NEWReferenciaSilaboBD;
 import modelo.silabo.NEWSilaboBD;
 import modelo.silabo.SilaboMD;
 import vista.silabos.NEWFrmSilabo;
-import vista.silabos.frmReferencias;
+import vista.silabos.FrmReferencias;
 
 /**
  *
@@ -31,7 +31,7 @@ public class FRMReferenciaSilaboCTR extends DCTR {
     private final NEWFrmSilabo FRM_SILABO;
 
     // El formulario de referencias  
-    private final frmReferencias FRM_REF = new frmReferencias();
+    private final FrmReferencias FRM_REF = new FrmReferencias();
     // Modelo del silabo que agregamos bibliografia  
     private final SilaboMD silabo;
     // Conexiones a la base de datos
