@@ -7,7 +7,7 @@ persona_primer_apellido || ' ' ||
 persona_segundo_apellido AS apellido, (
   SELECT MAX(curso_ciclo)
   FROM public."AlumnoCurso" ac
-  JOIN public."Cursos" c ON ac.id_curso = ac.id_curso
+  JOIN public."Cursos" c ON c.id_curso = ac.id_curso
   AND ac.id_alumno = m.id_alumno
   AND c.id_prd_lectivo = m.id_prd_lectivo
 ) AS ciclo_max
