@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Function;
 import javax.swing.table.DefaultTableModel;
 import modelo.reporte.FichasBD;
+import utils.ToExcel;
 import vista.ube.VtnAlumnosSinResponderFS;
 
 /**
@@ -21,7 +22,9 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
     // BD  
     private final FichasBD FBD = FichasBD.single();
     // Datos 
-    List<List<String>> fichas, todasFichas;
+    private List<List<String>> fichas, todasFichas;
+    // Periodos  
+    private String periodosCmb = "";
 
     public VtnAlumnosSinResponderFSCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -30,6 +33,8 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
     public void iniciar() {
         iniciarTbl();
         cargarDatos();
+        clickCmbPeriodo();
+        VTN.getBtnExportarExcel().addActionListener(e -> exportarExcel());
 
         ctrPrin.agregarVtn(VTN);
         listenerTxtBuscarLocal(
@@ -37,6 +42,16 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
                 VTN.getBtnBuscar(),
                 buscarFun()
         );
+    }
+
+    private void clickCmbPeriodo() {
+        VTN.getCmbPeriodo().addActionListener(e -> {
+            if (!VTN.getCmbPeriodo().getSelectedItem().toString().equals("Seleccione")) {
+                buscar(VTN.getCmbPeriodo().getSelectedItem().toString());
+            }
+
+        });
+
     }
 
     private Function<String, Void> buscarFun() {
@@ -62,6 +77,8 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
     private void cargarDatos() {
         fichas = FBD.getFichasSinResponder();
         todasFichas = fichas;
+        VTN.getCmbPeriodo().removeAllItems();
+        VTN.getCmbPeriodo().addItem("Seleccione");
         llenatTbl(fichas);
     }
 
@@ -69,6 +86,10 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
         mdTbl.setRowCount(0);
         fichas.forEach(r -> {
             mdTbl.addRow(r.toArray());
+            if (!periodosCmb.contains(r.get(3))) {
+                periodosCmb += r.get(3);
+                VTN.getCmbPeriodo().addItem(r.get(3));
+            }
         });
         VTN.getLblResultados().setText(fichas.size() + " Resultados obtenidos.");
     }
@@ -82,9 +103,25 @@ public class VtnAlumnosSinResponderFSCTR extends DCTR {
             "FECHA INGRESO",
             "FECHA ULTIMA MODIFICACION"
         };
+
         mdTbl = iniciarTbl(
                 VTN.getTblAlumnos(),
                 titulo
+        );
+    }
+
+    private void exportarExcel() {
+        List<String> cols = new ArrayList<>();
+        cols.add("IDENTIFICACIÓN");
+        cols.add("ALUMNO");
+        cols.add("CORREO");
+        cols.add("FECHA INGRESO");
+        cols.add("FECHA ULTIMA MODIFICACION");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                fichas,
+                "NOMBRE"
         );
     }
 
