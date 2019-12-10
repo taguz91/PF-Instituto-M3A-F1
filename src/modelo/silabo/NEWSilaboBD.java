@@ -508,7 +508,7 @@ public class NEWSilaboBD implements ISilaboBD {
         System.out.println(SELECT);
 
         List<SilaboMD> silabos = new ArrayList<>();
-        ResultSet rs = CON.ejecutarQuery(SELECT, null);
+        ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
             while (rs.next()) {
