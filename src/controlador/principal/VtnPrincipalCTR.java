@@ -52,6 +52,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.login.VtnSelectRolCTR;
 import controlador.pagos.FRMComprobanteCTR;
+import controlador.ube.VtnAlumnosSinResponderFSCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import controlador.version.VtnDitoolCTR;
 import controlador.vistaReportes.VtnEstadosCTR;
@@ -276,6 +277,11 @@ public class VtnPrincipalCTR {
 
     private void iniciarAccionesRep() {
         vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
+        // Menu reporte fichas sin responder 
+        vtnPrin.getMnRepFichasSinResponder().addActionListener(e -> {
+            VtnAlumnosSinResponderFSCTR ctr = new VtnAlumnosSinResponderFSCTR(this);
+            ctr.iniciar();
+        });
 
         //Menus Fichas
         vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));

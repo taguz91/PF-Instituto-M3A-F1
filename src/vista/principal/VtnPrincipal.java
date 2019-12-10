@@ -404,6 +404,10 @@ public class VtnPrincipal extends javax.swing.JFrame {
         return mnIgMatriculaEspecial;
     }
 
+    public JMenuItem getMnRepFichasSinResponder() {
+        return mnRepFichasSinResponder;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -512,6 +516,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnIgActivarNotas1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         mnRepNumAlumno = new javax.swing.JMenuItem();
+        mnRepFichasSinResponder = new javax.swing.JMenuItem();
         mnOpciones = new javax.swing.JMenu();
         mnEstilo = new javax.swing.JMenu();
 
@@ -1051,6 +1056,9 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnRepNumAlumno.setText("Numero Alumnos");
         jMenu1.add(mnRepNumAlumno);
 
+        mnRepFichasSinResponder.setText("Fichas sin responder");
+        jMenu1.add(mnRepFichasSinResponder);
+
         menuCrud.add(jMenu1);
 
         mnOpciones.setText("Opciones");
@@ -1203,6 +1211,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu mnNotas;
     private javax.swing.JMenu mnNotas1;
     private javax.swing.JMenu mnOpciones;
+    private javax.swing.JMenuItem mnRepFichasSinResponder;
     private javax.swing.JMenuItem mnRepNumAlumno;
     private javax.swing.JMenu mnTipoNotas;
     private javax.swing.JPanel pnlMenu;

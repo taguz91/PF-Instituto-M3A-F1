@@ -506,6 +506,11 @@
                 <Property name="text" type="java.lang.String" value="Numero Alumnos"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnRepFichasSinResponder">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fichas sin responder"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnOpciones">
