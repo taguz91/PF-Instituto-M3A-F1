@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.ConnDBPool;
 import modelo.persona.PersonaMD;
+import modelo.silabo.NEWSilaboBD;
 
 /**
  *
@@ -25,11 +28,6 @@ public final class UsuarioBD extends UsuarioMD {
         pool = new ConnDBPool();
     }
 
-    public UsuarioBD(String username, String password, boolean estado, PersonaMD idPersona) {
-        super(username, password, estado, idPersona);
-
-    }
-
     public UsuarioBD() {
     }
 
@@ -38,6 +36,7 @@ public final class UsuarioBD extends UsuarioMD {
         setPassword(obj.getPassword());
         setEstado(obj.isEstado());
         setPersona(obj.getPersona());
+        setIsSuperUser(obj.isIsSuperUser());
     }
 
     public Map<String, Object> insertar() {
@@ -46,15 +45,16 @@ public final class UsuarioBD extends UsuarioMD {
 
         String INSERT = ""
                 + "INSERT INTO \"Usuarios\" \n"
-                + " (usu_username, usu_password, id_persona)\n"
-                + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ? );\n";
+                + " (usu_username, usu_password, id_persona, usus_is_superuser)\n"
+                + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ?, ? );\n";
 
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
-        conn = pool.getConnection();
+        parametros.put(4, isIsSuperUser());
 
-        SQLException error = pool.ejecutar(INSERT, conn, parametros);
+        SQLException error = pool.ejecutar(INSERT, parametros);
+
         context.put("value", (error == null));
         context.put("error", error);
 
@@ -68,6 +68,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "    \"Usuarios\".usu_password,\n"
                 + "    \"Usuarios\".usu_estado,\n"
                 + "    \"Usuarios\".id_persona,\n"
+                + "    \"Usuarios\".usu_is_superuser,\n"
                 + "    \"Personas\".persona_identificacion,\n"
                 + "    \"Personas\".persona_primer_apellido,\n"
                 + "    \"Personas\".persona_segundo_apellido,\n"
@@ -76,10 +77,8 @@ public final class UsuarioBD extends UsuarioMD {
                 + "   FROM (\"Usuarios\"\n"
                 + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_estado IS TRUE \n"
+                + "\"Usuarios\".usu_estado IS TRUE \n"
                 + "ORDER BY usu_username";
-
-        System.out.println(SELECT);
 
         return selectSimple(SELECT, null);
 
@@ -97,6 +96,8 @@ public final class UsuarioBD extends UsuarioMD {
                 usuario.setEstado(rs.getBoolean("usu_estado"));
                 usuario.setPassword(rs.getString("usu_password"));
 
+                usuario.setIsSuperUser(rs.getBoolean("usu_is_superuser"));
+
                 PersonaMD persona = new PersonaMD();
                 persona.setIdPersona(rs.getInt("id_persona"));
                 persona.setIdentificacion(rs.getString("persona_identificacion"));
@@ -111,7 +112,7 @@ public final class UsuarioBD extends UsuarioMD {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(UsuarioBD.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             pool.close(conn);
         }
@@ -120,20 +121,21 @@ public final class UsuarioBD extends UsuarioMD {
 
     public UsuarioBD selectWhereUsernamePassword() {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Usuarios\".id_persona,\n"
-                + "\"public\".\"Personas\".persona_identificacion,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"Personas\".persona_foto\n"
+                + "\"Usuarios\".id_persona,\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"Personas\".persona_foto,\n"
+                + "\"Usuarios\".usu_is_superuser\n"
                 + "FROM\n"
-                + "\"public\".\"Usuarios\"\n"
-                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "\"Usuarios\"\n"
+                + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = ? AND\n"
-                + "\"public\".\"Usuarios\".usu_password = set_byte( MD5( ? ) :: bytea, 4, 64 ) AND\n"
-                + "\"public\".\"Usuarios\".usu_estado IS TRUE;";
+                + "\"Usuarios\".usu_username = ? AND\n"
+                + "\"Usuarios\".usu_password = set_byte( MD5( ? ) :: bytea, 4, 64 ) AND\n"
+                + "\"Usuarios\".usu_estado IS TRUE;";
         UsuarioBD usuario = null;
         try {
 
@@ -148,6 +150,7 @@ public final class UsuarioBD extends UsuarioMD {
 
                 usuario = new UsuarioBD();
                 usuario.setUsername(getUsername());
+                usuario.setIsSuperUser(rs.getBoolean("usu_is_superuser"));
 
                 PersonaMD persona = new PersonaMD();
 
@@ -164,7 +167,7 @@ public final class UsuarioBD extends UsuarioMD {
 
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             pool.closeStmt().close(rs).close(conn);
         }
@@ -187,7 +190,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "   FROM (\"Usuarios\"\n"
                 + "     JOIN \"Personas\" ON ((\"Usuarios\".id_persona = \"Personas\".id_persona)))"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_estado IS FALSE;";
+                + "\"Usuarios\".usu_estado IS FALSE;";
 
         return selectSimple(SELECT, null);
     }
@@ -195,9 +198,10 @@ public final class UsuarioBD extends UsuarioMD {
     public boolean editar(String Pk) {
         String UPDATE = "UPDATE  \"Usuarios\" \n"
                 + " SET \n"
-                + "usu_username = ?,\n"
+                + "usu_username = ? ,\n"
                 + "usu_password = set_byte( MD5( ? )::bytea, 4,64),\n"
-                + "id_persona = ?\n"
+                + "id_persona = ? ,\n"
+                + "usu_is_superuser = ? \n"
                 + " WHERE \n"
                 + " usu_username = ?;\n";
 
@@ -206,9 +210,11 @@ public final class UsuarioBD extends UsuarioMD {
         parametros.put(1, getUsername());
         parametros.put(2, getPassword());
         parametros.put(3, getPersona().getIdPersona());
-        parametros.put(4, Pk);
-        conn = pool.getConnection();
-        return pool.ejecutar(UPDATE, conn, parametros) == null;
+        parametros.put(4, isIsSuperUser());
+        parametros.put(5, Pk);
+
+        System.out.println("---->" + isIsSuperUser());
+        return pool.ejecutar(UPDATE, parametros) == null;
 
     }
 
@@ -221,12 +227,10 @@ public final class UsuarioBD extends UsuarioMD {
                 + " usu_username = ? ;\n"
                 + "";
 
-
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, estado);
         parametros.put(2, Pk);
-        conn = pool.getConnection();
-        return pool.ejecutar(DELETE, conn, parametros) == null;
+        return pool.ejecutar(DELETE, parametros) == null;
     }
 
 }

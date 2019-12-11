@@ -130,11 +130,7 @@ public class ConnDBPool {
         Connection conn = getConnection();
         try {
 
-            if (parametros == null) {
-                stmt = conn.prepareStatement(sql);
-            } else {
-                stmt = prepararStatement(sql, conn, parametros);
-            }
+            stmt = prepararStatement(sql, conn, parametros);
 
             stmt.executeUpdate();
 
@@ -192,10 +188,6 @@ public class ConnDBPool {
 
                                 stmt.setBoolean(posicion, (boolean) entry.getValue());
 
-                            } else if (entry.getValue() instanceof Boolean) {
-
-                                stmt.setBoolean(posicion, (boolean) entry.getValue());
-
                             } else if (entry.getValue() instanceof Byte[]) {
 
                                 stmt.setBytes(posicion, (byte[]) entry.getValue());
@@ -204,6 +196,7 @@ public class ConnDBPool {
                         } catch (SQLException ex) {
                             Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
                     }
                 });
             }).get();

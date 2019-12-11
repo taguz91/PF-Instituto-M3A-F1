@@ -4,12 +4,12 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
 import controlador.excepciones.BreakException;
 import controlador.usuario.VtnUsuarioCTR;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import utils.CONS;
 import modelo.persona.PersonaBD;
 import modelo.persona.PersonaMD;
 import modelo.usuario.UsuarioBD;
@@ -83,10 +83,7 @@ public abstract class AbstracForm {
 
         vista.getBtnResetear().addActionListener(e -> resetForm());
 
-        vista.getBtnCancelar().addActionListener(e -> {
-            vista.dispose();
-            destruirVariables();
-        });
+        vista.getBtnCancelar().addActionListener(e -> vista.dispose());
 
         vista.getBtnGuardar().addActionListener(e -> guardar());
 
@@ -101,41 +98,18 @@ public abstract class AbstracForm {
 
         });
 
-        vista.getTxtUsername().addCaretListener(e -> {
-            String username = vista.getTxtUsername().getText();
-/*
-            if (isCreated(username)) {
-                vista.getTxtUsername().setBorder(CONS.ERR_BORDER);
-                vista.getLblError().setVisible(true);
-                vista.getBtnGuardar().setEnabled(false);
-            } else {
-                vista.getTxtUsername().setBorder(CONS.DEFAULT_BORDER);
-                vista.getLblError().setVisible(false);
-                vista.getBtnGuardar().setEnabled(true);
-            }
-           */     
-
-        });
+        vista.getChxSuperUser().addActionListener(this::chxIsSuperUser);
 
     }
 
     //METODOS DE APOYO
     private void cargarComoPersonas() {
-        try {
-            listaPersonas
-                    .entrySet()
-                    .stream()
-                    .forEach(obj -> {
-                        if (!vista.isClosed()) {
-                            vista.getCmbPersona().addItem(obj.getKey());
-                        } else {
-                            throw new BreakException();
-                        }
-                    });
 
-        } catch (BreakException e) {
-            destruirVariables();
-        }
+        listaPersonas
+                .entrySet()
+                .stream()
+                .map(c -> c.getKey())
+                .forEach(vista.getCmbPersona()::addItem);
 
     }
 
@@ -157,13 +131,6 @@ public abstract class AbstracForm {
         vista.getBtnGuardar().setEnabled(estado);
     }
 
-    protected void destruirVariables() {
-        modelo = null;
-        vista = null;
-        listaPersonas = null;
-        System.gc();
-    }
-
     protected UsuarioBD getObj() {
         modelo = new UsuarioBD();
 
@@ -171,13 +138,14 @@ public abstract class AbstracForm {
 
         modelo.setPassword(vista.getTxtPassword().getText());
 
-        modelo.setPersona(listaPersonas
-                .entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().contains(vista.getCmbPersona().getSelectedItem().toString()))
-                .findAny()
-                .get()
-                .getValue()
+        modelo.setPersona(
+                listaPersonas
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getKey().contains(vista.getCmbPersona().getSelectedItem().toString()))
+                        .findAny()
+                        .get()
+                        .getValue()
         );
 
         modelo.setEstado(true);
@@ -199,7 +167,7 @@ public abstract class AbstracForm {
             if (!vista.getTxtPassword().getText().isEmpty()) {
                 return true;
             } else {
-                JOptionPane.showMessageDialog(vista, "INGRESE UNA CONTRASEñA".toUpperCase());
+                JOptionPane.showMessageDialog(vista, "INGRESE UNA CONTRASEÑA");
             }
         } else {
             JOptionPane.showMessageDialog(vista, "INGRESE UN NOMBRE DE USUARIO");
@@ -207,11 +175,14 @@ public abstract class AbstracForm {
         return false;
     }
 
-    private boolean isCreated(String username) {
-        return usuarios.stream().map(c -> c.getUsername()).anyMatch(item -> item.equals(username));
-    }
-
     //EVENTOS
     public abstract void guardar();
+
+    private void chxIsSuperUser(ActionEvent e) {
+
+        modelo.setIsSuperUser(vista.getChxSuperUser().isSelected());
+        System.out.println("--------------->");
+        System.out.println(modelo.isIsSuperUser());
+    }
 
 }

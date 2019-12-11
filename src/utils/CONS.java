@@ -31,7 +31,7 @@ public class CONS {
     //Direccion de las propiedades de version  
     public static final String V_DIR = "version.properties";
 
-    public static Color ERROR_COLOR = new Color(159, 53, 39);
+    public static final Color ERROR_COLOR = new Color(159, 53, 39);
     public static Color SUCCESS_COLOR = new Color(10, 186, 52);
 
     public static Border ERR_BORDER = new LineBorder(ERROR_COLOR, 1);
@@ -53,7 +53,6 @@ public class CONS {
 
     public static String getBDUser() {
         return "tsds";
-        //return "postgres";
     }
 
     //Obtenemos la direccion 

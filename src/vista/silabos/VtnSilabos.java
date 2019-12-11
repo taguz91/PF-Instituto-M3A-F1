@@ -4,6 +4,7 @@ import controlador.notas.ux.RowStyle;
 import java.awt.Color;
 import java.util.HashMap;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ public class VtnSilabos extends AbstracView {
         initComponents();
         InitDiseño();
         lblEstado.setVisible(false);
+        chxPeriodos.setVisible(false);
     }
 
     private void InitDiseño() {
@@ -87,6 +89,10 @@ public class VtnSilabos extends AbstracView {
         return lblEstado;
     }
 
+    public JCheckBox getChxPeriodos() {
+        return chxPeriodos;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,6 +110,7 @@ public class VtnSilabos extends AbstracView {
         btnRefresh = new javax.swing.JButton();
         btnInformacion = new javax.swing.JButton();
         lblEstado = new javax.swing.JLabel();
+        chxPeriodos = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -170,6 +177,8 @@ public class VtnSilabos extends AbstracView {
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEstado.setText("${ESTADO}");
 
+        chxPeriodos.setText("Ver Todos los Periodos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,15 +196,16 @@ public class VtnSilabos extends AbstracView {
                             .addComponent(txtBuscar)
                             .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(chxPeriodos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,9 +231,10 @@ public class VtnSilabos extends AbstracView {
                     .addComponent(lblCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chxPeriodos, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(srcSilabos, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEstado)
                 .addContainerGap())
@@ -240,6 +251,7 @@ public class VtnSilabos extends AbstracView {
     private javax.swing.JButton btnInformacion;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnRefresh;
+    private javax.swing.JCheckBox chxPeriodos;
     private javax.swing.JComboBox<String> cmbPeriodo;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCarrera;
