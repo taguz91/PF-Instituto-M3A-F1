@@ -25,11 +25,10 @@ WHERE id_almn_curso = :idAlumno
 AND fecha_asistencia = :fecha;
 
 -- Peticion JSON
-
 [
 {
 "fecha": "12/06/2019",
-"id_curos": 1 ,
+"id_curso": 1 ,
 "alumnos": [
 {
 "id_almn_curso": 12,

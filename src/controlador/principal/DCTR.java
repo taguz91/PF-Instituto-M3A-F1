@@ -79,5 +79,25 @@ public class DCTR {
             });
         }
     }
+    
+    protected void listenerTxtBuscarLocal(
+            JTextField txt,
+            JButton btn,
+            Function<String, Void> buscador
+    ) {
+        txt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                buscador.apply(
+                        txt.getText().trim()
+                );
+            }
+        });
+        if (btn != null) {
+            btn.addActionListener(e -> {
+                buscador.apply(txt.getText().trim());
+            });
+        }
+    }
 
 }
