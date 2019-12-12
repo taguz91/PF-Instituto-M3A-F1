@@ -23,12 +23,6 @@ public class DVtnCTR extends DCTR {
         super(ctrPrin);
     }
 
-    public void iniciarTbl(String[] titulo, String[][] datos, JTable tbl) {
-        mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
-        tbl.setModel(mdTbl);
-        TblEstilo.formatoTbl(tbl);
-    }
-
     public void formatoBuscador(JTextField txt, JButton btn) {
         txt.addKeyListener(new TxtVBuscador(txt, btn));
     }

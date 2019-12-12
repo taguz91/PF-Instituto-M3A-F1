@@ -45,8 +45,8 @@ public class JDVersionCTR extends DVtnCTR {
 
     private void formatoTbl() {
         String[] t = {"Autor", "Nombre", "Version"};
-        String[][] d = {};
-        iniciarTbl(t, d, jd.getTblVersiones());
+        
+        mdTbl = iniciarTbl(jd.getTblVersiones(), t);
     }
 
     private void clickEliminados() {

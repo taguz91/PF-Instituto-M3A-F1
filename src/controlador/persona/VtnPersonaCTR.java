@@ -109,17 +109,14 @@ public class VtnPersonaCTR extends DVtnCTR {
         vtnPersona.getBtnEditarIdentificacion().addActionListener(e -> editarIdentificacion());
 
         InitPermisos();
-
     }
 
     private void cargarCmbTipoPersonas() {
-
         vtnPersona.getCmbTipoPersona().removeAllItems();
         vtnPersona.getCmbTipoPersona().addItem("Todos");
         for (String t : tipoPersonas) {
             vtnPersona.getCmbTipoPersona().addItem(t);
         }
-
     }
 
     private void cargarTipoPersona() {

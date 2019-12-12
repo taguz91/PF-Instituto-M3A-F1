@@ -5,14 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.ConectarDB;
 import modelo.alumno.MallaAlumnoMD;
 import modelo.materia.MateriaMD;
+import utils.CONBD;
 
-public class AlumnoBD extends AlumnoMD {
+public class AlumnoBD extends CONBD {
 
     private final ConectarDB conecta;
-    private final PersonaBD per;
 
     /**
      *
@@ -20,25 +21,53 @@ public class AlumnoBD extends AlumnoMD {
      */
     public AlumnoBD(ConectarDB conecta) {
         this.conecta = conecta;
-        this.per = new PersonaBD(conecta);
     }
 
     /**
      * Este método guarda el Alumno en la Base de Datos con todos estos
      * atributos
      *
+     * @param a
      * @param s. Se tiene que pasar un objeto de la Clase de SectorEconomicoMD
      * @return Retorna una boolean dependiendo del guardado del Alumno
      */
-    public boolean guardarAlumno(SectorEconomicoMD s) {
+    public boolean guardarAlumno(AlumnoMD a, SectorEconomicoMD s) {
         String nsql = "INSERT INTO public.\"Alumnos\"(\n"
-                + "	 id_persona, id_sec_economico, alumno_codigo, alumno_tipo_colegio, alumno_tipo_bachillerato, alumno_anio_graduacion,"
-                + " alumno_educacion_superior, alumno_titulo_superior, alumno_nivel_academico, alumno_pension, alumno_ocupacion, alumno_trabaja,"
-                + " alumno_nivel_formacion_padre, alumno_nivel_formacion_madre, alumno_nombre_contacto_emergencia, alumno_parentesco_contacto, alumno_numero_contacto, alumno_activo)\n"
-                + "	VALUES ( " + getIdPersona() + ", " + s.getId_SecEconomico() + ", '" + getIdentificacion() + "', '" + getTipo_Colegio() + "', '" + getTipo_Bachillerato() + "', "
-                + "'" + getAnio_graduacion() + "', " + isEducacion_Superior() + ", '" + getTitulo_Superior() + "', null, " + isPension() + ", "
-                + "'" + getOcupacion() + "', " + isTrabaja() + ", '" + getFormacion_Padre() + "', '" + getFormacion_Madre() + "', "
-                + " '" + getNom_Contacto() + "', '" + getParentesco_Contacto() + "', '" + getContacto_Emergencia() + "', true);";
+                + "id_persona, "
+                + "id_sec_economico, "
+                + "alumno_codigo, "
+                + "alumno_tipo_colegio, "
+                + "alumno_tipo_bachillerato, "
+                + "alumno_anio_graduacion, "
+                + "alumno_educacion_superior, "
+                + "alumno_titulo_superior, "
+                + "alumno_nivel_academico, "
+                + "alumno_pension, "
+                + "alumno_ocupacion, "
+                + "alumno_trabaja, "
+                + "alumno_nivel_formacion_padre, "
+                + "alumno_nivel_formacion_madre, "
+                + "alumno_nombre_contacto_emergencia, "
+                + "alumno_parentesco_contacto, "
+                + "alumno_numero_contacto, "
+                + "alumno_activo) "
+                + "VALUES ( " + a.getIdPersona() + ", "
+                + s.getId_SecEconomico() + ", '"
+                + a.getIdentificacion() + "', '"
+                + a.getTipo_Colegio() + "', '"
+                + a.getTipo_Bachillerato() + "', "
+                + "'" + a.getAnio_graduacion() + "', "
+                + a.isEducacion_Superior() + ", '"
+                + a.getTitulo_Superior() + "', null, "
+                + a.isPension() + ", "
+                + "'" + a.getOcupacion() + "', "
+                + a.isTrabaja() + ", '"
+                + a.getFormacion_Padre() + "', '"
+                + a.getFormacion_Madre() + "', "
+                + " '" + a.getNom_Contacto() + "', '"
+                + a.getParentesco_Contacto() + "', '"
+                + a.getContacto_Emergencia() + "', "
+                + "true );";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
             return true;
@@ -49,9 +78,14 @@ public class AlumnoBD extends AlumnoMD {
     }
 
     public boolean guardarTitulo(ProfesionMD p) {
-        String nsql = "INSERT INTO public.\"Profesiones\"(\n"
-                + "	 titulo_nombre, titulo_abrev, titulo_institucion, titulo_estado)\n"
-                + "	VALUES ( '" + p.getTitulo_nombre() + "', '" + p.getTitulo_abreviatura() + "', '" + p.getTitulo_institucion() + "', "
+        String nsql = "INSERT INTO public.\"Profesiones\"( "
+                + "titulo_nombre, "
+                + "titulo_abrev, "
+                + "titulo_institucion, "
+                + "titulo_estado) "
+                + " VALUES ( '" + p.getTitulo_nombre() + "', '"
+                + p.getTitulo_abreviatura() + "', '"
+                + p.getTitulo_institucion() + "', "
                 + " true);";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
@@ -79,15 +113,27 @@ public class AlumnoBD extends AlumnoMD {
      * Este método edita a un Alumno de la Base de Datos, pueden ser todos estos
      * atributos
      *
+     * @param a
      * @param aguja. Se tiene que pasar un int como la Id de persona
      * @return Retorna un boolean según el resultado de la Edición
      */
-    public boolean editarAlumno(int aguja) {
+    public boolean editarAlumno(AlumnoMD a, int aguja) {
         String nsql = "UPDATE public.\"Alumnos\" SET\n"
-                + " id_sec_economico = " + getSectorEconomico().getId_SecEconomico() + ", alumno_tipo_colegio = '" + getTipo_Colegio() + "', alumno_tipo_bachillerato = '" + getTipo_Bachillerato() + "', alumno_anio_graduacion = '" + getAnio_graduacion()
-                + "', alumno_educacion_superior = " + isEducacion_Superior() + ", alumno_titulo_superior = '" + getTitulo_Superior() + "', alumno_nivel_academico = null, alumno_pension = " + isPension() + ", alumno_ocupacion = '" + getOcupacion() + "', alumno_trabaja = " + isTrabaja()
-                + ", alumno_nivel_formacion_padre = '" + getFormacion_Padre() + "', alumno_nivel_formacion_madre = '" + getFormacion_Madre() + "', alumno_nombre_contacto_emergencia = '" + getNom_Contacto()
-                + "', alumno_parentesco_contacto = '" + getParentesco_Contacto() + "', alumno_numero_contacto = '" + getContacto_Emergencia() + "'\n"
+                + " id_sec_economico = " + a.getSectorEconomico().getId_SecEconomico()
+                + ", alumno_tipo_colegio = '" + a.getTipo_Colegio() + "', "
+                + "alumno_tipo_bachillerato = '" + a.getTipo_Bachillerato()
+                + "', alumno_anio_graduacion = '" + a.getAnio_graduacion()
+                + "', alumno_educacion_superior = " + a.isEducacion_Superior()
+                + ", alumno_titulo_superior = '" + a.getTitulo_Superior()
+                + "', alumno_nivel_academico = null, "
+                + "alumno_pension = " + a.isPension()
+                + ", alumno_ocupacion = '" + a.getOcupacion()
+                + "', alumno_trabaja = " + a.isTrabaja()
+                + ", alumno_nivel_formacion_padre = '" + a.getFormacion_Padre()
+                + "', alumno_nivel_formacion_madre = '" + a.getFormacion_Madre()
+                + "', alumno_nombre_contacto_emergencia = '" + a.getNom_Contacto()
+                + "', alumno_parentesco_contacto = '" + a.getParentesco_Contacto()
+                + "', alumno_numero_contacto = '" + a.getContacto_Emergencia() + "' "
                 + " WHERE id_persona = " + aguja + ";";
         PreparedStatement ps = conecta.getPS(nsql);
         if (conecta.nosql(ps) == null) {
@@ -114,7 +160,6 @@ public class AlumnoBD extends AlumnoMD {
         if (conecta.nosql(ps) == null) {
             return true;
         } else {
-            System.out.println("Error");
             return false;
         }
     }
@@ -184,8 +229,8 @@ public class AlumnoBD extends AlumnoMD {
      *
      * @return Retorna una Lista con los Alumnos filtrados
      */
-    public List<PersonaMD> llenarTabla() {
-        List<PersonaMD> lista = new ArrayList();
+    public List<AlumnoMD> llenarTabla() {
+        List<AlumnoMD> lista = new ArrayList();
         String sql = "SELECT p.id_persona, p.persona_identificacion,"
                 + " p.persona_primer_nombre, p.persona_segundo_nombre,"
                 + " p.persona_primer_apellido, p.persona_segundo_apellido,"
@@ -193,12 +238,14 @@ public class AlumnoBD extends AlumnoMD {
                 + " FROM public.\"Personas\" p JOIN public.\"Alumnos\" a USING(id_persona)"
                 + " WHERE a.alumno_activo = 'true' AND p.persona_activa = 'true'"
                 + " ORDER BY p.persona_primer_apellido ASC;";
-        //Esto estaba mal WHERE alumno_activo = 'true'
+        System.out.println("------");
+        System.out.println(sql);
+        System.out.println("------");
         PreparedStatement ps = conecta.getPS(sql);
         ResultSet rs = conecta.sql(ps);
         try {
             while (rs.next()) {
-                PersonaMD m = new PersonaMD();
+                AlumnoMD m = new AlumnoMD();
                 m.setIdPersona(rs.getInt("id_persona"));
                 m.setIdentificacion(rs.getString("persona_identificacion"));
                 m.setPrimerNombre(rs.getString("persona_primer_nombre"));
@@ -213,8 +260,12 @@ public class AlumnoBD extends AlumnoMD {
             ps.getConnection().close();
             return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al consultar para tabla "
+                    + "alumnos: "
+                    + ex.getMessage()
+            );
             return null;
         }
     }
@@ -733,6 +784,75 @@ public class AlumnoBD extends AlumnoMD {
             System.out.println(e.getMessage());
         }
         return almns;
+    }
+
+    public List<List<String>> getAllTable() {
+        return mapearForTable(getBaseQueryTBL(""));
+    }
+
+    // Nuevas consultas  
+    public List<List<String>> mapearForTable(String sql) {
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        List<List<String>> alumnos = new ArrayList<>();
+        try {
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                List<String> cols = new ArrayList<>();
+
+                cols.add(res.getInt(1) + "");
+                cols.add(res.getString(2));
+                cols.add(res.getString(3));
+                cols.add(res.getString(4) == null ? "" : res.getString(4));
+                cols.add(res.getString(5) == null ? "" : res.getString(5));
+                cols.add(res.getString(6) == null ? "" : res.getString(6));
+                cols.add(res.getString(7) == null ? "" : res.getString(7));
+                cols.add(res.getString(8) == null ? "" : res.getString(8));
+                
+                alumnos.add(cols);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "No consultamos alumnos para tabla.\n"
+                    + e.getMessage(),
+                    "Error al consultar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return alumnos;
+    }
+
+    private String getBaseQueryTBL(String where) {
+        return "SELECT\n"
+                + "p.id_persona,\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_nombre || ' ' ||\n"
+                + "p.persona_segundo_nombre AS nombres,\n"
+                + "p.persona_primer_apellido || ' ' ||\n"
+                + "p.persona_segundo_apellido AS apellidos,\n"
+                + "p.persona_correo,\n"
+                + "p.persona_celular, (\n"
+                + "  SELECT carrera_nombre\n"
+                + "  FROM public.\"AlumnosCarrera\" ac\n"
+                + "  JOIN public.\"Carreras\" c USING(id_carrera)\n"
+                + "  WHERE ac.id_alumno = a.id_alumno\n"
+                + "  ORDER BY id_carrera DESC\n"
+                + "  LIMIT 1\n"
+                + ") AS carrera, (\n"
+                + "  SELECT curso_nombre\n"
+                + "  FROM public.\"AlumnoCurso\" ac\n"
+                + "  JOIN public.\"Cursos\" c USING(id_curso)\n"
+                + "  WHERE ac.id_alumno = a.id_alumno\n"
+                + "  ORDER BY curso_nombre DESC\n"
+                + "  LIMIT 1\n"
+                + ") AS curso\n"
+                + "FROM public.\"Personas\" p\n"
+                + "JOIN public.\"Alumnos\" a USING(id_persona)\n"
+                + "WHERE a.alumno_activo = 'true'\n"
+                + "AND p.persona_activa = 'true' "
+                + where + " ORDER BY p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido;";
     }
 
 }

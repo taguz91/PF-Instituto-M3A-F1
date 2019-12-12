@@ -33,7 +33,7 @@ public class Validar {
 
     //Validamos un txt de un buscador 
     public static boolean esLetrasYNumeros(String cadena) {
-        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+");
+        return cadena.matches("[0-9A-Za-záéíóúÁÉÍÓÚÑñkK\\s]+||\\s");
     }
 
     public static boolean esLetrasYNumeros2(String cadena) {

@@ -67,9 +67,10 @@ public class FrmAlumnoCTR extends DCTR {
         this.sectorE = new SectorEconomicoBD(ctrPrin.getConecta());
         bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
-    
+
     /**
-     * Este método inicia los eventos de los componentes así como sus Validaciones correspondientes
+     * Este método inicia los eventos de los componentes así como sus
+     * Validaciones correspondientes
      */
     public void iniciar() {
         ctrPrin.agregarVtn(frmAlumno);
@@ -314,8 +315,7 @@ public class FrmAlumnoCTR extends DCTR {
         frmAlumno.getBtn_Buscar().addActionListener(e -> buscarPersona());
         frmAlumno.getBtn_Guardar().addActionListener(e -> guardarAlumno());
         frmAlumno.getBtn_Cancelar().addActionListener(Cancelar);
-        
-       
+
     }
 
     /**
@@ -337,6 +337,7 @@ public class FrmAlumnoCTR extends DCTR {
 
     /**
      * Devuelve un boolean para verificar si existen errores en el formulario
+     *
      * @return Regresa un Boolean para determinar el error
      */
     public boolean confirmarErrores() {
@@ -425,7 +426,8 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     /**
-     * Este método busca al estudiante ingresado por medio de la Cédula en el formulario
+     * Este método busca al estudiante ingresado por medio de la Cédula en el
+     * formulario
      */
     public void buscarCedula() {
         if (cont == 1) {
@@ -494,10 +496,10 @@ public class FrmAlumnoCTR extends DCTR {
 //                                frmAlumno.getCmBx_SecEconomico().setSelectedItem(sector.getDescrip_SecEconomico().toUpperCase());
 //                                frmAlumno.getChkBx_Trabaja().setSelected(true);
 //                            }
-                            
-                            if(alumno.isTrabaja() == true){
+
+                            if (alumno.isTrabaja() == true) {
                                 frmAlumno.getCmBx_SecEconomico().setEnabled(true);
-                            } else{
+                            } else {
                                 frmAlumno.getCmBx_SecEconomico().setEnabled(false);
                             }
                             frmAlumno.getChkBx_Trabaja().setSelected(alumno.isTrabaja());
@@ -542,7 +544,9 @@ public class FrmAlumnoCTR extends DCTR {
 
     /**
      * Muestra un mensaje de error de ingreso dependiendo del componente
-     * @param texto Se pasa el texto ingresado para su correspondiente validación
+     *
+     * @param texto Se pasa el texto ingresado para su correspondiente
+     * validación
      */
     public void validarComponentes(String texto) {
         if (validar == 1) {
@@ -585,7 +589,8 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     /**
-     * Habilita el boton Guardar cuando los siguientes componentes NO estan vacios
+     * Habilita el boton Guardar cuando los siguientes componentes NO estan
+     * vacios
      */
     public void habilitarGuardar() {
 
@@ -719,7 +724,8 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     /**
-     * Este método pasa al siguiente método un Boolean para la activación de los componentes
+     * Este método pasa al siguiente método un Boolean para la activación de los
+     * componentes
      */
     private void activarSuperior() {
         boolean superior = frmAlumno.getChkBx_EdcSuperior().isSelected();
@@ -728,6 +734,7 @@ public class FrmAlumnoCTR extends DCTR {
 
     /**
      * Este método actica o desactiva según el Boolean enviado
+     *
      * @param estado Se pasa un boolean para dar funcionalidad al Checkbox
      */
     private void desactivarSuperior(boolean estado) {
@@ -738,7 +745,8 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     /**
-     * Este método pasa al siguiente método un Boolean para la activación de los componentes
+     * Este método pasa al siguiente método un Boolean para la activación de los
+     * componentes
      */
     private void activarSectores() {
         boolean esSector = frmAlumno.getChkBx_Trabaja().isSelected();
@@ -747,6 +755,7 @@ public class FrmAlumnoCTR extends DCTR {
 
     /**
      * Este método actica o desactiva según el Boolean enviado
+     *
      * @param estado Se pasa un boolean para dar funcionalidad al Checkbox
      */
     private void desactivarSectores(boolean estado) {
@@ -767,18 +776,23 @@ public class FrmAlumnoCTR extends DCTR {
      * Guarda o Edita al Alumno insertado dependiendo el boolean
      */
     public void guardarAlumno() {
-
-        if (editar == false && editar_2 == false) {
-            AlumnoBD persona = new AlumnoBD(ctrPrin.getConecta());
+        if (!editar && !editar_2) {
+            AlumnoMD persona = new AlumnoMD();
             ProfesionMD profesion = new ProfesionMD();
-            this.bdAlumno = pasarDatos(persona);
-            profesion.setTitulo_nombre(bdAlumno.getProfesion().getTitulo_nombre());
-            profesion.setTitulo_abreviatura(bdAlumno.getProfesion().getTitulo_abreviatura());
-            if (bdAlumno.guardarAlumno(sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString())) == true) {
-                if (bdAlumno.getProfesion().getTitulo_nombre().equals("") == false) {
+            persona = pasarDatos(persona);
+            profesion.setTitulo_nombre(persona.getProfesion().getTitulo_nombre());
+            profesion.setTitulo_abreviatura(persona.getProfesion().getTitulo_abreviatura());
+            if (bdAlumno.guardarAlumno(
+                    persona,
+                    sectorE.capturarIdSector(
+                            frmAlumno.getCmBx_SecEconomico()
+                                    .getSelectedItem().toString()
+                    )
+            )) {
+                if (persona.getProfesion().getTitulo_nombre().equals("") == false) {
                     if (bdAlumno.guardarTitulo(profesion) == true) {
                         profesion.setId_Titulo(bdAlumno.idProfesion(profesion.getTitulo_nombre()).getId_Titulo());
-                        if (bdAlumno.guardarTituloAuxiliar(profesion, bdAlumno.getIdPersona())) {
+                        if (bdAlumno.guardarTituloAuxiliar(profesion, persona.getIdPersona())) {
                             JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                             botonreporteAlumno();
                             frmAlumno.dispose();
@@ -797,35 +811,39 @@ public class FrmAlumnoCTR extends DCTR {
                     frmAlumno.dispose();
                     ctrPrin.cerradoJIF();
                 }
-//                reiniciarComponentes(frmAlumno);
-//                iniciarComponentes();
             } else {
                 JOptionPane.showMessageDialog(null, "Error en grabar los datos");
             }
-        } else if (editar == true) {
-            AlumnoBD persona;
-            persona = pasarDatos(bdAlumno);
-            if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
+        } else if (editar) {
+            AlumnoMD persona = new AlumnoMD();
+            persona = pasarDatos(persona);
+            if (bdAlumno.editarAlumno(
+                    persona,
+                    bdAlumno.capturarPersona(
+                            frmAlumno.getTxt_Cedula().getText()
+                    ).get(0).getIdPersona()
+            )) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 botonreporteAlumno();
                 frmAlumno.dispose();
                 ctrPrin.cerradoJIF();
-//                reiniciarComponentes(frmAlumno);
-//                iniciarComponentes();
                 editar = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
             }
         } else if (editar_2 == true) {
-            AlumnoBD persona;
-            persona = pasarDatos(bdAlumno);
-            if (persona.editarAlumno(persona.capturarPersona(frmAlumno.getTxt_Cedula().getText()).get(0).getIdPersona()) == true) {
+            AlumnoMD persona = new AlumnoMD();
+            persona = pasarDatos(persona);
+            if (bdAlumno.editarAlumno(
+                    persona,
+                    bdAlumno.capturarPersona(
+                            frmAlumno.getTxt_Cedula().getText()
+                    ).get(0).getIdPersona()
+            )) {
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                 botonreporteAlumno();
                 frmAlumno.dispose();
                 ctrPrin.cerradoJIF();
-//                reiniciarComponentes(frmAlumno);
-//                iniciarComponentes();
                 editar_2 = false;
             } else {
                 JOptionPane.showMessageDialog(null, "Error en editar los datos");
@@ -834,8 +852,11 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     /**
-     * Inserta los datos extraídos del objeto personas en los componentes para su Edición
-     * @param persona Se pasa un objeto de Persona para la respectiva colocación de datos en el Sistema
+     * Inserta los datos extraídos del objeto personas en los componentes para
+     * su Edición
+     *
+     * @param persona Se pasa un objeto de Persona para la respectiva colocación
+     * de datos en el Sistema
      */
     public void editar(AlumnoMD persona) {
         editar = true;
@@ -890,7 +911,6 @@ public class FrmAlumnoCTR extends DCTR {
         habilitarGuardar();
     }
 
-    
     //Se limpian los registros del Formulario
     public void reiniciarComponentes(FrmAlumno frmAlumno) {
         //frmAlumno.getTxt_Cedula().setText("");
@@ -912,21 +932,19 @@ public class FrmAlumnoCTR extends DCTR {
     }
 
     //Se extraen los datos de los componentes insertado y los devuelve en un Objeto
-    public AlumnoBD pasarDatos(AlumnoBD persona) {
+    public AlumnoMD pasarDatos(AlumnoMD persona) {
         //List<PersonaMD> user = new ArrayList();
-        PersonaMD user = new PersonaMD();
+        PersonaMD user;
         ProfesionMD profesion = new ProfesionMD();
         Integer sectorEco = sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico();
-        user = persona.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+        user = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
         SectorEconomicoMD sector = new SectorEconomicoMD();
         persona.setIdPersona(user.getIdPersona());
         persona.setIdentificacion(user.getIdentificacion());
-        if (sectorEco == null) {
+        if (0 == sectorEco) {
             sector.setId_SecEconomico(0);
-
         } else {
             sector.setId_SecEconomico(sectorEco);
-
         }
         persona.setSectorEconomico(sector);
         persona.setTipo_Colegio(frmAlumno.getCmBx_TipoColegio().getSelectedItem().toString());

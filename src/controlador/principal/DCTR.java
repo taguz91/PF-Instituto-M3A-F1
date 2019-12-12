@@ -55,6 +55,7 @@ public class DCTR {
     protected DefaultTableModel iniciarTbl(JTable tbl, String[] titulo) {
         DefaultTableModel mdTbl = TblEstilo.modelTblSinEditar(titulo);
         tbl.setModel(mdTbl);
+        TblEstilo.formatoTbl(tbl);
         return mdTbl;
     }
 

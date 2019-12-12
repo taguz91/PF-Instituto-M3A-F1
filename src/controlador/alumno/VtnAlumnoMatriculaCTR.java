@@ -43,9 +43,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
             "Cursos"
         }; 
         
-        String[][] d = {}; 
-        
-        iniciarTbl(t, d, vtnMatri.getTblMatricula());
+        mdTbl = iniciarTbl( vtnMatri.getTblMatricula(), t);
         
         llenarCmbPrd();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());

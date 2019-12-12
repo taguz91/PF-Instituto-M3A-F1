@@ -2,13 +2,12 @@ package controlador.persona;
 
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.persona.AlumnoBD;
 import modelo.persona.AlumnoMD;
@@ -31,6 +30,9 @@ public class VtnAlumnoCTR extends DVtnCTR {
     private final AlumnoBD bdAlumno;
     public static AlumnoMD mdAlumno;
 
+    // Datos  
+    private List<List<String>> alumnos, todosAlumnos;
+
     public VtnAlumnoCTR(VtnAlumno vtnAlumno, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnAlumno = vtnAlumno;
@@ -41,91 +43,76 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     public void iniciar() {
         ctrPrin.agregarVtn(vtnAlumno);
-        KeyListener kl = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
+        iniciarComponentes(); //Inicia los componentes
+        //Asignación de eventos a los componentes de la Ventana
+        vtnAlumno.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-
                 if (e.getKeyCode() == 10) {
-
                     buscaIncremental(vtnAlumno.getTxtBuscar().getText().toUpperCase());
                 }
             }
-        };
-
-        ActionListener Cancelar = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vtnAlumno.dispose();
-            }
-
-        };
-
-        iniciarComponentes(); //Inicia los componentes
-        ocultarAtributo(); //Oculta la Columna del Id de Persona
-        llenarTabla(); //LLena la tabla con los datos de los Alumnos registrados
-        //Asignación de eventos a los componentes de la Ventana
-        vtnAlumno.getTxtBuscar().addKeyListener(kl);
+        });
         vtnAlumno.getBtnEliminar().addActionListener(e -> eliminarAlumno());
         vtnAlumno.getBtnEditar().addActionListener(e -> editarAlumno());
         vtnAlumno.getBtnIngresar().addActionListener(e -> abrirFrmAlumno());
         vtnAlumno.getBtn_Materias().addActionListener(e -> abrirVtnMaterias());
-        vtnAlumno.getCbx_Filtrar().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String palabra = vtnAlumno.getCbx_Filtrar().getSelectedItem().toString();
-                switch (palabra) {
-                    case "ALUMNOS ELMINADOS":
-                        llenarElimanados();
-                        vtnAlumno.getBtn_Materias().setVisible(false);
-                        vtnAlumno.getBtnEliminar().setEnabled(false);
-                        vtnAlumno.getBtnEditar().setEnabled(false);
-                        break;
-                    case "ALUMNOS RETIRADOS":
-                        llenarRetirados();
-                        vtnAlumno.getBtn_Materias().setVisible(true);
-                        vtnAlumno.getBtnEliminar().setEnabled(true);
-                        vtnAlumno.getBtnEditar().setEnabled(true);
-                        break;
-                    default:
-                        llenarTabla();
-                        vtnAlumno.getBtn_Materias().setVisible(false);
-                        vtnAlumno.getBtnEliminar().setEnabled(true);
-                        vtnAlumno.getBtnEditar().setEnabled(true);
-                        break;
-                }
+        vtnAlumno.getCbx_Filtrar().addActionListener(e -> {
+            String palabra = vtnAlumno.getCbx_Filtrar().getSelectedItem().toString();
+            switch (palabra) {
+                case "ALUMNOS ELMINADOS":
+                    llenarElimanados();
+                    vtnAlumno.getBtn_Materias().setVisible(false);
+                    vtnAlumno.getBtnEliminar().setEnabled(false);
+                    vtnAlumno.getBtnEditar().setEnabled(false);
+                    break;
+                case "ALUMNOS RETIRADOS":
+                    llenarRetirados();
+                    vtnAlumno.getBtn_Materias().setVisible(true);
+                    vtnAlumno.getBtnEliminar().setEnabled(true);
+                    vtnAlumno.getBtnEditar().setEnabled(true);
+                    break;
+                default:
+                    alumnos = todosAlumnos;
+                    llenarTbl(alumnos);
+                    vtnAlumno.getBtn_Materias().setVisible(false);
+                    vtnAlumno.getBtnEliminar().setEnabled(true);
+                    vtnAlumno.getBtnEditar().setEnabled(true);
+                    break;
             }
         });
-
         //Cuando termina de cargar todo se le vuelve a su estado normal.
         //Validacion del buscador
         vtnAlumno.getTxtBuscar().addKeyListener(new TxtVBuscador(vtnAlumno.getTxtBuscar(),
                 vtnAlumno.getBtnBuscar()));
-
-//        vtnAlumno.getChBx_Alumnos().addActionListener(new ActionListener(){
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//               if(vtnAlumno.getChBx_Alumnos().isSelected() == true){
-//                   vtnAlumno.getBtn_Materias().setVisible(true);
-//                   llenarRetirados();
-//               } else{
-//                   vtnAlumno.getBtn_Materias().setVisible(false);
-//                   llenarTabla();
-//               }
-//            }
-//        });
-        //vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> llamaReporteAlumno()); EN ESTA LINEA DABA ERROR
         InitPermisos();
 
         vtnAlumno.getBtnReporteAlumnos().addActionListener(e -> ListaDeAlumnos());
 
+        iniciarTbl();
+    }
+
+    private void iniciarTbl() {
+        String[] titulo = {
+            "ID",
+            "Identificacion",
+            "Nombres",
+            "Apellidos",
+            "Correo",
+            "Celular",
+            "Carrera",
+            "Curso"
+        };
+        mdTbl = iniciarTbl(vtnAlumno.getTblAlumno(), titulo);
+        alumnos = bdAlumno.getAllTable();
+        todosAlumnos = alumnos;
+        modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
+        llenarTbl(alumnos);
+        listenerTxtBuscarLocal(
+                vtnAlumno.getTxtBuscar(),
+                vtnAlumno.getBtnBuscar(),
+                buscarFun()
+        );
     }
 
     //Muestra el Formulario de Registro de Alumno
@@ -137,7 +124,6 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     public void abrirVtnMaterias() {
-        //AlumnoMD al = capturarFila();
         mdAlumno = capturarFila();
         if (mdAlumno == null) {
             JOptionPane.showMessageDialog(null, "Advertencia!! Seleccione a un Alumno");
@@ -150,46 +136,14 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     public void iniciarComponentes() {
         vtnAlumno.getBtn_Materias().setVisible(false);
-        //vtnAlumno.getCbx_Filtrar().setVisible(false);
-    }
-
-    //Oculta la columna del Id de Persona
-    public void ocultarAtributo() {
-        modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
-    }
-
-    //Rellena con datos de los Estudiantes registrados en el Sistema
-    public void llenarTabla() {
-        DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-        for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-            modelo_Tabla.removeRow(i);
-        }
-        List<PersonaMD> lista = bdAlumno.llenarTabla();
-        int columnas = modelo_Tabla.getColumnCount();
-        for (int i = 0; i < lista.size(); i++) {
-            modelo_Tabla.addRow(new Object[columnas]);
-            vtnAlumno.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
-            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
-            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                    + " " + lista.get(i).getSegundoNombre(), i, 2);
-            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                    + " " + lista.get(i).getSegundoApellido(), i, 3);
-            vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
-        }
-        vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
     }
 
     public void llenarElimanados() {
-        DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-        for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-            modelo_Tabla.removeRow(i);
-        }
+        mdTbl.setRowCount(0);
         List<PersonaMD> lista = bdAlumno.llenarEliminados();
-        int columnas = modelo_Tabla.getColumnCount();
+        int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
-            modelo_Tabla.addRow(new Object[columnas]);
+            mdTbl.addRow(new Object[columnas]);
             vtnAlumno.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
@@ -202,15 +156,11 @@ public class VtnAlumnoCTR extends DVtnCTR {
     }
 
     public void llenarRetirados() {
-        DefaultTableModel modelo_Tabla;
-        modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-        for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-            modelo_Tabla.removeRow(i);
-        }
+        mdTbl.setRowCount(0);
         List<AlumnoMD> lista = bdAlumno.filtrarRetirados();
-        int columnas = modelo_Tabla.getColumnCount();
+        int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
-            modelo_Tabla.addRow(new Object[columnas]);
+            mdTbl.addRow(new Object[columnas]);
             vtnAlumno.getTblAlumno().setValueAt(String.valueOf(lista.get(i).getIdPersona()), i, 0);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
             vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
@@ -224,73 +174,37 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     //Filtra los datos de los Alumnos buscados ya sea por su Cédula o por su Nombres
     public void buscaIncremental(String aguja) {
-        boolean numero = true;
-        if (modelo.validaciones.Validar.esNumeros(aguja) == true) {
-            if (aguja.length() >= 5) {
-                DefaultTableModel modelo_Tabla;
-                modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-                for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-                    modelo_Tabla.removeRow(i);
-                }
-                List<PersonaMD> lista = bdAlumno.capturarPersona(aguja);
-                int columnas = modelo_Tabla.getColumnCount();
-                for (int i = 0; i < lista.size(); i++) {
-                    modelo_Tabla.addRow(new Object[columnas]);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdPersona(), i, 0);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                            + " " + lista.get(i).getSegundoNombre(), i, 2);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                            + " " + lista.get(i).getSegundoApellido(), i, 3);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
-                }
-                vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
+        if (modelo.validaciones.Validar.esLetrasYNumeros(aguja)) {
+            mdTbl.setRowCount(0);
+            List<PersonaMD> lista = bdAlumno.capturarPersona(aguja);
+            int columnas = mdTbl.getColumnCount();
+            for (int i = 0; i < lista.size(); i++) {
+                mdTbl.addRow(new Object[columnas]);
+                vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdPersona(), i, 0);
+                vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
+                vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
+                        + " " + lista.get(i).getSegundoNombre(), i, 2);
+                vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
+                        + " " + lista.get(i).getSegundoApellido(), i, 3);
+                vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
             }
-        } else if (modelo.validaciones.Validar.esLetras(aguja) == true) {
-            if (aguja.length() >= 4) {
-                DefaultTableModel modelo_Tabla;
-                modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-                for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-                    modelo_Tabla.removeRow(i);
-                }
-                List<PersonaMD> lista = bdAlumno.capturarPersona(aguja);
-                int columnas = modelo_Tabla.getColumnCount();
-                for (int i = 0; i < lista.size(); i++) {
-                    modelo_Tabla.addRow(new Object[columnas]);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdPersona(), i, 0);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                            + " " + lista.get(i).getSegundoNombre(), i, 2);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                            + " " + lista.get(i).getSegundoApellido(), i, 3);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
-                }
-                vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
-            }
+            vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
         } else {
             if (!aguja.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese un caracter válido para la Búsqueda");
             } else {
-                DefaultTableModel modelo_Tabla;
-                modelo_Tabla = (DefaultTableModel) vtnAlumno.getTblAlumno().getModel();
-                for (int i = vtnAlumno.getTblAlumno().getRowCount() - 1; i >= 0; i--) {
-                    modelo_Tabla.removeRow(i);
-                }
-                List<PersonaMD> lista = bdAlumno.capturarPersona(aguja);
-                int columnas = modelo_Tabla.getColumnCount();
-                for (int i = 0; i < lista.size(); i++) {
-                    modelo_Tabla.addRow(new Object[columnas]);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdPersona(), i, 0);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getIdentificacion(), i, 1);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerNombre()
-                            + " " + lista.get(i).getSegundoNombre(), i, 2);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getPrimerApellido()
-                            + " " + lista.get(i).getSegundoApellido(), i, 3);
-                    vtnAlumno.getTblAlumno().setValueAt(lista.get(i).getCorreo(), i, 4);
-                }
-                vtnAlumno.getLblResultados().setText(String.valueOf(lista.size()) + " Resultados obtenidos.");
+                alumnos = todosAlumnos;
+                llenarTbl(alumnos);
             }
         }
+    }
+
+    private void llenarTbl(List<List<String>> alumnos) {
+        mdTbl.setRowCount(0);
+        alumnos.forEach(a -> {
+            mdTbl.addRow(a.toArray());
+        });
+        vtnAlumno.getLblResultados().setText(alumnos.size() + " Resultados obtenidos.");
     }
 
     //Captura los datos del Alumno en un objeto
@@ -348,7 +262,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     //Permite la eliminación de algún Alumno seleccionado en la tabla
     public void eliminarAlumno() {
-        AlumnoMD alumno = new AlumnoMD();
+        AlumnoMD alumno;
         if (capturarFila() == null) {
             JOptionPane.showMessageDialog(null, "No se puede Eliminar si no selecciona a un Alumno");
         } else {
@@ -361,7 +275,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
                     alumno.setObservacion(observacion.toUpperCase());
                     if (bdAlumno.eliminarAlumno(alumno, alumno.getIdPersona()) == true) {
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
-                        llenarTabla();
+                        buscaIncremental("");
                     } else {
                         JOptionPane.showMessageDialog(null, "NO SE PUDO ELIMINAR AL ALUMNO");
                     }
@@ -390,6 +304,29 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
         CONS.activarBtns(vtnAlumno.getBtnEliminar(), vtnAlumno.getBtnEditar(), vtnAlumno.getBtnIngresar(),
                 vtnAlumno.getBtnReporteAlumnos());
+    }
+
+    // Nuevos metodos  
+    private Function<String, Void> buscarFun() {
+        return t -> {
+            buscar(t.toUpperCase().trim());
+            return null;
+        };
+    }
+
+    private void buscar(String aguja) {
+        alumnos = new ArrayList<>();
+        todosAlumnos.forEach(ta -> {
+            if (ta.get(1).contains(aguja)
+                    || ta.get(2).contains(aguja)
+                    || ta.get(3).contains(aguja)
+                    || ta.get(4).contains(aguja)
+                    || ta.get(5).contains(aguja)
+                    || (ta.get(2) + " " + ta.get(3)).contains(aguja)) {
+                alumnos.add(ta);
+            }
+        });
+        llenarTbl(alumnos);
     }
 
 }
