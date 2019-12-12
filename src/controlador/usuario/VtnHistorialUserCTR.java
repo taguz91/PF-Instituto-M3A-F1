@@ -163,7 +163,7 @@ public class VtnHistorialUserCTR extends DVtnCTR {
     }
 
     private void cargarCmbFechas() {
-        System.out.println("Se cargaran fechas");
+
         fechaIni = his.cargarFechas();
         llenarCmbFechaIni(fechaIni);
     }
@@ -244,7 +244,6 @@ public class VtnHistorialUserCTR extends DVtnCTR {
             vtnH.getCmbAccion().addItem("Seleccione");
             acciones.forEach(a -> {
                 vtnH.getCmbAccion().addItem(a);
-                System.out.println(a);
             });
             vtnH.getCmbAccion().setSelectedIndex(0);
         }

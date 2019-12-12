@@ -173,7 +173,6 @@ public class VtnRolCTR {
         if (!listaSeleccionados.isEmpty()) {
             listaSeleccionados.forEach(obj -> {
                 FrmRolEdit form = new FrmRolEdit(desktop, this);
-                System.out.println("------->" + obj.getId());
                 form.setModelo(obj);
                 form.Init();
             });

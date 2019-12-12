@@ -182,8 +182,6 @@ public abstract class AbstracForm {
     private void chxIsSuperUser(ActionEvent e) {
 
         modelo.setIsSuperUser(vista.getChxSuperUser().isSelected());
-        System.out.println("--------------->");
-        System.out.println(modelo.isIsSuperUser());
     }
 
 }

@@ -131,7 +131,6 @@ public class FrmAsignarRolCTR {
      */
     private void setRolesEnListas() {
         rolesDados = rolBD.SelectWhereUSUARIOusername(usuario.getUsername());
-        System.out.println("Llamamos al rol una vez");
         validacion();
 
         List<RolBD> listaTemporal = new ArrayList<>(rolesDisponibles);

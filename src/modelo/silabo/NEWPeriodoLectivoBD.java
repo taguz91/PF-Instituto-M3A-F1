@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -266,7 +265,9 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "FROM\n"
                 + "	\"PeriodoLectivo\" \n"
                 + "ORDER BY\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_activo IS TRUE"
                 + "";
 
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
@@ -290,4 +291,5 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
 
         return periodos;
     }
+
 }

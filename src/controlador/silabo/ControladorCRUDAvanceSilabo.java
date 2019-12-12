@@ -292,13 +292,10 @@ public class ControladorCRUDAvanceSilabo {
 
         if (seleccion >= 0) {
             CarreraMD ca = new CarrerasBDS(conexion).retornaModalidad(seguimientoSilabo().getCurso().getId());
-            System.out.println(ca.getModalidad());
             if (ca.getModalidad().equalsIgnoreCase("PRESENCIAL")) {
                 if (seguimientoSilabo().isEsInterciclo() == false) {
                     try {
 
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
                         JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
                         Map parametro = new HashMap();
 
@@ -318,8 +315,7 @@ public class ControladorCRUDAvanceSilabo {
 
                     try {
 
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
+
                         JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_de_silabo/avance_principal.jasper"));
                         Map parametro = new HashMap();
 
@@ -336,14 +332,11 @@ public class ControladorCRUDAvanceSilabo {
                     }
                 }
             } else if (ca.getModalidad().equalsIgnoreCase("DUAL")) {
-                System.out.println("esto es para las duales");
                 if (seguimientoSilabo().isEsInterciclo() == false) {
                 
                 
                  try {
 
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
                         JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
                         Map parametro = new HashMap();
 
@@ -365,8 +358,6 @@ public class ControladorCRUDAvanceSilabo {
                 else{
                 try {
 
-//                System.out.println(plan_clas_selecc().getId_plan_clases() + " soy un plan CON CURSO :"
-//                        + curso_selecc().getId() + " UNIDAD: " + unidad_seleccionada().getIdUnidad());
                     JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_inter_dual/avance_principal.jasper"));
                     Map parametro = new HashMap();
 

@@ -126,8 +126,6 @@ public class ControladorConfiguracionAvanceSilabo {
             cursos.forEach(cs -> {
                 avance.getCbxCurso().addItem(String.valueOf(cs.getNombre()));
             });
-        } else {
-            System.out.println("NO tiene");
         }
     }
 
@@ -155,7 +153,7 @@ public class ControladorConfiguracionAvanceSilabo {
 //           LLENAR_COMBO_UNIDADES(unidadesSilabo);
             cursoSilabo = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursoSilabo);
-            System.out.println(getIdSilabo() + "------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
+           
             if (avance.getCbxCurso().getItemCount() != 0) {
                 avance.getBtnSiguiente().setEnabled(true);
             } else {
@@ -181,7 +179,7 @@ public class ControladorConfiguracionAvanceSilabo {
             materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
 
-            System.out.println(getid_periodo() + "----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");
+
 
         } else {
             clickCmbCarreras();
@@ -266,7 +264,6 @@ public class ControladorConfiguracionAvanceSilabo {
 
     private boolean validarSeguiSilaboExistente() {
         boolean valid = true;
-        System.out.println("PASOOOOOOOOOOOOOOOOOOOOOOOO POR AKI ------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         count = SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, cursos_seleccionado().getId());
         for (SeguimientoSilaboMD ss : count) {
 

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,9 +74,6 @@ public class ConnDBPool {
 
     public Connection getConnection() {
         try {
-//            while (!Middlewares.isConnected()) {
-//                JOptionPane.showMessageDialog(null, "POR FAVOR CONECTECE A INTERNET!!!!");
-//            }
             return ds.getConnection();
         } catch (SQLException e) {
             return null;
