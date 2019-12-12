@@ -6,7 +6,6 @@ import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import controlador.silabo.frm.FRMSilaboCTR;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -59,7 +58,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getBtnNuevo().addActionListener(this::btnNuevo);
         vista.getBtnEditar().addActionListener(this::btnEditar);
         vista.getBtnEliminar().addActionListener(this::btnEliminar);
-        vista.getCmbPeriodo().addItemListener(this::cmbCarrera);
+        vista.getCmbPeriodo().addActionListener(this::cmbPeriodo);
         vista.getBtnImprimir().addActionListener(this::btnImprimir);
         vista.getTxtBuscar().addCaretListener(this::txtBuscar);
         vista.getBtnInformacion().addActionListener(this::btnInformacion);
@@ -103,7 +102,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         METODOS
      */
     private void cargarCmbPeriodo() {
-
+        vista.getCmbPeriodo().removeAllItems();
         periodos.stream()
                 .map(c -> c.getNombre())
                 .forEach(vista.getCmbPeriodo()::addItem);
@@ -206,18 +205,24 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void setLista() {
-        PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
-                .getSelectedIndex());
-        if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-            lista = SILABO_CONN.findBy(
-                    user.getPersona().getIdentificacion(), periodo.getID()
-            );
-        } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
-            lista = SILABO_CONN.getSilabosPeriodo(
-                    getPeriodoCmb().getID()
-            );
+        try {
 
+            PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
+                    .getSelectedIndex());
+            if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
+                lista = SILABO_CONN.findBy(
+                        user.getPersona().getIdentificacion(), periodo.getID()
+                );
+            } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+
+                lista = SILABO_CONN.getSilabosPeriodo(
+                        getPeriodoCmb().getID()
+                );
+
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
         }
 
     }
@@ -369,7 +374,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     }
 
-    private void cmbCarrera(ItemEvent e) {
+    private void cmbPeriodo(ActionEvent e) {
         setLista();
         cargarTabla(cargador());
 
@@ -416,14 +421,17 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void chxPeriodos(ActionEvent e) {
-
+        tableM.setRowCount(0);
+        vista.getCmbPeriodo().removeAllItems();
+        
         if (vista.getChxPeriodos().isSelected()) {
             this.periodos = PERIODO_CONN.selectAllDEV();
         } else {
             this.getPeriodos();
         }
+        
         cargarCmbPeriodo();
-        this.btnRefresh(e);
+
     }
 
 }

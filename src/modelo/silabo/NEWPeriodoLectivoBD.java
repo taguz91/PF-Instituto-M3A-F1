@@ -251,6 +251,8 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
             }
         } catch (SQLException ex) {
             Logger.getLogger(NEWPeriodoLectivoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
 
         return periodos;
@@ -264,10 +266,10 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
                 + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio \n"
                 + "FROM\n"
                 + "	\"PeriodoLectivo\" \n"
-                + "ORDER BY\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio\n"
                 + "WHERE\n"
-                + "	\"PeriodoLectivo\".prd_lectivo_activo IS TRUE"
+                + "	\"PeriodoLectivo\".prd_lectivo_activo IS TRUE\n"
+                + "ORDER BY\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC\n"
                 + "";
 
         List<PeriodoLectivoMD> periodos = new ArrayList<>();

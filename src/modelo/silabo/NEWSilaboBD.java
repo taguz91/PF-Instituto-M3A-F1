@@ -768,7 +768,7 @@ public class NEWSilaboBD implements ISilaboBD {
                     );
 
                 } catch (NullPointerException e) {
-                    Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, e);
+                    //Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, e);
                 }
 
                 silabos.add(silabo);

@@ -126,7 +126,11 @@ public class ConnDBPool {
         Connection conn = getConnection();
         try {
 
-            stmt = prepararStatement(sql, conn, parametros);
+            if (parametros == null) {
+                stmt = conn.prepareStatement(sql);
+            } else {
+                stmt = prepararStatement(sql, conn, parametros);
+            }
 
             stmt.executeUpdate();
 
@@ -194,8 +198,11 @@ public class ConnDBPool {
 
     public ResultSet ejecutarQuery(String sql, Connection conn, Map<Integer, Object> parametros) {
         try {
-
-            stmt = prepararStatement(sql, conn, parametros);
+            if (parametros == null) {
+                stmt = conn.prepareStatement(sql);
+            } else {
+                stmt = prepararStatement(sql, conn, parametros);
+            }
 
             rs = stmt.executeQuery();
 
