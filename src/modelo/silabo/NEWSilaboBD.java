@@ -505,8 +505,6 @@ public class NEWSilaboBD implements ISilaboBD {
                 + "	\"Materias\".materia_nombre ASC"
                 + "";
 
-        System.out.println(SELECT);
-
         List<SilaboMD> silabos = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
@@ -538,7 +536,8 @@ public class NEWSilaboBD implements ISilaboBD {
                     );
 
                 } catch (NullPointerException e) {
-                    System.out.println(
+
+                    Logger.getLogger(NEWSilaboBD.class.getName()).log(Level.SEVERE, null,
                             "NOT TIENE FECHA DE GENERACION: "
                             + silabo.getID()
                             + " "
@@ -546,6 +545,7 @@ public class NEWSilaboBD implements ISilaboBD {
                             + " "
                             + silabo.getMateria().getNombre()
                     );
+
                 }
 
                 silabos.add(silabo);
@@ -768,14 +768,7 @@ public class NEWSilaboBD implements ISilaboBD {
                     );
 
                 } catch (NullPointerException e) {
-                    System.out.println(
-                            "NOT TIENE FECHA DE GENERACION: "
-                            + silabo.getID()
-                            + " "
-                            + silabo.getPeriodo().getNombre()
-                            + " "
-                            + silabo.getMateria().getNombre()
-                    );
+                    Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, e);
                 }
 
                 silabos.add(silabo);

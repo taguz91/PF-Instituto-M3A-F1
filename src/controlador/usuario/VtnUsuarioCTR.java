@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
-import modelo.usuario.RolMD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
 import modelo.usuario.UsuarioMD;
@@ -29,7 +28,6 @@ public class VtnUsuarioCTR {
     private final VtnPrincipal desktop;
     private final VtnUsuario vista;
     private UsuarioBD modelo;
-    private final RolMD permisos;
 
     //Listas
     private static List<UsuarioMD> listaUsuarios;
@@ -39,7 +37,6 @@ public class VtnUsuarioCTR {
     public VtnUsuarioCTR(VtnPrincipal desktop) {
         this.desktop = desktop;
         this.vista = new VtnUsuario();
-        this.permisos = CONS.ROL;
     }
 
     public VtnUsuario getVista() {
@@ -136,7 +133,6 @@ public class VtnUsuarioCTR {
 
         listaTemporal.forEach(VtnUsuarioCTR::agregarFila);
         vista.getLblResultados().setText(listaTemporal.size() + " Registros");
-        listaTemporal = null;
 
     }
 
@@ -186,8 +182,9 @@ public class VtnUsuarioCTR {
                     if (modelo == null) {
                         modelo = new UsuarioBD();
                     }
-                    modelo.cambiarEstado(Username, false);
 
+                    modelo.cambiarEstado(Username, false);
+                    
                     cargarTabla(listaUsuarios = modelo.selectAll());
 
                 } else {

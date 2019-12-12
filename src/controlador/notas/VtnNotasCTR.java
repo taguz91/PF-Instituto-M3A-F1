@@ -196,9 +196,6 @@ public class VtnNotasCTR extends AbstractVtn {
     private void mensajeDeError() {
         Effects.setTextInLabel(vista.getLblEstado(), "INGRESE UN NUMERO CORRECTO EJEMPLO (15.6)", CONS.ERROR_COLOR,
                 2);
-
-        CONS.ERROR_COLOR = null;
-
     }
 
     private void errorDeNota(TipoDeNotaMD rango) {

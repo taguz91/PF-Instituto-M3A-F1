@@ -3,6 +3,8 @@ package controlador;
 import controlador.login.LoginCTR;
 import controlador.version.VtnDitoolCTR;
 import java.awt.EventQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.CONS;
 import modelo.version.DitoolBD;
@@ -21,7 +23,7 @@ public class run {
             iniciaEstilo("Nimbus");
         }
         if (CONS.M_DESARROLLO) {
-            System.out.println("Iniciamos en modo desarrollo");
+            Logger.getLogger(run.class.getName()).log(Level.SEVERE, null, "Iniciamos en modo desarrollo");
             EventQueue.invokeLater(() -> {
                 LoginCTR login = new LoginCTR();
                 login.Init();
@@ -54,7 +56,7 @@ public class run {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            System.out.println("No enconramos ninugn LOOK AND FIELD " + ex.getMessage());
+            Logger.getLogger(run.class.getName()).log(Level.SEVERE, null, "No enconramos ninugn LOOK AND FIELD " + ex.getMessage());
         }
         return encontrado;
     }

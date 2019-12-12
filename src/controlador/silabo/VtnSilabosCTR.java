@@ -38,10 +38,6 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         modelo = new SilaboMD();
     }
 
-    public VtnSilabos getVista() {
-        return vista;
-    }
-
     @Override
     public void Init() {
         setTable(vista.getTbl());
@@ -56,6 +52,12 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
             periodos = PERIODO_CONN.getPeriodosCoordinador(CONS.USUARIO.getPersona().getIdPersona());
 
+        }
+
+        if (CONS.USUARIO.isIsSuperUser()) {
+            vista.getChxPeriodos().setVisible(true);
+
+            System.out.println(CONS.USUARIO.isIsSuperUser());
         }
 
         cargarCmbPeriodo();
@@ -92,7 +94,6 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         });
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR") || CONS.ROL.getNombre().equalsIgnoreCase("DEV");
-
         List<String> estados = new ArrayList<String>() {
             {
                 add("APROBADO");

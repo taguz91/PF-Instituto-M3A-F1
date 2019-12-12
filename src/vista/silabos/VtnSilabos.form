@@ -42,16 +42,17 @@
                           <Component id="cmbPeriodo" min="-2" pref="292" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnNuevo" min="-2" pref="80" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="btnNuevo" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnEditar" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnEliminar" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="chxPeriodos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnRefresh" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -86,9 +87,10 @@
                   <Component id="cmbPeriodo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="btnRefresh" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="btnInformacion" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="chxPeriodos" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="srcSilabos" pref="320" max="32767" attributes="0"/>
+              <Component id="srcSilabos" pref="323" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -225,6 +227,11 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="${ESTADO}"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chxPeriodos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Todos los Periodos"/>
       </Properties>
     </Component>
   </SubComponents>

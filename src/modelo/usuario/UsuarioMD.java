@@ -12,18 +12,11 @@ public class UsuarioMD {
     private String password;
     private boolean estado;
     private boolean isSuperUser;
-    private boolean canCreateRolPostgres;
 
-    private PersonaMD idPersona;
-
-    public UsuarioMD(String username, String password, boolean estado, PersonaMD idPersona) {
-        this.username = username;
-        this.password = password;
-        this.estado = estado;
-        this.idPersona = idPersona;
-    }
+    private PersonaMD persona;
 
     public UsuarioMD() {
+        isSuperUser = false;
     }
 
     public String getUsername() {
@@ -51,19 +44,24 @@ public class UsuarioMD {
     }
 
     public PersonaMD getPersona() {
-        return idPersona;
+        return persona;
     }
 
-    public void setPersona(PersonaMD idPersona) {
-        this.idPersona = idPersona;
+    public void setPersona(PersonaMD persona) {
+        this.persona = persona;
     }
-    
-    
-    
+
+    public boolean isIsSuperUser() {
+        return isSuperUser;
+    }
+
+    public void setIsSuperUser(boolean isSuperUser) {
+        this.isSuperUser = isSuperUser;
+    }
 
     @Override
     public String toString() {
-        return "UsuarioMD{" + "username=" + username + ", password=" + password + ", estado=" + estado + ", idPersona=" + idPersona + '}';
+        return "UsuarioMD{" + "username=" + username + ", password=" + password + ", estado=" + estado + ", Persona=" + persona + '}';
     }
 
 }

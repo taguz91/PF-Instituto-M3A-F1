@@ -4,19 +4,19 @@ import utils.CONS;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
@@ -99,7 +99,7 @@ public class ConnDBPool {
 
             return null;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             close(conn);
             return e;
         } finally {
@@ -117,7 +117,7 @@ public class ConnDBPool {
             stmt.executeUpdate();
             return null;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             close(conn);
             return e;
         } finally {
@@ -130,20 +130,13 @@ public class ConnDBPool {
         Connection conn = getConnection();
         try {
 
-            if (parametros == null) {
-                stmt = conn.prepareStatement(sql);
-            } else {
-                stmt = prepararStatement(sql, conn, parametros);
-            }
+            stmt = prepararStatement(sql, conn, parametros);
 
             stmt.executeUpdate();
 
-//            System.out.println("*******************************************");
-//            System.out.println("*PreparedStatement ejecutado correctamente*");
-//            System.out.println("*******************************************");
             return null;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             close(conn);
             return e;
         } finally {
@@ -195,24 +188,21 @@ public class ConnDBPool {
 
                                 stmt.setBoolean(posicion, (boolean) entry.getValue());
 
-                            } else if (entry.getValue() instanceof Boolean) {
-
-                                stmt.setBoolean(posicion, (boolean) entry.getValue());
-
                             } else if (entry.getValue() instanceof Byte[]) {
 
                                 stmt.setBytes(posicion, (byte[]) entry.getValue());
 
                             }
                         } catch (SQLException ex) {
-                            System.out.println(ex.getMessage());
+                            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        
                     }
                 });
             }).get();
             CONS.THREAD_POOL.shutdown();
         } catch (InterruptedException | ExecutionException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
         return stmt;
     }
@@ -228,7 +218,7 @@ public class ConnDBPool {
 
             parametros = null;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
         return rs;
@@ -241,7 +231,7 @@ public class ConnDBPool {
             stmt = prepararStatement(sql, conn, parametros);
             rs = stmt.executeQuery();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
         return rs;
@@ -253,7 +243,7 @@ public class ConnDBPool {
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
         return rs;
@@ -265,7 +255,7 @@ public class ConnDBPool {
                 conn.close();
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this;
     }
@@ -277,7 +267,7 @@ public class ConnDBPool {
             rs.getStatement().close();
             conn.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this;
     }
@@ -286,7 +276,7 @@ public class ConnDBPool {
         try {
             stmt.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this;
     }
