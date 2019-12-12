@@ -2,7 +2,6 @@ package controlador.usuario.forms;
 
 import controlador.Libraries.Effects;
 import controlador.Libraries.Validaciones;
-import controlador.excepciones.BreakException;
 import controlador.usuario.VtnUsuarioCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -25,7 +24,7 @@ public abstract class AbstracForm {
 
     protected final VtnPrincipal desktop;
     protected FrmUsuario vista;
-    protected UsuarioBD modelo;
+    protected UsuarioMD modelo;
     protected VtnUsuarioCTR vtnPadre;
     private List<UsuarioMD> usuarios;
 
@@ -131,7 +130,7 @@ public abstract class AbstracForm {
         vista.getBtnGuardar().setEnabled(estado);
     }
 
-    protected UsuarioBD getObj() {
+    protected UsuarioMD getObj() {
         modelo = new UsuarioBD();
 
         modelo.setUsername(vista.getTxtUsername().getText());
@@ -149,6 +148,8 @@ public abstract class AbstracForm {
         );
 
         modelo.setEstado(true);
+
+        modelo.setIsSuperUser(vista.getChxSuperUser().isSelected());
 
         return modelo;
     }

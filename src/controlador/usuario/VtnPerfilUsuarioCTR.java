@@ -4,19 +4,19 @@ import controlador.Libraries.Effects;
 import controlador.Libraries.ImgLib;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import utils.CONS;
 import modelo.usuario.UsuarioBD;
+import modelo.usuario.UsuarioMD;
 import vista.usuario.VtnPerfilUsuario;
 
 public class VtnPerfilUsuarioCTR {
 
     private VtnPerfilUsuario vista;
-    private UsuarioBD modelo;
+    private final UsuarioBD CONN = UsuarioBD.single();
+    private UsuarioMD modelo;
     private VtnPrincipalCTR desktop;
 
     public VtnPerfilUsuarioCTR(VtnPrincipalCTR desktop) {
@@ -60,8 +60,6 @@ public class VtnPerfilUsuarioCTR {
         EVENTOS
      */
     private void btnCambiarContrasenaActionPerformance(ActionEvent e) {
-        System.out.println("------>" + vista.getLblFoto().getHeight());
-        System.out.println("------>" + vista.getLblFoto().getWidth());
         vista.getTxtContrasena().setEnabled(true);
         vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
     }
@@ -80,7 +78,7 @@ public class VtnPerfilUsuarioCTR {
                 JOptionPane.showMessageDialog(vista, "La contraseña debe ser mayor o igual a 4 caracteres");
             } else {
 
-                if (modelo.editar(modelo.getUsername())) {
+                if (CONN.editar(modelo, modelo.getUsername())) {
                     JOptionPane.showMessageDialog(vista, "Contraseña Editada correctamente");
                     vista.getTxtContrasena().setText("");
                     vista.getTxtContrasena().setBorder(BorderFactory.createLineBorder(Color.GRAY));

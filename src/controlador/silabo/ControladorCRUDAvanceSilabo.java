@@ -99,7 +99,7 @@ public class ControladorCRUDAvanceSilabo {
             if (row != -1) {
 
                 seguimiento.dispose();
-                controlador_avance_editar ce = new controlador_avance_editar(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
+                FrmEditarAvanceSilaboCTR ce = new FrmEditarAvanceSilaboCTR(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
                 ce.init();
 
             } else {

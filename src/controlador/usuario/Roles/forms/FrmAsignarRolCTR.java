@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.usuario.RolBD;
 import modelo.usuario.RolesDelUsuarioBD;
 import modelo.usuario.UsuarioBD;
+import modelo.usuario.UsuarioMD;
 import vista.principal.VtnPrincipal;
 import vista.usuario.FrmAsignarRoles;
 
@@ -23,15 +24,17 @@ import vista.usuario.FrmAsignarRoles;
  */
 public class FrmAsignarRolCTR {
 
-    private VtnPrincipal desktop;
+    private final UsuarioBD USUARIO_CONN = UsuarioBD.single();
 
-    private FrmAsignarRoles vista;
+    private final VtnPrincipal desktop;
 
-    private RolesDelUsuarioBD modelo;
+    private final FrmAsignarRoles vista;
 
-    private UsuarioBD usuario;
+    private final RolesDelUsuarioBD modelo;
 
-    private String Funcion;
+    private final UsuarioMD usuario;
+
+    private final String Funcion;
 
     //Listas
     private List<RolBD> rolesDisponibles;
@@ -47,7 +50,7 @@ public class FrmAsignarRolCTR {
         rolBD = new RolBD();
     }
 
-    public FrmAsignarRolCTR(VtnPrincipal desktop, FrmAsignarRoles vista, RolesDelUsuarioBD modelo, UsuarioBD usuario, String Funcion) {
+    public FrmAsignarRolCTR(VtnPrincipal desktop, FrmAsignarRoles vista, RolesDelUsuarioBD modelo, UsuarioMD usuario, String Funcion) {
         this.desktop = desktop;
         this.vista = vista;
         this.modelo = modelo;
@@ -216,7 +219,7 @@ public class FrmAsignarRolCTR {
 
     private void guardarUsuario() {
 
-        Map context = usuario.insertar();
+        Map context = USUARIO_CONN.insertar(usuario);
 
         if ((boolean) context.get("value")) {
             JOptionPane.showMessageDialog(vista, "SE HA GUARDADO AL USUARIO \n" + usuario.getUsername());

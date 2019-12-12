@@ -20,6 +20,16 @@ import modelo.silabo.NEWSilaboBD;
  */
 public final class UsuarioBD extends UsuarioMD {
 
+    private static UsuarioBD INSTANCE = null;
+
+    public static UsuarioBD single() {
+        if (INSTANCE == null) {
+            INSTANCE = new UsuarioBD();
+        }
+
+        return INSTANCE;
+    }
+
     private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rs;
@@ -39,19 +49,19 @@ public final class UsuarioBD extends UsuarioMD {
         setIsSuperUser(obj.isIsSuperUser());
     }
 
-    public Map<String, Object> insertar() {
+    public Map<String, Object> insertar(UsuarioMD usuario) {
         Map context = new HashMap();
         Map<Integer, Object> parametros = new HashMap<>();
 
         String INSERT = ""
                 + "INSERT INTO \"Usuarios\" \n"
-                + " (usu_username, usu_password, id_persona, usus_is_superuser)\n"
+                + " (usu_username, usu_password, id_persona, usu_is_superuser)\n"
                 + " VALUES (?, set_byte( MD5( ? ) :: bytea, 4, 64 ), ?, ? );\n";
 
-        parametros.put(1, getUsername());
-        parametros.put(2, getPassword());
-        parametros.put(3, getPersona().getIdPersona());
-        parametros.put(4, isIsSuperUser());
+        parametros.put(1, usuario.getUsername());
+        parametros.put(2, usuario.getPassword());
+        parametros.put(3, usuario.getPersona().getIdPersona());
+        parametros.put(4, usuario.isIsSuperUser());
 
         SQLException error = pool.ejecutar(INSERT, parametros);
 
@@ -195,7 +205,7 @@ public final class UsuarioBD extends UsuarioMD {
         return selectSimple(SELECT, null);
     }
 
-    public boolean editar(String Pk) {
+    public boolean editar(UsuarioMD usuario, String Pk) {
         String UPDATE = "UPDATE  \"Usuarios\" \n"
                 + " SET \n"
                 + "usu_username = ? ,\n"
@@ -207,13 +217,14 @@ public final class UsuarioBD extends UsuarioMD {
 
         Map<Integer, Object> parametros = new HashMap<>();
 
-        parametros.put(1, getUsername());
-        parametros.put(2, getPassword());
-        parametros.put(3, getPersona().getIdPersona());
-        parametros.put(4, isIsSuperUser());
+        parametros.put(1, usuario.getUsername());
+        parametros.put(2, usuario.getPassword());
+        parametros.put(3, usuario.getPersona().getIdPersona());
+        parametros.put(4, new Boolean(usuario.isIsSuperUser()));
         parametros.put(5, Pk);
 
         System.out.println("---->" + isIsSuperUser());
+        System.out.println(parametros);
         return pool.ejecutar(UPDATE, parametros) == null;
 
     }
