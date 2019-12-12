@@ -645,7 +645,9 @@ public class PeriodoLectivoBD extends CONBD {
                 + "INNER JOIN \"Cursos\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "WHERE\n"
-                + " \"Docentes\".id_docente = ?";
+                + " \"Docentes\".id_docente = ? "
+                + " AND prd_lectivo_activo = true "
+                + " AND prd_lectivo_estado = true ";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
