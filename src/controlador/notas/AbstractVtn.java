@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaBD;
@@ -33,7 +34,7 @@ public abstract class AbstractVtn {
     // LISTAS
     protected Map<String, DocenteMD> listaDocentes;
     protected List<PeriodoLectivoMD> listaPeriodos;
-    protected List<AlumnoCursoBD> listaNotas;
+    protected List<AlumnoCursoMD> listaNotas;
     protected List<MateriaMD> listaMaterias;
     protected List<TipoDeNotaBD> listaValidaciones;
 

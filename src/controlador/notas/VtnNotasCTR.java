@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import utils.CONS;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.notas.NotasBD;
 import modelo.tipoDeNota.TipoDeNotaMD;
 import vista.notas.VtnNotas;
@@ -203,7 +204,7 @@ public class VtnNotasCTR extends AbstractVtn {
                 "EL RANGO DE LA NOTA DEBE ESTAR ENTRE: " + 0 + " Y " + rango.getValorMaximo(), CONS.ERROR_COLOR, 2);
     }
 
-    private void refreshTabla(Consumer<AlumnoCursoBD> loader, DefaultTableModel tabla) {
+    private void refreshTabla(Consumer<AlumnoCursoMD> loader, DefaultTableModel tabla) {
         activarForm(false);
         tabla.setRowCount(0);
         listaNotas.stream().forEach(loader);
@@ -282,7 +283,7 @@ public class VtnNotasCTR extends AbstractVtn {
         return (faltas * 100) / horas;
     }
 
-    private void editarFaltas(int fila, JTable tabla, Consumer<AlumnoCursoBD> loader, Function<String, Void> editar,
+    private void editarFaltas(int fila, JTable tabla, Consumer<AlumnoCursoMD> loader, Function<String, Void> editar,
             Function<Void, Void> sumar) {
 
         int colFaltas = getIndex.apply(tabla, "Faltas");
@@ -342,7 +343,7 @@ public class VtnNotasCTR extends AbstractVtn {
         }
     }
 
-    private void cargarTabla(Consumer<AlumnoCursoBD> loader) {
+    private void cargarTabla(Consumer<AlumnoCursoMD> loader) {
         new Thread(() -> {
             cargarTabla = false;
             String cursoNombre = vista.getCmbCiclo().getSelectedItem().toString();
@@ -420,7 +421,7 @@ public class VtnNotasCTR extends AbstractVtn {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="AGREGAR FILAS">
-    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
+    private Consumer<AlumnoCursoMD> agregarFilasTrad() {
         return (obj) -> {
 
             tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
@@ -441,7 +442,7 @@ public class VtnNotasCTR extends AbstractVtn {
         };
     }
 
-    private Consumer<AlumnoCursoBD> agregarFilasDuales() {
+    private Consumer<AlumnoCursoMD> agregarFilasDuales() {
         return (obj) -> {
 
             tablaDuales
@@ -561,7 +562,7 @@ public class VtnNotasCTR extends AbstractVtn {
             String estado = vista.getTblTrad().getValueAt(fila, 13).toString();
             String asistencia = Middlewares.capitalize(vista.getTblTrad().getValueAt(fila, 16).toString());
 
-            AlumnoCursoBD alumno = listaNotas.get(fila);
+            AlumnoCursoMD alumno = listaNotas.get(fila);
             if (tipoNota != null) {
                 List<NotasBD> notas = alumno.getNotas();
 
@@ -580,7 +581,8 @@ public class VtnNotasCTR extends AbstractVtn {
             alumno.setAsistencia(asistencia);
             alumno.setEstado(estado);
             alumno.setNumFalta(Integer.valueOf(tablaTrad.getValueAt(fila, 14).toString()));
-            alumno.editar();
+
+            almnCursoBD.editar(alumno);
             jTblTrad.setEnabled(true);
             return null;
         };
@@ -709,7 +711,7 @@ public class VtnNotasCTR extends AbstractVtn {
             String estado = jTblDual.getValueAt(fila, 12).toString();
             String asistencia = jTblDual.getValueAt(fila, 15).toString();
 
-            AlumnoCursoBD alumno = listaNotas.get(fila);
+            AlumnoCursoMD alumno = listaNotas.get(fila);
 
             if (tipoNota != null) {
 
@@ -729,7 +731,7 @@ public class VtnNotasCTR extends AbstractVtn {
             alumno.setEstado(estado);
             alumno.setAsistencia(asistencia);
             alumno.setNumFalta(Integer.valueOf(tablaDuales.getValueAt(fila, 13).toString()));
-            alumno.editar();
+            almnCursoBD.editar(alumno);
             jTblDual.setEnabled(true);
             return null;
         };
