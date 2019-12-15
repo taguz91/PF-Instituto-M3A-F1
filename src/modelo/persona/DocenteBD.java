@@ -8,20 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
+import utils.CONBD;
+import utils.M;
 
-public class DocenteBD extends DocenteMD {
+public class DocenteBD extends CONBD {
 
-    private ConectarDB conecta;
     private PersonaMD p;
 
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet res;
 
@@ -29,70 +26,92 @@ public class DocenteBD extends DocenteMD {
         pool = new ConnDBPool();
     }
 
-    public DocenteBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    private static DocenteBD DBD;
+
+    public static DocenteBD single() {
+        if (DBD == null) {
+            DBD = new DocenteBD();
+        }
+        return DBD;
     }
 
-    public DocenteBD() {
-    }
+    public boolean InsertarDocente(DocenteMD d) {
+        String nsql = "INSERT INTO public.\"Docentes\"( "
+                + "id_persona, "
+                + "docente_codigo, "
+                + "docente_otro_trabajo, "
+                + "docente_categoria, "
+                + "docente_fecha_contrato, "
+                + "docente_tipo_tiempo, "
+                + "docente_activo, "
+                + "docente_observacion, "
+                + "docente_capacitador, "
+                + "docente_titulo, "
+                + "docente_abreviatura)\n"
+                + "VALUES (" + d.getIdPersona() + ", "
+                + "'" + d.getCodigo() + "', "
+                + d.isDocenteOtroTrabajo() + ","
+                + d.getDocenteCategoria() + ", '"
+                + d.getFechaInicioContratacion() + "', '"
+                + d.getDocenteTipoTiempo() + "', "
+                + "true, "
+                + "NULL, "
+                + d.isDocenteCapacitador() + ", '"
+                + d.getTituloDocente() + "', '"
+                + d.getAbreviaturaDocente() + "' );";
 
-
-    /* public DocenteBD(ConectarDB conecta, PersonaBD per, String codigo, String docenteTipoTiempo, String estado, int docenteCategoria, int idDocente, boolean docenteOtroTrabajo, LocalDate fechaInicioContratacion, LocalDate fechaFinContratacion, boolean docenteCapacitador, String tituloDocente,String abreviaturaDocente) {
-        super(codigo, docenteTipoTiempo, estado, docenteCategoria, idDocente, docenteOtroTrabajo, fechaInicioContratacion, fechaFinContratacion, docenteCapacitador, tituloDocente,abreviaturaDocente);
-        this.conecta = conecta;
-        this.per = per;
-    }*/
-    public void InsertarDocente() {
-        // DocenteMD doc = new DocenteMD();
-        String nsql = "INSERT INTO public.\"Docentes\"(\n"
-                + "	 id_persona, docente_codigo, docente_otro_trabajo, "
-                + "docente_categoria, docente_fecha_contrato, "
-                + "docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura)\n"
-                + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
-                + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', '"
-                + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador() + ", '" + this.getTituloDocente() + "', '" + this.getAbreviaturaDocente() + "' " + ");";
-
-        if (getFechaFinContratacion() != null) {
-            nsql = "INSERT INTO public.\"Docentes\"(\n"
-                    + "	 id_persona, docente_codigo, docente_otro_trabajo, "
-                    + "docente_categoria, docente_fecha_contrato, "
-                    + "docente_fecha_fin, docente_tipo_tiempo, docente_activo, docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura)\n"
-                    + "	VALUES (" + this.getIdPersona() + ", '" + this.getCodigo() + "', " + this.isDocenteOtroTrabajo() + ","
-                    + " " + this.getDocenteCategoria() + ", '" + this.getFechaInicioContratacion() + "', "
-                    + "'" + this.getFechaFinContratacion() + "', '" + this.getDocenteTipoTiempo() + "', true, NULL, " + this.isDocenteCapacitador()
-                    + ", '" + this.getTituloDocente() + "', '" + this.getAbreviaturaDocente() + "' " + ");";
+        if (d.getFechaFinContratacion() != null) {
+            nsql = "INSERT INTO public.\"Docentes\"( "
+                    + "id_persona, "
+                    + "docente_codigo, "
+                    + "docente_otro_trabajo, "
+                    + "docente_categoria, "
+                    + "docente_fecha_contrato, "
+                    + "docente_fecha_fin, "
+                    + "docente_tipo_tiempo, "
+                    + "docente_activo, "
+                    + "docente_observacion, "
+                    + "docente_capacitador, "
+                    + "docente_titulo, "
+                    + "docente_abreviatura) "
+                    + "	VALUES ("
+                    + d.getIdPersona() + ", '"
+                    + d.getCodigo() + "', "
+                    + d.isDocenteOtroTrabajo() + ","
+                    + d.getDocenteCategoria() + ", '"
+                    + d.getFechaInicioContratacion() + "', '"
+                    + d.getFechaFinContratacion() + "', '"
+                    + d.getDocenteTipoTiempo() + "', "
+                    + "true, "
+                    + "NULL, "
+                    + d.isDocenteCapacitador() + ", '"
+                    + d.getTituloDocente() + "', '"
+                    + d.getAbreviaturaDocente() + "' );";
         }
-
-        PreparedStatement ps = conecta.getPS(nsql);
-
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se guardo correctamente");
-        }
-
+        return CON.executeNoSQL(nsql);
     }
 
     public DocenteMD capturarIdDocente(String identificacion, int idDocente) {
-        String sql = "SELECT id_docente, docente_codigo FROM public.\"Docentes\" WHERE docente_codigo LIKE '%" + identificacion + "%'"
+        String sql = "SELECT "
+                + "id_docente, "
+                + "docente_codigo "
+                + "FROM public.\"Docentes\" "
+                + "WHERE docente_codigo LIKE '%" + identificacion + "%'"
                 + " OR id_docente = " + idDocente + ";";
         DocenteMD d = new DocenteMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    d.setCodigo(rs.getString("docente_codigo"));
-                    d.setIdDocente(rs.getInt("id_docente"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return d;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                d.setCodigo(rs.getString("docente_codigo"));
+                d.setIdDocente(rs.getInt("id_docente"));
             }
+            return d;
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
+            M.errorMsg("No capturamos el id del docente. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -104,21 +123,14 @@ public class DocenteBD extends DocenteMD {
             cStmt = conn.prepareCall("SELECT reasignarMaterias(?, ?);");
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
-
-            if (conecta.call(cStmt) == null) {
-                exito = true;
-            } else {
-                System.out.println("Error");
-                exito = false;
-            }
-
+            exito = pool.call(cStmt) == null;
         } catch (SQLException ex) {
-            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("Error al reasignar alumno curso. " + ex.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+                M.errorMsg("Error al cerrar la conexion. " + ex.getMessage());
             }
         }
         return exito;
@@ -134,20 +146,14 @@ public class DocenteBD extends DocenteMD {
             cStmt.setInt(1, curso_Old);
             cStmt.setInt(2, curso_New);
 
-            if (conecta.call(cStmt) == null) {
-                exito = true;
-            } else {
-                System.out.println("Error");
-                exito = false;
-            }
-
+            exito = pool.call(cStmt) == null;
         } catch (SQLException ex) {
-            Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("Error al reasignar notas. " + ex.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(DocenteBD.class.getName()).log(Level.SEVERE, null, ex);
+                M.errorMsg("Error al cerrar la conexion. " + ex.getMessage());
             }
         }
         return exito;
@@ -156,37 +162,32 @@ public class DocenteBD extends DocenteMD {
     private ArrayList<DocenteMD> consultarDocenteTbl(String sql) {
         ArrayList<DocenteMD> pers = new ArrayList();
         DocenteMD d;
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    d = new DocenteMD();
-                    d.setCodigo(rs.getString("docente_codigo"));
-                    d.setIdDocente(rs.getInt("id_docente"));
-                    d.setIdPersona(rs.getInt("id_persona"));
-                    d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
-                    d.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    d.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    d.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    d.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    d.setCorreo(rs.getString("persona_correo"));
-                    d.setCelular(rs.getString("persona_celular"));
-                    d.setIdentificacion(rs.getString("persona_identificacion"));
+            ResultSet rs = ps.executeQuery();
 
-                    pers.add(d);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return pers;
-            } else {
-                return null;
+            while (rs.next()) {
+                d = new DocenteMD();
+                d.setCodigo(rs.getString("docente_codigo"));
+                d.setIdDocente(rs.getInt("id_docente"));
+                d.setIdPersona(rs.getInt("id_persona"));
+                d.setDocenteTipoTiempo(rs.getString("docente_tipo_tiempo"));
+                d.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                d.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                d.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                d.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                d.setCorreo(rs.getString("persona_correo"));
+                d.setCelular(rs.getString("persona_celular"));
+                d.setIdentificacion(rs.getString("persona_identificacion"));
+
+                pers.add(d);
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar docente para tabla. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return pers;
     }
 
     //metodo para buscar una persona 
@@ -195,24 +196,19 @@ public class DocenteBD extends DocenteMD {
         String sql = "SELECT id_docente, docente_codigo \n"
                 + "FROM public.\"Docentes\" \n"
                 + "WHERE docente_codigo ='" + cedula + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    datos.add(rs.getString("id_docente"));
-                    datos.add(rs.getString("docente_codigo"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return datos;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(rs.getString("id_docente"));
+                datos.add(rs.getString("docente_codigo"));
             }
         } catch (SQLException e) {
-            System.out.println("no es posible realizar la consulta buscar persona" + e);
-            return null;
+            M.errorMsg("no es posible realizar la consulta buscar persona" + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return datos;
 
     }
 
@@ -223,42 +219,43 @@ public class DocenteBD extends DocenteMD {
                 + "FROM public.\"Personas\", public.\"Docentes\"\n"
                 + "WHERE persona_identificacion = '" + cedula + "'\n"
                 + "and \"Personas\".id_persona = \"Docentes\".id_persona;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    datos.add(rs.getString("id_persona"));
-                    datos.add(rs.getString("persona_primer_nombre"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return datos;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.add(rs.getString("id_persona"));
+                datos.add(rs.getString("persona_primer_nombre"));
             }
         } catch (SQLException e) {
-            System.out.println("no es posible realizar la consulta buscar persona" + e);
-            return null;
+            M.errorMsg("No es posible realizar la consulta buscar persona" + e);
+        } finally {
+            CON.cerrarCONPS(ps);
         }
-
+        return datos;
     }
 
     public DocenteMD buscarDocenteid(int id) {
-        String sql = "SELECT id_docente, id_persona, docente_codigo, "
-                + "docente_otro_trabajo, docente_categoria, "
-                + "docente_fecha_contrato, docente_fecha_fin,"
-                + " docente_tipo_tiempo, docente_activo,"
-                + " docente_observacion, docente_capacitador, docente_titulo, docente_abreviatura \n"
+        String sql = "SELECT id_docente, "
+                + "id_persona, "
+                + "docente_codigo, "
+                + "docente_otro_trabajo, "
+                + "docente_categoria, "
+                + "docente_fecha_contrato, "
+                + "docente_fecha_fin, "
+                + "docente_tipo_tiempo, "
+                + "docente_activo, "
+                + "docente_observacion, "
+                + "docente_capacitador, "
+                + "docente_titulo, "
+                + "docente_abreviatura "
                 + "FROM public.\"Docentes\" "
                 + "WHERE id_docente = '" + id + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             DocenteMD doc = new DocenteMD();
             while (rs.next()) {
                 doc.setIdDocente(rs.getInt("id_docente"));
-                //Cargamos el codigo de persona  
                 doc.setIdPersona(rs.getInt("id_persona"));
                 doc.setCodigo(rs.getString("docente_codigo"));
                 if (rs.wasNull()) {
@@ -280,12 +277,12 @@ public class DocenteBD extends DocenteMD {
                 doc.setTituloDocente(rs.getString("docente_titulo"));
                 doc.setAbreviaturaDocente(rs.getString("docente_abreviatura"));
             }
-            rs.close();
-            ps.getConnection().close();
             return doc;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            M.errorMsg("Error al consultar docente. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -323,50 +320,62 @@ public class DocenteBD extends DocenteMD {
     }
 
     public DocenteMD capturarFecha(int ID) {
-        String sql = "SELECT docente_fecha_contrato, docente_codigo FROM public.\"Docentes\" \n"
+        String sql = "SELECT docente_fecha_contrato, "
+                + "docente_codigo "
+                + "FROM public.\"Docentes\" \n"
                 + "WHERE id_persona = " + ID + ";";
         DocenteMD datos = new DocenteMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    datos.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
-                    datos.setCodigo(rs.getString("docente_codigo"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return datos;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                datos.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
+                datos.setCodigo(rs.getString("docente_codigo"));
             }
+            return datos;
         } catch (SQLException e) {
-            System.out.println("no es posible realizar la consulta buscar persona" + e);
+            M.errorMsg("No es posible realizar la consulta buscar persona" + e);
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
-
     }
 
     public ArrayList<DocenteMD> cargarDocentesEliminados() {
-        String sql = "SELECT docente_codigo, id_docente, d.id_persona, docente_tipo_tiempo, \n"
-                + "persona_primer_nombre, persona_segundo_nombre,\n"
-                + "persona_primer_apellido, persona_segundo_apellido,\n"
-                + "persona_celular, persona_correo, persona_identificacion\n"
-                + "FROM public.\"Docentes\" d, public.\"Personas\" p \n"
-                + "WHERE p.id_persona = d.id_persona AND \n"
+        String sql = "SELECT docente_codigo, "
+                + "id_docente, "
+                + "d.id_persona, "
+                + "docente_tipo_tiempo, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "persona_celular, "
+                + "persona_correo, "
+                + "persona_identificacion "
+                + "FROM public.\"Docentes\" d, "
+                + "public.\"Personas\" p "
+                + "WHERE p.id_persona = d.id_persona AND "
                 + "docente_activo = false;";
         return consultarDocenteTbl(sql);
     }
 
     public List<CursoMD> capturarMaterias(int idPeriodo, int idDocente) {
-        String nsql = "SELECT m.id_materia, c.id_curso, m.materia_nombre, c.curso_nombre FROM ((public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
-                + "public.\"PeriodoLectivo\" p USING(id_prd_lectivo)) JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
-                + "p.id_prd_lectivo = " + idPeriodo + " AND d.id_docente = " + idDocente + " AND m.materia_activa = true AND p.prd_lectivo_activo = true;";
-        PreparedStatement ps = conecta.getPS(nsql);
-        ResultSet rs = conecta.sql(ps);
+        String nsql = "SELECT m.id_materia, "
+                + "c.id_curso, "
+                + "m.materia_nombre, "
+                + "c.curso_nombre FROM ("
+                + " (public.\"Materias\" m JOIN public.\"Cursos\" c USING(id_materia)) JOIN \n"
+                + " public.\"PeriodoLectivo\" p USING(id_prd_lectivo)"
+                + ") JOIN public.\"Docentes\" d USING(id_docente) WHERE\n"
+                + "p.id_prd_lectivo = " + idPeriodo + " "
+                + "AND d.id_docente = " + idDocente + " "
+                + "AND m.materia_activa = true "
+                + "AND p.prd_lectivo_activo = true;";
+        PreparedStatement ps = CON.getPSPOOL(nsql);
         List<CursoMD> lista = new ArrayList<>();
-
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CursoMD c = new CursoMD();
                 MateriaMD m = new MateriaMD();
@@ -376,46 +385,51 @@ public class DocenteBD extends DocenteMD {
                 c.setId(rs.getInt("id_curso"));
                 c.setNombre(rs.getString("curso_nombre"));
                 lista.add(c);
-
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoBD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("Error al consultar materias " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public ArrayList<DocenteMD> cargarDocentesPorCarrera(int idCarrera) {
         ArrayList<DocenteMD> docentes = new ArrayList();
-        String sql = "	\n"
-                + "SELECT public.\"Docentes\".id_docente, id_persona, docente_codigo, docente_otro_trabajo, \n"
-                + "docente_categoria, docente_fecha_contrato,docente_fecha_fin, \n"
-                + "docente_tipo_tiempo, docente_activo, docente_observacion,\n"
-                + "docente_capacitador, docente_titulo, docente_abreviatura\n"
+        String sql = "SELECT public.\"Docentes\".id_docente, "
+                + "id_persona, "
+                + "docente_codigo, "
+                + "docente_otro_trabajo, "
+                + "docente_categoria, "
+                + "docente_fecha_contrato, "
+                + "docente_fecha_fin, "
+                + "docente_tipo_tiempo, "
+                + "docente_activo, "
+                + "docente_observacion, "
+                + "docente_capacitador, "
+                + "docente_titulo, "
+                + "docente_abreviatura "
                 + "	FROM public.\"Docentes\", public.\"Materias\", public.\"DocentesMateria\"\n"
                 + "	WHERE public.\"Materias\".id_carrera = " + idCarrera + " \n"
                 + "	AND public.\"DocentesMateria\".id_docente = public.\"Docentes\".id_docente\n"
                 + "	AND public.\"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
                 + "	GROUP BY \"Docentes\".id_docente, \"Materias\".id_carrera ORDER BY id_docente;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 DocenteMD doc = obtenerDocente(rs);
                 if (doc != null) {
                     docentes.add(doc);
                 }
             }
-            rs.close();
-            ps.getConnection().close();
-            return docentes;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar docentes");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No consultamos docentes. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return docentes;
     }
 
     public ArrayList<DocenteMD> cargarDocentesPorCarreraCiclo(int idCarrera, int ciclo) {
@@ -430,23 +444,21 @@ public class DocenteBD extends DocenteMD {
                 + "	AND public.\"DocentesMateria\".id_materia = \"Materias\".id_materia \n"
                 + "	AND public.\"Materias\".materia_ciclo = " + ciclo + " \n"
                 + "	GROUP BY \"Docentes\".id_docente, \"Materias\".id_carrera ORDER BY id_docente;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 DocenteMD doc = obtenerDocente(rs);
                 if (doc != null) {
                     docentes.add(doc);
                 }
             }
-            ps.getConnection().close();
-            rs.close();
-            return docentes;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar docentes");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No consultamos docentes. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return docentes;
     }
 
     public ArrayList<DocenteMD> cargarDocentesPorMateria(int idMateria) {
@@ -461,9 +473,9 @@ public class DocenteBD extends DocenteMD {
                 + "AND p.id_persona = d.id_persona \n"
                 + "AND docente_activo = TRUE\n"
                 + "ORDER BY id_docente;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 DocenteMD doc = new DocenteMD();
                 doc.setPrimerNombre(rs.getString("persona_primer_nombre"));
@@ -473,14 +485,12 @@ public class DocenteBD extends DocenteMD {
 
                 docentes.add(doc);
             }
-            rs.close();
-            ps.getConnection().close();
-            return docentes;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar docentes");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No consultamos docentes. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return docentes;
     }
 
     public DocenteMD buscarDocente(int idDocente) {
@@ -496,50 +506,22 @@ public class DocenteBD extends DocenteMD {
                 + " p.persona_identificacion \n"
                 + "FROM public.\"Docentes\" d JOIN public.\"Personas\" p USING(id_persona) "
                 + "WHERE d.id_docente = " + idDocente + " AND docente_activo = true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    d = obtenerDocente(rs);
-                }
-                ps.getConnection().close();
-                return d;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                d = obtenerDocente(rs);
             }
+            ps.getConnection().close();
+            return d;
         } catch (SQLException e) {
-            System.out.println("No se pudo consultar docente " + idDocente);
+            M.errorMsg("No consultamos docente por di. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
-//    public DocenteMD buscarDocenteParaReferencia(int idDocente) {
-//        DocenteMD d = new DocenteMD();
-//        String sql = "SELECT id_docente, id_persona, docente_codigo \n"
-//                + "FROM public.\"Docentes\" "
-//                + "WHERE id_docente = " + idDocente + " and docente_activo =true;";
-//        PreparedStatement ps = conecta.getPS(sql);
-//        ResultSet rs = conecta.sql(ps);
-//        try {
-//            if (rs != null) {
-//                while (rs.next()) {
-//                    d.setIdDocente(rs.getInt("id_docente"));
-//                    //Buscamos todos los datos de la tabla persona de este docente 
-//                    p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
-//                    d.setPersona(p);
-//                    d.setCodigo(rs.getString("docente_codigo"));
-//                }
-//                ps.getConnection().close();
-//                return d;
-//            } else {
-//                return null;
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("No se pudo consultar docente " + idDocente);
-//            return null;
-//        }
-//    }
     public DocenteMD obtenerDocente(ResultSet rs) {
         DocenteMD d = new DocenteMD();
         try {
@@ -547,11 +529,6 @@ public class DocenteBD extends DocenteMD {
                 d.setIdDocente(rs.getInt("id_docente"));
             }
             PersonaMD persona = new PersonaMD();
-            //Buscamos todos los datos de la tabla persona de este docente 
-            //p = per.buscarPersonaParaReferencia(rs.getInt("id_persona"));
-            //d.setPersona(p);
-            //  System.out.println(d.getPrimerApellido());
-            // System.out.println(d.getPrimerNombre());
             persona.setPrimerNombre(rs.getString("persona_primer_nombre"));
             persona.setPrimerApellido(rs.getString("persona_primer_apellido"));
             persona.setIdentificacion(rs.getString("persona_identificacion"));
@@ -566,17 +543,15 @@ public class DocenteBD extends DocenteMD {
             } else {
                 d.setDocenteOtroTrabajo(rs.getBoolean("docente_otro_trabajo"));
             }
-            if (!rs.wasNull()) {
+            if (rs.getInt("docente_categoria") != 0) {
                 d.setDocenteCategoria(rs.getInt("docente_categoria"));
             }
-            if (!rs.wasNull()) {
+            if (rs.getDate("docente_fecha_contrato") != null) {
                 d.setFechaInicioContratacion(rs.getDate("docente_fecha_contrato").toLocalDate());
             }
-            try {
+
+            if (rs.getDate("docente_fecha_fin") != null) {
                 d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
-            } catch (Exception e) {
-                System.out.println("No tiene fecha fin");
-                System.out.println(e);
             }
 
             //d.setFechaFinContratacion(rs.getDate("docente_fecha_fin").toLocalDate());
@@ -597,58 +572,46 @@ public class DocenteBD extends DocenteMD {
             d.setDocenteEnFuncion(rs.getBoolean("docente_en_funcion"));
             return d;
         } catch (SQLException e) {
-            System.out.println("No pudimos obtener docente");
-            System.out.println(e.getMessage());
+            M.errorMsg("Error al mapear docente. " + e.getMessage());
             return null;
         }
     }
 
     //Sentencia para editar una Persona
-    public boolean editarDocente(int aguja) {
+    public boolean editarDocente(DocenteMD d) {
         String sql = "UPDATE public.\"Docentes\" SET\n"
-                + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", "
-                + " docente_categoria=" + this.getDocenteCategoria() + ","
-                + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "',  "
-                + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', "
+                + "docente_otro_trabajo= " + d.isDocenteOtroTrabajo() + ", "
+                + "docente_categoria=" + d.getDocenteCategoria() + ","
+                + " docente_fecha_contrato= '" + d.getFechaInicioContratacion() + "',  "
+                + "docente_tipo_tiempo= '" + d.getDocenteTipoTiempo() + "', "
                 + " docente_activo=TRUE, docente_observacion=NULL, "
-                + "docente_capacitador= " + this.isDocenteCapacitador()
-                + ", docente_titulo= '" + this.getTituloDocente() + "',"
-                + " docente_abreviatura= '" + this.getAbreviaturaDocente() + "'  \n"
-                + "WHERE id_docente= " + aguja + ";";
-        if (getFechaFinContratacion() != null) {
+                + "docente_capacitador= " + d.isDocenteCapacitador()
+                + ", docente_titulo= '" + d.getTituloDocente() + "',"
+                + " docente_abreviatura= '" + d.getAbreviaturaDocente() + "'  \n"
+                + "WHERE id_docente= " + d.getIdDocente() + ";";
+        if (d.getFechaFinContratacion() != null) {
             sql = "UPDATE public.\"Docentes\" SET\n"
-                    + "	docente_otro_trabajo= " + this.isDocenteOtroTrabajo() + ", "
-                    + "docente_categoria=" + this.getDocenteCategoria() + ","
-                    + " docente_fecha_contrato= '" + this.getFechaInicioContratacion() + "', "
-                    + "docente_fecha_fin='" + this.getFechaFinContratacion() + "', "
-                    + "docente_tipo_tiempo= '" + this.getDocenteTipoTiempo() + "', docente_activo=TRUE, docente_observacion=NULL, "
-                    + "docente_capacitador= " + this.isDocenteCapacitador()
-                    + ", docente_titulo= '" + this.getTituloDocente() + "',"
-                    + " docente_abreviatura= '" + this.getAbreviaturaDocente() + "' \n"
-                    + "WHERE id_docente= " + aguja + ";";
+                    + "	docente_otro_trabajo= " + d.isDocenteOtroTrabajo() + ", "
+                    + "docente_categoria=" + d.getDocenteCategoria() + ","
+                    + " docente_fecha_contrato= '" + d.getFechaInicioContratacion() + "', "
+                    + "docente_fecha_fin='" + d.getFechaFinContratacion() + "', "
+                    + "docente_tipo_tiempo= '" + d.getDocenteTipoTiempo() + "', "
+                    + "docente_activo=TRUE, docente_observacion=NULL, "
+                    + "docente_capacitador= " + d.isDocenteCapacitador()
+                    + ", docente_titulo= '" + d.getTituloDocente() + "',"
+                    + " docente_abreviatura= '" + d.getAbreviaturaDocente() + "' \n"
+                    + "WHERE id_docente= " + d.getIdDocente() + ";";
         }
-
-        PreparedStatement ps = conecta.getPS(sql);
-
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(sql);
     }
 
     public boolean deshabilitarCursos(CursoMD curso) {
         String sql = "UPDATE public.\"Cursos\" SET curso_activo = false "
-                + "WHERE id_docente = " + curso.getDocente().getIdDocente() + " AND id_prd_lectivo = " + curso.getPeriodo().getID()
-                + " AND id_materia = " + curso.getMateria().getId() + " AND curso_nombre = '" + curso.getNombre() + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+                + "WHERE id_docente = " + curso.getDocente().getIdDocente() + " "
+                + "AND id_prd_lectivo = " + curso.getPeriodo().getID() + " "
+                + "AND id_materia = " + curso.getMateria().getId()
+                + "AND curso_nombre = '" + curso.getNombre() + "';";
+        return CON.executeNoSQL(sql);
     }
 
     public ArrayList<DocenteMD> buscar(String aguja) {
@@ -719,23 +682,18 @@ public class DocenteBD extends DocenteMD {
     //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
     private DocenteMD consultarPor(String sql) {
         DocenteMD d = null;
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    d = obtenerDocente(rs);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return d;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                d = obtenerDocente(rs);
             }
+            return d;
         } catch (SQLException e) {
-            System.out.println("No se pudo consultar una persona");
-            System.out.println(e.getMessage());
+            M.errorMsg("No consultamos una persona. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -743,26 +701,14 @@ public class DocenteBD extends DocenteMD {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = false, docente_observacion = '" + a.getEstado()
                 + "' WHERE id_docente = " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean activarDocente(int aguja) {
         String nsql = "UPDATE public.\"Docentes\" SET\n"
                 + " docente_activo = true\n"
                 + " WHERE id_docente = " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean terminarContrato(DocenteMD docente) {
@@ -770,13 +716,7 @@ public class DocenteBD extends DocenteMD {
                 + " docente_fecha_fin = '" + docente.getFechaFinContratacion()
                 + "', docente_observacion = '" + docente.getObservacion() + "', docente_en_funcion = false\n"
                 + " WHERE id_docente = " + docente.getIdDocente() + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public HashMap<String, DocenteMD> selectAll() {

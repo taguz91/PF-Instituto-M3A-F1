@@ -113,7 +113,7 @@ public class ReferenciasCRUDCTR {
         } else if(frmCRUDBibliografiaC.getCmblibros().getSelectedIndex()>0){
          nombre= frmCRUDBibliografiaC.getCmblibros().getSelectedItem().toString();
         mo=BDbibliotecaC.retornaPRDlectivo(conexion, nombre);
-           List<ReferenciasMD> referencias = BDbibliotecaC.consultarBporperiodo(conexion,mo.getID());
+           List<ReferenciasMD> referencias = BDbibliotecaC.getBasePorPeriodo(conexion,mo.getID());
         System.out.println("entro");
         DefaultTableModel modeloTabla;
 
@@ -260,7 +260,7 @@ public class ReferenciasCRUDCTR {
     }
 
     public void cargartablaperiodo() {
-        List<ReferenciasMD> referencias = BDbibliotecaC.consultarBporperiodo(conexion,21);
+        List<ReferenciasMD> referencias = BDbibliotecaC.getBasePorPeriodo(conexion,21);
         System.out.println("entro");
         DefaultTableModel modeloTabla;
 

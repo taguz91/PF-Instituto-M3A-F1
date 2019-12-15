@@ -5,21 +5,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Johnny
  */
-public class MallaAlumnoBD extends MallaAlumnoMD {
+public class MallaAlumnoBD extends CONBD {
 
-    private final ConectarDB conecta;
     private String sql = "";
 
-    public MallaAlumnoBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    private static MallaAlumnoBD MABD;
+
+    public static MallaAlumnoBD single() {
+        if (MABD == null) {
+            MABD = new MallaAlumnoBD();
+        }
+        return MABD;
     }
 
     public void ingresarNota(int idMalla, int numMatri, double nota) {
@@ -47,21 +52,23 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
             default:
                 break;
         }
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se guardao correctamente la nota");
-        }
+        CON.executeNoSQL(nsql);
     }
 
-    public boolean actualizarNota(int idMalla, double nota1, double nota2, double nota3, int numMatri, String estado) {
+    public boolean actualizarNota(
+            int idMalla,
+            double nota1,
+            double nota2,
+            double nota3,
+            int numMatri,
+            String estado
+    ) {
         String nsql = "UPDATE public.\"MallaAlumno\"\n"
                 + "SET  malla_almn_nota1=" + nota1 + ", malla_almn_nota2=" + nota2 + ", "
                 + "malla_almn_nota3=" + nota3 + ", malla_almn_estado='" + estado + "', "
                 + "malla_almn_num_matricula = " + numMatri + " \n"
                 + "WHERE id_malla_alumno=" + idMalla + ";";
-
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
+        if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se actualizo la malla correctamente.");
             return true;
         } else {
@@ -255,36 +262,32 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
     }
 
     public MallaAlumnoMD buscarMateriaEstado(int idAlumnoCarrera, int idMateria) {
-        String sqlc = "SELECT id_malla_alumno, id_materia, malla_almn_estado \n"
+        String sqlc = "SELECT id_malla_alumno, "
+                + "id_materia, "
+                + "malla_almn_estado "
                 + "FROM public.\"MallaAlumno\" "
-                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " AND id_materia = " + idMateria + ";";
+                + "WHERE id_almn_carrera = " + idAlumnoCarrera + " "
+                + "AND id_materia = " + idMateria + ";";
         MallaAlumnoMD mll = new MallaAlumnoMD();
-        PreparedStatement ps = conecta.getPS(sqlc);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sqlc);
         try {
-            if (rs != null) {
-                AlumnoCarreraMD a = new AlumnoCarreraMD();
-                while (rs.next()) {
-
-                    a.setId(idAlumnoCarrera);
-                    mll.setId(rs.getInt("id_malla_alumno"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    mll.setEstado(rs.getString("malla_almn_estado"));
-                    mll.setMateria(m);
-                    mll.setAlumnoCarrera(a);
-
-                }
-                ps.getConnection().close();
-                return mll;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            AlumnoCarreraMD a = new AlumnoCarreraMD();
+            while (rs.next()) {
+                a.setId(idAlumnoCarrera);
+                mll.setId(rs.getInt("id_malla_alumno"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                mll.setEstado(rs.getString("malla_almn_estado"));
+                mll.setMateria(m);
+                mll.setAlumnoCarrera(a);
             }
         } catch (SQLException e) {
-            System.out.println("No se pudieron buscar estado materia");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("Error al buscar materia estado. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return mll;
     }
 
     /**
@@ -327,35 +330,32 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private ArrayList<MallaAlumnoMD> consultarMallaParaEstado() {
         ArrayList<MallaAlumnoMD> mallas = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    MallaAlumnoMD mll = new MallaAlumnoMD();
-                    mll.setId(rs.getInt("id_malla_alumno"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    mll.setMateria(m);
-                    AlumnoCarreraMD a = new AlumnoCarreraMD();
-                    mll.setAlumnoCarrera(a);
-                    mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
-                    mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
-                    mll.setEstado(rs.getString("malla_almn_estado"));
+        PreparedStatement ps = CON.getPSPOOL(sql);
 
-                    mallas.add(mll);
-                }
-                ps.getConnection().close();
-                return mallas;
-            } else {
-                return null;
+        try {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                MallaAlumnoMD mll = new MallaAlumnoMD();
+                mll.setId(rs.getInt("id_malla_alumno"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                mll.setMateria(m);
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                mll.setAlumnoCarrera(a);
+                mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
+                mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
+                mll.setEstado(rs.getString("malla_almn_estado"));
+
+                mallas.add(mll);
             }
         } catch (SQLException e) {
-            System.out.println("No se pudieron cargar mallas");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No se pudieron cargar mallas. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return mallas;
     }
 
     public ArrayList<MallaAlumnoMD> buscarMallaAlumno(String aguja) {
@@ -379,46 +379,42 @@ public class MallaAlumnoBD extends MallaAlumnoMD {
 
     private ArrayList<MallaAlumnoMD> consultaMallasTbl(String sql) {
         ArrayList<MallaAlumnoMD> mallas = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    MallaAlumnoMD mll = new MallaAlumnoMD();
-                    mll.setId(rs.getInt("id_malla_alumno"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    mll.setMateria(m);
-                    AlumnoCarreraMD a = new AlumnoCarreraMD();
-                    a.setId(rs.getInt("id_almn_carrera"));
-                    AlumnoMD al = new AlumnoMD();
-                    al.setIdentificacion(rs.getString("persona_identificacion"));
-                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    a.setAlumno(al);
-                    mll.setAlumnoCarrera(a);
-                    mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
-                    mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
-                    mll.setNota1(rs.getDouble("malla_almn_nota1"));
-                    mll.setNota2(rs.getDouble("malla_almn_nota2"));
-                    mll.setNota3(rs.getDouble("malla_almn_nota3"));
-                    mll.setEstado(rs.getString("malla_almn_estado"));
+            ResultSet rs = ps.executeQuery();
 
-                    mallas.add(mll);
-                }
-                ps.getConnection().close();
-                return mallas;
-            } else {
-                return null;
+            while (rs.next()) {
+                MallaAlumnoMD mll = new MallaAlumnoMD();
+                mll.setId(rs.getInt("id_malla_alumno"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                mll.setMateria(m);
+                AlumnoCarreraMD a = new AlumnoCarreraMD();
+                a.setId(rs.getInt("id_almn_carrera"));
+                AlumnoMD al = new AlumnoMD();
+                al.setIdentificacion(rs.getString("persona_identificacion"));
+                al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                a.setAlumno(al);
+                mll.setAlumnoCarrera(a);
+                mll.setMallaCiclo(rs.getInt("malla_almn_ciclo"));
+                mll.setMallaNumMatricula(rs.getInt("malla_almn_num_matricula"));
+                mll.setNota1(rs.getDouble("malla_almn_nota1"));
+                mll.setNota2(rs.getDouble("malla_almn_nota2"));
+                mll.setNota3(rs.getDouble("malla_almn_nota3"));
+                mll.setEstado(rs.getString("malla_almn_estado"));
+
+                mallas.add(mll);
             }
         } catch (SQLException e) {
-            System.out.println("No se pudieron cargar mallas");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No se pudieron cargar mallas. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return mallas;
     }
 
     public String getSql() {

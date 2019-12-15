@@ -4,6 +4,7 @@ import utils.CONS;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import utils.M;
 
 /**
  *
@@ -319,6 +321,24 @@ public class ConnDBPool {
         return res > 0;
     }
 
+    public boolean executeNoSQL(String sql) {
+        int res = 0;
+        PreparedStatement ps = getPSPOOL(sql);
+        try {
+            res = ps.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al ejecutar el script. \n"
+                    + e.getMessage(),
+                    "Error SQL",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            cerrarCONPS(ps);
+        }
+        return res > 0;
+    }
+
     public PreparedStatement getPSID(String sql) {
         try {
             System.out.println("OBTENER EL PREPARED STATMENET CON ID ");
@@ -360,12 +380,21 @@ public class ConnDBPool {
     }
 
     public void cerrarCONPS(PreparedStatement ps) {
-        try {
-            ps.getConnection().close();
-        } catch (SQLException e) {
+        if (ps != null) {
+            try {
+                ps.getConnection().close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error al cerrar conexion. \n"
+                        + e.getMessage(),
+                        "Error servidor",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } else {
             JOptionPane.showMessageDialog(null,
                     "Error al cerrar conexion. \n"
-                    + e.getMessage(),
+                    + "No tenemos conexion",
                     "Error servidor",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -385,6 +414,22 @@ public class ConnDBPool {
             );
         }
         return noSQLPOOL(ps);
+    }
+
+    public SQLException call(CallableStatement callStmt) {
+        try {
+            callStmt.execute();
+            return null;
+        } catch (SQLException e) {
+            return e;
+        } finally {
+            try {
+                callStmt.close();
+                callStmt.getConnection().close();
+            } catch (SQLException ex) {
+                M.errorMsg("No pudimos cerrar el callable statement. " + ex.getMessage());
+            }
+        }
     }
 
     public String useINsql(List<Integer> ids, String statement) {

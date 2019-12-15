@@ -4,21 +4,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.persona.AlumnoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Johnny
  */
-public class AlumnoCarreraBD extends AlumnoCarreraMD {
+public class AlumnoCarreraBD extends CONBD {
 
-    private final ConectarDB conecta;
+    private static AlumnoCarreraBD ACBD;
 
-    public AlumnoCarreraBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static AlumnoCarreraBD single() {
+        if (ACBD == null) {
+            ACBD = new AlumnoCarreraBD();
+        }
+        return ACBD;
     }
 
     private static final String BASEQUERY_ALMNCARRERA = "SELECT "
@@ -47,22 +50,16 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
             + ") AND id_almn_carrera NOT IN ("
             + " SELECT id_almn_carrera FROM alumno.\"Egresados\");";
 
-    public boolean guardar() {
+    public boolean guardar(AlumnoCarreraMD ac) {
         String nsql = "INSERT INTO public.\"AlumnosCarrera\"( "
                 + "id_alumno, "
                 + "id_carrera, "
                 + "almn_carrera_fecha_registro"
                 + ") VALUES ( "
-                + getAlumno().getId_Alumno() + ", "
-                + getCarrera().getId() + ", "
+                + ac.getAlumno().getId_Alumno() + ", "
+                + ac.getCarrera().getId() + ", "
                 + " now() );";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Se guardo correctamente los campos.");
-            return true;
-        } else {
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public String estaMatriculadoEn(int idAlm) {
@@ -75,19 +72,18 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "AND c.id_carrera = ac.id_carrera\n"
                 + "AND malla_almn_estado <> 'C' "
                 + "AND malla_almn_estado <> 'X';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     carrera = carrera + rs.getString("carrera_nombre") + "\n";
                 }
             }
-            ps.getConnection().close();
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
-
+            M.errorMsg("No consultamos alumnos. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return carrera;
     }
@@ -100,19 +96,19 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "WHERE c.id_carrera = ac.id_carrera \n"
                 + "AND ac.id_alumno = " + idAlm + " \n"
                 + "AND c.id_carrera = " + idCarrera + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     carrera = carrera + rs.getString("carrera_nombre") + "\n";
                 }
             }
-            ps.getConnection().close();
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
+            M.errorMsg("No pudimos consultar si esta matriculado. " + e.getMessage());
 
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return carrera;
     }
@@ -193,104 +189,86 @@ public class AlumnoCarreraBD extends AlumnoCarreraMD {
                 + "AND persona_activa = true "
                 + ENQUERY_ALMNCARRERA;
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
         try {
-            if (rs != null) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                ac.setId(rs.getInt("id_almn_carrera"));
+                AlumnoMD al = new AlumnoMD();
+                CarreraMD c = new CarreraMD();
+                c.setId(rs.getInt("id_carrera"));
+                al.setId_Alumno(rs.getInt("id_alumno"));
+                al.setIdPersona(rs.getInt("id_persona"));
+                al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                al.setIdentificacion(rs.getString("persona_identificacion"));
+                ac.setCarrera(c);
+                ac.setAlumno(al);
 
-                while (rs.next()) {
-                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
-                    ac.setId(rs.getInt("id_almn_carrera"));
-                    AlumnoMD al = new AlumnoMD();
-                    CarreraMD c = new CarreraMD();
-                    c.setId(rs.getInt("id_carrera"));
-                    al.setId_Alumno(rs.getInt("id_alumno"));
-                    al.setIdPersona(rs.getInt("id_persona"));
-                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    al.setIdentificacion(rs.getString("persona_identificacion"));
-
-                    ac.setCarrera(c);
-                    ac.setAlumno(al);
-
-                    alms.add(ac);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return alms;
-            } else {
-                return null;
+                alms.add(ac);
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar para tabla. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return alms;
     }
 
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarrera(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    AlumnoCarreraMD ac = obtenerAlumnoCarreraTbl(rs);
-                    if (ac != null) {
-                        alms.add(ac);
-                    }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AlumnoCarreraMD ac = obtenerAlumnoCarreraTbl(rs);
+                if (ac != null) {
+                    alms.add(ac);
                 }
-                ps.getConnection().close();
-                return alms;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No consultamos alumnos carrera. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return alms;
     }
 
     private ArrayList<AlumnoCarreraMD> consultarAlumnoCarreraTbl(String sql) {
         ArrayList<AlumnoCarreraMD> alms = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
         try {
-            if (rs != null) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                ac.setId(rs.getInt("id_almn_carrera"));
+                AlumnoMD al = new AlumnoMD();
+                CarreraMD c = new CarreraMD();
+                c.setId(rs.getInt("id_carrera"));
+                al.setId_Alumno(rs.getInt("id_alumno"));
+                al.setIdPersona(rs.getInt("id_persona"));
+                al.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                al.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                al.setIdentificacion(rs.getString("persona_identificacion"));
 
-                while (rs.next()) {
-                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
-                    ac.setId(rs.getInt("id_almn_carrera"));
-                    AlumnoMD al = new AlumnoMD();
-                    CarreraMD c = new CarreraMD();
-                    c.setId(rs.getInt("id_carrera"));
-                    al.setId_Alumno(rs.getInt("id_alumno"));
-                    al.setIdPersona(rs.getInt("id_persona"));
-                    al.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    al.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    al.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    al.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    al.setIdentificacion(rs.getString("persona_identificacion"));
+                ac.setCarrera(c);
+                ac.setAlumno(al);
 
-                    ac.setCarrera(c);
-                    ac.setAlumno(al);
-
-                    alms.add(ac);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return alms;
-            } else {
-                return null;
+                alms.add(ac);
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar alumnos");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar para tabla. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return alms;
     }
 
     /**

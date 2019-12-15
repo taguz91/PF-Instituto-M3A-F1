@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author USUARIOXD
  */
-public class MateriaBD extends MateriaMD {
+public class MateriaBD extends CONBD {
 
-    private final ConectarDB conecta;
     private String sqlg;
 
     private final ConnDBPool POOL;
@@ -30,160 +30,203 @@ public class MateriaBD extends MateriaMD {
         POOL = new ConnDBPool();
     }
 
-    public MateriaBD(ConectarDB conecta) {
-        this.conecta = conecta;
-    }
+    private static MateriaBD MBD;
 
-    public MateriaBD() {
-        this.conecta = null;
-    }
-
-    public boolean insertarMateria() {
-        String nsql = "INSERT INTO public.\"Materias\"(\n"
-                + "	 id_carrera, id_eje, materia_codigo, materia_nombre, materia_ciclo,"
-                + " materia_creditos, materia_tipo, materia_categoria, materia_tipo_acreditacion, materia_horas_docencia, materia_horas_practicas,"
-                + " materia_horas_auto_estudio, materia_horas_presencial, materia_total_horas, materia_activa, "
-                + "materia_objetivo, materia_descripcion, materia_objetivo_especifico, materia_organizacion_curricular, materia_campo_formacion, materia_nucleo)\n"
-                + "	VALUES ( " + getCarrera().getId() + ", " + getEje().getId() + ", '" + getCodigo() + "', '" + getNombre() + "', " + getCiclo()
-                + ", " + getCreditos() + ", '" + getTipo() + "', '" + getCategoria() + "', '" + getTipoAcreditacion() + "', " + getHorasDocencia() + ", " + getHorasPracticas()
-                + ", " + getHorasAutoEstudio() + ", " + getHorasPresenciales() + ", " + getTotalHoras() + ", true, '"
-                + getObjetivo() + "', '" + getDescripcion() + "', '" + getObjetivoespecifico() + "', '" + getOrganizacioncurricular() + "', '" + getMateriacampoformacion() + "', '" + isMateriaNucleo() + "');";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
+    public static MateriaBD single() {
+        if (MBD == null) {
+            MBD = new MateriaBD();
         }
+        return MBD;
     }
 
-    public boolean editarMateria(int aguja) {
-        String nsql = "UPDATE public.\"Materias\" SET\n"
-                + " id_carrera = " + getCarrera().getId() + ", id_eje = " + getEje().getId() + ", materia_codigo = '" + getCodigo()
-                + "', materia_nombre = '" + getNombre() + "', materia_ciclo = " + getCiclo() + ", materia_creditos = " + getCreditos()
-                + ", materia_tipo = '" + getTipo() + "', materia_categoria = '" + getCategoria() + "', materia_tipo_acreditacion = '" + getTipoAcreditacion()
-                + "', materia_horas_docencia = " + getHorasDocencia() + ", materia_horas_practicas = " + getHorasPracticas() + ", materia_horas_auto_estudio = " + getHorasAutoEstudio()
-                + ", materia_horas_presencial = " + getHorasPresenciales() + ", materia_total_horas = " + getTotalHoras() + ", materia_objetivo = '" + getObjetivo() + "\n"
-                + "', materia_descripcion = '" + getDescripcion() + "', materia_objetivo_especifico = '" + getObjetivoespecifico() + "', materia_organizacion_curricular = '" + getOrganizacioncurricular()
-                + "', materia_campo_formacion = '" + getMateriacampoformacion() + "', materia_nucleo = '" + isMateriaNucleo() + "'\n"
-                + " WHERE id_materia = " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+    public boolean insertarMateria(MateriaMD m) {
+        String nsql = "INSERT INTO public.\"Materias\"( "
+                + "id_carrera, "
+                + "id_eje, "
+                + "materia_codigo, "
+                + "materia_nombre, "
+                + "materia_ciclo, "
+                + "materia_creditos, "
+                + "materia_tipo, "
+                + "materia_categoria, "
+                + "materia_tipo_acreditacion, "
+                + "materia_horas_docencia, "
+                + "materia_horas_practicas, "
+                + "materia_horas_auto_estudio, "
+                + "materia_horas_presencial, "
+                + "materia_total_horas, "
+                + "materia_activa, "
+                + "materia_objetivo, "
+                + "materia_descripcion, "
+                + "materia_objetivo_especifico, "
+                + "materia_organizacion_curricular, "
+                + "materia_campo_formacion, "
+                + "materia_nucleo) "
+                + "VALUES( " + m.getCarrera().getId() + ", "
+                + m.getEje().getId() + ", "
+                + "'" + m.getCodigo() + "', "
+                + "'" + m.getNombre() + "', "
+                + m.getCiclo()
+                + ", " + m.getCreditos() + ", "
+                + "'" + m.getTipo() + "', "
+                + "'" + m.getCategoria() + "', "
+                + "'" + m.getTipoAcreditacion() + "', "
+                + m.getHorasDocencia() + ", "
+                + m.getHorasPracticas() + ", "
+                + m.getHorasAutoEstudio() + ", "
+                + m.getHorasPresenciales() + ", "
+                + m.getTotalHoras() + ", true, "
+                + "'" + m.getObjetivo() + "', "
+                + "'" + m.getDescripcion() + "', "
+                + "'" + m.getObjetivoespecifico() + "', "
+                + "'" + m.getOrganizacioncurricular() + "', "
+                + "'" + m.getMateriacampoformacion() + "', "
+                + "'" + m.isMateriaNucleo() + "');";
+        return CON.executeNoSQL(nsql);
+    }
+
+    public boolean editarMateria(MateriaMD m) {
+        String nsql = "UPDATE public.\"Materias\" SET "
+                + " id_carrera = " + m.getCarrera().getId() + ", "
+                + "id_eje = " + m.getEje().getId() + ", "
+                + "materia_codigo = '" + m.getCodigo() + "', "
+                + "materia_nombre = '" + m.getNombre() + "', "
+                + "materia_ciclo = " + m.getCiclo() + ", "
+                + "materia_creditos = " + m.getCreditos() + ", "
+                + "materia_tipo = '" + m.getTipo() + "', "
+                + "materia_categoria = '" + m.getCategoria() + "', "
+                + "materia_tipo_acreditacion = '" + m.getTipoAcreditacion() + "', "
+                + "materia_horas_docencia = " + m.getHorasDocencia() + ", "
+                + "materia_horas_practicas = " + m.getHorasPracticas() + ", "
+                + "materia_horas_auto_estudio = " + m.getHorasAutoEstudio() + ", "
+                + "materia_horas_presencial = " + m.getHorasPresenciales() + ", "
+                + "materia_total_horas = " + m.getTotalHoras() + ", "
+                + "materia_objetivo = '" + m.getObjetivo() + "', "
+                + "materia_descripcion = '" + m.getDescripcion() + "', "
+                + "materia_objetivo_especifico = '" + m.getObjetivoespecifico() + "', "
+                + "materia_organizacion_curricular = '" + m.getOrganizacioncurricular() + "', "
+                + "materia_campo_formacion = '" + m.getMateriacampoformacion() + "', "
+                + "materia_nucleo = '" + m.isMateriaNucleo() + "' "
+                + " WHERE id_materia = " + m.getId() + ";";
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean elminarMateria(int aguja) {
         String nsql = "UPDATE public.\"Materias\" SET\n"
                 + " materia_activa = 'false'"
                 + " WHERE id_materia = " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public List<CarreraMD> cargarCarreras() {
         String sql = "SELECT carrera_nombre FROM public.\"Carreras\" WHERE carrera_activo = true;";
         List<CarreraMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CarreraMD c = new CarreraMD();
                 c.setNombre(rs.getString("carrera_nombre"));
                 lista.add(c);
             }
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
             System.out.println("No se pudieron consultar alumnos");
             System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No consultamos carreras. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public List<EjeFormacionMD> cargarEjes(int aguja) {
-        String sql = "SELECT eje_nombre FROM public.\"EjesFormacion\" WHERE id_carrera = " + aguja + " AND eje_estado = true;";
+        String sql = "SELECT eje_nombre "
+                + "FROM public.\"EjesFormacion\" "
+                + "WHERE id_carrera = " + aguja + " "
+                + "AND eje_estado = true;";
         List<EjeFormacionMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 EjeFormacionMD eje = new EjeFormacionMD();
                 eje.setNombre(rs.getString("eje_nombre"));
                 lista.add(eje);
             }
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultaron ejes. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public CarreraMD filtrarIdCarrera(String nombre, int id) {
-        String sql = "SELECT id_carrera, carrera_nombre FROM public.\"Carreras\" WHERE carrera_nombre LIKE '" + nombre
-                + "' or id_carrera = " + id + " AND carrera_activo = true;";
+        String sql = "SELECT id_carrera, "
+                + "carrera_nombre "
+                + "FROM public.\"Carreras\" "
+                + "WHERE carrera_nombre LIKE '" + nombre + "' "
+                + "OR id_carrera = " + id + " "
+                + "AND carrera_activo = true;";
         CarreraMD carrera = new CarreraMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setNombre(rs.getString("carrera_nombre"));
             }
-            ps.getConnection().close();
             return carrera;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar carreras");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultaron carrera. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public EjeFormacionMD filtrarIdEje(String nombre, int id) {
-        String sql = "SELECT id_eje, eje_nombre FROM public.\"EjesFormacion\" WHERE eje_nombre LIKE '" + nombre
-                + "' or id_eje = " + id + ";";
-        PreparedStatement ps = conecta.getPS(sql);
+        String sql = "SELECT id_eje, "
+                + "eje_nombre "
+                + "FROM public.\"EjesFormacion\" "
+                + "WHERE eje_nombre LIKE '" + nombre + "' "
+                + "OR id_eje = " + id + ";";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         EjeFormacionMD eje = new EjeFormacionMD();
-        ResultSet rs = conecta.sql(ps);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 eje.setId(rs.getInt("id_eje"));
                 eje.setNombre(rs.getString("eje_nombre"));
             }
-            ps.getConnection().close();
             return eje;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar ejes");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultaron eje por ID. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public MateriaMD capturarIDMaterias(String nombre, int carrera) {
-        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '" + nombre + "' AND id_carrera = " + carrera + " AND materia_activa = true;";
+        String sql = "SELECT id_materia "
+                + "FROM public.\"Materias\" "
+                + "WHERE materia_nombre LIKE '" + nombre + "' "
+                + "AND id_carrera = " + carrera + " "
+                + "AND materia_activa = true;";
         MateriaMD m = new MateriaMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 m.setId(rs.getInt("id_materia"));
             }
-            ps.getConnection().close();
             return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar ejes");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultaron materias. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -201,64 +244,54 @@ public class MateriaBD extends MateriaMD {
     }
 
     public MateriaMD buscarMateria(String materia) {
-        String sql = "SELECT id_materia FROM public.\"Materias\" WHERE materia_nombre LIKE '%" + materia + "%';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT id_materia "
+                + "FROM public.\"Materias\" "
+                + "WHERE materia_nombre LIKE '%" + materia + "%';";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         MateriaMD m = new MateriaMD();
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    m.setId(rs.getInt("id_materia"));
-                }
-                ps.getConnection().close();
-                return m;
-            } else {
-                System.out.println("No se pudo consultar materias para tabla");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m.setId(rs.getInt("id_materia"));
             }
-
+            return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias para tabla");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultaron materias para tabla. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     //Cargar datos de materia por carrera para comprobar si es nucleo o no 
     public ArrayList<MateriaMD> cargarMateriaPorCarreraFrm(int idcarrera) {
-        sqlg = "SELECT id_materia, materia_codigo,"
-                + " materia_nombre, materia_ciclo, "
-                + "m.id_carrera, materia_nucleo \n"
-                + "FROM public.\"Materias\" m \n"
+        sqlg = "SELECT id_materia, materia_codigo, "
+                + "materia_nombre, materia_ciclo, "
+                + "m.id_carrera, materia_nucleo "
+                + "FROM public.\"Materias\" m "
                 + "WHERE materia_activa = 'true' "
-                + "AND m.id_carrera= " + idcarrera + " AND materia_activa = true;";
+                + "AND m.id_carrera= " + idcarrera + " "
+                + "AND materia_activa = true;";
         ArrayList<MateriaMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sqlg);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sqlg);
         try {
-            if (rs != null) {
-                MateriaMD m;
-                while (rs.next()) {
-                    m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    CarreraMD cr = new CarreraMD();
-                    cr.setId(idcarrera);
-                    m.setCarrera(cr);
-                    m.setMateriaNucleo(rs.getBoolean("materia_nucleo"));
-                    lista.add(m);
-                }
-                ps.getConnection().close();
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar materias para tabla");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            MateriaMD m;
+            while (rs.next()) {
+                m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                CarreraMD cr = new CarreraMD();
+                cr.setId(idcarrera);
+                m.setCarrera(cr);
+                m.setMateriaNucleo(rs.getBoolean("materia_nucleo"));
+                lista.add(m);
             }
-
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias para tabla");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultaron materias para formulario. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     //Cargar datos de materia por carrera
@@ -299,88 +332,77 @@ public class MateriaBD extends MateriaMD {
                 + "AND id_carrera= " + idcarrera + " "
                 + "AND materia_ciclo = " + ciclo + ";";
         ArrayList<MateriaMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                MateriaMD m;
-                while (rs.next()) {
-                    m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setCodigo(rs.getString("materia_codigo"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    lista.add(m);
-                }
-                ps.getConnection().close();
-                return lista;
-            } else {
-                System.out.println("No se pudo buscar materias para referencia");
-                return null;
-            }
+        PreparedStatement ps = CON.getPSPOOL(sql);
 
+        try {
+            ResultSet rs = ps.executeQuery();
+            MateriaMD m;
+            while (rs.next()) {
+                m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setCodigo(rs.getString("materia_codigo"));
+                m.setNombre(rs.getString("materia_nombre"));
+                lista.add(m);
+            }
         } catch (SQLException ex) {
-            System.out.println("No se pudo buscar materias para referencia");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultaron materias para formulario. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     //Cargar todos los ciclos de una carrera  
     public ArrayList<Integer> cargarCiclosCarrera(int idCarrera) {
         ArrayList<Integer> ciclos = new ArrayList();
-        String sql = "SELECT DISTINCT materia_ciclo\n"
-                + "	FROM public.\"Materias\" \n"
-                + "	WHERE id_carrera = " + idCarrera + " ORDER BY materia_ciclo; ";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT DISTINCT materia_ciclo "
+                + "FROM public.\"Materias\"  "
+                + "WHERE id_carrera = " + idCarrera + " "
+                + "ORDER BY materia_ciclo; ";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    ciclos.add(rs.getInt("materia_ciclo"));
-                }
-                ps.getConnection().close();
-                return ciclos;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ciclos.add(rs.getInt("materia_ciclo"));
             }
-        } catch (SQLException e) {
-            System.out.println("No pudimos cargar los ciclos de una carrera");
-            System.out.println(e.getMessage());
-            return null;
+        } catch (SQLException ex) {
+            M.errorMsg("No se consultaron ciclos por carrera. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return ciclos;
     }
 
     //Buscar materia para informacion
     public MateriaMD buscarMateriaInfo(int idmateria) {
         MateriaMD m = new MateriaMD();
-        String sql = "SELECT id_materia, m.id_carrera, materia_codigo, \n"
-                + "materia_nombre, carrera_nombre\n"
-                + "FROM public.\"Materias\" m, public.\"Carreras\" c\n"
-                + "WHERE id_materia = " + idmateria + " AND\n"
-                + "c.id_carrera = m.id_carrera;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT id_materia, "
+                + "m.id_carrera, "
+                + "materia_codigo, "
+                + "materia_nombre, "
+                + "carrera_nombre "
+                + "FROM public.\"Materias\" m, "
+                + "public.\"Carreras\" c "
+                + "WHERE id_materia = " + idmateria + " "
+                + "AND c.id_carrera = m.id_carrera;";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    m.setId(rs.getInt("id_materia"));
-                    m.setCodigo(rs.getString("materia_codigo"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    CarreraMD cr = new CarreraMD();
-                    cr.setId(rs.getInt("id_carrera"));
-                    cr.setNombre(rs.getString("carrera_nombre"));
-                    m.setCarrera(cr);
-                }
-                ps.getConnection().close();
-                return m;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m.setId(rs.getInt("id_materia"));
+                m.setCodigo(rs.getString("materia_codigo"));
+                m.setNombre(rs.getString("materia_nombre"));
+                CarreraMD cr = new CarreraMD();
+                cr.setId(rs.getInt("id_carrera"));
+                cr.setNombre(rs.getString("carrera_nombre"));
+                m.setCarrera(cr);
             }
+            return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultar materia info. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -397,23 +419,18 @@ public class MateriaBD extends MateriaMD {
                 + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion, materia_nucleo\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    m = obtenerMateria(rs);
-                }
-                ps.getConnection().close();
-                return m;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m = obtenerMateria(rs);
             }
+            return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultar materia por id. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -429,23 +446,18 @@ public class MateriaBD extends MateriaMD {
                 + "materia_objetivo_especifico,materia_organizacion_curricular,materia_campo_formacion, materia_nucleo\n"
                 + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
                 + "AND materia_codigo LIKE '" + codigo + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    m = obtenerMateria(rs);
-                }
-                ps.getConnection().close();
-                return m;
-            } else {
-                System.out.println("No se pudo consultar carreras");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m = obtenerMateria(rs);
             }
+            return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar carreras");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultar materia por codigo. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -453,28 +465,24 @@ public class MateriaBD extends MateriaMD {
     public MateriaMD buscarMateriaPorReferencia(int idmateria) {
         MateriaMD m = new MateriaMD();
         String sql = "SELECT id_materia, id_carrera, "
-                + " materia_nombre, materia_ciclo\n"
-                + "FROM public.\"Materias\" WHERE materia_activa = 'true' "
+                + "materia_nombre, materia_ciclo "
+                + "FROM public.\"Materias\" "
+                + "WHERE materia_activa = 'true' "
                 + "AND id_materia= " + idmateria + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    m.setCiclo(rs.getInt("materia_ciclo"));
-                }
-                return m;
-            } else {
-                System.out.println("No se pudo consultar materia para referencia");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                m.setCiclo(rs.getInt("materia_ciclo"));
             }
+            return m;
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materia para referencia");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No se consultar materia por referencia. " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -496,39 +504,31 @@ public class MateriaBD extends MateriaMD {
 
     private ArrayList<MateriaMD> consultarMateriasParaTabla(String sql) {
         ArrayList<MateriaMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                MateriaMD m;
-                while (rs.next()) {
-                    m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    CarreraMD cr = new CarreraMD();
-                    cr.setId(rs.getInt("id_carrera"));
-                    m.setCarrera(cr);
-                    m.setCodigo(rs.getString("materia_codigo"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    m.setCiclo(rs.getInt("materia_ciclo"));
-                    m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
-                    m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
-                    m.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
-                    m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
-                    m.setTotalHoras(rs.getInt("materia_total_horas"));
-                    lista.add(m);
-                }
-                ps.getConnection().close();
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar materias para tabla");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                CarreraMD cr = new CarreraMD();
+                cr.setId(rs.getInt("id_carrera"));
+                m.setCarrera(cr);
+                m.setCodigo(rs.getString("materia_codigo"));
+                m.setNombre(rs.getString("materia_nombre"));
+                m.setCiclo(rs.getInt("materia_ciclo"));
+                m.setHorasDocencia(rs.getInt("materia_horas_docencia"));
+                m.setHorasPracticas(rs.getInt("materia_horas_practicas"));
+                m.setHorasPresenciales(rs.getInt("materia_horas_presencial"));
+                m.setHorasAutoEstudio(rs.getInt("materia_horas_auto_estudio"));
+                m.setTotalHoras(rs.getInt("materia_total_horas"));
+                lista.add(m);
             }
-
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias para tabla");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultar materia para tabla. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public ArrayList<MateriaMD> cargarMateriasCarreraCmb(int idCarrera) {
@@ -538,30 +538,23 @@ public class MateriaBD extends MateriaMD {
                 + "WHERE materia_activa = 'true' "
                 + "AND m.id_carrera= " + idCarrera + ";";
         ArrayList<MateriaMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                MateriaMD m;
-                while (rs.next()) {
-                    m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setCodigo(rs.getString("materia_codigo"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    lista.add(m);
-                }
-                ps.getConnection().close();
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar materias para tabla");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            MateriaMD m;
+            while (rs.next()) {
+                m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setCodigo(rs.getString("materia_codigo"));
+                m.setNombre(rs.getString("materia_nombre"));
+                lista.add(m);
             }
-
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias para tabla");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultar materia para combo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public MateriaMD obtenerMateria(ResultSet rs) {
@@ -570,8 +563,6 @@ public class MateriaBD extends MateriaMD {
         String palabra;
         try {
             m.setId(rs.getInt("id_materia"));
-            //Aqui cargamos la carrera el id de la carrera
-            //Deberiamos buscar carrera
             CarreraMD carrera = new CarreraMD();
             carrera.setId(rs.getInt("id_carrera"));
             m.setCarrera(carrera);
@@ -757,7 +748,7 @@ public class MateriaBD extends MateriaMD {
                 + "AND materia_activa = true;";
         return getParaRequisitos(sql);
     }
-    
+
     public ArrayList<MateriaMD> getMateriasParaPrequisitos(int idMateria) {
         String sql = "SELECT id_materia, "
                 + " materia_nombre \n"
@@ -776,27 +767,21 @@ public class MateriaBD extends MateriaMD {
 
     private ArrayList<MateriaMD> getParaRequisitos(String sql) {
         ArrayList<MateriaMD> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                MateriaMD m;
-                while (rs.next()) {
-                    m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    lista.add(m);
-                }
-                ps.getConnection().close();
-                return lista;
-            } else {
-                System.out.println("No se pudo consultar materias para combo");
-                return null;
+            ResultSet rs = ps.executeQuery();
+            MateriaMD m;
+            while (rs.next()) {
+                m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                lista.add(m);
             }
         } catch (SQLException ex) {
-            System.out.println("No se pudo consultar materias para combo");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se consultar materia para combo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 }

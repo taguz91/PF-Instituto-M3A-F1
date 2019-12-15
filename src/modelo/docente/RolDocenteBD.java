@@ -4,58 +4,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.ConectarDB;
 import modelo.persona.DocenteMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author DAVICHO
  */
-public class RolDocenteBD extends RolDocenteMD {
+public class RolDocenteBD extends CONBD {
 
-    private final ConectarDB conecta;
+    private static RolDocenteBD RDBD;
 
-    public RolDocenteBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static RolDocenteBD single() {
+        if (RDBD == null) {
+            RDBD = new RolDocenteBD();
+        }
+        return RDBD;
     }
 
-    public boolean InsertarRol() {
+    public boolean InsertarRol(RolDocenteMD rd) {
         String nsql = "INSERT INTO public.\"RolesDocente\"(\n"
-                + "	id_docente, id_rol_prd)\n"
-                + "	VALUES (" + getIdDocente().getIdDocente() + ",+" + getIdRolPeriodo().getId_rol() + ");";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error de conexion a la BD");
-            return false;
-        }
+                + "id_docente, "
+                + "id_rol_prd)\n"
+                + "VALUES (" + rd.getIdDocente().getIdDocente() + ", "
+                + "" + rd.getIdRolPeriodo().getId_rol() + ");";
+        return CON.executeNoSQL(nsql);
     }
 
-    public boolean editarRolPeriodo(int aguja) {
+    public boolean editarRolPeriodo(RolDocenteMD rd) {
         String nsql = "UPDATE public.\"RolesDocente\"\n"
-                + "	SET id_rol_prd= " + getIdRolPeriodo().getId_rol() + "\n"
-                + "	WHERE id_rol_docente=" + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+                + "SET id_rol_prd= " + rd.getIdRolPeriodo().getId_rol() + "\n"
+                + "WHERE id_rol_docente=" + rd.getIdDocente() + ";";
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean eliminarRolPeriodo(int aguja) {
         String nsql = "Update public.\"RolesDocente\"n"
                 + "SET rol_docente_activo= false \n"
                 + "WHERE id_rol_docente=" + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error de consulta");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public ArrayList<RolDocenteMD> llenarTabla() {
@@ -70,9 +58,9 @@ public class RolDocenteBD extends RolDocenteMD {
                 + "p.id_rol_prd=r.id_rol_prd and\n"
                 + "r.id_docente = d.id_docente and\n"
                 + "d.id_persona= a.id_persona and id_docente_activo= true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 RolDocenteMD rd = new RolDocenteMD();
                 DocenteMD d = new DocenteMD();
@@ -84,12 +72,9 @@ public class RolDocenteBD extends RolDocenteMD {
                 rd.setIdRolPeriodo(m);
                 lista.add(rd);
             }
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No consultamos roles de docente. " + ex.getMessage());
         }
+        return lista;
     }
 }

@@ -4,60 +4,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.ConectarDB;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author arman
  */
-public class RolPeriodoBD extends RolPeriodoMD {
+public class RolPeriodoBD extends CONBD {
 
-    private final ConectarDB conecta;
+    private static RolPeriodoBD RPBD;
 
-    public RolPeriodoBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static RolPeriodoBD single() {
+        if (RPBD == null) {
+            RPBD = new RolPeriodoBD();
+        }
+        return RPBD;
     }
 
-    public boolean InsertarRol() {
+    public boolean InsertarRol(RolPeriodoMD rp) {
         String nsql = "Insert into public.\"RolesPeriodo\"(\n"
                 + "id_prd_lectivo,rol_prd)\n"
-                + "Values (" + getPeriodo().getID() + ", "
-                + "UPPER('" + getNombre_rol() + "'));";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+                + "Values (" + rp.getPeriodo().getID() + ", "
+                + "UPPER('" + rp.getNombre_rol() + "'));";
+        return CON.executeNoSQL(nsql);
     }
 
-    public boolean editarRolPeriodo(int aguja) {
+    public boolean editarRolPeriodo(RolPeriodoMD rp) {
         String nsql = "UPDATE public.\"RolesPeriodo\"\n"
-                + "SET id_prd_lectivo=" + getPeriodo().getID() + ","
-                + " rol_prd='" + getNombre_rol() + "'\n"
-                + " WHERE id_rol_prd= " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+                + "SET id_prd_lectivo=" + rp.getPeriodo().getID() + ","
+                + " rol_prd='" + rp.getNombre_rol() + "'\n"
+                + " WHERE id_rol_prd= " + rp.getId_rol() + ";";
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean eliminarRolPeriodo(int aguja) {
         String nsql = "UPDATE public.\"RolesPeriodo\"\n"
                 + "	SET rol_activo=false\n"
                 + "	WHERE id_rol_prd=" + aguja + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error de consulta");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public ArrayList<RolPeriodoMD> llenarTabla() {
@@ -66,9 +52,9 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 + "from \n"
                 + "public.\"PeriodoLectivo\" p join public.\"RolesPeriodo\"\n"
                 + "using (id_prd_lectivo) where rol_activo= true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 RolPeriodoMD m = new RolPeriodoMD();
                 PeriodoLectivoMD perL = new PeriodoLectivoMD();
@@ -76,17 +62,15 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 perL.setNombre(rs.getString("prd_lectivo_nombre"));
                 m.setId_rol(rs.getInt("id_rol_prd"));
                 m.setPeriodo(perL);
-                //m.setPeriodo(perLec.getNombre_PerLectivo());
                 m.setNombre_rol(rs.getString("rol_prd"));
                 lista.add(m);
             }
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("Error al consultar roles de peridoo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public ArrayList<RolPeriodoMD> cargarRolesPorPeriodo(int idPrd) {
@@ -95,10 +79,9 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 + "	FROM public.\"RolesPeriodo\" p\n"
                 + "	where p.id_prd_lectivo=" + idPrd + "\n"
                 + "	and p.rol_activo= true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 RolPeriodoMD rol = new RolPeriodoMD();
                 rol.setId_rol(rs.getInt("id_rol_prd"));
@@ -106,11 +89,11 @@ public class RolPeriodoBD extends RolPeriodoMD {
                 System.out.println("Nombre " + rol.getNombre_rol());
                 rPrd.add(rol);
             }
-            ps.getConnection().close();
-            return rPrd;
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("Error al consultar roles de peridoo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return rPrd;
     }
 }

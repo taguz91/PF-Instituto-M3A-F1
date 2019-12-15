@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;

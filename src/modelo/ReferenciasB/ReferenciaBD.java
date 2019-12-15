@@ -1,136 +1,169 @@
 package modelo.ReferenciasB;
 
+import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import utils.CONBD;
+import utils.M;
 
-public class ReferenciaBD extends ReferenciasMD {
-
-    private ConectarDB conectar;
-    private ConexionBD conexion;
-
-   /* public ReferenciaBD(int id_referencia, String codigo_referencia, String descripcion_referencia,
-            String tipo_referencia, boolean existe_en_biblioteca,
-            String observaciones, String codigo_ibsn, String numero_de_paginas, String codigo_koha,
-            String codigo_dewey, String area_referencias, String autor2, String autor3,String autor1,String ciudad, String año, String editor, String titulo) {
-        super(id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca, observaciones, codigo_ibsn, numero_de_paginas, codigo_koha, codigo_dewey, area_referencias, autor2, autor3,editor, ciudad);
-    }*/
-
-    public ReferenciaBD(int id_referencia, String codigo_referencia, String descripcion_referencia, String tipo_referencia, boolean existe_en_biblioteca, String observaciones, String codigo_ibsn, String numero_de_paginas, String codigo_koha, String codigo_dewey, String area_referencias, String autor2, String autor3, String titulo, String autor1, String año, String editor, String ciudad) {
-        super(id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca, observaciones, codigo_ibsn, numero_de_paginas, codigo_koha, codigo_dewey, area_referencias, autor2, autor3, titulo, autor1, año, editor, ciudad);
-    }
+public class ReferenciaBD extends CONBD {
     
-
-    public ReferenciaBD(ConectarDB conectar) {
-        this.conectar = conectar;
+    
+    private static ReferenciaBD RBD; 
+    
+    public static ReferenciaBD single(){
+        if (RBD == null) {
+            RBD = new ReferenciaBD();
+        }
+        return RBD;
     }
 
-    public ReferenciaBD() {
+    public boolean insertarReferencia(ReferenciasMD re) {
+        String nsql = "INSERT INTO public.\"Referencias\"( "
+                + "codigo_referencia,"
+                + "descripcion_referencia,"
+                + "tipo_referencia,"
+                + "existe_en_biblioteca,"
+                + "observaciones,"
+                + "codigo_isbn,"
+                + "numero_de_paginas,"
+                + "codigo_koha,"
+                + "codigo_dewey,"
+                + "area_referencia,"
+                + "autor2,"
+                + "autor3, "
+                + "autor1, "
+                + "editor, "
+                + "ciudad, "
+                + "año, "
+                + "titulo)\n"
+                + " values ("
+                + "'" + re.getCodigo_referencia() + "',"
+                + "'" + re.getDescripcion_referencia() + "',"
+                + "'" + re.getTipo_referencia() + "',"
+                + "" + re.isExiste_en_biblioteca() + ","
+                + "'" + re.getObservaciones() + "',"
+                + "'" + re.getCodigo_isbn() + "',"
+                + "'" + re.getNumero_de_paginas() + "',"
+                + "'" + re.getCodigo_koha() + "',"
+                + "'" + re.getCodigo_dewey() + "',"
+                + "'" + re.getArea_referencias() + "',"
+                + "'" + re.getAutor2() + "',"
+                + "'" + re.getAutor3() + "',"
+                + "'" + re.getAutor1() + "',"
+                + "'" + re.getEditor() + "',"
+                + "'" + re.getCiudad() + "',"
+                + "'" + re.getAño() + "',"
+                + "'" + re.getTitulo() + "');";
+        return CON.executeNoSQL(nsql);
     }
 
-    public boolean insertarReferencia() {
-        String nsql = "INSERT INTO public.\"Referencias\"(\n"
-                + "codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,numero_de_paginas,codigo_koha,codigo_dewey,area_referencia,autor2,autor3, autor1, editor, ciudad, año, titulo)\n"
-                + " values ('" + getCodigo_referencia() + "','" + getDescripcion_referencia() + "','" + getTipo_referencia() + "'," + isExiste_en_biblioteca() + ",'" + getObservaciones()
-                + "','" + getCodigo_isbn() + "','" + getNumero_de_paginas() + "','" + getCodigo_koha() + "','" + getCodigo_dewey() + "','" + getArea_referencias() + "','" + getAutor2() + "','" + getAutor3() + "','" + getAutor1()+ "','" + getEditor()+ "','" + getCiudad()+ "','" + getAño()+ "','" + getTitulo()+ "');";
-        if (conectar.nosql(nsql) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
+    public void actualizar(ReferenciasMD re) {
+        String sql = "UPDATE \"Referencias\" SET "
+                + "descripcion_referencia='" + re.getDescripcion_referencia() + "',"
+                + "codigo_referencia='" + re.getCodigo_referencia() + "',"
+                + "existe_en_biblioteca='" + re.isExiste_en_biblioteca() + "',"
+                + "observaciones='" + re.getObservaciones() + "',"
+                + "codigo_isbn='" + re.getCodigo_isbn() + "' , "
+                + "numero_de_paginas='" + re.getNumero_de_paginas() + "',"
+                + "codigo_koha='" + re.getCodigo_koha() + "',"
+                + "codigo_dewey='" + re.getCodigo_dewey() + "',"
+                + "area_referencia='" + re.getArea_referencias() + "',"
+                + "autor2='" + re.getAutor2() + "',"
+                + "autor3='" + re.getAutor3() + "',"
+                + "autor1='" + re.getAutor1() + "',"
+                + "titulo='" + re.getTitulo() + "',"
+                + "año='" + re.getAño() + "',"
+                + "ciudad='" + re.getCiudad() + "',"
+                + "editor='" + re.getEditor() + "' "
+                + "WHERE id_referencia = ?";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ps.setInt(1, re.getId_referencia());
+            JOptionPane.showMessageDialog(null, "Referencia actuaizada correctamente");
+            CON.noSQLPOOL(ps);
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar referencias");
         }
     }
 
-    public void actualizar(ConexionBD conexion,int id) throws SQLException {
-        String editar = getDescripcion_referencia();
-        String sql = "update \"Referencias\" set descripcion_referencia='"+getDescripcion_referencia()+"',codigo_referencia='"+getCodigo_referencia()+"',"
-                + "existe_en_biblioteca='"+isExiste_en_biblioteca()+"',observaciones='"+getObservaciones()+"',codigo_isbn='"+getCodigo_isbn()+"' , "
-                + "numero_de_paginas='"+getNumero_de_paginas()+"',codigo_koha='"+getCodigo_koha()+"',codigo_dewey='"+getCodigo_dewey()+"',"
-                + "area_referencia='"+getArea_referencias()+"',autor2='"+getAutor2()+"',autor3='"+getAutor3()+"',autor1='"+getAutor1()+"',"
-                + "titulo='"+getTitulo()+"',año='"+getAño()+"',ciudad='"+getCiudad()+"',editor='"+getEditor()+"' where id_referencia=?";
-        PreparedStatement st = conexion.getCon().prepareStatement(sql);
-        st.setInt(1, id);
-        st.executeUpdate();
-        st.close();
-        JOptionPane.showMessageDialog(null, "Referencia actuaizada correctamente");
-
-    }
-
-    public List<ReferenciasMD> consultarBibliotecaTabla(ConexionBD conexion) {
-
+    public List<ReferenciasMD> consultarBibliotecaTabla() {
         List<ReferenciasMD> referencias = new ArrayList<>();
+        String sql = "SELECT codigo_referencia, "
+                + " descripcion_referencia "
+                + "FROM public.\"Referencias\" "
+                + "WHERE tipo_referencia='Base' ";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  codigo_referencia, descripcion_referencia\n"
-                    + "                     FROM public.\"Referencias\"\n"
-                    + "                    WHERE tipo_referencia='Base'");
-
-            ResultSet rs = st.executeQuery();
-
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
-                ReferenciasMD tmp = new ReferenciasMD();
-                tmp.setCodigo_referencia(rs.getString(1));
-                tmp.setDescripcion_referencia(rs.getString(2));
-
-                referencias.add(tmp);
+                ReferenciasMD re = new ReferenciasMD();
+                re.setCodigo_referencia(rs.getString(1));
+                re.setDescripcion_referencia(rs.getString(2));
+                referencias.add(re);
             }
-
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg(
+                    "Error al consultar biblioteca para tabla. \n"
+                    + ex.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return referencias;
 
     }
 
-    public void eliminar(ConexionBD conexion, String codigo) {
+    public void eliminar(String codigo) {
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM \"Referencias\" where codigo_referencia=?");
+            String sql = "DELETE FROM \"Referencias\" where codigo_referencia=?";
+            PreparedStatement st = CON.getPSPOOL(sql);
             st.setString(1, codigo);
-
-            st.executeUpdate();
-
-            System.out.println(st);
-            st.close();
+            CON.executeNoSQL(sql);
             JOptionPane.showMessageDialog(null, "Datos eliminados correctamente");
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg(
+                    "Error al eliminar por codigo. \n"
+                    + ex.getMessage()
+            );
         }
     }
 
-    public List<ReferenciasMD> consultarBiblioteca(ConexionBD conexion, String clave) {
+    public List<ReferenciasMD> consultarBiblioteca(String clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
+        String sql = "SELECT id_referencia, "
+                + "codigo_referencia, "
+                + "descripcion_referencia, "
+                + "tipo_referencia, "
+                + "existe_en_biblioteca "
+                + "FROM public.\"Referencias\"\n"
+                + "WHERE tipo_referencia='Base'\n"
+                + "AND descripcion_referencia ILIKE '%" + clave + "%'";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_referencia, codigo_referencia, descripcion_referencia, tipo_referencia, existe_en_biblioteca\n"
-                    + "FROM public.\"Referencias\"\n"
-                    + "WHERE tipo_referencia='Base'\n"
-                    + "AND descripcion_referencia ILIKE '%" + clave + "%'");
-
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ReferenciasMD tmp = new ReferenciasMD();
-                tmp.setId_referencia(rs.getInt(1));
-                tmp.setCodigo_referencia(rs.getString(2));
-                tmp.setDescripcion_referencia(rs.getString(3));
-                tmp.setTipo_referencia(rs.getString(4));
-                tmp.setExiste_en_biblioteca(rs.getBoolean(5));
+                ReferenciasMD re = new ReferenciasMD();
+                re.setId_referencia(rs.getInt(1));
+                re.setCodigo_referencia(rs.getString(2));
+                re.setDescripcion_referencia(rs.getString(3));
+                re.setTipo_referencia(rs.getString(4));
+                re.setExiste_en_biblioteca(rs.getBoolean(5));
 
-                referencias.add(tmp);
+                referencias.add(re);
             }
-
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("No pudimos consultar por clave. \n" + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return referencias;
 
@@ -139,117 +172,116 @@ public class ReferenciaBD extends ReferenciasMD {
     public List<ReferenciasMD> obtenerdatos(ConexionBD conexion, String clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
+        String sql = "select id_referencia,codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,\n"
+                + "numero_de_paginas,codigo_koha,codigo_dewey,area_referencia,autor1,autor2,autor3,editor,ciudad,año,titulo\n"
+                + "from \"Referencias\" where codigo_referencia=?";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_referencia,codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,\n"
-                    + "numero_de_paginas,codigo_koha,codigo_dewey,area_referencia,autor1,autor2,autor3,editor,ciudad,año,titulo\n"
-                    + "from \"Referencias\" where codigo_referencia=?");
-            st.setString(1, clave);
-            ResultSet rs = st.executeQuery();
+            ps.setString(1, clave);
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ReferenciasMD tmp = new ReferenciasMD();
-                tmp.setId_referencia(rs.getInt(1));
-                tmp.setCodigo_referencia(rs.getString(2));
-                tmp.setDescripcion_referencia(rs.getString(3));
-                tmp.setTipo_referencia(rs.getString(4));
-                tmp.setExiste_en_biblioteca(rs.getBoolean(5));
-                tmp.setObservaciones(rs.getString(6));
-                tmp.setCodigo_isbn(rs.getString(7));
-                tmp.setNumero_de_paginas(rs.getString(8));
-                tmp.setCodigo_koha(rs.getString(9));
-                tmp.setCodigo_dewey(rs.getString(10));
-                tmp.setArea_referencias(rs.getString(11));
-                tmp.setAutor2(rs.getString(13));
-                tmp.setAutor3(rs.getString(14));
-                tmp.setEditor(rs.getString(15));
-                tmp.setCiudad(rs.getString(16));
-                tmp.setAño(rs.getString(17));
-                tmp.setTitulo(rs.getString(18));
-                tmp.setAutor1(rs.getString(12));
-                referencias.add(tmp);
+                ReferenciasMD re = new ReferenciasMD();
+                re.setId_referencia(rs.getInt(1));
+                re.setCodigo_referencia(rs.getString(2));
+                re.setDescripcion_referencia(rs.getString(3));
+                re.setTipo_referencia(rs.getString(4));
+                re.setExiste_en_biblioteca(rs.getBoolean(5));
+                re.setObservaciones(rs.getString(6));
+                re.setCodigo_isbn(rs.getString(7));
+                re.setNumero_de_paginas(rs.getString(8));
+                re.setCodigo_koha(rs.getString(9));
+                re.setCodigo_dewey(rs.getString(10));
+                re.setArea_referencias(rs.getString(11));
+                re.setAutor2(rs.getString(13));
+                re.setAutor3(rs.getString(14));
+                re.setEditor(rs.getString(15));
+                re.setCiudad(rs.getString(16));
+                re.setAño(rs.getString(17));
+                re.setTitulo(rs.getString(18));
+                re.setAutor1(rs.getString(12));
+                referencias.add(re);
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("Error al cargar todo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return referencias;
-
     }
-public List<PeriodoLectivoMD> mostrarDatos1(ConexionBD conexion) {
+
+    public List<PeriodoLectivoMD> mostrarDatos1() {
         List<PeriodoLectivoMD> lista = new ArrayList<>();
+        String sql = "SELECT id_prd_lectivo,"
+                + "prd_lectivo_nombre "
+                + "FROM \"PeriodoLectivo\" "
+                + "WHERE current_date < prd_lectivo_fecha_fin;";
+        PreparedStatement st = CON.getPSPOOL(sql);
         try {
-
-            String sql = "select id_prd_lectivo,prd_lectivo_nombre from \"PeriodoLectivo\" where current_date<prd_lectivo_fecha_fin;";
-            PreparedStatement st = conexion.getCon().prepareStatement(sql);
-
-            System.out.println(st);
             ResultSet rs = st.executeQuery();
-
             while (rs.next()) {
                 PeriodoLectivoMD m = new PeriodoLectivoMD();
                 m.setID(rs.getInt(1));
                 m.setNombre(rs.getString(2));
                 lista.add(m);
             }
-            // rs.close();//cerrar conexion cn la bd 
-
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            M.errorMsg("Error al mostradar datos 1 " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(st);
         }
         return lista;
     }
-  public List<ReferenciasMD> consultarBporperiodo(ConexionBD conexion, int clave) {
+
+    public List<ReferenciasMD> getBasePorPeriodo(int clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
+        String sql = "SELECT  distinct r.codigo_referencia,"
+                + "r.descripcion_referencia "
+                + "FROM \"ReferenciaSilabo\" rs "
+                + "JOIN \"Referencias\" r ON r.id_referencia=rs.id_referencia \n"
+                + "join \"Silabo\" s ON rs.id_silabo=s.id_silabo "
+                + "JOIN \"PeriodoLectivo\" pl ON pl.id_prd_lectivo = s.id_prd_lectivo "
+                + "WHERE r.tipo_referencia = 'Base' AND \n"
+                + "r.existe_en_biblioteca=true AND s.id_prd_lectivo=?";
+        PreparedStatement st = CON.getPSPOOL(sql);
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT  distinct r.codigo_referencia,r.descripcion_referencia FROM \"ReferenciaSilabo\" rs join \"Referencias\" r on r.id_referencia=rs.id_referencia \n" +
-"join \"Silabo\" s on rs.id_silabo=s.id_silabo join \"PeriodoLectivo\" pl on pl.id_prd_lectivo=s.id_prd_lectivo where r.tipo_referencia='Base' and \n" +
-"r.existe_en_biblioteca=true and s.id_prd_lectivo=?");
             st.setInt(1, clave);
-
             ResultSet rs = st.executeQuery();
-
             while (rs.next()) {
                 ReferenciasMD tmp = new ReferenciasMD();
-               // tmp.setId_referencia(rs.getInt(1));
                 tmp.setCodigo_referencia(rs.getString(1));
                 tmp.setDescripcion_referencia(rs.getString(2));
-                
+
                 referencias.add(tmp);
             }
-
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciasMD.class.getName()).log(Level.SEVERE, null, ex);
+            M.errorMsg("Error al consultar por periodo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(st);
         }
         return referencias;
-
     }
-  public PeriodoLectivoMD retornaPRDlectivo(ConexionBD conexion, String nombre) {
-        int id_periodo = 0;
+
+    public PeriodoLectivoMD retornaPRDlectivo(String nombre) {
         PeriodoLectivoMD m = new PeriodoLectivoMD();
+        String sql = "select id_prd_lectivo "
+                + "from \"PeriodoLectivo\" "
+                + "where prd_lectivo_nombre=?;";
+            PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-
-            String sql = "select id_prd_lectivo from \"PeriodoLectivo\" where prd_lectivo_nombre=?;";
-            PreparedStatement st = conexion.getCon().prepareStatement(sql);
-            st.setString(1, nombre);
-
-            System.out.println(st);
-            ResultSet rs = st.executeQuery();
-
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 m.setID(rs.getInt(1));
-                //return m;
             }
-            // rs.close();//cerrar conexion cn la bd 
-
         } catch (SQLException ex) {
-            Logger.getLogger(ReferenciaBD.class.getName()).log(Level.SEVERE, null, ex);
-
+            M.errorMsg("Error al consultar el ID periodo. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return m;
     }
+    
 }

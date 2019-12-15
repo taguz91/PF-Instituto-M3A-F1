@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import utils.CONBD;
+import utils.M;
 
 public class PeriodoLectivoBD extends CONBD {
 
-    private ConectarDB conecta;
     //Para guardar carrera en un periodo  
     private CarreraBD car;
 
@@ -37,14 +36,6 @@ public class PeriodoLectivoBD extends CONBD {
 
     {
         pool = new ConnDBPool();
-    }
-
-    public PeriodoLectivoBD() {
-    }
-
-    public PeriodoLectivoBD(ConectarDB conecta) {
-        this.conecta = conecta;
-        this.car = new CarreraBD(conecta);
     }
 
     public boolean guardarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
@@ -69,8 +60,7 @@ public class PeriodoLectivoBD extends CONBD {
                 + "true, "
                 + "'" + p.getFechaFinClases() + "' "
                 + ");";
-        PreparedStatement ps = conecta.getPS(nsql);
-        return conecta.nosql(ps) == null;
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean editarPeriodo(PeriodoLectivoMD p, CarreraMD c) {
@@ -82,32 +72,28 @@ public class PeriodoLectivoBD extends CONBD {
                 + "prd_lectivo_observacion = '" + p.getObservacion() + "', "
                 + "prd_lectivo_fecha_fin_clases = '" + p.getFechaFinClases() + "' "
                 + "WHERE id_prd_lectivo = " + p.getID() + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        return conecta.nosql(ps) == null;
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean eliminarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" "
                 + "SET prd_lectivo_activo = false"
                 + " WHERE id_prd_lectivo = " + p.getID() + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        return conecta.nosql(ps) == null;
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean cerrarPeriodo(PeriodoLectivoMD p) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" "
                 + "SET prd_lectivo_estado = false "
                 + "WHERE id_prd_lectivo = " + p.getID() + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        return conecta.nosql(ps) == null;
+        return CON.executeNoSQL(nsql);
     }
 
     public boolean abrirPeriodo(int id) {
         String nsql = "UPDATE public.\"PeriodoLectivo\" "
                 + "SET  prd_lectivo_estado = true"
                 + "WHERE id_prd_lectivo = " + id + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        return conecta.nosql(ps) == null;
+        return CON.executeNoSQL(nsql);
     }
 
     public List<PeriodoLectivoMD> llenarPeriodosxCarreras(int idCarrera) {
@@ -121,10 +107,10 @@ public class PeriodoLectivoBD extends CONBD {
                 + "c.carrera_nombre "
                 + "FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c "
                 + "USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
                 p.setID(rs.getInt("id_prd_lectivo"));
@@ -138,13 +124,12 @@ public class PeriodoLectivoBD extends CONBD {
                 p.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 lista.add(p);
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar el periodo: " + ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar el periodo: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public List<PeriodoLectivoMD> periodoDocente(int aguja) {
@@ -156,97 +141,97 @@ public class PeriodoLectivoBD extends CONBD {
                 + "JOIN public.\"Docentes\" d USING(id_docente) "
                 + "WHERE d.id_docente = " + aguja + " "
                 + "AND p.prd_lectivo_activo = true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 lista.add(p);
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar el periodo: " + ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar el periodo: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public List<CarreraMD> capturarCarrera() {
         List<CarreraMD> lista = new ArrayList();
         String sql = "SELECT id_carrera, carrera_nombre, carrera_codigo FROM public.\"Carreras\" "
                 + "WHERE carrera_activo = true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    CarreraMD a = new CarreraMD();
-                    a.setId(rs.getInt("id_carrera"));
-                    a.setNombre(rs.getString("carrera_nombre"));
-                    a.setCodigo(rs.getString("carrera_codigo"));
-                    lista.add(a);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return lista;
-            } catch (SQLException ex) {
-                System.out.println("No pude capturar una carrera: " + ex.getMessage());
-                return null;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CarreraMD a = new CarreraMD();
+                a.setId(rs.getInt("id_carrera"));
+                a.setNombre(rs.getString("carrera_nombre"));
+                a.setCodigo(rs.getString("carrera_codigo"));
+                lista.add(a);
             }
-        } else {
-            return null;
+        } catch (SQLException ex) {
+            M.errorMsg("No pudimos consultar el carrera: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
 
     }
 
     public CarreraMD capturarIdCarrera(String aguja) {
         String sql = "SELECT id_carrera"
-                + " FROM public.\"Carreras\" WHERE carrera_nombre LIKE '%" + aguja + "%';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+                + "FROM public.\"Carreras\" "
+                + "WHERE carrera_nombre LIKE '%" + aguja + "%';";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             CarreraMD c = new CarreraMD();
             while (rs.next()) {
                 c.setId(rs.getInt("id_carrera"));
             }
-            rs.close();
-            ps.getConnection().close();
             return c;
         } catch (SQLException ex) {
-            System.out.println("No pude capturar id del periodo: " + ex.getMessage());
+            M.errorMsg("No pudimos consultar el id de la carrera: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public CarreraMD capturarNomCarrera(int aguja) {
         String sql = "SELECT carrera_nombre"
                 + " FROM public.\"Carreras\" WHERE id_carrera = " + aguja + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             CarreraMD c = new CarreraMD();
             while (rs.next()) {
                 c.setNombre(rs.getString("carrera_nombre"));
             }
-            rs.close();
-            ps.getConnection().close();
             return c;
         } catch (SQLException ex) {
-            System.out.println("Capturamos el nombre de la carrera: " + ex.getMessage());
+            M.errorMsg("No pudimos consultar el nombre de la carrera: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public List<PeriodoLectivoMD> llenarTabla() {
         List<PeriodoLectivoMD> lista = new ArrayList();
-        String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin"
-                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT id_prd_lectivo, "
+                + "id_carrera, "
+                + "prd_lectivo_nombre, "
+                + "prd_lectivo_fecha_inicio, "
+                + "prd_lectivo_fecha_fin "
+                + "FROM public.\"PeriodoLectivo\" "
+                + "WHERE prd_lectivo_activo = true";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD m = new PeriodoLectivoMD();
                 carrera = new CarreraMD();
@@ -258,13 +243,12 @@ public class PeriodoLectivoBD extends CONBD {
                 m.setCarrera(carrera);
                 lista.add(m);
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar para llenar tabla: " + ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar para llenar la tabla: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public List<PeriodoLectivoMD> capturarPeriodos(String aguja) {
@@ -278,14 +262,12 @@ public class PeriodoLectivoBD extends CONBD {
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
-
                 p.setID(rs.getInt("id_prd_lectivo"));
-                //Buscamos la carrera para guardarla en la clase
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setCodigo(rs.getString("carrera_codigo"));
@@ -299,13 +281,12 @@ public class PeriodoLectivoBD extends CONBD {
 
                 lista.add(p);
             }
-            ps.getConnection().close();
-            rs.close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No pudimos capturar periodos: " + ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar para llenar la tabla: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public PeriodoLectivoMD capturarPerLectivo(int ID) {
@@ -323,9 +304,9 @@ public class PeriodoLectivoBD extends CONBD {
                 + "JOIN public.\"Carreras\" c USING(id_carrera) "
                 + "WHERE p.id_prd_lectivo = "
                 + ID + " AND prd_lectivo_activo = true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             PeriodoLectivoMD m = new PeriodoLectivoMD();
             carrera = new CarreraMD();
             while (rs.next()) {
@@ -340,31 +321,37 @@ public class PeriodoLectivoBD extends CONBD {
                 m.setCarrera(carrera);
                 m.setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
             }
-            rs.close();
-            ps.getConnection().close();
             return m;
         } catch (SQLException ex) {
-            System.out.println("No pudimos capturar solo un periodo lectivo: " + ex.getMessage());
+            M.errorMsg("No pudimos consultar para llenar la tabla: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public ArrayList<PeriodoLectivoMD> cargarPeriodos() {
         ArrayList<PeriodoLectivoMD> lista = new ArrayList();
-        String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
-                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo, prd_lectivo_estado\n"
-                + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
-                + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true "
-                + "AND carrera_activo = true\n"
+        String sql = "SELECT id_prd_lectivo, "
+                + "pl.id_carrera, "
+                + "prd_lectivo_nombre, "
+                + "prd_lectivo_fecha_inicio, "
+                + "prd_lectivo_fecha_fin, "
+                + "carrera_nombre, "
+                + "carrera_codigo, "
+                + "prd_lectivo_estado "
+                + "FROM public.\"PeriodoLectivo\" pl, "
+                + "public.\"Carreras\" c "
+                + "WHERE c.id_carrera = pl.id_carrera "
+                + "AND prd_lectivo_activo = true "
+                + "AND carrera_activo = true "
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
                 p.setID(rs.getInt("id_prd_lectivo"));
-                //Buscamos la carrera para guardarla en la clase
                 carrera = new CarreraMD();
                 carrera.setId(rs.getInt("id_carrera"));
                 carrera.setCodigo(rs.getString("carrera_codigo"));
@@ -377,14 +364,12 @@ public class PeriodoLectivoBD extends CONBD {
 
                 lista.add(p);
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar para llenar la tabla: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public PeriodoLectivoMD buscarPerido(int idPeriodo) {
@@ -393,11 +378,10 @@ public class PeriodoLectivoBD extends CONBD {
                 + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
                 + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "id_prd_lectivo = " + idPeriodo + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 p.setID(rs.getInt("id_prd_lectivo"));
                 //Buscamos la carrera para guardarla en la clase
                 carrera = car.buscar(rs.getInt("id_carrera"));
@@ -406,15 +390,13 @@ public class PeriodoLectivoBD extends CONBD {
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-
             }
-            rs.close();
-            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No pudimos consultar para llenar la tabla: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -471,9 +453,9 @@ public class PeriodoLectivoBD extends CONBD {
      */
     private ArrayList<PeriodoLectivoMD> consultarParaCmb(String sql) {
         ArrayList<PeriodoLectivoMD> prds = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            ResultSet rs = conecta.sql(ps);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 PeriodoLectivoMD p = new PeriodoLectivoMD();
                 p.setID(rs.getInt("id_prd_lectivo"));
@@ -484,11 +466,10 @@ public class PeriodoLectivoBD extends CONBD {
 
                 prds.add(p);
             }
-            rs.close();
-            ps.getConnection().close();
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos para combo");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No pudimos consultar para combo: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return prds;
     }
@@ -497,48 +478,48 @@ public class PeriodoLectivoBD extends CONBD {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
         String sql = "SELECT id_prd_lectivo FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
                 + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 p.setID(rs.getInt("id_prd_lectivo"));
             }
-            rs.close();
             return p;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos para combo");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No pudimos consultar para combo: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public PeriodoLectivoMD buscarPeriodo(String nombrePer) {
         PeriodoLectivoMD p = new PeriodoLectivoMD();
-        String sql = "SELECT id_prd_lectivo, id_carrera, prd_lectivo_nombre,"
-                + " prd_lectivo_fecha_inicio, prd_lectivo_fecha_fin "
-                + " FROM public.\"PeriodoLectivo\" WHERE prd_lectivo_activo = true AND "
+        String sql = "SELECT id_prd_lectivo, "
+                + "id_carrera, "
+                + "prd_lectivo_nombre, "
+                + "prd_lectivo_fecha_inicio, "
+                + "prd_lectivo_fecha_fin "
+                + "FROM public.\"PeriodoLectivo\" "
+                + "WHERE prd_lectivo_activo = true AND "
                 + "prd_lectivo_nombre LIKE '" + nombrePer + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 p.setID(rs.getInt("id_prd_lectivo"));
-                //Buscamos la carrera para guardarla en la clase
                 carrera = car.buscar(rs.getInt("id_carrera"));
                 p.setCarrera(carrera);
-
                 p.setNombre(rs.getString("prd_lectivo_nombre"));
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
-
             }
-            rs.close();
-            ps.getConnection().close();
             return p;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos");
-            System.out.println(ex.getMessage());
+            M.errorMsg("No pudimos consultar para combo: " + ex.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -587,25 +568,25 @@ public class PeriodoLectivoBD extends CONBD {
     }
 
     public String alumnosMatriculados(int ID) {
-        System.out.println("ID: " + ID);
-        String sql = "SELECT COUNT(*) AS numeroAlumnos FROM (public.\"Carreras\" c JOIN public.\"AlumnosCarrera\" a\n"
-                + "					  USING(id_carrera)) JOIN public.\"MallaAlumno\" m USING(id_almn_carrera)\n"
-                + "							WHERE c.id_carrera = " + ID + " AND m.malla_almn_estado LIKE 'M';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT COUNT(*) AS numeroAlumnos FROM ( "
+                + " public.\"Carreras\" c "
+                + " JOIN public.\"AlumnosCarrera\" a "
+                + " USING(id_carrera)"
+                + ") JOIN public.\"MallaAlumno\" m USING(id_almn_carrera) "
+                + "WHERE c.id_carrera = " + ID + " AND m.malla_almn_estado LIKE 'M';";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         String count = "";
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 count = String.valueOf(rs.getInt("numeroAlumnos"));
             }
-            rs.close();
-            ps.getConnection().close();
-            return count;
         } catch (SQLException ex) {
-            System.out.println("No pudimos consultar periodos para combo");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar numero de alumnos: " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return count;
     }
 
     public LocalDate buscarFechaInicioPrd(int idPrd) {

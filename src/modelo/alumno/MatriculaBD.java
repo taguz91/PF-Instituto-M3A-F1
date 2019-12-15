@@ -6,61 +6,82 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
-import modelo.ConnDBPool;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Johnny
  */
-public class MatriculaBD extends MatriculaMD {
+public class MatriculaBD extends CONBD {
 
-    private String sql = "", nsql = "";
+    private String sql = "";
+    private static MatriculaBD MBD;
 
-    private final ConectarDB conecta;
-
-    private final ConnDBPool CON = ConnDBPool.single();
-
-    public MatriculaBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static MatriculaBD single() {
+        if (MBD == null) {
+            MBD = new MatriculaBD();
+        }
+        return MBD;
     }
 
-    public void ingresar() {
-        nsql = "INSERT INTO public.\"Matricula\"(\n"
-                + "	id_alumno, id_prd_lectivo, matricula_tipo)\n"
-                + "	VALUES (" + getAlumno().getId_Alumno() + ", " + getPeriodo().getID() + ", '" + getTipo() + "');";
+    public void ingresar(MatriculaMD m) {
+        String nsql = "INSERT INTO public.\"Matricula\"(\n"
+                + "id_alumno, "
+                + "id_prd_lectivo, "
+                + "matricula_tipo)\n"
+                + "VALUES (" + m.getAlumno().getId_Alumno() + ", "
+                + "" + m.getPeriodo().getID() + ", "
+                + "'" + m.getTipo() + "');";
 
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) != null) {
+        if (!CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "No se pudo realizar la matricula, \n"
                     + "compruebe su conexion a internet.");
         }
     }
 
     public ArrayList<MatriculaMD> cargarMatriculas() {
-        sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
-                + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre \n"
-                + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
-                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
-                + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
-                + "	a.id_alumno = m.id_alumno AND \n"
-                + "	p.id_persona = a.id_persona; ";
+        sql = "SELECT id_matricula, "
+                + "m.id_alumno, "
+                + "m.id_prd_lectivo, "
+                + "matricula_fecha, "
+                + "persona_identificacion, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "prd_lectivo_nombre "
+                + "FROM public.\"Matricula\" m, "
+                + "public.\"PeriodoLectivo\" pl, "
+                + "public.\"Alumnos\" a, "
+                + "public.\"Personas\" p "
+                + "WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
+                + "a.id_alumno = m.id_alumno AND \n"
+                + "p.id_persona = a.id_persona; ";
         return consultarParaTbl(sql);
     }
 
     public ArrayList<MatriculaMD> cargarMatriculasPorPrd(int idPrd) {
-        sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
-                + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre \n"
-                + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
-                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
-                + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
-                + "	a.id_alumno = m.id_alumno AND \n"
-                + "	p.id_persona = a.id_persona AND \n"
-                + "     m.id_prd_lectivo = " + idPrd + "; ";
+        sql = "SELECT id_matricula, "
+                + "m.id_alumno, "
+                + "m.id_prd_lectivo, "
+                + "matricula_fecha, "
+                + "persona_identificacion, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "prd_lectivo_nombre "
+                + "FROM public.\"Matricula\" m, "
+                + "public.\"PeriodoLectivo\" pl, "
+                + "public.\"Alumnos\" a, "
+                + "public.\"Personas\" p "
+                + "WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND "
+                + "a.id_alumno = m.id_alumno AND  "
+                + "p.id_persona = a.id_persona AND  "
+                + "m.id_prd_lectivo = " + idPrd + "; ";
         return consultarParaTbl(sql);
     }
 
@@ -76,23 +97,22 @@ public class MatriculaBD extends MatriculaMD {
         sql = "SELECT id_matricula, id_alumno, id_prd_lectivo, matricula_fecha \n"
                 + "FROM public.\"Matricula\" \n "
                 + "WHERE id_prd_lectivo = " + idPrd + " AND id_alumno = " + idAlm + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    m = new MatriculaMD();
-                    m.setId(rs.getInt("id_matricula"));
-                    m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
-                }
-                ps.getConnection().close();
-                return m;
-            } catch (SQLException e) {
-                System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
-                return null;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                m = new MatriculaMD();
+                m.setId(rs.getInt("id_matricula"));
+                m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
             }
-        } else {
+            ps.getConnection().close();
+            return m;
+        } catch (SQLException e) {
+            M.errorMsg("No se pudieron consultar matriculas. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -104,56 +124,61 @@ public class MatriculaBD extends MatriculaMD {
      * @return
      */
     public ArrayList<MatriculaMD> buscarMatriculas(String aguja) {
-        sql = "SELECT id_matricula, m.id_alumno, m.id_prd_lectivo, matricula_fecha, \n"
-                + "persona_identificacion, persona_primer_nombre, persona_segundo_nombre, \n"
-                + "persona_primer_apellido, persona_segundo_apellido, prd_lectivo_nombre \n"
-                + "FROM public.\"Matricula\" m, public.\"PeriodoLectivo\" pl,\n"
-                + "public.\"Alumnos\" a, public.\"Personas\" p\n"
-                + "	WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND \n"
-                + "	a.id_alumno = m.id_alumno AND \n"
-                + "	p.id_persona = a.id_persona AND(\n"
-                + "	persona_identificacion ILIKE '%" + aguja + "%' OR \n"
-                + "	persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
-                + "	persona_primer_apellido ||' '|| persona_segundo_apellido ILIKE '%" + aguja + "%'\n"
-                + "	OR prd_lectivo_nombre ILIKE '%" + aguja + "%'); ";
+        sql = "SELECT id_matricula, "
+                + "m.id_alumno, "
+                + "m.id_prd_lectivo, "
+                + "matricula_fecha, "
+                + "persona_identificacion, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "prd_lectivo_nombre "
+                + "FROM public.\"Matricula\" m, "
+                + "public.\"PeriodoLectivo\" pl, "
+                + "public.\"Alumnos\" a, "
+                + "public.\"Personas\" p "
+                + "WHERE pl.id_prd_lectivo = m.id_prd_lectivo AND "
+                + "a.id_alumno = m.id_alumno AND  "
+                + "p.id_persona = a.id_persona AND( "
+                + "persona_identificacion ILIKE '%" + aguja + "%' OR \n"
+                + "persona_primer_nombre || ' ' || persona_segundo_nombre || ' ' ||\n"
+                + "persona_primer_apellido ||' '|| persona_segundo_apellido ILIKE '%" + aguja + "%'\n"
+                + "OR prd_lectivo_nombre ILIKE '%" + aguja + "%'); ";
         return consultarParaTbl(sql);
     }
 
     private ArrayList<MatriculaMD> consultarParaTbl(String sql) {
         ArrayList<MatriculaMD> matriculas = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    MatriculaMD m = new MatriculaMD();
-                    AlumnoMD a = new AlumnoMD();
-                    PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    m.setId(rs.getInt("id_matricula"));
-                    a.setId_Alumno(rs.getInt("id_alumno"));
-                    p.setID(rs.getInt("id_prd_lectivo"));
-                    m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
-                    a.setIdentificacion(rs.getString("persona_identificacion"));
-                    a.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    a.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    p.setNombre(rs.getString("prd_lectivo_nombre"));
-                    a.setIdentificacion(rs.getString("persona_identificacion"));
-                    m.setAlumno(a);
-                    m.setPeriodo(p);
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MatriculaMD m = new MatriculaMD();
+                AlumnoMD a = new AlumnoMD();
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                m.setId(rs.getInt("id_matricula"));
+                a.setId_Alumno(rs.getInt("id_alumno"));
+                p.setID(rs.getInt("id_prd_lectivo"));
+                m.setFecha(rs.getTimestamp("matricula_fecha").toLocalDateTime());
+                a.setIdentificacion(rs.getString("persona_identificacion"));
+                a.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                a.setIdentificacion(rs.getString("persona_identificacion"));
+                m.setAlumno(a);
+                m.setPeriodo(p);
 
-                    matriculas.add(m);
-                }
-                ps.getConnection().close();
-                return matriculas;
-            } catch (SQLException e) {
-                System.out.println("No se pudieron consultar matriculas. " + e.getMessage());
-                return null;
+                matriculas.add(m);
             }
-        } else {
-            return null;
+        } catch (SQLException e) {
+            M.errorMsg("No se pudieron consultar matriculas. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return matriculas;
     }
 
     /**
@@ -169,46 +194,39 @@ public class MatriculaBD extends MatriculaMD {
                 + "  SELECT id_curso\n"
                 + "  FROM public.\"Cursos\"\n"
                 + "  WHERE id_prd_lectivo = " + idPrd + ");";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    num = rs.getInt(1);
-                }
-                ps.getConnection().close();
-                return num;
-            } catch (SQLException e) {
-                System.out.println("No podemos obetener el numero de matriculados en un periodo \n"
-                        + e.getMessage());
-                return 0;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                num = rs.getInt(1);
             }
-        } else {
+            return num;
+        } catch (SQLException e) {
+            M.errorMsg("No podemos obetener el numero de matriculados en un periodo \n"
+                    + e.getMessage());
             return 0;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
     public int numMaticulados(int idPrd) {
         int num = 0;
-        sql = "SELECT count(*) FROM public.\"Matricula\"\n"
+        sql = "SELECT count(*) FROM public.\"Matricula\" "
                 + "WHERE id_prd_lectivo = " + idPrd + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    num = rs.getInt(1);
-                }
-                ps.getConnection().close();
-                return num;
-            } catch (SQLException e) {
-                System.out.println("No podemos obetener el numero de matriculados en un periodo \n"
-                        + e.getMessage());
-                return 0;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                num = rs.getInt(1);
             }
-        } else {
-            return 0;
+        } catch (SQLException e) {
+            M.errorMsg("No podemos obetener el numero de matriculados en un periodo \n"
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return num;
     }
 
     public ArrayList<String> cursosMatriculado(int idAlumno, int idPeriodo) {
@@ -219,20 +237,21 @@ public class MatriculaBD extends MatriculaMD {
                 + "	FROM public.\"AlumnoCurso\"\n"
                 + "	WHERE id_alumno = " + idAlumno + "\n"
                 + "	AND id_prd_lectivo = " + idPeriodo + ")";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                nombres = new ArrayList<>();
-                while (rs.next()) {
-                    String n = rs.getString(1);
-                    nombres.add(n);
-                }
-                ps.getConnection().close();
-            } catch (SQLException e) {
-                System.out.println("No se pudo realizar la consulta: " + e.getMessage());
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            nombres = new ArrayList<>();
+            while (rs.next()) {
+                String n = rs.getString(1);
+                nombres.add(n);
             }
+            ps.getConnection().close();
+        } catch (SQLException e) {
+            M.errorMsg("No se pudo realizar la consulta: " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+
         return nombres;
     }
 

@@ -1,45 +1,46 @@
 package modelo.jornada;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.ConectarDB;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Johnny
  */
-public class JornadaBD extends JornadaMD {
+public class JornadaBD extends CONBD {
 
-    private final ConectarDB conecta;
+    private static JornadaBD JBD;
 
-    public JornadaBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static JornadaBD single() {
+        if (JBD == null) {
+            JBD = new JornadaBD();
+        }
+        return JBD;
     }
 
     public ArrayList<JornadaMD> cargarJornadas() {
         ArrayList<JornadaMD> jornadas = new ArrayList();
         String sql = "SELECT id_jornada, nombre_jornada\n"
                 + "	FROM public.\"Jornadas\";";
-
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    JornadaMD j = obtenerJornada(rs);
-                    if (j != null) {
-                        jornadas.add(j);
-                    }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                JornadaMD j = obtenerJornada(rs);
+                if (j != null) {
+                    jornadas.add(j);
                 }
-                return jornadas;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos cargar jornadas");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("No pudimos consultar jornadas. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return jornadas;
     }
 
     public JornadaMD buscarJornada(int idJornada) {
@@ -48,24 +49,22 @@ public class JornadaBD extends JornadaMD {
                 + "	FROM public.\"Jornadas\"  "
                 + "WHERE id_jornada = " + idJornada + ";";
 
-        ResultSet rs = conecta.sql(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    j = obtenerJornada(rs);
-                }
-                return j;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                j = obtenerJornada(rs);
             }
+            return j;
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar una jornada " + idJornada);
-            System.out.println(e.getMessage());
+            M.errorMsg("No pudimos consultar jornadas. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
-    public JornadaMD obtenerJornada(ResultSet rs) {
+    private JornadaMD obtenerJornada(ResultSet rs) {
         JornadaMD j = new JornadaMD();
         try {
             j.setId(rs.getInt("id_jornada"));
@@ -73,11 +72,9 @@ public class JornadaBD extends JornadaMD {
 
             return j;
         } catch (SQLException e) {
-            System.out.println("No pudimos obtener una jornada");
-            System.out.println(e.getMessage());
+            M.errorMsg("No pudimos consultar jornadas. " + e.getMessage());
             return null;
         }
     }
-
 
 }

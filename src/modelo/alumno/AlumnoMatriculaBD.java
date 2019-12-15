@@ -4,16 +4,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelo.ConectarDB;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author gus
  */
-public class AlumnoMatriculaBD {
+public class AlumnoMatriculaBD extends CONBD {
+
+    private static AlumnoMatriculaBD AMBD;
+
+    public static AlumnoMatriculaBD single() {
+        if (AMBD == null) {
+            AMBD = new AlumnoMatriculaBD();
+        }
+        return AMBD;
+    }
 
     private final String BASESQL = "SELECT\n"
             + "persona_identificacion,\n"
@@ -55,12 +65,6 @@ public class AlumnoMatriculaBD {
             + "prd_lectivo_nombre\n"
             + "ORDER BY persona_primer_apellido, persona_segundo_apellido;";
 
-    private final ConectarDB conecta;
-
-    public AlumnoMatriculaBD(ConectarDB conecta) {
-        this.conecta = conecta;
-    }
-
     public ArrayList<AlumnoMatriculaMD> getTodos() {
         String sql = BASESQL + FINSQL;
         return obtenerParaTbl(sql);
@@ -87,46 +91,43 @@ public class AlumnoMatriculaBD {
 
     public ArrayList<AlumnoMatriculaMD> obtenerParaTbl(String sql) {
         ArrayList<AlumnoMatriculaMD> almnsMatri = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    AlumnoMatriculaMD am = new AlumnoMatriculaMD();
-                    AlumnoMD a = new AlumnoMD();
-                    CarreraMD c = new CarreraMD();
-                    PeriodoLectivoMD p = new PeriodoLectivoMD();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AlumnoMatriculaMD am = new AlumnoMatriculaMD();
+                AlumnoMD a = new AlumnoMD();
+                CarreraMD c = new CarreraMD();
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
 
-                    a.setIdentificacion(rs.getString("persona_identificacion"));
-                    a.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    a.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    a.setCorreo(rs.getString("persona_correo"));
-                    a.setCelular(rs.getString("persona_celular"));
-                    a.setTelefono(rs.getString("persona_telefono"));
+                a.setIdentificacion(rs.getString("persona_identificacion"));
+                a.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                a.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                a.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                a.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                a.setCorreo(rs.getString("persona_correo"));
+                a.setCelular(rs.getString("persona_celular"));
+                a.setTelefono(rs.getString("persona_telefono"));
 
-                    c.setNombre(rs.getString("carrera_nombre"));
-                    c.setCodigo(rs.getString("carrera_codigo"));
+                c.setNombre(rs.getString("carrera_nombre"));
+                c.setCodigo(rs.getString("carrera_codigo"));
 
-                    p.setNombre(rs.getString("prd_lectivo_nombre"));
-                    p.setCarrera(c);
+                p.setNombre(rs.getString("prd_lectivo_nombre"));
+                p.setCarrera(c);
 
-                    am.setAlumno(a);
-                    am.setPeriodo(p);
-                    am.setCursos(rs.getString(12));
-                    
-                    almnsMatri.add(am);
-                }
-                ps.getConnection().close();
-                return almnsMatri;
-            } catch (SQLException e) {
-                System.out.println("No logramos consultar " + e.getMessage());
-                return null;
+                am.setAlumno(a);
+                am.setPeriodo(p);
+                am.setCursos(rs.getString(12));
+
+                almnsMatri.add(am);
             }
-        } else {
-            return null;
+
+        } catch (SQLException e) {
+            M.errorMsg("No logramos consultar " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return almnsMatri;
     }
 
 }

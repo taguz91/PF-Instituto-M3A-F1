@@ -5,36 +5,50 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.materia.MateriaMD;
 import modelo.persona.DocenteMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Johnny
  */
-public class DocenteMateriaBD extends DocenteMateriaMD {
+public class DocenteMateriaBD extends CONBD {
 
-    private final ConectarDB conecta;
+    private static DocenteMateriaBD DMBD;
 
-    public DocenteMateriaBD(ConectarDB conecta) {
-        this.conecta = conecta;
+    public static DocenteMateriaBD single() {
+        if (DMBD == null) {
+            DMBD = new DocenteMateriaBD();
+        }
+        return DMBD;
     }
 
-    public boolean guardar() {
+    public boolean guardar(DocenteMateriaMD dm) {
         String nsql = "INSERT INTO public.\"DocentesMateria\"(\n"
-                + "	id_docente, id_materia)\n"
-                + "	VALUES (" + getDocente().getIdDocente() + ", " + getMateria().getId() + ");";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Asignamos correctamente \n" + getMateria().getNombre()
-                    + " A \n" + getDocente().getPrimerNombre() + " " + getDocente().getSegundoNombre()
-                    + " " + getDocente().getPrimerApellido() + " " + getDocente().getSegundoApellido());
+                + "id_docente, "
+                + "id_materia) "
+                + "VALUES (" + dm.getDocente().getIdDocente() + ", "
+                + "" + dm.getMateria().getId() + ");";
+
+        if (CON.executeNoSQL(nsql)) {
+            JOptionPane.showMessageDialog(null,
+                    "Asignamos correctamente \n"
+                    + dm.getMateria().getNombre()
+                    + " A \n" + dm.getDocente().getPrimerNombre() + " "
+                    + dm.getDocente().getSegundoNombre()
+                    + " " + dm.getDocente().getPrimerApellido()
+                    + " " + dm.getDocente().getSegundoApellido());
             return true;
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo asignar  \n" + getMateria().getNombre()
-                    + " A \n" + getDocente().getPrimerNombre() + " " + getDocente().getSegundoNombre()
-                    + " " + getDocente().getPrimerApellido() + " " + getDocente().getSegundoApellido() + "\n"
+            JOptionPane.showMessageDialog(null,
+                    "No se pudo asignar  \n"
+                    + dm.getMateria().getNombre()
+                    + " A \n" + dm.getDocente().getPrimerNombre() + " "
+                    + dm.getDocente().getSegundoNombre()
+                    + " " + dm.getDocente().getPrimerApellido() + " "
+                    + dm.getDocente().getSegundoApellido() + "\n"
                     + "Por favor compruebe su conexion a internet y vuelva a intentarlo.");
             return false;
         }
@@ -44,8 +58,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         String nsql = "UPDATE public.\"DocentesMateria\""
                 + " SET docente_mat_activo = false\n"
                 + "WHERE id_docente_mat = " + idDocenMat + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
+        if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar, compruebe su conexion.");
@@ -56,8 +69,7 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         String nsql = "UPDATE public.\"DocentesMateria\""
                 + " SET docente_mat_activo = true\n"
                 + "WHERE id_docente_mat = " + idDocenMat + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
+        if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se activo correctamente.");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo activar, compruebe su conexion.");
@@ -69,24 +81,20 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
         String sql = "SELECT id_docente_mat, docente_mat_activo\n"
                 + "	FROM public.\"DocentesMateria\" \n"
                 + "	WHERE id_docente = " + idDocente + " AND id_materia = " + idMateria + ";";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    dm = new DocenteMateriaMD();
-                    dm.setId(rs.getInt("id_docente_mat"));
-                    dm.setActivo(rs.getBoolean("docente_mat_activo"));
-                }
-                ps.getConnection().close();
-                return dm;
-            } catch (SQLException e) {
-                System.out.println("No se pudo consultar docente materia");
-                System.out.println(e.getMessage());
-                return null;
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                dm = new DocenteMateriaMD();
+                dm.setId(rs.getInt("id_docente_mat"));
+                dm.setActivo(rs.getBoolean("docente_mat_activo"));
             }
-        } else {
+            return dm;
+        } catch (SQLException e) {
+            M.errorMsg("No se pudo consultar docente materia. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -190,26 +198,21 @@ public class DocenteMateriaBD extends DocenteMateriaMD {
 
     private ArrayList<DocenteMateriaMD> consultar(String sql) {
         ArrayList<DocenteMateriaMD> dms = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    DocenteMateriaMD dm = obtenerDocenteMateriaTbl(rs);
-                    if (dm != null) {
-                        dms.add(dm);
-                    }
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                DocenteMateriaMD dm = obtenerDocenteMateriaTbl(rs);
+                if (dm != null) {
+                    dms.add(dm);
                 }
-                ps.getConnection().close();
-                return dms;
-            } catch (SQLException e) {
-                System.out.println("No se pudo consultar docentes");
-                System.out.println(e.getMessage());
-                return null;
             }
-        } else {
-            return null;
+        } catch (SQLException e) {
+            M.errorMsg("No se pudo consultar docente materia. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return dms;
     }
 
     private DocenteMateriaMD obtenerDocenteMateriaTbl(ResultSet rs) {

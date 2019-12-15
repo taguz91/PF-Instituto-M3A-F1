@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.jornada.JornadaMD;
@@ -17,69 +16,70 @@ import modelo.materia.MateriaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
 import modelo.persona.DocenteMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author arman
  */
-public class CursoBD extends CursoMD {
+public class CursoBD extends CONBD {
 
-    private final ConectarDB conecta;
-
-    private ConnDBPool POOL;
+    private final ConnDBPool POOL;
     private Connection conn;
     private ResultSet rst;
+
+    private static CursoBD CBD;
+
+    public static CursoBD single() {
+        if (CBD == null) {
+            CBD = new CursoBD();
+        }
+        return CBD;
+    }
 
     {
         POOL = new ConnDBPool();
     }
 
-    public CursoBD(ConectarDB conecta) {
-        this.conecta = conecta;
-    }
-
-    public CursoBD() {
-        this.conecta = null;
-    }
-
-    private void iniciarIngresoNotas() {
-        String nsql = "INSERT INTO public.\"IngresoNotas\"( id_curso)\n"
-                + "	VALUES ();";
-        if (conecta.nosql(nsql) == null) {
-            JOptionPane.showMessageDialog(null, "Se incio ingreso notas.");
-        }
-    }
-
-    public void guardarCurso() {
+    public void guardarCurso(CursoMD c) {
         String nsql = "INSERT INTO public.\"Cursos\"(\n"
-                + "	id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "	curso_nombre, curso_capacidad, curso_ciclo,\n"
-                + "	curso_paralelo)\n"
-                + "	VALUES (" + getMateria().getId() + ", " + getPeriodo().getID()
-                + ", " + getDocente().getIdDocente() + ", " + getJornada().getId()
-                + ", '" + getNombre() + "', " + getCapacidad() + ", " + getCiclo()
-                + ", '" + getParalelo() + "');";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso " + getNombre());
+                + "id_materia, "
+                + "id_prd_lectivo, "
+                + "id_docente, "
+                + "id_jornada, "
+                + "curso_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo,"
+                + "curso_paralelo)\n"
+                + "VALUES (" + c.getMateria().getId() + ", "
+                + "" + c.getPeriodo().getID()
+                + ", " + c.getDocente().getIdDocente() + ", "
+                + "" + c.getJornada().getId()
+                + ", '" + c.getNombre() + "', "
+                + c.getCapacidad() + ", "
+                + "" + c.getCiclo()
+                + ", '" + c.getParalelo() + "');";
+        if (CON.executeNoSQL(nsql)) {
+            JOptionPane.showMessageDialog(null, "Se guardo correctamente el curso " + c.getNombre());
         }
     }
 
-    public void editarCurso(int idCurso) {
+    public void editarCurso(CursoMD c) {
         String nsql = "UPDATE public.\"Cursos\"\n"
-                + "	SET id_materia=" + getMateria().getId() + ", "
-                + " id_prd_lectivo=" + getPeriodo().getID() + ", "
-                + "id_docente= " + getDocente().getIdDocente() + ", "
-                + "id_jornada=" + getJornada().getId() + ", "
-                + "curso_nombre='" + getNombre() + "', curso_capacidad=" + getCapacidad() + ", "
-                + "curso_ciclo=" + getCiclo() + ", "
-                + "curso_paralelo= '" + getParalelo() + "'\n"
-                + "	WHERE id_curso = " + idCurso + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + getNombre());
+                + "SET id_materia=" + c.getMateria().getId() + ", "
+                + " id_prd_lectivo=" + c.getPeriodo().getID() + ", "
+                + "id_docente= " + c.getDocente().getIdDocente() + ", "
+                + "id_jornada=" + c.getJornada().getId() + ", "
+                + "curso_nombre='" + c.getNombre() + "', "
+                + "curso_capacidad=" + c.getCapacidad() + ", "
+                + "curso_ciclo=" + c.getCiclo() + ", "
+                + "curso_paralelo= '" + c.getParalelo() + "' "
+                + "WHERE id_curso = " + c.getId() + ";";
+        if (CON.executeNoSQL(nsql)) {
+            JOptionPane.showMessageDialog(null, "Se edito correctamente el curso " + c.getNombre());
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + getNombre());
+            JOptionPane.showMessageDialog(null, "No se pudo editar el curso " + c.getNombre());
         }
     }
 
@@ -87,8 +87,7 @@ public class CursoBD extends CursoMD {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = false "
                 + "WHERE id_curso = " + idCurso + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
+        if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se elimino correctamente. ");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente, \n"
@@ -100,8 +99,7 @@ public class CursoBD extends CursoMD {
         String nsql = "UPDATE public.\"Cursos\" "
                 + "SET curso_activo = true "
                 + "WHERE id_curso = " + idCurso + ";";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
+        if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se activo correctamente. ");
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo activar,"
@@ -118,14 +116,7 @@ public class CursoBD extends CursoMD {
                 + ", " + c.getDocente().getIdDocente() + ", " + c.getJornada().getId()
                 + ", '" + c.getNombre() + "', " + c.getCapacidad() + ", " + c.getCiclo()
                 + ", '" + c.getParalelo() + "', true);";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-//            JOptionPane.showMessageDialog(null, "Todo salió de maravilla");
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(nsql);
     }
 
     public List<Integer> consultaCursos() {
@@ -134,31 +125,32 @@ public class CursoBD extends CursoMD {
                 + "GROUP BY id_materia, id_prd_lectivo, curso_nombre\n"
                 + "HAVING count(*) > 1";
         List<Integer> lista = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Integer num = 0;
-                num = rs.getInt("id_materia");
-                lista.add(num);
+                lista.add(rs.getInt("id_materia"));
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se pudieron consultar alumnos. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public List<AlumnoCursoMD> extraerAlumnosCurso(int curso) {
-        String sql = "SELECT id_almn_curso, id_alumno, id_curso, almn_curso_asistencia, almn_curso_nota_final,"
-                + " almn_curso_num_faltas WHERE id_curso = " + curso + ";";
-        PreparedStatement ps = conecta.getPS(sql);
+        String sql = "SELECT id_almn_curso, "
+                + "id_alumno, "
+                + "id_curso, "
+                + "almn_curso_asistencia, "
+                + "almn_curso_nota_final, "
+                + "almn_curso_num_faltas "
+                + "WHERE id_curso = " + curso + ";";
+        PreparedStatement ps = CON.getPSPOOL(sql);
         List<AlumnoCursoMD> lista = new ArrayList();
-        ResultSet rs = conecta.sql(ps);
         try {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 AlumnoCursoMD c = new AlumnoCursoMD();
                 c.setId(rs.getInt("id_almn_curso"));
@@ -173,74 +165,84 @@ public class CursoBD extends CursoMD {
                 c.setCurso(cur);
                 lista.add(c);
             }
-            rs.close();
-            ps.getConnection().close();
-            return lista;
         } catch (SQLException ex) {
-            System.out.println("No se pudieron consultar alumnos");
-            System.out.println(ex.getMessage());
-            return null;
+            M.errorMsg("No se pudieron consultar alumnos. " + ex.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return lista;
     }
 
     public boolean nuevoAlumnoCurso(AlumnoCursoMD a, int curso) {
         String nsql = "INSERT INTO public.\"AlumnoCurso\"(\n"
-                + "	id_alumno, id_curso, almn_curso_asistencia, almn_curso_nota_final, \n"
-                + "	almn_curso_estado, almn_curso_num_faltas, almn_curso_fecha_registro,\n"
-                + "	almn_curso_activo)\n"
-                + "	VALUES (" + a.getAlumno().getId_Alumno() + ", " + curso
-                + ", " + a.getAsistencia() + ", " + a.getNotaFinal()
-                + ", true, '" + a.getNumFalta() + "', now(), true);";
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+                + "id_alumno, "
+                + "id_curso, "
+                + "almn_curso_asistencia, "
+                + "almn_curso_nota_final, "
+                + "almn_curso_estado, "
+                + "almn_curso_num_faltas, "
+                + "almn_curso_fecha_registro, "
+                + "almn_curso_activo) "
+                + "VALUES ("
+                + a.getAlumno().getId_Alumno() + ", "
+                + curso + ", "
+                + a.getAsistencia() + ", "
+                + a.getNotaFinal()
+                + ", true, '"
+                + a.getNumFalta()
+                + "', now(), true);";
+        return CON.executeNoSQL(nsql);
     }
 
     public CursoMD atraparCurso(int materia, int periodo, int docente, String curso) {
-        String sql = "SELECT id_curso, id_materia, id_prd_lectivo, id_docente, id_jornada, \n"
-                + "curso_nombre, curso_capacidad, curso_ciclo, curso_paralelo, curso_activo\n"
-                + "	FROM public.\"Cursos\" WHERE id_materia = " + materia + "  AND id_prd_lectivo = " + periodo + ""
-                + "AND id_docente = " + docente + " AND curso_nombre LIKE '" + curso + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        String sql = "SELECT id_curso, "
+                + "id_materia, "
+                + "id_prd_lectivo, "
+                + "id_docente, "
+                + "id_jornada, "
+                + "curso_nombre, "
+                + "curso_capacidad, "
+                + "curso_ciclo, "
+                + "curso_paralelo, "
+                + "curso_activo "
+                + "FROM public.\"Cursos\" "
+                + "WHERE id_materia = " + materia + " "
+                + "AND id_prd_lectivo = " + periodo + " "
+                + "AND id_docente = " + docente + " "
+                + "AND curso_nombre LIKE '" + curso + "';";
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
         CursoMD c = new CursoMD();
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    c.setId(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    c.setMateria(m);
-                    PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    p.setID(rs.getInt("id_prd_lectivo"));
+            ResultSet rs = ps.executeQuery();
 
-                    c.setPeriodo(p);
-                    DocenteMD d = new DocenteMD();
-                    d.setIdDocente(rs.getInt("id_docente"));
-                    c.setDocente(d);
-                    JornadaMD j = new JornadaMD();
-                    j.setId(rs.getInt("id_jornada"));
-                    c.setJornada(j);
-                    c.setNombre(rs.getString("curso_nombre"));
-                    c.setCapacidad(rs.getInt("curso_capacidad"));
-                    c.setCiclo(rs.getInt("curso_ciclo"));
-                    c.setParalelo(rs.getString("curso_paralelo"));
-                    c.setActivo(rs.getBoolean("curso_activo"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return c;
-            } else {
-                return null;
+            while (rs.next()) {
+                c.setId(rs.getInt("id_curso"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                c.setMateria(m);
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                p.setID(rs.getInt("id_prd_lectivo"));
+
+                c.setPeriodo(p);
+                DocenteMD d = new DocenteMD();
+                d.setIdDocente(rs.getInt("id_docente"));
+                c.setDocente(d);
+                JornadaMD j = new JornadaMD();
+                j.setId(rs.getInt("id_jornada"));
+                c.setJornada(j);
+                c.setNombre(rs.getString("curso_nombre"));
+                c.setCapacidad(rs.getInt("curso_capacidad"));
+                c.setCiclo(rs.getInt("curso_ciclo"));
+                c.setParalelo(rs.getString("curso_paralelo"));
+                c.setActivo(rs.getBoolean("curso_activo"));
             }
+            return c;
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos. ");
-            System.out.println(e.getMessage());
+            M.errorMsg("No pudimos consultar cursos. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -250,23 +252,21 @@ public class CursoBD extends CursoMD {
                 + "FROM public.\"AlumnoCurso\" "
                 + "WHERE id_curso =" + idCurso + ""
                 + "AND almn_curso_activo = true;";
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    num = rs.getInt(1);
-                }
-                ps.getConnection().close();
-                return num;
-            } else {
-                return 0;
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                num = rs.getInt(1);
             }
+            ps.getConnection().close();
+
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos. ");
-            System.out.println(e.getMessage());
-            return 0;
+            M.errorMsg("No pudimos consultar cursos. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return num;
     }
 
     public ArrayList<CursoMD> cargarCursos() {
@@ -533,25 +533,23 @@ public class CursoBD extends CursoMD {
 
     private ArrayList<CursoMD> getCursosCmb(String sql, String nombre) {
         ArrayList<CursoMD> cursos = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    CursoMD c = new CursoMD();
-                    c.setId(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    c.setMateria(m);
-                    c.setCapacidad(rs.getInt("curso_capacidad"));
-                    c.setCiclo(rs.getInt("curso_ciclo"));
-                    c.setNombre(rs.getString("curso_nombre"));
-                    c.setNumMatriculados(rs.getInt(6));
+            ResultSet rs = ps.executeQuery();
 
-                    cursos.add(c);
-                }
-                ps.getConnection().close();
+            while (rs.next()) {
+                CursoMD c = new CursoMD();
+                c.setId(rs.getInt("id_curso"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                c.setMateria(m);
+                c.setCapacidad(rs.getInt("curso_capacidad"));
+                c.setCiclo(rs.getInt("curso_ciclo"));
+                c.setNombre(rs.getString("curso_nombre"));
+                c.setNumMatriculados(rs.getInt(6));
+
+                cursos.add(c);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
@@ -559,29 +557,32 @@ public class CursoBD extends CursoMD {
                     "Error al consultar cursos."
                     + e.getMessage()
             );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return cursos;
     }
 
     public CursoMD extraerId(String nombre) {
-        String sql = "SELECT id_curso FROM public.\"Cursos\" WHERE curso_nombre LIKE '" + nombre + "';";
+        String sql = "SELECT id_curso FROM public.\"Cursos\" "
+                + "WHERE curso_nombre LIKE '" + nombre + "';";
         CursoMD c = new CursoMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
+
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    c.setId(rs.getInt("id_curso"));
-                }
-                ps.getConnection().close();
-                return c;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                c.setId(rs.getInt("id_curso"));
             }
+            ps.getConnection().close();
+            return c;
+
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos por alumno. ");
-            System.out.println(e.getMessage());
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -611,37 +612,33 @@ public class CursoBD extends CursoMD {
                 + "d.id_docente = c.id_docente AND\n"
                 + "p.id_persona = d.id_persona AND curso_activo = true ;";
         ArrayList<CursoMD> cursos = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    CursoMD c = new CursoMD();
-                    c.setId(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    m.setNombre(rs.getString("materia_nombre"));
-                    c.setMateria(m);
-                    DocenteMD dc = new DocenteMD();
-                    dc.setIdDocente(rs.getInt("id_docente"));
-                    dc.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    dc.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    dc.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    dc.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    c.setDocente(dc);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CursoMD c = new CursoMD();
+                c.setId(rs.getInt("id_curso"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                m.setNombre(rs.getString("materia_nombre"));
+                c.setMateria(m);
+                DocenteMD dc = new DocenteMD();
+                dc.setIdDocente(rs.getInt("id_docente"));
+                dc.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                dc.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                dc.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                dc.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                c.setDocente(dc);
 
-                    cursos.add(c);
-                }
-                ps.getConnection().close();
-                return cursos;
-            } else {
-                return null;
+                cursos.add(c);
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos por alumno. ");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return cursos;
     }
 
     public ArrayList<String> cargarNombreCursos() {
@@ -667,19 +664,17 @@ public class CursoBD extends CursoMD {
                 + "AND  curso_activo = true "
                 + "ORDER BY curso_ciclo;";
         ArrayList<Integer> ciclos = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    ciclos.add(rs.getInt(1));
-                }
-                ps.getConnection().close();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ciclos.add(rs.getInt(1));
             }
         } catch (SQLException e) {
-            System.out.println("No se pudieron cargar los nombres de todos los cursos");
-            System.out.println(e.getMessage());
-
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return ciclos;
     }
@@ -747,86 +742,76 @@ public class CursoBD extends CursoMD {
 
     private ArrayList<CursoMD> consultarCursos(String sql) {
         ArrayList<CursoMD> cursos = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    CursoMD c = obtenerCursoParaTbl(rs);
-                    if (c != null) {
-                        cursos.add(c);
-                    }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CursoMD c = obtenerCursoParaTbl(rs);
+                if (c != null) {
+                    cursos.add(c);
                 }
-                ps.getConnection().close();
-                return cursos;
-            } else {
-                return null;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar cursos. ");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return cursos;
     }
 
     private ArrayList<String> consultarNombreCursos(String sql) {
         ArrayList<String> nombres = new ArrayList();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    String nombre = rs.getString("curso_nombre");
-                    nombres.add(nombre);
-                }
-                ps.getConnection().close();
-                return nombres;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String nombre = rs.getString("curso_nombre");
+                nombres.add(nombre);
             }
         } catch (SQLException e) {
-            System.out.println("No se pudieron cargar los nombres de todos los cursos");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return nombres;
     }
 
     private CursoMD consultarCurso(String sql) {
         CursoMD c = null;
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    c = new CursoMD();
-                    c.setId(rs.getInt("id_curso"));
-                    MateriaMD m = new MateriaMD();
-                    m.setId(rs.getInt("id_materia"));
-                    c.setMateria(m);
-                    PeriodoLectivoMD p = new PeriodoLectivoMD();
-                    p.setID(rs.getInt("id_prd_lectivo"));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                c = new CursoMD();
+                c.setId(rs.getInt("id_curso"));
+                MateriaMD m = new MateriaMD();
+                m.setId(rs.getInt("id_materia"));
+                c.setMateria(m);
+                PeriodoLectivoMD p = new PeriodoLectivoMD();
+                p.setID(rs.getInt("id_prd_lectivo"));
 
-                    c.setPeriodo(p);
-                    DocenteMD d = new DocenteMD();
-                    d.setIdDocente(rs.getInt("id_docente"));
-                    c.setDocente(d);
-                    JornadaMD j = new JornadaMD();
-                    j.setId(rs.getInt("id_jornada"));
-                    c.setJornada(j);
-                    c.setNombre(rs.getString("curso_nombre"));
-                    c.setCapacidad(rs.getInt("curso_capacidad"));
-                    c.setCiclo(rs.getInt("curso_ciclo"));
-                    c.setParalelo(rs.getString("curso_paralelo"));
-                }
-                ps.getConnection().close();
-                return c;
-            } else {
-                return null;
+                c.setPeriodo(p);
+                DocenteMD d = new DocenteMD();
+                d.setIdDocente(rs.getInt("id_docente"));
+                c.setDocente(d);
+                JornadaMD j = new JornadaMD();
+                j.setId(rs.getInt("id_jornada"));
+                c.setJornada(j);
+                c.setNombre(rs.getString("curso_nombre"));
+                c.setCapacidad(rs.getInt("curso_capacidad"));
+                c.setCiclo(rs.getInt("curso_ciclo"));
+                c.setParalelo(rs.getString("curso_paralelo"));
             }
+            return c;
         } catch (SQLException e) {
-            System.out.println("No se pudo consultar curso curso ");
-            System.out.println(e.getMessage());
+            M.errorMsg("Error al consultar cursos."
+                    + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
