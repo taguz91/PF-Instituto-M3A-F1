@@ -33,7 +33,7 @@ import vista.materia.FrmMaterias;
 public class FrmMateriasCTR extends DCTR {
 
     private final FrmMaterias frmMaterias;
-    private final MateriaBD materiaBD;
+    private final MateriaBD MTBD = MateriaBD.single();
     private boolean guardar = false;
     private int acceso = 0;
     private boolean editar = false;
@@ -51,14 +51,12 @@ public class FrmMateriasCTR extends DCTR {
         super(ctrPrin);
         this.frmMaterias = frmMaterias;
         this.ctrVtnMat = null;
-        this.materiaBD = new MateriaBD(ctrPrin.getConecta());
     }
 
     public FrmMateriasCTR(FrmMaterias frmMaterias, VtnPrincipalCTR ctrPrin, VtnMateriaCTR ctrVtnMat) {
         super(ctrPrin);
         this.frmMaterias = frmMaterias;
         this.ctrVtnMat = ctrVtnMat;
-        this.materiaBD = new MateriaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -68,7 +66,7 @@ public class FrmMateriasCTR extends DCTR {
         frmMaterias.getCbCarrera().addActionListener((ActionEvent e) -> {
             acceso = 0;
             String nombre = frmMaterias.getCbCarrera().getSelectedItem().toString();
-            List<EjeFormacionMD> ejes = materiaBD.cargarEjes(materiaBD.filtrarIdCarrera(nombre, 0).getId());
+            List<EjeFormacionMD> ejes = MTBD.cargarEjes(MTBD.filtrarIdCarrera(nombre, 0).getId());
             frmMaterias.getCbEjeFormacion().removeAllItems();
             frmMaterias.getCbEjeFormacion().addItem("SELECCIONE");
 
@@ -152,7 +150,7 @@ public class FrmMateriasCTR extends DCTR {
     }
 
     public void iniciarCarreras() {
-        List<CarreraMD> carreras = materiaBD.cargarCarreras();
+        List<CarreraMD> carreras = MTBD.cargarCarreras();
         for (int i = 0; i < carreras.size(); i++) {
             frmMaterias.getCbCarrera().addItem(carreras.get(i).getNombre());
         }
@@ -335,9 +333,9 @@ public class FrmMateriasCTR extends DCTR {
 
         if (guardar) {
 
-            MateriaBD materia = new MateriaBD(ctrPrin.getConecta());
-            carreraMD.setId(materiaBD.filtrarIdCarrera(carrera, 0).getId());
-            ejeMD.setId(materiaBD.filtrarIdEje(eje, 0).getId());
+            MateriaMD materia = new MateriaMD();
+            carreraMD.setId(MTBD.filtrarIdCarrera(carrera, 0).getId());
+            ejeMD.setId(MTBD.filtrarIdEje(eje, 0).getId());
             materia.setCarrera(carreraMD);
             materia.setEje(ejeMD);
             materia.setCodigo(materiaCodigo);
@@ -365,7 +363,8 @@ public class FrmMateriasCTR extends DCTR {
             materia.setMateriaNucleo(materiaNucleo);
 
             if (editar) {
-                if (materia.editarMateria(idEditar)) {
+                materia.setId(idEditar);
+                if (MTBD.editarMateria(materia)) {
                     JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Datos Editados Correctamente");
                     actualizarVtnMaterias();
                     frmMaterias.dispose();
@@ -376,7 +375,7 @@ public class FrmMateriasCTR extends DCTR {
                 editar = false;
 
             } else {
-                if (materia.insertarMateria()) {
+                if (MTBD.insertarMateria(materia)) {
                     JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Datos Guardados Correctamente");
                     actualizarVtnMaterias();
                     frmMaterias.dispose();
@@ -398,7 +397,7 @@ public class FrmMateriasCTR extends DCTR {
         String codigo = frmMaterias.getTxt_CodMateria().getText().trim();
         if (!codigo.equals("")) {
             MateriaMD materia;
-            materia = materiaBD.buscarMateriaxCodigo(codigo);
+            materia = MTBD.buscarMateriaxCodigo(codigo);
             editar = true;
             if (materia == null) {
                 editar = false;
@@ -593,14 +592,14 @@ public class FrmMateriasCTR extends DCTR {
             frmMaterias.getCbCarrera().setSelectedItem("SELECCIONE");
         } else {
             frmMaterias.getCbCarrera().setSelectedItem(
-                    materiaBD.filtrarIdCarrera("", matEditar.getCarrera().getId()).getNombre()
+                    MTBD.filtrarIdCarrera("", matEditar.getCarrera().getId()).getNombre()
             );
             frmMaterias.getCbCarrera().setEnabled(false);
         }
         //
 
         if (matEditar.getEje().getId() > 40) {
-            frmMaterias.getCbEjeFormacion().setSelectedItem(materiaBD.filtrarIdEje("", matEditar.getEje().getId()).getNombre());
+            frmMaterias.getCbEjeFormacion().setSelectedItem(MTBD.filtrarIdEje("", matEditar.getEje().getId()).getNombre());
         } else {
             frmMaterias.getCbEjeFormacion().setSelectedItem("SELECCIONE");
         }

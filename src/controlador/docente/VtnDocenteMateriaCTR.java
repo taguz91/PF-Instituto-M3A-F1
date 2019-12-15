@@ -26,9 +26,9 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
 
     private final VtnDocenteMateria vtnDm;
 
-    private final DocenteMateriaBD dm;
-    private final CarreraBD car;
-    private final MateriaBD mat;
+    private final DocenteMateriaBD DMBD = DocenteMateriaBD.single();
+    private final CarreraBD CRBD = CarreraBD.single();
+    private final MateriaBD MTBD = MateriaBD.single();
 
     private ArrayList<CarreraMD> carreras;
     private ArrayList<MateriaMD> materias;
@@ -38,10 +38,6 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     public VtnDocenteMateriaCTR(VtnDocenteMateria vtnDm, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnDm = vtnDm;
-        //Inciamos todos las clases para realizar las consultas
-        this.dm = new DocenteMateriaBD(ctrPrin.getConecta());
-        this.car = new CarreraBD(ctrPrin.getConecta());
-        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -93,7 +89,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     private void eliminar() {
         int pos = vtnDm.getTblDocentesMateria().getSelectedRow();
         if (pos >= 0) {
-            dm.eliminar(dms.get(pos).getId());
+            DMBD.eliminar(dms.get(pos).getId());
             buscar(vtnDm.getTxtBuscar().getText().trim());
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila primero.");
@@ -103,7 +99,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     //Buscador
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            dms = dm.buscar(aguja);
+            dms = DMBD.buscar(aguja);
             llenarTblDocenteMateria(dms);
         }
     }
@@ -115,7 +111,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     }
 
     private void cargarDocenteMaterias() {
-        dms = dm.cargarDocenteMateria();
+        dms = DMBD.cargarDocenteMateria();
         llenarTblDocenteMateria(dms);
     }
 
@@ -135,10 +131,10 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
             int idCar = carreras.get(posCar - 1).getId();
 //            materias = mat.cargarMateriasCarreraCmb(idCar);
 //            llenarCmbMaterias(materias);
-            ciclos = mat.cargarCiclosCarrera(idCar);
+            ciclos = MTBD.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
 
-            dms = dm.cargarDocenteMateriaPorCarrera(idCar);
+            dms = DMBD.cargarDocenteMateriaPorCarrera(idCar);
             llenarTblDocenteMateria(dms);
         } else {
             estadoCmbCicloYMateria(false);
@@ -150,10 +146,10 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
         int posCar = vtnDm.getCmbCarrera().getSelectedIndex();
         int posCic = vtnDm.getCmbCiclo().getSelectedIndex();
         if (posCar > 0 && posCic > 0) {
-            materias = mat.cargarMateriaPorCarreraCiclo(carreras.get(posCar - 1).getId(),
+            materias = MTBD.cargarMateriaPorCarreraCiclo(carreras.get(posCar - 1).getId(),
                     posCic);
             llenarCmbMaterias(materias);
-            dms = dm.cargarDocenteMateriaPorCarreraYCiclo(carreras.get(posCar - 1).getId(),
+            dms = DMBD.cargarDocenteMateriaPorCarreraYCiclo(carreras.get(posCar - 1).getId(),
                     posCic);
             llenarTblDocenteMateria(dms);
         } else {
@@ -165,7 +161,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
     private void clickMateria() {
         int posMat = vtnDm.getCmbMateria().getSelectedIndex();
         if (posMat > 0) {
-            dms = dm.cargarDocenteMateriaPorMateria(materias.get(posMat - 1).getId());
+            dms = DMBD.cargarDocenteMateriaPorMateria(materias.get(posMat - 1).getId());
             llenarTblDocenteMateria(dms);
         } else {
             clickCiclo();
@@ -174,7 +170,7 @@ public class VtnDocenteMateriaCTR extends DVtnCTR {
 
     private void llenarCmbCarrera() {
         vtnDm.getCmbCarrera().removeAllItems();
-        carreras = car.cargarCarrerasCmb();
+        carreras = CRBD.cargarCarrerasCmb();
         if (carreras != null) {
             vtnDm.getCmbCarrera().addItem("Todas");
             carreras.forEach(c -> {

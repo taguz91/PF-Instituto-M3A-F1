@@ -29,11 +29,11 @@ public class FrmDocenteMateriaCTR extends DCTR {
 
     private final FrmDocenteMateria frmDM;
 
-    private final DocenteMateriaBD dm;
+    private final DocenteMateriaBD DMBD = DocenteMateriaBD.single();
     private DocenteMateriaMD docenMat;
-    private final DocenteBD doc;
-    private final CarreraBD car;
-    private final MateriaBD mat;
+    private final DocenteBD DBD = DocenteBD.single();
+    private final CarreraBD CRBD = CarreraBD.single();
+    private final MateriaBD MTBD = MateriaBD.single();
 
     private ArrayList<DocenteMD> docentes;
     private ArrayList<CarreraMD> carreras;
@@ -45,11 +45,6 @@ public class FrmDocenteMateriaCTR extends DCTR {
     public FrmDocenteMateriaCTR(FrmDocenteMateria frmDM, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmDM = frmDM;
-        //Inciamos todos las clases para realizar las consultas
-        this.dm = new DocenteMateriaBD(ctrPrin.getConecta());
-        this.doc = new DocenteBD(ctrPrin.getConecta());
-        this.car = new CarreraBD(ctrPrin.getConecta());
-        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -113,7 +108,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
         }
 
         if (guardar) {
-            docenMat = dm.existeDocenteMateria(docentes.get(posDoc).getIdDocente(),
+            docenMat = DMBD.existeDocenteMateria(docentes.get(posDoc).getIdDocente(),
                     materias.get(posMat - 1).getId());
             if (docenMat != null) {
                 frmDM.getLblError().setText("Ya se asigno esta materia al docente.");
@@ -122,7 +117,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
                     int r = JOptionPane.showConfirmDialog(null, "Ya se asigno esta materia pero se\n"
                             + "encuentra eliminada, desea activala.");
                     if (r == JOptionPane.YES_OPTION) {
-                        dm.activar(docenMat.getId());
+                        DMBD.activar(docenMat.getId());
                         frmDM.dispose();
                         ctrPrin.cerradoJIF();
                         ctrPrin.abrirVtnDocenteMateria();
@@ -133,11 +128,10 @@ public class FrmDocenteMateriaCTR extends DCTR {
             }
         }
         if (guardar) {
-            dm.setDocente(docentes.get(posDoc));
-            dm.setMateria(materias.get(posMat - 1));
-
-            guardar = dm.guardar();
-
+            DocenteMateriaMD dcm = new DocenteMateriaMD();
+            dcm.setDocente(docentes.get(posDoc));
+            dcm.setMateria(materias.get(posMat - 1));
+            guardar = DMBD.guardar(dcm);
         }
         return guardar;
     }
@@ -145,7 +139,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
     //Buscador
     private void buscarDocente(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            docentes = doc.buscar(aguja);
+            docentes = DBD.buscar(aguja);
             llenarTblDocentes(docentes);
         }
     }
@@ -164,7 +158,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
         if (posCar > 0) {
             estadoCmbCicloYMateria(true);
             int idCar = carreras.get(posCar - 1).getId();
-            ciclos = mat.cargarCiclosCarrera(idCar);
+            ciclos = MTBD.cargarCiclosCarrera(idCar);
             llenarCmbCiclo(ciclos);
         } else {
             estadoCmbCicloYMateria(false);
@@ -176,7 +170,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
         int posCar = frmDM.getCmbCarrera().getSelectedIndex();
         int posCic = frmDM.getCmbCiclo().getSelectedIndex();
         if (posCar > 0 && posCic > 0) {
-            materias = mat.cargarMateriaPorCarreraCiclo(carreras.get(posCar - 1).getId(),
+            materias = MTBD.cargarMateriaPorCarreraCiclo(carreras.get(posCar - 1).getId(),
                     posCic);
             llenarCmbMaterias(materias);
         } else {
@@ -186,7 +180,7 @@ public class FrmDocenteMateriaCTR extends DCTR {
 
     private void llenarCmbCarrera() {
         frmDM.getCmbCarrera().removeAllItems();
-        carreras = car.cargarCarreras();
+        carreras = CRBD.cargarCarreras();
         if (carreras != null) {
             frmDM.getCmbCarrera().addItem("Seleccione");
             carreras.forEach(c -> {

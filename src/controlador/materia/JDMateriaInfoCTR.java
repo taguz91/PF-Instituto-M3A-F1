@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ConectarDB;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaBD;
 import modelo.materia.MateriaMD;
@@ -16,7 +15,6 @@ import modelo.materia.MateriaRequisitoBD;
 import modelo.materia.MateriaRequisitoMD;
 import vista.materia.FrmRequisitos;
 import vista.materia.JDMateriaInfo;
-import vista.principal.VtnPrincipal;
 
 /**
  *
@@ -25,22 +23,20 @@ import vista.principal.VtnPrincipal;
 public class JDMateriaInfoCTR extends DCTR {
 
     private final JDMateriaInfo vtnInfo;
-    private final MateriaRequisitoBD matRe;
+    private final MateriaRequisitoBD MTRBD = MateriaRequisitoBD.single();
     private final MateriaMD m;
     private ArrayList<MateriaRequisitoMD> preRequisitos, coRequisitos;
     private int posFila;
     private String tipo, materia;
-    private final MateriaBD materiabd;
+    private final MateriaBD MTBD = MateriaBD.single();
 
     //Para las tablas 
     private DefaultTableModel mdTblPre, mdTblCo;
 
-    public JDMateriaInfoCTR(MateriaMD m, VtnPrincipalCTR ctrPrin, MateriaBD materiabd) {
+    public JDMateriaInfoCTR(MateriaMD m, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
-        this.materiabd = materiabd;
         this.m = m;
         this.vtnInfo = new JDMateriaInfo(ctrPrin.getVtnPrin(), false);
-        this.matRe = new MateriaRequisitoBD(ctrPrin.getConecta());
         vtnInfo.setLocationRelativeTo(ctrPrin.getVtnPrin());
     }
 
@@ -91,7 +87,7 @@ public class JDMateriaInfoCTR extends DCTR {
         try {
             if (posFila >= 0) {
                 FrmRequisitos frmreq = new FrmRequisitos();
-                VtnRequisitosCTR req = new VtnRequisitosCTR(ctrPrin, frmreq, materiabd, m);
+                VtnRequisitosCTR req = new VtnRequisitosCTR(ctrPrin, frmreq, m);
                 req.iniciar();
                 switch (tipo) {
                     case "co-requisito":
@@ -122,11 +118,11 @@ public class JDMateriaInfoCTR extends DCTR {
                 if (r == JOptionPane.YES_OPTION) {
                     switch (tipo) {
                         case "co-requisito":
-                            matRe.eliminar(coRequisitos.get(posFila).getId());
+                            MTRBD.eliminar(coRequisitos.get(posFila).getId());
                             mdTblCo.removeRow(posFila);
                             break;
                         case "pre-requisito":
-                            matRe.eliminar(preRequisitos.get(posFila).getId());
+                            MTRBD.eliminar(preRequisitos.get(posFila).getId());
                             mdTblPre.removeRow(posFila);
                             break;
 
@@ -158,7 +154,7 @@ public class JDMateriaInfoCTR extends DCTR {
     }
 
     private void llenarTblCoRequisitos() {
-        coRequisitos = matRe.buscarCoRequisitosDe(m.getId());
+        coRequisitos = MTRBD.buscarCoRequisitosDe(m.getId());
         mdTblCo.setRowCount(0);
         if (coRequisitos != null) {
             coRequisitos.forEach(mt -> {
@@ -169,7 +165,7 @@ public class JDMateriaInfoCTR extends DCTR {
     }
 
     private void llenarTblPreRequisitos() {
-        preRequisitos = matRe.buscarPreRequisitosDe(m.getId());
+        preRequisitos = MTRBD.buscarPreRequisitosDe(m.getId());
         mdTblPre.setRowCount(0);
         if (preRequisitos != null) {
             preRequisitos.forEach(mt -> {

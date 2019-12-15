@@ -34,10 +34,10 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
     private ArrayList<String> ncs;
     private ArrayList<CursoMD> tcs, csp, css;
     // BD 
-    private final AlumnoBD ALBD;
-    private final CursoBD CRBD;
-    private final AlumnoCursoBD ACBD;
-    private final MatriculaBD MTBD;
+    private final AlumnoBD ALBD = AlumnoBD.single();
+    private final CursoBD CRBD = CursoBD.single();
+    private final AlumnoCursoBD ACBD = AlumnoCursoBD.single();
+    private final MatriculaBD MTBD = MatriculaBD.single();
     // Formulario 
     private final FrmAlumnoCursoEspecial FRM = new FrmAlumnoCursoEspecial();
     // Para los mensajes de confirmacion
@@ -46,10 +46,6 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
 
     public FrmAlumnoCursoEspecialCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
-        ALBD = new AlumnoBD(ctrPrin.getConecta());
-        CRBD = new CursoBD(ctrPrin.getConecta());
-        ACBD = new AlumnoCursoBD(ctrPrin.getConecta());
-        MTBD = new MatriculaBD(ctrPrin.getConecta());
         css = new ArrayList<>();
     }
 
@@ -75,7 +71,7 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
     private void iniciarCmbPeriodo() {
         FRM.getCmbPrdLectivo().removeAllItems();
         FRM.getCmbPrdLectivo().addItem("Seleccione");
-        PeriodoLectivoBD PLBD = new PeriodoLectivoBD(ctrPrin.getConecta());
+        PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
         pls = PLBD.cargarPeriodoEspecial();
         pls.forEach(e -> {
             FRM.getCmbPrdLectivo().addItem(e.getNombre());
@@ -273,10 +269,11 @@ public class FrmAlumnoCursoEspecialCTR extends DCTR {
                 );
 
                 if (m == null) {
-                    MTBD.setAlumno(als.get(posAlm));
-                    MTBD.setPeriodo(pls.get(posPrd - 1));
-                    MTBD.setTipo("ORDINARIA");
-                    MTBD.ingresar();
+                    MatriculaMD matricula = new MatriculaMD();
+                    matricula.setAlumno(als.get(posAlm));
+                    matricula.setPeriodo(pls.get(posPrd - 1));
+                    matricula.setTipo("ORDINARIA");
+                    MTBD.ingresar(matricula);
                 }
 
                 if (ACBD.guardarAlmnCurso()) {

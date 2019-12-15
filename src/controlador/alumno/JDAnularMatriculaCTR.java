@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.alumno.AlumnoCursoRetiradoBD;
+import modelo.alumno.AlumnoCursoRetiradoMD;
 import modelo.alumno.MatriculaMD;
 import modelo.estilo.TblEstilo;
 import modelo.materia.MateriaRequisitoBD;
@@ -22,11 +23,11 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
 
     private final JDAnularMatricula jd;
     private final MatriculaMD matricula;
-    private final AlumnoCursoBD almCur;
+    private final AlumnoCursoBD ALCBD = AlumnoCursoBD.single();
     private ArrayList<AlumnoCursoMD> almnsCurso, almnsCursoAnular;
-    private final AlumnoCursoRetiradoBD acrb;
+    private final AlumnoCursoRetiradoBD ALCRBD = AlumnoCursoRetiradoBD.single();
     private ArrayList<MateriaRequisitoMD> corequisitos;
-    private final MateriaRequisitoBD mtr;
+    private final MateriaRequisitoBD MRBD = MateriaRequisitoBD.single();
     private String materiaAnular = "";
 
     /**
@@ -38,9 +39,6 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
     public JDAnularMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
         super(ctrPrin);
-        this.almCur = new AlumnoCursoBD(ctrPrin.getConecta());
-        this.acrb = new AlumnoCursoRetiradoBD(ctrPrin.getConecta());
-        this.mtr = new MateriaRequisitoBD(ctrPrin.getConecta());
         this.matricula = matricula;
         this.jd = new JDAnularMatricula(ctrPrin.getVtnPrin(), false);
     }
@@ -79,10 +77,11 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
             if (Validar.esLetras(observacion)) {
 
                 almnsCursoAnular.forEach(ac -> {
-                    acrb.setAlumnoCurso(ac);
-                    acrb.setObservacion(observacion);
+                    AlumnoCursoRetiradoMD acr = new AlumnoCursoRetiradoMD();
+                    acr.setAlumnoCurso(ac);
+                    acr.setObservacion(observacion);
 
-                    acrb.guardar();
+                    ALCRBD.guardar(acr);
                 });
 
                 llenarTbl();
@@ -106,7 +105,7 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
         materiaAnular = "";
         if (posFila >= 0) {
             materiaAnular = materiaAnular + almnsCurso.get(posFila).getCurso().getMateria().getNombre() + "\n";
-            corequisitos = mtr.buscarDeQueEsCorequisito(almnsCurso.get(posFila).getCurso().getMateria().getId());
+            corequisitos = MRBD.buscarDeQueEsCorequisito(almnsCurso.get(posFila).getCurso().getMateria().getId());
             if (corequisitos.size() > 0) {
                 materiaAnular = materiaAnular + "Con sus corequisitos: \n";
             }
@@ -151,7 +150,7 @@ public class JDAnularMatriculaCTR extends DVtnCTR {
      */
     private void llenarTbl() {
         mdTbl.setRowCount(0);
-        almnsCurso = almCur.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
+        almnsCurso = ALCBD.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
                 matricula.getPeriodo().getID());
         almnsCurso.forEach(ac -> {
             Object[] v = {ac.getCurso().getMateria().getNombre(),

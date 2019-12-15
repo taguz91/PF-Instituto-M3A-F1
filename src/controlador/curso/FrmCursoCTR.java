@@ -26,22 +26,22 @@ public class FrmCursoCTR extends DCTR {
 
     private final FrmCurso frmCurso;
     private final VtnCursoCTR ctrCurso;
-    private final CursoBD curso;
+    private final CursoBD CBD = CursoBD.single();
     //Para saber si estamos editando  
     private boolean editando = false;
     private int idCurso = 0;
 
     //Para cargar los datos en la tabla  
-    private final DocenteBD docen;
+    private final DocenteBD DBD = DocenteBD.single();
     private ArrayList<DocenteMD> docentes;
     //Para carar periodos lectivos 
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para cargar materias 
-    private final MateriaBD mt;
+    private final MateriaBD MTBD = MateriaBD.single();
     private ArrayList<MateriaMD> materias;
     //Para cargar jornadas  
-    private final JornadaBD jd;
+    private final JornadaBD JBD = JornadaBD.single();
     private ArrayList<JornadaMD> jornadas;
     //Private void ciclos de una carrera
     private ArrayList<Integer> ciclos;
@@ -49,12 +49,6 @@ public class FrmCursoCTR extends DCTR {
     public FrmCursoCTR(FrmCurso frmCurso, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmCurso = frmCurso;
-
-        this.curso = new CursoBD(ctrPrin.getConecta());
-        this.docen = new DocenteBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
-        this.mt = new MateriaBD(ctrPrin.getConecta());
-        this.jd = new JornadaBD(ctrPrin.getConecta());
         this.ctrCurso = null;
     }
 
@@ -62,12 +56,6 @@ public class FrmCursoCTR extends DCTR {
             VtnCursoCTR ctrCurso) {
         super(ctrPrin);
         this.frmCurso = frmCurso;
-
-        this.curso = new CursoBD(ctrPrin.getConecta());
-        this.docen = new DocenteBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
-        this.mt = new MateriaBD(ctrPrin.getConecta());
-        this.jd = new JornadaBD(ctrPrin.getConecta());
         this.ctrCurso = ctrCurso;
     }
 
@@ -121,7 +109,7 @@ public class FrmCursoCTR extends DCTR {
      * Cargamos el combo de periodos lectivos
      */
     private void cargarCmbPrdLectivo() {
-        periodos = prd.cargarPrdParaCmbFrm();
+        periodos = PLBD.cargarPrdParaCmbFrm();
         if (periodos != null) {
             frmCurso.getCbxPeriodoLectivo().removeAllItems();
             frmCurso.getCbxPeriodoLectivo().addItem("Seleccione");
@@ -152,7 +140,7 @@ public class FrmCursoCTR extends DCTR {
         if (posPr > 0 && posCi > 0) {
             int ciclo = Integer.parseInt(frmCurso.getCbxCiclo().getSelectedItem().toString());
 
-            materias = mt.cargarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
+            materias = MTBD.cargarMateriaPorCarreraCiclo(periodos.get(posPr - 1).getCarrera().getId(), ciclo);
             cargarCmbMaterias(materias);
         } else {
             frmCurso.getCbxMateria().removeAllItems();
@@ -167,7 +155,7 @@ public class FrmCursoCTR extends DCTR {
      * @param posPrd
      */
     private void llenarCmbCiclos(int posPrd) {
-        ciclos = mt.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+        ciclos = MTBD.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
         frmCurso.getCbxCiclo().removeAllItems();
         if (ciclos != null) {
             frmCurso.getCbxCiclo().addItem("Seleccione");
@@ -185,7 +173,7 @@ public class FrmCursoCTR extends DCTR {
         int posMat = frmCurso.getCbxMateria().getSelectedIndex();
         frmCurso.getCbxDocente().setEnabled(true);
         if (posMat > 0) {
-            docentes = docen.cargarDocentesPorMateria(materias.get(posMat - 1).getId());
+            docentes = DBD.cargarDocentesPorMateria(materias.get(posMat - 1).getId());
             cargarCmbDocente(docentes);
         } else {
             frmCurso.getCbxDocente().setEnabled(false);
@@ -229,7 +217,7 @@ public class FrmCursoCTR extends DCTR {
      * Cargamos las jornadas
      */
     private void cargarCmbJornada() {
-        jornadas = jd.cargarJornadas();
+        jornadas = JBD.cargarJornadas();
         if (jornadas != null) {
             frmCurso.getCbxJornada().removeAllItems();
             frmCurso.getCbxJornada().addItem("Seleccione");
@@ -300,7 +288,7 @@ public class FrmCursoCTR extends DCTR {
             paralelo = frmCurso.getCbxParalelo().getSelectedItem().toString();
 
             if (!editando) {
-                CursoMD existeCurso = curso.existeDocenteMateria(materias.get(posMat - 1).getId(),
+                CursoMD existeCurso = CBD.existeDocenteMateria(materias.get(posMat - 1).getId(),
                         docentes.get(posDoc - 1).getIdDocente(), jornadas.get(posJrd - 1).getId(),
                         periodos.get(posPrd - 1).getID(), ciclo, paralelo);
 
@@ -311,7 +299,7 @@ public class FrmCursoCTR extends DCTR {
                 } else {
                     frmCurso.getLblError().setVisible(false);
 
-                    existeCurso = curso.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
+                    existeCurso = CBD.existeMateriaCursoJornada(materias.get(posMat - 1).getId(), ciclo,
                             jornadas.get(posJrd - 1).getId(), periodos.get(posPrd - 1).getID(),
                             paralelo);
                     if (existeCurso != null) {
@@ -327,7 +315,7 @@ public class FrmCursoCTR extends DCTR {
         }
 
         if (guardar) {
-
+            CursoMD curso = new CursoMD();
             String nombre = jornadas.get(posJrd - 1).getNombre().charAt(0) + "" + ciclo + "" + paralelo;
 
             curso.setCapacidad(Integer.parseInt(capacidad));
@@ -340,25 +328,24 @@ public class FrmCursoCTR extends DCTR {
             curso.setParalelo(paralelo);
 
             if (!editando) {
-                //Guardamos persona  
-                curso.guardarCurso();
-
+                CBD.guardarCurso(curso);
             } else {
                 if (idCurso > 0) {
                     //Editamos curso
-                    curso.editarCurso(idCurso);
+                    curso.setId(idCurso);
+                    CBD.editarCurso(curso);
                     editando = false;
                 }
             }
         }
         return guardar;
     }
-    
+
     /**
-     * Editamos el curso 
-     * Cargamos todo el formulario con los datos que nos den de curso 
-     * desde la tabla 
-     * @param c 
+     * Editamos el curso Cargamos todo el formulario con los datos que nos den
+     * de curso desde la tabla
+     *
+     * @param c
      */
     public void editar(CursoMD c) {
         editando = true;

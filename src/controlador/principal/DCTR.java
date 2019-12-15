@@ -12,12 +12,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.estilo.TblEstilo;
+import utils.CONBD;
 
 /**
  *
  * @author Johnny
  */
-public class DCTR {
+public class DCTR extends CONBD {
 
     protected final VtnPrincipalCTR ctrPrin;
     protected boolean vtnCargada = false;

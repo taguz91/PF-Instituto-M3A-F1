@@ -6,7 +6,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import modelo.ConectarDB;
 import modelo.curso.CursoMD;
 import modelo.curso.SesionClaseBD;
 import modelo.curso.SesionClaseMD;
@@ -22,7 +21,7 @@ public class PnlHorarioCursoCTR {
 
     private final PnlHorarioClase pnl;
     private final CursoMD curso;
-    private final SesionClaseBD bd;
+    private final SesionClaseBD SCBD = SesionClaseBD.single();
     private ArrayList<SesionClaseMD> sesionLunes, sesionMartes, sesionMiercoles, sesionJueves, sesionViernes,
             sesionSabado;
     private DefaultTableModel mdTbl;
@@ -50,15 +49,13 @@ public class PnlHorarioCursoCTR {
     private String[] hSelec, jSelec, tSelec;
     private int posI, posF, posFila, posColum;
 
-    public PnlHorarioCursoCTR(PnlHorarioClase pnl, CursoMD curso, SesionClaseBD bd) {
+    public PnlHorarioCursoCTR(PnlHorarioClase pnl, CursoMD curso) {
         this.pnl = pnl;
         this.curso = curso;
-        this.bd = bd;
     }
 
-    public PnlHorarioCursoCTR(PnlHorarioClase pnl, String nomCurso, int idPrd, ConectarDB conecta) {
+    public PnlHorarioCursoCTR(PnlHorarioClase pnl, String nomCurso, int idPrd) {
         this.pnl = pnl;
-        this.bd = new SesionClaseBD(conecta);
         this.curso = new CursoMD();
         this.curso.setNombre(nomCurso);
         //Inciamos el periodo para pasarle 
@@ -187,37 +184,37 @@ public class PnlHorarioCursoCTR {
 
     //Todos los metodos publicos de esta clase
     public void actualizarLunes() {
-        sesionLunes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 1,
+        sesionLunes = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 1,
                 curso.getPeriodo().getID());
         llenarDia(sesionLunes, 1);
     }
 
     public void actualizarMartes() {
-        sesionMartes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 2,
+        sesionMartes = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 2,
                 curso.getPeriodo().getID());
         llenarDia(sesionMartes, 2);
     }
 
     public void actualizarMiercoles() {
-        sesionMiercoles = bd.cargarHorarioCursoPorDia(curso.getNombre(), 3,
+        sesionMiercoles = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 3,
                 curso.getPeriodo().getID());
         llenarDia(sesionMiercoles, 3);
     }
 
     public void actuatizarJueves() {
-        sesionJueves = bd.cargarHorarioCursoPorDia(curso.getNombre(), 4,
+        sesionJueves = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 4,
                 curso.getPeriodo().getID());
         llenarDia(sesionJueves, 4);
     }
 
     public void actualizarViernes() {
-        sesionViernes = bd.cargarHorarioCursoPorDia(curso.getNombre(), 5,
+        sesionViernes = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 5,
                 curso.getPeriodo().getID());
         llenarDia(sesionViernes, 5);
     }
 
     public void actualizarSabado() {
-        sesionSabado = bd.cargarHorarioCursoPorDia(curso.getNombre(), 6,
+        sesionSabado = SCBD.cargarHorarioCursoPorDia(curso.getNombre(), 6,
                 curso.getPeriodo().getID());
         llenarDia(sesionSabado, 6);
     }

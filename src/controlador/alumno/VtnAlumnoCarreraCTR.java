@@ -26,10 +26,10 @@ import vista.alumno.VtnAlumnoCarrera;
 public class VtnAlumnoCarreraCTR extends DCTR {
 
     private final VtnAlumnoCarrera vtnAlmCar;
-    private final AlumnoCarreraBD almnCar;
+    private final AlumnoCarreraBD ACRBD = AlumnoCarreraBD.single();
     private ArrayList<AlumnoCarreraMD> almnsCarr;
     private final JDRetirarAlumnoCTR RCTR;
-    JDEgresarAlumnoCTR ECTR;
+    private final JDEgresarAlumnoCTR ECTR;
     // Para los retirados 
     private final RetiradoBD RBD = RetiradoBD.single();
     private List<Retirado> retirados;
@@ -37,7 +37,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     //Modelo de la tabla
     private DefaultTableModel mdTbl;
 
-    private final CarreraBD carr;
+    private final CarreraBD CRBD = CarreraBD.single();
     private ArrayList<CarreraMD> carreras;
 
     /**
@@ -49,8 +49,6 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     public VtnAlumnoCarreraCTR(VtnAlumnoCarrera vtnAlmCar, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnAlmCar = vtnAlmCar;
-        this.almnCar = new AlumnoCarreraBD(ctrPrin.getConecta());
-        this.carr = new CarreraBD(ctrPrin.getConecta());
         this.RCTR = new JDRetirarAlumnoCTR(ctrPrin);
         this.ECTR = new JDEgresarAlumnoCTR(ctrPrin);
     }
@@ -133,7 +131,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            almnsCarr = almnCar.buscar(b);
+            almnsCarr = ACRBD.buscar(b);
             llenarTblAlmnCarreras(almnsCarr);
         } else {
             System.out.println("No ingrese caracteres especiales");
@@ -147,11 +145,11 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     private void cargarAlmnsCarrera() {
         int posCar = vtnAlmCar.getCmbCarrera().getSelectedIndex();
         if (posCar > 0) {
-            almnsCarr = almnCar.cargarAlumnoCarreraPorCarrera(
+            almnsCarr = ACRBD.cargarAlumnoCarreraPorCarrera(
                     carreras.get(posCar - 1).getId()
             );
         } else {
-            almnsCarr = almnCar.cargarAlumnoCarrera();
+            almnsCarr = ACRBD.cargarAlumnoCarrera();
         }
         llenarTblAlmnCarreras(almnsCarr);
     }
@@ -186,7 +184,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
      * Cargamos todas las carreras que esten abiertas en la institucion.
      */
     private void cargarCmbCarreras() {
-        carreras = carr.cargarCarrerasCmb();
+        carreras = CRBD.cargarCarrerasCmb();
         if (carreras != null) {
             vtnAlmCar.getCmbCarrera().removeAllItems();
             vtnAlmCar.getCmbCarrera().addItem("Todos");
@@ -203,7 +201,7 @@ public class VtnAlumnoCarreraCTR extends DCTR {
     private void clickCmbCarreras() {
         int posCar = vtnAlmCar.getCmbCarrera().getSelectedIndex();
         if (posCar > 0) {
-            almnsCarr = almnCar.cargarAlumnoCarreraPorCarrera(carreras.get(posCar - 1).getId());
+            almnsCarr = ACRBD.cargarAlumnoCarreraPorCarrera(carreras.get(posCar - 1).getId());
             llenarTblAlmnCarreras(almnsCarr);
         } else {
             cargarAlmnsCarrera();
@@ -216,11 +214,11 @@ public class VtnAlumnoCarreraCTR extends DCTR {
      */
     private void verEliminados() {
         if (vtnAlmCar.getCbxEliminados().isSelected()) {
-            almnsCarr = almnCar.cargarAlumnoCarreraEliminados();
+            almnsCarr = ACRBD.cargarAlumnoCarreraEliminados();
             llenarTblAlmnCarreras(almnsCarr);
             vtnAlmCar.getCmbCarrera().setEnabled(false);
         } else {
-            almnsCarr = almnCar.cargarAlumnoCarrera();
+            almnsCarr = ACRBD.cargarAlumnoCarrera();
             llenarTblAlmnCarreras(almnsCarr);
             vtnAlmCar.getCmbCarrera().setEnabled(true);
         }

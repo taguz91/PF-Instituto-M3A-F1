@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import utils.CONS;
 import modelo.estilo.TblEstilo;
 import modelo.docente.RolDocenteBD;
+import modelo.docente.RolDocenteMD;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.periodolectivo.PeriodoLectivoBD;
@@ -41,10 +42,10 @@ public class VtnDocenteCTR extends DVtnCTR {
     //vector de titulos de la tabla en el iniciar
     // vtnMateriaCTR basarme en ese---->para el crud
     private final VtnDocente vtnDocente;
-    private final DocenteBD docente;
-    private final RolPeriodoBD rolPer;
-    private final RolDocenteBD rolDoc;
-    private final PeriodoLectivoBD prd;
+    private final DocenteBD DBD = DocenteBD.single();
+    private final RolPeriodoBD RPBD = RolPeriodoBD.single();
+    private final RolDocenteBD RDBD = RolDocenteBD.single();
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private DocenteMD d;
     //Lista de todos los periodos lectivos
     private ArrayList<PeriodoLectivoMD> periodos;
@@ -53,19 +54,13 @@ public class VtnDocenteCTR extends DVtnCTR {
     private FrmDocente frmDocente;
 
     private PersonaMD perEditar;
-    private final PersonaBD per;
+    private final PersonaBD PBD = PersonaBD.single();
     private final String tipoDocntes[] = {"Finalizado Contrato"};
 
     public VtnDocenteCTR(VtnDocente vtnDocente,
             VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnDocente = vtnDocente;
-        this.rolPer = new RolPeriodoBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
-        this.rolDoc = new RolDocenteBD(ctrPrin.getConecta());
-        //Cambiamos el estado del cursos
-        docente = new DocenteBD(ctrPrin.getConecta());
-        per = new PersonaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -135,11 +130,11 @@ public class VtnDocenteCTR extends DVtnCTR {
         switch (tipo) {
 
             case "Finalizado Contrato":
-                docentesMD = docente.cargarDocentesFinContrato();
+                docentesMD = DBD.cargarDocentesFinContrato();
                 llenarTabla(docentesMD);
                 break;
             default:
-                docentesMD = docente.cargarDocentes();
+                docentesMD = DBD.cargarDocentes();
                 llenarTabla(docentesMD);
                 break;
 
@@ -149,12 +144,12 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     private void cargarDocentes() {
         if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
-            docentesMD = docente.cargarDocentesEliminados();
+            docentesMD = DBD.cargarDocentesEliminados();
             llenarTabla(docentesMD);
             vtnDocente.getBtnEditar().setText("Habilitar");
             inhabilitarBotones();
         } else {
-            docentesMD = docente.cargarDocentes();
+            docentesMD = DBD.cargarDocentes();
             llenarTabla(docentesMD);
             vtnDocente.getBtnEditar().setText("Editar");
             habilitarBotones();
@@ -189,10 +184,10 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             if (vtnDocente.getCbxDocentesEliminados().isSelected()) {
-                docentesMD = docente.buscarEliminados(aguja);
+                docentesMD = DBD.buscarEliminados(aguja);
                 llenarTabla(docentesMD);
             } else {
-                docentesMD = docente.buscar(aguja);
+                docentesMD = DBD.buscar(aguja);
                 llenarTabla(docentesMD);
             }
 
@@ -211,7 +206,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                     FrmPersona frmPersona = new FrmPersona();
                     FrmPersonaCTR ctrFrmPersona = new FrmPersonaCTR(frmPersona, ctrPrin);
                     ctrFrmPersona.iniciar();
-                    perEditar = per.buscarPersona(docentesMD.get(posFila).getIdPersona());
+                    perEditar = PBD.buscarPersona(docentesMD.get(posFila).getIdPersona());
                     ctrFrmPersona.editar(perEditar);
                     //vtnDocente.dispose();
                     ctrPrin.cerradoJIF();
@@ -235,9 +230,9 @@ public class VtnDocenteCTR extends DVtnCTR {
 
                         frmDoc.getBtnGuardar().setEnabled(true);
 
-                        ctrFrm.editar(docente.buscarDocente(docentesMD.get(posFila).getIdDocente()));
+                        ctrFrm.editar(DBD.buscarDocente(docentesMD.get(posFila).getIdDocente()));
                         //vtnDocente.getTblDocente().setVisible(false);
-                       // vtnDocente.dispose();
+                        // vtnDocente.dispose();
                         ctrPrin.cerradoJIF();
                     }
                 }
@@ -247,7 +242,7 @@ public class VtnDocenteCTR extends DVtnCTR {
             }
         } else {
             if (posFila >= 0) {
-                d = docente.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
+                d = DBD.buscarDocenteInactivo(docentesMD.get(posFila).getCodigo());
                 if (d != null) {
                     int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                             "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -257,8 +252,8 @@ public class VtnDocenteCTR extends DVtnCTR {
                         cargarDocentes();
                         System.out.println("opcion 2");
                     } else if (seleccion == 0) {
-                        docente.activarDocente(docentesMD.get(posFila).getIdDocente());
-                        System.out.println(docente.activarDocente(docentesMD.get(posFila).getIdDocente()) + "METODO ACTIVAR");
+                        DBD.activarDocente(docentesMD.get(posFila).getIdDocente());
+                        System.out.println(DBD.activarDocente(docentesMD.get(posFila).getIdDocente()) + "METODO ACTIVAR");
                         JOptionPane.showMessageDialog(null, "SE ACTIVO EL DOCENTE !");
                         cargarDocentes();
                     }
@@ -280,10 +275,10 @@ public class VtnDocenteCTR extends DVtnCTR {
         vtnDocente.getBtnhorasAsignadas().getAccessibleContext().setAccessibleName("Docente-Reporte-Horas Asignacion");
         vtnDocente.getBtnReporteDocente().getAccessibleContext().setAccessibleName("Docente-Reporte-Docente");
         vtnDocente.getBtnReporteDocenteMateria().getAccessibleContext().setAccessibleName("Docente-Reporte-Materia Docente");
-        
+
         CONS.activarBtns(vtnDocente.getBtnAsignarRol(), vtnDocente.getBtnFinContratacion(),
                 vtnDocente.getBtnEliminar(), vtnDocente.getBtnEditar(), vtnDocente.getBtnIngresar(),
-                vtnDocente.getCbxDocentesEliminados(), vtnDocente.getBtnhorasAsignadas(), 
+                vtnDocente.getCbxDocentesEliminados(), vtnDocente.getBtnhorasAsignadas(),
                 vtnDocente.getBtnReporteDocente(), vtnDocente.getBtnReporteDocenteMateria());
 
     }
@@ -298,7 +293,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este Docente?");
                 if (observacion != null) {
                     docentemd.setEstado(observacion.toUpperCase());
-                    if (docente.eliminarDocente(docentemd, docentesMD.get(posFila).getIdDocente()) == true) {
+                    if (DBD.eliminarDocente(docentemd, docentesMD.get(posFila).getIdDocente()) == true) {
                         System.out.println(docentesMD.get(posFila).getIdDocente() + " " + docentesMD.get(posFila).getNombreCompleto());
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                         cargarDocentes();
@@ -322,7 +317,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("cedula", docentesMD.get(posFila).getIdDocente());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Docente");
+                CON.mostrarReporte(jr, parametro, "Reporte de Docente");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
@@ -331,16 +326,18 @@ public class VtnDocenteCTR extends DVtnCTR {
         }
 
     }
- public void ListaDeDocentes() {
+
+    public void ListaDeDocentes() {
         JasperReport jr;
         String path = "/vista/reportes/repListaDocentes.jasper";
-            try {
-                jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
-            } catch (JRException ex) {
-                JOptionPane.showMessageDialog(null, "error" + ex);
-            }
+        try {
+            jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
+            CON.mostrarReporte(jr, null, "Lista de Docentes");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "error" + ex);
+        }
     }
+
     public void llamaReporteDocenteMateria() {
         JasperReport jr;
         String path = "/vista/reportes/repDocentesCarrera.jasper";
@@ -352,7 +349,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 parametro.put("id", docentesMD.get(posFila).getIdDocente());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
+                CON.mostrarReporte(jr, parametro, "Reporte de Materias del Docente");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
@@ -385,7 +382,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     }
 
     public void seleccionarPeriodo() {
-        periodos = prd.cargarPeriodos();
+        periodos = PLBD.cargarPeriodos();
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
@@ -412,7 +409,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 parametro.put("idDocente", docentesMD.get(posFila).getIdDocente());
                 parametro.put("periodo", np);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+                CON.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
@@ -437,7 +434,7 @@ public class VtnDocenteCTR extends DVtnCTR {
         if (posFila >= 0) {
 //            System.out.println("Este es el ID: " + docentesMD.get(posFila).getIdDocente());
             JDFinContratacionCTR ctr = new JDFinContratacionCTR(ctrPrin, vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(),
-                    docente.capturarIdDocente(vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(), 0).getIdDocente());
+                    DBD.capturarIdDocente(vtnDocente.getTblDocente().getValueAt(posFila, 0).toString(), 0).getIdDocente());
             ctr.iniciar();
 
         } else {
@@ -486,7 +483,7 @@ public class VtnDocenteCTR extends DVtnCTR {
     public void asignarRolDocente() {
         posFila = vtnDocente.getTblDocente().getSelectedRow();
         if (posFila >= 0) {
-            periodos = prd.cargarPeriodos();
+            periodos = PLBD.cargarPeriodos();
             ArrayList<String> nmPrd = new ArrayList();
             nmPrd.add("Seleccione");
             periodos.forEach(p -> {
@@ -515,7 +512,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     private void selecionarRol(int idPrd) {
         ArrayList<String> nmRol = new ArrayList();
-        roles = rolPer.cargarRolesPorPeriodo(idPrd);
+        roles = RPBD.cargarRolesPorPeriodo(idPrd);
         nmRol.add("Seleccione");
         roles.forEach(r -> {
             nmRol.add(r.getNombre_rol());
@@ -536,11 +533,11 @@ public class VtnDocenteCTR extends DVtnCTR {
     }
 
     public void insertarRolDocente(RolPeriodoMD rol) {
-        System.out.println("Ya podemos ingresar el rol: " + rol);
         posFila = vtnDocente.getTblDocente().getSelectedRow();
-        rolDoc.setIdDocente(docentesMD.get(posFila));
-        rolDoc.setIdRolPeriodo(rol);
-        if (rolDoc.InsertarRol() == true) {
+        RolDocenteMD rd = new RolDocenteMD();
+        rd.setIdDocente(docentesMD.get(posFila));
+        rd.setIdRolPeriodo(rol);
+        if (RDBD.InsertarRol(rd)) {
             JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
         } else {
             JOptionPane.showMessageDialog(null, "Error en grabar los datos");
@@ -549,7 +546,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR DOCENTE
     public void seleccionarPeriodohoras() {
-        periodos = prd.cargarPeriodos();
+        periodos = PLBD.cargarPeriodos();
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
@@ -578,7 +575,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 parametro.put("idperiodolectivo", np.toString());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
+                CON.mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
@@ -587,7 +584,7 @@ public class VtnDocenteCTR extends DVtnCTR {
 
     //SELECCIONA LOS PERIODOS PARA EL REPORTE DE HORAS POR CARRERA
     public void seleccionarPeriodohorasCARRERA() {
-        periodos = prd.cargarPeriodos();
+        periodos = PLBD.cargarPeriodos();
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
@@ -617,7 +614,7 @@ public class VtnDocenteCTR extends DVtnCTR {
                 parametro.put("periodo_nombre", np.toString());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
+                CON.mostrarReporte(jr, parametro, "Reporte de Horas de docencia Semanal");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);

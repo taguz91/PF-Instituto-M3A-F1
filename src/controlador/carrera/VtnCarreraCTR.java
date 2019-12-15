@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import utils.CONS;
-import modelo.accesos.AccesosMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -32,17 +31,15 @@ import vista.carrera.VtnCarrera;
 public class VtnCarreraCTR extends DVtnCTR {
 
     private final VtnCarrera vtnCarrera;
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
 
-    private final CarreraBD car;
+    private final CarreraBD CRBD = CarreraBD.single();
     private ArrayList<CarreraMD> carreras;
     private ArrayList<PeriodoLectivoMD> periodos;
 
     public VtnCarreraCTR(VtnCarrera vtnCarrera, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnCarrera = vtnCarrera;
-        this.car = new CarreraBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     /**
@@ -100,7 +97,7 @@ public class VtnCarreraCTR extends DVtnCTR {
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            carreras = car.buscarCarrera(b);
+            carreras = CRBD.buscarCarrera(b);
             llenarTbl(carreras);
         } else {
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "No debe ingresar caracteres especiales.");
@@ -136,7 +133,7 @@ public class VtnCarreraCTR extends DVtnCTR {
                     + vtnCarrera.getTblMaterias().getValueAt(fila, 2).toString() + "\n"
                     + "No se podran recuperar los datos despues.");
             if (r == JOptionPane.OK_OPTION) {
-                car.eliminarCarrera(carreras.get(fila).getId());
+                CRBD.eliminarCarrera(carreras.get(fila).getId());
                 cargarCarreras();
             }
         }
@@ -155,7 +152,7 @@ public class VtnCarreraCTR extends DVtnCTR {
      * Consultamos todas las carreras, y las cargamos en la tabla
      */
     public void cargarCarreras() {
-        carreras = car.cargarCarreras();
+        carreras = CRBD.cargarCarreras();
         llenarTbl(carreras);
     }
 
@@ -201,7 +198,7 @@ public class VtnCarreraCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("alumnoCarrera", carreras.get(posFila).getId());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de alumnos por Carrera");
+                CON.mostrarReporte(jr, parametro, "Reporte de alumnos por Carrera");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
@@ -235,7 +232,7 @@ public class VtnCarreraCTR extends DVtnCTR {
      * Seleecionamos un periodo para poder llamar al reporte.
      */
     public void seleccionarPeriodo() {
-        periodos = prd.cargarPeriodos();
+        periodos = PLBD.cargarPeriodos();
         ArrayList<String> nmPrd = new ArrayList();
         nmPrd.add("Seleccione");
         periodos.forEach(p -> {
@@ -261,7 +258,7 @@ public class VtnCarreraCTR extends DVtnCTR {
                 parametro.put("idPeriodo", np);
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
+                CON.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
@@ -275,8 +272,8 @@ public class VtnCarreraCTR extends DVtnCTR {
         vtnCarrera.getBtnIngresar().getAccessibleContext().setAccessibleName("Carreras-Ingresar");
         vtnCarrera.getBtnReporteAlumnoCarrera().getAccessibleContext().setAccessibleName("Carreras-Reporte-Alumno");
         vtnCarrera.getBtnReporteDocente().getAccessibleContext().setAccessibleName("Carreras-Reporte-Docente");
-        
-        CONS.activarBtns(vtnCarrera.getBtnEliminar(), vtnCarrera.getBtnEditar(), vtnCarrera.getBtnIngresar(), 
+
+        CONS.activarBtns(vtnCarrera.getBtnEliminar(), vtnCarrera.getBtnEditar(), vtnCarrera.getBtnIngresar(),
                 vtnCarrera.getBtnReporteAlumnoCarrera(), vtnCarrera.getBtnReporteDocente());
     }
 

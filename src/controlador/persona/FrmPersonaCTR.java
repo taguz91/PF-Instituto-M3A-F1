@@ -53,7 +53,7 @@ import vista.persona.FrmPersona;
 public class FrmPersonaCTR extends DCTR {
 
     private final FrmPersona frmPersona;
-    private final PersonaBD persona;
+    private final PersonaBD PBD = PersonaBD.single();
     private TxtVCedula valCe;
     private int numAccion = 2;
     private final String[] idiomas = COMBOS.IDIOMAS;
@@ -68,7 +68,7 @@ public class FrmPersonaCTR extends DCTR {
     private ArrayList<LugarMD> parroquias;
 
     //Para consultar lugares 
-    private final LugarBD lug;
+    private final LugarBD LBD = LugarBD.single();
     //Para guardar la foto  
     private FileInputStream fis = null;
     private int lonBytes = 0;
@@ -83,10 +83,6 @@ public class FrmPersonaCTR extends DCTR {
     public FrmPersonaCTR(FrmPersona frmPersona, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmPersona = frmPersona;
-        //Inicializamos persona
-        this.persona = new PersonaBD(ctrPrin.getConecta());
-        this.lug = new LugarBD(ctrPrin.getConecta());
-        //Para iniciar los combos de paises 
         cargarPaises();
     }
 
@@ -212,14 +208,14 @@ public class FrmPersonaCTR extends DCTR {
             }
 
             if (!errorCedula) {
-                PersonaMD per = persona.existePersona(cedula);
+                PersonaMD per = PBD.existePersona(cedula);
                 editar = true;
                 if (per != null) {
                     if (per.isPersonaActiva() == false) {
                         int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                         int result = JOptionPane.showConfirmDialog(null, "Esta persona se encuentra eliminada.\n ¿Desea Activarla ? ", " Activar Persona", dialog);
                         if (result == 0) {
-                            if (persona.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
+                            if (PBD.activarPersonaIdentificacion(per.getIdentificacion()) == true) {
                                 JOptionPane.showMessageDialog(null, "Persona activada correctamente");
                                 editar(per);
                             } else {
@@ -582,8 +578,7 @@ public class FrmPersonaCTR extends DCTR {
                 frmPersona.getLblErrorIdentificacion().setVisible(false);
             }
         }
-        
-        
+
         priNombre = frmPersona.getTxtPrimerNombre().getText().trim().toUpperCase();
         if (!Validar.esLetras(priNombre)) {
             guardar = false;
@@ -591,7 +586,7 @@ public class FrmPersonaCTR extends DCTR {
         } else {
             frmPersona.getLblErrorPriNombre().setVisible(false);
         }
-        
+
         segNombre = frmPersona.getTxtSegundoNombre().getText().trim().toUpperCase();
         priApellido = frmPersona.getTxtPrimerApellido().getText().trim().toUpperCase();
         if (!Validar.esLetras(priApellido)) {
@@ -600,7 +595,7 @@ public class FrmPersonaCTR extends DCTR {
         } else {
             frmPersona.getLblErrorPriApellido().setVisible(false);
         }
-        
+
         segApellido = frmPersona.getTxtSegundoApellido().getText().trim().toUpperCase();
         if (frmPersona.getJdfechaNacimiento().isValid()) {
             fecha = frmPersona.getJdfechaNacimiento().getDate();
@@ -781,7 +776,7 @@ public class FrmPersonaCTR extends DCTR {
         correo = frmPersona.getTxtCorreo().getText().trim();
 
         if (guardar) {
-            PersonaBD per = new PersonaBD(ctrPrin.getConecta());
+            PersonaMD per = new PersonaMD();
             //Pasamos la informacion de la foto 
             per.setFile(fis);
             per.setLogBytes(lonBytes);
@@ -822,10 +817,11 @@ public class FrmPersonaCTR extends DCTR {
             per.setFechaRegistro(fechaActual);
 
             if (editar) {
+
                 if (idPersona > 0) {
-                    System.out.println("idPersona" + idPersona);
+                    per.setIdPersona(idPersona);
                     if (fis != null) {
-                        if (per.editarPersonaConFoto(idPersona)) {
+                        if (PBD.editarPersonaConFoto(per)) {
                             JOptionPane.showMessageDialog(null, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
@@ -836,7 +832,7 @@ public class FrmPersonaCTR extends DCTR {
                         }
 
                     } else {
-                        if (per.editarPersona(idPersona)) {
+                        if (PBD.editarPersona(per)) {
                             JOptionPane.showMessageDialog(null, "Datos Editados Correctamente.");
                             botonreportepersona();
                             borrarCamposConId();
@@ -851,14 +847,14 @@ public class FrmPersonaCTR extends DCTR {
                 }
             } else {
                 if (fis != null) {
-                    per.insertarPersonaConFoto();
+                    PBD.insertarPersonaConFoto(per);
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
                     iniciarComponentes();
 
                 } else {
-                    per.insertarPersona();
+                    PBD.insertarPersona(per);
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
                     botonreportepersona();
                     borrarCampos();
@@ -881,7 +877,7 @@ public class FrmPersonaCTR extends DCTR {
 
     private void consultar() {
         String identificacion = frmPersona.getTxtIdentificacion().getText();
-        PersonaMD per = persona.buscarPersona(identificacion);
+        PersonaMD per = PBD.buscarPersona(identificacion);
         if (per != null) {
             editar(per);
         }
@@ -1006,14 +1002,14 @@ public class FrmPersonaCTR extends DCTR {
         if (nvlLugarNac == 3) {
             //Guardamos el nombre del ciudad/canton para luego selecionarlo
             ciudad = per.getLugarNatal().getNombre();
-            per.setLugarNatal(lug.buscar(per.getLugarNatal().getIdReferencia()));
+            per.setLugarNatal(LBD.buscar(per.getLugarNatal().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
         nvlLugarNac = Integer.parseInt(per.getLugarNatal().getNivel());
         if (nvlLugarNac == 2) {
             //Guardamos el nombre del distrito/provincia para luego selecionarlo
             distrito = per.getLugarNatal().getNombre();
-            per.setLugarNatal(lug.buscar(per.getLugarNatal().getIdReferencia()));
+            per.setLugarNatal(LBD.buscar(per.getLugarNatal().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel 
         nvlLugarNac = Integer.parseInt(per.getLugarNatal().getNivel());
@@ -1039,7 +1035,7 @@ public class FrmPersonaCTR extends DCTR {
         if (nvlLugarRes == 4) {
             //Guardamos el nombre del parroquia para luego selecionarlo
             parroquia = per.getLugarResidencia().getNombre();
-            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+            per.setLugarResidencia(LBD.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
         if (per.getLugarResidencia().getNivel() == null) {
@@ -1050,7 +1046,7 @@ public class FrmPersonaCTR extends DCTR {
         if (nvlLugarRes == 3) {
             //Guardamos el nombre del canton para luego selecionarlo
             canton = per.getLugarResidencia().getNombre();
-            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+            per.setLugarResidencia(LBD.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel del lugar 
         if (per.getLugarResidencia().getNivel() == null) {
@@ -1061,7 +1057,7 @@ public class FrmPersonaCTR extends DCTR {
         if (nvlLugarRes == 2) {
             //Guardamos el nombre del provincia para luego selecionarlo
             provincia = per.getLugarResidencia().getNombre();
-            per.setLugarResidencia(lug.buscar(per.getLugarResidencia().getIdReferencia()));
+            per.setLugarResidencia(LBD.buscar(per.getLugarResidencia().getIdReferencia()));
         }
         //Ahora preguntamos nuevamente el nivel 
         if (per.getLugarResidencia().getNivel() == null) {
@@ -1153,7 +1149,7 @@ public class FrmPersonaCTR extends DCTR {
 
     //Metodos para los combos de residencia y ciudades natales
     private void cargarPaises() {
-        paises = lug.buscarPaises();
+        paises = LBD.buscarPaises();
         paises = reordenarArray(paises, "ECUADOR");
         frmPersona.getCmbNacionalidad().removeAllItems();
         frmPersona.getCmbNacionalidad().addItem("SELECCIONE");
@@ -1187,7 +1183,7 @@ public class FrmPersonaCTR extends DCTR {
         int posNac = frmPersona.getCmbNacionalidad().getSelectedIndex();
         if (posNac > 0) {
             frmPersona.getLblErrorProvincia().setVisible(false);
-            distritos = lug.buscarPorReferencia(paises.get(posNac - 1).getId());
+            distritos = LBD.buscarPorReferencia(paises.get(posNac - 1).getId());
             distritos = reordenarArray(distritos, "PROVINCIA DEL AZUAY");
             cargarCmbLugares(frmPersona.getCmbProvincia(), distritos);
         } else {
@@ -1199,7 +1195,7 @@ public class FrmPersonaCTR extends DCTR {
         int posDis = frmPersona.getCmbProvincia().getSelectedIndex();
         if (posDis > 0) {
             frmPersona.getLblErrorCanton().setVisible(false);
-            ciudades = lug.buscarPorReferencia(distritos.get(posDis - 1).getId());
+            ciudades = LBD.buscarPorReferencia(distritos.get(posDis - 1).getId());
             cargarCmbLugares(frmPersona.getCmbCanton(), ciudades);
         } else {
             frmPersona.getLblErrorCanton().setVisible(true);
@@ -1210,7 +1206,7 @@ public class FrmPersonaCTR extends DCTR {
         int posPaisRe = frmPersona.getCmbPaisReside().getSelectedIndex();
         if (posPaisRe > 0) {
             frmPersona.getLblErrorPaisReside().setVisible(false);
-            provincias = lug.buscarPorReferencia(paises.get(posPaisRe - 1).getId());
+            provincias = LBD.buscarPorReferencia(paises.get(posPaisRe - 1).getId());
             provincias = reordenarArray(provincias, "PROVINCIA DEL AZUAY");
             cargarCmbLugares(frmPersona.getCmbProvinciaReside(), provincias);
         } else {
@@ -1222,7 +1218,7 @@ public class FrmPersonaCTR extends DCTR {
         int posPr = frmPersona.getCmbProvinciaReside().getSelectedIndex();
         if (posPr > 0) {
             frmPersona.getLblErrorCantonReside().setVisible(false);
-            cantones = lug.buscarPorReferencia(provincias.get(posPr - 1).getId());
+            cantones = LBD.buscarPorReferencia(provincias.get(posPr - 1).getId());
             cargarCmbLugares(frmPersona.getCmbCantonReside(), cantones);
         } else {
             frmPersona.getLblErrorCantonReside().setVisible(true);
@@ -1233,7 +1229,7 @@ public class FrmPersonaCTR extends DCTR {
         int posCt = frmPersona.getCmbCantonReside().getSelectedIndex();
         if (posCt > 0) {
             frmPersona.getLblErrorParroquiaReside().setVisible(false);
-            parroquias = lug.buscarPorReferencia(cantones.get(posCt - 1).getId());
+            parroquias = LBD.buscarPorReferencia(cantones.get(posCt - 1).getId());
             cargarCmbLugares(frmPersona.getCmbParroquiaReside(), parroquias);
             System.out.println("Cantones " + cantones.get(posCt - 1).getId());
         } else {
@@ -1351,7 +1347,7 @@ public class FrmPersonaCTR extends DCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", frmPersona.getTxtIdentificacion().getText());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Persona");
+            CON.mostrarReporte(jr, parametro, "Reporte de Persona");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex);
         }

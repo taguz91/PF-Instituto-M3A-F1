@@ -39,16 +39,16 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
 
     //Datos
     private ArrayList<AlumnoCursoMD> almns;
-    private final AlumnoCursoBD alc;
+    private final AlumnoCursoBD ALCBR = AlumnoCursoBD.single();
     //Cargamos los periodos
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para cargar los cursos
-    private final CursoBD cur;
+    private final CursoBD CBD = CursoBD.single();
     private ArrayList<String> cursos;
     //Ciclos de una carrera 
     private ArrayList<Integer> ciclos;
-    private final MateriaBD mat;
+    private final MateriaBD MTBD = MateriaBD.single();
 
     /**
      * En el constructor se inician todas las dependencias de base de datos.
@@ -59,11 +59,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
     public VtnAlumnoCursoCTR(VtnAlumnoCurso vtnAlmnCurso, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnAlmnCurso = vtnAlmnCurso;
-
-        this.alc = new AlumnoCursoBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
-        this.cur = new CursoBD(ctrPrin.getConecta());
-        this.mat = new MateriaBD(ctrPrin.getConecta());
     }
 
     /**
@@ -119,7 +114,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            almns = alc.buscarAlumnosCursosTbl(b);
+            almns = ALCBR.buscarAlumnosCursosTbl(b);
             llenatTbl(almns);
         } else {
             System.out.println("No ingrese caracteres especiales");
@@ -139,7 +134,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      * Cargamos todos los alumnos que estan matriculados en un curso.
      */
     private void cargarAlumnosCurso() {
-        almns = alc.cargarAlumnosCursosTbl();
+        almns = ALCBR.cargarAlumnosCursosTbl();
         llenatTbl(almns);
     }
 
@@ -148,7 +143,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarTblPorPrd() {
         if (posPrd > 0) {
-            almns = alc.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getID());
+            almns = ALCBR.cargarAlumnosCursosPorPrdTbl(periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
     }
@@ -158,7 +153,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarTblPorCiclo() {
         if (posCiclo > 0) {
-            almns = alc.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
+            almns = ALCBR.cargarAlumnosCursosPorCicloTbl(ciclos.get(posCiclo - 1),
                     periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
@@ -169,7 +164,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarTblPorCurso() {
         if (posCur > 0) {
-            almns = alc.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1),
+            almns = ALCBR.cargarAlumnosCursosPorCursoTbl(cursos.get(posCur - 1),
                     periodos.get(posPrd - 1).getID());
             llenatTbl(almns);
         }
@@ -198,7 +193,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      * Cargamos las carrerar en el combo para los filtros.
      */
     private void cargarCmbPrds() {
-        periodos = prd.cargarPrdParaCmbVtn();
+        periodos = PLBD.cargarPrdParaCmbVtn();
         vtnAlmnCurso.getCmbPrdLectivos().removeAllItems();
         if (!periodos.isEmpty()) {
             vtnAlmnCurso.getCmbPrdLectivos().addItem("Todos");
@@ -212,7 +207,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      * LLenamos el combo de ciclos por carrera
      */
     private void cargarCmbCiclo() {
-        ciclos = mat.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
+        ciclos = MTBD.cargarCiclosCarrera(periodos.get(posPrd - 1).getCarrera().getId());
         if (ciclos != null) {
             vtnAlmnCurso.getCmbCiclo().removeAllItems();
             vtnAlmnCurso.getCmbCiclo().addItem("Todos");
@@ -255,7 +250,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
      */
     private void cargarCursoPorPrd() {
         if (posPrd > 0) {
-            cursos = cur.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
+            cursos = CBD.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             vtnAlmnCurso.getCmbCursos().removeAllItems();
             if (cursos != null) {
                 vtnAlmnCurso.getCmbCursos().addItem("Todos");
@@ -293,7 +288,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
             parametro.put("curso", vtnAlmnCurso.getCmbCursos().getSelectedItem());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            CON.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -326,7 +321,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             ));
             System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
+            CON.mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -343,7 +338,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("periodo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
+                CON.mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
@@ -428,7 +423,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+                CON.mostrarReporte(jr, parametro, "Reporte UBE");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
@@ -451,7 +446,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+                CON.mostrarReporte(jr, parametro, "Reporte UBE");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
@@ -474,7 +469,7 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
                 System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte UBE");
+                CON.mostrarReporte(jr, parametro, "Reporte UBE");
 
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);

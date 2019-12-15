@@ -2,13 +2,9 @@ package controlador.silabo.planesDeClase;
 
 import java.util.List;
 import java.util.Optional;
-import java.awt.event.ActionEvent;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;

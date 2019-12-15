@@ -22,7 +22,7 @@ public class FrmVersionCTR extends DVtnCTR {
 
     private final FrmVersion frmVersion;
     private final JDVersionCTR ctrVersion;
-    private final VersionBD ver;
+    private final VersionBD VRBD;
     private boolean editar = false;
     private int idVersion = 0;
 
@@ -31,7 +31,7 @@ public class FrmVersionCTR extends DVtnCTR {
         super(ctrPrin);
         this.ctrVersion = ctrVersion;
         this.frmVersion = new FrmVersion(ctrPrin.getVtnPrin(), false);
-        this.ver = ver;
+        this.VRBD = ver;
     }
 
     public void iniciar() {
@@ -126,7 +126,7 @@ public class FrmVersionCTR extends DVtnCTR {
 
         //Si hasta aqui todo esta bien consultamos si no existe ya esa version. 
         if (guardar && !editar) {
-            VersionMD v = ver.existeVersion(nombre + ".zip", version);
+            VersionMD v = VRBD.existeVersion(nombre + ".zip", version);
             if (v != null) {
                 if (v.getUsername() != null) {
                     JOptionPane.showMessageDialog(frmVersion, "Ya existe esta version fue publicada por: "
@@ -149,6 +149,7 @@ public class FrmVersionCTR extends DVtnCTR {
                     + "¿Seguro que quiere continuar?");
 
             if (r == JOptionPane.YES_OPTION) {
+                VersionMD ver = new VersionMD();
                 ver.setNombre(nombre + ".zip");
                 ver.setNotas(notas);
                 ver.setUrl(url);
@@ -156,9 +157,10 @@ public class FrmVersionCTR extends DVtnCTR {
                 ver.setVersion(version);
 
                 if (editar) {
-                    completo = ver.editar(idVersion);
+                    ver.setId(idVersion);
+                    completo = VRBD.editar(ver);
                 } else {
-                    completo = ver.guardar();
+                    completo = VRBD.guardar(ver);
                 }
                 //Si todo se completo correctamente cerramos la ventana.
                 if (completo) {
@@ -174,7 +176,7 @@ public class FrmVersionCTR extends DVtnCTR {
     public void editar(int idVersion) {
         this.idVersion = idVersion;
         editar = true;
-        VersionMD v = ver.consultarVersion(idVersion);
+        VersionMD v = VRBD.consultarVersion(idVersion);
         if (v != null) {
             frmVersion.getTxtAutor().setText(v.getUsername());
             frmVersion.getTxtNombre().setText(v.getNombreSinExtension());

@@ -23,8 +23,8 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
 
     private final JDEditarMatricula jd;
     private final MatriculaMD matricula;
-    private final CursoBD cur;
-    private final AlumnoCursoBD almCur;
+    private final CursoBD CRBD = CursoBD.single();
+    private final AlumnoCursoBD ACRBD = AlumnoCursoBD.single();
     private String nombreCurso;
     private ArrayList<String> nomCursos;
     private ArrayList<AlumnoCursoMD> almnsCurso, cursosNuevos = null;
@@ -43,8 +43,6 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
     public JDEditarMatriculaCTR(VtnPrincipalCTR ctrPrin,
             MatriculaMD matricula) {
         super(ctrPrin);
-        this.cur = new CursoBD(ctrPrin.getConecta());
-        this.almCur = new AlumnoCursoBD(ctrPrin.getConecta());
         this.cursosNuevos = new ArrayList<>();
         this.matricula = matricula;
         this.jd = new JDEditarMatricula(ctrPrin.getVtnPrin(), false);
@@ -94,13 +92,13 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      */
     private void clickGuardar() {
         if (cursosNuevos != null) {
-            almCur.borrarActualizarMatricula();
+            ACRBD.borrarActualizarMatricula();
             nombreCursosN = "";
             numMat = 1;
             cursosNuevos.forEach(ac -> {
                 if (ac.getCurso().getCapaciadActual() > 0) {
                     //Agregamos el update en todo el sql
-                    almCur.agregarUpdate(ac.getId(), ac.getCurso().getId());
+                    ACRBD.agregarUpdate(ac.getId(), ac.getCurso().getId());
 
                     nombreCursosN = nombreCursosN + numMat + ": " + ac.getCurso().getMateria().getNombre() + "   Curso: "
                             + ac.getCurso().getNombre() + "   \n";
@@ -112,10 +110,10 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
                     + matricula.getAlumno().getNombreCompleto() + "   \n" + ""
                     + "Estos son sus nuevos cursos: \n" + nombreCursosN);
             if (r == JOptionPane.YES_OPTION) {
-                if (almCur.actualizarMatricula()) {
+                if (ACRBD.actualizarMatricula()) {
                     ctrPrin.getVtnPrin().setEnabled(true);
                     jd.dispose();
-                    almCur.borrarActualizarMatricula();
+                    ACRBD.borrarActualizarMatricula();
                 }
             }
         }
@@ -132,7 +130,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      */
     private void cambiarACurso(String curso) {
         // Aqui pasamos 0 porque no queremos que filtre por alumno que lo ingnore 
-        cursos = cur.buscarCursosPorNombreYPrdLectivo(
+        cursos = CRBD.buscarCursosPorNombreYPrdLectivo(
                 curso,
                 matricula.getPeriodo().getID()
         );
@@ -176,7 +174,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
      * @param ciclo
      */
     private void llenarCursosDisponibles(int ciclo) {
-        nomCursos = cur.cargarNombreCursosPorPeriodoCiclo(matricula.getPeriodo().getID(),
+        nomCursos = CRBD.cargarNombreCursosPorPeriodoCiclo(matricula.getPeriodo().getID(),
                 ciclo);
         ArrayList<String> nomAux = new ArrayList<>();
 
@@ -302,7 +300,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
         jd.getLblAlumno().setText(matricula.getAlumno().getNombreCompleto());
         jd.getLblPeriodo().setText(matricula.getPeriodo().getNombre());
         jd.getLblFecha().setText(matricula.getSoloFecha());
-        almnsCurso = almCur.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
+        almnsCurso = ACRBD.buscarCursosAlmPeriodo(matricula.getAlumno().getId_Alumno(),
                 matricula.getPeriodo().getID());
         llenarTblMA(almnsCurso);
     }
@@ -326,7 +324,7 @@ public class JDEditarMatriculaCTR extends DVtnCTR {
             if (Validar.esNumeros(e.toString())) {
                 int num = Integer.parseInt(e.toString());
                 if (num > 0 && num < 4) {
-                    almCur.editarNumMatricula(id, num);
+                    ACRBD.editarNumMatricula(id, num);
                 } else {
                     JOptionPane.showMessageDialog(jd, "El numero de matricula no puede ser \n"
                             + "menor a 1 ni mayor a 3.");

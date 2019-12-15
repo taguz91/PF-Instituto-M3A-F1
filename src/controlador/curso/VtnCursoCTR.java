@@ -1,14 +1,11 @@
 package controlador.curso;
 
-import controlador.Libraries.Effects;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +17,6 @@ import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import modelo.persona.DocenteBD;
 import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
@@ -38,10 +34,10 @@ public class VtnCursoCTR extends DVtnCTR {
     private final VtnCurso vtnCurso;
 
     private ArrayList<AlumnoCursoMD> almns;
-    private final CursoBD curso;
+    private final CursoBD CBD = CursoBD.single();
     private ArrayList<CursoMD> cursos;
     //Para cargar el combo periodos  
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
     //Para guardanos los nombres de los cursos  
     private ArrayList<String> nombresC;
@@ -51,9 +47,6 @@ public class VtnCursoCTR extends DVtnCTR {
             VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnCurso = vtnCurso;
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
-        //Inicializamos el curso  
-        curso = new CursoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -177,7 +170,7 @@ public class VtnCursoCTR extends DVtnCTR {
      */
     private void buscar(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            cursos = curso.buscarCursos(b);
+            cursos = CBD.buscarCursos(b);
             llenarTbl(cursos);
         } else {
             System.out.println("No ingrese caracteres especiales");
@@ -189,7 +182,7 @@ public class VtnCursoCTR extends DVtnCTR {
      * periodo lectivo en el que se abrieron
      */
     public void cargarCursos() {
-        cursos = curso.cargarCursos();
+        cursos = CBD.cargarCursos();
         llenarTbl(cursos);
         System.out.println("Se cargaron cursos");
     }
@@ -198,7 +191,7 @@ public class VtnCursoCTR extends DVtnCTR {
      * Cargamos los nombres de todos los cursos
      */
     public void cargarNombreCursos() {
-        nombresC = curso.cargarNombreCursos();
+        nombresC = CBD.cargarNombreCursos();
         cargarCmbCursos(nombresC);
     }
 
@@ -210,10 +203,10 @@ public class VtnCursoCTR extends DVtnCTR {
         int posPrd = vtnCurso.getCmbPeriodoLectivo().getSelectedIndex();
         if (posPrd > 0) {
             //Cargamos el combo de cursos por el periodo  
-            nombresC = curso.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
+            nombresC = CBD.cargarNombreCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             cargarCmbCursos(nombresC);
             //Cargamos los cursos por periodo
-            cursos = curso.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getID());
+            cursos = CBD.cargarCursosPorPeriodo(periodos.get(posPrd - 1).getID());
             llenarTbl(cursos);
         } else {
             cargarCursos();
@@ -230,10 +223,10 @@ public class VtnCursoCTR extends DVtnCTR {
         if (posNom == 0) {
             cargarCursosPorPeriodo();
         } else if (posNom > 0 && posPrd == 0) {
-            cursos = curso.cargarCursosPorNombre(vtnCurso.getCmbCurso().getSelectedItem().toString());
+            cursos = CBD.cargarCursosPorNombre(vtnCurso.getCmbCurso().getSelectedItem().toString());
             llenarTbl(cursos);
         } else if (posNom > 0 && posPrd > 0) {
-            cursos = curso.cargarCursosPorNombreYPrdLectivo(vtnCurso.getCmbCurso().getSelectedItem().toString(),
+            cursos = CBD.cargarCursosPorNombreYPrdLectivo(vtnCurso.getCmbCurso().getSelectedItem().toString(),
                     periodos.get(posPrd - 1).getID());
             llenarTbl(cursos);
         }
@@ -272,7 +265,7 @@ public class VtnCursoCTR extends DVtnCTR {
      * Cargamos el combo de periodo lectivo
      */
     private void cargarCmbPrdLectio() {
-        periodos = prd.cargarPrdParaCmbVtn();
+        periodos = PLBD.cargarPrdParaCmbVtn();
         vtnCurso.getCmbPeriodoLectivo().removeAllItems();
         if (periodos != null) {
             vtnCurso.getCmbPeriodoLectivo().addItem("Todos");
@@ -293,7 +286,7 @@ public class VtnCursoCTR extends DVtnCTR {
             Map parametro = new HashMap();
             parametro.put("curso", cursos.get(posFila).getId());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Lista de estudiantes");
+            CON.mostrarReporte(jr, parametro, "Lista de estudiantes");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -311,7 +304,7 @@ public class VtnCursoCTR extends DVtnCTR {
                 parametro.put("curso", cursos.get(posFila).getId());
                 parametro.put("titulo", titleRepor);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Socialización Sílabos");
+                CON.mostrarReporte(jr, parametro, "Socialización Sílabos");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
@@ -343,16 +336,16 @@ public class VtnCursoCTR extends DVtnCTR {
 
         if (posCur >= 0) {
             String nom = vtnCurso.getTblCurso().getValueAt(posCur, 5).toString();
-            int num = curso.numAlumnos(cursos.get(posCur).getId());
+            int num = CBD.numAlumnos(cursos.get(posCur).getId());
             int r = JOptionPane.showConfirmDialog(vtnCurso, "Seguro quiere "
                     + vtnCurso.getBtnEliminar().getText().toLowerCase() + " el curso " + nom + "\n"
                     + "Se " + vtnCurso.getBtnEliminar().getText().toLowerCase()
                     + "an todos los alumnos de este curso: " + num);
             if (r == JOptionPane.YES_OPTION) {
                 if (vtnCurso.getCbxEliminados().isSelected()) {
-                    curso.activarCurso(cursos.get(posCur).getId());
+                    CBD.activarCurso(cursos.get(posCur).getId());
                 } else {
-                    curso.eliminarCurso(cursos.get(posCur).getId());
+                    CBD.eliminarCurso(cursos.get(posCur).getId());
                 }
                 verCursosEliminados();
             }
@@ -367,11 +360,11 @@ public class VtnCursoCTR extends DVtnCTR {
      */
     private void verCursosEliminados() {
         if (vtnCurso.getCbxEliminados().isSelected()) {
-            cursos = curso.cargarCursosEliminados();
+            cursos = CBD.cargarCursosEliminados();
             llenarTbl(cursos);
             vtnCurso.getBtnEliminar().setText("Activar");
         } else {
-            cursos = curso.cargarCursos();
+            cursos = CBD.cargarCursos();
             llenarTbl(cursos);
             vtnCurso.getBtnEliminar().setText("Eliminar");
         }

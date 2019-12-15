@@ -2,26 +2,21 @@ package controlador.referencias;
 
 import controlador.principal.VtnPrincipalCTR;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
 import modelo.ReferenciasB.ReferenciaBD;
+import modelo.referencias.ReferenciasMD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmBibliografia;
 
 public class ReferenciasCTR {
 
     private final frmBibliografia frmBibliografia;
-    private final ReferenciaBD BDbibliografia;
-    private final ConectarDB conecta;
+    private final ReferenciaBD RFBD = ReferenciaBD.single();
     private final VtnPrincipal vtnPrin;
     private final VtnPrincipalCTR ctrPrin;
     private String autor, autor2, autor3, autorCorporativo, titulo, año, ciudad, editor;
-    
-    
-    
-    public ReferenciasCTR(ConectarDB conecta, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmBibliografia frmBibliografia) {
+
+    public ReferenciasCTR(VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmBibliografia frmBibliografia) {
         this.frmBibliografia = frmBibliografia;
-        this.BDbibliografia = new ReferenciaBD(conecta);
-        this.conecta = conecta;
         this.ctrPrin = ctrPrin;
         this.vtnPrin = vtnPrin;
         this.vtnPrin.getDpnlPrincipal().add(frmBibliografia);
@@ -40,9 +35,9 @@ public class ReferenciasCTR {
     }
 
     public void bottonGuardar() {
-        if (frmBibliografia.getTxtAnio().getText().equals(null) || frmBibliografia.getTxtAutor2().getText().equals(null) || frmBibliografia.getTxtAutor3().getText().equals(null)
-                || frmBibliografia.getTxtAutor().getText().equals(null)
-                || frmBibliografia.getTxtCiudad().getText().equals(null) || frmBibliografia.getTxtEditor().getText().equals(null)) {
+        if (frmBibliografia.getTxtAnio().getText() == null || frmBibliografia.getTxtAutor2().getText() == null || frmBibliografia.getTxtAutor3().getText() == null
+                || frmBibliografia.getTxtAutor().getText() == null
+                || frmBibliografia.getTxtCiudad().getText() == null || frmBibliografia.getTxtEditor().getText().equals(null)) {
             JOptionPane.showMessageDialog(null, "Campos vacios no Permitido");
         } else {
             boolean existe;
@@ -74,25 +69,27 @@ public class ReferenciasCTR {
                 contenedor = autor + " & " + autor2 + " & " + autor3 + " . " + año + " . " + titulo + " , " + editor + " . " + ciudad;
             }
 
-            BDbibliografia.setCodigo_referencia(frmBibliografia.getTxtCodigoLibro().getText());
-            BDbibliografia.setAutor2(autor2);
-            BDbibliografia.setAutor3(autor3);
-            BDbibliografia.setDescripcion_referencia(contenedor);
-            BDbibliografia.setTipo_referencia(tipoD);
-            BDbibliografia.setExiste_en_biblioteca(existe);
-            BDbibliografia.setObservaciones(observaciones);
-            BDbibliografia.setCodigo_isbn(frmBibliografia.getTxtCodigoISBM().getText());
-            BDbibliografia.setNumero_de_paginas(frmBibliografia.getTxtNumeroPaginas().getText());
-            BDbibliografia.setCodigo_koha(frmBibliografia.getTxtCodigoKoha().getText());
-            BDbibliografia.setCodigo_dewey(frmBibliografia.getTxtCodigoDewey().getText());
-            BDbibliografia.setArea_referencias(frmBibliografia.getTxtArea().getText());
-            BDbibliografia.setAutor1(autor);
-            BDbibliografia.setTitulo(titulo);
-            BDbibliografia.setEditor(editor);
-            BDbibliografia.setAño(año);
-            BDbibliografia.setCiudad(ciudad);
-              
-            if (BDbibliografia.insertarReferencia()) {
+            modelo.ReferenciasB.ReferenciasMD re = new modelo.ReferenciasB.ReferenciasMD();
+
+            re.setCodigo_referencia(frmBibliografia.getTxtCodigoLibro().getText());
+            re.setAutor2(autor2);
+            re.setAutor3(autor3);
+            re.setDescripcion_referencia(contenedor);
+            re.setTipo_referencia(tipoD);
+            re.setExiste_en_biblioteca(existe);
+            re.setObservaciones(observaciones);
+            re.setCodigo_isbn(frmBibliografia.getTxtCodigoISBM().getText());
+            re.setNumero_de_paginas(frmBibliografia.getTxtNumeroPaginas().getText());
+            re.setCodigo_koha(frmBibliografia.getTxtCodigoKoha().getText());
+            re.setCodigo_dewey(frmBibliografia.getTxtCodigoDewey().getText());
+            re.setArea_referencias(frmBibliografia.getTxtArea().getText());
+            re.setAutor1(autor);
+            re.setTitulo(titulo);
+            re.setEditor(editor);
+            re.setAño(año);
+            re.setCiudad(ciudad);
+
+            if (RFBD.insertarReferencia(re)) {
                 JOptionPane.showMessageDialog(null, "Los Datos se guardaron Correctamente");
                 frmBibliografia.getTxtAutor().setText("");
                 frmBibliografia.getTxtAutor2().setText("");

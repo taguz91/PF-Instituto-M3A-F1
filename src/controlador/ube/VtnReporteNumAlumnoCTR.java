@@ -1,5 +1,6 @@
 package controlador.ube;
 
+import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -24,9 +25,8 @@ import vista.ube.VtnReporteNumAlumno;
  *
  * @author gus
  */
-public class VtnReporteNumAlumnoCTR {
+public class VtnReporteNumAlumnoCTR extends DCTR {
 
-    private final VtnPrincipalCTR ctrPrin;
     private final VtnReporteNumAlumno vtn;
     //Todos los array que usaremos en los combos  
     private ArrayList<CarreraMD> carreras;
@@ -35,7 +35,7 @@ public class VtnReporteNumAlumnoCTR {
     private ArrayList<JornadaMD> jornadas;
 
     public VtnReporteNumAlumnoCTR(VtnPrincipalCTR ctrPrin, VtnReporteNumAlumno vtn) {
-        this.ctrPrin = ctrPrin;
+        super(ctrPrin);
         this.vtn = vtn;
     }
 
@@ -55,7 +55,7 @@ public class VtnReporteNumAlumnoCTR {
     }
 
     private void inicarCmbCarrera() {
-        CarreraBD CBD = new CarreraBD(ctrPrin.getConecta());
+        CarreraBD CBD = CarreraBD.single();
         carreras = CBD.cargarCarrerasCmb();
         iniciarCmb(vtn.getCmbCarrera());
         carreras.forEach(c -> {
@@ -66,7 +66,7 @@ public class VtnReporteNumAlumnoCTR {
 
     private void clickCarrera() {
         int sel = vtn.getCmbCarrera().getSelectedIndex();
-        PeriodoLectivoBD PBD = new PeriodoLectivoBD(ctrPrin.getConecta());
+        PeriodoLectivoBD PBD = PeriodoLectivoBD.single();
         if (sel > 0) {
             periodos = (ArrayList<PeriodoLectivoMD>) PBD.llenarPeriodosxCarreras(
                     carreras.get(sel - 1).getId()
@@ -78,7 +78,7 @@ public class VtnReporteNumAlumnoCTR {
     private void clickPeriodo() {
         int sel = vtn.getCmbPeriodo().getSelectedIndex();
         if (sel > 0) {
-            CursoBD MBD = new CursoBD(ctrPrin.getConecta());
+            CursoBD MBD = CursoBD.single();
             ciclos = MBD.cargarCiclosPorPeriodo(periodos.get(sel - 1).getCarrera().getId());
             llenarCmbCiclos(ciclos);
         }
@@ -107,7 +107,7 @@ public class VtnReporteNumAlumnoCTR {
     }
 
     private void iniciarCmbJornada() {
-        JornadaBD JBD = new JornadaBD(ctrPrin.getConecta());
+        JornadaBD JBD = JornadaBD.single();
         jornadas = JBD.cargarJornadas();
         if (jornadas != null) {
             iniciarCmb(vtn.getCmbJornada());
@@ -136,7 +136,7 @@ public class VtnReporteNumAlumnoCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/UBE-principal.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("id_carrera", carreras.get(posCarrera - 1).getId());
-                ctrPrin.getConecta().mostrarReporte(
+                CON.mostrarReporte(
                         jr,
                         parametro,
                         "Número de alumnos por carrera"
@@ -161,7 +161,7 @@ public class VtnReporteNumAlumnoCTR {
                 parametro.put("id_carrera", carreras.get(posCarrera - 1).getId());
                 parametro.put("id_jornada", jornadas.get(posJornada - 1).getId());
 
-                ctrPrin.getConecta().mostrarReporte(
+                CON.mostrarReporte(
                         jr,
                         parametro,
                         "Número de alumnos por jornada"
@@ -183,7 +183,7 @@ public class VtnReporteNumAlumnoCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/ube/UBE/num_alumnos_periodo.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("id_periodo", periodos.get(posPeriodo - 1).getID());
-                ctrPrin.getConecta().mostrarReporte(
+                CON.mostrarReporte(
                         jr,
                         parametro,
                         "Número de alumnos por jornada"

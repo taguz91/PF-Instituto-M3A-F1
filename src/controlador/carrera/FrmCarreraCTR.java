@@ -32,7 +32,7 @@ public class FrmCarreraCTR extends DCTR {
     private boolean editar = false;
     private int idCarrera = 0;
     //Para cargar el combo de coordinador  
-    private final DocenteBD docen;
+    private final DocenteBD DBD = DocenteBD.single();
     private ArrayList<DocenteMD> docentes;
 
     //Todas las modalidades que puede tener una carrera  
@@ -44,7 +44,6 @@ public class FrmCarreraCTR extends DCTR {
     public FrmCarreraCTR(FrmCarrera frmCarrera, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmCarrera = frmCarrera;
-        this.docen = new DocenteBD(ctrPrin.getConecta());
     }
 
     /**
@@ -164,7 +163,8 @@ public class FrmCarreraCTR extends DCTR {
         }
 
         if (guardar) {
-            CarreraBD car = new CarreraBD(ctrPrin.getConecta());
+            CarreraBD CRBD = CarreraBD.single();
+            CarreraMD car = new CarreraMD();
             car.setCodigo(codigo);
             car.setFechaInicio(fechaInicio);
             car.setModalidad(modalidad);
@@ -172,13 +172,14 @@ public class FrmCarreraCTR extends DCTR {
             car.setCoordinador(docentes.get(posCoord));
             car.setNumSemanas(Integer.parseInt(semanas));
             if (editar) {
-                guardar = car.editarCarrera(idCarrera);
+                car.setId(idCarrera);
+                guardar = CRBD.editarCarrera(car);
                 if (guardar) {
                     editar = false;
                     return true;
                 }
             } else {
-                guardar = car.guardarCarrera();
+                guardar = CRBD.guardarCarrera(car);
             }
         }
         return guardar;
@@ -191,7 +192,7 @@ public class FrmCarreraCTR extends DCTR {
      */
     private void buscarDocentes(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            docentes = docen.buscar(aguja);
+            docentes = DBD.buscar(aguja);
             llenarTblDocentes(docentes);
         }
     }

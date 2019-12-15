@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import utils.CONS;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.UsuarioBD;
 import vista.Login;
@@ -82,7 +81,7 @@ public class LoginCTR {
 
                             vista.dispose();
                             CONS.setUsuario(modelo);
-                            VtnSelectRolCTR vtn = new VtnSelectRolCTR(new ConectarDB("Login", conex));
+                            VtnSelectRolCTR vtn = new VtnSelectRolCTR();
                             vtn.Init();
 
                         } else {

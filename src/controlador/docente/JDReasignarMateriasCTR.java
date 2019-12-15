@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.docente;
 
 import controlador.principal.DVtnCTR;
@@ -11,10 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.alumno.AlumnoCursoMD;
 import modelo.curso.CursoBD;
 import modelo.curso.CursoMD;
 import modelo.estilo.TblEstilo;
@@ -22,7 +15,6 @@ import modelo.materia.MateriaBD;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.persona.DocenteBD;
 import modelo.persona.DocenteMD;
-import modelo.validaciones.TxtVBuscador;
 import modelo.validaciones.Validar;
 import vista.docente.JDReasignarMaterias;
 
@@ -32,8 +24,7 @@ import vista.docente.JDReasignarMaterias;
  */
 public class JDReasignarMateriasCTR extends DVtnCTR {
 
-    private PeriodoLectivoBD periodoBD;
-    private final DocenteBD dc;
+    private final DocenteBD DBD = DocenteBD.single();
     private CursoMD cursoMD;
     private DocenteMD docenteMD;
     private final String materia;
@@ -46,7 +37,6 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     public JDReasignarMateriasCTR(VtnPrincipalCTR ctrPrin, String materia, String curso, int periodo, int docente) {
         super(ctrPrin);
-        this.dc = new DocenteBD(ctrPrin.getConecta());
         this.materia = materia;
         this.curso = curso;
         this.periodo = periodo;
@@ -93,26 +83,26 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     private void reasignarMaterias() {
         posFila = frmReasignarMateria.getTblDocentesDisponibles().getSelectedRow();
         if (posFila >= 0) {
-            CursoBD bdCurso = new CursoBD(ctrPrin.getConecta());
+            CursoBD bdCurso = CursoBD.single();
             DocenteMD d = new DocenteMD();
-            MateriaBD bdMateria = new MateriaBD(ctrPrin.getConecta());
+            MateriaBD bdMateria = MateriaBD.single();
             cursoMD = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), this.periodo, docente, curso);
-            d.setIdDocente(dc.buscarDocente(frmReasignarMateria.getTblDocentesDisponibles().getValueAt(posFila, 0).toString()).getIdDocente());
+            d.setIdDocente(DBD.buscarDocente(frmReasignarMateria.getTblDocentesDisponibles().getValueAt(posFila, 0).toString()).getIdDocente());
             cursoMD.setDocente(d);
             System.out.println("docente " + d.getIdDocente());
-            if(bdCurso.nuevoCurso(cursoMD) == true){
+            if (bdCurso.nuevoCurso(cursoMD) == true) {
                 int curso_New = bdCurso.atraparCurso(bdMateria.buscarMateria(materia).getId(), this.periodo, d.getIdDocente(), curso).getId();
-                if(dc.reasignarAlumnoCurso(cursoMD.getId(), curso_New)){
-                    if(dc.reasignarNotas(cursoMD.getId(), curso_New)){
+                if (DBD.reasignarAlumnoCurso(cursoMD.getId(), curso_New)) {
+                    if (DBD.reasignarNotas(cursoMD.getId(), curso_New)) {
                         JOptionPane.showMessageDialog(null, "Se reasignó con éxito las materias y notas al docente seleccionado");
                         frmReasignarMateria.dispose();
-                    } else{
-                        JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");  
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo reasignar las notas de esas materias al nuevo docente seleccionado");
                     }
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(null, "No se pudo reasignar las materias al docente seleccionado");
                 }
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se pudo finalizar el contrato de este docente");
             }
         } else {
@@ -122,15 +112,14 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
 
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            docentesMD = dc.buscarReasignarMateria(aguja);
+            docentesMD = DBD.buscarReasignarMateria(aguja);
             llenarTabla(docentesMD);
         }
     }
 
     public void cargarTabla(String periodo) {
-
-        DocenteBD d = new DocenteBD(ctrPrin.getConecta());
-        PeriodoLectivoBD p = new PeriodoLectivoBD(ctrPrin.getConecta());
+        DocenteBD d = DocenteBD.single();
+        PeriodoLectivoBD p = PeriodoLectivoBD.single();
         DefaultTableModel modelo_Tabla;
         modelo_Tabla = (DefaultTableModel) frmReasignarMateria.getTblDocentesDisponibles().getModel();
         for (int i = frmReasignarMateria.getTblDocentesDisponibles().getRowCount() - 1; i >= 0; i--) {
@@ -147,7 +136,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
     }
 
     private void cargarDocentes() {
-        docentesMD = dc.cargarDocentesParaReasignarMaterias();
+        docentesMD = DBD.cargarDocentesParaReasignarMaterias();
         llenarTabla(docentesMD);
     }
 
@@ -162,7 +151,7 @@ public class JDReasignarMateriasCTR extends DVtnCTR {
                 mdTbl.addRow(valores);
             });
         }
-        
+
     }
 
 }

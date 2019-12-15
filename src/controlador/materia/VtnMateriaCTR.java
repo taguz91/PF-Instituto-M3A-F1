@@ -30,8 +30,8 @@ import vista.materia.VtnMateria;
 public class VtnMateriaCTR extends DVtnCTR {
 
     private final VtnMateria vtnMateria;
-    private final MateriaBD materia;
-    private final CarreraBD carrerBD;
+    private final MateriaBD MTBD = MateriaBD.single();
+    private final CarreraBD CRBD = CarreraBD.single();
 
     //Aqui guardamos todas las materias
     private ArrayList<MateriaMD> materias;
@@ -49,8 +49,6 @@ public class VtnMateriaCTR extends DVtnCTR {
     public VtnMateriaCTR(VtnMateria vtnMateria, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnMateria = vtnMateria;
-        this.materia = new MateriaBD(ctrPrin.getConecta());
-        this.carrerBD = new CarreraBD(ctrPrin.getConecta());
         InitPermisosDocente();
     }
 
@@ -85,7 +83,7 @@ public class VtnMateriaCTR extends DVtnCTR {
         vtnMateria.getLblError().setVisible(false);
 
         cargarCmbCarreras();
-        materias = materia.cargarMaterias();
+        materias = MTBD.cargarMaterias();
         cargarTblMaterias();
         vtnMateria.getCmbCarreras().addActionListener(e -> filtrarPorCarrera());
         vtnMateria.getCmbCiclo().addActionListener(e -> filtrarPorCarreraPorCiclo());
@@ -122,8 +120,8 @@ public class VtnMateriaCTR extends DVtnCTR {
     private void infoMateria() {
         int pos = vtnMateria.getTblMateria().getSelectedRow();
         if (pos >= 0) {
-            MateriaMD mt = materia.buscarMateriaInfo(materias.get(pos).getId());
-            JDMateriaInfoCTR info = new JDMateriaInfoCTR(mt, ctrPrin, materia);
+            MateriaMD mt = MTBD.buscarMateriaInfo(materias.get(pos).getId());
+            JDMateriaInfoCTR info = new JDMateriaInfoCTR(mt, ctrPrin);
             info.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una materia");
@@ -142,7 +140,7 @@ public class VtnMateriaCTR extends DVtnCTR {
 
     public void buscarMaterias(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            materias = materia.cargarMaterias(b);
+            materias = MTBD.cargarMaterias(b);
             cargarTblMaterias();
         }
 
@@ -155,7 +153,7 @@ public class VtnMateriaCTR extends DVtnCTR {
     }
 
     public void cargarCmbCarreras() {
-        carreras = carrerBD.cargarCarrerasCmb();
+        carreras = CRBD.cargarCarrerasCmb();
         //Cargamos el combo
         vtnMateria.getCmbCarreras().removeAllItems();
         vtnMateria.getCmbCarreras().addItem("Seleccione una carrera");
@@ -168,9 +166,9 @@ public class VtnMateriaCTR extends DVtnCTR {
         int pos = vtnMateria.getCmbCarreras().getSelectedIndex();
         //validarBotonesReportes();
         if (pos > 0) {
-            materias = materia.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
+            materias = MTBD.cargarMateriaPorCarrera(carreras.get(pos - 1).getId());
             //Cargamos los ciclos de una carrera
-            ciclos = materia.cargarCiclosCarrera(carreras.get(pos - 1).getId());
+            ciclos = MTBD.cargarCiclosCarrera(carreras.get(pos - 1).getId());
             vtnMateria.getCmbCiclo().removeAllItems();
             vtnMateria.getCmbCiclo().addItem("Todos");
             ciclos.forEach(c -> {
@@ -178,7 +176,7 @@ public class VtnMateriaCTR extends DVtnCTR {
             });
             vtnMateria.getCmbCiclo().setSelectedIndex(0);
         } else {
-            materias = materia.cargarMaterias();
+            materias = MTBD.cargarMaterias();
             //Borramos todos los item del combo ciclos
             vtnMateria.getCmbCiclo().removeAllItems();
         }
@@ -206,7 +204,7 @@ public class VtnMateriaCTR extends DVtnCTR {
         int ciclo = vtnMateria.getCmbCiclo().getSelectedIndex();
         int posCar = vtnMateria.getCmbCarreras().getSelectedIndex();
         if (ciclo > 0) {
-            materias = materia.cargarMateriaPorCarreraCiclo(
+            materias = MTBD.cargarMateriaPorCarreraCiclo(
                     carreras.get(posCar - 1).getId(), ciclo);
             cargarTblMaterias();
         } else {
@@ -219,9 +217,9 @@ public class VtnMateriaCTR extends DVtnCTR {
         String path = "/vista/reportes/repMaterias.jasper";
         try {
             Map parametro = new HashMap();
-            parametro.put("consulta", materia.getSql());
+            parametro.put("consulta", MTBD.getSql());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Materias por Carrera");
+            CON.mostrarReporte(jr, parametro, "Reporte de Materias por Carrera");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -248,7 +246,7 @@ public class VtnMateriaCTR extends DVtnCTR {
         if (posFila >= 0) {
 
             FrmRequisitos frmreq = new FrmRequisitos();
-            VtnRequisitosCTR vtnreq = new VtnRequisitosCTR(ctrPrin, frmreq, materia, materias.get(posFila));
+            VtnRequisitosCTR vtnreq = new VtnRequisitosCTR(ctrPrin, frmreq, materias.get(posFila));
             vtnreq.iniciar();
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una materia");
@@ -270,7 +268,7 @@ public class VtnMateriaCTR extends DVtnCTR {
             FrmMateriasCTR ctrFrm = new FrmMateriasCTR(frmMateria, ctrPrin, this);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
-            MateriaMD matEditar = materia.buscarMateria(Integer.parseInt(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
+            MateriaMD matEditar = MTBD.buscarMateria(Integer.parseInt(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
             ctrFrm.editarMaterias(matEditar);
             cargarTblMaterias();
         } else {
@@ -284,12 +282,12 @@ public class VtnMateriaCTR extends DVtnCTR {
         if (posFila >= 0) {
             MateriaMD mate;
             System.out.println(Integer.valueOf(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
-            mate = materia.buscarMateria(Integer.valueOf(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
+            mate = MTBD.buscarMateria(Integer.valueOf(vtnMateria.getTblMateria().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"
                     + vtnMateria.getTblMateria().getValueAt(posFila, 2) + "?", " Eliminar Materia", dialog);
             if (result == 0) {
-                if (materia.elminarMateria(mate.getId()) == true) {
+                if (MTBD.elminarMateria(mate.getId()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
 
                     cargarTblMaterias();

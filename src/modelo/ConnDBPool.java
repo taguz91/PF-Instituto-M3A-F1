@@ -19,6 +19,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import utils.M;
 
 /**
@@ -438,6 +443,27 @@ public class ConnDBPool {
                 .collect(Collectors.joining(",", "(", ")"));
 
         return statement.replace("(?)", sqlIn);
+    }
+    
+        //Mostramos el reporte con el pool
+    public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
+        new Thread(() -> {
+            Connection c = getConnection();
+            try {
+                JasperPrint print = JasperFillManager.fillReport(jr, parametro, c);
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle(titulo);
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(null, "Error en reporte: " + ex);
+            } finally {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "No pudimos cerrar conexion: " + e.getMessage());
+                }
+            }
+        }).start();
     }
 
 }

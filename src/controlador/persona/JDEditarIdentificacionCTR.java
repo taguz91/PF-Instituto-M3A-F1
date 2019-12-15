@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador.persona;
 
 import controlador.principal.DVtnCTR;
@@ -24,8 +19,7 @@ import vista.persona.JDEditarIdentificacion;
  */
 public class JDEditarIdentificacionCTR extends DVtnCTR {
 
-    private final PersonaBD personaBD;
-    private PersonaMD personaMD;
+    private final PersonaBD PBD = PersonaBD.single();
     private final JDEditarIdentificacion jdEditarIdentificacion;
     private final String identificacion, nombrePersona;
     private int idPersona = 0;
@@ -35,7 +29,6 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
 
     public JDEditarIdentificacionCTR(VtnPrincipalCTR ctrPrin, String identificacion, String nombrePersona) {
         super(ctrPrin);
-        this.personaBD = new PersonaBD(ctrPrin.getConecta());
         this.identificacion = identificacion;
         this.nombrePersona = nombrePersona;
         this.jdEditarIdentificacion = new JDEditarIdentificacion(ctrPrin.getVtnPrin(), false);
@@ -52,7 +45,7 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
         jdEditarIdentificacion.getLblNombrePersona().setText(nombrePersona);
         //Desactivamos el campo de identificacion porque debe ingresar primero el tipo de identificacion
         jdEditarIdentificacion.getTxtIdentificacion().setEnabled(false);
-        personaMD = personaBD.buscarPersona(identificacion);
+        //personaMD = PBD.buscarPersona(identificacion);
         //Ocultamos todos los erores del formulario 
         iniciarComponentes();
         //Cuando se realice una accion en alguno de esos combos 
@@ -120,14 +113,9 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
         }
 
         if (guardar) {
-
-            PersonaBD per = new PersonaBD(ctrPrin.getConecta());
-            per.setIdentificacion(identifi);
-
             if (editar) {
                 if (idPersona > 0) {
-                    System.out.println("idPersona" + idPersona);
-                    if (per.editarIdentificacion(idPersona)) {
+                    if (PBD.editarIdentificacion(identifi, idPersona)) {
                         JOptionPane.showMessageDialog(null, "Datos Editados Correctamente.");
                         iniciarComponentes();
                     } else {
@@ -136,10 +124,6 @@ public class JDEditarIdentificacionCTR extends DVtnCTR {
                     }
                     editar = false;
                 }
-            } else {
-                per.insertarIdentificacion();
-                JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
-                iniciarComponentes();
             }
             jdEditarIdentificacion.dispose();
             ctrPrin.cerradoJIF();

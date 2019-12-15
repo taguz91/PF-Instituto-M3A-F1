@@ -17,9 +17,9 @@ import vista.materia.FrmRequisitos;
 public class VtnRequisitosCTR extends DVtnCTR {
 
     private final FrmRequisitos frmreq;
-    private final MateriaBD materiabd;
+    private final MateriaBD MTBD = MateriaBD.single();
 
-    private final MateriaRequisitoBD materiarequisito;
+    private final MateriaRequisitoBD MTRBD = MateriaRequisitoBD.single();
     private int idRequisito = -1;
     private boolean editar = false;
     //objeto Materia
@@ -31,11 +31,9 @@ public class VtnRequisitosCTR extends DVtnCTR {
     /*
     *Constructor de la clase
      */
-    public VtnRequisitosCTR(VtnPrincipalCTR ctrPrin, FrmRequisitos frmreq, MateriaBD materiabd, MateriaMD materia) {
+    public VtnRequisitosCTR(VtnPrincipalCTR ctrPrin, FrmRequisitos frmreq, MateriaMD materia) {
         super(ctrPrin);
         this.frmreq = frmreq;
-        this.materiabd = materiabd;
-        this.materiarequisito = new MateriaRequisitoBD(ctrPrin.getConecta());
         this.materia = materia;
     }
 
@@ -45,12 +43,11 @@ public class VtnRequisitosCTR extends DVtnCTR {
      */
     public void iniciar() {
         frmreq.getLblNombreMateria().setText(materia.getNombre());
-        
+
         frmreq.getBtnGuardar().addActionListener(e -> guardarMateriaRequisito());
         ctrPrin.agregarVtn(frmreq);
-        
+
         // Acciones en la ventana  
-        
         frmreq.getJrbCoRequisito().addActionListener(e -> cargarComboMaterias());
         frmreq.getJrbPrerequisito().addActionListener(e -> cargarComboMaterias());
     }
@@ -63,11 +60,11 @@ public class VtnRequisitosCTR extends DVtnCTR {
         boolean pre = frmreq.getJrbPrerequisito().isSelected();
 
         if (co) {
-            materias = materiabd.getMateriasParaCorequisito(materia.getId());
+            materias = MTBD.getMateriasParaCorequisito(materia.getId());
         }
 
         if (pre) {
-            materias = materiabd.getMateriasParaPrequisitos(materia.getId());
+            materias = MTBD.getMateriasParaPrequisitos(materia.getId());
         }
 
         //materias = materiabd.cargarMateriaPorCarrera(materia.getCarrera().getId());
@@ -94,11 +91,12 @@ public class VtnRequisitosCTR extends DVtnCTR {
         posicion = frmreq.getCmbrequisitos().getSelectedIndex();
 
         //Guarda la materia requisito en su objeto
-        materiarequisito.setMateria(materia);
+        MateriaRequisitoMD mr = new MateriaRequisitoMD();
+        mr.setMateria(materia);
 
         if (posicion > 0) {
             materia = materias.get(posicion - 1);
-            materiarequisito.setMateriaRequisito(materia);
+            mr.setMateriaRequisito(materia);
         } else {
             guardar = false;
             JOptionPane.showMessageDialog(null, "Seleccione los datos");
@@ -107,30 +105,27 @@ public class VtnRequisitosCTR extends DVtnCTR {
         //Verifica que opcion de los radio buton han sido seleccionados para guardarlo en la variable
         if (frmreq.getJrbCoRequisito().isSelected()) {
             tipo = "C";
-            materiarequisito.setTipo(tipo);
-
+            mr.setTipo(tipo);
         } else if (frmreq.getJrbPrerequisito().isSelected()) {
             tipo = "P";
-            materiarequisito.setTipo(tipo);
-
+            mr.setTipo(tipo);
         } else {
             guardar = false;
         }
         if (guardar) {
             //Verifica que se haya guardado en el MateriaRequisitosBD   
             if (editar) {
-                materiarequisito.editar(idRequisito);
+                mr.setId(idRequisito);
+                MTRBD.editar(mr);
             } else {
-                if (materiarequisito.insertarMateriaRequisito()) {
+                if (MTRBD.insertarMateriaRequisito(mr)) {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                     frmreq.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "La Informacion existe, Por favor seleccione otros datos");
                 }
             }
-
         }
-
     }
 
     /**

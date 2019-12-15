@@ -25,8 +25,8 @@ public abstract class AVtnAlumnoEgresadoCTR extends DCTR {
     protected List<Egresado> egresados, todosEgresados;
     protected DefaultTableModel mdTbl;
     protected final EgresadoBD EBD = EgresadoBD.single();
-    private final CarreraBD CBD;
-    private final PeriodoLectivoBD PBD;
+    private final CarreraBD CBD = CarreraBD.single();
+    private final PeriodoLectivoBD PBD = PeriodoLectivoBD.single();
     private ArrayList<CarreraMD> todasCarreras;
     private ArrayList<PeriodoLectivoMD> todosPeriodos;
     protected ArrayList<CarreraMD> carreras;
@@ -39,8 +39,6 @@ public abstract class AVtnAlumnoEgresadoCTR extends DCTR {
     ) {
         super(ctrPrin);
         this.vtn = new VtnAlumnoEgresados();
-        this.CBD = new CarreraBD(ctrPrin.getConecta());
-        this.PBD = new PeriodoLectivoBD(ctrPrin.getConecta());
         this.ECTR = new JDEgresarAlumnoCTR(ctrPrin);
     }
 

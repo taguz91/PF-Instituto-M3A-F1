@@ -19,17 +19,15 @@ import vista.docente.FrmRolesPeriodos;
 public class FrmRolPeriodoCTR extends DCTR {
 
     private final FrmRolesPeriodos frmRolPer;
-    private final RolPeriodoBD rolDoc;
+    private final RolPeriodoBD RPLBD = RolPeriodoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PRBD = PeriodoLectivoBD.single();
     private boolean editar = false;
     private int idRolPrd;
 
     public FrmRolPeriodoCTR(FrmRolesPeriodos frmRolPer, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmRolPer = frmRolPer;
-        this.rolDoc = new RolPeriodoBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -42,7 +40,7 @@ public class FrmRolPeriodoCTR extends DCTR {
     }
 
     private void cargarCmbPrdLectivo() {
-        periodos = prd.cargarPrdParaCmbFrm();
+        periodos = PRBD.cargarPrdParaCmbFrm();
         if (periodos != null) {
             frmRolPer.getCmbPeriodoLectivo().removeAllItems();
             frmRolPer.getCmbPeriodoLectivo().addItem("Seleccione");
@@ -61,16 +59,18 @@ public class FrmRolPeriodoCTR extends DCTR {
         if (!Validar.esLetras(frmRolPer.getTxtNombreRol().getText().trim())) {
             guardar = false;
         }
-        rolDoc.setPeriodo(periodos.get(posFila - 1));
-        rolDoc.setNombre_rol(frmRolPer.getTxtNombreRol().getText());
+
         if (guardar) {
+            RolPeriodoMD rpl = new RolPeriodoMD();
+            rpl.setPeriodo(periodos.get(posFila - 1));
+            rpl.setNombre_rol(frmRolPer.getTxtNombreRol().getText());
             if (editar) {
-                rolDoc.editarRolPeriodo(idRolPrd);
+                rpl.setId_rol(idRolPrd);
+                RPLBD.editarRolPeriodo(rpl);
                 JOptionPane.showMessageDialog(null, "Datos editados correctamente");
             } else {
-                if (rolDoc.InsertarRol() == true) {
+                if (RPLBD.InsertarRol(rpl)) {
                     JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
-                    System.out.println(rolDoc.getPeriodo());
                 } else {
                     JOptionPane.showMessageDialog(null, "Error en grabar los datos");
                 }

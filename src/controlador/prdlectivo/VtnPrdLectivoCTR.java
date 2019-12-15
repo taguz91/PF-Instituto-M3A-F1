@@ -30,7 +30,7 @@ import vista.prdlectivo.VtnPrdLectivo;
 public class VtnPrdLectivoCTR extends DCTR {
 
     private final VtnPrdLectivo vtnPrdLectivo;
-    private final PeriodoLectivoBD bdPerLectivo;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private FrmPrdLectivo frmPerLectivo;
     private List<PeriodoLectivoMD> periodos;
     private List<CarreraMD> carreras;
@@ -38,7 +38,6 @@ public class VtnPrdLectivoCTR extends DCTR {
     public VtnPrdLectivoCTR(VtnPrdLectivo vtnPrdLectivo, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnPrdLectivo = vtnPrdLectivo;
-        bdPerLectivo = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     //Inicia la funcionalidad de la Ventana de visualización de los Períodos Lectivos
@@ -60,7 +59,6 @@ public class VtnPrdLectivoCTR extends DCTR {
             }
         });
         vtnPrdLectivo.getBtnEditar().addActionListener(e -> editarPeriodo());
-//        vtnPrdLectivo.getBtn_EliminarPL().addActionListener(e -> eliminarPeriodo());
         vtnPrdLectivo.getBtnIngresar().addActionListener(e -> abrirFrmPrdLectivo());
         vtnPrdLectivo.getBtnBuscar().addActionListener(e -> buscaIncremental(vtnPrdLectivo.getTxt_Buscar().getText()));
         vtnPrdLectivo.getBtnCerrarPeriodo().addActionListener(e -> cerrarPeriodo());
@@ -86,7 +84,7 @@ public class VtnPrdLectivoCTR extends DCTR {
     }
 
     public void cargarCarreras() {
-        CarreraBD bdCarrera = new CarreraBD(ctrPrin.getConecta());
+        CarreraBD bdCarrera = CarreraBD.single();
         carreras = bdCarrera.cargarCarreras();
         for (int i = 0; i < carreras.size(); i++) {
             vtnPrdLectivo.getCmbx_Filtrar().addItem(carreras.get(i).getNombre());
@@ -104,7 +102,7 @@ public class VtnPrdLectivoCTR extends DCTR {
                     idCarrera = carreras.get(i).getId();
                 }
             }
-            periodos = bdPerLectivo.llenarPeriodosxCarreras(idCarrera);
+            periodos = PLBD.llenarPeriodosxCarreras(idCarrera);
             llenarTabla(periodos);
         } else {
             llenarTabla(periodos);
@@ -120,7 +118,7 @@ public class VtnPrdLectivoCTR extends DCTR {
      * Cargamos los datos para llenar la tabla
      */
     private void cargarPeriodos() {
-        periodos = bdPerLectivo.cargarPeriodos();
+        periodos = PLBD.cargarPeriodos();
         llenarTabla(periodos);
     }
 
@@ -168,7 +166,7 @@ public class VtnPrdLectivoCTR extends DCTR {
     //Filtra datos en la tabla ya sea por su carerra o por su nombre
     public void buscaIncremental(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            periodos = bdPerLectivo.capturarPeriodos(aguja);
+            periodos = PLBD.capturarPeriodos(aguja);
             llenarTabla(periodos);
         }
     }
@@ -178,7 +176,7 @@ public class VtnPrdLectivoCTR extends DCTR {
         int i = vtnPrdLectivo.getTblPrdLectivo().getSelectedRow();
         if (i >= 0) {
             PeriodoLectivoMD periodo;
-            periodo = bdPerLectivo.capturarPerLectivo(Integer.valueOf(vtnPrdLectivo.getTblPrdLectivo().getValueAt(i, 0).toString()));
+            periodo = PLBD.capturarPerLectivo(Integer.valueOf(vtnPrdLectivo.getTblPrdLectivo().getValueAt(i, 0).toString()));
             return periodo;
         } else {
             return null;
@@ -211,7 +209,7 @@ public class VtnPrdLectivoCTR extends DCTR {
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este Período Lectivo? ", " Eliminar Período Lectivo ", dialog);
             if (result == 0) {
                 periodo = capturarFila();
-                if (bdPerLectivo.eliminarPeriodo(periodo) == true) {
+                if (PLBD.eliminarPeriodo(periodo) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     cargarPeriodos();
                 } else {
@@ -232,14 +230,14 @@ public class VtnPrdLectivoCTR extends DCTR {
                 int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                 int result = JOptionPane.showConfirmDialog(null, "El Período Lectivo que seleccionó esta Cerrado\n ¿Desea Abrir este Período Lectivo? ", " Abrir Período Lectivo ", dialog);
                 if (result == 0) {
-                    if (bdPerLectivo.abrirPeriodo(periodo.getID()) == true) {
+                    if (PLBD.abrirPeriodo(periodo.getID()) == true) {
                         JOptionPane.showMessageDialog(null, "Período Lectivo Abierto Satisfactoriamente");
                     } else {
                         JOptionPane.showMessageDialog(null, "No se pudo abrir este Período Lectivo");
                     }
                 }
             } else {
-                String num = bdPerLectivo.alumnosMatriculados(periodo.getCarrera().getId());
+                String num = PLBD.alumnosMatriculados(periodo.getCarrera().getId());
                 int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
                 int result = JOptionPane.showConfirmDialog(null, "ADVERTENCIA!!\n"
                         + "Está a punto de Cerrar un Período Lectivo\n"
@@ -252,7 +250,7 @@ public class VtnPrdLectivoCTR extends DCTR {
                     if (periodo.isEstado() == false) {
                         JOptionPane.showMessageDialog(null, "Este Período Lectivo ya fue cerrado");
                     } else {
-                        if (bdPerLectivo.cerrarPeriodo(periodo) == true) {
+                        if (PLBD.cerrarPeriodo(periodo) == true) {
                             JOptionPane.showMessageDialog(null, "Período Lectivo Cerrado Satisfactoriamente");
                             cargarPeriodos();
                         } else {
@@ -264,16 +262,17 @@ public class VtnPrdLectivoCTR extends DCTR {
             }
         }
     }
- public void ListaDocentesPeriodos() {
+
+    public void ListaDocentesPeriodos() {
         JasperReport jr;
         String path = "/vista/reportes/repListaDocentesPeriodos.jasper";
-       int posFila = vtnPrdLectivo.getTblPrdLectivo().getSelectedRow();
+        int posFila = vtnPrdLectivo.getTblPrdLectivo().getSelectedRow();
         if (posFila >= 0) {
             try {
                 Map parametro = new HashMap();
                 parametro.put("periodo", periodos.get(posFila).getID());
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Lista de Docente por Periodo Lectivo");
+                CON.mostrarReporte(jr, parametro, "Lista de Docente por Periodo Lectivo");
                 System.out.println(parametro);
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
@@ -281,17 +280,16 @@ public class VtnPrdLectivoCTR extends DCTR {
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione primero una fila de la tabla");
         }
-            
-        }
+
+    }
+
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
-        
+
         vtnPrdLectivo.getBtnCerrarPeriodo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Cerrar Periodo");
         vtnPrdLectivo.getBtnEditar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Editar");
         vtnPrdLectivo.getBtnIngresar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Ingresar");
-        
-        
-        
+
         CONS.activarBtns(vtnPrdLectivo.getBtnCerrarPeriodo(), vtnPrdLectivo.getBtnEditar(),
                 vtnPrdLectivo.getBtnIngresar());
 

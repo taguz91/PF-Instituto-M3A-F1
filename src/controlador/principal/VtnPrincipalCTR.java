@@ -74,7 +74,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import utils.CONS;
-import modelo.ConectarDB;
 import modelo.ConexionBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
@@ -125,7 +124,6 @@ public class VtnPrincipalCTR {
     private final VtnPrincipal vtnPrin;
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
-    private final ConectarDB conecta;
     private final ConexionBD conexion;
     private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
@@ -136,16 +134,14 @@ public class VtnPrincipalCTR {
     /**
      * Construnctor principal del sistema.
      *
-     * @param conecta ConectarDB: Coneccion a la base de datos G23
      * @param ctrSelecRol
      */
-    public VtnPrincipalCTR(ConectarDB conecta, VtnSelectRolCTR ctrSelecRol) {
+    public VtnPrincipalCTR(VtnSelectRolCTR ctrSelecRol) {
         this.vtnPrin = new VtnPrincipal();
         this.rolSeleccionado = CONS.ROL;
         this.usuario = CONS.USUARIO;
-        this.conecta = conecta;
         this.ctrSelecRol = ctrSelecRol;
-        this.conexion = new ConexionBD(conecta);
+        this.conexion = new ConexionBD();
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());
@@ -168,8 +164,6 @@ public class VtnPrincipalCTR {
      * animaciones.
      */
     public void iniciar() {
-        //Le pasamos dependencias a conectar
-        conecta.setVtnPrin(vtnPrin);
         //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
         //Accion al boton de actualizar 
@@ -329,7 +323,7 @@ public class VtnPrincipalCTR {
         frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
         eventoInternal(frmCRUDBibliografiaV);
         if (numVtns < 5) {
-            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conexion, conecta, this, vtnPrin, frmCRUDBibliografiaV);
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conexion, this, vtnPrin, frmCRUDBibliografiaV);
             ReferenciasCRUDCTRV.iniciarControlador();
 
         } else {
@@ -1255,10 +1249,6 @@ public class VtnPrincipalCTR {
         return vtnPrin;
     }
 
-    public ConectarDB getConecta() {
-        return conecta;
-    }
-
     public void agregarVtn(JInternalFrame ji) {
         eventoInternal(ji);
         vtnPrin.getDpnlPrincipal().add(ji);
@@ -1302,10 +1292,8 @@ public class VtnPrincipalCTR {
     }
 
     private void btnGestionAcademica(ActionEvent e) {
-
         VtnSeguimientoEvaluacionCTR vtn = new VtnSeguimientoEvaluacionCTR(this);
         vtn.Init();
-
     }
 
 }

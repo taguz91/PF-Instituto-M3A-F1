@@ -13,8 +13,6 @@ import modelo.alumno.RetiradoBD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
-import utils.CONS;
-import utils.Descarga;
 import vista.alumno.VtnAlumnoRetirados;
 
 /**
@@ -36,7 +34,7 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
     private final RetiradoBD RBD = RetiradoBD.single();
     private List<Retirado> todosRetirados, retiradosBuscado;
     // Para los combos  
-    private final CarreraBD carr;
+    private final CarreraBD carr = CarreraBD.single();
     private ArrayList<CarreraMD> carreras;
     // Para ver los retirados  
     private final JDRetirarAlumnoCTR RCTR;
@@ -46,7 +44,6 @@ public class VtnAlumnoRetiradosCTR extends DCTR {
     ) {
         super(ctrPrin);
         this.vtn = new VtnAlumnoRetirados();
-        this.carr = new CarreraBD(ctrPrin.getConecta());
         this.RCTR = new JDRetirarAlumnoCTR(ctrPrin);
     }
 

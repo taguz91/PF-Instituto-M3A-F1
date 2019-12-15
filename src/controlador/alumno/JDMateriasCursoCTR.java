@@ -17,7 +17,7 @@ import vista.alumno.JDMateriasCurso;
 public class JDMateriasCursoCTR extends DCTR {
 
     private final JDMateriasCurso jdMat;
-    private final CursoBD cur;
+    private final CursoBD CRBD = CursoBD.single();
     private final AlumnoCursoMD almCurso;
     //Guardaremos los cursos que consultamos
     private ArrayList<CursoMD> cursos;
@@ -33,7 +33,6 @@ public class JDMateriasCursoCTR extends DCTR {
     public JDMateriasCursoCTR(AlumnoCursoMD almCurso, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.almCurso = almCurso;
-        this.cur = new CursoBD(ctrPrin.getConecta());
         this.jdMat = new JDMateriasCurso(ctrPrin.getVtnPrin(), false);
     }
 
@@ -59,7 +58,7 @@ public class JDMateriasCursoCTR extends DCTR {
      * Buscamos todos los cursos de este alumno por nombre de curso
      */
     private void buscar() {
-        cursos = cur.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
+        cursos = CRBD.buscarCursosPorAlumno(almCurso.getAlumno().getIdentificacion(),
                 almCurso.getCurso().getNombre());
         llenarTbl(cursos);
     }

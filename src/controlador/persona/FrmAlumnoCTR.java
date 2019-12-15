@@ -43,7 +43,7 @@ import vista.persona.VtnAlumno;
 public class FrmAlumnoCTR extends DCTR {
 
     private final FrmAlumno frmAlumno;
-    private AlumnoBD bdAlumno;
+    private final AlumnoBD ALBD = AlumnoBD.single();
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private boolean editar = false; //Variable de permiso para editar mediante el filtro de datos del evento de teclado
     private boolean editar_2 = false; //Variable de permiso de edicion cuando se filtran los datos de la Ventana de Alumno
@@ -52,7 +52,7 @@ public class FrmAlumnoCTR extends DCTR {
     private List<AlumnoMD> Alumnos = new ArrayList();
     private List<SectorEconomicoMD> Sectores = new ArrayList();
 
-    private final SectorEconomicoBD sectorE;
+    private final SectorEconomicoBD SEBD = SectorEconomicoBD.single();
 
     //Para cargar los sectores economico  
     /**
@@ -64,8 +64,6 @@ public class FrmAlumnoCTR extends DCTR {
     public FrmAlumnoCTR(FrmAlumno frmAlumno, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmAlumno = frmAlumno;
-        this.sectorE = new SectorEconomicoBD(ctrPrin.getConecta());
-        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
 
     /**
@@ -332,7 +330,7 @@ public class FrmAlumnoCTR extends DCTR {
      */
     public void iniciaDatos() {
         //Alumnos = bdAlumno.filtrarAlumno();
-        Sectores = sectorE.capturarSectores();
+        Sectores = SEBD.capturarSectores();
     }
 
     /**
@@ -440,7 +438,7 @@ public class FrmAlumnoCTR extends DCTR {
 
                 if (error == false) {
 
-                    PersonaMD p = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+                    PersonaMD p = ALBD.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
                     if (p.getIdentificacion() == null) {
                         reiniciarComponentes(frmAlumno);
                         iniciarComponentes();
@@ -462,7 +460,7 @@ public class FrmAlumnoCTR extends DCTR {
                         }
                         cont = 0;
                     } else {
-                        AlumnoMD alumno = bdAlumno.buscarPersona(p.getIdPersona());
+                        AlumnoMD alumno = ALBD.buscarPersona(p.getIdPersona());
                         Integer idAlumno = alumno.getId_Alumno();
                         Font negrita = new Font("Tahoma", Font.BOLD, 13);
                         frmAlumno.getTxt_Nombre().setFont(negrita);
@@ -488,7 +486,7 @@ public class FrmAlumnoCTR extends DCTR {
                             frmAlumno.getTxt_Anios().setText(alumno.getAnio_graduacion());
                             frmAlumno.getTxt_TlSuperior().setText(alumno.getTitulo_Superior());
                             frmAlumno.getTxt_Ocupacion().setText(alumno.getOcupacion());
-                            String sector = sectorE.capturarSector(alumno.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico();
+                            String sector = SEBD.capturarSector(alumno.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico();
 //                            if (sector.getDescrip_SecEconomico().equals("Ninguno")) {
 //                                frmAlumno.getCmBx_SecEconomico().setSelectedIndex(0);
 //                                frmAlumno.getLbl_ErrSecEconomico().setVisible(false);
@@ -782,17 +780,17 @@ public class FrmAlumnoCTR extends DCTR {
             persona = pasarDatos(persona);
             profesion.setTitulo_nombre(persona.getProfesion().getTitulo_nombre());
             profesion.setTitulo_abreviatura(persona.getProfesion().getTitulo_abreviatura());
-            if (bdAlumno.guardarAlumno(
+            if (ALBD.guardarAlumno(
                     persona,
-                    sectorE.capturarIdSector(
+                    SEBD.capturarIdSector(
                             frmAlumno.getCmBx_SecEconomico()
                                     .getSelectedItem().toString()
                     )
             )) {
                 if (persona.getProfesion().getTitulo_nombre().equals("") == false) {
-                    if (bdAlumno.guardarTitulo(profesion) == true) {
-                        profesion.setId_Titulo(bdAlumno.idProfesion(profesion.getTitulo_nombre()).getId_Titulo());
-                        if (bdAlumno.guardarTituloAuxiliar(profesion, persona.getIdPersona())) {
+                    if (ALBD.guardarTitulo(profesion) == true) {
+                        profesion.setId_Titulo(ALBD.idProfesion(profesion.getTitulo_nombre()).getId_Titulo());
+                        if (ALBD.guardarTituloAuxiliar(profesion, persona.getIdPersona())) {
                             JOptionPane.showMessageDialog(null, "Datos grabados correctamente");
                             botonreporteAlumno();
                             frmAlumno.dispose();
@@ -817,9 +815,9 @@ public class FrmAlumnoCTR extends DCTR {
         } else if (editar) {
             AlumnoMD persona = new AlumnoMD();
             persona = pasarDatos(persona);
-            if (bdAlumno.editarAlumno(
+            if (ALBD.editarAlumno(
                     persona,
-                    bdAlumno.capturarPersona(
+                    ALBD.capturarPersona(
                             frmAlumno.getTxt_Cedula().getText()
                     ).get(0).getIdPersona()
             )) {
@@ -834,9 +832,9 @@ public class FrmAlumnoCTR extends DCTR {
         } else if (editar_2 == true) {
             AlumnoMD persona = new AlumnoMD();
             persona = pasarDatos(persona);
-            if (bdAlumno.editarAlumno(
+            if (ALBD.editarAlumno(
                     persona,
-                    bdAlumno.capturarPersona(
+                    ALBD.capturarPersona(
                             frmAlumno.getTxt_Cedula().getText()
                     ).get(0).getIdPersona()
             )) {
@@ -863,7 +861,7 @@ public class FrmAlumnoCTR extends DCTR {
         //El alumno que nos pasamos lo llenamos en el formulario  
         Font negrita = new Font("Tahoma", Font.BOLD, 13);
         frmAlumno.getTxt_Nombre().setFont(negrita);
-        String sector = sectorE.capturarSector(persona.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico().toUpperCase();
+        String sector = SEBD.capturarSector(persona.getSectorEconomico().getId_SecEconomico()).getDescrip_SecEconomico().toUpperCase();
         ProfesionMD profesion = new ProfesionMD();
 //        if(bdAlumno.existeProfesion(persona.getIdPersona()) != null){
 //            profesion = bdAlumno.capturarProfesiones(persona.getIdPersona());
@@ -936,8 +934,8 @@ public class FrmAlumnoCTR extends DCTR {
         //List<PersonaMD> user = new ArrayList();
         PersonaMD user;
         ProfesionMD profesion = new ProfesionMD();
-        Integer sectorEco = sectorE.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico();
-        user = bdAlumno.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
+        Integer sectorEco = SEBD.capturarIdSector(frmAlumno.getCmBx_SecEconomico().getSelectedItem().toString()).getId_SecEconomico();
+        user = ALBD.filtrarPersona(frmAlumno.getTxt_Cedula().getText());
         SectorEconomicoMD sector = new SectorEconomicoMD();
         persona.setIdPersona(user.getIdPersona());
         persona.setIdentificacion(user.getIdentificacion());
@@ -983,7 +981,7 @@ public class FrmAlumnoCTR extends DCTR {
             Map parametro = new HashMap();
             parametro.put("cedula_alumno", frmAlumno.getTxt_Cedula().getText());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Alumno");
+            CON.mostrarReporte(jr, parametro, "Reporte de Alumno");
         } catch (JRException ex) {
             Logger.getLogger(VtnCarreraCTR.class.getName()).log(Level.SEVERE, null, ex);
         }

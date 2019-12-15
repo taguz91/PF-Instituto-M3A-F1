@@ -28,12 +28,12 @@ import vista.alumno.VtnMatricula;
 public class VtnMatriculaCTR extends DVtnCTR {
 
     private final VtnMatricula vtnMatri;
-    private final MatriculaBD matr;
+    private final MatriculaBD MTBD = MatriculaBD.single();
     private ArrayList<MatriculaMD> matriculas;
 
     //Para combos
     private ArrayList<PeriodoLectivoMD> periodos;
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private int posPrd;
 
     /**
@@ -44,9 +44,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      */
     public VtnMatriculaCTR(VtnPrincipalCTR ctrPrin, VtnMatricula vtnMatri) {
         super(ctrPrin);
-        this.matr = new MatriculaBD(ctrPrin.getConecta());
         this.vtnMatri = vtnMatri;
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     /**
@@ -77,7 +75,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      * @return
      */
     private boolean validarFecha() {
-        LocalDate fi = prd.buscarFechaInicioPrd(matriculas.get(posFila).getPeriodo().getID());
+        LocalDate fi = PLBD.buscarFechaInicioPrd(matriculas.get(posFila).getPeriodo().getID());
         LocalDate fa = LocalDate.now();
         return fa.isBefore(fi.plusMonths(1));
     }
@@ -143,7 +141,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      */
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            matriculas = matr.buscarMatriculas(aguja);
+            matriculas = MTBD.buscarMatriculas(aguja);
             llenarTbl(matriculas);
         }
     }
@@ -172,7 +170,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      * Cargamos todas las matriculas que existan
      */
     private void cargarMatriculas() {
-        matriculas = matr.cargarMatriculas();
+        matriculas = MTBD.cargarMatriculas();
         llenarTbl(matriculas);
     }
 
@@ -183,7 +181,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
-            matriculas = matr.cargarMatriculasPorPrd(periodos.get(posPrd - 1).getID());
+            matriculas = MTBD.cargarMatriculasPorPrd(periodos.get(posPrd - 1).getID());
             llenarTbl(matriculas);
         } else {
             cargarMatriculas();
@@ -194,7 +192,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
      * Llenamos el combo del periodo lectivo
      */
     private void llenarCmbPrd() {
-        periodos = prd.cargarPrdParaCmbVtn();
+        periodos = PLBD.cargarPrdParaCmbVtn();
         vtnMatri.getCmbPeriodos().removeAllItems();
         if (periodos != null) {
             vtnMatri.getCmbPeriodos().addItem("Seleccione");
@@ -321,7 +319,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
     }
 
     private String selecCurso() {
-        ArrayList<String> cursos = matr.cursosMatriculado(matriculas.get(posFila).getAlumno().getId_Alumno(),
+        ArrayList<String> cursos = MTBD.cursosMatriculado(matriculas.get(posFila).getAlumno().getId_Alumno(),
                 matriculas.get(posFila).getPeriodo().getID());
         Object np = JOptionPane.showInputDialog(null,
                 "Cursos en los que se matriculo: ", "Matricula",
@@ -347,7 +345,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -363,7 +361,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
             parametro.put("usuario", ctrPrin.getUsuario().getUsername());
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
+            CON.mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }
@@ -381,7 +379,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("periodo", periodos.get(posCombo - 1).getID());
                 parametro.put("periodo_titulo", periodos.get(posPrd - 1).getNombre());
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
+                CON.mostrarReporte(jr, parametro, "Reporte Historial de Matrícula por Periodo");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
@@ -402,7 +400,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 parametro.put("idAlumno", matriculas.get(posFila).getAlumno().getId_Alumno());
                 parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
                 parametro.put("curso", curso);
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+                CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }
@@ -423,7 +421,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 parametro.put("numMatricula", numMatricula);
                 parametro.put("matricula", matricula);
                 System.out.println("Parametros: " + parametro);
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+                CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             }
@@ -454,7 +452,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
                 parametro.put("matricula", numMatricula);
                 parametro.put("periodo", periodos.get(posPrd - 1).getID());
                 System.out.println("Parametros: " + parametro);
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+                CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             }
@@ -470,7 +468,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             parametro.put("periodo", periodos.get(posPrd - 1).getID());
             parametro.put("periodo_titulo", periodos.get(posPrd - 1).getNombre());
             System.out.println("Parametros: " + parametro.toString());
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Matricula");
+            CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }

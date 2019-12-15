@@ -39,21 +39,21 @@ import vista.alumno.VtnMallaAlumno;
 public class VtnMallaAlumnoCTR extends DVtnCTR {
 
     private final VtnMallaAlumno vtnMallaAlm;
-    private final MallaAlumnoBD mallaAlm;
+    private final MallaAlumnoBD MABD = MallaAlumnoBD.single();
     private final String[] cmbEstado = {"Seleccione", "Cursado", "Matriculado", "Pendiente", "Reprobado", "Anulado/Retirado"};
 
     private ArrayList<MallaAlumnoMD> mallas = new ArrayList();
     //Para cargar los combos
-    private final AlumnoCarreraBD almCar;
+    private final AlumnoCarreraBD ACRBD = AlumnoCarreraBD.single();
     private ArrayList<AlumnoCarreraMD> alumnos;
 
-    private final CarreraBD car;
+    private final CarreraBD CRBD = CarreraBD.single();
     private ArrayList<CarreraMD> carreras = new ArrayList();
     //Modelo de la tabla
     private DefaultTableModel mdlTbl;
     //Ciclos de una carrera
     private ArrayList<Integer> ciclos;
-    private final MateriaBD mat;
+    private final MateriaBD MTBD = MateriaBD.single();
 
     //Para comprobar que los datos ya fueron cargados 
     private boolean cargados = false;
@@ -62,10 +62,6 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         super(ctrPrin);
         this.vtnMallaAlm = vtnMallaAlm;
         //Cambiamos el estado del cursos
-        this.mat = new MateriaBD(ctrPrin.getConecta());
-        this.almCar = new AlumnoCarreraBD(ctrPrin.getConecta());
-        this.mallaAlm = new MallaAlumnoBD(ctrPrin.getConecta());
-        this.car = new CarreraBD(ctrPrin.getConecta());
     }
 
     /**
@@ -178,7 +174,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      * @param m
      */
     public void actualizarVtn(MallaAlumnoMD m) {
-        mallas = mallaAlm.cargarMallasPorEstudiante(m.getAlumnoCarrera().getId());
+        mallas = MABD.cargarMallasPorEstudiante(m.getAlumnoCarrera().getId());
         llenarTbl(mallas);
         vtnMallaAlm.setVisible(true);
     }
@@ -189,7 +185,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     private void actualizarNotas() {
         posFila = vtnMallaAlm.getTblMallaAlumno().getSelectedRow();
         if (posFila >= 0) {
-            FrmMallaActualizarCTR ctrFrm = new FrmMallaActualizarCTR(ctrPrin, mallas.get(posFila), mallaAlm, this);
+            FrmMallaActualizarCTR ctrFrm = new FrmMallaActualizarCTR(ctrPrin, mallas.get(posFila), MABD, this);
             ctrFrm.iniciar();
             //Ocusltamos esta ventana
             vtnMallaAlm.setVisible(false);
@@ -207,7 +203,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     private void buscarAlumno(String aguja) {
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
         if (Validar.esLetrasYNumeros(aguja)) {
-            alumnos = almCar.buscarAlumnoCarrera(carreras.get(posCar - 1).getId(),
+            alumnos = ACRBD.buscarAlumnoCarrera(carreras.get(posCar - 1).getId(),
                     aguja);
             llenarCmbAlumno(alumnos);
             vtnMallaAlm.getCmbAlumnos().showPopup();
@@ -222,7 +218,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      */
     private void buscarMalla(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
-            mallas = mallaAlm.buscarMallaAlumno(aguja);
+            mallas = MABD.buscarMallaAlumno(aguja);
             llenarTbl(mallas);
         }
     }
@@ -233,7 +229,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     private void cargarPorAlumno() {
         int posAlm = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
         if (posAlm > 0) {
-            mallas = mallaAlm.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
+            mallas = MABD.cargarMallasPorEstudiante(alumnos.get(posAlm - 1).getId());
 
             vtnMallaAlm.getCmbEstado().setEnabled(true);
 
@@ -266,7 +262,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                             "Ingrese la nota de \n" + malla.getMateria().getNombre() + "\n"
                             + "Número de matrícula: " + malla.getMallaNumMatricula());
                     if (Validar.esNota(nota)) {
-                        mallaAlm.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
+                        MABD.ingresarNota(malla.getId(), malla.getMallaNumMatricula(), Double.parseDouble(nota));
                     } else {
                         JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Ingrese una nota válida.");
                         ingresarNota();
@@ -298,16 +294,16 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         if (posAlm < 1) {
             if (posCar > 0 && ciclo > 0 && posEst > 0) {
                 //Cargamos la malla por carrera
-                mallas = mallaAlm.cargarMallaPorCarreraCicloEstado(
+                mallas = MABD.cargarMallaPorCarreraCicloEstado(
                         carreras.get(posCar - 1).getId(), ciclo, cmbEstado[posEst]);
                 llenarTbl(mallas);
             } else if (posCar > 0 && ciclo > 0 && posEst == 0) {
                 //Cargamos la malla por carrera
-                mallas = mallaAlm.cargarMallaPorCarreraCiclo(carreras.get(posCar - 1).getId(), ciclo);
+                mallas = MABD.cargarMallaPorCarreraCiclo(carreras.get(posCar - 1).getId(), ciclo);
                 llenarTbl(mallas);
             } else if (posCar > 0 && posEst > 0 && ciclo == 0) {
                 //Cargamos la malla por carrera
-                mallas = mallaAlm.cargarMallaPorCarreraEstado(carreras.get(posCar - 1).getId(), cmbEstado[posEst]);
+                mallas = MABD.cargarMallaPorCarreraEstado(carreras.get(posCar - 1).getId(), cmbEstado[posEst]);
                 llenarTbl(mallas);
             } else if (posCar > 0) {
 
@@ -318,7 +314,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                 if (!cargados) {
                     cargados = true;
                     cargarCmbEstado();
-                    ciclos = mat.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
+                    ciclos = MTBD.cargarCiclosCarrera(carreras.get(posCar - 1).getId());
                     cargarCmbCiclos(ciclos);
                 }
                 //llenarTbl(mallas);
@@ -333,15 +329,15 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             }
         } else {
             if (posEst > 0 && ciclo > 0) {
-                mallas = mallaAlm.cargarMallaAlumnoPorEstadoCiclo(
+                mallas = MABD.cargarMallaAlumnoPorEstadoCiclo(
                         alumnos.get(posAlm - 1).getId(), ciclo, cmbEstado[posEst]);
                 llenarTbl(mallas);
             } else if (posEst > 0 && ciclo == 0) {
-                mallas = mallaAlm.cargarMallaAlumnoPorEstado(
+                mallas = MABD.cargarMallaAlumnoPorEstado(
                         alumnos.get(posAlm - 1).getId(), cmbEstado[posEst]);
                 llenarTbl(mallas);
             } else if (ciclo > 0 && posEst == 0) {
-                mallas = mallaAlm.cargarMallaAlumnoPorCiclo(
+                mallas = MABD.cargarMallaAlumnoPorCiclo(
                         alumnos.get(posAlm - 1).getId(), ciclo);
                 llenarTbl(mallas);
             } else {
@@ -381,7 +377,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      * Cargamos las carreras en un combo
      */
     private void cargarCmbCarrera() {
-        carreras = car.cargarCarrerasCmb();
+        carreras = CRBD.cargarCarrerasCmb();
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
             vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
@@ -460,7 +456,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
     private void reportePorCarrera() {
         int pos = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
         if (pos > 0) {
-            mallaAlm.cargarMallaPorCarrera(carreras.get(pos - 1).getId());
+            MABD.cargarMallaPorCarrera(carreras.get(pos - 1).getId());
             vtnMallaAlm.setCursor(new Cursor(3));
             reporteGrande();
 
@@ -475,16 +471,16 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      */
     public void llamaReporteMallaALumno() {
         int posCar = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
-        if (mallaAlm.getSql().length() > 0 && posCar > 0) {
+        if (MABD.getSql().length() > 0 && posCar > 0) {
             if (vtnMallaAlm.getCmbAlumnos().getSelectedIndex() > 0 || mallas.size() < 50) {
                 JasperReport jr;
                 String path = "/vista/reportes/repMalaAlumno.jasper";
                 try {
                     Map parametro = new HashMap();
-                    parametro.put("consulta", mallaAlm.getSql());
+                    parametro.put("consulta", MABD.getSql());
                     parametro.put("idCarreras", carreras.get(posCar - 1).getId());
                     jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-                    ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+                    CON.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
                 } catch (JRException ex) {
                     JOptionPane.showMessageDialog(null, "error" + ex);
                 }
@@ -501,9 +497,9 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         String path = "/vista/reportes/repMallas.jasper";
         try {
             Map parametro = new HashMap();
-            parametro.put("consulta", mallaAlm.getSql());
+            parametro.put("consulta", MABD.getSql());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
+            CON.mostrarReporte(jr, parametro, "Reporte de Malla de Alumno");
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

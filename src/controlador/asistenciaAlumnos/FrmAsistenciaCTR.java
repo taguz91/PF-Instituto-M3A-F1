@@ -16,7 +16,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.alumno.AlumnoCursoBD;
+import modelo.alumno.AlumnoCursoMD;
 import modelo.asistencia.AsistenciaBD;
+import modelo.asistencia.AsistenciaMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoBD;
@@ -57,8 +59,8 @@ public class FrmAsistenciaCTR {
     // LISTAS
     private Map<String, DocenteMD> listaDocentes;
     private List<PeriodoLectivoMD> listaPeriodos;
-    private List<AlumnoCursoBD> listaNotas;
-    private List<AsistenciaBD> listaHoras;
+    private List<AlumnoCursoMD> listaNotas;
+    private List<AsistenciaMD> listaHoras;
     private List<MateriaMD> listaMaterias;
     private static List<SesionClaseMD> listaSesionClase;
     private List<CarreraMD> listaNumSemanas;
@@ -84,13 +86,13 @@ public class FrmAsistenciaCTR {
     private final AsistenciaBD asistenciaBD;
 
     {
-        periodoBD = new PeriodoLectivoBD();
-        almnCursoBD = new AlumnoCursoBD();
-        materiaBD = new MateriaBD();
-        cursoBD = new CursoBD();
-        docenteBD = new DocenteBD();
-        sesionClaseBD = new SesionClaseBD();
-        carreraBD = new CarreraBD();
+        periodoBD = PeriodoLectivoBD.single();
+        almnCursoBD = AlumnoCursoBD.single();
+        materiaBD = MateriaBD.single();
+        cursoBD = CursoBD.single();
+        docenteBD = DocenteBD.single();
+        sesionClaseBD = SesionClaseBD.single();
+        carreraBD = CarreraBD.single();
         calendarioBD = new CalendarioBD();
         asistenciaBD = new AsistenciaBD();
     }
@@ -387,7 +389,7 @@ public class FrmAsistenciaCTR {
         vista.getTblAsistencia().setEnabled(estado);
     }
 
-    private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoBD, DefaultTableModel, Void> funcionCarga) {
+    private void cargarTabla(DefaultTableModel tabla, BiFunction<AlumnoCursoMD, DefaultTableModel, Void> funcionCarga) {
         new Thread(() -> {
             int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
 
@@ -453,7 +455,7 @@ public class FrmAsistenciaCTR {
 //                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
 //        };
 //    }
-    private BiFunction<AlumnoCursoBD, DefaultTableModel, Void> agregarFilasTrad() {
+    private BiFunction<AlumnoCursoMD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
 
             // System.out.println(obj);
@@ -560,14 +562,9 @@ public class FrmAsistenciaCTR {
 
     private void btnVerAsistencia(ActionEvent e) {
         if (cargarTabla) {
-            // // String modalidad = listaPeriodos.stream()
-            // .filter(item -> item.getId_PerioLectivo() == getIdPeriodoLectivo())
-            // .map(c -> c.getCarrera().getModalidad()).findFirst().orElse("");
-
             jTbl.removeAll();
             tablaTrad.setRowCount(0);
             cargarTabla(tablaTrad, agregarFilasTrad());
-
         } else {
             JOptionPane.showMessageDialog(vista, "YA HAY UNA CARGA PENDIENTE!");
         }

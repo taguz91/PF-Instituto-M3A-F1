@@ -37,12 +37,12 @@ public class FrmDocenteCTR extends DCTR {
     private int idDocente = 0;
     private VtnDocenteCTR docenteVtn;
     private final FrmDocente frmDocente;
-    private final DocenteBD docente;
+    private final DocenteBD DBD = DocenteBD.single();
     private boolean guardar = false;
     private static int cont = 0; // Variable de Acceso para permitir buscar los datos de la persona mediante el evento de Teclado
     private static int validar = 0; //Variable para saber a que textFiel se valida
     //Para ver si existe una persona  
-    private final PersonaBD per;
+    private final PersonaBD PBD = PersonaBD.single();
     private DocenteMD d;
     private TxtVCedula valCe;
     private String cedula;
@@ -54,8 +54,6 @@ public class FrmDocenteCTR extends DCTR {
     public FrmDocenteCTR(FrmDocente frmDocente, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmDocente = frmDocente;
-        this.docente = new DocenteBD(ctrPrin.getConecta());
-        this.per = new PersonaBD(ctrPrin.getConecta());
     }
 
     private void abrirFrmPersona() {
@@ -262,7 +260,7 @@ public class FrmDocenteCTR extends DCTR {
                 frmDocente.getLblError().setVisible(false);
                 //Cedula no registrada: 0102380821
                 if (buscar) {
-                    d = docente.buscarDocenteInactivo(cedula);
+                    d = DBD.buscarDocenteInactivo(cedula);
                     if (d != null) {
                         int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                                 "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -272,15 +270,15 @@ public class FrmDocenteCTR extends DCTR {
                             inhabilitarComponentesDocente();
                             frmDocente.getBtnRegistrarPersona().setVisible(false);
                         } else if (seleccion == 0) {
-                            docente.activarDocente(d.getIdPersona());
+                            DBD.activarDocente(d.getIdPersona());
                             habilitarComponentesDocente();
                             editar(d);
                         }
                     } else {
-                        d = docente.buscarDocente(cedula);
+                        d = DBD.buscarDocente(cedula);
                         if (d == null) {
                             System.out.println("No existe el docente");
-                            PersonaMD p = per.buscarPersona(cedula);
+                            PersonaMD p = PBD.buscarPersona(cedula);
                             if (p == null) {
                                 JOptionPane.showMessageDialog(null, "No existe la persona");
                                 frmDocente.getBtnRegistrarPersona().setVisible(true);
@@ -310,7 +308,7 @@ public class FrmDocenteCTR extends DCTR {
             //Validar cuando es pasaporte 
 
             if (buscar) {
-                d = docente.buscarDocenteInactivo(cedula);
+                d = DBD.buscarDocenteInactivo(cedula);
                 if (d != null) {
                     int seleccion = JOptionPane.showOptionDialog(null, "Seleccione una Opcion",
                             "Selector de Opciones", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -320,15 +318,15 @@ public class FrmDocenteCTR extends DCTR {
                         inhabilitarComponentesDocente();
                         frmDocente.getBtnRegistrarPersona().setVisible(false);
                     } else if (seleccion == 0) {
-                        docente.activarDocente(d.getIdPersona());
+                        DBD.activarDocente(d.getIdPersona());
                         habilitarComponentesDocente();
                         editar(d);
                     }
                 } else {
-                    d = docente.buscarDocente(cedula);
+                    d = DBD.buscarDocente(cedula);
                     if (d == null) {
                         System.out.println("No existe el docente");
-                        PersonaMD p = per.buscarPersona(cedula);
+                        PersonaMD p = PBD.buscarPersona(cedula);
                         if (p == null) {
                             JOptionPane.showMessageDialog(null, "No existe la persona");
                             frmDocente.getBtnRegistrarPersona().setVisible(true);
@@ -431,6 +429,7 @@ public class FrmDocenteCTR extends DCTR {
 
         if (guardar) {
             //Llenar directo por el constructor
+            DocenteMD docente = new DocenteMD();
             docente.setCodigo(codigo);
             docente.setIdPersona(idPer);
             docente.setFechaInicioContratacion(fechaInicioContratacion);
@@ -446,13 +445,14 @@ public class FrmDocenteCTR extends DCTR {
                 docente.setDocenteTipoTiempo(docenteTipoTiempo);
                 if (editar) {
                     if (idDocente > 0) {
-                        docente.editarDocente(idDocente);
+                        docente.setIdDocente(idDocente);
+                        DBD.editarDocente(docente);
                         JOptionPane.showMessageDialog(null, "Los Datos se han editado exitosamente");
                         botonreporteDocente();
                         frmDocente.dispose();
                     }
                 } else {
-                    docente.InsertarDocente();
+                    DBD.InsertarDocente(docente);
                     JOptionPane.showMessageDialog(null, "Se han insertado los datos de forma correcta!");
                     botonreporteDocente();
                     frmDocente.dispose();
@@ -559,7 +559,7 @@ public class FrmDocenteCTR extends DCTR {
             Map parametro = new HashMap();
             parametro.put("cedulaverificacion", frmDocente.getTxtIdentificacion().getText());
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Docente");
+            CON.mostrarReporte(jr, parametro, "Reporte de Docente");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(frmDocente, "Error: " + ex);
         }

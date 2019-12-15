@@ -16,14 +16,13 @@ public class JDVersionCTR extends DVtnCTR {
 
     private final JDVersion jd;
     private ArrayList<VersionMD> versiones;
-    private final VersionBD ver;
+    private final VersionBD ver = VersionBD.single();
 
     public JDVersionCTR(VtnPrincipal vtnPrin, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.jd = new JDVersion(vtnPrin, false);
         jd.setLocationRelativeTo(vtnPrin);
         jd.setVisible(true);
-        this.ver = new VersionBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {

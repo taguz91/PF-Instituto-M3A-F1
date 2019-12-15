@@ -33,16 +33,14 @@ public class JDEgresarAlumnoCTR extends DCTR {
     // Para saber si estamos editando  
     private boolean editar = false;
     // Para saber que matriculas nos quedan por pagar antes de ingresarnos como egresados. 
-    private final MallaAlumnoBD MABD;
+    private final MallaAlumnoBD MABD = MallaAlumnoBD.single();
     private List<MallaAlumnoMD> mallaAlumno;
-    private final MatriculaBD MTBD;
+    private final MatriculaBD MTBD = MatriculaBD.single();
     private final UtilEgresadoBD UEBD = UtilEgresadoBD.single();
 
     public JDEgresarAlumnoCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.FRM = new JDEgresarAlumno(ctrPrin.getVtnPrin(), false);
-        this.MABD = new MallaAlumnoBD(ctrPrin.getConecta());
-        this.MTBD = new MatriculaBD(ctrPrin.getConecta());
     }
 
     public void ingresar(int idAlmnCarrera) {

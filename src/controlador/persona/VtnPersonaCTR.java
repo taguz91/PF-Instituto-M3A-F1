@@ -30,7 +30,7 @@ import vista.persona.VtnPersona;
  */
 public class VtnPersonaCTR extends DVtnCTR {
 
-    private final PersonaBD dbp;
+    private final PersonaBD PBD = PersonaBD.single();
     private final VtnPersona vtnPersona;
     //Para trabajar en los datos de la tabla
     private ArrayList<PersonaMD> personas;
@@ -41,8 +41,6 @@ public class VtnPersonaCTR extends DVtnCTR {
     public VtnPersonaCTR(VtnPersona vtnPersona, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnPersona = vtnPersona;
-        //Iniciamos la clase persona
-        dbp = new PersonaBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -125,17 +123,17 @@ public class VtnPersonaCTR extends DVtnCTR {
         switch (tipo) {
 
             case "Docente":
-                personas = dbp.cargarDocentes();
+                personas = PBD.cargarDocentes();
                 cargarLista();
                 break;
 
             case "Alumno":
-                personas = dbp.cargarAlumnos();
+                personas = PBD.cargarAlumnos();
                 cargarLista();
                 break;
 
             default:
-                personas = dbp.cargarPersonas();
+                personas = PBD.cargarPersonas();
                 cargarLista();
                 break;
         }
@@ -144,7 +142,7 @@ public class VtnPersonaCTR extends DVtnCTR {
 
     public void filtrarEliminados() {
         List<PersonaMD> peliminados;
-        peliminados = dbp.filtrarEliminados();
+        peliminados = PBD.filtrarEliminados();
         mdTbl.setRowCount(0);
         ctrPrin.getVtnPrin().getDpnlPrincipal().setCursor(new Cursor(3));
         if (peliminados != null) {
@@ -190,9 +188,9 @@ public class VtnPersonaCTR extends DVtnCTR {
         busqueda = busqueda.trim();
         if (Validar.esLetrasYNumeros(busqueda)) {
             if (busqueda.length() > 2) {
-                personas = dbp.buscar(busqueda);
+                personas = PBD.buscar(busqueda);
             } else if (busqueda.length() == 0) {
-                personas = dbp.cargarPersonas();
+                personas = PBD.cargarPersonas();
             }
             cargarLista();
         }
@@ -215,7 +213,7 @@ public class VtnPersonaCTR extends DVtnCTR {
             FrmPersonaCTR ctrFrm = new FrmPersonaCTR(frmPersona, ctrPrin);
             ctrFrm.iniciar();
             //Le pasamos la persona de nuestro lista justo la persona seleccionada
-            PersonaMD perEditar = dbp.buscarPersona(
+            PersonaMD perEditar = PBD.buscarPersona(
                     Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             ctrFrm.editar(perEditar);
             cargarTipoPersona();
@@ -233,7 +231,7 @@ public class VtnPersonaCTR extends DVtnCTR {
             JDEditarIdentificacionCTR ctr = new JDEditarIdentificacionCTR(ctrPrin, vtnPersona.getTblPersona().getValueAt(posFila, 0).toString(), vtnPersona.getTblPersona().getValueAt(posFila, 2).toString());
             ctr.iniciar();
 
-            PersonaMD perEditar = dbp.buscarPersona(
+            PersonaMD perEditar = PBD.buscarPersona(
                     Integer.parseInt(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             ctr.editarIdentificacion(perEditar);
             cargarTipoPersona();
@@ -249,12 +247,12 @@ public class VtnPersonaCTR extends DVtnCTR {
         if (posFila >= 0) {
             PersonaMD persona;
             System.out.println(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
-            persona = dbp.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
+            persona = PBD.buscarPersona(Integer.valueOf(vtnPersona.getTblPersona().getValueAt(posFila, 0).toString()));
             int dialog = JOptionPane.YES_NO_CANCEL_OPTION;
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar a \n"
                     + vtnPersona.getTblPersona().getValueAt(posFila, 2) + "?", " Eliminar Persona", dialog);
             if (result == 0) {
-                if (dbp.eliminarPersonaId(persona.getIdPersona()) == true) {
+                if (PBD.eliminarPersonaId(persona.getIdPersona()) == true) {
                     JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                     //cargarLista();
                     cargarTipoPersona();
@@ -275,7 +273,7 @@ public class VtnPersonaCTR extends DVtnCTR {
                 JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/reportes/repPersona.jasper"));
                 Map parametro = new HashMap();
                 parametro.put("cedula", String.valueOf(mdTbl.getValueAt(posFila, 1)));
-                ctrPrin.getConecta().mostrarReporte(jr, parametro, "Reporte de Persona");
+                CON.mostrarReporte(jr, parametro, "Reporte de Persona");
             } catch (JRException ex) {
                 JOptionPane.showMessageDialog(null, "error" + ex);
             }

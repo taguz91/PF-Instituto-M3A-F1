@@ -29,7 +29,7 @@ import vista.prdlectivo.FrmPrdLectivo;
 public class FrmPrdLectivoCTR extends DCTR {
 
     private final FrmPrdLectivo frmPrdLectivo;
-    private final PeriodoLectivoBD bdPerLectivo;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private boolean editar = false; //Variable de edición, donde diferencia si que se edita o se guarda
     private int id_PeriodoLectivo; //Recibe la ID de un Período Lectivo en específico
     private List<CarreraMD> carreras; //Recibe los datos de las Carreras Ingresadas
@@ -37,8 +37,6 @@ public class FrmPrdLectivoCTR extends DCTR {
     public FrmPrdLectivoCTR(FrmPrdLectivo frmPrdLectivo, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmPrdLectivo = frmPrdLectivo;
-        //Cambiamos el estado del cursos  
-        this.bdPerLectivo = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     //Ejerce la funcionalidad de esta Ventana
@@ -112,7 +110,7 @@ public class FrmPrdLectivoCTR extends DCTR {
 
     //Se capturan los datos de Carreras en la Lista
     public void iniciarDatos() {
-        carreras = bdPerLectivo.capturarCarrera();
+        carreras = PLBD.capturarCarrera();
     }
 
     //Se insertan los datos de la Lista en el Combo box
@@ -209,9 +207,9 @@ public class FrmPrdLectivoCTR extends DCTR {
             if (!editar) {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 CarreraMD carrera = new CarreraMD();
-                carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
+                carrera.setId(PLBD.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(periodo, carrera);
-                if (bdPerLectivo.guardarPeriodo(periodo, carrera) == true) {
+                if (PLBD.guardarPeriodo(periodo, carrera) == true) {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
@@ -224,10 +222,10 @@ public class FrmPrdLectivoCTR extends DCTR {
             } else {
                 PeriodoLectivoMD periodo = new PeriodoLectivoMD();
                 CarreraMD carrera = new CarreraMD();
-                carrera.setId(bdPerLectivo.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
+                carrera.setId(PLBD.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(periodo, carrera);
                 periodo.setID(id_PeriodoLectivo);
-                if (bdPerLectivo.editarPeriodo(periodo, carrera)) {
+                if (PLBD.editarPeriodo(periodo, carrera)) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();

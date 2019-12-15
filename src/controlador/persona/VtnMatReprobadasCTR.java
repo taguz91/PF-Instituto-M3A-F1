@@ -18,7 +18,7 @@ public class VtnMatReprobadasCTR extends DVtnCTR {
     private final VtnMatRetiradas vtnMaterias;
     private final VtnAlumnoCTR vtnAlumnoCtr;
     private final VtnAlumno vtnAlumno;
-    private AlumnoBD bdAlumno;
+    private AlumnoBD ALBD;
     private int idPersona;
 
     public VtnMatReprobadasCTR(VtnAlumnoCTR vtnAlumnoCtr, VtnAlumno vtnAlumno, VtnPrincipalCTR ctrPrin) {
@@ -60,8 +60,8 @@ public class VtnMatReprobadasCTR extends DVtnCTR {
         for (int i = vtnMaterias.getTbl_Materias().getRowCount() - 1; i >= 0; i--) {
             modelo_Tabla.removeRow(i);
         }
-        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
-        List<MallaAlumnoMD> malla = bdAlumno.consultarMaterias(idPersona);
+        ALBD = AlumnoBD.single();
+        List<MallaAlumnoMD> malla = ALBD.consultarMaterias(idPersona);
         int columnas = modelo_Tabla.getColumnCount();
         for (int i = 0; i < malla.size(); i++) {
             modelo_Tabla.addRow(new Object[columnas]);

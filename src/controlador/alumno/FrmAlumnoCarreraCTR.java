@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoCarreraBD;
+import modelo.alumno.AlumnoCarreraMD;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
 import modelo.estilo.TblEstilo;
@@ -26,7 +27,7 @@ import vista.alumno.FrmAlumnoCarrera;
 public class FrmAlumnoCarreraCTR extends DCTR {
 
     private final FrmAlumnoCarrera frmAlmCarrera;
-    private final AlumnoCarreraBD almnCarrera;
+    private final AlumnoCarreraBD ACBD = AlumnoCarreraBD.single();
     private boolean matriculado = false;
     private String carrera;
 
@@ -34,10 +35,10 @@ public class FrmAlumnoCarreraCTR extends DCTR {
     private DefaultTableModel mdTbl;
 
     //Para rellenar los combo box
-    private final AlumnoBD almn;
+    private final AlumnoBD ABD = AlumnoBD.single();
     private ArrayList<AlumnoMD> alumnos;
 
-    private final CarreraBD carr;
+    private final CarreraBD CBD = CarreraBD.single();
     private ArrayList<CarreraMD> carreras;
 
     /**
@@ -50,10 +51,6 @@ public class FrmAlumnoCarreraCTR extends DCTR {
     public FrmAlumnoCarreraCTR(FrmAlumnoCarrera frmAlmCarrera, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.frmAlmCarrera = frmAlmCarrera;
-
-        this.almnCarrera = new AlumnoCarreraBD(ctrPrin.getConecta());
-        this.almn = new AlumnoBD(ctrPrin.getConecta());
-        this.carr = new CarreraBD(ctrPrin.getConecta());
     }
 
     /**
@@ -134,10 +131,10 @@ public class FrmAlumnoCarreraCTR extends DCTR {
                         + alumnos.get(posAlm).getNombreCompleto() + "\n En: \n"
                         + carreras.get(posCar - 1).getNombre());
                 if (r == JOptionPane.YES_OPTION) {
-                    almnCarrera.setAlumno(alumnos.get(posAlm));
-                    almnCarrera.setCarrera(carreras.get(posCar - 1));
-                    if (almnCarrera.guardar()) {
-
+                    AlumnoCarreraMD ac = new AlumnoCarreraMD();
+                    ac.setAlumno(alumnos.get(posAlm));
+                    ac.setCarrera(carreras.get(posCar - 1));
+                    if (ACBD.guardar(ac)) {
                         frmAlmCarrera.dispose();
                         ctrPrin.cerradoJIF();
                     }
@@ -150,7 +147,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
     }
 
     private boolean buscarSiEstaMatriculado(int posAlmn, int posCar) {
-        carrera = almnCarrera.estaMatriculadoEn(
+        carrera = ACBD.estaMatriculadoEn(
                 alumnos.get(posAlmn).getId_Alumno(),
                 carreras.get(posCar - 1).getId()
         );
@@ -186,7 +183,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
     public void buscarAlmns(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             frmAlmCarrera.getCmbCarreras().setSelectedIndex(0);
-            alumnos = almn.buscarAlumnos(aguja);
+            alumnos = ABD.buscarAlumnos(aguja);
             mdTbl.setRowCount(0);
             if (alumnos != null) {
                 alumnos.forEach(a -> {
@@ -206,7 +203,7 @@ public class FrmAlumnoCarreraCTR extends DCTR {
      * cargarlas en el combo.
      */
     private void cargarCmbCarreras() {
-        carreras = carr.cargarCarreras();
+        carreras = CBD.cargarCarreras();
         if (carreras != null) {
             frmAlmCarrera.getCmbCarreras().removeAllItems();
             frmAlmCarrera.getCmbCarreras().addItem("Seleccione");

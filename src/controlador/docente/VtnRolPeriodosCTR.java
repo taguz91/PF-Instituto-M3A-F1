@@ -9,7 +9,6 @@ import utils.CONS;
 import modelo.docente.RolPeriodoBD;
 import modelo.docente.RolPeriodoMD;
 import modelo.estilo.TblEstilo;
-import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import vista.docente.FrmRolesPeriodos;
 import vista.docente.VtnRolesPeriodos;
@@ -21,17 +20,13 @@ import vista.docente.VtnRolesPeriodos;
 public class VtnRolPeriodosCTR extends DVtnCTR {
 
     private final VtnRolesPeriodos vtnRolPe;
-    private final RolPeriodoBD rolPer;
-// para combo de periodo
+    private final RolPeriodoBD rolPer = RolPeriodoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
-    private final PeriodoLectivoBD prd;
     private ArrayList<RolPeriodoMD> roles;
 
     public VtnRolPeriodosCTR(VtnRolesPeriodos vtnRolPe, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnRolPe = vtnRolPe;
-        this.rolPer = new RolPeriodoBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {

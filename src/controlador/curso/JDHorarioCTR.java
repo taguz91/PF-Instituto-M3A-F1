@@ -22,7 +22,7 @@ public class JDHorarioCTR extends DVtnCTR {
 
     private final JDHorario jd;
     private final CursoMD curso;
-    private final SesionClaseBD bd;
+    private final SesionClaseBD SCBD = SesionClaseBD.single();
     //Variables para el horario
     private int idSesion, posFil, posColum, dia, horaC, horaT, minutoC, minutoT;
     //Cargamos datos
@@ -39,10 +39,8 @@ public class JDHorarioCTR extends DVtnCTR {
             CursoMD curso) {
         super(ctrPrin);
         this.curso = curso;
-        this.bd = new SesionClaseBD(ctrPrin.getConecta());
         this.jd = new JDHorario(ctrPrin.getVtnPrin(), false);
         jd.setLocationRelativeTo(ctrPrin.getVtnPrin());
-
     }
 
     /**
@@ -158,7 +156,7 @@ public class JDHorarioCTR extends DVtnCTR {
             //Vemos si no guardamos ya ese horario
             inicio = LocalTime.of(horaC, minutoC);
             fin = LocalTime.of(horaT, minutoT);
-            SesionClaseMD s = bd.existeSesion(curso.getId(), dia, inicio, fin);
+            SesionClaseMD s = SCBD.existeSesion(curso.getId(), dia, inicio, fin);
             if (s.getCurso() != null) {
                 JOptionPane.showMessageDialog(pnlCurso, "Ya ingreso este horario.");
                 guardar = false;
@@ -171,34 +169,35 @@ public class JDHorarioCTR extends DVtnCTR {
 
         if (guardar) {
             String nsql = "";
-
+            SesionClaseMD sc = new SesionClaseMD();
             if (horaT > horaC && minutoC == 0 && minutoT == 0) {
                 for (int i = horaC; i < horaT; i++) {
                     inicio = LocalTime.of(i, minutoC);
                     fin = LocalTime.of((i + 1), minutoT);
-                    bd.setCurso(curso);
-                    bd.setDia(dia);
-                    bd.setHoraIni(inicio);
-                    bd.setHoraFin(fin);
-                    nsql += bd.obtenerInsert() + "\n";
+                    sc.setCurso(curso);
+                    sc.setDia(dia);
+                    sc.setHoraIni(inicio);
+                    sc.setHoraFin(fin);
+                    nsql += SCBD.obtenerInsert(sc) + "\n";
                 }
             } else {
                 inicio = LocalTime.of(horaC, minutoC);
                 fin = LocalTime.of(horaT, minutoT);
-                bd.setCurso(curso);
-                bd.setDia(dia);
-                bd.setHoraIni(inicio);
-                bd.setHoraFin(fin);
-                nsql += bd.obtenerInsert() + "\n";
+                sc.setCurso(curso);
+                sc.setDia(dia);
+                sc.setHoraIni(inicio);
+                sc.setHoraFin(fin);
+                nsql += SCBD.obtenerInsert(sc) + "\n";
             }
 
             if (editar) {
-                bd.editar(idSesion);
+                sc.setId(idSesion);
+                SCBD.editar(sc);
                 idSesion = 0;
                 editar = false;
                 jd.getBtnCancelar().setVisible(false);
             } else {
-                bd.ingresarHorarios(nsql);
+                SCBD.ingresarHorarios(nsql);
             }
 
             //Actualizamos el horario 
@@ -224,7 +223,7 @@ public class JDHorarioCTR extends DVtnCTR {
      */
     private void horarioClase() {
         pnl = new PnlHorarioClase();
-        ctrHClase = new PnlHorarioClaseCTR(pnl, curso, bd);
+        ctrHClase = new PnlHorarioClaseCTR(pnl, curso, SCBD);
         ctrHClase.iniciar();
         jd.getTbpHorario().addTab("Horario Clase", pnl);
     }
@@ -234,7 +233,7 @@ public class JDHorarioCTR extends DVtnCTR {
      */
     private void horarioCurso() {
         pnlCurso = new PnlHorarioClase();
-        ctrHCurso = new PnlHorarioCursoCTR(pnlCurso, curso, bd);
+        ctrHCurso = new PnlHorarioCursoCTR(pnlCurso, curso);
         jd.getTbpHorario().addTab("Horario Curso", pnlCurso);
     }
 
@@ -284,7 +283,7 @@ public class JDHorarioCTR extends DVtnCTR {
                     if (pnl.getTblHorario().getValueAt(posFil, posColum) != null) {
                         idSesion = Integer.parseInt(
                                 pnl.getTblHorario().getValueAt(posFil, posColum).toString().split("%")[0]);
-                        sesion = bd.buscarSesion(idSesion);
+                        sesion = SCBD.buscarSesion(idSesion);
                         int r = JOptionPane.showOptionDialog(ctrPrin.getVtnPrin(), "Selecciono: " + idSesion + " "
                                 + jd.getCmbDia().getItemAt(sesion.getDia()) + "\nHora inicio: " + sesion.getHoraIni() + "\n"
                                 + "Hora fin: " + sesion.getHoraFin(), "Sesion Clase",
@@ -300,7 +299,7 @@ public class JDHorarioCTR extends DVtnCTR {
                                 break;
                             case 1:
                                 idSesion = sesion.getId();
-                                bd.eliminar(idSesion);
+                                SCBD.eliminar(idSesion);
                                 pnl.getTblHorario().setValueAt(null, posFil, posColum);
                                 ctrHClase.actualizar(sesion.getDia());
                                 break;

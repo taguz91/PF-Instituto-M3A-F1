@@ -14,6 +14,15 @@ import utils.M;
  * @author alumno
  */
 public class VersionBD extends CONBD {
+    
+    private static VersionBD VBD; 
+    
+    public static VersionBD single(){
+        if (VBD == null) {
+            VBD = new VersionBD();
+        }
+        return VBD;
+    }
 
     public boolean guardar(VersionMD v) {
         String nsql = "INSERT INTO public.\"Versiones\"(usu_username,\n"

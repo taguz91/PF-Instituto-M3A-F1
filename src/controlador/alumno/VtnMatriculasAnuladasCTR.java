@@ -23,9 +23,9 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
 
     private final VtnMatriculasAnuladas vtnAR;
 
-    private final AlumnoCursoRetiradoBD acrb;
+    private final AlumnoCursoRetiradoBD ACRBD = AlumnoCursoRetiradoBD.single();
     private ArrayList<AlumnoCursoRetiradoMD> almsCursosRetirados;
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD PLBD = PeriodoLectivoBD.single();
     private ArrayList<PeriodoLectivoMD> periodos;
     private int posPrd;
 
@@ -38,8 +38,6 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
             VtnMatriculasAnuladas vtnAR) {
         super(ctrPrin);
         this.vtnAR = vtnAR;
-        this.acrb = new AlumnoCursoRetiradoBD(ctrPrin.getConecta());
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
 
     /**
@@ -67,7 +65,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
                     + almsCursosRetirados.get(posFila).getAlumnoCurso().getCurso().getMateria().getNombre() + "\n"
                     + "¿Seguro que quiere continuar?");
             if (r == JOptionPane.YES_OPTION) {
-                if (acrb.eliminar(almsCursosRetirados.get(posFila).getId())) {
+                if (ACRBD.eliminar(almsCursosRetirados.get(posFila).getId())) {
                     cargarAnulados();
                 }
             }
@@ -79,7 +77,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      */
     private void iniciarDependencias() {
         //Llenamos el combo 
-        periodos = prd.cargarPrdParaCmbFrm();
+        periodos = PLBD.cargarPrdParaCmbFrm();
         llenarCmbPrd(periodos);
         vtnAR.getLblResultados().setText("0 Resultados obtenidos.");
     }
@@ -122,7 +120,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      * Cargamos todos los alumnos retirados que eliminamos
      */
     private void cargarEliminados() {
-        almsCursosRetirados = acrb.cargarRetiradosEliminados();
+        almsCursosRetirados = ACRBD.cargarRetiradosEliminados();
         llenarTblAlmRetirado(almsCursosRetirados);
     }
 
@@ -130,7 +128,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      * Cargamos todos los alumnos que anularon una matricula
      */
     private void cargarAnulados() {
-        almsCursosRetirados = acrb.cargarRetirados();
+        almsCursosRetirados = ACRBD.cargarRetirados();
         llenarTblAlmRetirado(almsCursosRetirados);
     }
 
@@ -174,7 +172,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      */
     private void buscarACR(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            almsCursosRetirados = acrb.buscarRetirados(b);
+            almsCursosRetirados = ACRBD.buscarRetirados(b);
             llenarTblAlmRetirado(almsCursosRetirados);
         }
     }
@@ -184,7 +182,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      */
     private void buscarACRE(String b) {
         if (Validar.esLetrasYNumeros(b)) {
-            almsCursosRetirados = acrb.buscarRetiradosEliminados(b);
+            almsCursosRetirados = ACRBD.buscarRetiradosEliminados(b);
             llenarTblAlmRetirado(almsCursosRetirados);
         }
     }
@@ -196,10 +194,10 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
         posPrd = vtnAR.getCmbPrdLectivos().getSelectedIndex();
         if (posPrd > 0) {
             if (vtnAR.getCbxEliminados().isSelected()) {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getID());
+                almsCursosRetirados = ACRBD.cargarRetiradosPorPrdEliminados(periodos.get(posPrd - 1).getID());
                 llenarTblAlmRetirado(almsCursosRetirados);
             } else {
-                almsCursosRetirados = acrb.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getID());
+                almsCursosRetirados = ACRBD.cargarRetiradosPorPrd(periodos.get(posPrd - 1).getID());
                 llenarTblAlmRetirado(almsCursosRetirados);
             }
         }
@@ -218,7 +216,7 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
      * Cargamos el combo de periodos con todos los periodos
      */
     private void cargarCmbACR() {
-        periodos = prd.cargarPrdParaCmbVtn();
+        periodos = PLBD.cargarPrdParaCmbVtn();
         llenarCmbPrd(periodos);
     }
 
@@ -261,11 +259,10 @@ public class VtnMatriculasAnuladasCTR extends DVtnCTR {
     }
 
     private void InitPermisos() {
-       vtnAR.getBtnEliminar().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Eliminar");
-       vtnAR.getCbxEliminados().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Ver Eliminados");
-       
-       
-        CONS.activarBtns(vtnAR.getBtnEliminar(), vtnAR.getCbxEliminados() );
+        vtnAR.getBtnEliminar().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Eliminar");
+        vtnAR.getCbxEliminados().getAccessibleContext().setAccessibleName("Matriculas-Anuladas-Ver Eliminados");
+
+        CONS.activarBtns(vtnAR.getBtnEliminar(), vtnAR.getCbxEliminados());
     }
 
 }

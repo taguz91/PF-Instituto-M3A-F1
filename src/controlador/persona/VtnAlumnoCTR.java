@@ -27,7 +27,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
     private final VtnAlumno vtnAlumno;
 
     private FrmAlumno frmAlumno;
-    private final AlumnoBD bdAlumno;
+    private final AlumnoBD ABD = AlumnoBD.single();
     public static AlumnoMD mdAlumno;
 
     // Datos  
@@ -36,9 +36,6 @@ public class VtnAlumnoCTR extends DVtnCTR {
     public VtnAlumnoCTR(VtnAlumno vtnAlumno, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
         this.vtnAlumno = vtnAlumno;
-        //Cambiamos el estado del cursos
-        //Inicializamos la clase de alumno
-        bdAlumno = new AlumnoBD(ctrPrin.getConecta());
     }
 
     public void iniciar() {
@@ -104,7 +101,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
             "Curso"
         };
         mdTbl = iniciarTbl(vtnAlumno.getTblAlumno(), titulo);
-        alumnos = bdAlumno.getAllTable();
+        alumnos = ABD.getAllTable();
         todosAlumnos = alumnos;
         modelo.estilo.TblEstilo.ocualtarID(vtnAlumno.getTblAlumno());
         llenarTbl(alumnos);
@@ -140,7 +137,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     public void llenarElimanados() {
         mdTbl.setRowCount(0);
-        List<PersonaMD> lista = bdAlumno.llenarEliminados();
+        List<PersonaMD> lista = ABD.llenarEliminados();
         int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             mdTbl.addRow(new Object[columnas]);
@@ -157,7 +154,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
 
     public void llenarRetirados() {
         mdTbl.setRowCount(0);
-        List<AlumnoMD> lista = bdAlumno.filtrarRetirados();
+        List<AlumnoMD> lista = ABD.filtrarRetirados();
         int columnas = mdTbl.getColumnCount();
         for (int i = 0; i < lista.size(); i++) {
             mdTbl.addRow(new Object[columnas]);
@@ -176,7 +173,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
     public void buscaIncremental(String aguja) {
         if (modelo.validaciones.Validar.esLetrasYNumeros(aguja)) {
             mdTbl.setRowCount(0);
-            List<PersonaMD> lista = bdAlumno.capturarPersona(aguja);
+            List<PersonaMD> lista = ABD.capturarPersona(aguja);
             int columnas = mdTbl.getColumnCount();
             for (int i = 0; i < lista.size(); i++) {
                 mdTbl.addRow(new Object[columnas]);
@@ -212,7 +209,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
         int i = vtnAlumno.getTblAlumno().getSelectedRow();
         if (i >= 0) {
             AlumnoMD alumno;
-            alumno = bdAlumno.buscarPersona(Integer.valueOf(vtnAlumno.getTblAlumno().getValueAt(i, 0).toString()));
+            alumno = ABD.buscarPersona(Integer.valueOf(vtnAlumno.getTblAlumno().getValueAt(i, 0).toString()));
             System.out.println("ID: " + vtnAlumno.getTblAlumno().getValueAt(i, 0).toString());
             return alumno;
         } else {
@@ -237,10 +234,10 @@ public class VtnAlumnoCTR extends DVtnCTR {
                 ctrPrin.cerradoJIF();
 
             } else if (seleccion == 0) {
-                PersonaBD extraer = new PersonaBD(ctrPrin.getConecta());
+                PersonaBD PBD = PersonaBD.single();
                 FrmPersona frmPersona = new FrmPersona();
                 PersonaMD persona;
-                persona = extraer.buscarPersona(al.getIdPersona());
+                persona = PBD.buscarPersona(al.getIdPersona());
                 FrmPersonaCTR ctrPers = new FrmPersonaCTR(frmPersona, ctrPrin);
                 ctrPers.iniciar();
                 ctrPers.editar(persona);
@@ -273,7 +270,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
                 String observacion = JOptionPane.showInputDialog("¿Por que motivo elimina este alumno?");
                 if (observacion != null) {
                     alumno.setObservacion(observacion.toUpperCase());
-                    if (bdAlumno.eliminarAlumno(alumno, alumno.getIdPersona()) == true) {
+                    if (ABD.eliminarAlumno(alumno, alumno.getIdPersona()) == true) {
                         JOptionPane.showMessageDialog(null, "Datos Eliminados Satisfactoriamente");
                         buscaIncremental("");
                     } else {
@@ -290,7 +287,7 @@ public class VtnAlumnoCTR extends DVtnCTR {
         String path = "/vista/reportes/repListaAlumnos.jasper";
         try {
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
-            ctrPrin.getConecta().mostrarReporte(jr, null, "Lista de Docentes");
+            CON.mostrarReporte(jr, null, "Lista de Docentes");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
         }

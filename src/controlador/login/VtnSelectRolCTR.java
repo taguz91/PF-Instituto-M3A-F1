@@ -8,33 +8,30 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import utils.CONS;
-import modelo.ConectarDB;
 import modelo.ConnDBPool;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
+import utils.CONBD;
 import vista.usuario.VtnSelectRol;
 
 /**
  *
  * @author MrRainx
  */
-public class VtnSelectRolCTR {
+public class VtnSelectRolCTR extends CONBD {
 
     private final VtnSelectRol vista;
     private RolBD modelo;
     private final UsuarioBD usuario;
 
-    private final ConectarDB conexion;
     private List<RolBD> rolesDelUsuario;
 
     /**
-     * @param conexion
      */
-    public VtnSelectRolCTR(ConectarDB conexion) {
+    public VtnSelectRolCTR() {
         this.vista = new VtnSelectRol();
         this.modelo = new RolBD();
         this.usuario = CONS.USUARIO;
-        this.conexion = conexion;
         vista.setIconImage(CONS.getImage());
         registroIngreso(vista);
     }
@@ -58,7 +55,7 @@ public class VtnSelectRolCTR {
         String nsql = "INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "	VALUES ('" + usuario.getUsername() + "', now(), 'INICIO SESION', 'SISTEMA', 0);";
-        if (conexion.nosql(nsql) == null) {
+        if (CON.executeNoSQL(nsql)) {
             System.out.println("Iniciamos como: " + usuario.getUsername());
         }
     }
@@ -67,10 +64,9 @@ public class VtnSelectRolCTR {
         String nsql = " INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "  	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "  	VALUES ('" + usuario.getUsername() + "', now(), 'CIERRE SESION', 'SISTEMA', 0);";
-        if (conexion.nosql(nsql) == null) {
+        if (CON.executeNoSQL(nsql)) {
             System.out.println("Salimos del sistema como: " + usuario.getUsername());
         }
-        conexion.cerrarConexion();
         ConnDBPool pool = new ConnDBPool();
         pool.closePool();
     }
@@ -128,7 +124,7 @@ public class VtnSelectRolCTR {
         setModelo();
         CONS.setRol(modelo);
         CONS.refreshPermisos();
-        VtnPrincipalCTR vtn = new VtnPrincipalCTR(conexion, this);
+        VtnPrincipalCTR vtn = new VtnPrincipalCTR(this);
         vtn.iniciar();
         vista.dispose();
     }

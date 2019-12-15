@@ -17,45 +17,42 @@ import vista.alumno.VtnAlumnoMatricula;
  * @author gus
  */
 public class VtnAlumnoMatriculaCTR extends DVtnCTR {
-    
-    private final VtnAlumnoMatricula vtnMatri; 
-    private final AlumnoMatriculaBD almMatri; 
+
+    private final VtnAlumnoMatricula vtnMatri;
+    private final AlumnoMatriculaBD almMatri = AlumnoMatriculaBD.single();
     private ArrayList<AlumnoMatriculaMD> almnMatricula;
-    
     //Para combos
     private ArrayList<PeriodoLectivoMD> periodos;
-    private final PeriodoLectivoBD prd;
+    private final PeriodoLectivoBD prd = PeriodoLectivoBD.single();
     private int posPrd;
-    
+
     public VtnAlumnoMatriculaCTR(VtnPrincipalCTR ctrPrin, VtnAlumnoMatricula vtnMatri) {
         super(ctrPrin);
-        this.almMatri = new AlumnoMatriculaBD(ctrPrin.getConecta());
         this.vtnMatri = vtnMatri;
-        this.prd = new PeriodoLectivoBD(ctrPrin.getConecta());
     }
-    
-    public void iniciar(){
+
+    public void iniciar() {
         String[] t = {
-            "Periodo", "Cedula", 
-            "Nombres", "Apellidos", 
+            "Periodo", "Cedula",
+            "Nombres", "Apellidos",
             "Correo", "Celular",
             "Telefono", "Carrera",
             "Cursos"
-        }; 
-        
-        mdTbl = iniciarTbl( vtnMatri.getTblMatricula(), t);
-        
+        };
+
+        mdTbl = iniciarTbl(vtnMatri.getTblMatricula(), t);
+
         llenarCmbPrd();
         formatoBuscador(vtnMatri.getTxtBuscar(), vtnMatri.getBtnBuscar());
         iniciarBuscador();
-        
+
         vtnMatri.getCmbPeriodos().addActionListener(e -> clickPrd());
         ctrPrin.agregarVtn(vtnMatri);
     }
-    
+
     private void iniciarBuscador() {
         vtnMatri.getBtnBuscar().addActionListener(e -> buscar(vtnMatri.getTxtBuscar().getText().trim()));
-        
+
         vtnMatri.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -67,21 +64,21 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
             }
         });
     }
-    
+
     private void buscar(String aguja) {
         if (Validar.esLetrasYNumeros(aguja)) {
             almnMatricula = almMatri.buscarPor(aguja);
             llenarTbl(almnMatricula);
         }
     }
-    
-    private  void cargarAlumnosMatriculas(){
+
+    private void cargarAlumnosMatriculas() {
         new Thread(() -> {
             almnMatricula = almMatri.getTodos();
             llenarTbl(almnMatricula);
-        }).start();    
+        }).start();
     }
-    
+
     private void llenarTbl(ArrayList<AlumnoMatriculaMD> alumnosMatriculas) {
         mdTbl.setRowCount(0);
         if (alumnosMatriculas != null) {
@@ -90,13 +87,13 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
                     am.getPeriodo().getNombre(),
                     am.getAlumno().getIdentificacion(),
                     am.getAlumno().getSoloNombres(),
-                    am.getAlumno().getSoloApellidos(), 
+                    am.getAlumno().getSoloApellidos(),
                     am.getAlumno().getCorreo(),
                     am.getAlumno().getCelular(),
                     am.getAlumno().getTelefono(),
                     am.getPeriodo().getCarrera().getCodigo(),
                     am.getCursos()
-                    };
+                };
                 mdTbl.addRow(v);
             });
             vtnMatri.getLblNumResultados().setText(alumnosMatriculas.size() + " Resultados obtenidos.");
@@ -104,7 +101,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
             vtnMatri.getLblNumResultados().setText("0 Resultados obtenidos.");
         }
     }
-    
+
     private void clickPrd() {
         posPrd = vtnMatri.getCmbPeriodos().getSelectedIndex();
         if (posPrd > 0) {
@@ -114,7 +111,7 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
             cargarAlumnosMatriculas();
         }
     }
-    
+
     /**
      * Llenamos el combo del periodo lectivo
      */
@@ -128,5 +125,5 @@ public class VtnAlumnoMatriculaCTR extends DVtnCTR {
             });
         }
     }
-    
+
 }
