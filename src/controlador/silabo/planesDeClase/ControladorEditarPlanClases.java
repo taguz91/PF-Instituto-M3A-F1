@@ -4,7 +4,6 @@ package controlador.silabo.planesDeClase;
 
 import com.placeholder.PlaceHolder;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -30,7 +29,6 @@ import modelo.PlanClases.RecursosPlanClasesMD;
 import modelo.curso.CursoMD;
 import modelo.estrategiasUnidad.EstrategiasUnidadBD;
 import modelo.estrategiasUnidad.EstrategiasUnidadMD;
-import modelo.evaluacionSilabo.EvaluacionSilaboBD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
