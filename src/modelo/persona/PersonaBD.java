@@ -17,163 +17,315 @@ import javax.swing.ImageIcon;
 import modelo.ConnDBPool;
 import modelo.lugar.LugarBD;
 import modelo.lugar.LugarMD;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author Lina
  */
-public class PersonaBD extends PersonaMD {
-
-    private ConectarDB conecta;
-    //Se usaran estas clases para consultar
-    private LugarBD lugar;
+public class PersonaBD extends CONBD {
 
     //Esto se usara para cargar las fotos 
     InputStream is;
-    private ConnDBPool pool;
+    private final ConnDBPool pool;
     private Connection conn;
     private ResultSet rst;
+    private static PersonaBD PBD;
+
+    // Para consultar lugar  
+    private LugarBD LBD = LugarBD.single();
+
+    public static PersonaBD single() {
+        if (PBD == null) {
+            PBD = new PersonaBD();
+        }
+        return PBD;
+    }
 
     {
         pool = new ConnDBPool();
     }
 
     /**
-     *
-     * @param conecta
-     */
-    public PersonaBD(ConectarDB conecta) {
-        this.conecta = conecta;
-        this.lugar = new LugarBD(conecta);
-    }
-
-    public PersonaBD() {
-    }
-
-    /**
      * Este método guarda a la Persona en la Base de Datos con todos estos
      * atributos
+     *
+     * @param p
+     * @return
      */
-    public void insertarPersona() {
+    public boolean insertarPersona(PersonaMD p) {
         LugarMD lg = new LugarMD();
-        //Aqui id_persona ya no va porque es autoincrementable
-        //TipoPersona si porque necesitamos saber si es estudiante
-        //docente u otro 
         String nsql = "INSERT INTO public.\"Personas\"(\n"
-                + "id_lugar_natal, id_lugar_residencia,"
-                + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
-                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
-                + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
-                + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
-                + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
-                + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
-                + "VALUES (" + getLugarNatal().getId() + ", "
-                + getLugarResidencia().getId() + " , '" + getIdentificacion() + "', '"
-                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
-                + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
-                + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
-                + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
-                + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
-                + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
+                + "id_lugar_natal, "
+                + "id_lugar_residencia, "
+                + "persona_identificacion, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_genero, "
+                + "persona_sexo, "
+                + "persona_estado_civil, "
+                + "persona_etnia, "
+                + "persona_idioma_raiz, "
+                + "persona_tipo_sangre, "
+                + "persona_telefono, "
+                + "persona_celular, "
+                + "persona_correo, "
+                + "persona_fecha_registro, "
+                + "persona_discapacidad, "
+                + "persona_tipo_discapacidad, "
+                + "persona_porcenta_discapacidad, "
+                + "persona_carnet_conadis, "
+                + "persona_calle_principal, "
+                + "persona_numero_casa, "
+                + "persona_calle_secundaria, "
+                + "persona_referencia, "
+                + "persona_sector, "
+                + "persona_idioma, "
+                + "persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, "
+                + "persona_categoria_migratoria ) \n"
+                + "VALUES ("
+                + p.getLugarNatal().getId() + ", "
+                + p.getLugarResidencia().getId() + " , "
+                + "'" + p.getIdentificacion() + "', "
+                + "'" + p.getPrimerApellido() + "', "
+                + "'" + p.getSegundoApellido() + "', "
+                + "'" + p.getPrimerNombre() + "', "
+                + "'" + p.getSegundoNombre() + "', "
+                + "'" + p.getGenero() + "', "
+                + "'" + p.getSexo() + "', "
+                + "'" + p.getEstadoCivil() + "', "
+                + "'" + p.getEtnia() + "', "
+                + "'" + p.getIdiomaRaiz() + "', "
+                + "'" + p.getTipoSangre() + "', "
+                + "'" + p.getTelefono() + "', "
+                + "'" + p.getCelular() + "', "
+                + "'" + p.getCorreo() + "', "
+                + "'" + p.getFechaRegistro() + "', "
+                + "'" + p.isDiscapacidad() + "', "
+                + "'" + p.getTipoDiscapacidad() + "', "
+                + "'" + p.getPorcentajeDiscapacidad() + "', "
+                + "'" + p.getCarnetConadis() + "', "
+                + "'" + p.getCallePrincipal() + "', "
+                + "'" + p.getNumeroCasa() + "', "
+                + "'" + p.getCalleSecundaria() + "', "
+                + "'" + p.getReferencia() + "', "
+                + "'" + p.getSector() + "', "
+                + "'" + p.getIdioma() + "', "
+                + "'" + p.getTipoResidencia() + "', "
+                + "'" + p.getFechaNacimiento() + "', "
+                + "'" + p.getCategoriaMigratoria() + "');";
 
-        if (isDiscapacidad()) {
+        if (p.isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
-                    + "id_lugar_natal, id_lugar_residencia,"
-                    + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
-                    + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
-                    + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
-                    + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
-                    + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
-                    + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
-                    + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
-                    + "VALUES (" + getLugarNatal().getId() + ", "
-                    + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
-                    + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
-                    + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
-                    + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                    + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
-                    + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
-                    + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
-                    + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
+                    + "id_lugar_natal, "
+                    + "id_lugar_residencia, "
+                    + "persona_identificacion, "
+                    + "persona_primer_apellido, "
+                    + "persona_segundo_apellido, "
+                    + "persona_primer_nombre, "
+                    + "persona_segundo_nombre, "
+                    + "persona_genero, "
+                    + "persona_sexo, "
+                    + "persona_estado_civil, "
+                    + "persona_etnia, "
+                    + "persona_idioma_raiz, "
+                    + "persona_tipo_sangre, "
+                    + "persona_telefono, "
+                    + "persona_celular, "
+                    + "persona_correo, "
+                    + "persona_fecha_registro, "
+                    + "persona_discapacidad, "
+                    + "persona_tipo_discapacidad, "
+                    + "persona_porcenta_discapacidad, "
+                    + "persona_carnet_conadis, "
+                    + "persona_calle_principal, "
+                    + "persona_numero_casa, "
+                    + "persona_calle_secundaria, "
+                    + "persona_referencia, "
+                    + "persona_sector, "
+                    + "persona_idioma, "
+                    + "persona_tipo_residencia, "
+                    + "persona_fecha_nacimiento, "
+                    + "persona_categoria_migratoria) \n"
+                    + "VALUES ("
+                    + p.getLugarNatal().getId() + ", "
+                    + p.getLugarResidencia().getId() + ", "
+                    + "'" + p.getIdentificacion() + "', "
+                    + "'" + p.getPrimerApellido() + "', "
+                    + "'" + p.getSegundoApellido() + "', "
+                    + "'" + p.getPrimerNombre() + "', "
+                    + "'" + p.getSegundoNombre() + "', "
+                    + "'" + p.getGenero() + "', "
+                    + "'" + p.getSexo() + "', "
+                    + "'" + p.getEstadoCivil() + "', "
+                    + "'" + p.getEtnia() + "', "
+                    + "'" + p.getIdiomaRaiz() + "', "
+                    + "'" + p.getTipoSangre() + "', "
+                    + "'" + p.getTelefono() + "', "
+                    + "'" + p.getCelular() + "', "
+                    + "'" + p.getCorreo() + "', "
+                    + "'" + p.getFechaRegistro() + "', "
+                    + "'" + p.isDiscapacidad() + "', "
+                    + "'" + p.getTipoDiscapacidad() + "', "
+                    + "'" + p.getPorcentajeDiscapacidad() + "', "
+                    + "'" + p.getCarnetConadis() + "', "
+                    + "'" + p.getCallePrincipal() + "', "
+                    + "'" + p.getNumeroCasa() + "', "
+                    + "'" + p.getCalleSecundaria() + "', "
+                    + "'" + p.getReferencia() + "', "
+                    + "'" + p.getSector() + "', "
+                    + "'" + p.getIdioma() + "', "
+                    + "'" + p.getTipoResidencia() + "', "
+                    + "'" + p.getFechaNacimiento() + "', "
+                    + "'" + p.getCategoriaMigratoria() + "');";
         }
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se guardo correctamente");
-        }
+        return CON.executeNoSQL(nsql);
     }
 
-    public void insertarIdentificacion() {
-        String nsql = "INSERT INTO public. \"Personas\"(persona_identificacion) VALUES ('" + getIdentificacion() + "');";
-
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se guardo correctamente");
-        }
+    // Revisar
+    public void insertarIdentificacion(String identificacion) {
+        String nsql = "INSERT INTO public. \"Personas\"(persona_identificacion) "
+                + "VALUES ('" + identificacion + "');";
+        CON.executeNoSQL(nsql);
     }
 
     //persona_categoria_migratoria
-    public void insertarPersonaConFoto() {
+    public boolean insertarPersonaConFoto(PersonaMD p) {
         //Aqui id_persona ya no va porque es autoincrementable
         String nsql = "INSERT INTO public.\"Personas\"(\n"
-                + "id_lugar_natal, id_lugar_residencia, persona_foto,"
-                + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
-                + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
-                + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
-                + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
-                + "persona_calle_principal, persona_numero_casa, "
-                + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
-                + "VALUES (" + getLugarNatal().getId() + ", "
-                + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
-                + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
-                + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
-                + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '"
-                + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
-                + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
+                + "id_lugar_natal, "
+                + "id_lugar_residencia, "
+                + "persona_foto,"
+                + "persona_identificacion, "
+                + "persona_primer_apellido, "
+                + "persona_segundo_apellido, "
+                + "persona_primer_nombre, "
+                + "persona_segundo_nombre, "
+                + "persona_genero, "
+                + "persona_sexo, "
+                + "persona_estado_civil, "
+                + "persona_etnia, "
+                + "persona_idioma_raiz, "
+                + "persona_tipo_sangre, "
+                + "persona_telefono, "
+                + "persona_celular, "
+                + "persona_correo, "
+                + "persona_fecha_registro, "
+                + "persona_calle_principal, "
+                + "persona_numero_casa, "
+                + "persona_calle_secundaria, "
+                + "persona_referencia, "
+                + "persona_sector, "
+                + "persona_idioma, "
+                + "persona_tipo_residencia, "
+                + "persona_fecha_nacimiento, "
+                + "persona_categoria_migratoria) \n"
+                + "VALUES ("
+                + p.getLugarNatal().getId() + ", "
+                + p.getLugarResidencia().getId() + ", "
+                + "? , "
+                + "'" + p.getIdentificacion() + "', "
+                + "'" + p.getPrimerApellido() + "', "
+                + "'" + p.getSegundoApellido() + "', "
+                + "'" + p.getPrimerNombre() + "', "
+                + "'" + p.getSegundoNombre() + "', "
+                + "'" + p.getGenero() + "', "
+                + "'" + p.getSexo() + "', "
+                + "'" + p.getEstadoCivil() + "', "
+                + "'" + p.getEtnia() + "', "
+                + "'" + p.getIdiomaRaiz() + "', "
+                + "'" + p.getTipoSangre() + "', "
+                + "'" + p.getTelefono() + "', "
+                + "'" + p.getCelular() + "', "
+                + "'" + p.getCorreo() + "', "
+                + "'" + p.getFechaRegistro() + "', "
+                + "'" + p.getCallePrincipal() + "', "
+                + "'" + p.getNumeroCasa() + "', "
+                + "'" + p.getCalleSecundaria() + "', "
+                + "'" + p.getReferencia() + "', "
+                + "'" + p.getSector() + "', "
+                + "'" + p.getIdioma() + "', "
+                + "'" + p.getTipoResidencia() + "', "
+                + "'" + p.getFechaNacimiento() + "', "
+                + "'" + p.getCategoriaMigratoria() + "');";
 
-        if (isDiscapacidad()) {
+        if (p.isDiscapacidad()) {
             nsql = "INSERT INTO public.\"Personas\"(\n"
-                    + "id_lugar_natal, id_lugar_residencia, persona_foto,"
-                    + "persona_identificacion, persona_primer_apellido, persona_segundo_apellido, "
-                    + "persona_primer_nombre, persona_segundo_nombre,persona_genero, persona_sexo, "
-                    + "persona_estado_civil, persona_etnia, persona_idioma_raiz, persona_tipo_sangre, "
-                    + "persona_telefono, persona_celular, persona_correo, persona_fecha_registro, "
-                    + "persona_discapacidad, persona_tipo_discapacidad, persona_porcenta_discapacidad, "
-                    + "persona_carnet_conadis, persona_calle_principal, persona_numero_casa, "
-                    + "persona_calle_secundaria, persona_referencia, persona_sector, persona_idioma, "
-                    + "persona_tipo_residencia, persona_fecha_nacimiento, persona_categoria_migratoria) \n"
-                    + "VALUES (" + getLugarNatal().getId() + ", "
-                    + getLugarResidencia().getId() + ", ? , '" + getIdentificacion() + "', '"
-                    + getPrimerApellido() + "', '" + getSegundoApellido() + "', '" + getPrimerNombre() + "', '"
-                    + getSegundoNombre() + "', '" + getGenero() + "', '" + getSexo() + "', '" + getEstadoCivil() + "', '"
-                    + getEtnia() + "', '" + getIdiomaRaiz() + "', '" + getTipoSangre() + "', '" + getTelefono() + "', '"
-                    + getCelular() + "', '" + getCorreo() + "', '" + getFechaRegistro() + "', '" + isDiscapacidad() + "', '"
-                    + getTipoDiscapacidad() + "', '" + getPorcentajeDiscapacidad() + "', '" + getCarnetConadis() + "', '"
-                    + getCallePrincipal() + "', '" + getNumeroCasa() + "', '" + getCalleSecundaria() + "', '"
-                    + getReferencia() + "', '" + getSector() + "', '" + getIdioma() + "', '" + getTipoResidencia() + "', '"
-                    + getFechaNacimiento() + "', '" + getCategoriaMigratoria() + "');";
+                    + "id_lugar_natal, "
+                    + "id_lugar_residencia, "
+                    + "persona_foto, "
+                    + "persona_identificacion, "
+                    + "persona_primer_apellido, "
+                    + "persona_segundo_apellido, "
+                    + "persona_primer_nombre, "
+                    + "persona_segundo_nombre, "
+                    + "persona_genero, "
+                    + "persona_sexo, "
+                    + "persona_estado_civil, "
+                    + "persona_etnia, "
+                    + "persona_idioma_raiz, "
+                    + "persona_tipo_sangre, "
+                    + "persona_telefono, "
+                    + "persona_celular, "
+                    + "persona_correo, "
+                    + "persona_fecha_registro, "
+                    + "persona_discapacidad, "
+                    + "persona_tipo_discapacidad, "
+                    + "persona_porcenta_discapacidad, "
+                    + "persona_carnet_conadis, "
+                    + "persona_calle_principal, "
+                    + "persona_numero_casa, "
+                    + "persona_calle_secundaria, "
+                    + "persona_referencia, "
+                    + "persona_sector, persona_idioma, "
+                    + "persona_tipo_residencia, "
+                    + "persona_fecha_nacimiento, "
+                    + "persona_categoria_migratoria) "
+                    + "VALUES ("
+                    + p.getLugarNatal().getId() + ", "
+                    + p.getLugarResidencia().getId() + ", "
+                    + "? , "
+                    + "'" + p.getIdentificacion() + "', "
+                    + "'" + p.getPrimerApellido() + "', "
+                    + "'" + p.getSegundoApellido() + "', "
+                    + "'" + p.getPrimerNombre() + "', "
+                    + "'" + p.getSegundoNombre() + "', "
+                    + "'" + p.getGenero() + "', "
+                    + "'" + p.getSexo() + "', "
+                    + "'" + p.getEstadoCivil() + "', "
+                    + "'" + p.getEtnia() + "', "
+                    + "'" + p.getIdiomaRaiz() + "', "
+                    + "'" + p.getTipoSangre() + "', "
+                    + "'" + p.getTelefono() + "', "
+                    + "'" + p.getCelular() + "', "
+                    + "'" + p.getCorreo() + "', "
+                    + "'" + p.getFechaRegistro() + "', "
+                    + "'" + p.isDiscapacidad() + "', "
+                    + "'" + p.getTipoDiscapacidad() + "', "
+                    + "'" + p.getPorcentajeDiscapacidad() + "', "
+                    + "'" + p.getCarnetConadis() + "', "
+                    + "'" + p.getCallePrincipal() + "', "
+                    + "'" + p.getNumeroCasa() + "', "
+                    + "'" + p.getCalleSecundaria() + "', "
+                    + "'" + p.getReferencia() + "', "
+                    + "'" + p.getSector() + "', "
+                    + "'" + p.getIdioma() + "', "
+                    + "'" + p.getTipoResidencia() + "', "
+                    + "'" + p.getFechaNacimiento() + "', "
+                    + "'" + p.getCategoriaMigratoria() + "');";
         }
 
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (ps != null) {
-            try {
-                ps.setBinaryStream(1, getFile(), getLogBytes());
-
-                if (conecta.nosql(ps) == null) {
-                    System.out.println("SE guarado correctamente.");
-                }
-            } catch (SQLException e) {
-                System.out.println("No se pudo guardar persona con foto");
-                System.out.println(e.getMessage());
-            }
+        PreparedStatement ps = CON.getPSPOOL(nsql);
+        try {
+            ps.setBinaryStream(1, p.getFile(), p.getLogBytes());
+            return CON.noSQLPOOL(ps);
+        } catch (SQLException e) {
+            M.errorMsg("No se pudo guardar con foto. " + e.getMessage());
+            return false;
         }
     }
 
@@ -181,80 +333,86 @@ public class PersonaBD extends PersonaMD {
      * Este método edita a una Persona que no tiene foto de la Base de Datos con
      * todos estos atributos
      *
-     * @param aguja Se tiene que pasar un int como la Id de persona
+     * @param p
      * @return Retorna un boolean según el resultado de la Edición
      */
-    public boolean editarPersona(int aguja) {
+    public boolean editarPersona(PersonaMD p) {
         String sql;
-
-        if (isDiscapacidad()) {
+        if (p.isDiscapacidad()) {
             sql = "UPDATE public.\"Personas\" SET\n"
-                    + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
-                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
-                    + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
-                    + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
-                    + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
-                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                    + " WHERE id_persona = " + aguja + ";";
+                    + " id_lugar_natal = " + p.getLugarNatal().getId() + ", "
+                    + "id_lugar_residencia = " + p.getLugarResidencia().getId() + ", "
+                    + "persona_identificacion = '" + p.getIdentificacion() + "', "
+                    + "persona_primer_apellido = '" + p.getPrimerApellido() + "', "
+                    + "persona_segundo_apellido = '" + p.getSegundoApellido() + "', "
+                    + "persona_primer_nombre = '" + p.getPrimerNombre() + "', "
+                    + "persona_segundo_nombre = '" + p.getSegundoNombre() + "', "
+                    + "persona_genero = '" + p.getGenero() + "', "
+                    + "persona_sexo = '" + p.getSexo() + "', "
+                    + "persona_estado_civil = '" + p.getEstadoCivil() + "', "
+                    + "persona_etnia = '" + p.getEtnia() + "', "
+                    + "persona_idioma_raiz = '" + p.getIdiomaRaiz() + "', "
+                    + "persona_tipo_sangre = '" + p.getTipoSangre() + "', "
+                    + "persona_telefono = '" + p.getTelefono() + "', "
+                    + "persona_celular = '" + p.getCelular() + "', "
+                    + "persona_correo = '" + p.getCorreo() + "', "
+                    + "persona_fecha_registro = '" + p.getFechaRegistro() + "', "
+                    + "persona_discapacidad = '" + p.isDiscapacidad() + "', "
+                    + "persona_tipo_discapacidad = '" + p.getTipoDiscapacidad() + "', "
+                    + "persona_porcenta_discapacidad = '" + p.getPorcentajeDiscapacidad() + "', "
+                    + "persona_carnet_conadis = '" + p.getCarnetConadis() + "', "
+                    + "persona_calle_principal = '" + p.getCallePrincipal() + "', "
+                    + "persona_numero_casa = '" + p.getNumeroCasa() + "', "
+                    + "persona_calle_secundaria = '" + p.getCalleSecundaria() + "', "
+                    + "persona_referencia = '" + p.getReferencia() + "', "
+                    + "persona_sector = '" + p.getSector() + "', "
+                    + "persona_idioma = '" + p.getIdioma() + "', "
+                    + "persona_tipo_residencia = '" + p.getTipoResidencia() + "', "
+                    + "persona_fecha_nacimiento = '" + p.getFechaNacimiento() + "', "
+                    + "persona_categoria_migratoria = '" + p.getCategoriaMigratoria() + "' "
+                    + " WHERE id_persona = " + p.getIdPersona() + ";";
         } else {
             sql = "UPDATE public.\"Personas\" SET\n"
-                    + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId()
-                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = false"
-                    + ", persona_tipo_discapacidad = null , persona_porcenta_discapacidad = 0 "
-                    + ", persona_carnet_conadis = null, persona_calle_principal = '"
-                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                    + " WHERE id_persona = " + aguja + ";";
+                    + " id_lugar_natal = " + p.getLugarNatal().getId() + ", "
+                    + "id_lugar_residencia = " + p.getLugarResidencia().getId() + ", "
+                    + "persona_identificacion = '" + p.getIdentificacion() + "', "
+                    + "persona_primer_apellido = '" + p.getPrimerApellido() + "', "
+                    + "persona_segundo_apellido = '" + p.getSegundoApellido() + "', "
+                    + "persona_primer_nombre = '" + p.getPrimerNombre() + "', "
+                    + "persona_segundo_nombre = '" + p.getSegundoNombre() + "', "
+                    + "persona_genero = '" + p.getGenero() + "', "
+                    + "persona_sexo = '" + p.getSexo() + "', "
+                    + "persona_estado_civil = '" + p.getEstadoCivil() + "', "
+                    + "persona_etnia = '" + p.getEtnia() + "', "
+                    + "persona_idioma_raiz = '" + p.getIdiomaRaiz() + "', "
+                    + "persona_tipo_sangre = '" + p.getTipoSangre() + "', "
+                    + "persona_telefono = '" + p.getTelefono() + "', "
+                    + "persona_celular = '" + p.getCelular() + "', "
+                    + "persona_correo = '" + p.getCorreo() + "', "
+                    + "persona_fecha_registro = '" + p.getFechaRegistro() + "', "
+                    + "persona_discapacidad = false" + ", "
+                    + "persona_tipo_discapacidad = null , "
+                    + "persona_porcenta_discapacidad = 0 " + ", "
+                    + "persona_carnet_conadis = null, "
+                    + "persona_calle_principal = '" + p.getCallePrincipal() + "', "
+                    + "persona_numero_casa = '" + p.getNumeroCasa() + "', "
+                    + "persona_calle_secundaria = '" + p.getCalleSecundaria() + "', "
+                    + "persona_referencia = '" + p.getReferencia() + "', "
+                    + "persona_sector = '" + p.getSector() + "', "
+                    + "persona_idioma = '" + p.getIdioma() + "', "
+                    + "persona_tipo_residencia = '" + p.getTipoResidencia() + "', "
+                    + "persona_fecha_nacimiento = '" + p.getFechaNacimiento() + "', "
+                    + "persona_categoria_migratoria = '" + p.getCategoriaMigratoria() + "' "
+                    + " WHERE id_persona = " + p.getIdPersona() + ";";
         }
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se edito correctamente");
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(sql);
     }
 
-    public boolean editarIdentificacion(int aguja) {
-        String sql = "UPDATE public. \"Personas\" SET persona_identificacion ='" + getIdentificacion() + "'\n"
+    public boolean editarIdentificacion(String identificacion, int aguja) {
+        String sql = "UPDATE public. \"Personas\" "
+                + "SET persona_identificacion ='" + identificacion + "'\n"
                 + "WHERE id_persona= " + aguja + ";";
-
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            System.out.println("Se edito correctamente la identificacion");
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(sql);
     }
 
     /**
@@ -264,70 +422,84 @@ public class PersonaBD extends PersonaMD {
      * @param aguja Se tiene que pasar un int como la Id de persona
      * @return
      */
-    public boolean editarPersonaConFoto(int aguja) {
+    public boolean editarPersonaConFoto(PersonaMD p) {
         String nsql;
 
-        if (isDiscapacidad()) {
-            nsql = "UPDATE public.\"Personas\" SET\n"
-                    + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ? "
-                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = '"
-                    + isDiscapacidad() + "', persona_tipo_discapacidad = '" + getTipoDiscapacidad()
-                    + "', persona_porcenta_discapacidad = '" + getPorcentajeDiscapacidad()
-                    + "', persona_carnet_conadis = '" + getCarnetConadis() + "', persona_calle_principal = '"
-                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                    + " WHERE id_persona = " + aguja + ";";
+        if (p.isDiscapacidad()) {
+            nsql = "UPDATE public.\"Personas\" SET "
+                    + "id_lugar_natal = " + p.getLugarNatal().getId() + ", "
+                    + "id_lugar_residencia = " + p.getLugarResidencia().getId() + ", "
+                    + "persona_foto = ? " + ", "
+                    + "persona_identificacion = '" + p.getIdentificacion() + "', "
+                    + "persona_primer_apellido = '" + p.getPrimerApellido() + "', "
+                    + "persona_segundo_apellido = '" + p.getSegundoApellido() + "', "
+                    + "persona_primer_nombre = '" + p.getPrimerNombre() + "', "
+                    + "persona_segundo_nombre = '" + p.getSegundoNombre() + "', "
+                    + "persona_genero = '" + p.getGenero() + "', "
+                    + "persona_sexo = '" + p.getSexo() + "', "
+                    + "persona_estado_civil = '" + p.getEstadoCivil() + "', "
+                    + "persona_etnia = '" + p.getEtnia() + "', "
+                    + "persona_idioma_raiz = '" + p.getIdiomaRaiz() + "', "
+                    + "persona_tipo_sangre = '" + p.getTipoSangre() + "', "
+                    + "persona_telefono = '" + p.getTelefono() + "', "
+                    + "persona_celular = '" + p.getCelular() + "', "
+                    + "persona_correo = '" + p.getCorreo() + "', "
+                    + "persona_fecha_registro = '" + p.getFechaRegistro() + "', "
+                    + "persona_discapacidad = '" + p.isDiscapacidad() + "', "
+                    + "persona_tipo_discapacidad = '" + p.getTipoDiscapacidad() + "', "
+                    + "persona_porcenta_discapacidad = '" + p.getPorcentajeDiscapacidad() + "', "
+                    + "persona_carnet_conadis = '" + p.getCarnetConadis() + "', "
+                    + "persona_calle_principal = '" + p.getCallePrincipal() + "', "
+                    + "persona_numero_casa = '" + p.getNumeroCasa() + "', "
+                    + "persona_calle_secundaria = '" + p.getCalleSecundaria() + "', "
+                    + "persona_referencia = '" + p.getReferencia() + "', "
+                    + "persona_sector = '" + p.getSector() + "', "
+                    + "persona_idioma = '" + p.getIdioma() + "', "
+                    + "persona_tipo_residencia = '" + p.getTipoResidencia() + "', "
+                    + "persona_fecha_nacimiento = '" + p.getFechaNacimiento() + "', "
+                    + "persona_categoria_migratoria = '" + p.getCategoriaMigratoria() + "' "
+                    + "WHERE id_persona = " + p.getIdPersona() + ";";
         } else {
-            nsql = "UPDATE public.\"Personas\" SET\n"
-                    + " id_lugar_natal = " + getLugarNatal().getId()
-                    + ", id_lugar_residencia = " + getLugarResidencia().getId() + ", persona_foto = ? "
-                    + ", persona_identificacion = '" + getIdentificacion() + "', persona_primer_apellido = '"
-                    + getPrimerApellido() + "', persona_segundo_apellido = '" + getSegundoApellido()
-                    + "', persona_primer_nombre = '" + getPrimerNombre() + "', persona_segundo_nombre = '"
-                    + getSegundoNombre() + "', persona_genero = '" + getGenero()
-                    + "', persona_sexo = '" + getSexo() + "', persona_estado_civil = '" + getEstadoCivil()
-                    + "', persona_etnia = '" + getEtnia() + "', persona_idioma_raiz = '" + getIdiomaRaiz()
-                    + "', persona_tipo_sangre = '" + getTipoSangre() + "', persona_telefono = '" + getTelefono()
-                    + "', persona_celular = '" + getCelular() + "', persona_correo = '" + getCorreo()
-                    + "', persona_fecha_registro = '" + getFechaRegistro() + "', persona_discapacidad = false"
-                    + ", persona_tipo_discapacidad = null , persona_porcenta_discapacidad = 0 "
-                    + ", persona_carnet_conadis = null, persona_calle_principal = '"
-                    + getCallePrincipal() + "', persona_numero_casa = '" + getNumeroCasa()
-                    + "', persona_calle_secundaria = '" + getCalleSecundaria() + "', persona_referencia = '"
-                    + getReferencia() + "', persona_sector = '" + getSector() + "', persona_idioma = '"
-                    + getIdioma() + "', persona_tipo_residencia = '" + getTipoResidencia()
-                    + "', persona_fecha_nacimiento = '" + getFechaNacimiento()
-                    + "', persona_categoria_migratoria = '" + getCategoriaMigratoria() + "'\n"
-                    + " WHERE id_persona = " + aguja + ";";
+            nsql = "UPDATE public.\"Personas\" SET "
+                    + "id_lugar_natal = " + p.getLugarNatal().getId() + ", "
+                    + "id_lugar_residencia = " + p.getLugarResidencia().getId() + ", "
+                    + "persona_foto = ? " + ", "
+                    + "persona_identificacion = '" + p.getIdentificacion() + "', "
+                    + "persona_primer_apellido = '" + p.getPrimerApellido() + "', "
+                    + "persona_segundo_apellido = '" + p.getSegundoApellido() + "', "
+                    + "persona_primer_nombre = '" + p.getPrimerNombre() + "', "
+                    + "persona_segundo_nombre = '" + p.getSegundoNombre() + "', "
+                    + "persona_genero = '" + p.getGenero() + "', "
+                    + "persona_sexo = '" + p.getSexo() + "', "
+                    + "persona_estado_civil = '" + p.getEstadoCivil() + "', "
+                    + "persona_etnia = '" + p.getEtnia() + "', "
+                    + "persona_idioma_raiz = '" + p.getIdiomaRaiz() + "', "
+                    + "persona_tipo_sangre = '" + p.getTipoSangre() + "', "
+                    + "persona_telefono = '" + p.getTelefono() + "', "
+                    + "persona_celular = '" + p.getCelular() + "', "
+                    + "persona_correo = '" + p.getCorreo() + "', "
+                    + "persona_fecha_registro = '" + p.getFechaRegistro() + "', "
+                    + "persona_discapacidad = false" + ", "
+                    + "persona_tipo_discapacidad = null , "
+                    + "persona_porcenta_discapacidad = 0, "
+                    + "persona_carnet_conadis = null, "
+                    + "persona_calle_principal = '" + p.getCallePrincipal() + "', "
+                    + "persona_numero_casa = '" + p.getNumeroCasa() + "', "
+                    + "persona_calle_secundaria = '" + p.getCalleSecundaria() + "', "
+                    + "persona_referencia = '" + p.getReferencia() + "', "
+                    + "persona_sector = '" + p.getSector() + "', "
+                    + "persona_idioma = '" + p.getIdioma() + "', "
+                    + "persona_tipo_residencia = '" + p.getTipoResidencia() + "', "
+                    + "persona_fecha_nacimiento = '" + p.getFechaNacimiento() + "', "
+                    + "persona_categoria_migratoria = '" + p.getCategoriaMigratoria() + "' "
+                    + "WHERE id_persona = " + p.getIdPersona() + ";";
         }
-
-        PreparedStatement ps = conecta.getPS(nsql);
-        if (ps != null) {
-            try {
-                ps.setBinaryStream(1, getFile(), getLogBytes());
-                if (conecta.nosql(ps) == null) {
-                    System.out.println("Editamos correctamente.");
-                }
-                return true;
-                //JOptionPane.showMessageDialog(null, "Persona editada correctamente");
-            } catch (SQLException e) {
-                System.out.println("No se pudo editar persona con foto" + e.getMessage());
-                return false;
-            }
-        } else {
+        PreparedStatement ps = CON.getPSPOOL(nsql);
+        try {
+            ps.setBinaryStream(1, p.getFile(), p.getLogBytes());
+            return CON.executeNoSQL(nsql);
+        } catch (SQLException e) {
+            M.errorMsg("No se pudo editar persona con foto" + e.getMessage());
             return false;
         }
     }
@@ -341,14 +513,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa = 'true'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
-
+        return CON.executeNoSQL(sql);
     }
 
     // Utilizamos la sentencia update para modificar el estado de una persona
@@ -362,13 +527,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE persona_identificacion = '" + identificacion + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(sql);
     }
 
     // Utilizamos la sentencia update para modificar el estado de una persona
@@ -377,13 +536,7 @@ public class PersonaBD extends PersonaMD {
         String sql = "UPDATE public.\"Personas\"\n"
                 + "SET persona_activa='false'"
                 + "WHERE id_persona = '" + idpersona + "';";
-        PreparedStatement ps = conecta.getPS(sql);
-        if (conecta.nosql(ps) == null) {
-            return true;
-        } else {
-            System.out.println("Error");
-            return false;
-        }
+        return CON.executeNoSQL(sql);
     }
 
     //Consultamos todos las personas en nuestro sistema 
@@ -534,115 +687,56 @@ public class PersonaBD extends PersonaMD {
         return consultarPor(sql);
     }
 
-//    //Buscar Persona con aguja
-//    public PersonaMD buscarPersonaParaReferencia(int idPersona) {
-//        String sql = "SELECT id_persona, persona_identificacion,"
-//                + " persona_primer_apellido, persona_segundo_apellido, "
-//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-//                + " persona_celular "
-//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-//                + " id_persona = " + idPersona + ";";
-//
-//        return consultarParaReferencia(sql);
-//    }
-//    public PersonaMD buscarPersonaParaReferencia(String identificacion) {
-//        String sql = "SELECT id_persona, id_lugar_natal, "
-//                + "id_lugar_residencia, persona_foto, persona_identificacion,"
-//                + " persona_primer_apellido, persona_segundo_apellido, "
-//                + "persona_primer_nombre, persona_segundo_nombre, persona_correo,"
-//                + " persona_celular "
-//                + "FROM public.\"Personas\" WHERE persona_activa = 'true' AND"
-//                + " persona_identificacion ='" + identificacion + "'";
-//
-//        return consultarParaReferencia(sql);
-//    }
-    private PersonaMD consultarParaReferencia(String sql) {
-        PersonaMD p = new PersonaMD();
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    p.setIdPersona(rs.getInt("id_persona"));
-                    p.setIdentificacion(rs.getString("persona_identificacion"));
-                    p.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    p.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    p.setCorreo(rs.getString("persona_correo"));
-                    p.setCelular(rs.getString("persona_celular"));
-                }
-                rs.close();
-                ps.getConnection().close();
-                return p;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     private ArrayList<PersonaMD> consultarParaTabla(String sql) {
         ArrayList<PersonaMD> pers = new ArrayList();
         PersonaMD p;
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    p = new PersonaMD();
-                    p.setIdPersona(rs.getInt("id_persona"));
-                    p.setIdentificacion(rs.getString("persona_identificacion"));
-                    p.setPrimerApellido(rs.getString("persona_primer_apellido"));
-                    p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
-                    p.setPrimerNombre(rs.getString("persona_primer_nombre"));
-                    p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
-                    if (rs.getDate("persona_fecha_nacimiento") == null) {
-                        p.setFechaNacimiento(null);
-                    } else {
-                        p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
-                    }
-                    p.setCelular(rs.getString("persona_celular"));
-                    p.setTelefono(rs.getString("persona_telefono"));
-                    p.setCorreo(rs.getString("persona_correo"));
-                    pers.add(p);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                p = new PersonaMD();
+                p.setIdPersona(rs.getInt("id_persona"));
+                p.setIdentificacion(rs.getString("persona_identificacion"));
+                p.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+                p.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                p.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                if (rs.getDate("persona_fecha_nacimiento") == null) {
+                    p.setFechaNacimiento(null);
+                } else {
+                    p.setFechaNacimiento(rs.getDate("persona_fecha_nacimiento").toLocalDate());
                 }
-                rs.close();
-                ps.getConnection().close();
-                return pers;
-            } else {
-                return null;
+                p.setCelular(rs.getString("persona_celular"));
+                p.setTelefono(rs.getString("persona_telefono"));
+                p.setCorreo(rs.getString("persona_correo"));
+                pers.add(p);
             }
+
         } catch (SQLException e) {
-            System.out.println("No pudimos consultar personas");
-            System.out.println(e.getMessage());
-            return null;
+            M.errorMsg("NO consultamos personas. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
+        return pers;
     }
 
     //Este metodo unicamente nos devolvera una persona dependiendo de la setencia sql que se envie
     private PersonaMD consultarPor(String sql) {
         PersonaMD p = null;
-        PreparedStatement ps = conecta.getPS(sql);
-        ResultSet rs = conecta.sql(ps);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-            if (rs != null) {
-                while (rs.next()) {
-                    p = obtenerPersona(rs);
-                }
-                rs.close();
-                ps.getConnection().close();
-                return p;
-            } else {
-                return null;
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                p = obtenerPersona(rs);
             }
+            return p;
         } catch (SQLException e) {
-            System.out.println("No se pudo consultar una persona");
-            System.out.println(e.getMessage());
+            M.errorMsg("No conusltamos persona. " + e.getMessage());
             return null;
+        } finally {
+            CON.cerrarCONPS(ps);
         }
     }
 
@@ -655,16 +749,12 @@ public class PersonaBD extends PersonaMD {
         PersonaMD persona = new PersonaMD();
         try {
             persona.setIdPersona(rs.getInt("id_persona"));
-            //Aqui igual se crear una clase lugar 
-
             //Buscamos el lugar que corresponde a cada cosa
-            persona.setLugarNatal(lugar.buscar(rs.getInt("id_lugar_natal")));
-            persona.setLugarResidencia(lugar.buscar(rs.getInt("id_lugar_residencia")));
+            persona.setLugarNatal(LBD.buscar(rs.getInt("id_lugar_natal")));
+            persona.setLugarResidencia(LBD.buscar(rs.getInt("id_lugar_residencia")));
 
             //Consultamos foto y la cargamos si tiene foto
-            if (rs.wasNull()) {
-                System.out.println("No tiene foto");
-            } else {
+            if (rs.getBinaryStream("persona_foto") != null) {
                 is = rs.getBinaryStream("persona_foto");
                 //Pasamos la imagen
                 if (is != null) {
@@ -823,8 +913,7 @@ public class PersonaBD extends PersonaMD {
 
             return persona;
         } catch (SQLException e) {
-            System.out.println("No pudimos obtener persona");
-            System.out.println(e.getMessage());
+            M.errorMsg("No mapeamos personas. " + e.getMessage());
             return null;
         }
     }

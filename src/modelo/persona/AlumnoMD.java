@@ -13,32 +13,6 @@ public class AlumnoMD extends PersonaMD {
     private SectorEconomicoMD sectorEconomico;
     private boolean educacion_Superior, pension, trabaja, activo;
 
-    public AlumnoMD() {
-    }
-
-    public AlumnoMD(String nombre, String tipo_Colegio, String tipo_Bachillerato, String nivel_Academico, String titulo_Superior, String ocupacion, String anio_graduacion, String observacion, String formacion_Padre, String formacion_Madre, String nom_Contacto, String parentesco_Contacto, String contacto_Emergencia, int id_Alumno, SectorEconomicoMD sectorEconomico, boolean educacion_Superior, boolean pension, boolean trabaja, boolean activo, int idPersona, LugarBD lugarNatal, LugarBD lugarResidencia, Image foto, String identificacion, String primerApellido, String segundoApellido, String primerNombre, String segundoNombre, LocalDate fechaNacimiento, String genero, char sexo, String estadoCivil, String etnia, String idiomaRaiz, String tipoSangre, String telefono, String celular, String correo, LocalDate fechaRegistro, boolean discapacidad, String tipoDiscapacidad, byte porcentajeDiscapacidad, String carnetConadis, String callePrincipal, String numeroCasa, String calleSecundaria, String referencia, String sector, String idioma, String tipoResidencia, String categoriaMigratoria, boolean personaActiva) {
-        super(idPersona, lugarNatal, lugarResidencia, foto, identificacion, primerApellido, segundoApellido, primerNombre, segundoNombre, fechaNacimiento, genero, sexo, estadoCivil, etnia, idiomaRaiz, tipoSangre, telefono, celular, correo, fechaRegistro, discapacidad, tipoDiscapacidad, porcentajeDiscapacidad, carnetConadis, callePrincipal, numeroCasa, calleSecundaria, referencia, sector, idioma, tipoResidencia, categoriaMigratoria, personaActiva);
-        this.nombre = nombre;
-        this.tipo_Colegio = tipo_Colegio;
-        this.tipo_Bachillerato = tipo_Bachillerato;
-        this.nivel_Academico = nivel_Academico;
-        this.titulo_Superior = titulo_Superior;
-        this.ocupacion = ocupacion;
-        this.anio_graduacion = anio_graduacion;
-        this.observacion = observacion;
-        this.formacion_Padre = formacion_Padre;
-        this.formacion_Madre = formacion_Madre;
-        this.nom_Contacto = nom_Contacto;
-        this.parentesco_Contacto = parentesco_Contacto;
-        this.contacto_Emergencia = contacto_Emergencia;
-        this.id_Alumno = id_Alumno;
-        this.sectorEconomico = sectorEconomico;
-        this.educacion_Superior = educacion_Superior;
-        this.pension = pension;
-        this.trabaja = trabaja;
-        this.activo = activo;
-    }
-
     public String getTipo_Colegio() {
         return tipo_Colegio;
     }

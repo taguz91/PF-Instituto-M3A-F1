@@ -6,34 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ConectarDB;
+import utils.CONBD;
+import utils.M;
 
 /**
  *
  * @author alumno
  */
-public class VersionBD extends VersionMD {
+public class VersionBD extends CONBD {
 
-    private final ConectarDB conecta;
-
-    public VersionBD(ConectarDB conecta) {
-        this.conecta = conecta;
-    }
-
-    public boolean guardar() {
+    public boolean guardar(VersionMD v) {
         String nsql = "INSERT INTO public.\"Versiones\"(usu_username,\n"
                 + "  version, nombre, url, notas)\n"
                 + "  VALUES(?, ?, ?, ?, ?);";
-        PreparedStatement ps = conecta.getPS(nsql);
+        PreparedStatement ps = CON.getPSPOOL(nsql);
 
         try {
-            ps.setString(1, getUsername());
-            ps.setString(2, getVersion());
-            ps.setString(3, getNombre());
-            ps.setString(4, getUrl());
-            ps.setString(5, getNotas());
+            ps.setString(1, v.getUsername());
+            ps.setString(2, v.getVersion());
+            ps.setString(3, v.getNombre());
+            ps.setString(4, v.getUrl());
+            ps.setString(5, v.getNotas());
 
-            if (conecta.nosql(ps) == null) {
+            if (CON.noSQLPOOL(ps)) {
                 JOptionPane.showMessageDialog(null, "Se guardo correctamente la version.");
                 return true;
             } else {
@@ -41,12 +36,12 @@ public class VersionBD extends VersionMD {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos preparar el statement: " + e.getMessage());
+            M.errorMsg("No pudimos preparar el statement: " + e.getMessage());
             return false;
         }
     }
 
-    public boolean editar(int idVersion) {
+    public boolean editar(VersionMD v) {
         String nsql = "UPDATE public.\"Versiones\" SET \n"
                 + "  usu_username = ?, \n"
                 + "  version = ?, \n"
@@ -54,17 +49,17 @@ public class VersionBD extends VersionMD {
                 + "  url = ?,\n"
                 + "  notas = ?\n"
                 + "  WHERE id_version = ?;";
-        PreparedStatement ps = conecta.getPS(nsql);
+        PreparedStatement ps = CON.getPSPOOL(nsql);
 
         try {
-            ps.setString(1, getUsername());
-            ps.setString(2, getVersion());
-            ps.setString(3, getNombre());
-            ps.setString(4, getUrl());
-            ps.setString(5, getNotas());
-            ps.setInt(6, idVersion);
+            ps.setString(1, v.getUsername());
+            ps.setString(2, v.getVersion());
+            ps.setString(3, v.getNombre());
+            ps.setString(4, v.getUrl());
+            ps.setString(5, v.getNotas());
+            ps.setInt(6, v.getId());
 
-            if (conecta.nosql(ps) == null) {
+            if (CON.noSQLPOOL(ps)) {
                 JOptionPane.showMessageDialog(null, "Se edito correctamente la version.");
                 return true;
             } else {
@@ -72,7 +67,7 @@ public class VersionBD extends VersionMD {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("No pudimos preparar el statement: " + e.getMessage());
+            M.errorMsg("No pudimos preparar el statement: " + e.getMessage());
             return false;
         }
     }
@@ -81,10 +76,10 @@ public class VersionBD extends VersionMD {
         String nsql = "UPDATE public.\"Versiones\"\n"
                 + "  SET version_activa = false\n"
                 + "  WHERE id_version = ?;";
-        PreparedStatement ps = conecta.getPS(nsql);
+        PreparedStatement ps = CON.getPSPOOL(nsql);
         try {
             ps.setInt(1, idVersion);
-            if (conecta.nosql(ps) == null) {
+            if (CON.noSQLPOOL(ps)) {
                 JOptionPane.showMessageDialog(null, "Se elimino correctamente la version.");
                 return true;
             } else {
@@ -92,7 +87,7 @@ public class VersionBD extends VersionMD {
                 return false;
             }
         } catch (HeadlessException | SQLException e) {
-            System.out.println("No pudimos eliminar: " + e.getMessage());
+            M.errorMsg("No pudimos eliminar: " + e.getMessage());
             return false;
         }
     }
@@ -101,10 +96,10 @@ public class VersionBD extends VersionMD {
         String nsql = "UPDATE public.\"Versiones\"\n"
                 + "  SET version_activa = true\n"
                 + "  WHERE id_version = ?;";
-        PreparedStatement ps = conecta.getPS(nsql);
+        PreparedStatement ps = CON.getPSPOOL(nsql);
         try {
             ps.setInt(1, idVersion);
-            if (conecta.nosql(ps) == null) {
+            if (CON.noSQLPOOL(ps)) {
                 JOptionPane.showMessageDialog(null, "Se activo correctamente la version.");
                 return true;
             } else {
@@ -112,7 +107,7 @@ public class VersionBD extends VersionMD {
                 return false;
             }
         } catch (HeadlessException | SQLException e) {
-            System.out.println("No pudimos eliminar: " + e.getMessage());
+            M.errorMsg("No pudimos eliminar: " + e.getMessage());
             return false;
         }
     }
@@ -123,7 +118,7 @@ public class VersionBD extends VersionMD {
                 + "FROM public.\"Versiones\"\n"
                 + "WHERE version_activa = true\n"
                 + "ORDER BY fecha DESC;";
-        PreparedStatement ps = conecta.getPS(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         return consultarParaTbl(ps);
     }
 
@@ -133,30 +128,29 @@ public class VersionBD extends VersionMD {
                 + "FROM public.\"Versiones\"\n"
                 + "WHERE version_activa = false\n"
                 + "ORDER BY fecha DESC;";
-        PreparedStatement ps = conecta.getPS(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         return consultarParaTbl(ps);
     }
 
     private ArrayList<VersionMD> consultarParaTbl(PreparedStatement ps) {
         ArrayList<VersionMD> versiones = null;
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                versiones = new ArrayList<>();
-                while (rs.next()) {
-                    VersionMD v = new VersionMD();
-                    v.setId(rs.getInt("id_version"));
-                    v.setNombre(rs.getString("nombre"));
-                    v.setVersion(rs.getString("version"));
-                    v.setUsername(rs.getString("usu_username"));
+        try {
+            ResultSet rs = ps.executeQuery();
+            versiones = new ArrayList<>();
+            while (rs.next()) {
+                VersionMD v = new VersionMD();
+                v.setId(rs.getInt("id_version"));
+                v.setNombre(rs.getString("nombre"));
+                v.setVersion(rs.getString("version"));
+                v.setUsername(rs.getString("usu_username"));
 
-                    versiones.add(v);
-                }
-            } catch (SQLException e) {
-                System.out.println("No pudimos consultar versiones: " + e.getMessage());
+                versiones.add(v);
             }
+        } catch (SQLException e) {
+            M.errorMsg("No pudimos consultar versiones: " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
-        conecta.cerrar(ps);
         return versiones;
     }
 
@@ -167,26 +161,20 @@ public class VersionBD extends VersionMD {
                 + "AND version = ? \n"
                 + "AND version_activa = true;";
         VersionMD v = null;
-        PreparedStatement ps = conecta.getPS(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ps.setString(1, version);
-        } catch (SQLException e) {
-            System.out.println("No pudimos preparar la consulta: " + e.getMessage());
-        }
-
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                v = new VersionMD();
-                while (rs.next()) {
-                    v.setId(rs.getInt(1));
-                    v.setUsername(rs.getString(2));
-                }
-            } catch (SQLException e) {
-                System.out.println("No pudimos consultar la version: " + e.getMessage());
+            ResultSet rs = ps.executeQuery();
+            v = new VersionMD();
+            while (rs.next()) {
+                v.setId(rs.getInt(1));
+                v.setUsername(rs.getString(2));
             }
+        } catch (SQLException e) {
+            M.errorMsg("No pudimos consultar la version: " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
-        conecta.cerrar(ps);
         return v;
     }
 
@@ -196,30 +184,24 @@ public class VersionBD extends VersionMD {
                 + "FROM public.\"Versiones\"\n"
                 + "WHERE id_version = ?;";
         VersionMD v = null;
-        PreparedStatement ps = conecta.getPS(sql);
+        PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ps.setInt(1, idVersion);
-        } catch (SQLException e) {
-            System.out.println("No pudimos preparar la consulta: " + e.getMessage());
-        }
-
-        ResultSet rs = conecta.sql(ps);
-        if (rs != null) {
-            try {
-                v = new VersionMD();
-                while (rs.next()) {
-                    v.setId(rs.getInt("id_version"));
-                    v.setUsername(rs.getString("usu_username"));
-                    v.setVersion(rs.getString("version"));
-                    v.setNombre(rs.getString("nombre"));
-                    v.setUrl(rs.getString("url"));
-                    v.setNotas(rs.getString("notas"));
-                }
-            } catch (SQLException e) {
-                System.out.println("No pudimos consultar la version: " + e.getMessage());
+            ResultSet rs = ps.executeQuery();
+            v = new VersionMD();
+            while (rs.next()) {
+                v.setId(rs.getInt("id_version"));
+                v.setUsername(rs.getString("usu_username"));
+                v.setVersion(rs.getString("version"));
+                v.setNombre(rs.getString("nombre"));
+                v.setUrl(rs.getString("url"));
+                v.setNotas(rs.getString("notas"));
             }
+        } catch (SQLException e) {
+            M.errorMsg("No pudimos preparar la consulta: " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
-        conecta.cerrar(ps);
         return v;
     }
 

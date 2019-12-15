@@ -1,28 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo;
 
-import utils.CONS;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import utils.CONBD;
 
 /**
  *
  * @author Andres Ullauri
  */
-public class ConexionBD {
-
-    private String url = "jdbc:postgresql://localhost:5432/baseFinal";
-
-    private String usuario = "postgres";
-
-    private String contrasena = "qwerty79";
-    private final ConectarDB conecta;
+public class ConexionBD extends CONBD {
+    
 
     private Connection con = null;
 
@@ -30,16 +20,8 @@ public class ConexionBD {
 
     private ResultSet rs = null;
 
-    public ConexionBD(ConectarDB conecta) {
-        this.conecta = conecta;
-    }
-
     public void conectar() {
-
-        con = conecta.getConecction("Clase conexion de andres");
-        url = CONS.BD_URL;
-        System.out.println("Establecida la conexión con la base de datos");
-
+        con = CON.getConnection();
     }
 
     public void desconectar() throws SQLException {
@@ -59,21 +41,7 @@ public class ConexionBD {
 
     public Connection getCon() {
         // Comprobar conexion
-        try {
-            if (con != null) {
-                if (con.isClosed()) {
-                    System.out.println("Se abrira conexion en ConexionBD referenciando a resource manager ");
-                    con = conecta.getConecction("Funcion getCon de andresss");
-                }
-            } else {
-                con = conecta.devolverConexion();
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error al comprobar la conexion");
-            con = null;
-            System.out.println(ex.getMessage());
-        }
-
+        con = CON.getConnection();
         return con;
     }
 
