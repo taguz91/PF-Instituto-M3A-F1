@@ -50,45 +50,50 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
     public boolean insertarPlanClases(PlandeClasesMD pl) {
 
+        String SELECT = ""
+                + "INSERT INTO public.\"PlandeClases\"(\n"
+                + "	 id_curso, id_unidad, observaciones,\n"
+                + "	 fecha_revision, fecha_generacion, fecha_cierre,trabajo_autonomo)\n"
+                + "	VALUES (?, ?, ?, ?, ?, ?,?)";
+
+        PreparedStatement stmt = CON.prepareStatement(SELECT);
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement(""
-                    + "INSERT INTO public.\"PlandeClases\"(\n"
-                    + "	 id_curso, id_unidad, observaciones,\n"
-                    + "	 fecha_revision, fecha_generacion, fecha_cierre,trabajo_autonomo)\n"
-                    + "	VALUES (?, ?, ?, ?, ?, ?,?)");
-            st.setInt(1, pl.getId_curso().getId());
-            st.setInt(2, pl.getId_unidad().getIdUnidad());
-            st.setString(3, pl.getObservaciones());
-            System.out.println(pl.getObservaciones() + "----------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            st.setDate(4, null);
-            st.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
-            st.setDate(6, null);
-            st.setString(7, pl.getTrabajo_autonomo());
+
+            stmt.setInt(1, pl.getId_curso().getId());
+            stmt.setInt(2, pl.getId_unidad().getIdUnidad());
+            stmt.setString(3, pl.getObservaciones());
+
+            stmt.setDate(4, null);
+            stmt.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
+            stmt.setDate(6, null);
+            stmt.setString(7, pl.getTrabajo_autonomo());
 //            st.setDate(4, java.sql.Date.valueOf(getFecha_revision()));
 //            st.setDate(5, java.sql.Date.valueOf(getFecha_generacion()));
 //            st.setDate(6, java.sql.Date.valueOf(getFecha_cierre()));
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Falló al guardar");
+        } finally {
+            CON.close(stmt);
         }
         return true;
     }
 
     public boolean editarFechageneracoion(int idpla, LocalDate fecha) {
 
+        String SELECT = "UPDATE public.\"PlandeClases\"\n"
+                + "	SET fecha_generacion=?\n"
+                + "	WHERE id_plan_clases=?";
+        PreparedStatement stmt = CON.prepareStatement(SELECT);
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"PlandeClases\"\n"
-                    + "	SET fecha_generacion=?\n"
-                    + "	WHERE id_plan_clases=?");
-            st.setDate(1, java.sql.Date.valueOf(fecha));
-            st.setInt(2, idpla);
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
+
+            stmt.setDate(1, java.sql.Date.valueOf(fecha));
+            stmt.setInt(2, idpla);
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Falló al guardar");
+        } finally {
+            CON.close(stmt);
         }
         return true;
     }
@@ -180,27 +185,25 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return lista_plan;
     }
 
-    public static List<PlandeClasesMD> consultarPlanClaseExistente(ConexionBD conexion, String[] parametros) {
+    public static List<PlandeClasesMD> consultarPlanClaseExistente(String[] parametros) {
         List<PlandeClasesMD> lista_plan = new ArrayList<>();
 
+        String SELECT = "SELECT DISTINCT pla.id_plan_clases,us.id_unidad, cr.id_curso\n"
+                + "       FROM \"Silabo\" AS s\n"
+                + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
+                + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
+                + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
+                + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
+                + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
+                + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
+                + "					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n"
+                + "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n"
+                + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
+                + "                    WHERE crr.carrera_nombre= '" + parametros[0] + "'\n"
+                + "                    AND p.id_persona=" + parametros[1] + " AND cr.id_prd_lectivo=" + parametros[2] + " ";
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT pla.id_plan_clases,us.id_unidad, cr.id_curso\n"
-                    + "       FROM \"Silabo\" AS s\n"
-                    + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                    + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                    + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                    + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                    + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                    + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
-                    + "					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n"
-                    + "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n"
-                    + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
-                    + "                    WHERE crr.carrera_nombre=?\n"
-                    + "                    AND p.id_persona=? AND cr.id_prd_lectivo=? ");
-            st.setString(1, parametros[0]);
-            st.setInt(2, Integer.parseInt(parametros[1]));
-            st.setInt(3, Integer.parseInt(parametros[2]));
-            ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setId_plan_clases(rs.getInt(1));
@@ -210,19 +213,23 @@ public class PlandeClasesBD extends PlandeClasesMD {
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
         }
         return lista_plan;
     }
 
     public void eliminarPlanClase(PlandeClasesMD pl) {
+
+        String DELETE = "delete from \"PlandeClases\" where id_plan_clases=" + pl.getID();
+        PreparedStatement stmt = CON.prepareStatement(DELETE);
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("delete from \"PlandeClases\" where id_plan_clases=?");
-            st.setInt(1, pl.getID());
-            st.executeUpdate();
-            System.out.println(st);
-            st.close();
+            stmt.setInt(1, pl.getID());
+            stmt.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Falló al eliminar antes de guardar");
+        } finally {
+            CON.close(stmt);
         }
 
     }
@@ -238,9 +245,11 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 pc.setObservaciones(rs.getString(1));
                 pc.setTrabajo_autonomo(rs.getString(2));
                 lista_plan.add(pc);
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlandeClasesBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return lista_plan;
     }
@@ -256,9 +265,11 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 planClase = new PlandeClasesMD();
                 planClase.setId_plan_clases(rs.getInt(1));
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlandeClasesBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return planClase;
     }
@@ -276,9 +287,11 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 planClase.getId_curso().setId(rs.getInt(2));
                 planClase.getId_unidad().setIdUnidad(rs.getInt(3));
                 planClase.setFecha_generacion(rs.getDate(4).toLocalDate());
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlandeClasesBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return planClase;
     }
@@ -340,7 +353,8 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlandeClasesBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } finally {
             CON.close(rs);
         }
@@ -358,17 +372,24 @@ public class PlandeClasesBD extends PlandeClasesMD {
     }
 
     public void aprobarPlanClase(int id_plan, int estado) {
+
+        String UPDATE = "UPDATE public .\"PlandeClases\"\n"
+                + "SET estado_plan=?"
+                + "where id_plan_clases=?";
+
+        PreparedStatement st = CON.prepareStatement(UPDATE);
+
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public .\"PlandeClases\"\n"
-                    + "SET estado_plan=?"
-                    + "where id_plan_clases=?");
             st.setInt(1, estado);
             st.setInt(2, id_plan);
             st.executeUpdate();
-            System.out.println(st);
             st.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlandeClasesBD.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
     }
 

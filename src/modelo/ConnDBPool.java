@@ -256,6 +256,18 @@ public class ConnDBPool {
         return this;
     }
 
+    public ConnDBPool close(PreparedStatement stmt) {
+        try {
+            Connection conn = stmt.getConnection();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this;
+    }
+
     public ConnDBPool close(ResultSet rs) {
         try {
             rs.close();
@@ -279,6 +291,16 @@ public class ConnDBPool {
 
     public PreparedStatement getStmt() {
         return stmt;
+    }
+
+    public PreparedStatement prepareStatement(String sql) {
+        Connection conn = getConnection();
+        try {
+            return conn.prepareStatement(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public ResultSet getRs() {
@@ -444,8 +466,8 @@ public class ConnDBPool {
 
         return statement.replace("(?)", sqlIn);
     }
-    
-        //Mostramos el reporte con el pool
+
+    //Mostramos el reporte con el pool
     public void mostrarReporte(JasperReport jr, Map parametro, String titulo) {
         new Thread(() -> {
             Connection c = getConnection();
