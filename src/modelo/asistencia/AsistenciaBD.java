@@ -25,13 +25,6 @@ public class AsistenciaBD extends AsistenciaMD {
         pool = new ConnDBPool();
     }
 
-    public AsistenciaBD(int id, LocalDate fechaAsistencia, int numeroFaltas, String observaciones, AlumnoCursoMD alumnoCurso) {
-        super(id, fechaAsistencia, numeroFaltas, observaciones, alumnoCurso);
-    }
-
-    public AsistenciaBD() {
-    }
-
     public List<AsistenciaBD> selectWhere(int idDocente, int idperiodoLectivo, String materiaNombre, String cursoNombre) {
         String SELECT = "SELECT \"Asistencia\".id_asistencia, \"Asistencia\".fecha_asistencia, \"              Asistencia\".numero_faltas\n"
                 + "FROM \"Asistencia\"\n"
