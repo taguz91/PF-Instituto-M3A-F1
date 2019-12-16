@@ -16,14 +16,6 @@ public class AsistenciaMD {
     private AlumnoCursoMD alumnoCurso;
     private int num_horas;
 
-    public AsistenciaMD(int id, LocalDate fechaAsistencia, int numeroFaltas, String observaciones, AlumnoCursoMD alumnoCurso) {
-        this.id = id;
-        this.fechaAsistencia = fechaAsistencia;
-        this.numeroFaltas = numeroFaltas;
-        this.observaciones = observaciones;
-        this.alumnoCurso = alumnoCurso;
-    }
-
     public AsistenciaMD() {
     }
 
