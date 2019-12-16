@@ -25,19 +25,21 @@ import vista.principal.VtnPrincipal;
 import vista.silabos.planesDeClase.frmConfiguraciónPlanClase;
 
 public class ControladorConfiguracion_plan_clases {
-    private int id_silabo=-1;
-    private int id_periodo_lectivo=-1;
+
+    private int id_silabo = -1;
+    private int id_periodo_lectivo = -1;
     private final UsuarioBD usuario;
     private ConexionBD conexion;
     private frmConfiguraciónPlanClase frm_cong_PlanClase;
     private final VtnPrincipal vtnPrincipal;
     private List<SilaboMD> silabosDocente;
     private List<MateriaMD> materias_Silabos;
-    private List<CarreraMD>  silabos_docente;
+    private List<CarreraMD> silabos_docente;
     private List<UnidadSilaboMD> unidadesSilabo;
     private List<PlandeClasesMD> lista_plan_clases;
     private List<CursoMD> cursosSilabo;
     private List<PeriodoLectivoMD> periodosCarrera;
+
     public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
         this.usuario = usuario;
         this.vtnPrincipal = vtnPrincipal;
@@ -57,232 +59,238 @@ public class ControladorConfiguracion_plan_clases {
 
         frm_cong_PlanClase.getBtn_cancelar().addActionListener((e) -> {
             frm_cong_PlanClase.dispose();
-             vtnPrincipal.getMnCtPlandeClase().doClick();
+            vtnPrincipal.getMnCtPlandeClase().doClick();
         });
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
-            if (validarPlanClaseExistente()==true) {
-            frm_cong_PlanClase.dispose();
-            Controlador_plan_clases cpc=new 
-        Controlador_plan_clases(silabo_seleccionado(),cursos_seleccionado(),unidad_seleccionada(),usuario, vtnPrincipal, conexion);
-            cpc.iniciaControlador();
+            if (validarPlanClaseExistente() == true) {
+                frm_cong_PlanClase.dispose();
+                Controlador_plan_clases cpc = new Controlador_plan_clases(silabo_seleccionado(), cursos_seleccionado(), unidad_seleccionada(), usuario, vtnPrincipal, conexion);
+                cpc.iniciaControlador();
             } else {
                 JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         });
-          frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
-           frm_cong_PlanClase.getCmb_silabos().addActionListener(a-> clickCmbSilabos());
-           frm_cong_PlanClase.getCmb_Periodos().addActionListener(a-> clickComboPeriodos());
-           estadoCmb_silbo(false);
-           estadoCmb_cursoUnidDES(false);
-           CARGAR_COMBO_CARRERAS();
-           frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
-           estado_comboPeriodos(false);
-           }
-           
-
-   
-     public List<SilaboMD> cargar_silabo(){
-         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),
-             String.valueOf(usuario.getPersona().getIdPersona()),frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString()};
-         List<SilaboMD> silabosdocente= SilaboBD.consultarSilabo1(conexion, parametros);
-         
-         return silabosdocente;
-         
+        frm_cong_PlanClase.getCmb_carreras().addActionListener(a -> clickCmbCarreras());
+        frm_cong_PlanClase.getCmb_silabos().addActionListener(a -> clickCmbSilabos());
+        frm_cong_PlanClase.getCmb_Periodos().addActionListener(a -> clickComboPeriodos());
+        estadoCmb_silbo(false);
+        estadoCmb_cursoUnidDES(false);
+        CARGAR_COMBO_CARRERAS();
+        frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
+        estado_comboPeriodos(false);
     }
-     private List<PeriodoLectivoMD> cargarPeriodos(){
-          List<PeriodoLectivoMD> periodos=PeriodoLectivoBDS.consultarPeriodos(conexion,frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString()); 
-          return periodos;
-     }
- 
-    private SilaboMD silabo_seleccionado(){
-        silabosDocente=cargar_silabo();
+
+    public List<SilaboMD> cargar_silabo() {
+        String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),
+            String.valueOf(usuario.getPersona().getIdPersona()), frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString()};
+        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(conexion, parametros);
+
+        return silabosdocente;
+
+    }
+
+    private List<PeriodoLectivoMD> cargarPeriodos() {
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.single().consultarPeriodos(frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString());
+        return periodos;
+    }
+
+    private SilaboMD silabo_seleccionado() {
+        silabosDocente = cargar_silabo();
         Optional<SilaboMD> silaboSeleccionado = silabosDocente.stream().
                 filter(s -> s.getMateria().getNombre().equals(frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString())).
                 findFirst();
 
         return silaboSeleccionado.get();
     }
-    private CursoMD cursos_seleccionado(){
-        Optional<CursoMD> cursoSeleccionado=cursosSilabo.stream().
+
+    private CursoMD cursos_seleccionado() {
+        Optional<CursoMD> cursoSeleccionado = cursosSilabo.stream().
                 filter(s -> s.getNombre().equals(frm_cong_PlanClase.getCmb_Cursos().getSelectedItem().toString())).
                 findFirst();
         return cursoSeleccionado.get();
     }
-    private UnidadSilaboMD unidad_seleccionada(){
-        Optional<UnidadSilaboMD> unidadSeleccionada= unidadesSilabo.stream().
-                filter(s -> s.getNumeroUnidad()==Integer.parseInt(frm_cong_PlanClase.getCmb_unidades().getSelectedItem().toString())).
+
+    private UnidadSilaboMD unidad_seleccionada() {
+        Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
+                filter(s -> s.getNumeroUnidad() == Integer.parseInt(frm_cong_PlanClase.getCmb_unidades().getSelectedItem().toString())).
                 findFirst();
         return unidadSeleccionada.get();
     }
-    
-    
-    
-    private void CARGAR_COMBO_CARRERAS(){
+
+    private void CARGAR_COMBO_CARRERAS() {
         frm_cong_PlanClase.getCmb_carreras().removeAllItems();
-        silabos_docente=CarrerasBDS.consultar(conexion, usuario.getUsername());
-        if(silabosDocente!=null){
+        silabos_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        if (silabosDocente != null) {
             JOptionPane.showMessageDialog(null, "No tiene carreras asignadas");
-        }else{
+        } else {
             frm_cong_PlanClase.getCmb_carreras().addItem("SELECCIONE UNA CARRERA!");
-        silabos_docente.forEach((cmd) -> {
-            frm_cong_PlanClase.getCmb_carreras().addItem(cmd.getNombre());
-        });
+            silabos_docente.forEach((cmd) -> {
+                frm_cong_PlanClase.getCmb_carreras().addItem(cmd.getNombre());
+            });
         }
     }
-    private void LLENAR_COMBO_SILABOS(List<MateriaMD> materias){
+
+    private void LLENAR_COMBO_SILABOS(List<MateriaMD> materias) {
         frm_cong_PlanClase.getCmb_silabos().removeAllItems();
-        if(materias !=null){
-             frm_cong_PlanClase.getCmb_silabos().addItem("SELECCIONE UN SILABO!");
-            materias_Silabos.forEach(m ->{
+        if (materias != null) {
+            frm_cong_PlanClase.getCmb_silabos().addItem("SELECCIONE UN SILABO!");
+            materias_Silabos.forEach(m -> {
                 frm_cong_PlanClase.getCmb_silabos().addItem(m.getNombre());
             });
             frm_cong_PlanClase.getCmb_silabos().setSelectedIndex(0);
         }
     }
-    private void LLENAR_COMBO_UNIDADES(List<UnidadSilaboMD> unidadesSilabo){
+
+    private void LLENAR_COMBO_UNIDADES(List<UnidadSilaboMD> unidadesSilabo) {
         frm_cong_PlanClase.getCmb_unidades().removeAllItems();
-        if (unidadesSilabo!=null) {
+        if (unidadesSilabo != null) {
             unidadesSilabo.forEach(us -> {
-                
+
                 frm_cong_PlanClase.getCmb_unidades().addItem(String.valueOf(us.getNumeroUnidad()));
             });
         } else {
             System.out.println("siiiiiiiiiiiiiiiiiiiiiiiiimnnnnnnnnnnnnnn unidades");
         }
     }
-    private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos){
+
+    private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos) {
         frm_cong_PlanClase.getCmb_Periodos().removeAllItems();
-        if (periodos!=null) {
+        if (periodos != null) {
             frm_cong_PlanClase.getCmb_Periodos().addItem("SELECCIONE SU PERIODO ACTUAL!");
-            periodos.forEach(pl-> {
+            periodos.forEach(pl -> {
                 frm_cong_PlanClase.getCmb_Periodos().addItem(pl.getNombre());
             });
-           frm_cong_PlanClase.getCmb_Periodos().setSelectedIndex(0);           
+            frm_cong_PlanClase.getCmb_Periodos().setSelectedIndex(0);
         }
     }
-    private void LLENAR_COMBO_CURSOS(List<CursoMD> cursos){
+
+    private void LLENAR_COMBO_CURSOS(List<CursoMD> cursos) {
         frm_cong_PlanClase.getCmb_Cursos().removeAllItems();
-        if (cursos!=null) {
-            cursos.forEach(cs->{
+        if (cursos != null) {
+            cursos.forEach(cs -> {
                 frm_cong_PlanClase.getCmb_Cursos().addItem(String.valueOf(cs.getNombre()));
             });
         } else {
             System.out.println("NO tiene");
         }
     }
-      
-private void clickCmbCarreras(){
-    int posC=frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
-    if (posC>0) {
-        estado_comboPeriodos(true);
-         String carrera=silabos_docente.get(posC-1).getNombre();
-        periodosCarrera=PeriodoLectivoBDS.consultarPeriodos(conexion, carrera);
-        LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
-        
-    }else{
-        estado_comboPeriodos(false);
-    }
-   } 
-   private void clickCmbSilabos(){
-       int posC=frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
-       int posS=frm_cong_PlanClase.getCmb_silabos().getSelectedIndex();
-       
-       if(posS>0){
-           estadoCmb_cursoUnidDES(true);
-           String materia_silabo=materias_Silabos.get(posS -1).getNombre();
-           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
-           LLENAR_COMBO_UNIDADES(unidadesSilabo);
-           cursosSilabo=CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
-           LLENAR_COMBO_CURSOS(cursosSilabo);
-           System.out.println(getIdSilabo()+"------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
-           if (frm_cong_PlanClase.getCmb_Cursos().getItemCount()!=0) {
-               frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
-           } else {
-              JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);                      
-               frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
-           }
-               
-       }else{
-           clickComboPeriodos();
-           estadoCmb_cursoUnidDES(false);
-           frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
-       }
-   }
-   private void clickComboPeriodos(){
-       int posC=frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
-       int posP=frm_cong_PlanClase.getCmb_Periodos().getSelectedIndex();
-       
-       if (posP>0 && posC>0) {
-          estadoCmb_silbo(true);
-        String carrera=silabos_docente.get(posC-1).getNombre();
-        String nombre_periodo=periodosCarrera.get(posP-1).getNombre();
-        materias_Silabos=MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(),nombre_periodo);
-        LLENAR_COMBO_SILABOS(materias_Silabos);
-           
-           System.out.println(getid_periodo()+"----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");
-           
-       } else {
-           clickCmbCarreras();
-           estadoCmb_silbo(false);
-       }
-   }
 
-  private void estadoCmb_silbo(boolean estado){
-      frm_cong_PlanClase.getCmb_silabos().setEnabled(estado);
-       frm_cong_PlanClase.getCmb_silabos().removeAllItems();
-  }
-  private void estadoCmb_cursoUnidDES(boolean estado){
-      frm_cong_PlanClase.getCmb_Cursos().setEnabled(estado);
-      frm_cong_PlanClase.getCmb_Cursos().removeAllItems();
-      frm_cong_PlanClase.getCmb_unidades().setEnabled(estado);
-      frm_cong_PlanClase.getCmb_unidades().removeAllItems();
-      
-  }
-  private void estado_comboPeriodos(boolean estado){
-       frm_cong_PlanClase.getCmb_Periodos().setEnabled(estado);
-       frm_cong_PlanClase.getCmb_Periodos().removeAllItems();
-      
-  }
-  private int getIdSilabo(){
-      String silabo=frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString();
-      silabosDocente=cargar_silabo();
-      silabosDocente
-              .stream()
+    private void clickCmbCarreras() {
+        int posC = frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
+        if (posC > 0) {
+            estado_comboPeriodos(true);
+            String carrera = silabos_docente.get(posC - 1).getNombre();
+            periodosCarrera = PeriodoLectivoBDS.single().consultarPeriodos(carrera);
+            LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
+
+        } else {
+            estado_comboPeriodos(false);
+        }
+    }
+
+    private void clickCmbSilabos() {
+        int posC = frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
+        int posS = frm_cong_PlanClase.getCmb_silabos().getSelectedIndex();
+
+        if (posS > 0) {
+            estadoCmb_cursoUnidDES(true);
+            String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
+            unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
+            LLENAR_COMBO_UNIDADES(unidadesSilabo);
+            cursosSilabo = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            LLENAR_COMBO_CURSOS(cursosSilabo);
+            System.out.println(getIdSilabo() + "------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
+            if (frm_cong_PlanClase.getCmb_Cursos().getItemCount() != 0) {
+                frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "NO PUEDE REALIZAR UN PLAN DE CLASE DE ESTA MATERIA", "Aviso", JOptionPane.ERROR_MESSAGE);
+                frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
+            }
+
+        } else {
+            clickComboPeriodos();
+            estadoCmb_cursoUnidDES(false);
+            frm_cong_PlanClase.getBtn_siguiente().setEnabled(false);
+        }
+    }
+
+    private void clickComboPeriodos() {
+        int posC = frm_cong_PlanClase.getCmb_carreras().getSelectedIndex();
+        int posP = frm_cong_PlanClase.getCmb_Periodos().getSelectedIndex();
+
+        if (posP > 0 && posC > 0) {
+            estadoCmb_silbo(true);
+            String carrera = silabos_docente.get(posC - 1).getNombre();
+            String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
+            materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
+            LLENAR_COMBO_SILABOS(materias_Silabos);
+
+            System.out.println(getid_periodo() + "----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");
+
+        } else {
+            clickCmbCarreras();
+            estadoCmb_silbo(false);
+        }
+    }
+
+    private void estadoCmb_silbo(boolean estado) {
+        frm_cong_PlanClase.getCmb_silabos().setEnabled(estado);
+        frm_cong_PlanClase.getCmb_silabos().removeAllItems();
+    }
+
+    private void estadoCmb_cursoUnidDES(boolean estado) {
+        frm_cong_PlanClase.getCmb_Cursos().setEnabled(estado);
+        frm_cong_PlanClase.getCmb_Cursos().removeAllItems();
+        frm_cong_PlanClase.getCmb_unidades().setEnabled(estado);
+        frm_cong_PlanClase.getCmb_unidades().removeAllItems();
+
+    }
+
+    private void estado_comboPeriodos(boolean estado) {
+        frm_cong_PlanClase.getCmb_Periodos().setEnabled(estado);
+        frm_cong_PlanClase.getCmb_Periodos().removeAllItems();
+
+    }
+
+    private int getIdSilabo() {
+        String silabo = frm_cong_PlanClase.getCmb_silabos().getSelectedItem().toString();
+        silabosDocente = cargar_silabo();
+        silabosDocente
+                .stream()
                 .filter(item -> item.getMateria().getNombre().equals(silabo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                     id_silabo= obj.getID();
+                    id_silabo = obj.getID();
                 });
-      return id_silabo;
-  }
-  
-  private int getid_periodo(){
-     String nombre_periodo=frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString();
-     periodosCarrera=cargarPeriodos();
-     periodosCarrera
+        return id_silabo;
+    }
+
+    private int getid_periodo() {
+        String nombre_periodo = frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString();
+        periodosCarrera = cargarPeriodos();
+        periodosCarrera
                 .stream()
                 .filter(item -> item.getNombre().equals(nombre_periodo))
                 .collect(Collectors.toList())
                 .forEach(obj -> {
-                     id_periodo_lectivo= obj.getID();
+                    id_periodo_lectivo = obj.getID();
                 });
-     return id_periodo_lectivo;
-  }
-   
-  private boolean validarPlanClaseExistente(){
-      boolean valid=true;
-      String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),String.valueOf(usuario.getPersona().getIdPersona()),  String.valueOf(getid_periodo())};
-      lista_plan_clases=PlandeClasesBD.consultarPlanClaseExistente(conexion, parametros);
-      for(PlandeClasesMD plmd:lista_plan_clases){
-          
-      if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
-             && plmd.getId_curso().getId()==cursos_seleccionado().getId() ) {
-          valid=false;
-      }
-      }
-      
-  
-  return valid;
-  }
-  
+        return id_periodo_lectivo;
+    }
+
+    private boolean validarPlanClaseExistente() {
+        boolean valid = true;
+        String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona()), String.valueOf(getid_periodo())};
+        lista_plan_clases = PlandeClasesBD.consultarPlanClaseExistente(conexion, parametros);
+        for (PlandeClasesMD plmd : lista_plan_clases) {
+
+            if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
+                    && plmd.getId_curso().getId() == cursos_seleccionado().getId()) {
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
 }

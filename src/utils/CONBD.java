@@ -6,8 +6,8 @@ import modelo.ConnDBPool;
  *
  * @author gus
  */
-public class CONBD {
-    
-    protected final ConnDBPool CON = ConnDBPool.single();
-    
+public abstract class CONBD {
+
+    protected static final ConnDBPool CON = ConnDBPool.single();
+
 }

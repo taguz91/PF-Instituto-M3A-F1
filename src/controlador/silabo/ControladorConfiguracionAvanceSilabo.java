@@ -134,7 +134,7 @@ public class ControladorConfiguracionAvanceSilabo {
         if (posC > 0) {
             estado_comboPeriodos(true);
             String carrera = carreras_docente.get(posC - 1).getNombre();
-            periodosCarrera = PeriodoLectivoBDS.consultarPeriodos(conexion, carrera);
+            periodosCarrera = PeriodoLectivoBDS.single().consultarPeriodos(carrera);
             LLENA_COMBO_PERIODOS_CARRERA(periodosCarrera);
 
         } else {
@@ -153,7 +153,7 @@ public class ControladorConfiguracionAvanceSilabo {
 //           LLENAR_COMBO_UNIDADES(unidadesSilabo);
             cursoSilabo = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursoSilabo);
-           
+
             if (avance.getCbxCurso().getItemCount() != 0) {
                 avance.getBtnSiguiente().setEnabled(true);
             } else {
@@ -178,8 +178,6 @@ public class ControladorConfiguracionAvanceSilabo {
             String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
             materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
-
-
 
         } else {
             clickCmbCarreras();
@@ -229,7 +227,7 @@ public class ControladorConfiguracionAvanceSilabo {
     }
 
     private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, avance.getCbxCarrera().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.single().consultarPeriodos(avance.getCbxCarrera().getSelectedItem().toString());
         return periodos;
     }
 
