@@ -127,12 +127,13 @@ public class VtnPlanClasesCTR {
         principal.getDpnlPrincipal().add(vista);
         vista.setTitle("PLANES DE CLASE");
         vista.show();
+
         CARGAR_COMBO_CARRERAS();
         CARGAR_COMBO_PERIODOS_CARRERA();
-        CARGAR_JORNADAS();
+        CARGAR_JORNADAS();//
         cargarPlanesDeClaseProfesor();
-        getid_periodo();
 
+        getid_periodo();
         vista.setLocation((principal.getDpnlPrincipal().getSize().width - vista.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - vista.getSize().height) / 2);
 
@@ -141,10 +142,6 @@ public class VtnPlanClasesCTR {
             ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, principal, conexion);
             cp.iniciarControlaador();
         });
-        vista.getCmb_Carreras().addActionListener(a -> cargarPlanesDeClaseProfesor());
-        vista.getCmb_Carreras().addActionListener(a -> CARGAR_COMBO_PERIODOS_CARRERA());
-        vista.getCmbJornadas().addActionListener(a -> cargarPlanesDeClaseProfesor());
-        vista.getCmb_periodos().addActionListener(a -> cargarPlanesDeClaseProfesor());
 
         vista.getBtnCopiar().addActionListener(this::btnCopiar);
 
@@ -194,6 +191,12 @@ public class VtnPlanClasesCTR {
         });
 
         vista.getBtnImplimirPlan().addActionListener(e -> ejecutar(e));
+
+        vista.getCmb_Carreras().addActionListener(a -> cargarPlanesDeClaseProfesor());
+        vista.getCmb_Carreras().addActionListener(a -> CARGAR_COMBO_PERIODOS_CARRERA());
+        vista.getCmbJornadas().addActionListener(a -> cargarPlanesDeClaseProfesor());
+        vista.getCmb_periodos().addActionListener(a -> cargarPlanesDeClaseProfesor());
+
         InitPermisos();
     }
 
@@ -206,10 +209,10 @@ public class VtnPlanClasesCTR {
             if (esCordinador) {
                 String[] parametros1 = {vista.getCmb_Carreras().getSelectedItem().toString(), vista.getCmbJornadas().getSelectedItem().toString(), vista.getTxtBuscarPLC().getText(),
                     String.valueOf(getid_periodo())};
-                planes = PlandeClasesBD.consultarPlanClaseCoordinador(conexion, parametros1);
+                planes = PlandeClasesBD.consultarPlanClaseCoordinador(parametros1);
             } else {
 
-                planes = PlandeClasesBD.consultarPlanClase(conexion, parametros);
+                planes = PlandeClasesBD.consultarPlanClase(parametros);
             }
             for (int j = vista.getTbl().getModel().getRowCount() - 1; j >= 0; j--) {
                 modelotabla.removeRow(j);
@@ -240,7 +243,7 @@ public class VtnPlanClasesCTR {
 
     private void CARGAR_COMBO_PERIODOS_CARRERA() {
         vista.getCmb_periodos().removeAllItems();
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, vista.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.single().consultarPeriodos(vista.getCmb_Carreras().getSelectedItem().toString());
         if (periodos == null) {
             JOptionPane.showMessageDialog(null, "No existen Periodos");
         } else {
@@ -256,9 +259,9 @@ public class VtnPlanClasesCTR {
         vista.getCmb_Carreras().removeAllItems();
         carrerasDocente = new ArrayList<>();
         if (esCordinador) {
-            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
+            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(CONS.USUARIO.getUsername()));
         } else {
-            carrerasDocente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+            carrerasDocente = CarrerasBDS.consultar(conexion, CONS.USUARIO.getUsername());
         }
 
         carrerasDocente.forEach((cmd) -> {
@@ -308,7 +311,7 @@ public class VtnPlanClasesCTR {
     }
 
     private List<PeriodoLectivoMD> cargarPeriodos() {
-        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.consultarPeriodos(conexion, vista.getCmb_Carreras().getSelectedItem().toString());
+        List<PeriodoLectivoMD> periodos = PeriodoLectivoBDS.single().consultarPeriodos(vista.getCmb_Carreras().getSelectedItem().toString());
         return periodos;
     }
 
