@@ -20,6 +20,7 @@ import controlador.alumno.VtnMatriculasAnuladasCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
 import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
+import controlador.asistenciaAlumnos.NEWFrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
@@ -646,7 +647,10 @@ public class VtnPrincipalCTR {
         } else {
             errorNumVentanas();
         }
-
+        // IDEA
+/*
+        NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
+        ctr.iniciar();*/
     }
 
     private void abrirVtnReporteNumAlumno() {
