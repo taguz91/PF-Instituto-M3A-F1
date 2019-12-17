@@ -1,5 +1,6 @@
 package controlador.asistenciaAlumnos;
 
+import controlador.estilo.cmb.TblEditorSpinner;
 import controlador.estilo.cmb.TblRenderSpinner;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
@@ -62,7 +63,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         JSpinner spn = new JSpinner();
         spn.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 3.0d, 1.0d));
         VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellRenderer(new TblRenderSpinner(spn));
-        VTN.getTblAlumnos().getColumnModel().getColumn(2).getCellEditor();
+        VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellEditor(new TblEditorSpinner(spn));
     }
 
     private void iniciarAcciones() {

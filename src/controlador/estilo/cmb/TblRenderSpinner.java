@@ -25,6 +25,7 @@ public class TblRenderSpinner extends DefaultTableCellRenderer {
 
     private void iniciarEventos() {
         spn.setVisible(true);
+        spn.setOpaque(true);
         spn.addChangeListener((ChangeEvent e) -> {
             System.out.println("Cambiamos de listener.");
         });
