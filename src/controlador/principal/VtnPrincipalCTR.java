@@ -19,6 +19,7 @@ import controlador.alumno.VtnAlumnoRetiradosCTR;
 import controlador.alumno.VtnMatriculasAnuladasCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
+import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import controlador.asistenciaAlumnos.NEWFrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
@@ -107,6 +108,7 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
+import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
@@ -637,18 +639,18 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
-        /*FrmAsistencia frm = new FrmAsistencia();
+        FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {
             FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
             asistencia.Init();
         } else {
             errorNumVentanas();
-        }*/
+        }
         // IDEA
-
+/*
         NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
-        ctr.iniciar();
+        ctr.iniciar();*/
     }
 
     private void abrirVtnReporteNumAlumno() {
