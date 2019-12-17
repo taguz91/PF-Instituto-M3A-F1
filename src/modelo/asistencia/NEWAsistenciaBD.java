@@ -48,7 +48,10 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    ON p.id_persona = a.id_persona\n"
                 + "    WHERE ac.id_curso = " + idCurso + "\n"
                 + "    AND  to_char(fecha_asistencia,'DD/MM/YYYY') = '" + fecha + "'\n"
-                + "    ORDER BY alumno;";
+                + "    ORDER BY persona_primer_apellido, "
+                + "    persona_segundo_apellido,"
+                + "    persona_primer_nombre, "
+                + "    persona_segundo_nombre;";
         List<AsistenciaMD> as = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {

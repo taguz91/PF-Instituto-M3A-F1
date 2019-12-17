@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.function.Function;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -81,7 +82,7 @@ public class DCTR extends CONBD {
             });
         }
     }
-    
+
     protected void listenerTxtBuscarLocal(
             JTextField txt,
             JButton btn,
@@ -100,6 +101,21 @@ public class DCTR extends CONBD {
                 buscador.apply(txt.getText().trim());
             });
         }
+    }
+
+    protected void listenerCmbBuscador(JComboBox cmb, Function<String, Void> buscar) {
+        cmb.setEditable(true);
+        cmb.getEditor().getEditorComponent()
+                .addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if (e.getKeyCode() == 10 && cmb.getSelectedIndex() == 0) {
+                            String aguja = cmb.getEditor().getItem().toString();
+                            buscar.apply(aguja.trim());
+                            cmb.showPopup();
+                        }
+                    }
+                });
     }
 
 }

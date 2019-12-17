@@ -2,9 +2,15 @@ package controlador.asistenciaAlumnos;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Function;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
+import modelo.asistencia.AsistenciaMD;
 import modelo.asistencia.GenerarFechas;
 import modelo.asistencia.NEWAsistenciaBD;
 import modelo.curso.CursoMD;
@@ -24,6 +30,9 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     // Listas para combos 
     private List<PeriodoLectivoMD> pls;
     private List<CursoMD> cs;
+    private List<String> fechas;
+    // Lista para tabla 
+    private List<AsistenciaMD> as;
     // Modelo de la tabla 
     private DefaultTableModel mdTbl;
 
@@ -34,6 +43,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     public void iniciar() {
         iniciarCMBPeriodo();
         iniciarTablas();
+        iniciarBuscarCmbFechas();
         ctrPrin.agregarVtn(VTN);
         iniciarAcciones();
         vtnCargada = true;
@@ -58,6 +68,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             clickCmbCurso();
         });
         VTN.getCmbPeriodo().addActionListener(e -> clickCmbPeriodo());
+        VTN.getBtnCargarLista().addActionListener(e -> cargarLista());
     }
 
     private void iniciarCMBPeriodo() {
@@ -94,7 +105,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         int posCurso = VTN.getCmbMateria().getSelectedIndex();
         if (posCurso > 0) {
             GenerarFechas gf = new GenerarFechas();
-            List<String> fechas = gf.getFechasClaseCurso(
+            fechas = gf.getFechasClaseCurso(
                     cs.get(posCurso - 1).getId()
             );
             VTN.getCmbFechas().removeAllItems();
@@ -109,6 +120,70 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                     + ld.getYear()
             );
         }
+    }
+
+    private void iniciarBuscarCmbFechas() {
+        listenerCmbBuscador(VTN.getCmbFechas(), buscarFun());
+    }
+
+    private Function<String, Void> buscarFun() {
+        return t -> {
+            buscarCmbFechas(t);
+            return null;
+        };
+    }
+
+    private void buscarCmbFechas(String aguja) {
+        VTN.getCmbFechas().removeAllItems();
+        VTN.getCmbFechas().addItem(aguja);
+        fechas.forEach(f -> {
+            if (f.contains(aguja)) {
+                VTN.getCmbFechas().addItem(f);
+            }
+        });
+    }
+
+    private void cargarLista() {
+        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
+        int posCurso = VTN.getCmbMateria().getSelectedIndex();
+        if (!fecha.equals("")) {
+            as = ABD.getAlumnosCursoFicha(
+                    cs.get(posCurso - 1).getId(),
+                    fecha
+            );
+            if (as.size() > 0) {
+                llenarTbl(as);
+            } else {
+                ABD.iniciarAsistenciaCursoFecha(
+                        cs.get(posCurso - 1).getId(),
+                        fecha
+                );
+                cargarLista();
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    VTN,
+                    "Debe seleccionar un curso y la fecha."
+            );
+        }
+    }
+    
+    private int numAlum = 1;
+
+    private void llenarTbl(List<AsistenciaMD> as) {
+        SpinnerDateModel spinnerModel2 = new SpinnerDateModel();
+        mdTbl.setRowCount(0);
+        numAlum = 1;
+        as.forEach(a -> {
+            numAlum++;
+            Object[] r = {
+                numAlum,
+                a.getAlumnoCurso().getAlumno().getApellidosNombres(),
+                a.getNumeroFaltas()
+            //spinnerModel2
+            };
+            mdTbl.addRow(r);
+        });
     }
 
 }
