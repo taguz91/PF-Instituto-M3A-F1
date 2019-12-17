@@ -7,6 +7,7 @@ import controlador.principal.VtnPrincipalCTR;
 import controlador.silabo.frm.FRMSilaboCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
@@ -83,19 +84,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         });
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR") || CONS.ROL.getNombre().equalsIgnoreCase("DEV");
-        List<String> estados = new ArrayList<String>() {
-            {
-                add("APROBADO");
-                add("PENDIENTE");
-                add("REVISAR");
-
-            }
-        };
 
         vista.getTbl()
                 .getColumnModel()
                 .getColumn(5)
-                .setCellEditor(new ComboBoxCellEditor(estado, estados));
+                .setCellEditor(new ComboBoxCellEditor(
+                        estado,
+                        Arrays.asList("APROBADO", "PENDIENTE", "REVISAR"))
+                );
     }
 
     /*
@@ -212,7 +208,8 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     .getSelectedIndex());
             if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
                 lista = SILABO_CONN.findBy(
-                        user.getPersona().getIdentificacion(), periodo.getID()
+                        user.getPersona().getIdentificacion(),
+                        periodo.getID()
                 );
             } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
@@ -423,13 +420,13 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     private void chxPeriodos(ActionEvent e) {
         tableM.setRowCount(0);
         vista.getCmbPeriodo().removeAllItems();
-        
+
         if (vista.getChxPeriodos().isSelected()) {
             this.periodos = PERIODO_CONN.selectAllDEV();
         } else {
             this.getPeriodos();
         }
-        
+
         cargarCmbPeriodo();
 
     }

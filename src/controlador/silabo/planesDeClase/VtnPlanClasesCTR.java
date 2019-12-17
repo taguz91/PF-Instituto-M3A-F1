@@ -5,12 +5,14 @@
  */
 package controlador.silabo.planesDeClase;
 
+import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
@@ -291,7 +294,7 @@ public class VtnPlanClasesCTR {
     private PlandeClasesMD plan_clas_id_c_u() {
         int seleccion = vista.getTbl().getSelectedRow();
         planMD = new PlandeClasesMD();
-        planMD = PlandeClasesBD.consultarIDCURSO_ID_UNIDAD(conexion, Integer.parseInt(vista.getTbl().getValueAt(seleccion, 0).toString()));
+        planMD = PlandeClasesBD.consultarIDCURSO_ID_UNIDAD(Integer.parseInt(vista.getTbl().getValueAt(seleccion, 0).toString()));
         return planMD;
     }
 
@@ -316,25 +319,20 @@ public class VtnPlanClasesCTR {
     }
 
     public void imprimir_plan() {
+
         int seleccion = vista.getTbl().getSelectedRow();
+
         if (seleccion >= 0) {
-            try {
+            Map parametro = new HashMap();
 
-                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/plan_de_clase/planClasePagPrincipal.jasper"));
-                Map parametro = new HashMap();
+            parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getId_unidad().getIdUnidad()));
+            parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getId_curso().getId()));
+            parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getID()));
 
-                parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getId_unidad().getIdUnidad()));
-                parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getId_curso().getId()));
-                parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getID()));
-
-                JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                JasperViewer pv = new JasperViewer(jp, false);
-                pv.setVisible(true);
-                pv.setTitle("PLAN DE CLASES");
-                //principal.add(pv);
-            } catch (JRException ex) {
-                Logger.getLogger(VtnPlanClasesCTR.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Middlewares.generarReporte(
+                    getClass().getResource("/vista/silabos/reportes/plan_de_clase/planClasePagPrincipal.jasper"),
+                    "PLAN DE CLASES",
+                    parametro);
 
         } else {
             JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");

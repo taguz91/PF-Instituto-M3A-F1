@@ -116,7 +116,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 + " AND jo.nombre_jornada='" + parametros[1] + "' \n"
                 + " AND cr.id_prd_lectivo=" + parametros[4] + " \n"
                 + " AND m.materia_nombre ILIKE '%" + parametros[2] + "%'\n"
-                + "ORDER BY cr.curso_nombre";
+                + "ORDER BY p.persona_primer_apellido, cr.curso_nombre";
 
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
@@ -159,7 +159,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
                 + "                    AND jo.nombre_jornada='" + parametros[1] + "' \n"
                 + "AND cr.id_prd_lectivo=" + parametros[3] + " \n"
                 + "AND m.materia_nombre ILIKE '%" + parametros[2] + "%'\n"
-                + "ORDER BY cr.curso_nombre";
+                + "ORDER BY p.persona_primer_apellido, cr.curso_nombre";
 
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
@@ -284,13 +284,15 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return planClase;
     }
 
-    public static PlandeClasesMD consultarIDCURSO_ID_UNIDAD(ConexionBD conexion, int id_plan_de_clase) {
+    public static PlandeClasesMD consultarIDCURSO_ID_UNIDAD(int id_plan_de_clase) {
         PlandeClasesMD planClase = null;
 
         String SELECT = "select distinct id_plan_clases,"
                 + " id_curso,id_unidad ,fecha_generacion from \"PlandeClases\" where id_plan_clases=?";
 
         PreparedStatement st = CON.prepareStatement(SELECT);
+
+        System.out.println(st.toString());
 
         try {
             st.setInt(1, id_plan_de_clase);
