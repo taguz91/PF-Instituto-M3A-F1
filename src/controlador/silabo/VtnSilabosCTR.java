@@ -311,7 +311,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                 if (!silabo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
                         || silabo.isEditando()) {
 
-                    mensajeEditando();
+                    //mensajeEditando();
 
                 } else {
                     // Abrimos el formulario  

@@ -13,6 +13,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Effects {
     private static final Cursor LOAD_CURSOR;
     private static final Cursor DEFAULT_CURSOR;
 
-
+    private static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Effects.class);
 
     static {
         LOAD_CURSOR = new Cursor(Cursor.WAIT_CURSOR);
