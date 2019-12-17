@@ -59,7 +59,7 @@ public class FrmEditarAvanceSilaboCTR {
         avanceSi.show();
         avanceSi.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - avanceSi.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - avanceSi.getSize().height) / 2);
-        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
+        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(curso.getId());
         lista_avanUnidades = AvanzeUnidadesBDA.consultarUnidadAvanze(conexion, curso.getId(), seguimientoS.getId_seguimientoS());
         cargarCampos(lista_curso);
 

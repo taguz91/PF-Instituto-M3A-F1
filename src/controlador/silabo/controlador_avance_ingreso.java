@@ -6,7 +6,6 @@
 package controlador.silabo;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.ZoneId;
@@ -17,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import modelo.AvanceSilabo.AvanzeUnidadesBDA;
 
 import modelo.AvanceSilabo.AvanzeUnidadesMDA;
@@ -68,7 +66,7 @@ public class controlador_avance_ingreso {
         avanceSi.show();
         avanceSi.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - avanceSi.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - avanceSi.getSize().height) / 2);
-        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
+        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(curso.getId());
 
         lista_avanzeU = new ArrayList<>();
         unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(silabo.getID());

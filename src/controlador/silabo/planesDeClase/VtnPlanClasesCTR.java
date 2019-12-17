@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
-import modelo.ConexionBD;
 import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
@@ -49,7 +48,6 @@ import vista.silabos.frmCargando1;
 public class VtnPlanClasesCTR {
 
     private final UsuarioBD usuario;
-    private final ConexionBD conexion;
     private final VtnPrincipal principal;
     private VtnPlanClase vista;
     private List<SilaboMD> silabosDocente;
@@ -68,9 +66,8 @@ public class VtnPlanClasesCTR {
 
     private final PlandeClasesBD CON = PlandeClasesBD.single();
 
-    public VtnPlanClasesCTR(UsuarioBD usuario, RolBD rol, ConexionBD conexion, VtnPrincipal principal) {
+    public VtnPlanClasesCTR(UsuarioBD usuario, RolBD rol, VtnPrincipal principal) {
         this.usuario = usuario;
-        this.conexion = conexion;
         this.principal = principal;
         this.rol = rol;
     }
@@ -84,7 +81,6 @@ public class VtnPlanClasesCTR {
     }
 
     public void iniciaControlador() {
-        conexion.conectar();
 
         vista = new VtnPlanClase();
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
@@ -132,7 +128,7 @@ public class VtnPlanClasesCTR {
 
         vista.getBtnNuevoPLC().addActionListener(a -> {
             vista.dispose();
-            ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, principal, conexion);
+            ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, principal);
             cp.iniciarControlaador();
         });
 
@@ -161,7 +157,7 @@ public class VtnPlanClasesCTR {
             if (row != -1) {
                 if (!vista.getTbl().getValueAt(row, 5).equals("Aprobado")) {
                     ControladorEditarPlanClases ce = new ControladorEditarPlanClases(usuario, plan_clas_selecc(),
-                            principal, conexion, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
+                            principal, curso_selecc(), silabo_seleccionado(), unidad_seleccionada());
                     ce.iniciaControlador();
                     vista.dispose();
 

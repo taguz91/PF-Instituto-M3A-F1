@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 
@@ -21,6 +22,8 @@ import modelo.unidadSilabo.UnidadSilaboMD;
  * @author Andres Ullauri
  */
 public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
+
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     private final ConexionBD conexion;
 
@@ -34,11 +37,11 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
     }
 
     public void insertar(EstrategiasUnidadMD e, int iu) {
+        PreparedStatement st = CON.prepareStatement("INSERT INTO public.\"EstrategiasUnidad\"(\n"
+                + "	 id_unidad, id_estrategia)\n"
+                + "	VALUES (" + iu + ", ?)");
 
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"EstrategiasUnidad\"(\n"
-                    + "	 id_unidad, id_estrategia)\n"
-                    + "	VALUES (" + iu + ", ?)");
 
             st.setInt(1, e.getEstrategia().getIdEstrategia());
             st.executeUpdate();
@@ -46,6 +49,8 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
 
     }
@@ -81,16 +86,16 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
         return lista;
     }
 
-    public static List<EstrategiasUnidadMD> cargarEstrategiasPlanClae(ConexionBD conexion, int id_silabo, int numero_unidad) {
+    public static List<EstrategiasUnidadMD> cargarEstrategiasPlanClae(int id_silabo, int numero_unidad) {
 
         List<EstrategiasUnidadMD> lista = new ArrayList<>();
+        PreparedStatement st = CON.prepareStatement("SELECT distinct \"EstrategiasAprendizaje\".descripcion_estrategia\n"
+                + "                     FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n"
+                + "                     WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n"
+                + "                     AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n"
+                + "                    AND id_silabo=? AND numero_unidad=?");
         try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT distinct \"EstrategiasAprendizaje\".descripcion_estrategia\n"
-                    + "                     FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n"
-                    + "                     WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n"
-                    + "                     AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n"
-                    + "                    AND id_silabo=? AND numero_unidad=?");
             st.setInt(1, id_silabo);
             st.setInt(2, numero_unidad);
             ResultSet res = st.executeQuery();
@@ -104,6 +109,8 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
         } catch (SQLException ex) {
             Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
 
+        } finally {
+            CON.close(st);
         }
 
         return lista;

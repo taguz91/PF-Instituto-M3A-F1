@@ -151,7 +151,7 @@ public class ControladorConfiguracionAvanceSilabo {
             String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
 //           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
 //           LLENAR_COMBO_UNIDADES(unidadesSilabo);
-            cursoSilabo = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            cursoSilabo = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursoSilabo);
 
             if (avance.getCbxCurso().getItemCount() != 0) {
@@ -176,7 +176,7 @@ public class ControladorConfiguracionAvanceSilabo {
             estadoCmb_silbo(true);
             String carrera = carreras_docente.get(posC - 1).getNombre();
             String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
-            materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
+            materias_Silabos = MateriasBDS.consultarSilabo2(carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
 
         } else {

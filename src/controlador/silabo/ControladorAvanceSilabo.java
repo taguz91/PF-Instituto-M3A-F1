@@ -32,7 +32,6 @@ public class ControladorAvanceSilabo {
         this.usuario = usuario;
     }
 
-    
     public void iniciaControlador() {
         conexion.conectar();
         avance = new frmAvanceSilabo();
@@ -42,13 +41,12 @@ public class ControladorAvanceSilabo {
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - avance.getSize().height) / 2);
         avance.getBtnCancelar().addActionListener(a1 -> {
             avance.dispose();
-            ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal, conexion);
+            ControladorConfiguracion_plan_clases cp = new ControladorConfiguracion_plan_clases(usuario, vtnPrincipal);
             cp.iniciarControlaador();
 
         });
-         PlaceHolder holder = new PlaceHolder(avance.getTxrObservaciones(), "Escriba su Observacion aqui...");
-          
-          
+        PlaceHolder holder = new PlaceHolder(avance.getTxrObservaciones(), "Escriba su Observacion aqui...");
+
     }
 
     public void cargarCamposCursoCarreraDocente(List<CursoMDS> lista) {
