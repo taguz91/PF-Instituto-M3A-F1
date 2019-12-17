@@ -61,6 +61,13 @@ public class DCTR extends CONBD {
         return mdTbl;
     }
 
+    protected DefaultTableModel iniciarTblConEditar(JTable tbl, String[] titulo) {
+        String[][] datos = {};
+        DefaultTableModel mdTbl = new DefaultTableModel(datos, titulo);
+        tbl.setModel(mdTbl);
+        return mdTbl;
+    }
+
     protected void listenerTxtBuscar(
             JTextField txt,
             JButton btn,

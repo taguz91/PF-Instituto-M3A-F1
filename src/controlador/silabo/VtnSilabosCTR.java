@@ -306,7 +306,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         if (silabo != null) {
 
             silabo = SILABO_CONN.getDisponibilidad(silabo);
-
+            silabo = SILABO_CONN.getSilaboById(
+                        Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
+                );
+                validarEstadoParaEditar(silabo);
+/*
             if (silabo.getEditadoPor().getIdentificacion() != null) {
                 if (!silabo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
                         || silabo.isEditando()) {
@@ -326,7 +330,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                         Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
                 );
                 validarEstadoParaEditar(silabo);
-            }
+            }*/
 
         }
 
