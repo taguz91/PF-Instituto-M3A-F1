@@ -16,14 +16,17 @@ import modelo.carrera.CarreraMD;
  */
 public class CarrerasBDS extends CarreraMD {
 
-    private static ConnDBPool CONN = ConnDBPool.single();
+    private final static ConnDBPool CONN = ConnDBPool.single();
 
     public CarrerasBDS(ConexionBD conexion) {
         //this.conexion = conexion;
     }
 
+    public CarrerasBDS() {
+    }
+
     // Pasado 
-    public static List<CarreraMD> consultar(ConexionBD conexion, String clave) {
+    public static List<CarreraMD> consultar(String clave) {
         String SELECT = "SELECT DISTINCT crr.id_carrera, crr.carrera_nombre\n"
                 + "FROM \"Materias\" AS m\n"
                 + "JOIN \"Cursos\" AS crs ON m.id_materia=crs.id_materia\n"

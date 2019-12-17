@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.ConexionBD;
+import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.persona.PersonaMD;
 
 public class CursosBDS extends CursoMDS {
+
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     private ConexionBD conexion;
 
@@ -25,18 +28,17 @@ public class CursosBDS extends CursoMDS {
         super(id_materia, id_carrera, id_persona);
         this.conexion = conexion;
     }
-    
+
     // Pasado
-    public static List<CursoMD> Consultarcursos(ConexionBD conexion, int id_docente_persona, int id_periodo, String nombre_materia) {
+    public static List<CursoMD> Consultarcursos(int id_docente_persona, int id_periodo, String nombre_materia) {
         List<CursoMD> cursos = new ArrayList<>();
+        PreparedStatement st = CON.prepareStatement("select distinct c.id_curso,c.curso_nombre from \"Cursos\" c join  \"Docentes\" d on c.id_docente=d.id_docente join \"Personas\" p \n"
+                + "on d.id_persona=p.id_persona join \"Materias\" m on c.id_materia=m.id_materia\n"
+                + "where p.id_persona=? and c.id_prd_lectivo=? and m.materia_nombre=?");
         try {
-            PreparedStatement st = conexion.getCon().prepareCall("select distinct c.id_curso,c.curso_nombre from \"Cursos\" c join  \"Docentes\" d on c.id_docente=d.id_docente join \"Personas\" p \n"
-                    + "on d.id_persona=p.id_persona join \"Materias\" m on c.id_materia=m.id_materia\n"
-                    + "where p.id_persona=? and c.id_prd_lectivo=? and m.materia_nombre=?");
             st.setInt(1, id_docente_persona);
             st.setInt(2, id_periodo);
             st.setString(3, nombre_materia);
-            System.out.println(st);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -49,22 +51,23 @@ public class CursosBDS extends CursoMDS {
 
         } catch (SQLException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
         return cursos;
     }
-    
+
     // Pasado 
-    
-    public static int numero(ConexionBD conexion, int id_curso){
-       int numeroAlm=0;
+    public static int numero(ConexionBD conexion, int id_curso) {
+        int numeroAlm = 0;
         try {
             PreparedStatement st = conexion.getCon().prepareCall("SELECT count(id_alumno) from \"AlumnoCurso\" where id_curso=?");
-             st.setInt(1, id_curso);
-              ResultSet rs = st.executeQuery();
-              while (rs.next()) {
-                numeroAlm=rs.getInt(1);
-                
-              }
+            st.setInt(1, id_curso);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                numeroAlm = rs.getInt(1);
+
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CursosBDS.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
@@ -100,7 +103,7 @@ public class CursosBDS extends CursoMDS {
         }
         return cursos;
     }
-    
+
     // ESta no se usa en nada 
     /*
     public static List<CursoMD> ConsultarCurso(ConexionBD conexion) {

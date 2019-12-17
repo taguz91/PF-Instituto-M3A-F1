@@ -5,14 +5,12 @@
  */
 package modelo.PlanClases;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.jornada.JornadaMD;
 import utils.CONBD;
 
@@ -20,7 +18,7 @@ public class JornadasDB extends CONBD {
 
     private static JornadasDB INSTANCE;
 
-    public static List<JornadaMD> consultarJornadas(ConexionBD conexion) {
+    public static List<JornadaMD> consultarJornadas() {
         String SELECT = "select nombre_jornada from \"Jornadas\" ";
 
         List<JornadaMD> lista_jornadas = new ArrayList<>();

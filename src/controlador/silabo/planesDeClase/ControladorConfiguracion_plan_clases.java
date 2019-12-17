@@ -83,7 +83,7 @@ public class ControladorConfiguracion_plan_clases {
     public List<SilaboMD> cargar_silabo() {
         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(),
             String.valueOf(usuario.getPersona().getIdPersona()), frm_cong_PlanClase.getCmb_Periodos().getSelectedItem().toString()};
-        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(conexion, parametros);
+        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(parametros);
 
         return silabosdocente;
 
@@ -119,7 +119,7 @@ public class ControladorConfiguracion_plan_clases {
 
     private void CARGAR_COMBO_CARRERAS() {
         frm_cong_PlanClase.getCmb_carreras().removeAllItems();
-        silabos_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        silabos_docente = CarrerasBDS.consultar(usuario.getUsername());
         if (silabosDocente != null) {
             JOptionPane.showMessageDialog(null, "No tiene carreras asignadas");
         } else {
@@ -195,9 +195,9 @@ public class ControladorConfiguracion_plan_clases {
         if (posS > 0) {
             estadoCmb_cursoUnidDES(true);
             String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
-            unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
+            unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(getIdSilabo());
             LLENAR_COMBO_UNIDADES(unidadesSilabo);
-            cursosSilabo = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            cursosSilabo = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursosSilabo);
             System.out.println(getIdSilabo() + "------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
             if (frm_cong_PlanClase.getCmb_Cursos().getItemCount() != 0) {

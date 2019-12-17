@@ -12,20 +12,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.CONS;
 import modelo.ConexionBD;
-import modelo.ConnDBPool;
 import modelo.PlanClases.JornadasDB;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
@@ -42,12 +38,6 @@ import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.planesDeClase.VtnPlanClase;
 import vista.silabos.frmCargando1;
@@ -118,9 +108,9 @@ public class VtnPlanClasesCTR {
                 int columna = vista.getTbl().getSelectedColumn();
                 if (esCordinador && columna == 5) {
                     if (vista.getTbl().getValueAt(fila, columna).equals(true)) {
-                        new PlandeClasesBD(conexion).aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 1);
+                        new PlandeClasesBD().aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 1);
                     } else {
-                        new PlandeClasesBD(conexion).aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 0);
+                        new PlandeClasesBD().aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 0);
                     }
                 }
 
@@ -185,7 +175,7 @@ public class VtnPlanClasesCTR {
         vista.getBtn_editar_fecha().addActionListener((ActionEvent ae) -> {
             int row = vista.getTbl().getSelectedRow();
             if (row != -1) {
-                ControladorEditarFechaGenPlanClase cep = new ControladorEditarFechaGenPlanClase(conexion, principal, plan_clas_id_c_u());
+                ControladorEditarFechaGenPlanClase cep = new ControladorEditarFechaGenPlanClase(principal, plan_clas_id_c_u());
                 cep.iniciaControlador();
                 vista.dispose();
             } else {
@@ -262,9 +252,9 @@ public class VtnPlanClasesCTR {
         vista.getCmb_Carreras().removeAllItems();
         carrerasDocente = new ArrayList<>();
         if (esCordinador) {
-            carrerasDocente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(CONS.USUARIO.getUsername()));
+            carrerasDocente.add(new CarrerasBDS().retornaCarreraCoordinador(CONS.USUARIO.getUsername()));
         } else {
-            carrerasDocente = CarrerasBDS.consultar(conexion, CONS.USUARIO.getUsername());
+            carrerasDocente = CarrerasBDS.consultar(CONS.USUARIO.getUsername());
         }
 
         carrerasDocente.forEach((cmd) -> {
@@ -276,7 +266,7 @@ public class VtnPlanClasesCTR {
 
     private void CARGAR_JORNADAS() {
         vista.getCmbJornadas().removeAllItems();
-        jornadas = JornadasDB.consultarJornadas(conexion);
+        jornadas = JornadasDB.consultarJornadas();
         jornadas.forEach((lj) -> {
             vista.getCmbJornadas().addItem(lj.getNombre());
         });
@@ -300,7 +290,7 @@ public class VtnPlanClasesCTR {
 
     private CursoMD curso_selecc() {
         int seleccion = vista.getTbl().getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), vista.getTbl().getValueAt(seleccion, 2).toString());
+        lista_curso = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), vista.getTbl().getValueAt(seleccion, 2).toString());
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(vista.getTbl().getValueAt(seleccion, 3).toString())).findFirst();
         return curso_selecccionado.get();
     }
@@ -308,7 +298,7 @@ public class VtnPlanClasesCTR {
     private void eliminarPlanClase() {
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este plan de clase?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            new PlandeClasesBD(conexion).eliminarPlanClase(plan_clas_selecc());
+            new PlandeClasesBD().eliminarPlanClase(plan_clas_selecc());
             JOptionPane.showMessageDialog(null, "Plan de clase eliminado correctamente");
         }
     }
@@ -357,7 +347,7 @@ public class VtnPlanClasesCTR {
     public List<SilaboMD> cargar_silabo() {
         String[] parametros = {vista.getCmb_Carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona()),
             vista.getCmb_periodos().getSelectedItem().toString()};
-        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(conexion, parametros);
+        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(parametros);
 
         return silabosdocente;
 
@@ -374,7 +364,7 @@ public class VtnPlanClasesCTR {
 
     private UnidadSilaboMD unidad_seleccionada() {
         int seleccion = vista.getTbl().getSelectedRow();
-        unidadesSilabo = UnidadSilaboBD.consultar(conexion, silabo_seleccionado().getID(), 1);
+        unidadesSilabo = UnidadSilaboBD.consultar(silabo_seleccionado().getID(), 1);
         Optional<UnidadSilaboMD> unidadSeleccionada = unidadesSilabo.stream().
                 filter(s -> s.getNumeroUnidad() == Integer.parseInt(vista.getTbl().getValueAt(seleccion, 4).toString())).
                 findFirst();

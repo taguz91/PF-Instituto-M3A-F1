@@ -39,8 +39,7 @@ import vista.silabos.frmAvanceSilabo;
  * @author HP
  */
 public class controlador_avance_ingreso {
-    
-    
+
     private ConexionBD conexion;
     private final VtnPrincipal vtnPrincipal;
     private CursoMD curso;
@@ -51,7 +50,6 @@ public class controlador_avance_ingreso {
     private List<AvanzeUnidadesMDA> lista_avanzeU;
     private SeguimientoSilaboMD seguimientoSilaboMD;
     private List<SeguimientoSilaboMD> count;
-   
 
     public controlador_avance_ingreso(ConexionBD conexion, VtnPrincipal vtnPrincipal, CursoMD curso,
             SilaboMD silabo) {
@@ -59,7 +57,7 @@ public class controlador_avance_ingreso {
         this.vtnPrincipal = vtnPrincipal;
         this.curso = curso;
         this.silabo = silabo;
-        
+
     }
 
     public void init() {
@@ -71,53 +69,46 @@ public class controlador_avance_ingreso {
         avanceSi.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - avanceSi.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - avanceSi.getSize().height) / 2);
         lista_curso = CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
-        
-        lista_avanzeU=new ArrayList<>();
-        unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(conexion, silabo.getID());
+
+        lista_avanzeU = new ArrayList<>();
+        unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(silabo.getID());
         cargarTemasUnidades();
         cargarCampos(lista_curso);
         avanceSi.getCbxTipoReporte().removeItemAt(2);
-        avanceSi.getBntGuardar().addActionListener(e-> ejecutar(e));
-        avanceSi.getBtnCancelar().addActionListener(a1 ->{
+        avanceSi.getBntGuardar().addActionListener(e -> ejecutar(e));
+        avanceSi.getBtnCancelar().addActionListener(a1 -> {
             avanceSi.dispose();
             vtnPrincipal.getMnCAvanceSilabo().doClick();
         });
-        
-        avanceSi.getCbxUnidad().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarUnidad();
-            }
+
+        avanceSi.getCbxUnidad().addActionListener((ActionEvent e) -> {
+            mostrarUnidad();
         });
-        
-        avanceSi.getSpnCumplimiento().addChangeListener(new ChangeListener() {
-           @Override
-           public void stateChanged(ChangeEvent e) {
-               AvanzeUnidadesMDA unidadSeleccionadaAvanz=seleccionarUnidadA();
-               unidadSeleccionadaAvanz.setPortecentaje((int) avanceSi.getSpnCumplimiento().getValue());
-                
-           }
-       });
-         avanceSi.getTxrObservaciones().addKeyListener(new KeyAdapter() {
-            
+
+        avanceSi.getSpnCumplimiento().addChangeListener((ChangeEvent e) -> {
+            AvanzeUnidadesMDA unidadSeleccionadaAvanz = seleccionarUnidadA();
+            unidadSeleccionadaAvanz.setPortecentaje((int) avanceSi.getSpnCumplimiento().getValue());
+        });
+        avanceSi.getTxrObservaciones().addKeyListener(new KeyAdapter() {
+
             @Override
             public void keyReleased(KeyEvent ke) {
-              AvanzeUnidadesMDA unidadSeleccionadaAvanz=seleccionarUnidadA();
-                unidadSeleccionadaAvanz.setObservaciones(avanceSi.getTxrObservaciones().getText());  
-                
+                AvanzeUnidadesMDA unidadSeleccionadaAvanz = seleccionarUnidadA();
+                unidadSeleccionadaAvanz.setObservaciones(avanceSi.getTxrObservaciones().getText());
+
             }
-         });
-         avanceSi.getCbxUnidad().setSelectedIndex(0);
+        });
+        avanceSi.getCbxUnidad().setSelectedIndex(0);
     }
-    
-    private void cargarTemasUnidades(){
-         unidadesSilabo.forEach((umd)->{
+
+    private void cargarTemasUnidades() {
+        unidadesSilabo.forEach((umd) -> {
             avanceSi.getCbxUnidad().addItem(umd.getTituloUnidad());
         });
-            for(UnidadSilaboMD us:unidadesSilabo){
-        lista_avanzeU.add(new AvanzeUnidadesMDA(us));
-            }
-    }    
+        for (UnidadSilaboMD us : unidadesSilabo) {
+            lista_avanzeU.add(new AvanzeUnidadesMDA(us));
+        }
+    }
 
     public void cargarCampos(List<CursoMDS> lista) {
         for (CursoMDS cursoMDS : lista) {
@@ -135,116 +126,115 @@ public class controlador_avance_ingreso {
             avanceSi.getTxtNumeroAlumnos().setText(String.valueOf(numeroAlm));
         }
     }
-    private void mostrarUnidad(){
-       AvanzeUnidadesMDA unidadesMDA=seleccionarUnidadA();
-  
-       avanceSi.getTxrContenidos().setText(unidadesMDA.getUnidad().getContenidosUnidad());
-       avanceSi.getTxrObservaciones().setText(unidadesMDA.getObservaciones());
-       avanceSi.getSpnCumplimiento().setValue(unidadesMDA.getPortecentaje());
+
+    private void mostrarUnidad() {
+        AvanzeUnidadesMDA unidadesMDA = seleccionarUnidadA();
+
+        avanceSi.getTxrContenidos().setText(unidadesMDA.getUnidad().getContenidosUnidad());
+        avanceSi.getTxrObservaciones().setText(unidadesMDA.getObservaciones());
+        avanceSi.getSpnCumplimiento().setValue(unidadesMDA.getPortecentaje());
     }
-    
-   private AvanzeUnidadesMDA seleccionarUnidadA(){
-        System.out.println(lista_avanzeU.size()+" -------------------TAMAÑO------------------------->>>> DEL ARRAY AVANCE_UNIDADES");
-        Optional<AvanzeUnidadesMDA> unidadSeleccionadaA=lista_avanzeU.stream().filter(uas->
-        uas.getUnidad().getTituloUnidad().equals(avanceSi.getCbxUnidad().getSelectedItem().toString())).findFirst();
-            
+
+    private AvanzeUnidadesMDA seleccionarUnidadA() {
+        System.out.println(lista_avanzeU.size() + " -------------------TAMAÑO------------------------->>>> DEL ARRAY AVANCE_UNIDADES");
+        Optional<AvanzeUnidadesMDA> unidadSeleccionadaA = lista_avanzeU.stream().filter(uas
+                -> uas.getUnidad().getTituloUnidad().equals(avanceSi.getCbxUnidad().getSelectedItem().toString())).findFirst();
+
         return unidadSeleccionadaA.get();
     }
-   
-   private boolean guardar_SeguimientoSilabo(){
-       boolean esInterciclo=true;
-       try {
-           seguimientoSilaboMD=new SeguimientoSilaboMD(curso);
-           seguimientoSilaboMD.getCurso().setId(curso.getId());
-           seguimientoSilaboMD.setFecha_entrega_informe(avanceSi.getDchFechaEntrega().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-           if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Interciclo")) {
-               esInterciclo=true;
-           }
-           seguimientoSilaboMD.setEsInterciclo(esInterciclo);
-           if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
-             insertarAvanceUnidades();
-               
-               return true;
-           }
-           
-       } catch (Exception e) {
-             System.out.println("Fallo al guardar ULTIMO");
-           
-       }
-       return false;
-   }
-   
-   private  void insertarAvanceUnidades(){
-       seguimientoSilaboMD=SeguimientoSilaboBD.consultarUltimoSegumiento(conexion, curso.getId(), seguimientoSilaboMD.isEsInterciclo());
-       seguimientoSilaboMD.setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
-       for(AvanzeUnidadesMDA avanceU:lista_avanzeU){
-           avanceU.getSeguimiento().setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
-           AvanzeUnidadesBDA aus=new AvanzeUnidadesBDA(conexion);
-           aus.insertarAvanzeUnidades(avanceU, avanceU.getSeguimiento().getId_seguimientoS());
-       }
-       
-   }
-   
-   private boolean accion=true;
-   private void ejecutar(ActionEvent e){
-               if (accion) {
+
+    private boolean guardar_SeguimientoSilabo() {
+        boolean esInterciclo = true;
+        try {
+            seguimientoSilaboMD = new SeguimientoSilaboMD(curso);
+            seguimientoSilaboMD.getCurso().setId(curso.getId());
+            seguimientoSilaboMD.setFecha_entrega_informe(avanceSi.getDchFechaEntrega().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Interciclo")) {
+                esInterciclo = true;
+            }
+            seguimientoSilaboMD.setEsInterciclo(esInterciclo);
+            if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
+                insertarAvanceUnidades();
+
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Fallo al guardar ULTIMO");
+
+        }
+        return false;
+    }
+
+    private void insertarAvanceUnidades() {
+        seguimientoSilaboMD = SeguimientoSilaboBD.consultarUltimoSegumiento(conexion, curso.getId(), seguimientoSilaboMD.isEsInterciclo());
+        seguimientoSilaboMD.setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
+        for (AvanzeUnidadesMDA avanceU : lista_avanzeU) {
+            avanceU.getSeguimiento().setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
+            AvanzeUnidadesBDA aus = new AvanzeUnidadesBDA(conexion);
+            aus.insertarAvanzeUnidades(avanceU, avanceU.getSeguimiento().getId_seguimientoS());
+        }
+
+    }
+
+    private boolean accion = true;
+
+    private void ejecutar(ActionEvent e) {
+        if (accion) {
             new Thread(() -> {
                 accion = false;
-                if (validarCampos()==true) {
-                        boolean aux=false;
-                        avanceSi.getBtnCancelar().setEnabled(false);
-                        avanceSi.getBntGuardar().setEnabled(false);
-                        
-                        vtnPrincipal.getLblEstado().setText("                                  Guardando su Seguimiento de Sílabo! Espere por favor...........");
-                        
+                if (validarCampos() == true) {
+                    boolean aux = false;
+                    avanceSi.getBtnCancelar().setEnabled(false);
+                    avanceSi.getBntGuardar().setEnabled(false);
+
+                    vtnPrincipal.getLblEstado().setText("                                  Guardando su Seguimiento de Sílabo! Espere por favor...........");
+
                     try {
                         Thread.sleep(400);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(controlador_avance_ingreso.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                    aux=guardar_SeguimientoSilabo();
-                    
-                    if(aux==true){
-                         JOptionPane.showMessageDialog(avanceSi, "Se guardó correctamente!");
-                         avanceSi.dispose();
+
+                    aux = guardar_SeguimientoSilabo();
+
+                    if (aux == true) {
+                        JOptionPane.showMessageDialog(avanceSi, "Se guardó correctamente!");
+                        avanceSi.dispose();
                         vtnPrincipal.getMnCAvanceSilabo().doClick();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Falló al guardar! Intente de nuevo! ", "Aviso", JOptionPane.ERROR_MESSAGE);
-                         avanceSi.getBtnCancelar().setEnabled(true);
+                        avanceSi.getBtnCancelar().setEnabled(true);
                         avanceSi.getBntGuardar().setEnabled(true);
                     }
-                }else{
-                     JOptionPane.showMessageDialog(null, "         REVISE INFORMACION INCOMPLETA\nY/O REPORTE DE CICLO O INTERCICLO YA EXISTENTE", "Aviso", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "         REVISE INFORMACION INCOMPLETA\nY/O REPORTE DE CICLO O INTERCICLO YA EXISTENTE", "Aviso", JOptionPane.ERROR_MESSAGE);
                 }
-
-                
 
                 vtnPrincipal.getLblEstado().setText("");
                 accion = true;
 
             }).start();
         }
-       
-   }
-   
-   private boolean validarCampos(){
-       boolean valid=true;
-       if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Reporte Correspondiente a")
-                || avanceSi.getDchFechaEntrega().getDate()==null) {
-           valid=false;
-       }
-       
-       
-       for (int i = 0; i < lista_avanzeU.size(); i++) {
-           
-           if(lista_avanzeU.get(i).getObservaciones()==null){
-               valid=false;
-           }
+
+    }
+
+    private boolean validarCampos() {
+        boolean valid = true;
+        if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Reporte Correspondiente a")
+                || avanceSi.getDchFechaEntrega().getDate() == null) {
+            valid = false;
+        }
+
+        for (int i = 0; i < lista_avanzeU.size(); i++) {
+
+            if (lista_avanzeU.get(i).getObservaciones() == null) {
+                valid = false;
+            }
 //           if (lista_avanzeU.get(i).getPortecentaje()==0) {
 //               valid=false;
 //           }
-       }
+        }
 //       count=SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, curso.getId());
 //         boolean esInterciclo=true;
 //        for(SeguimientoSilaboMD ss:count){
@@ -257,11 +247,8 @@ public class controlador_avance_ingreso {
 //                valid=false;
 //            }
 //        }
-       return valid;
-       
-   }
-    
-  
+        return valid;
 
-    
+    }
+
 }

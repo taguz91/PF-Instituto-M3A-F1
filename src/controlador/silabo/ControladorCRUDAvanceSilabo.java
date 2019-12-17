@@ -209,9 +209,9 @@ public class ControladorCRUDAvanceSilabo {
         seguimiento.getCmb_Carreras().removeAllItems();
         carreras_docente = new ArrayList<>();
         if (esCordinador) {
-            carreras_docente.add(new CarrerasBDS(conexion).retornaCarreraCoordinador(usuario.getUsername()));
+            carreras_docente.add(new CarrerasBDS().retornaCarreraCoordinador(usuario.getUsername()));
         } else {
-            carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+            carreras_docente = CarrerasBDS.consultar( usuario.getUsername());
         }
 
         carreras_docente.forEach((cmd) -> {
@@ -223,7 +223,7 @@ public class ControladorCRUDAvanceSilabo {
 
     private void CARGAR_JORNADAS() {
         seguimiento.getCmbJornadas().removeAllItems();
-        lista_jornadas = JornadasDB.consultarJornadas(conexion);
+        lista_jornadas = JornadasDB.consultarJornadas();
         lista_jornadas.forEach((lj) -> {
             seguimiento.getCmbJornadas().addItem(lj.getNombre());
         });
@@ -274,7 +274,7 @@ public class ControladorCRUDAvanceSilabo {
 
     private CursoMD curso_selecc() {
         int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
+        lista_curso = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 3).toString())).findFirst();
         return curso_selecccionado.get();
     }
