@@ -74,7 +74,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import utils.CONS;
-import modelo.ConexionBD;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
 import modelo.version.DitoolBD;
@@ -123,7 +122,6 @@ public class VtnPrincipalCTR {
     private final VtnPrincipal vtnPrin;
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
-    private final ConexionBD conexion;
     private final VtnSelectRolCTR ctrSelecRol;
     //Agregamos la animacion 
     public AnimacionCarga carga;
@@ -140,7 +138,6 @@ public class VtnPrincipalCTR {
         this.rolSeleccionado = CONS.ROL;
         this.usuario = CONS.USUARIO;
         this.ctrSelecRol = ctrSelecRol;
-        this.conexion = new ConexionBD();
 
         //Inciamos la carga pero la detenemos
         this.carga = new AnimacionCarga(vtnPrin.getBtnEstado());

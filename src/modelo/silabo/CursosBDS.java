@@ -7,27 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
+
 import modelo.ConnDBPool;
-import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
-import modelo.materia.MateriaMD;
-import modelo.persona.PersonaMD;
 
 public class CursosBDS extends CursoMDS {
 
     private static final ConnDBPool CON = ConnDBPool.single();
-
-    private ConexionBD conexion;
-
-    public CursosBDS(ConexionBD conexion) {
-        this.conexion = conexion;
-    }
-
-    public CursosBDS(ConexionBD conexion, MateriaMD id_materia, CarreraMD id_carrera, PersonaMD id_persona) {
-        super(id_materia, id_carrera, id_persona);
-        this.conexion = conexion;
-    }
 
     // Pasado
     public static List<CursoMD> Consultarcursos(int id_docente_persona, int id_periodo, String nombre_materia) {

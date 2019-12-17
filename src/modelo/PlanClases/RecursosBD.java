@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 
 /**
@@ -22,17 +21,6 @@ import modelo.ConnDBPool;
 public class RecursosBD extends RecursosMD {
 
     private static final ConnDBPool CON = ConnDBPool.single();
-
-    private ConexionBD conexion;
-
-    public RecursosBD(ConexionBD conexion) {
-        this.conexion = conexion;
-    }
-
-    public RecursosBD(ConexionBD conexion, int id_recurso, String nombre_recursos, String tipo_recurso) {
-        super(id_recurso, nombre_recursos, tipo_recurso);
-        this.conexion = conexion;
-    }
 
     public static List<RecursosMD> consultarRecursos() {
         List<RecursosMD> recursos = new ArrayList<>();

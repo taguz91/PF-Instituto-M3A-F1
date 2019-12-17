@@ -8,12 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
-import modelo.materia.MateriaMD;
-import modelo.persona.PersonaMD;
-import modelo.unidadSilabo.UnidadSilaboMD;
 
 public class PlandeClasesBD extends PlandeClasesMD {
 
@@ -29,23 +25,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return INSTANCE;
     }
 
-    private ConexionBD conexion;
-
     public PlandeClasesBD() {
-    }
-
-    public PlandeClasesBD(ConexionBD conexion) {
-        this.conexion = conexion;
-    }
-
-    public PlandeClasesBD(ConexionBD conexion, CursoMD id_curso, UnidadSilaboMD id_unidad) {
-        super(id_curso, id_unidad);
-        this.conexion = conexion;
-    }
-
-    public PlandeClasesBD(ConexionBD conexion, CursoMD id_curso, UnidadSilaboMD id_unidad, MateriaMD id_materia, PersonaMD id_persona) {
-        super(id_curso, id_unidad, id_materia, id_persona);
-        this.conexion = conexion;
     }
 
     public boolean insertarPlanClases(PlandeClasesMD pl) {

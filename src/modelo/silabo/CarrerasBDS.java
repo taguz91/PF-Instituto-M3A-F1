@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraMD;
 
@@ -17,10 +16,6 @@ import modelo.carrera.CarreraMD;
 public class CarrerasBDS extends CarreraMD {
 
     private final static ConnDBPool CONN = ConnDBPool.single();
-
-    public CarrerasBDS(ConexionBD conexion) {
-        //this.conexion = conexion;
-    }
 
     public CarrerasBDS() {
     }

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import modelo.ConexionBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import utils.CONBD;
 import utils.M;

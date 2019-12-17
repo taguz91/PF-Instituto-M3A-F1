@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 
 /**
@@ -21,13 +20,7 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
 
     private static final ConnDBPool CON = ConnDBPool.single();
 
-    private ConexionBD conexion;
-
     public AvanzeUnidadesBDA() {
-    }
-
-    public AvanzeUnidadesBDA(ConexionBD conexion) {
-        this.conexion = conexion;
     }
 
     public static List<AvanzeUnidadesMDA> consultarUnidadAvanze(int id_curso, int id_segui) {
@@ -73,20 +66,22 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
     }
 
     public boolean insertarAvanzeUnidades(AvanzeUnidadesMDA aus, int idsegui) {
+        PreparedStatement st = CON.prepareStatement("INSERT INTO public.\"Unidad_Seguimiento\"(\n"
+                + "	id_unidad, id_seguimientosilabo, cumplimiento_porcentaje, observaciones)\n"
+                + "	VALUES (?," + idsegui + " , ?, ?);");
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("INSERT INTO public.\"Unidad_Seguimiento\"(\n"
-                    + "	id_unidad, id_seguimientosilabo, cumplimiento_porcentaje, observaciones)\n"
-                    + "	VALUES (?," + idsegui + " , ?, ?);");
             st.setInt(1, aus.getUnidad().getIdUnidad());
             st.setInt(2, aus.getPortecentaje());
             st.setString(3, aus.getObservaciones());
             st.executeUpdate();
-            System.out.println(st);
-            return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("fallo al insertarUnidadesAvance");
+            CON.close(st);
             return false;
+        } finally {
+            CON.close(st);
         }
+        return true;
 
     }
 

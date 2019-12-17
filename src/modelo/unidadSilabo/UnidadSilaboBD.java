@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 
 /**
@@ -16,52 +15,7 @@ import modelo.ConnDBPool;
  */
 public class UnidadSilaboBD extends UnidadSilaboMD {
 
-    private static ConnDBPool CON = ConnDBPool.single();
-
-    private ConexionBD conexion;
-
-    public UnidadSilaboBD(ConexionBD conexion) {
-        this.conexion = conexion;
-    }
-
-    public void insertar(UnidadSilaboMD u, int is) {
-
-        try {
-            PreparedStatement ps = conexion.getCon().prepareStatement("INSERT INTO public.\"UnidadSilabo\"(\n"
-                    + "	 numero_unidad, objetivo_especifico_unidad, resultados_aprendizaje_unidad, contenidos_unidad, fecha_inicio_unidad, fecha_fin_unidad, horas_docencia_unidad, horas_practica_unidad, horas_autonomo_unidad, id_silabo, titulo_unidad)\n"
-                    + "	VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?," + is + ", ?)");
-
-            ps.setInt(1, u.getNumeroUnidad());
-            ps.setString(2, u.getObjetivoEspecificoUnidad());
-            ps.setString(3, u.getResultadosAprendizajeUnidad());
-            ps.setString(4, u.getContenidosUnidad());
-            if (u.getFechaInicioUnidad() == null) {
-                ps.setDate(5, null);
-
-            } else {
-                ps.setDate(5, java.sql.Date.valueOf(u.getFechaInicioUnidad()));
-            }
-            if (u.getFechaFinUnidad() == null) {
-                ps.setDate(6, null);
-
-            } else {
-                ps.setDate(6, java.sql.Date.valueOf(u.getFechaFinUnidad()));
-            }
-
-            ps.setDouble(7, u.getHorasDocenciaUnidad());
-            ps.setDouble(8, u.getHorasPracticaUnidad());
-            ps.setDouble(9, u.getHorasAutonomoUnidad());
-
-            ps.setString(10, u.getTituloUnidad());
-
-            ps.executeUpdate();
-            System.out.println(ps);
-            ps.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     public static List<UnidadSilaboMD> consultar(int clave, int tipo) {
         List<UnidadSilaboMD> unidades = new ArrayList<>();
@@ -176,28 +130,6 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             CON.close(st);
         }
         return unidades;
-    }
-
-    public static UnidadSilaboMD consultarUltima(ConexionBD conexion, int is, int iu) {
-        UnidadSilaboMD unidad = null;
-        try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT id_unidad FROM \"UnidadSilabo\" WHERE id_silabo=? AND numero_unidad=?");
-            st.setInt(1, is);
-            st.setInt(2, iu);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                unidad = new UnidadSilaboMD();
-
-                unidad.setIdUnidad(rs.getInt(1));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        return unidad;
     }
 
 }

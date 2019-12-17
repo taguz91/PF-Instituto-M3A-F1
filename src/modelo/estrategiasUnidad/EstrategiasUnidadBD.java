@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
-import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
-import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
  *
@@ -24,17 +21,6 @@ import modelo.unidadSilabo.UnidadSilaboMD;
 public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
 
     private static final ConnDBPool CON = ConnDBPool.single();
-
-    private final ConexionBD conexion;
-
-    public EstrategiasUnidadBD(ConexionBD conexion) {
-        this.conexion = conexion;
-    }
-
-    public EstrategiasUnidadBD(ConexionBD conexion, EstrategiasAprendizajeMD idEstrategia, UnidadSilaboMD idUnidad) {
-        super(idEstrategia, idUnidad);
-        this.conexion = conexion;
-    }
 
     public void insertar(EstrategiasUnidadMD e, int iu) {
         PreparedStatement st = CON.prepareStatement("INSERT INTO public.\"EstrategiasUnidad\"(\n"
@@ -53,37 +39,6 @@ public class EstrategiasUnidadBD extends EstrategiasUnidadMD {
             CON.close(st);
         }
 
-    }
-
-    public static List<EstrategiasUnidadMD> cargarEstrategiasU(ConexionBD conexion, int aguja) {
-
-        List<EstrategiasUnidadMD> lista = new ArrayList<>();
-        try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT \"EstrategiasUnidad\".id_unidad,\"EstrategiasUnidad\".id_estrategia,\"EstrategiasAprendizaje\".descripcion_estrategia,\"UnidadSilabo\".numero_unidad  \n"
-                    + "FROM \"EstrategiasUnidad\",\"UnidadSilabo\",\"EstrategiasAprendizaje\"\n"
-                    + "WHERE \"EstrategiasUnidad\".id_unidad=\"UnidadSilabo\".id_unidad\n"
-                    + "AND \"EstrategiasUnidad\".id_estrategia=\"EstrategiasAprendizaje\".id_estrategia\n"
-                    + "AND id_silabo=" + aguja + "");
-            ResultSet res = st.executeQuery();
-
-            while (res.next()) {
-                EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
-
-                eu.getUnidad().setIdUnidad(res.getInt(1));
-                eu.getUnidad().setNumeroUnidad(res.getInt(4));
-                eu.getEstrategia().setIdEstrategia(res.getInt(2));
-                eu.getEstrategia().setDescripcionEstrategia(res.getString(3));
-
-                lista.add(eu);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(EstrategiasUnidadBD.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        return lista;
     }
 
     public static List<EstrategiasUnidadMD> cargarEstrategiasPlanClae(int id_silabo, int numero_unidad) {

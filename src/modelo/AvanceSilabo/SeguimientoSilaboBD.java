@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
 import modelo.ConnDBPool;
 
 /**
@@ -23,13 +22,7 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
 
     private static final ConnDBPool CON = ConnDBPool.single();
 
-    private ConexionBD conexion;
-
     public SeguimientoSilaboBD() {
-    }
-
-    public SeguimientoSilaboBD(ConexionBD conexion) {
-        this.conexion = conexion;
     }
 
     public boolean insertarSeguimiento(SeguimientoSilaboMD ss) {
@@ -142,44 +135,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             Logger.getLogger(SeguimientoSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             CON.close(st);
-        }
-        return lista_seguimiento;
-    }
-
-    public static List<SeguimientoSilaboMD> consultarSeguimientoExistentes(ConexionBD conexion, String[] parametros) {
-        List<SeguimientoSilaboMD> lista_seguimiento = new ArrayList<>();
-
-        try {
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT  \n"
-                    + "ss.id_seguimientosilabo,ss.id_curso,ss.es_interciclo\n"
-                    + "       FROM \"Silabo\" AS s\n"
-                    + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                    + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                    + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                    + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                    + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                    + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
-                    + "					JOIN \"SeguimientoSilabo\" AS ss on  cr.id_curso=ss.id_Curso \n"
-                    + "					JOIN \"Unidad_Seguimiento\" AS us on ss.id_seguimientosilabo=us.id_seguimientosilabo\n"
-                    + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
-                    + "                    WHERE crr.carrera_nombre=?\n"
-                    + "                    AND p.id_persona=? AND cr.id_prd_lectivo=? ");
-
-            st.setString(1, parametros[0]);
-            st.setInt(2, Integer.parseInt(parametros[1]));
-            st.setInt(3, Integer.parseInt(parametros[2]));
-            ResultSet rs = st.executeQuery();
-            System.out.println(st);
-
-            while (rs.next()) {
-                SeguimientoSilaboMD ss = new SeguimientoSilaboMD();
-                ss.setId_seguimientoS(rs.getInt(1));
-                ss.getCurso().setId(rs.getInt(2));
-                ss.setEsInterciclo(rs.getBoolean(3));
-                lista_seguimiento.add(ss);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SeguimientoSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista_seguimiento;
     }
@@ -301,30 +256,34 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
     }
 
     public void eliminarSeguimientoSilabo(SeguimientoSilaboMD ss) {
+        PreparedStatement st = CON.prepareStatement("DELETE FROM public.\"SeguimientoSilabo\"\n"
+                + "	WHERE id_seguimientosilabo=?");
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("DELETE FROM public.\"SeguimientoSilabo\"\n"
-                    + "	WHERE id_seguimientosilabo=?");
             st.setInt(1, ss.getId_seguimientoS());
             st.executeUpdate();
             System.out.println(st);
             st.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Falló al eliminar antes de guardar");
+        } finally {
+            CON.close(st);
         }
 
     }
 
     public void aprobarSeguimientoSilabo(int id_segui, int estado) {
+        PreparedStatement st = CON.prepareStatement("UPDATE public.\"SeguimientoSilabo\"\n"
+                + "SET estado_seguimiento=? where id_seguimientosilabo=?");
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("UPDATE public.\"SeguimientoSilabo\"\n"
-                    + "SET estado_seguimiento=? where id_seguimientosilabo=?");
             st.setInt(1, estado);
             st.setInt(2, id_segui);
             st.executeUpdate();
             System.out.println(st);
             st.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            CON.close(st);
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConexionBD;
+
 import modelo.ConnDBPool;
 
 public class RecursosPlanClasesBD extends RecursosPlanClasesMD {
@@ -15,16 +15,6 @@ public class RecursosPlanClasesBD extends RecursosPlanClasesMD {
     private static final ConnDBPool CON = ConnDBPool.single();
 
     public RecursosPlanClasesBD() {
-    }
-
-    public RecursosPlanClasesBD(ConexionBD conexion, PlandeClasesMD id_plan_clases, RecursosMD id_recursos) {
-        super(id_plan_clases, id_recursos);
-
-    }
-
-    public RecursosPlanClasesBD(ConexionBD conexion, RecursosMD id_recursos) {
-        super(id_recursos);
-
     }
 
     public boolean insertarRecursosPlanClases2(RecursosPlanClasesMD rP, int id_plan_clase) {
