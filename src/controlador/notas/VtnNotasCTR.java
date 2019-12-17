@@ -23,7 +23,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import utils.CONS;
-import modelo.alumno.AlumnoCursoBD;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.notas.NotasBD;
 import modelo.tipoDeNota.TipoDeNotaMD;

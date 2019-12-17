@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
-import modelo.ConexionBD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.carrera.CarreraMD;
@@ -29,7 +28,7 @@ public class ControladorConfiguracion_plan_clases {
     private int id_silabo = -1;
     private int id_periodo_lectivo = -1;
     private final UsuarioBD usuario;
-    private ConexionBD conexion;
+
     private frmConfiguraciónPlanClase frm_cong_PlanClase;
     private final VtnPrincipal vtnPrincipal;
     private List<SilaboMD> silabosDocente;
@@ -40,15 +39,13 @@ public class ControladorConfiguracion_plan_clases {
     private List<CursoMD> cursosSilabo;
     private List<PeriodoLectivoMD> periodosCarrera;
 
-    public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+    public ControladorConfiguracion_plan_clases(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
         this.vtnPrincipal = vtnPrincipal;
-        this.conexion = conexion;
+
     }
 
     public void iniciarControlaador() {
-        conexion.conectar();
-
         frm_cong_PlanClase = new frmConfiguraciónPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(frm_cong_PlanClase);
         frm_cong_PlanClase.setTitle("CREAR UN PLAN DE CLASE");
@@ -64,7 +61,7 @@ public class ControladorConfiguracion_plan_clases {
         frm_cong_PlanClase.getBtn_siguiente().addActionListener(a1 -> {
             if (validarPlanClaseExistente() == true) {
                 frm_cong_PlanClase.dispose();
-                Controlador_plan_clases cpc = new Controlador_plan_clases(silabo_seleccionado(), cursos_seleccionado(), unidad_seleccionada(), usuario, vtnPrincipal, conexion);
+                Controlador_plan_clases cpc = new Controlador_plan_clases(silabo_seleccionado(), cursos_seleccionado(), unidad_seleccionada(), usuario, vtnPrincipal);
                 cpc.iniciaControlador();
             } else {
                 JOptionPane.showMessageDialog(null, "YA EXISTE UN PLAN DE CLASE DE ESTA UNIDAD Y DE ESTE CURSO", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -197,7 +194,7 @@ public class ControladorConfiguracion_plan_clases {
             String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
             unidadesSilabo = UnidadSilaboBD.consultarUnidadesPlanClase(getIdSilabo());
             LLENAR_COMBO_UNIDADES(unidadesSilabo);
-            cursosSilabo = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            cursosSilabo = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursosSilabo);
             System.out.println(getIdSilabo() + "------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
             if (frm_cong_PlanClase.getCmb_Cursos().getItemCount() != 0) {
@@ -222,7 +219,7 @@ public class ControladorConfiguracion_plan_clases {
             estadoCmb_silbo(true);
             String carrera = silabos_docente.get(posC - 1).getNombre();
             String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
-            materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
+            materias_Silabos = MateriasBDS.consultarSilabo2(carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
 
             System.out.println(getid_periodo() + "----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");

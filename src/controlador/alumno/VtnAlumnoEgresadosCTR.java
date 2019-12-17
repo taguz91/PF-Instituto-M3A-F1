@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.alumno.Egresado;
-import utils.CONS;
 import utils.Descarga;
 
 /**

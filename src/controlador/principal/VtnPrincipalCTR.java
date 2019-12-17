@@ -19,7 +19,6 @@ import controlador.alumno.VtnAlumnoRetiradosCTR;
 import controlador.alumno.VtnMatriculasAnuladasCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
-import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import controlador.asistenciaAlumnos.NEWFrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
@@ -43,7 +42,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
-import controlador.silabo.ControladorCRUDAvanceSilabo;
+import controlador.silabo.avance.ControladorCRUDAvanceSilabo;
 import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
@@ -108,7 +107,6 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
-import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
@@ -324,7 +322,7 @@ public class VtnPrincipalCTR {
         frmCRUDBibliografia frmCRUDBibliografiaV = new frmCRUDBibliografia();
         eventoInternal(frmCRUDBibliografiaV);
         if (numVtns < 5) {
-            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(conexion, this, vtnPrin, frmCRUDBibliografiaV);
+            ReferenciasCRUDCTR ReferenciasCRUDCTRV = new ReferenciasCRUDCTR(this, vtnPrin, frmCRUDBibliografiaV);
             ReferenciasCRUDCTRV.iniciarControlador();
 
         } else {
@@ -670,14 +668,14 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, conexion, vtnPrin);
+        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, vtnPrin);
         cP.iniciaControlador();
         cP.setDesktop(this);
 
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
-        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin, conexion);
+        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin);
         AS.initCrud();
 
     }

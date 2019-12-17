@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.avance;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import modelo.AvanceSilabo.AvanzeUnidadesBDA;
 import modelo.AvanceSilabo.AvanzeUnidadesMDA;
 import modelo.AvanceSilabo.SeguimientoSilaboBD;
 import modelo.AvanceSilabo.SeguimientoSilaboMD;
-import modelo.ConexionBD;
+
 import modelo.curso.CursoMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
@@ -36,31 +35,28 @@ public class FrmEditarAvanceSilaboCTR {
     private SeguimientoSilaboMD seguimientoS;
     private final VtnPrincipal vtnPrincipal;
     private CursoMD curso;
-    private ConexionBD conexion;
     private frmAvanceSilabo avanceSi;
     private List<CursoMDS> lista_curso;
     private List<AvanzeUnidadesMDA> lista_avanUnidades;
     private SeguimientoSilaboMD seguimientoSilaboMD;
     private List<SeguimientoSilaboMD> count;
 
-    public FrmEditarAvanceSilaboCTR(UsuarioBD usuario, SeguimientoSilaboMD seguimientoS, VtnPrincipal vtnPrincipal, CursoMD curso, ConexionBD conexion) {
+    public FrmEditarAvanceSilaboCTR(UsuarioBD usuario, SeguimientoSilaboMD seguimientoS, VtnPrincipal vtnPrincipal, CursoMD curso) {
         this.usuario = usuario;
         this.seguimientoS = seguimientoS;
         this.vtnPrincipal = vtnPrincipal;
         this.curso = curso;
-        this.conexion = conexion;
     }
 
     public void init() {
-        conexion.conectar();
         avanceSi = new frmAvanceSilabo();
         vtnPrincipal.getDpnlPrincipal().add(avanceSi);
         avanceSi.setTitle("CREAR UN AVANCE DE SILABO");
         avanceSi.show();
         avanceSi.setLocation((vtnPrincipal.getDpnlPrincipal().getSize().width - avanceSi.getSize().width) / 2,
                 (vtnPrincipal.getDpnlPrincipal().getSize().height - avanceSi.getSize().height) / 2);
-        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(conexion, curso.getId());
-        lista_avanUnidades = AvanzeUnidadesBDA.consultarUnidadAvanze(conexion, curso.getId(), seguimientoS.getId_seguimientoS());
+        lista_curso = CursosBDS.ConsultarCursoCarreraDocente(curso.getId());
+        lista_avanUnidades = AvanzeUnidadesBDA.consultarUnidadAvanze(curso.getId(), seguimientoS.getId_seguimientoS());
         cargarCampos(lista_curso);
 
         avanceSi.getBntGuardar().addActionListener(e -> ejecutar(e));
@@ -113,7 +109,7 @@ public class FrmEditarAvanceSilaboCTR {
             avanceSi.getTxtParalelo().setText(cursoMDS.getCurso_nombre());
             avanceSi.getTxtParalelo().setEnabled(false);
 
-            int numeroAlm = CursosBDS.numero(conexion, curso.getId());
+            int numeroAlm = CursosBDS.numero(curso.getId());
             avanceSi.getTxtNumeroAlumnos().setText(String.valueOf(numeroAlm));
             for (AvanzeUnidadesMDA aus : lista_avanUnidades) {
                 avanceSi.getDchFechaEntrega().setDate(Date.from(aus.getSeguimiento().getFecha_entrega_informe().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -157,12 +153,12 @@ public class FrmEditarAvanceSilaboCTR {
                     esInterciclo = false;
                 }
                 seguimientoSilaboMD.setEsInterciclo(esInterciclo);
-                if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
+                if (new SeguimientoSilaboBD().insertarSeguimiento(seguimientoSilaboMD)) {
                     insertarAvanceUnidades();
                     valid = true;
                 }
             } else if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Fin de Ciclo")) {
-                new SeguimientoSilaboBD(conexion).eliminarSeguimientoSilabo(seguimientoS);
+                new SeguimientoSilaboBD().eliminarSeguimientoSilabo(seguimientoS);
                 seguimientoSilaboMD = new SeguimientoSilaboMD(curso);
                 seguimientoSilaboMD.getCurso().setId(curso.getId());
                 seguimientoSilaboMD.setFecha_entrega_informe(avanceSi.getDchFechaEntrega().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -170,13 +166,13 @@ public class FrmEditarAvanceSilaboCTR {
                     esInterciclo = false;
                 }
                 seguimientoSilaboMD.setEsInterciclo(esInterciclo);
-                if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
+                if (new SeguimientoSilaboBD().insertarSeguimiento(seguimientoSilaboMD)) {
                     insertarAvanceUnidades();
                     valid = true;
                 }
 
             } else {
-                new SeguimientoSilaboBD(conexion).eliminarSeguimientoSilabo(seguimientoS);
+                new SeguimientoSilaboBD().eliminarSeguimientoSilabo(seguimientoS);
                 seguimientoSilaboMD = new SeguimientoSilaboMD(curso);
                 seguimientoSilaboMD.getCurso().setId(curso.getId());
                 seguimientoSilaboMD.setFecha_entrega_informe(avanceSi.getDchFechaEntrega().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -184,7 +180,7 @@ public class FrmEditarAvanceSilaboCTR {
                     esInterciclo = true;
                 }
                 seguimientoSilaboMD.setEsInterciclo(esInterciclo);
-                if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
+                if (new SeguimientoSilaboBD().insertarSeguimiento(seguimientoSilaboMD)) {
                     insertarAvanceUnidades();
                     valid = true;
                 }
@@ -199,11 +195,11 @@ public class FrmEditarAvanceSilaboCTR {
     }
 
     private void insertarAvanceUnidades() {
-        seguimientoSilaboMD = SeguimientoSilaboBD.consultarUltimoSegumiento(conexion, curso.getId(), seguimientoSilaboMD.isEsInterciclo());
+        seguimientoSilaboMD = SeguimientoSilaboBD.consultarUltimoSegumiento(curso.getId(), seguimientoSilaboMD.isEsInterciclo());
         seguimientoSilaboMD.setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
         for (AvanzeUnidadesMDA avanceU : lista_avanUnidades) {
             avanceU.getSeguimiento().setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
-            AvanzeUnidadesBDA aus = new AvanzeUnidadesBDA(conexion);
+            AvanzeUnidadesBDA aus = new AvanzeUnidadesBDA();
             aus.insertarAvanzeUnidades(avanceU, avanceU.getSeguimiento().getId_seguimientoS());
         }
     }
@@ -262,12 +258,10 @@ public class FrmEditarAvanceSilaboCTR {
             if (lista_avanUnidades.get(i).getObservaciones() == null) {
                 valid = false;
             }
-//           if (lista_avanUnidades.get(i).getPortecentaje()==0) {
-//               valid=false;
-//           }
+
         }
         if (avanceSi.getCbxTipoReporte().getSelectedIndex() == 2) {
-            count = SeguimientoSilaboBD.consultarSeguimientoEsInterciclo(conexion, curso.getId());
+            count = SeguimientoSilaboBD.consultarSeguimientoEsInterciclo(curso.getId());
             for (SeguimientoSilaboMD ss : count) {
                 seguimientoSilaboMD = new SeguimientoSilaboMD();
                 boolean esInterciclo = true;
@@ -281,7 +275,7 @@ public class FrmEditarAvanceSilaboCTR {
             }
         }
         if (avanceSi.getCbxTipoReporte().getSelectedIndex() == 1) {
-            count = SeguimientoSilaboBD.consultarSeguimientoAprobacion(conexion, seguimientoS.getId_seguimientoS(), curso.getId());
+            count = SeguimientoSilaboBD.consultarSeguimientoAprobacion(seguimientoS.getId_seguimientoS(), curso.getId());
             for (SeguimientoSilaboMD ss : count) {
                 if (ss.getEstado_seguimiento() == 1) {
                     valid = false;
@@ -289,7 +283,7 @@ public class FrmEditarAvanceSilaboCTR {
             }
         }
         if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Fin de Ciclo")) {
-            count = SeguimientoSilaboBD.consultarSeguimientoAprobacion(conexion, seguimientoS.getId_seguimientoS(), curso.getId());
+            count = SeguimientoSilaboBD.consultarSeguimientoAprobacion(seguimientoS.getId_seguimientoS(), curso.getId());
             for (SeguimientoSilaboMD ss : count) {
                 if (ss.getEstado_seguimiento() == 1) {
                     valid = false;

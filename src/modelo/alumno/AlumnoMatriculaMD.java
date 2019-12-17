@@ -1,6 +1,5 @@
 package modelo.alumno;
 
-import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
 

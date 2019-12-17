@@ -234,7 +234,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
     }
 
-    public static List<PlandeClasesMD> consultarPlanClaseObservacion(ConexionBD conexion, int plan_clase) {
+    public static List<PlandeClasesMD> consultarPlanClaseObservacion(int plan_clase) {
         List<PlandeClasesMD> lista_plan = new ArrayList<>();
 
         String SELECT = "select observaciones,trabajo_autonomo from \"PlandeClases\" where id_plan_clases=?";
@@ -260,7 +260,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
         return lista_plan;
     }
 
-    public static PlandeClasesMD consultarUltimoPlanClase(ConexionBD conexion, int id_curso, int id_unidad) {
+    public static PlandeClasesMD consultarUltimoPlanClase(int id_curso, int id_unidad) {
         PlandeClasesMD planClase = null;
         String SELECT = "select id_plan_clases "
                 + "from \"PlandeClases\" where id_curso=? AND id_unidad=?";

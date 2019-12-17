@@ -3,7 +3,6 @@ package controlador.referencias;
 import controlador.principal.VtnPrincipalCTR;
 import javax.swing.JOptionPane;
 import modelo.ReferenciasB.ReferenciaBD;
-import modelo.referencias.ReferenciasMD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmBibliografia;
 

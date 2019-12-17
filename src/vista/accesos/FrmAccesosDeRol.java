@@ -1,7 +1,6 @@
 package vista.accesos;
 
 import java.awt.Component;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;

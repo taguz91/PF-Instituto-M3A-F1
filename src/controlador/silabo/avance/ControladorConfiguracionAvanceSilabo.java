@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.avance;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import modelo.AvanceSilabo.SeguimientoSilaboBD;
 import modelo.AvanceSilabo.SeguimientoSilaboMD;
-import modelo.ConexionBD;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
@@ -34,7 +33,6 @@ public class ControladorConfiguracionAvanceSilabo {
 
     private int id_silabo = -1;
     private final UsuarioBD usuario;
-    private ConexionBD conexion;
     private List<CarreraMD> carreras_docente;
     private List<SilaboMD> silabosDocente;
     private frmConfiguracionSeguimientoSilabo avance;
@@ -45,15 +43,13 @@ public class ControladorConfiguracionAvanceSilabo {
     private List<MateriaMD> materias_Silabos;
     private List<SeguimientoSilaboMD> count;
 
-    public ControladorConfiguracionAvanceSilabo(UsuarioBD usuario, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+    public ControladorConfiguracionAvanceSilabo(UsuarioBD usuario, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
-        this.conexion = conexion;
         this.vtnPrincipal = vtnPrincipal;
 
     }
 
     public void init() {
-        conexion.conectar();
         avance = new frmConfiguracionSeguimientoSilabo();
         vtnPrincipal.getDpnlPrincipal().add(avance);
         avance.setTitle("CREAR UN AVANCE DE SILABO");
@@ -68,7 +64,7 @@ public class ControladorConfiguracionAvanceSilabo {
         avance.getBtnSiguiente().addActionListener(a1 -> {
             if (validarSeguiSilaboExistente() == true) {
                 avance.dispose();
-                controlador_avance_ingreso cas = new controlador_avance_ingreso(conexion, vtnPrincipal, cursos_seleccionado(), silabo_seleccionado());
+                controlador_avance_ingreso cas = new controlador_avance_ingreso(vtnPrincipal, cursos_seleccionado(), silabo_seleccionado());
                 cas.init();
                 avance.dispose();
             } else {
@@ -149,9 +145,7 @@ public class ControladorConfiguracionAvanceSilabo {
         if (posS > 0) {
             estadoCmb_cursoUnidDES(true);
             String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
-//           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
-//           LLENAR_COMBO_UNIDADES(unidadesSilabo);
-            cursoSilabo = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            cursoSilabo = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursoSilabo);
 
             if (avance.getCbxCurso().getItemCount() != 0) {
@@ -176,7 +170,7 @@ public class ControladorConfiguracionAvanceSilabo {
             estadoCmb_silbo(true);
             String carrera = carreras_docente.get(posC - 1).getNombre();
             String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
-            materias_Silabos = MateriasBDS.consultarSilabo2(conexion, carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
+            materias_Silabos = MateriasBDS.consultarSilabo2(carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
 
         } else {
@@ -262,7 +256,7 @@ public class ControladorConfiguracionAvanceSilabo {
 
     private boolean validarSeguiSilaboExistente() {
         boolean valid = true;
-        count = SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, cursos_seleccionado().getId());
+        count = SeguimientoSilaboBD.consultarSeguimientoExistentes2(cursos_seleccionado().getId());
         for (SeguimientoSilaboMD ss : count) {
 
             if (ss.getCurso().getId() == cursos_seleccionado().getId()) {

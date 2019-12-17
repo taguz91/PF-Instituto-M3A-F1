@@ -1,10 +1,8 @@
 package controlador.principal;
 
 import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import modelo.estilo.TblEstilo;
 import modelo.validaciones.TxtVBuscador;
 
 /**

@@ -169,7 +169,7 @@ public class ReferenciaBD extends CONBD {
 
     }
 
-    public List<ReferenciasMD> obtenerdatos(ConexionBD conexion, String clave) {
+    public List<ReferenciasMD> obtenerdatos(String clave) {
 
         List<ReferenciasMD> referencias = new ArrayList<>();
         String sql = "select id_referencia,codigo_referencia,descripcion_referencia,tipo_referencia,existe_en_biblioteca,observaciones,codigo_isbn,\n"

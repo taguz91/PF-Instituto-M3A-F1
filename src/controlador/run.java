@@ -6,9 +6,9 @@ import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import utils.CONS;
 import modelo.version.DitoolBD;
 import modelo.version.VersionMD;
+import utils.CONS;
 import vista.version.VtnDitool;
 
 /**

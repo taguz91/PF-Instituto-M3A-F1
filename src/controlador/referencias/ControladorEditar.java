@@ -1,7 +1,6 @@
 package controlador.referencias;
 
 import java.util.List;
-import modelo.ConexionBD;
 import modelo.ReferenciasB.ReferenciaBD;
 import modelo.ReferenciasB.ReferenciasMD;
 import vista.principal.VtnPrincipal;
@@ -14,7 +13,6 @@ public class ControladorEditar {
     private frmBibliografia vista1;
     private final ReferenciaBD RBD = ReferenciaBD.single();
     private VtnPrincipal vtnPrin;
-    private ConexionBD conexion;
     private String clave;
     private int id;
 
@@ -24,13 +22,11 @@ public class ControladorEditar {
         vista.setVisible(true);
     }
 
-    public ControladorEditar(frmBibliografia vista1, VtnPrincipal vtnPrin, String clave, ConexionBD conexion) {
+    public ControladorEditar(frmBibliografia vista1, VtnPrincipal vtnPrin, String clave) {
         this.vista1 = vista1;
         this.vtnPrin = vtnPrin;
         this.vtnPrin.getDpnlPrincipal().add(vista1);
-        this.conexion = conexion;
         this.clave = clave;
-        conexion.conectar();
         vista1.show();
         vista1.getLbldescripcion_referecnia().setVisible(true);
         vista1.getTxtdescripcionreferencia().setVisible(true);
@@ -39,19 +35,17 @@ public class ControladorEditar {
 
     }
 
-    public ControladorEditar(frmEditarBiblioteca vista, VtnPrincipal vtnPrin, String clave, ConexionBD conexion) {
+    public ControladorEditar(frmEditarBiblioteca vista, VtnPrincipal vtnPrin, String clave) {
         this.vista = vista;
         this.vtnPrin = vtnPrin;
         this.vtnPrin.getDpnlPrincipal().add(vista);
-        this.conexion = conexion;
         this.clave = clave;
-        conexion.conectar();
         vista.show();
     }
 
     public void inicia_vista() {
         ReferenciasMD referencia = new ReferenciasMD();
-        List<ReferenciasMD> r = RBD.obtenerdatos(conexion, clave);
+        List<ReferenciasMD> r = RBD.obtenerdatos(clave);
         referencia.setId_referencia(r.get(0).getId_referencia());
         referencia.setCodigo_referencia(r.get(0).getCodigo_referencia());
         referencia.setDescripcion_referencia(r.get(0).getDescripcion_referencia());

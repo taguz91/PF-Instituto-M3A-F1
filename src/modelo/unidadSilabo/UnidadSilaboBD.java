@@ -3,7 +3,6 @@ package modelo.unidadSilabo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -141,15 +140,14 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
         return unidades;
     }
 
-    public static List<UnidadSilaboMD> consultarSilaboUnidades(ConexionBD conexion, int silabo, int unidad) {
+    public static List<UnidadSilaboMD> consultarSilaboUnidades(int silabo, int unidad) {
 
         List<UnidadSilaboMD> unidades = new ArrayList<>();
+        PreparedStatement st = CON.prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n"
+                + "u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n"
+                + "from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
 
         try {
-
-            PreparedStatement st = conexion.getCon().prepareStatement("select u.numero_unidad,u.titulo_unidad,u.fecha_inicio_unidad,u.fecha_fin_unidad,u.horas_docencia_unidad,u.horas_practica_unidad,\n"
-                    + "u.objetivo_especifico_unidad,u.resultados_aprendizaje_unidad,u.contenidos_unidad\n"
-                    + "from \"UnidadSilabo\" u join \"Silabo\" s on u.id_silabo=s.id_silabo where s.id_silabo=? and u.numero_unidad=?");
 
             st.setInt(1, silabo);
             st.setInt(2, unidad);
@@ -174,6 +172,8 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
 
         } catch (SQLException ex) {
             Logger.getLogger(UnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
         return unidades;
     }

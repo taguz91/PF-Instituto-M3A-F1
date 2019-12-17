@@ -5,9 +5,6 @@
  */
 package modelo.PlanClases;
 
-import java.util.List;
-import modelo.ConexionBD;
-
 
 public class RecursosMD {
     

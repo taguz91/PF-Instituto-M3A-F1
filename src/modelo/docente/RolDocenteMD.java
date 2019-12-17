@@ -6,7 +6,6 @@
 package modelo.docente;
 
 import modelo.persona.DocenteMD;
-import modelo.persona.PersonaMD;
 
 /**
  *
