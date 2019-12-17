@@ -87,7 +87,7 @@ public class ControladorConfiguracionAvanceSilabo {
 
     private void CARGAR_COMBO_CARRERAS() {
         avance.getCbxCarrera().removeAllItems();
-        carreras_docente = CarrerasBDS.consultar(conexion, usuario.getUsername());
+        carreras_docente = CarrerasBDS.consultar(usuario.getUsername());
         if (carreras_docente == null) {
             JOptionPane.showMessageDialog(null, "No tiene carreras asignadas");
         } else {
@@ -151,7 +151,7 @@ public class ControladorConfiguracionAvanceSilabo {
             String materia_silabo = materias_Silabos.get(posS - 1).getNombre();
 //           unidadesSilabo=UnidadSilaboBD.consultarUnidadesPlanClase(conexion, getIdSilabo());
 //           LLENAR_COMBO_UNIDADES(unidadesSilabo);
-            cursoSilabo = CursosBDS.Consultarcursos(conexion, usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
+            cursoSilabo = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursoSilabo);
 
             if (avance.getCbxCurso().getItemCount() != 0) {
@@ -214,7 +214,7 @@ public class ControladorConfiguracionAvanceSilabo {
     public List<SilaboMD> cargar_silabo() {
         String[] parametros = {avance.getCbxCarrera().getSelectedItem().toString(),
             String.valueOf(usuario.getPersona().getIdPersona()), avance.getCmb_perido().getSelectedItem().toString()};
-        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(conexion, parametros);
+        List<SilaboMD> silabosdocente = SilaboBD.consultarSilabo1(parametros);
 
         return silabosdocente;
 

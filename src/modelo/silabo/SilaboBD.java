@@ -2,7 +2,6 @@ package modelo.silabo;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +22,8 @@ import modelo.periodolectivo.PeriodoLectivoMD;
 public class SilaboBD extends SilaboMD {
 
     private ConexionBD conexion;
+
+    private static ConnDBPool CON = ConnDBPool.single();
 
     public SilaboBD(ConexionBD conexion) {
         this.conexion = conexion;
@@ -316,22 +317,23 @@ public class SilaboBD extends SilaboMD {
     }
 
     // Pasada
-    public static List<SilaboMD> consultarSilabo1(ConexionBD conexion, String[] clave) {
+    public static List<SilaboMD> consultarSilabo1(String[] clave) {
 
         List<SilaboMD> silabos = new ArrayList<>();
-        try {
 
-            PreparedStatement st = conexion.getCon().prepareStatement("SELECT DISTINCT id_silabo,\n"
-                    + "s.id_materia, m.materia_nombre\n"
-                    + "FROM \"Silabo\" AS s\n"
-                    + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                    + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                    + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                    + "JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                    + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                    + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
-                    + "WHERE crr.carrera_nombre=?\n"
-                    + "AND p.id_persona=? AND prd_lectivo_nombre=?");
+        PreparedStatement st = CON.prepareStatement("SELECT DISTINCT id_silabo,\n"
+                + "s.id_materia, m.materia_nombre\n"
+                + "FROM \"Silabo\" AS s\n"
+                + "JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
+                + "JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
+                + "JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
+                + "JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
+                + "JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
+                + "JOIN \"Personas\" AS p ON d.id_persona=p.id_persona\n"
+                + "WHERE crr.carrera_nombre=?\n"
+                + "AND p.id_persona=? AND prd_lectivo_nombre=?");
+
+        try {
 
             st.setString(1, clave[0]);
             st.setInt(2, Integer.parseInt(clave[1]));
@@ -351,6 +353,8 @@ public class SilaboBD extends SilaboMD {
 
         } catch (SQLException ex) {
             Logger.getLogger(SilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
         return silabos;
     }

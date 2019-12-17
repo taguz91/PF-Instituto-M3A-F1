@@ -21,7 +21,7 @@ public class ConexionBD extends CONBD {
     private ResultSet rs = null;
 
     public void conectar() {
-        con = CON.getConnection();
+        //con = CON.getConnection();
     }
 
     public void desconectar() throws SQLException {
