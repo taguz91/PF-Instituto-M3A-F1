@@ -1,14 +1,13 @@
 package controlador.asistenciaAlumnos;
 
+import controlador.estilo.cmb.TblRenderSpinner;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerDateModel;
+import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 import modelo.asistencia.AsistenciaMD;
 import modelo.asistencia.GenerarFechas;
@@ -55,11 +54,15 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             "Alumno",
             "Faltas"
         };
-        mdTbl = iniciarTbl(
+        mdTbl = iniciarTblConEditar(
                 VTN.getTblAlumnos(),
                 titulo
         );
         VTN.getTblAlumnos().setModel(mdTbl);
+        JSpinner spn = new JSpinner();
+        spn.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 3.0d, 1.0d));
+        VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellRenderer(new TblRenderSpinner(spn));
+        VTN.getTblAlumnos().getColumnModel().getColumn(2).getCellEditor();
     }
 
     private void iniciarAcciones() {
@@ -167,21 +170,20 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             );
         }
     }
-    
-    private int numAlum = 1;
+
+    private int numAlum;
 
     private void llenarTbl(List<AsistenciaMD> as) {
-        SpinnerDateModel spinnerModel2 = new SpinnerDateModel();
         mdTbl.setRowCount(0);
-        numAlum = 1;
+        numAlum = 0;
         as.forEach(a -> {
             numAlum++;
             Object[] r = {
                 numAlum,
                 a.getAlumnoCurso().getAlumno().getApellidosNombres(),
                 a.getNumeroFaltas()
-            //spinnerModel2
             };
+            System.out.println("Numero de faltas de los alumnos: " + a.getNumeroFaltas());
             mdTbl.addRow(r);
         });
     }
