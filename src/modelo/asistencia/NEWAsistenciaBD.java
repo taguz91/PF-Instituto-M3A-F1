@@ -48,11 +48,13 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    ON p.id_persona = a.id_persona\n"
                 + "    WHERE ac.id_curso = " + idCurso + "\n"
                 + "    AND  to_char(fecha_asistencia,'DD/MM/YYYY') = '" + fecha + "'\n"
-                + "    ORDER BY alumno;";
+                + "    ORDER BY persona_primer_apellido, "
+                + "    persona_segundo_apellido,"
+                + "    persona_primer_nombre, "
+                + "    persona_segundo_nombre;";
         List<AsistenciaMD> as = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 AsistenciaMD a = new AsistenciaMD();
@@ -114,7 +116,7 @@ public class NEWAsistenciaBD extends CONBD {
                 + "FROM public.\"PeriodoLectivo\" plr\n"
                 + "JOIN public.\"Cursos\" cr\n"
                 + "ON cr.id_prd_lectivo = plr.id_prd_lectivo\n"
-                + "WHERE id_curso = :idCurso";
+                + "WHERE id_curso = "+idCurso+";";
         AsistenciaSesionMD as = new AsistenciaSesionMD();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
@@ -174,10 +176,10 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    ON pl.id_prd_lectivo = c.id_prd_lectivo\n"
                 + "    WHERE persona_identificacion = '" + docente + "'\n"
                 + "    GROUP BY\n"
+                + "    pl.id_prd_lectivo,\n"
                 + "    prd_lectivo_nombre,\n"
                 + "    prd_lectivo_fecha_fin\n"
-                + "    ORDER BY prd_lectivo_fecha_fin DESC,\n"
-                + "    materia_nombre;";
+                + "    ORDER BY prd_lectivo_fecha_fin DESC;";
         List<PeriodoLectivoMD> pls = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
@@ -214,12 +216,9 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    AND c.id_prd_lectivo = " + idPeriodo + "\n"
                 + "    GROUP BY\n"
                 + "    c.id_curso,\n"
-                + "    prd_lectivo_nombre,\n"
                 + "    materia_nombre,\n"
-                + "    curso_nombre,\n"
-                + "    prd_lectivo_fecha_fin\n"
-                + "    ORDER BY prd_lectivo_fecha_fin DESC,\n"
-                + "    materia_nombre;";
+                + "    curso_nombre\n"
+                + "    ORDER BY materia_nombre;";
         List<CursoMD> cs = new ArrayList<>();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
@@ -230,10 +229,13 @@ public class NEWAsistenciaBD extends CONBD {
                 MateriaMD m = new MateriaMD();
                 m.setNombre(rs.getString(2));
                 c.setNombre(rs.getString(3));
+                c.setMateria(m);
                 cs.add(c);
             }
         } catch (SQLException e) {
             M.errorMsg("Error al consultar los cursos de un docente. " + e.getMessage());
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return cs;
     }
