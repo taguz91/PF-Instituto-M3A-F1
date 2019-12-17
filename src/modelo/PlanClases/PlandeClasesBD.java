@@ -236,10 +236,14 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
     public static List<PlandeClasesMD> consultarPlanClaseObservacion(ConexionBD conexion, int plan_clase) {
         List<PlandeClasesMD> lista_plan = new ArrayList<>();
+
+        String SELECT = "select observaciones,trabajo_autonomo from \"PlandeClases\" where id_plan_clases=?";
+
+        PreparedStatement stmt = CON.prepareStatement(SELECT);
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("select observaciones,trabajo_autonomo from \"PlandeClases\" where id_plan_clases=?");
-            st.setInt(1, plan_clase);
-            ResultSet rs = st.executeQuery();
+
+            stmt.setInt(1, plan_clase);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 PlandeClasesMD pc = new PlandeClasesMD();
                 pc.setObservaciones(rs.getString(1));
@@ -250,15 +254,19 @@ public class PlandeClasesBD extends PlandeClasesMD {
         } catch (SQLException ex) {
             Logger.getLogger(PlandeClasesBD.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(stmt);
         }
         return lista_plan;
     }
 
     public static PlandeClasesMD consultarUltimoPlanClase(ConexionBD conexion, int id_curso, int id_unidad) {
         PlandeClasesMD planClase = null;
+        String SELECT = "select id_plan_clases "
+                + "from \"PlandeClases\" where id_curso=? AND id_unidad=?";
+        PreparedStatement st = CON.prepareStatement(SELECT);
+
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("select id_plan_clases "
-                    + "from \"PlandeClases\" where id_curso=? AND id_unidad=?");
             st.setInt(1, id_curso);
             st.setInt(2, id_unidad);
             ResultSet rs = st.executeQuery();
@@ -270,15 +278,21 @@ public class PlandeClasesBD extends PlandeClasesMD {
         } catch (SQLException ex) {
             Logger.getLogger(PlandeClasesBD.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
         return planClase;
     }
 
     public static PlandeClasesMD consultarIDCURSO_ID_UNIDAD(ConexionBD conexion, int id_plan_de_clase) {
         PlandeClasesMD planClase = null;
+
+        String SELECT = "select distinct id_plan_clases,"
+                + " id_curso,id_unidad ,fecha_generacion from \"PlandeClases\" where id_plan_clases=?";
+
+        PreparedStatement st = CON.prepareStatement(SELECT);
+
         try {
-            PreparedStatement st = conexion.getCon().prepareStatement("select distinct id_plan_clases,"
-                    + " id_curso,id_unidad ,fecha_generacion from \"PlandeClases\" where id_plan_clases=?");
             st.setInt(1, id_plan_de_clase);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -292,6 +306,8 @@ public class PlandeClasesBD extends PlandeClasesMD {
         } catch (SQLException ex) {
             Logger.getLogger(PlandeClasesBD.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(st);
         }
         return planClase;
     }

@@ -303,6 +303,17 @@ public class ConnDBPool {
         return null;
     }
 
+    public ResultSet ejecutarQuery(PreparedStatement stmt) {
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+    }
+
     public ResultSet getRs() {
         return rs;
     }

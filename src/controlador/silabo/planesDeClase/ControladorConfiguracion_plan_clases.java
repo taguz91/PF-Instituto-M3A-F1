@@ -281,7 +281,7 @@ public class ControladorConfiguracion_plan_clases {
     private boolean validarPlanClaseExistente() {
         boolean valid = true;
         String[] parametros = {frm_cong_PlanClase.getCmb_carreras().getSelectedItem().toString(), String.valueOf(usuario.getPersona().getIdPersona()), String.valueOf(getid_periodo())};
-        lista_plan_clases = PlandeClasesBD.consultarPlanClaseExistente(conexion, parametros);
+        lista_plan_clases = PlandeClasesBD.consultarPlanClaseExistente(parametros);
         for (PlandeClasesMD plmd : lista_plan_clases) {
 
             if (Objects.equals(plmd.getId_unidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
