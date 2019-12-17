@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.avance;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -17,12 +17,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import modelo.AvanceSilabo.AvanzeUnidadesBDA;
-
 import modelo.AvanceSilabo.AvanzeUnidadesMDA;
 import modelo.AvanceSilabo.SeguimientoSilaboBD;
 import modelo.AvanceSilabo.SeguimientoSilaboMD;
-
-import modelo.ConexionBD;
 import modelo.curso.CursoMD;
 import modelo.silabo.CursoMDS;
 import modelo.silabo.CursosBDS;
@@ -38,7 +35,6 @@ import vista.silabos.frmAvanceSilabo;
  */
 public class controlador_avance_ingreso {
 
-    private ConexionBD conexion;
     private final VtnPrincipal vtnPrincipal;
     private CursoMD curso;
     private SilaboMD silabo;
@@ -49,9 +45,8 @@ public class controlador_avance_ingreso {
     private SeguimientoSilaboMD seguimientoSilaboMD;
     private List<SeguimientoSilaboMD> count;
 
-    public controlador_avance_ingreso(ConexionBD conexion, VtnPrincipal vtnPrincipal, CursoMD curso,
+    public controlador_avance_ingreso(VtnPrincipal vtnPrincipal, CursoMD curso,
             SilaboMD silabo) {
-        this.conexion = conexion;
         this.vtnPrincipal = vtnPrincipal;
         this.curso = curso;
         this.silabo = silabo;
@@ -59,7 +54,6 @@ public class controlador_avance_ingreso {
     }
 
     public void init() {
-        conexion.conectar();
         avanceSi = new frmAvanceSilabo();
         vtnPrincipal.getDpnlPrincipal().add(avanceSi);
         avanceSi.setTitle("CREAR UN AVANCE DE SILABO");
@@ -120,7 +114,7 @@ public class controlador_avance_ingreso {
             avanceSi.getTxtParalelo().setText(cursoMDS.getCurso_nombre());
             avanceSi.getTxtParalelo().setEnabled(false);
 
-            int numeroAlm = CursosBDS.numero(conexion, curso.getId());
+            int numeroAlm = CursosBDS.numero(curso.getId());
             avanceSi.getTxtNumeroAlumnos().setText(String.valueOf(numeroAlm));
         }
     }
@@ -151,7 +145,7 @@ public class controlador_avance_ingreso {
                 esInterciclo = true;
             }
             seguimientoSilaboMD.setEsInterciclo(esInterciclo);
-            if (new SeguimientoSilaboBD(conexion).insertarSeguimiento(seguimientoSilaboMD)) {
+            if (new SeguimientoSilaboBD().insertarSeguimiento(seguimientoSilaboMD)) {
                 insertarAvanceUnidades();
 
                 return true;
@@ -165,11 +159,11 @@ public class controlador_avance_ingreso {
     }
 
     private void insertarAvanceUnidades() {
-        seguimientoSilaboMD = SeguimientoSilaboBD.consultarUltimoSegumiento(conexion, curso.getId(), seguimientoSilaboMD.isEsInterciclo());
+        seguimientoSilaboMD = SeguimientoSilaboBD.consultarUltimoSegumiento(curso.getId(), seguimientoSilaboMD.isEsInterciclo());
         seguimientoSilaboMD.setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
         for (AvanzeUnidadesMDA avanceU : lista_avanzeU) {
             avanceU.getSeguimiento().setId_seguimientoS(seguimientoSilaboMD.getId_seguimientoS());
-            AvanzeUnidadesBDA aus = new AvanzeUnidadesBDA(conexion);
+            AvanzeUnidadesBDA aus = new AvanzeUnidadesBDA();
             aus.insertarAvanzeUnidades(avanceU, avanceU.getSeguimiento().getId_seguimientoS());
         }
 
@@ -229,22 +223,7 @@ public class controlador_avance_ingreso {
             if (lista_avanzeU.get(i).getObservaciones() == null) {
                 valid = false;
             }
-//           if (lista_avanzeU.get(i).getPortecentaje()==0) {
-//               valid=false;
-//           }
         }
-//       count=SeguimientoSilaboBD.consultarSeguimientoExistentes2(conexion, curso.getId());
-//         boolean esInterciclo=true;
-//        for(SeguimientoSilaboMD ss:count){
-//            if (avanceSi.getCbxTipoReporte().getSelectedItem().equals("Interciclo")) {
-//               esInterciclo=false;
-//           }else{
-//               esInterciclo=true;
-//           }
-//            if (ss.isEsInterciclo()==esInterciclo) {
-//                valid=false;
-//            }
-//        }
         return valid;
 
     }

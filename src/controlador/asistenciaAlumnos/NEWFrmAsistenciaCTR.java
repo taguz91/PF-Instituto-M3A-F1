@@ -2,8 +2,6 @@ package controlador.asistenciaAlumnos;
 
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;

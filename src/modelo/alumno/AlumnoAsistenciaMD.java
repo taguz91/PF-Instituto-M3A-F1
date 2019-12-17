@@ -4,7 +4,6 @@ package modelo.alumno;
 import java.util.List;
 import modelo.asistencia.AsistenciaBD;
 import modelo.curso.CursoMD;
-import modelo.notas.NotasBD;
 import modelo.persona.AlumnoMD;
 
 /**

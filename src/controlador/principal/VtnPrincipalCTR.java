@@ -42,7 +42,7 @@ import controlador.persona.VtnPersonaCTR;
 import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
-import controlador.silabo.ControladorCRUDAvanceSilabo;
+import controlador.silabo.avance.ControladorCRUDAvanceSilabo;
 import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
@@ -675,7 +675,7 @@ public class VtnPrincipalCTR {
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
-        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin, conexion);
+        ControladorCRUDAvanceSilabo AS = new ControladorCRUDAvanceSilabo(usuario, rolSeleccionado, vtnPrin);
         AS.initCrud();
 
     }

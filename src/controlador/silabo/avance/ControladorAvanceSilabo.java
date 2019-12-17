@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.avance;
 
 import controlador.silabo.planesDeClase.ControladorConfiguracion_plan_clases;
 import com.placeholder.PlaceHolder;
 import java.util.List;
 import modelo.silabo.CursoMDS;
 import vista.silabos.frmAvanceSilabo;
-import modelo.ConexionBD;
 import modelo.usuario.UsuarioBD;
 import vista.principal.VtnPrincipal;
 
@@ -21,19 +20,17 @@ import vista.principal.VtnPrincipal;
 public class ControladorAvanceSilabo {
 
     private frmAvanceSilabo avance;
-    private ConexionBD conexion;
     private final VtnPrincipal vtnPrincipal;
     private final UsuarioBD usuario;
 
-    public ControladorAvanceSilabo(frmAvanceSilabo avance, ConexionBD conexion, VtnPrincipal vtnPrincipal, UsuarioBD usuario) {
+    public ControladorAvanceSilabo(frmAvanceSilabo avance, VtnPrincipal vtnPrincipal, UsuarioBD usuario) {
         this.avance = avance;
-        this.conexion = conexion;
         this.vtnPrincipal = vtnPrincipal;
         this.usuario = usuario;
     }
 
     public void iniciaControlador() {
-        conexion.conectar();
+
         avance = new frmAvanceSilabo();
         vtnPrincipal.getDpnlPrincipal().add(avance);
         avance.show();

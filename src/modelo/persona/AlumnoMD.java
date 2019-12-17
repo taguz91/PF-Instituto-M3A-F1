@@ -1,9 +1,5 @@
 package modelo.persona;
 
-import java.awt.Image;
-import java.time.LocalDate;
-import modelo.lugar.LugarBD;
-
 public class AlumnoMD extends PersonaMD {
 
     private String nombre;

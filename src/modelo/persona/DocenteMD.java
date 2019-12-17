@@ -1,9 +1,6 @@
 package modelo.persona;
 
-import java.awt.Image;
 import java.time.LocalDate;
-import modelo.lugar.LugarBD;
-import modelo.lugar.LugarMD;
 
 /**
  *

@@ -58,10 +58,10 @@ public class CursosBDS extends CursoMDS {
     }
 
     // Pasado 
-    public static int numero(ConexionBD conexion, int id_curso) {
+    public static int numero(int id_curso) {
         int numeroAlm = 0;
+        PreparedStatement st = CON.prepareStatement("SELECT count(id_alumno) from \"AlumnoCurso\" where id_curso=?");
         try {
-            PreparedStatement st = conexion.getCon().prepareCall("SELECT count(id_alumno) from \"AlumnoCurso\" where id_curso=?");
             st.setInt(1, id_curso);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -71,6 +71,8 @@ public class CursosBDS extends CursoMDS {
         } catch (SQLException ex) {
             Logger.getLogger(CursosBDS.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
+        } finally {
+            CON.close(st);
         }
         return numeroAlm;
     }

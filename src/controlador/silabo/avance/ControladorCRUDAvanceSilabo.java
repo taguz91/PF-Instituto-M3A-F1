@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo;
+package controlador.silabo.avance;
 
+import controlador.Libraries.Middlewares;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,14 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.AvanceSilabo.SeguimientoSilaboBD;
 import modelo.AvanceSilabo.SeguimientoSilaboMD;
-import modelo.ConexionBD;
 import modelo.PlanClases.JornadasDB;
 import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
@@ -33,12 +31,6 @@ import modelo.silabo.CursosBDS;
 import modelo.silabo.PeriodoLectivoBDS;
 import modelo.usuario.RolBD;
 import modelo.usuario.UsuarioBD;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.view.JasperViewer;
 import vista.principal.VtnPrincipal;
 import vista.silabos.frmCRUDAvanceSilabo;
 
@@ -49,7 +41,6 @@ import vista.silabos.frmCRUDAvanceSilabo;
 public class ControladorCRUDAvanceSilabo {
 
     private final UsuarioBD usuario;
-    private ConexionBD conexion;
     private boolean esCordinador = false;
     private List<CarreraMD> carreras_docente;
     private frmCRUDAvanceSilabo seguimiento;
@@ -62,15 +53,13 @@ public class ControladorCRUDAvanceSilabo {
     private List<PeriodoLectivoMD> periodosCarrera;
     private SeguimientoSilaboMD segui;
 
-    public ControladorCRUDAvanceSilabo(UsuarioBD usuario, RolBD rol, VtnPrincipal vtnPrincipal, ConexionBD conexion) {
+    public ControladorCRUDAvanceSilabo(UsuarioBD usuario, RolBD rol, VtnPrincipal vtnPrincipal) {
         this.usuario = usuario;
-        this.conexion = conexion;
         this.vtnPrincipal = vtnPrincipal;
         this.rol = rol;
     }
 
     public void initCrud() {
-        conexion.conectar();
 
         seguimiento = new frmCRUDAvanceSilabo();
         if (rol.getNombre().equalsIgnoreCase("COORDINADOR")) {
@@ -99,7 +88,7 @@ public class ControladorCRUDAvanceSilabo {
             if (row != -1) {
 
                 seguimiento.dispose();
-                FrmEditarAvanceSilaboCTR ce = new FrmEditarAvanceSilaboCTR(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc(), conexion);
+                FrmEditarAvanceSilaboCTR ce = new FrmEditarAvanceSilaboCTR(usuario, seguimientoSilabo(), vtnPrincipal, curso_selecc());
                 ce.init();
 
             } else {
@@ -113,9 +102,9 @@ public class ControladorCRUDAvanceSilabo {
                 int columna = seguimiento.getTlbAvanceSilabo().getSelectedColumn();
                 if (esCordinador && columna == 4) {
                     if (seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna).equals(true)) {
-                        new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 1);
+                        new SeguimientoSilaboBD().aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 1);
                     } else {
-                        new SeguimientoSilaboBD(conexion).aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 0);
+                        new SeguimientoSilaboBD().aprobarSeguimientoSilabo(Integer.parseInt(seguimiento.getTlbAvanceSilabo().getValueAt(fila, columna - 4).toString()), 0);
                     }
                 }
 
@@ -154,7 +143,7 @@ public class ControladorCRUDAvanceSilabo {
     public void insertar() {
 
         seguimiento.dispose();
-        ControladorConfiguracionAvanceSilabo AS = new ControladorConfiguracionAvanceSilabo(usuario, vtnPrincipal, conexion);
+        ControladorConfiguracionAvanceSilabo AS = new ControladorConfiguracionAvanceSilabo(usuario, vtnPrincipal);
         AS.init();
     }
 
@@ -167,10 +156,10 @@ public class ControladorCRUDAvanceSilabo {
             if (esCordinador) {
                 String[] parametros1 = {seguimiento.getCmb_Carreras().getSelectedItem().toString(), seguimiento.getCmbJornadas().getSelectedItem().toString(), seguimiento.getTxtBuscar().getText(),
                     String.valueOf(getid_periodo())};
-                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboCoordinador(conexion, parametros1);
+                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboCoordinador(parametros1);
             } else {
 
-                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboDocentes(conexion, parametros);
+                lista_seguimiento = SeguimientoSilaboBD.consultarSeguimientoSilaboDocentes(parametros);
             }
             for (int j = seguimiento.getTlbAvanceSilabo().getModel().getRowCount() - 1; j >= 0; j--) {
                 modelotabla.removeRow(j);
@@ -211,7 +200,7 @@ public class ControladorCRUDAvanceSilabo {
         if (esCordinador) {
             carreras_docente.add(new CarrerasBDS().retornaCarreraCoordinador(usuario.getUsername()));
         } else {
-            carreras_docente = CarrerasBDS.consultar( usuario.getUsername());
+            carreras_docente = CarrerasBDS.consultar(usuario.getUsername());
         }
 
         carreras_docente.forEach((cmd) -> {
@@ -267,14 +256,14 @@ public class ControladorCRUDAvanceSilabo {
     private SeguimientoSilaboMD seguimientoSilabo() {
         int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
         segui = new SeguimientoSilaboMD();
-        segui = SeguimientoSilaboBD.consultarIDsegui_IdCurso(conexion, Integer.parseInt(
+        segui = SeguimientoSilaboBD.consultarIDsegui_IdCurso(Integer.parseInt(
                 seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 0).toString()));
         return segui;
     }
 
     private CursoMD curso_selecc() {
         int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
-        lista_curso = CursosBDS.Consultarcursos( usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
+        lista_curso = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 2).toString());
         Optional<CursoMD> curso_selecccionado = lista_curso.stream().filter(lc -> lc.getNombre().equals(seguimiento.getTlbAvanceSilabo().getValueAt(seleccion, 3).toString())).findFirst();
         return curso_selecccionado.get();
     }
@@ -282,7 +271,7 @@ public class ControladorCRUDAvanceSilabo {
     private void eliminarSeguimientos() {
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este seguimiento de silabo?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            new SeguimientoSilaboBD(conexion).eliminarSeguimientoSilabo(seguimientoSilabo());
+            new SeguimientoSilaboBD().eliminarSeguimientoSilabo(seguimientoSilabo());
             JOptionPane.showMessageDialog(null, "Seguimiento de silabo eliminado correctamente");
         }
     }
@@ -291,82 +280,49 @@ public class ControladorCRUDAvanceSilabo {
         int seleccion = seguimiento.getTlbAvanceSilabo().getSelectedRow();
 
         if (seleccion >= 0) {
-            CarreraMD ca = new CarrerasBDS(conexion).retornaModalidad(seguimientoSilabo().getCurso().getId());
+            CarreraMD ca = new CarrerasBDS().retornaModalidad(seguimientoSilabo().getCurso().getId());
             if (ca.getModalidad().equalsIgnoreCase("PRESENCIAL")) {
                 if (seguimientoSilabo().isEsInterciclo() == false) {
-                    try {
+                    Map parametro = new HashMap();
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+                    Middlewares.generarReporte(
+                            getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"),
+                            "Avance de silabo (fin de ciclo)",
+                            parametro);
 
-                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
-                        Map parametro = new HashMap();
-
-                        parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                        parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                        JasperViewer pv = new JasperViewer(jp, false);
-                        pv.setVisible(true);
-                        pv.setTitle("Avance de silabo (fin de ciclo)");
-                        //principal.add(pv);
-                    } catch (JRException ex) {
-                        Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
+                    //principal.add(pv);
                 } else {
 
-                    try {
+                    Map parametro = new HashMap();
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
 
-                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_de_silabo/avance_principal.jasper"));
-                        Map parametro = new HashMap();
+                    Middlewares.generarReporte(
+                            getClass().getResource("/vista/silabos/reportes/avance_de_silabo/avance_principal.jasper"),
+                            "Avance de silabo(interciclo)",
+                            parametro);
 
-                        parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                        parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                        JasperViewer pv = new JasperViewer(jp, false);
-                        pv.setVisible(true);
-                        pv.setTitle("Avance de silabo(interciclo)");
-                        //principal.add(pv);
-                    } catch (JRException ex) {
-                        Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
             } else if (ca.getModalidad().equalsIgnoreCase("DUAL")) {
                 if (seguimientoSilabo().isEsInterciclo() == false) {
 
-                    try {
-
-                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"));
-                        Map parametro = new HashMap();
-
-                        parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                        parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                        JasperViewer pv = new JasperViewer(jp, false);
-                        pv.setVisible(true);
-                        pv.setTitle("Avance de silabo (fin de ciclo)");
-                        //principal.add(pv);
-                    } catch (JRException ex) {
-                        Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Map parametro = new HashMap();
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+                    Middlewares.generarReporte(
+                            getClass().getResource("/vista/silabos/reportes/avance_silabo_fin/avance_principal.jasper"),
+                            "Avance de silabo (fin de ciclo)",
+                            parametro);
 
                 } else {
-                    try {
-
-                        JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/avance_silabo_inter_dual/avance_principal.jasper"));
-                        Map parametro = new HashMap();
-
-                        parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
-                        parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
-
-                        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                        JasperViewer pv = new JasperViewer(jp, false);
-                        pv.setVisible(true);
-                        pv.setTitle("Avance de silabo(interciclo)");
-                        //principal.add(pv);
-                    } catch (JRException ex) {
-                        Logger.getLogger(ControladorCRUDAvanceSilabo.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Map parametro = new HashMap();
+                    parametro.put("id_curso", String.valueOf(seguimientoSilabo().getCurso().getId()));
+                    parametro.put("id_seguimiento", String.valueOf(seguimientoSilabo().getId_seguimientoS()));
+                    Middlewares.generarReporte(
+                            getClass().getResource("/vista/silabos/reportes/avance_silabo_inter_dual/avance_principal.jasper"),
+                            "Avance de silabo(interciclo)",
+                            parametro);
                 }
             }
 

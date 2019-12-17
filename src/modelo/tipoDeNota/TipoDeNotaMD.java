@@ -1,7 +1,6 @@
 package modelo.tipoDeNota;
 
 import java.time.LocalDate;
-import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 
 /**
