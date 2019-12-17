@@ -25,7 +25,7 @@ public class TblRenderSpinner extends DefaultTableCellRenderer {
 
     private void iniciarEventos() {
         spn.setVisible(true);
-        spn.setOpaque(true);
+        spn.setOpaque(false);
         spn.addChangeListener((ChangeEvent e) -> {
             System.out.println("Cambiamos de listener.");
         });
@@ -41,6 +41,10 @@ public class TblRenderSpinner extends DefaultTableCellRenderer {
                 spn.setValue(Integer.parseInt(value.toString()));
             }
             System.out.println("Valor de la tabla: " + value.toString());
+        }
+
+        if (focused) {
+            spn.setOpaque(true);
         }
 
         return spn;
