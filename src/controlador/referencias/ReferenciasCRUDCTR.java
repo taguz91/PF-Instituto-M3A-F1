@@ -1,5 +1,6 @@
 package controlador.referencias;
 
+import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,7 +21,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-//import modelo.referencias.ReferenciasMD;
 import vista.principal.VtnPrincipal;
 
 import vista.silabos.frmBibliografia;
@@ -32,22 +32,19 @@ public class ReferenciasCRUDCTR {
     private final ReferenciaBD BDbibliotecaC = ReferenciaBD.single();
     private final VtnPrincipal vtnPrin;
     private final VtnPrincipalCTR ctrPrin;
-    private ConexionBD conexion;
     //private ReferenciasMD modelo;
 
-    public ReferenciasCRUDCTR(ConexionBD conexion, VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmCRUDBibliografia frmCRUDBibliografiaC) {
+    public ReferenciasCRUDCTR(VtnPrincipalCTR ctrPrin, VtnPrincipal vtnPrin, frmCRUDBibliografia frmCRUDBibliografiaC) {
         this.frmCRUDBibliografiaC = frmCRUDBibliografiaC;
         this.ctrPrin = ctrPrin;
         this.vtnPrin = vtnPrin;
-        this.conexion
-                = conexion;
+
         vtnPrin.getDpnlPrincipal().add(frmCRUDBibliografiaC);
         frmCRUDBibliografiaC.show();
         cargar_combo();
     }
 
     public void iniciarControlador() {
-        conexion.conectar();
         frmCRUDBibliografiaC.getBtnNuevoCB().addActionListener(e -> AbrirFormularioRefe());
 
         cargartabla();
@@ -131,25 +128,15 @@ public class ReferenciasCRUDCTR {
 
             // cargartablaperiodo();
         } else {
-            try {
-                System.out.println(mo.getID());
-                System.out.println("Imprimiendo.......");
-                JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/biblioteca/referencias_x_carrera.jasper"));
-                Map parametro = new HashMap();
-
-                parametro.put("id_prd_lectivo", String.valueOf(mo.getID()));
-
-                JasperPrint jp = JasperFillManager.fillReport(jr, parametro, conexion.getCon());
-                JasperViewer pv = new JasperViewer(jp, false);
-                pv.setVisible(true);
-                pv.setTitle("Reporte de libros");
-                frmCRUDBibliografiaC.getCmblibros().setSelectedIndex(0);
-                cargartabla1();
-                //principal.add(pv);
-
-            } catch (JRException ex) {
-                Logger.getLogger(ReferenciasCRUDCTR.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Map parametro = new HashMap();
+            parametro.put("id_prd_lectivo", String.valueOf(mo.getID()));
+            frmCRUDBibliografiaC.getCmblibros().setSelectedIndex(0);
+            cargartabla1();
+            Middlewares.generarReporte(
+                    getClass().getResource("/vista/silabos/reportes/biblioteca/referencias_x_carrera.jasper"),
+                    "Reporte de libros",
+                    parametro
+            );
         }
     }
 
@@ -196,7 +183,7 @@ public class ReferenciasCRUDCTR {
         int select = frmCRUDBibliografiaC.getTblTablaCB().getSelectedRow();
         if (select >= 0) {
             String codigo = frmCRUDBibliografiaC.getTblTablaCB().getValueAt(select, 0).toString();
-            ControladorEditar editar = new ControladorEditar(vista, vtnPrin, codigo, conexion);
+            ControladorEditar editar = new ControladorEditar(vista, vtnPrin, codigo);
             editar.inicia_vista();
             editar.init();
         } else {
