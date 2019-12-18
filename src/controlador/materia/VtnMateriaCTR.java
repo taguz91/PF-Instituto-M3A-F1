@@ -147,7 +147,7 @@ public class VtnMateriaCTR extends DVtnCTR {
     }
 
     private void InitPermisosDocente() {
-        if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("Docente")) {
+        if (CONS.ROL.getNombre().equalsIgnoreCase("Docente")) {
             vtnMateria.getBtnEliminarMateria().setEnabled(false);
         }
     }
@@ -232,13 +232,11 @@ public class VtnMateriaCTR extends DVtnCTR {
         vtnMateria.getBtnEditarMateria().getAccessibleContext().setAccessibleName("Materias-Editar");
         vtnMateria.getBtnEliminarMateria().getAccessibleContext().setAccessibleName("Materias-Eliminar");
         vtnMateria.getBtnReporteMaterias().getAccessibleContext().setAccessibleName("Materias-Reporte");
-        
-        
-        
+
         CONS.activarBtns(vtnMateria.getBtnIngresarMateria(), vtnMateria.getBtnRequisitos(),
-                vtnMateria.getBtnInfo(), vtnMateria.getBtnEditarMateria(), 
+                vtnMateria.getBtnInfo(), vtnMateria.getBtnEditarMateria(),
                 vtnMateria.getBtnEliminarMateria(), vtnMateria.getBtnReporteMaterias());
-        
+
     }
 
     public void abrirFrmRequisito() {

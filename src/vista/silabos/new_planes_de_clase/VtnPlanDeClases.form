@@ -53,22 +53,27 @@
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnEditarFecha" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnCopiar" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="btnEditarFecha" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="btnCopiar" max="32767" attributes="0"/>
+                          <Component id="chxSuperSu" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -81,33 +86,34 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="lblBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnNuevo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEditar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEliminar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnImprimir" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnEditarFecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCopiar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEditarFecha" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="btnCopiar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cmbPeriodos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbPeriodos" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="CmbJornadas" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CmbJornadas" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="chxSuperSu" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="326" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="328" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -254,6 +260,11 @@
     <Component class="javax.swing.JButton" name="btnCopiar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Copiar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chxSuperSu">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Todos Los Periodos"/>
       </Properties>
     </Component>
   </SubComponents>

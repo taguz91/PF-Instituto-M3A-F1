@@ -19,7 +19,6 @@ import controlador.alumno.VtnAlumnoRetiradosCTR;
 import controlador.alumno.VtnMatriculasAnuladasCTR;
 import controlador.alumno.VtnMallaAlumnoCTR;
 import controlador.alumno.VtnMatriculaCTR;
-import controlador.asistenciaAlumnos.FrmAsistenciaCTR;
 import controlador.asistenciaAlumnos.NEWFrmAsistenciaCTR;
 import controlador.docente.FrmDocenteMateriaCTR;
 import controlador.docente.FrmRolPeriodoCTR;
@@ -44,7 +43,6 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.avance.ControladorCRUDAvanceSilabo;
-import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
@@ -53,6 +51,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.login.VtnSelectRolCTR;
 import controlador.pagos.FRMComprobanteCTR;
+import controlador.silabo.planes_de_clases.VtnPlanDeClasesCTR;
 import controlador.ube.VtnAlumnosSinResponderFSCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import controlador.version.VtnDitoolCTR;
@@ -107,7 +106,6 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
-import vista.asistenciaAlumnos.FrmAsistencia;
 import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
@@ -243,7 +241,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         vtnPrin.getMnCtSilabos().addActionListener(al -> btnSilabo());
-        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
+        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> btnPlanDeClases());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> btnSilabo());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
         vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
@@ -666,11 +664,9 @@ public class VtnPrincipalCTR {
         vtn.Init();
     }
 
-    private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, vtnPrin);
-        cP.iniciaControlador();
-        cP.setDesktop(this);
-
+    private void btnPlanDeClases() {
+        VtnPlanDeClasesCTR vtn = new VtnPlanDeClasesCTR(this);
+        vtn.Init();
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
@@ -1087,10 +1083,6 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void btnActivarNotas(ActionEvent e) {
-
-    }
-
     private void btnMiperfilActionPerformance(ActionEvent e) {
 
         VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(this);
@@ -1254,10 +1246,6 @@ public class VtnPrincipalCTR {
         eventoInternal(ji);
         vtnPrin.getDpnlPrincipal().add(ji);
         ji.show();
-    }
-
-    public RolBD getRolSeleccionado() {
-        return rolSeleccionado;
     }
 
     private void mnctReportesEstado(ActionEvent e) {
