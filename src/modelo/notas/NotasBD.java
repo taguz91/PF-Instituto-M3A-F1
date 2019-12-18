@@ -7,15 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Spliterators;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.tipoDeNota.TipoDeNotaMD;
-import org.apache.commons.beanutils.ResultSetIterator;
 
 /**
  *
