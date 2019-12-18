@@ -81,9 +81,6 @@ public class SeguimientoEvaluacionBD {
         String CALL = ""
                 + "CALL \"crear_seguimienntos_evaluaciones\"(" + idUnidad + " ," + idCurso + ")"
                 + "";
-
-        System.out.println(CALL);
-
         return CON.ejecutar(CALL) != null;
 
     }

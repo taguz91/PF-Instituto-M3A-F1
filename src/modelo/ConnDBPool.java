@@ -64,7 +64,7 @@ public class ConnDBPool {
 
             config.setPassword(CONS.BD_PASS);
 
-            config.setMaximumPoolSize(2);
+            config.setMaximumPoolSize(3);
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -74,6 +74,7 @@ public class ConnDBPool {
              */
             config.addDataSourceProperty("allowMultiQueries", "true");
             config.addDataSourceProperty("useServerPrepStmts", "true");
+            config.addDataSourceProperty("maxLifetime", "1000");
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }

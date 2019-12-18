@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Spliterators;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import modelo.ConnDBPool;
 import modelo.alumno.AlumnoCursoMD;
 import modelo.tipoDeNota.TipoDeNotaMD;
+import org.apache.commons.beanutils.ResultSetIterator;
 
 /**
  *
@@ -51,9 +55,10 @@ public class NotasBD extends NotasMD {
         Map<Integer, Object> parametros = new HashMap<>();
         parametros.put(1, alumnnoCurso.getId());
 
-        try {
-            conn = pool.getConnection();
+        try (Connection conn = pool.getConnection()) {
+
             rs = pool.ejecutarQuery(SELECT, conn, parametros);
+
             while (rs.next()) {
                 NotasBD nota = new NotasBD();
 
@@ -67,10 +72,7 @@ public class NotasBD extends NotasMD {
 
         } catch (SQLException e) {
             Logger.getLogger(NotasBD.class.getName()).log(Level.SEVERE, null, e);
-        } finally {
-            pool.closeStmt().close(rs).close(conn);
         }
-
         return lista;
     }
     private boolean ejecutar = false;
@@ -81,7 +83,7 @@ public class NotasBD extends NotasMD {
                     + "SET nota_valor = " + getNotaValor() + " \n"
                     + "WHERE \n"
                     + "\"Notas\".id_nota = " + getIdNota();
-            System.out.println(UPDATE);
+            //System.out.println(UPDATE);
             conn = pool.getConnection();
             ejecutar = pool.ejecutar(UPDATE, conn, null) == null;
         }).start();
