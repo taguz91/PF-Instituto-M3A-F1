@@ -246,7 +246,6 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                     Integer.parseInt(VTN.getTblAlumnos().getValueAt(i, 3).toString())
             );
         }
-        System.out.println("Sql hecho: \n" + sql);
         if (ABD.actualizarFaltas(sql)) {
             JOptionPane.showMessageDialog(VTN, "Guardamos correctamente las faltas.");
         } else {
