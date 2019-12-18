@@ -34,8 +34,6 @@ public class PeriodoLectivoBDS extends PeriodoLectivoMD {
                 + "                   JOIN \"Carreras\" AS c ON c.id_carrera=p.id_carrera\n"
                 + "                    WHERE c.carrera_nombre='" + carrera + "'  AND  p.prd_lectivo_fecha_inicio>='2019-05-27' ORDER BY p.id_prd_lectivo DESC";
 
-        System.out.println("--->" + SELECT);
-
         List<PeriodoLectivoMD> periodos = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
         try {

@@ -927,14 +927,14 @@ public class PersonaBD extends CONBD {
 
     public Map<String, PersonaMD> selectAll() {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Personas\".id_persona,\n"
-                + "\"public\".\"Personas\".persona_identificacion,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre\n"
+                + "\"Personas\".id_persona,\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"Personas\"";
+                + "\"Personas\"";
         Map<String, PersonaMD> map = new HashMap<>();
 
         conn = pool.getConnection();

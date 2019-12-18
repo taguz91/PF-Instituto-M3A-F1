@@ -133,8 +133,6 @@ public class VtnAlumnoCarreraCTR extends DCTR {
         if (Validar.esLetrasYNumeros(b)) {
             almnsCarr = ACRBD.buscar(b);
             llenarTblAlmnCarreras(almnsCarr);
-        } else {
-            System.out.println("No ingrese caracteres especiales");
         }
     }
 

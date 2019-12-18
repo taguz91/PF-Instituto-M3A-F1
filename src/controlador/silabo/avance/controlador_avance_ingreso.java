@@ -128,7 +128,6 @@ public class controlador_avance_ingreso {
     }
 
     private AvanzeUnidadesMDA seleccionarUnidadA() {
-        System.out.println(lista_avanzeU.size() + " -------------------TAMAÑO------------------------->>>> DEL ARRAY AVANCE_UNIDADES");
         Optional<AvanzeUnidadesMDA> unidadSeleccionadaA = lista_avanzeU.stream().filter(uas
                 -> uas.getUnidad().getTituloUnidad().equals(avanceSi.getCbxUnidad().getSelectedItem().toString())).findFirst();
 

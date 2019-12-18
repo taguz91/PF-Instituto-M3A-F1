@@ -55,18 +55,13 @@ public class VtnSelectRolCTR extends CONBD {
         String nsql = "INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "	VALUES ('" + usuario.getUsername() + "', now(), 'INICIO SESION', 'SISTEMA', 0);";
-        if (CON.executeNoSQL(nsql)) {
-            System.out.println("Iniciamos como: " + usuario.getUsername());
-        }
+
     }
 
     public void cierreSesion() {
         String nsql = " INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "  	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "  	VALUES ('" + usuario.getUsername() + "', now(), 'CIERRE SESION', 'SISTEMA', 0);";
-        if (CON.executeNoSQL(nsql)) {
-            System.out.println("Salimos del sistema como: " + usuario.getUsername());
-        }
         ConnDBPool pool = new ConnDBPool();
         pool.closePool();
     }
@@ -75,7 +70,6 @@ public class VtnSelectRolCTR extends CONBD {
     public void Init() {
         rolesDelUsuario = modelo.SelectWhereUSUARIOusername(usuario.getUsername());
         vista.getLblUsuario().setText(usuario.getUsername());
-        System.out.println("Llamamos al rol una vez");
 
         rellenarCombo();
         InitEventos();

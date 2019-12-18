@@ -688,12 +688,12 @@ public class MateriaBD extends CONBD {
     public List<MateriaMD> selectWhere(CursoMD curso) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"Materias\".materia_nombre,\n"
-                + "\"public\".\"Materias\".id_materia,\n"
-                + "\"public\".\"Materias\".materia_horas_presencial\n"
+                + "\"Materias\".materia_nombre,\n"
+                + "\"Materias\".id_materia,\n"
+                + "\"Materias\".materia_horas_presencial\n"
                 + "FROM\n"
-                + "\"public\".\"Cursos\"\n"
-                + "INNER JOIN \"public\".\"Materias\" ON \"public\".\"Cursos\".id_materia = \"public\".\"Materias\".id_materia\n"
+                + "\"Cursos\"\n"
+                + "INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
                 + "WHERE\n"
                 + "\"Cursos\".id_docente = ? AND\n"
                 + "\"Cursos\".id_prd_lectivo = ?AND \n"

@@ -40,7 +40,6 @@ public class AsistenciaBD extends AsistenciaMD {
         try {
             conn = pool.getConnection();
             rst = pool.ejecutarQuery(SELECT, conn, parametrosAsis);
-            System.out.println(pool.getStmt().toString());
             while (rst.next()) {
                 AsistenciaBD asistencia = new AsistenciaBD();
 
@@ -119,9 +118,9 @@ public class AsistenciaBD extends AsistenciaMD {
     public synchronized boolean eliminar(int id_almn_curso, String fecha) {
         new Thread(() -> {
             String DELETE = "DELETE \n"
-                    + "FROM \"public\".\"Asistencia\"\n"
-                    + "WHERE \"public\".\"Asistencia\".id_almn_curso = " + id_almn_curso + "\n"
-                    + "AND \"public\".\"Asistencia\".fecha_asistencia = '" + fecha + "'";
+                    + "FROM \"Asistencia\"\n"
+                    + "WHERE \"Asistencia\".id_almn_curso = " + id_almn_curso + "\n"
+                    + "AND \"Asistencia\".fecha_asistencia = '" + fecha + "'";
             System.out.println(DELETE);
             conn = pool.getConnection();
             ejecutarAsis = pool.ejecutar(DELETE, conn, null) == null;
@@ -138,10 +137,7 @@ public class AsistenciaBD extends AsistenciaMD {
                 + "	WHERE id_curso = " + idCurso + "\n"
                 + ") AND fecha_asistencia = '" + fecha + "';";
 
-        System.out.println("------------------------------------");
-        System.out.println("D E L E T E ");
         System.out.println(DELETE);
-        System.out.println("------------------------------------");
 
         conn = pool.getConnection();
 

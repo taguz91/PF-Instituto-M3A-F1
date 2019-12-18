@@ -33,19 +33,19 @@ public class FichaSaludBD extends FichaSaludMD {
     public List<FichaSaludMD> getFichas() {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"FichaSalud\".\"id\",\n"
-                + "\"public\".\"FichaSalud\".estado_revision,\n"
-                + "\"public\".\"FichaSalud\".estado_envio,\n"
-                + "\"public\".\"Personas\".persona_identificacion,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"FichaSalud\".ingreso_fin_extend,\n"
-                + "\"public\".\"FichaSalud\".ingreso_inicio_extend\n"
+                + "\"FichaSalud\".\"id\",\n"
+                + "\"FichaSalud\".estado_revision,\n"
+                + "\"FichaSalud\".estado_envio,\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"FichaSalud\".ingreso_fin_extend,\n"
+                + "\"FichaSalud\".ingreso_inicio_extend\n"
                 + "FROM\n"
-                + "\"public\".\"FichaSalud\"\n"
-                + "INNER JOIN \"public\".\"Personas\" ON \"public\".\"FichaSalud\".persona_id = \"public\".\"Personas\".id_persona";
+                + "\"FichaSalud\"\n"
+                + "INNER JOIN \"Personas\" ON \"FichaSalud\".persona_id = \"Personas\".id_persona";
         List<FichaSaludMD> lista = new ArrayList<>();
 
         try {

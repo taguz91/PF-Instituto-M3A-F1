@@ -274,7 +274,6 @@ public class VtnControlUBCTR {
     }
 
     private void btnReportesUB(ActionEvent e) {
-        System.out.println("Estamos en el evento");
 
         new Thread(() -> {
             int b = JOptionPane.showOptionDialog(vista,

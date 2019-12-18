@@ -1,6 +1,5 @@
 package modelo;
 
-import utils.CONS;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
@@ -24,6 +23,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import utils.CONS;
 import utils.M;
 
 /**
@@ -64,7 +64,7 @@ public class ConnDBPool {
 
             config.setPassword(CONS.BD_PASS);
 
-            config.setMaximumPoolSize(2);
+            config.setMaximumPoolSize(3);
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -74,6 +74,7 @@ public class ConnDBPool {
              */
             config.addDataSourceProperty("allowMultiQueries", "true");
             config.addDataSourceProperty("useServerPrepStmts", "true");
+            config.addDataSourceProperty("maxLifetime", "1000");
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }

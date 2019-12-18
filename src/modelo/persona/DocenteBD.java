@@ -772,23 +772,23 @@ public class DocenteBD extends CONBD {
     public HashMap<String, DocenteMD> selectAll(String username) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"Personas\".id_persona,\n"
-                + "\"public\".\"Personas\".persona_identificacion,\n"
-                + "\"public\".\"Personas\".persona_primer_apellido,\n"
-                + "\"public\".\"Personas\".persona_segundo_apellido,\n"
-                + "\"public\".\"Personas\".persona_primer_nombre,\n"
-                + "\"public\".\"Personas\".persona_segundo_nombre,\n"
-                + "\"public\".\"Docentes\".id_docente,\n"
-                + "\"public\".\"Docentes\".docente_codigo,\n"
-                + "\"public\".\"Docentes\".docente_activo,\n"
-                + "\"public\".\"Docentes\".docente_en_funcion\n"
+                + "\"Personas\".id_persona,\n"
+                + "\"Personas\".persona_identificacion,\n"
+                + "\"Personas\".persona_primer_apellido,\n"
+                + "\"Personas\".persona_segundo_apellido,\n"
+                + "\"Personas\".persona_primer_nombre,\n"
+                + "\"Personas\".persona_segundo_nombre,\n"
+                + "\"Docentes\".id_docente,\n"
+                + "\"Docentes\".docente_codigo,\n"
+                + "\"Docentes\".docente_activo,\n"
+                + "\"Docentes\".docente_en_funcion\n"
                 + "FROM\n"
-                + "\"public\".\"Personas\"\n"
-                + "INNER JOIN \"public\".\"Usuarios\" ON \"public\".\"Usuarios\".id_persona = \"public\".\"Personas\".id_persona\n"
-                + "INNER JOIN \"public\".\"Docentes\" ON \"public\".\"Docentes\".id_persona = \"public\".\"Personas\".id_persona\n"
+                + "\"Personas\"\n"
+                + "INNER JOIN \"Usuarios\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
+                + "INNER JOIN \"Docentes\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE\n"
-                + "\"public\".\"Usuarios\".usu_username = '" + username + "'"
-                + "ORDER BY \"public\".\"Personas\".persona_primer_nombre ASC";
+                + "\"Usuarios\".usu_username = '" + username + "'"
+                + "ORDER BY \"Personas\".persona_primer_nombre ASC";
 
         HashMap<String, DocenteMD> lista = new HashMap<>();
         conn = pool.getConnection();

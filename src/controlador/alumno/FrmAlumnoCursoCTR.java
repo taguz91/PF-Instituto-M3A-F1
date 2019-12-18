@@ -364,7 +364,6 @@ public class FrmAlumnoCursoCTR extends DCTR {
     private ArrayList<CursoMD> borrarChoques(ArrayList<CursoMD> cursos) {
         int[] posElim = new int[cursos.size()];
         for (int i = 0; i < cursos.size(); i++) {
-            //System.out.println("Nombre curso: " + cursos.get(i).getNombre());
             if (cursos.get(i).getNombre().charAt(0) == 'C') {
                 posElim[i] = i + 1;
             }
@@ -611,7 +610,7 @@ public class FrmAlumnoCursoCTR extends DCTR {
             //Si reprobo una materia se busca el ciclo menor en el que reprobo
             mallaPerdidas.forEach(m -> {
                 if (carrera.getModalidad().equals("DUAL")) {
-                    System.out.println("Estamos en una carrera dual. " + m.getMateria().getNombre());
+
                     boolean p = perdioNucleoEstruncturante(m.getMateria().getId());
                     if (!perdioNE) {
                         perdioNE = p;

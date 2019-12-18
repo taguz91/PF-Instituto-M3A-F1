@@ -127,7 +127,6 @@ public class JDRetirarAlumnoCTR extends DCTR {
             }
             FRM.setVisible(false);
         }
-        System.out.println("GUARDANDO");
     }
 
     private void cargarCmbPeriodo() {
