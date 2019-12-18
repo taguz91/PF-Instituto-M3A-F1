@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.frmEditarFechaG;
+import vista.silabos.planesDeClase.frmEditarFechaG;
 
 public class ControladorEditarFechaGenPlanClase {
 
