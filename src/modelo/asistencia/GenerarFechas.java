@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class GenerarFechas {
 
-    private final List<String> fechas = new ArrayList<>();
+    private final List<FechasClase> fechas = new ArrayList<>();
     private final NEWAsistenciaBD ABD = NEWAsistenciaBD.single();
 
     // Variables que nos ayudaran a generar las fechas  
@@ -18,7 +18,7 @@ public class GenerarFechas {
     private int diaAumentar;
     private int diaAnterior;
 
-    public List<String> getFechasClaseCurso(int idCurso) {
+    public List<FechasClase> getFechasClaseCurso(int idCurso) {
         List<AsistenciaHoras> ahs = ABD.getDiasCurso(idCurso);
         AsistenciaSesionMD as = ABD.getInfoSesion(idCurso);
         fechaAux = as.getPrdFechaInicio();
@@ -35,11 +35,14 @@ public class GenerarFechas {
                 diaAnterior = d.getDia();
 
                 fechaAux = fechaAux.plusDays(diaAumentar);
-                fechas.add(
-                        fechaAux.getDayOfMonth() + "/"
+                FechasClase fc = new FechasClase();
+                fc.setFecha(fechaAux.getDayOfMonth() + "/"
                         + fechaAux.getMonthValue() + "/"
                         + fechaAux.getYear()
                 );
+                fc.setDia(d.getDia());
+                fc.setHoras(d.getHoras());
+                fechas.add(fc);
             });
         }
         return fechas;

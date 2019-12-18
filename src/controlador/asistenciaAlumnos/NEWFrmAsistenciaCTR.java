@@ -5,12 +5,15 @@ import controlador.estilo.cmb.TblRenderSpinner;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import modelo.asistencia.AsistenciaMD;
+import modelo.asistencia.FechasClase;
 import modelo.asistencia.GenerarFechas;
 import modelo.asistencia.NEWAsistenciaBD;
 import modelo.curso.CursoMD;
@@ -30,11 +33,14 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     // Listas para combos 
     private List<PeriodoLectivoMD> pls;
     private List<CursoMD> cs;
-    private List<String> fechas;
+    private List<FechasClase> fechas, fechasSelec;
     // Lista para tabla 
     private List<AsistenciaMD> as;
     // Modelo de la tabla 
     private DefaultTableModel mdTbl;
+    // Modelo del spinner para su validacion 
+    private SpinnerNumberModel mdSpn;
+    private final JSpinner spn = new JSpinner();
 
     public NEWFrmAsistenciaCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -60,10 +66,9 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 titulo
         );
         VTN.getTblAlumnos().setModel(mdTbl);
-        JSpinner spn = new JSpinner();
         spn.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 3.0d, 1.0d));
-        VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellRenderer(new TblRenderSpinner(spn));
-        VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellEditor(new TblEditorSpinner(spn));
+        //VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellRenderer(new TblRenderSpinner(spn));
+        //VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellEditor(new TblEditorSpinner(spn));
     }
 
     private void iniciarAcciones() {
@@ -112,17 +117,21 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             fechas = gf.getFechasClaseCurso(
                     cs.get(posCurso - 1).getId()
             );
+            fechasSelec = fechas;
             VTN.getCmbFechas().removeAllItems();
-            VTN.getCmbFechas().addItem("Sin clases");
-            fechas.forEach(f -> {
-                VTN.getCmbFechas().addItem(f);
-            });
+            VTN.getCmbFechas().addItem("");
             LocalDate ld = LocalDate.now();
-            VTN.getCmbFechas().setSelectedItem(
-                    ld.getDayOfMonth() + "/"
+            String fechaActual = ld.getDayOfMonth() + "/"
                     + ld.getMonthValue() + "/"
-                    + ld.getYear()
-            );
+                    + ld.getYear();
+            fechas.forEach(f -> {
+                VTN.getCmbFechas().addItem(f.getFecha());
+                if (f.getFecha().equals(fechaActual)) {
+                    VTN.getCmbFechas().setSelectedItem(
+                            fechaActual
+                    );
+                }
+            });
         }
     }
 
@@ -140,9 +149,11 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     private void buscarCmbFechas(String aguja) {
         VTN.getCmbFechas().removeAllItems();
         VTN.getCmbFechas().addItem(aguja);
+        fechasSelec = new ArrayList<>();
         fechas.forEach(f -> {
-            if (f.contains(aguja)) {
-                VTN.getCmbFechas().addItem(f);
+            if (f.getFecha().contains(aguja)) {
+                VTN.getCmbFechas().addItem(f.getFecha());
+                fechasSelec.add(f);
             }
         });
     }
@@ -150,11 +161,19 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     private void cargarLista() {
         String fecha = VTN.getCmbFechas().getSelectedItem().toString();
         int posCurso = VTN.getCmbMateria().getSelectedIndex();
-        if (!fecha.equals("")) {
+        int posFecha = VTN.getCmbFechas().getSelectedIndex();
+        if (!fecha.equals("") && posCurso > 0 && posFecha > 0) {
             as = ABD.getAlumnosCursoFicha(
                     cs.get(posCurso - 1).getId(),
                     fecha
             );
+            mdSpn = new javax.swing.SpinnerNumberModel(
+                    0.0d,
+                    0.0d,
+                    fechasSelec.get(posFecha - 1).getHoras(),
+                    1.0d
+            );
+            spn.setModel(mdSpn);
             if (as.size() > 0) {
                 llenarTbl(as);
             } else {
@@ -184,7 +203,6 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 a.getAlumnoCurso().getAlumno().getApellidosNombres(),
                 a.getNumeroFaltas()
             };
-            System.out.println("Numero de faltas de los alumnos: " + a.getNumeroFaltas());
             mdTbl.addRow(r);
         });
     }

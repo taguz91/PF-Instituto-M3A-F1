@@ -31,8 +31,7 @@ public class TblEditorSpinner extends AbstractCellEditor implements TableCellEdi
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        System.out.println("Valor al editar: " + value.toString());
-        spn.setValue(1);
+        table.setValueAt(value, row, column);
         return spn;
     }
 

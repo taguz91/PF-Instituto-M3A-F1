@@ -47,7 +47,7 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    JOIN public.\"Personas\" p\n"
                 + "    ON p.id_persona = a.id_persona\n"
                 + "    WHERE ac.id_curso = " + idCurso + "\n"
-                + "    AND  to_char(fecha_asistencia,'DD/MM/YYYY') = '" + fecha + "'\n"
+                + "    AND  to_char(fecha_asistencia,'DD/MM/YYYY') ILIKE '%" + fecha + "%'\n"
                 + "    ORDER BY persona_primer_apellido, "
                 + "    persona_segundo_apellido,"
                 + "    persona_primer_nombre, "
@@ -59,7 +59,7 @@ public class NEWAsistenciaBD extends CONBD {
             while (rs.next()) {
                 AsistenciaMD a = new AsistenciaMD();
                 a.setId(rs.getInt(1));
-                a.setNumeroFaltas(6);
+                a.setNumeroFaltas(rs.getInt(6));
                 AlumnoCursoMD ac = new AlumnoCursoMD();
                 AlumnoMD al = new AlumnoMD();
                 ac.setAlumno(al);
@@ -90,7 +90,14 @@ public class NEWAsistenciaBD extends CONBD {
                 + "    TO_DATE('" + fecha + "', 'DD/MM/YYYY'), "
                 + "    0 "
                 + "    FROM public.\"AlumnoCurso\" "
-                + "    WHERE id_curso = " + idCurso + ";";
+                + "    WHERE id_curso = " + idCurso + " "
+                + "    AND id_almn_curso NOT IN ("
+                + "     SELECT id_almn_curso "
+                + "     FROM public.\"Asistencia\" "
+                + "     WHERE id_curso = " + idCurso + " "
+                + "     AND fecha_asistencia = "
+                + "     TO_DATE('" + fecha + "', 'DD/MM/YYYY') "
+                + "   );";
         return CON.executeNoSQL(sql);
     }
 
@@ -116,7 +123,7 @@ public class NEWAsistenciaBD extends CONBD {
                 + "FROM public.\"PeriodoLectivo\" plr\n"
                 + "JOIN public.\"Cursos\" cr\n"
                 + "ON cr.id_prd_lectivo = plr.id_prd_lectivo\n"
-                + "WHERE id_curso = "+idCurso+";";
+                + "WHERE id_curso = " + idCurso + ";";
         AsistenciaSesionMD as = new AsistenciaSesionMD();
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
