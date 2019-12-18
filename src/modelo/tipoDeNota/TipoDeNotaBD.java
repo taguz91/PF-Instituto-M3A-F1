@@ -67,20 +67,20 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     public List<TipoDeNotaBD> selectAllWhereEstadoIs(boolean estado) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_minimo,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
-                + "\"public\".\"TipoDeNota\".id_prd_lectivo,\n"
-                + "\"public\".\"PeriodoLectivo\".id_carrera,\n"
-                + "\"public\".\"Carreras\".carrera_nombre,\n"
-                + "\"public\".\"Carreras\".carrera_modalidad,\n"
-                + "\"public\".\"PeriodoLectivo\".prd_lectivo_nombre\n"
+                + "\"TipoDeNota\".id_tipo_nota,\n"
+                + "\"TipoDeNota\".tipo_nota_nombre,\n"
+                + "\"TipoDeNota\".tipo_nota_valor_minimo,\n"
+                + "\"TipoDeNota\".tipo_nota_valor_maximo,\n"
+                + "\"TipoDeNota\".tipo_nota_fecha_creacion,\n"
+                + "\"TipoDeNota\".id_prd_lectivo,\n"
+                + "\"PeriodoLectivo\".id_carrera,\n"
+                + "\"Carreras\".carrera_nombre,\n"
+                + "\"Carreras\".carrera_modalidad,\n"
+                + "\"PeriodoLectivo\".prd_lectivo_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"TipoDeNota\"\n"
-                + "INNER JOIN \"public\".\"PeriodoLectivo\" ON \"public\".\"TipoDeNota\".id_prd_lectivo = \"public\".\"PeriodoLectivo\".id_prd_lectivo\n"
-                + "INNER JOIN \"public\".\"Carreras\" ON \"public\".\"PeriodoLectivo\".id_carrera = \"public\".\"Carreras\".id_carrera\n"
+                + "\"TipoDeNota\"\n"
+                + "INNER JOIN \"PeriodoLectivo\" ON \"TipoDeNota\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
                 + "WHERE\n"
                 + "\"TipoDeNota\".tipo_nota_estado IS " + estado;
         return SelectSimple(SELECT);
@@ -130,14 +130,14 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
 
     public List<TipoDeNotaBD> selectWhere(int idPeriodo) {
         String SELECT = "SELECT\n"
-                + "\"public\".\"TipoDeNota\".id_tipo_nota,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_nombre,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_minimo,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_valor_maximo\n"
+                + "\"TipoDeNota\".id_tipo_nota,\n"
+                + "\"TipoDeNota\".tipo_nota_nombre,\n"
+                + "\"TipoDeNota\".tipo_nota_valor_minimo,\n"
+                + "\"TipoDeNota\".tipo_nota_valor_maximo\n"
                 + "FROM\n"
-                + "\"public\".\"TipoDeNota\"\n"
+                + "\"TipoDeNota\"\n"
                 + "WHERE \n"
-                + "\"public\".\"TipoDeNota\".id_prd_lectivo = ?";
+                + "\"TipoDeNota\".id_prd_lectivo = ?";
 
         List<TipoDeNotaBD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -169,9 +169,9 @@ public class TipoDeNotaBD extends TipoDeNotaMD {
     public List<String> selectNombreWhere(int idPeriodo) {
 
         String SELECT = "SELECT\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_nombre\n"
+                + "\"TipoDeNota\".tipo_nota_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"TipoDeNota\"\n"
+                + "\"TipoDeNota\"\n"
                 + "WHERE\n"
                 + "id_prd_lectivo = ?";
         List<String> lista = new ArrayList<>();

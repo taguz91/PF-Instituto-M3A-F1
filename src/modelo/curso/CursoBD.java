@@ -849,13 +849,13 @@ public class CursoBD extends CONBD {
     public List<String> selectCicloWhere(int idDocente, int idPeriodoLectivo) {
 
         String SELECT = "SELECT DISTINCT\n"
-                + "\"public\".\"Cursos\".curso_nombre\n"
+                + "\"Cursos\".curso_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"Cursos\"\n"
+                + "\"Cursos\"\n"
                 + "WHERE\n"
-                + "\"public\".\"Cursos\".id_docente = ?\n"
+                + "\"Cursos\".id_docente = ?\n"
                 + "AND\n"
-                + "\"public\".\"Cursos\".id_prd_lectivo = ?";
+                + "\"Cursos\".id_prd_lectivo = ?";
 
         List<String> lista = new ArrayList<>();
 

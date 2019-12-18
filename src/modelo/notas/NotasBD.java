@@ -36,15 +36,15 @@ public class NotasBD extends NotasMD {
 
     public List<NotasBD> selectWhere(AlumnoCursoMD alumnnoCurso) {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Notas\".id_nota,\n"
-                + "\"public\".\"Notas\".nota_valor,\n"
-                + "\"public\".\"Notas\".id_tipo_nota,\n"
-                + "\"public\".\"TipoDeNota\".tipo_nota_nombre\n"
+                + "\"Notas\".id_nota,\n"
+                + "\"Notas\".nota_valor,\n"
+                + "\"Notas\".id_tipo_nota,\n"
+                + "\"TipoDeNota\".tipo_nota_nombre\n"
                 + "FROM\n"
-                + "\"public\".\"Notas\"\n"
-                + "INNER JOIN \"public\".\"TipoDeNota\" ON \"public\".\"Notas\".id_tipo_nota = \"public\".\"TipoDeNota\".id_tipo_nota\n"
+                + "\"Notas\"\n"
+                + "INNER JOIN \"TipoDeNota\" ON \"Notas\".id_tipo_nota = \"TipoDeNota\".id_tipo_nota\n"
                 + "WHERE\n"
-                + "\"public\".\"Notas\".id_almn_curso = ?\n"
+                + "\"Notas\".id_almn_curso = ?\n"
                 + "ORDER BY \"Notas\".nota_valor ASC";
 
         List<NotasBD> lista = new ArrayList<>();
@@ -80,7 +80,7 @@ public class NotasBD extends NotasMD {
             String UPDATE = "UPDATE \"Notas\" \n"
                     + "SET nota_valor = " + getNotaValor() + " \n"
                     + "WHERE \n"
-                    + "\"public\".\"Notas\".id_nota = " + getIdNota();
+                    + "\"Notas\".id_nota = " + getIdNota();
             System.out.println(UPDATE);
             conn = pool.getConnection();
             ejecutar = pool.ejecutar(UPDATE, conn, null) == null;

@@ -294,11 +294,9 @@ public class FrmAsistenciaCTR {
 
                 }
 
-                listadias.stream().forEach(a -> System.out.println("dia obtenido " + a));
 
             }
 
-            System.out.println("Numero de columnas ---->" + jTbl.getColumnCount());
         } catch (Exception e) {
             System.out.println("------->  Error Cargar Dias Clase " + e.getMessage());
         }
@@ -316,9 +314,7 @@ public class FrmAsistenciaCTR {
     public boolean Validar() {
         boolean correcto = true;
         int d = CONS.getDia(vista.getCmbDiaClase().getSelectedItem().toString().split(" | ")[0]);
-        System.out.println("dia obtenido de parte de cons " + d);
         int numero = asistenciaBD.numHorasPorDia(listaNotas.get(0).getCurso().getId(), d);
-        System.out.println("######################### " + numero);
         for (int i = 0; i < jTbl.getRowCount(); i++) {
 
             int faltas = Integer.parseInt(jTbl.getValueAt(i, 6).toString());
@@ -422,7 +418,6 @@ public class FrmAsistenciaCTR {
     private void cargarComboSemanas() {
 
         try {
-            System.out.println("-------------------------------------->  metodo carga de semanas");
             listaSemanasActivas = calendarioBD.cargarSemanas(getIdPeriodoLectivo());
             vista.getCmbSemana().removeAllItems();
             listaNumSemanas = carreraBD.cargarNumdeSemanas(getIdPeriodoLectivo());
@@ -433,32 +428,19 @@ public class FrmAsistenciaCTR {
 
                 calen.getSemanasActivas();
                 semanas = carrera.getNumSemanas();
-                System.out.println("Semanas - - ---------->" + semanas);
                 listaSemanasActivas.forEach(t -> vista.getCmbSemana().addItem(t.getSemanasActivas()));
             }
 
         } catch (Exception e) {
-            System.out.println("%%%%%%%%%%%%%%%%%%%%");
+
             System.out.println("Murio: " + e.getMessage());
-            System.out.println("%%%%%%%%%%%%%%%%%%%%");
+
         }
     }
 
-    // Agregar Filas 
-    // agregar a la tabla asistencia
-//    private Consumer<AlumnoCursoBD> agregarFilasTrad() {
-//        return (obj) -> {
-//
-//            // System.out.println(obj);
-//            tablaTrad.addRow(new Object[]{tablaTrad.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
-//                obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
-//                obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});
-//        };
-//    }
     private BiFunction<AlumnoCursoMD, DefaultTableModel, Void> agregarFilasTrad() {
         return (obj, tabla) -> {
 
-            // System.out.println(obj);
             tabla.addRow(new Object[]{tabla.getDataVector().size() + 1, obj.getAlumno().getIdentificacion(),
                 obj.getAlumno().getPrimerApellido(), obj.getAlumno().getSegundoApellido(),
                 obj.getAlumno().getPrimerNombre(), obj.getAlumno().getSegundoNombre()});

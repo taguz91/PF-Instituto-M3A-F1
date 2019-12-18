@@ -172,7 +172,6 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
 
             if (vista.getCmbCursoRef().getSelectedIndex() != 0) {
                 CONN.copiarSeguimientos(getCurso().getId(), getUnidad().getIdUnidad(), getCursoRef().getId());
-                System.out.println("----------------->");
             } else {
                 CONN.crearSeguimientos(getUnidad().getIdUnidad(), getCurso().getId());
             }

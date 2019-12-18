@@ -57,9 +57,9 @@ public class CalendarioBD extends CalendarioMD{
      public LocalDate fechaIniSemana (int id_prd , int num_semana){
         LocalDate fecha_ini = null;
         String SELECT = "SELECT\n" +
-"\"public\".\"CalendarioPeriodo\".clnd_prd_fecha_ini\n" +
+"\"CalendarioPeriodo\".clnd_prd_fecha_ini\n" +
 "FROM\n" +
-"\"public\".\"CalendarioPeriodo\"\n" +
+"\"CalendarioPeriodo\"\n" +
 "WHERE id_prd_lectivo = "+ id_prd + " AND clnd_prd_numero_semana = "+ num_semana+"";
         
         conn = pool.getConnection();

@@ -434,10 +434,6 @@ public class VtnNotasCTR extends AbstractVtn {
                 obj.getNotas().stream().filter(buscar("EXAMEN DE RECUPERACION")).findAny().get().getNotaValor(),
                 (int) Middlewares.conversor("" + obj.getNotaFinal()), obj.getEstado(), obj.getNumFalta(),
                 calcularPorcentaje(obj.getNumFalta(), getHoras()), obj.getAsistencia()});
-
-            System.out.println("Alumno->" + obj.getId());
-            System.out.println("---->" + obj.getNotas().stream().map(c -> c.getTipoDeNota()).toArray().length);
-
         };
     }
 
@@ -783,61 +779,52 @@ public class VtnNotasCTR extends AbstractVtn {
             ReportesCTR reportes = new ReportesCTR(vista, getIdDocente(), getModalidad());
             reportes.setModalidad(getModalidad());
 
+            desktop.getLblEstado().setText("CARGANDO REPORTE....");
             switch (r) {
                 case 0:
 
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteMenos70();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                     break;
 
                 case 1:
 
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteEntre70_80();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                     break;
 
                 case 2:
 
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteEntre80_90();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                     break;
 
                 case 3:
 
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteEntre90_100();
-                    desktop.getLblEstado().setText("COMPLETADO");
 
                     break;
 
                 case 4:
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
+
                     reportes.generarReporteCompleto();
-                    desktop.getLblEstado().setText("COMPLETADO");
+
                     break;
 
                 case 5:
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteInterciclo();
-                    desktop.getLblEstado().setText("COMPLETADO");
+
                     break;
 
                 case 6:
-                    desktop.getLblEstado().setText("CARGANDO REPORTE....");
                     reportes.generarReporteInformeFinalTabla();
-                    desktop.getLblEstado().setText("COMPLETADO");
                     break;
 
                 default:
                     break;
             }
 
+            desktop.getLblEstado().setText("COMPLETADO");
             try {
                 sleep(500);
             } catch (InterruptedException ex) {

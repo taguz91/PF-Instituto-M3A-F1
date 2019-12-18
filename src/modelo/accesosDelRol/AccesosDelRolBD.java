@@ -33,12 +33,12 @@ public class AccesosDelRolBD extends AccesosDelRolMD {
 
     public List<AccesosDelRolBD> selectWhere(int idRol) {
         String SELECT = "SELECT\n"
-                + "	\"public\".\"AccesosDelRol\".id_acceso_del_rol, \n"
-                + "	\"public\".\"AccesosDelRol\".acc_activo,\n"
-                + "	\"public\".\"Accesos\".acc_nombre\n"
+                + "	\"AccesosDelRol\".id_acceso_del_rol, \n"
+                + "	\"AccesosDelRol\".acc_activo,\n"
+                + "	\"Accesos\".acc_nombre\n"
                 + "FROM\n"
-                + "	\"public\".\"AccesosDelRol\"\n"
-                + "	INNER JOIN \"public\".\"Accesos\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso \n"
+                + "	\"AccesosDelRol\"\n"
+                + "	INNER JOIN \"Accesos\" ON \"AccesosDelRol\".id_acceso = \"Accesos\".id_acceso \n"
                 + "WHERE\n"
                 + "	\"AccesosDelRol\".id_rol = " + idRol;
 
@@ -72,10 +72,10 @@ public class AccesosDelRolBD extends AccesosDelRolMD {
 
     public List<String> selectWhere(int idRol, boolean estado) {
         String SELECT = "SELECT\n"
-                + "	\"public\".\"Accesos\".acc_nombre \n"
+                + "	\"Accesos\".acc_nombre \n"
                 + "FROM\n"
-                + "	\"public\".\"AccesosDelRol\"\n"
-                + "	INNER JOIN \"public\".\"Accesos\" ON \"public\".\"AccesosDelRol\".id_acceso = \"public\".\"Accesos\".id_acceso \n"
+                + "	\"AccesosDelRol\"\n"
+                + "	INNER JOIN \"Accesos\" ON \"AccesosDelRol\".id_acceso = \"Accesos\".id_acceso \n"
                 + "WHERE\n"
                 + "	\"AccesosDelRol\".id_rol = " + idRol + " \n"
                 + "	AND \"AccesosDelRol\".acc_activo IS " + estado;

@@ -38,11 +38,11 @@ public class AccesosBD extends AccesosMD {
     public List<AccesosBD> SelectAll() {
 
         String SELECT = "SELECT\n"
-                + "	\"public\".\"Accesos\".id_acceso,\n"
-                + "	\"public\".\"Accesos\".acc_nombre,\n"
-                + "	\"public\".\"Accesos\".acc_descripcion \n"
+                + "	\"Accesos\".id_acceso,\n"
+                + "	\"Accesos\".acc_nombre,\n"
+                + "	\"Accesos\".acc_descripcion \n"
                 + "FROM\n"
-                + "	\"public\".\"Accesos\"";
+                + "	\"Accesos\"";
 
         List<AccesosBD> lista = new ArrayList<>();
 

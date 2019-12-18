@@ -36,7 +36,6 @@ public class Reportes_ubCRT {
         parametros.put("curso_nombre", ciclo);
         parametros.put("materia_nombre", materia);
         JOptionPane.showMessageDialog(null, getClass().getResource(path).toString());
-         System.out.println("-----------"+ parametros);
           
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Estado Estudiantil", parametros);
 

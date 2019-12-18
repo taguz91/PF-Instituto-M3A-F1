@@ -71,9 +71,6 @@ public class ImgLib {
         if (image != null && label.getHeight() != 0 && label.getWidth() != 0) {
             label.setSize(label.getWidth(), label.getHeight());
 
-            System.out.println("->" + label.getHeight());
-            System.out.println("-->" + label.getWidth());
-
             Icon icon = new ImageIcon(image.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 
             label.setIcon(icon);

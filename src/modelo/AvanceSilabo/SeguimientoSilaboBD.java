@@ -35,7 +35,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             st.setBoolean(2, ss.isEsInterciclo());
             st.setInt(3, ss.getCurso().getId());
             st.executeUpdate();
-            System.out.println(st);
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(SeguimientoSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,7 +69,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             st.setString(3, parametros[1]);
             st.setInt(4, Integer.parseInt(parametros[4]));
             ResultSet rs = st.executeQuery();
-            System.out.println(st);
 
             while (rs.next()) {
                 SeguimientoSilaboMD ss = new SeguimientoSilaboMD();
@@ -117,7 +115,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             st.setString(2, parametros[1]);
             st.setInt(3, Integer.parseInt(parametros[3]));
             ResultSet rs = st.executeQuery();
-            System.out.println(st);
 
             while (rs.next()) {
                 SeguimientoSilaboMD ss = new SeguimientoSilaboMD();
@@ -170,7 +167,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
 
             st.setInt(1, id_curso);
             ResultSet rs = st.executeQuery();
-            System.out.println(st);
 
             while (rs.next()) {
                 SeguimientoSilaboMD ss = new SeguimientoSilaboMD();
@@ -195,14 +191,12 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             st.setInt(1, idsegui);
             st.setInt(2, id_curso);
             ResultSet rs = st.executeQuery();
-            System.out.println(st + "  ----------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<< CONSULTAA");
 
             while (rs.next()) {
                 SeguimientoSilaboMD ss = new SeguimientoSilaboMD();
                 ss.setEstado_seguimiento(rs.getInt(1));
                 ss.setEsInterciclo(rs.getBoolean(2));
                 lista_seguimiento.add(ss);
-                System.out.println(ss.getEstado_seguimiento() + "--------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<");
             }
         } catch (SQLException ex) {
             Logger.getLogger(SeguimientoSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,7 +255,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
         try {
             st.setInt(1, ss.getId_seguimientoS());
             st.executeUpdate();
-            System.out.println(st);
             st.close();
         } catch (SQLException e) {
             System.out.println("Falló al eliminar antes de guardar");
@@ -278,7 +271,6 @@ public class SeguimientoSilaboBD extends SeguimientoSilaboMD {
             st.setInt(1, estado);
             st.setInt(2, id_segui);
             st.executeUpdate();
-            System.out.println(st);
             st.close();
         } catch (SQLException e) {
             System.out.println(e);

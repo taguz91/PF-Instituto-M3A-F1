@@ -242,13 +242,15 @@ public class VtnCarreraCTR extends DVtnCTR {
                 "Lista de periodos lectivos", "Periodos lectivos",
                 JOptionPane.QUESTION_MESSAGE, null,
                 nmPrd.toArray(), "Seleccione");
-        System.out.println("Selecciono " + np);
-        //Se es null significa que no selecciono nada
+
         if (np == null) {
             botonDocentes();
+
         } else if (np.equals("Seleccione")) {
+
             JOptionPane.showMessageDialog(ctrPrin.getVtnPrin(), "Debe seleccionar un periodo lectivo.");
             seleccionarPeriodo();
+
         } else {
             JasperReport jr;
             String path = "/vista/reportes/repDocentesPrdLectivo.jasper";
@@ -256,7 +258,6 @@ public class VtnCarreraCTR extends DVtnCTR {
                 Map parametro = new HashMap();
 
                 parametro.put("idPeriodo", np);
-                System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 CON.mostrarReporte(jr, parametro, "Reporte de Materias del Docente por Periodos Lectivos");
 

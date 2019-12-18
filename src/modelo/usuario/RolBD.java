@@ -46,12 +46,12 @@ public class RolBD extends RolMD {
     public List<RolBD> selectAll() {
 
         String SELECT = "SELECT\n"
-                + "	\"public\".\"Roles\".id_rol,\n"
-                + "	\"public\".\"Roles\".rol_nombre,\n"
-                + "	\"public\".\"Roles\".rol_observaciones,\n"
-                + "	\"public\".\"Roles\".rol_estado \n"
+                + "	\"Roles\".id_rol,\n"
+                + "	\"Roles\".rol_nombre,\n"
+                + "	\"Roles\".rol_observaciones,\n"
+                + "	\"Roles\".rol_estado \n"
                 + "FROM\n"
-                + "	\"public\".\"Roles\" \n"
+                + "	\"Roles\" \n"
                 + "WHERE\n"
                 + "	rol_nombre NOT IN ( 'ROOT', 'DEV' );";
 
@@ -60,15 +60,15 @@ public class RolBD extends RolMD {
 
     public List<RolBD> SelectWhereUSUARIOusername(String username) {
         String SELECT = "SELECT\n"
-                + "\"public\".\"Roles\".id_rol,\n"
-                + "\"public\".\"Roles\".rol_nombre,\n"
-                + "\"public\".\"Roles\".rol_observaciones,\n"
-                + "\"public\".\"Roles\".rol_estado\n"
+                + "\"Roles\".id_rol,\n"
+                + "\"Roles\".rol_nombre,\n"
+                + "\"Roles\".rol_observaciones,\n"
+                + "\"Roles\".rol_estado\n"
                 + "FROM\n"
-                + "\"public\".\"Roles\"\n"
-                + "INNER JOIN \"public\".\"RolesDelUsuario\" ON \"public\".\"RolesDelUsuario\".id_rol = \"public\".\"Roles\".id_rol\n"
+                + "\"Roles\"\n"
+                + "INNER JOIN \"RolesDelUsuario\" ON \"RolesDelUsuario\".id_rol = \"Roles\".id_rol\n"
                 + "WHERE\n"
-                + "\"public\".\"RolesDelUsuario\".usu_username = '" + username + "';";
+                + "\"RolesDelUsuario\".usu_username = '" + username + "';";
         return SelectSimple(SELECT);
     }
 

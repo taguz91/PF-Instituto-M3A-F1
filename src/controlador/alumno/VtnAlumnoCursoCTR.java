@@ -116,8 +116,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
         if (Validar.esLetrasYNumeros(b)) {
             almns = ALCBR.buscarAlumnosCursosTbl(b);
             llenatTbl(almns);
-        } else {
-            System.out.println("No ingrese caracteres especiales");
         }
     }
 
@@ -319,7 +317,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
             parametro.put("ciclo", Integer.parseInt(
                     vtnAlmnCurso.getCmbCiclo().getSelectedItem().toString()
             ));
-            System.out.println(parametro);
             jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
             CON.mostrarReporte(jr, parametro, "Reporte Lista de Alumnos");
         } catch (JRException ex) {
@@ -421,7 +418,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
-                System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 CON.mostrarReporte(jr, parametro, "Reporte UBE");
 
@@ -444,7 +440,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
-                System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 CON.mostrarReporte(jr, parametro, "Reporte UBE");
 
@@ -467,7 +462,6 @@ public class VtnAlumnoCursoCTR extends DVtnCTR {
                 Map parametro = new HashMap();
                 parametro.put("cedulaalumno", almns.get(posFila).getAlumno().getIdentificacion());
                 parametro.put("periodolectivo", vtnAlmnCurso.getCmbPrdLectivos().getSelectedItem().toString());
-                System.out.println(parametro);
                 jr = (JasperReport) JRLoader.loadObject(getClass().getResource(path));
                 CON.mostrarReporte(jr, parametro, "Reporte UBE");
 

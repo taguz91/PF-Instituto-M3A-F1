@@ -145,9 +145,7 @@ public class ControladorConfiguracion_plan_clases {
 
                 frm_cong_PlanClase.getCmb_unidades().addItem(String.valueOf(us.getNumeroUnidad()));
             });
-        } else {
-            System.out.println("siiiiiiiiiiiiiiiiiiiiiiiiimnnnnnnnnnnnnnn unidades");
-        }
+        } 
     }
 
     private void LLENA_COMBO_PERIODOS_CARRERA(List<PeriodoLectivoMD> periodos) {
@@ -167,8 +165,6 @@ public class ControladorConfiguracion_plan_clases {
             cursos.forEach(cs -> {
                 frm_cong_PlanClase.getCmb_Cursos().addItem(String.valueOf(cs.getNombre()));
             });
-        } else {
-            System.out.println("NO tiene");
         }
     }
 
@@ -196,7 +192,6 @@ public class ControladorConfiguracion_plan_clases {
             LLENAR_COMBO_UNIDADES(unidadesSilabo);
             cursosSilabo = CursosBDS.Consultarcursos(usuario.getPersona().getIdPersona(), getid_periodo(), materia_silabo);
             LLENAR_COMBO_CURSOS(cursosSilabo);
-            System.out.println(getIdSilabo() + "------------------------------------------------>>>>>>>>><<<<<<<<ID_SILABO____");
             if (frm_cong_PlanClase.getCmb_Cursos().getItemCount() != 0) {
                 frm_cong_PlanClase.getBtn_siguiente().setEnabled(true);
             } else {
@@ -221,8 +216,6 @@ public class ControladorConfiguracion_plan_clases {
             String nombre_periodo = periodosCarrera.get(posP - 1).getNombre();
             materias_Silabos = MateriasBDS.consultarSilabo2(carrera, usuario.getPersona().getIdPersona(), nombre_periodo);
             LLENAR_COMBO_SILABOS(materias_Silabos);
-
-            System.out.println(getid_periodo() + "----------------------------->>>>>>>>>>>>>>><<<<<<<ID PERIODO");
 
         } else {
             clickCmbCarreras();
