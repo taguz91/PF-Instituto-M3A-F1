@@ -101,10 +101,14 @@ public class NEWAsistenciaBD extends CONBD {
         return CON.executeNoSQL(sql);
     }
 
-    public boolean actualizarFalta(int idAsistencia, int numFalta) {
+    public String getSqlActualizar(int idAsistencia, int numFalta) {
         String sql = "UPDATE public.\"Asistencia\" "
                 + "    SET numero_faltas = " + numFalta + " "
                 + "    WHERE id_asistencia = " + idAsistencia + ";";
+        return sql;
+    }
+
+    public boolean actualizarFaltas(String sql) {
         return CON.executeNoSQL(sql);
     }
 

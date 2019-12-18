@@ -636,18 +636,18 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
-        FrmAsistencia frm = new FrmAsistencia();
+        /*FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {
             FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
             asistencia.Init();
         } else {
             errorNumVentanas();
-        }
+        }*/
         // IDEA
-/*
+
         NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
-        ctr.iniciar();*/
+        ctr.iniciar();
     }
 
     private void abrirVtnReporteNumAlumno() {

@@ -23,7 +23,7 @@
 	where rp.id_plan_clases= $P!{id_plan_clase} and r.tipo_recurso='M'
 ) AS "RECURSOS_MATERIALES",
 (
-	SELECT   STRING_AGG( DISTINCT descripcion_estrategia, E'\n' ) FROM
+	SELECT DISTINCT   STRING_AGG( DISTINCT descripcion_estrategia, E'\n' ) FROM
 	"EstrategiasAprendizaje" j,
 	"EstrategiasUnidad" e 
 	WHERE
@@ -32,7 +32,7 @@
 ) AS "ESTRATEGIAS_UNIDAD" , (
 	SELECT DISTINCT
 	STRING_AGG(
-	  descripcion_estrategia, E'\n'
+	  DISTINCT descripcion_estrategia, E'\n'
 	)
 FROM "EstrategiasAprendizaje" j, "EstrategiasUnidad" e
 WHERE j.id_estrategia = e.id_estrategia
@@ -41,38 +41,38 @@ AND id_unidad = $P!{id_unidad}
 
 (
   SELECT
-  STRING_AGG(nombre_estrategia, E'\n')
+  DISTINCT STRING_AGG(DISTINCT nombre_estrategia, E'\n')
   FROM "EstrategiasMetodologias"
   WHERE tipo_estrategiAS_metodologiAS = 'Anticipacion'
   AND id_plan_de_clASes = $P!{id_plan_clase} 
 ) AS anticipacion_arr, (
   SELECT
-  STRING_AGG(nombre_estrategia, E'\n')
+  DISTINCT STRING_AGG(DISTINCT nombre_estrategia, E'\n')
   FROM "EstrategiasMetodologias"
   WHERE tipo_estrategiAS_metodologiAS = 'Construccion'
   AND id_plan_de_clASes = $P!{id_plan_clase} 
 ) AS construccion_arr, (
   SELECT
-  STRING_AGG(nombre_estrategia, E'\n')
+  DISTINCT STRING_AGG(DISTINCT nombre_estrategia, E'\n')
   FROM "EstrategiasMetodologias"
   WHERE tipo_estrategiAS_metodologiAS = 'Consolidacion'
   AND id_plan_de_clASes = $P!{id_plan_clase} 
 ) AS consolidacion_arr, 
 
 (
-  SELECT STRING_AGG(e.instrumento, E'\n')
+  SELECT DISTINCT STRING_AGG( DISTINCT e.instrumento, E'\n')
   FROM "EvaluacionSilabo" e, "UnidadSilabo" u
   WHERE e.id_unidad = u.id_unidad
   AND e.id_unidad= $P!{id_unidad}
 ) AS instrumento_arr , 
 
 (
-  SELECT trabajo_autonomo FROM "PlandeClases" 
+  SELECT DISTINCT trabajo_autonomo FROM "PlandeClases" 
   where id_plan_clases=$P!{id_plan_clase}
 ) as autonomo_plan , 
 
 (
-  select observaciones from "PlandeClases" 
+  select DISTINCT observaciones from "PlandeClases" 
   where id_plan_clases=$P!{id_plan_clase}
 ) AS observaciones_plan
 

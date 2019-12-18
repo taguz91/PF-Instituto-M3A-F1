@@ -1,7 +1,5 @@
 package controlador.asistenciaAlumnos;
 
-import controlador.estilo.cmb.TblEditorSpinner;
-import controlador.estilo.cmb.TblRenderSpinner;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalDate;
@@ -9,16 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.asistencia.AsistenciaMD;
 import modelo.asistencia.FechasClase;
 import modelo.asistencia.GenerarFechas;
 import modelo.asistencia.NEWAsistenciaBD;
 import modelo.curso.CursoMD;
+import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import utils.CONS;
+import utils.M;
 import vista.asistenciaAlumnos.NEWFrmAsistencia;
 
 /**
@@ -38,9 +38,8 @@ public class NEWFrmAsistenciaCTR extends DCTR {
     private List<AsistenciaMD> as;
     // Modelo de la tabla 
     private DefaultTableModel mdTbl;
-    // Modelo del spinner para su validacion 
-    private SpinnerNumberModel mdSpn;
-    private final JSpinner spn = new JSpinner();
+    // Para validar las faltas  
+    private int maxFaltas = 0;
 
     public NEWFrmAsistenciaCTR(VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -57,6 +56,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
 
     private void iniciarTablas() {
         String[] titulo = {
+            "id",
             "#",
             "Alumno",
             "Faltas"
@@ -65,19 +65,54 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 VTN.getTblAlumnos(),
                 titulo
         );
+        TblEstilo.ocualtarID(VTN.getTblAlumnos());
+        TblEstilo.columnaMedida(VTN.getTblAlumnos(), 1, 30);
+        TblEstilo.columnaMedida(VTN.getTblAlumnos(), 3, 50);
+        VTN.getTblAlumnos().setRowHeight(25);
         VTN.getTblAlumnos().setModel(mdTbl);
-        spn.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 3.0d, 1.0d));
-        //VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellRenderer(new TblRenderSpinner(spn));
-        //VTN.getTblAlumnos().getColumnModel().getColumn(2).setCellEditor(new TblEditorSpinner(spn));
     }
 
     private void iniciarAcciones() {
         VTN.getCmbMateria().addActionListener(e -> {
-            //vtnCargada = false;
             clickCmbCurso();
         });
         VTN.getCmbPeriodo().addActionListener(e -> clickCmbPeriodo());
         VTN.getBtnCargarLista().addActionListener(e -> cargarLista());
+        VTN.getBtnGuardar().addActionListener(e -> guardar());
+        iniciarAccionesTbl();
+    }
+
+    private void iniciarAccionesTbl() {
+        mdTbl.addTableModelListener(new TableModelListener() {
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+                    active = true;
+                    actualizarFalta();
+                    active = false;
+                }
+            }
+        });
+    }
+
+    private void actualizarFalta() {
+        int colum = VTN.getTblAlumnos().getSelectedColumn();
+        int row = VTN.getTblAlumnos().getSelectedRow();
+        String estado = VTN.getTblAlumnos().getValueAt(row, colum).toString();
+
+        if (estado.matches("[0-9]")) {
+            int faltas = Integer.parseInt(estado);
+            if (faltas > maxFaltas) {
+                JOptionPane.showMessageDialog(VTN, "Hoy solo tenemos " + maxFaltas + " horas de clase.");
+                VTN.getTblAlumnos().setValueAt(maxFaltas, row, colum);
+            } else {
+                VTN.getTblAlumnos().setValueAt(faltas, row, colum);
+            }
+        } else {
+            VTN.getTblAlumnos().setValueAt(0, row, colum);
+        }
     }
 
     private void iniciarCMBPeriodo() {
@@ -167,13 +202,8 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                     cs.get(posCurso - 1).getId(),
                     fecha
             );
-            mdSpn = new javax.swing.SpinnerNumberModel(
-                    0.0d,
-                    0.0d,
-                    fechasSelec.get(posFecha - 1).getHoras(),
-                    1.0d
-            );
-            spn.setModel(mdSpn);
+            maxFaltas = fechasSelec.get(posFecha - 1).getHoras();
+            VTN.getLblInfo().setText(maxFaltas + " numero de horas clase.");
             if (as.size() > 0) {
                 llenarTbl(as);
             } else {
@@ -199,12 +229,29 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         as.forEach(a -> {
             numAlum++;
             Object[] r = {
+                a.getId(),
                 numAlum,
                 a.getAlumnoCurso().getAlumno().getApellidosNombres(),
                 a.getNumeroFaltas()
             };
             mdTbl.addRow(r);
         });
+    }
+
+    private void guardar() {
+        String sql = "";
+        for (int i = 0; i < VTN.getTblAlumnos().getRowCount(); i++) {
+            sql += ABD.getSqlActualizar(
+                    Integer.parseInt(VTN.getTblAlumnos().getValueAt(i, 0).toString()),
+                    Integer.parseInt(VTN.getTblAlumnos().getValueAt(i, 3).toString())
+            );
+        }
+        System.out.println("Sql hecho: \n" + sql);
+        if (ABD.actualizarFaltas(sql)) {
+            JOptionPane.showMessageDialog(VTN, "Guardamos correctamente las faltas.");
+        } else {
+            M.errorMsg("Error al guardar las faltas.");
+        }
     }
 
 }
