@@ -1,10 +1,11 @@
-SELECT * FROM public."Asistencia"
+SELECT
+id_asistencia,
+to_char(fecha_asistencia, 'DD/MM/YYYY')
+FROM public."Asistencia"
 WHERE id_almn_curso IN (
   SELECT
   id_almn_curso
   FROM public."Cursos" c
-  JOIN public."PeriodoLectivo" pl
-  ON pl.id_prd_lectivo = c.id_prd_lectivo
   JOIN public."Docentes" d
   ON d.id_docente = c.id_docente
   JOIN public."Personas" pd
@@ -12,10 +13,11 @@ WHERE id_almn_curso IN (
   JOIN public."AlumnoCurso" ac
   ON ac.id_curso = c.id_curso
   WHERE pd.persona_identificacion = '0104553078'
+  AND c.id_prd_lectivo = 31
 );
 
 
-DELETE FROM public."Asistencia" 
+DELETE FROM public."Asistencia"
 WHERE id_almn_curso IN (
   SELECT
   id_almn_curso
@@ -29,4 +31,5 @@ WHERE id_almn_curso IN (
   JOIN public."AlumnoCurso" ac
   ON ac.id_curso = c.id_curso
   WHERE pd.persona_identificacion = '0104553078'
+  AND c.id_prd_lectivo = 31
 );
