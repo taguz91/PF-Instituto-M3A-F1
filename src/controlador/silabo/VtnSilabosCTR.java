@@ -46,12 +46,16 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         if (CONS.USUARIO.isIsSuperUser()) {
             vista.getChxPeriodos().setVisible(true);
         }
+        try {
+            cargarCmbPeriodo();
+            setLista();
+            cargarTabla(cargador());
 
-        cargarCmbPeriodo();
+        } catch (NullPointerException e) {
+        }
+
         InitEventos();
         super.Init();
-        setLista();
-        cargarTabla(cargador());
     }
 
     private void InitEventos() {
@@ -98,9 +102,11 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
      */
     private void cargarCmbPeriodo() {
         vista.getCmbPeriodo().removeAllItems();
+
         periodos.stream()
                 .map(c -> c.getNombre())
                 .forEach(vista.getCmbPeriodo()::addItem);
+
     }
 
     private PeriodoLectivoMD getPeriodoCmb() {
@@ -205,17 +211,21 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
             PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
                     .getSelectedIndex());
+
             if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
                 lista = SILABO_CONN.findBy(
                         user.getPersona().getIdentificacion(),
                         periodo.getID()
                 );
+
             } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
                 lista = SILABO_CONN.getSilabosPeriodo(
                         getPeriodoCmb().getID()
                 );
 
+            } else if (CONS.USUARIO.isIsSuperUser()) {
+                lista = SILABO_CONN.getSilabosPeriodo(periodo.getID());
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -307,10 +317,10 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
             silabo = SILABO_CONN.getDisponibilidad(silabo);
             silabo = SILABO_CONN.getSilaboById(
-                        Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
-                );
-                validarEstadoParaEditar(silabo);
-/*
+                    Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
+            );
+            validarEstadoParaEditar(silabo);
+            /*
             if (silabo.getEditadoPor().getIdentificacion() != null) {
                 if (!silabo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
                         || silabo.isEditando()) {

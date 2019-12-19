@@ -37,7 +37,7 @@ public class LoginCTR {
         Effects.btnHover(vista.getBtnIngresar(), vista.getLblBtnHover(), new Color(139, 195, 74), new Color(235, 192, 36));
         vista.getTxtPassword().addKeyListener(eventoText());
         vista.getTxtUsername().addKeyListener(eventoText());
-        //Evento para ingresar rapido como JHONNY
+
         vista.getTxtUsername().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -71,7 +71,7 @@ public class LoginCTR {
                         String PASSWORD = vista.getTxtPassword().getText().trim();
 
                         activarForm(false);
-                        conex = new ConnDBPool(null);
+
                         modelo = new UsuarioBD();
                         modelo.setUsername(USERNAME);
                         modelo.setPassword(PASSWORD);
@@ -87,7 +87,6 @@ public class LoginCTR {
                         } else {
                             Effects.setTextInLabel(vista.getLblAvisos(), "Revise la Informacion Ingresada", CONS.ERROR_COLOR, 2);
                             Effects.setDefaultCursor(vista);
-                            conex.closePool();
                         }
 
                     } catch (NullPointerException e) {

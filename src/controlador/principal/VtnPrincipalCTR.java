@@ -123,9 +123,7 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final VtnSelectRolCTR ctrSelecRol;
-    //Agregamos la animacion 
     public AnimacionCarga carga;
-    //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
 
     /**
@@ -145,13 +143,10 @@ public class VtnPrincipalCTR {
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         registroIngreso(vtnPrin);
-        //carga.iniciar();
         //Le pasamos el icono  
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
         InitPermisos();
-
-        System.out.println("-------THREADs----->" + Thread.activeCount());
 
     }
 
@@ -160,15 +155,15 @@ public class VtnPrincipalCTR {
      * animaciones.
      */
     public void iniciar() {
-        //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
-        //Accion al boton de actualizar 
+
         vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
         // Seteamos el usuario y su rol  
         String userRol = CONS.USUARIO.getPersona().getPrimerNombre()
                 + " " + CONS.USUARIO.getPersona().getPrimerApellido()
                 + "  |  " + CONS.ROL.getNombre();
+
         vtnPrin.getLblUsuario().setText(userRol);
         vtnPrin.getLblUsuario().setToolTipText(userRol);
 
@@ -267,7 +262,6 @@ public class VtnPrincipalCTR {
 
     private void iniciarAccionesRep() {
         vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
-        // Menu reporte fichas sin responder 
         vtnPrin.getMnRepFichasSinResponder().addActionListener(e -> {
             VtnAlumnosSinResponderFSCTR ctr = new VtnAlumnosSinResponderFSCTR(this);
             ctr.iniciar();
@@ -726,7 +720,6 @@ public class VtnPrincipalCTR {
      * nombre del estilo elejido y actualizara la ventana, para mostrarlo.
      */
     private void estiloVtn(String estilo) {
-        System.out.println(estilo);
         try {
             VtnPrincipal.setDefaultLookAndFeelDecorated(true);
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1094,7 +1087,6 @@ public class VtnPrincipalCTR {
         VtnSelectRolCTR vtn = ctrSelecRol;
         vtn.Init();
         vtnPrin.setVisible(false);
-        System.gc();
     }
 
     private void InitPermisos() {
@@ -1232,10 +1224,6 @@ public class VtnPrincipalCTR {
             }
 
         });
-    }
-
-    public UsuarioBD getUsuario() {
-        return usuario;
     }
 
     public VtnPrincipal getVtnPrin() {

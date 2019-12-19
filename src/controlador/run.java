@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.ConnDBPool;
 import modelo.version.DitoolBD;
 import modelo.version.VersionMD;
 import utils.CONS;
@@ -18,16 +19,16 @@ import vista.version.VtnDitool;
 public class run {
 
     public static void main(String[] args) {
+        ConnDBPool.IniciarConexion();
 
         if (!iniciaEstilo("Windows")) {
             iniciaEstilo("Nimbus");
         }
         if (CONS.M_DESARROLLO) {
             Logger.getLogger(run.class.getName()).log(Level.SEVERE, null, "Iniciamos en modo desarrollo");
-            EventQueue.invokeLater(() -> {
-                LoginCTR login = new LoginCTR();
-                login.Init();
-            });
+
+            EventQueue.invokeLater(() -> new LoginCTR().Init());
+
         } else {
             VtnDitool vtnDitool = new VtnDitool();
             vtnDitool.setTitle("Ditool | Version instalada: ");

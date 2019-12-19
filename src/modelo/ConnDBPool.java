@@ -41,20 +41,9 @@ public class ConnDBPool {
     private static ConnDBPool CONPOOL;
 
     public ConnDBPool() {
-        if (config == null && ds == null) {
-            CONPOOL = new ConnDBPool(null);
-        }
     }
 
-    public static ConnDBPool single() {
-        if (CONPOOL == null) {
-            CONPOOL = new ConnDBPool();
-        }
-
-        return CONPOOL;
-    }
-
-    public ConnDBPool(Object param) {
+    public static void IniciarConexion() {
         try {
 
             config = new HikariConfig();
@@ -78,6 +67,14 @@ public class ConnDBPool {
             ds = new HikariDataSource(config);
         } catch (PoolInitializationException e) {
         }
+    }
+
+    public static ConnDBPool single() {
+        if (CONPOOL == null) {
+            CONPOOL = new ConnDBPool();
+        }
+
+        return CONPOOL;
     }
 
     public Connection getConnection() {

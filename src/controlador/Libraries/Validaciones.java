@@ -278,7 +278,8 @@ public final class Validaciones {
         return !palabrasValidas
                 .stream()
                 .filter(item -> item.toUpperCase().contains(palabra.toUpperCase()))
-                .collect(Collectors.toList()).isEmpty();
+                .collect(Collectors.toList())
+                .isEmpty();
     }
 
     public static KeyAdapter validarSoloLetrasYnumeros() {
