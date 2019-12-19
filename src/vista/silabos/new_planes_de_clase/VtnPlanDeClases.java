@@ -26,6 +26,8 @@ public class VtnPlanDeClases extends AbstracView {
         initComponents();
         InitDiseño();
 
+        this.chxSuperSu.setVisible(false);
+
     }
 
     private void InitDiseño() {
@@ -112,6 +114,7 @@ public class VtnPlanDeClases extends AbstracView {
         btnEditarFecha = new javax.swing.JButton();
         btnCopiar = new javax.swing.JButton();
         chxSuperSu = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -186,6 +189,10 @@ public class VtnPlanDeClases extends AbstracView {
 
         chxSuperSu.setText("Ver Todos Los Periodos");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("{estado}");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,7 +234,8 @@ public class VtnPlanDeClases extends AbstracView {
                                         .addGap(18, 18, 18)
                                         .addComponent(btnImprimir))
                                     .addComponent(btnCopiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(chxSuperSu))))
+                            .addComponent(chxSuperSu)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -256,7 +264,9 @@ public class VtnPlanDeClases extends AbstracView {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(chxSuperSu, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addContainerGap())
         );
 
@@ -273,6 +283,7 @@ public class VtnPlanDeClases extends AbstracView {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chxSuperSu;
     private javax.swing.JComboBox<String> cmbPeriodos;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;

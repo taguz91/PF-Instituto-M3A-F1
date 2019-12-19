@@ -191,4 +191,11 @@ public class CONS {
 
     }
 
+    public static boolean is(String rol) {
+        return CONS.ROL.getNombre().equalsIgnoreCase(rol);
+    }
+
+    public static boolean isSuperSU() {
+        return CONS.USUARIO.isIsSuperUser();
+    }
 }
