@@ -645,9 +645,9 @@ public class VtnPrincipalCTR {
             errorNumVentanas();
         }
         // IDEA
-/*
+
         NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
-        ctr.iniciar();*/
+        ctr.iniciar();
     }
 
     private void abrirVtnReporteNumAlumno() {
@@ -670,7 +670,6 @@ public class VtnPrincipalCTR {
         VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, vtnPrin);
         cP.iniciaControlador();
         cP.setDesktop(this);
-
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
@@ -741,8 +740,6 @@ public class VtnPrincipalCTR {
             }
             SwingUtilities.updateComponentTreeUI(vtnPrin);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            System.out.println("No se pudo cambiar el estilo de la ventana");
-            System.out.println(e.getMessage());
         }
     }
 
@@ -913,8 +910,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
 
-        //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
-        //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
 
