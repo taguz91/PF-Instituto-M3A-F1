@@ -28,7 +28,6 @@ import vista.silabos.VtnSilabos;
 public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private final NEWSilaboBD SILABO_CONN = NEWSilaboBD.single();
-    private final NEWPeriodoLectivoBD PERIODO_CONN = NEWPeriodoLectivoBD.single();
     private List<PeriodoLectivoMD> periodos;
 
     public VtnSilabosCTR(VtnPrincipalCTR desktop) {
@@ -86,7 +85,9 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
         });
 
-        boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR") || CONS.ROL.getNombre().equalsIgnoreCase("DEV");
+        boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")
+                || CONS.ROL.getNombre().equalsIgnoreCase("DEV")
+                || CONS.USUARIO.isIsSuperUser();
 
         vista.getTbl()
                 .getColumnModel()
@@ -117,14 +118,14 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
     private void getPeriodos() {
         if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-            periodos = PERIODO_CONN.getMisPeriodosBy(
+            periodos = NEWPeriodoLectivoBD.getMisPeriodosBy(
                     CONS.USUARIO.getPersona().getIdPersona()
             );
             vista.getBtnEliminar().setEnabled(false);
 
         } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
-            periodos = PERIODO_CONN.getPeriodosCoordinador(CONS.USUARIO.getPersona().getIdPersona());
+            periodos = NEWPeriodoLectivoBD.getPeriodosCoordinador(CONS.USUARIO.getPersona().getIdPersona());
 
         }
     }
@@ -178,7 +179,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         switch (opcion) {
 
             case 0://IMPRIME SILABO DUAL
-                SILABO_CONN.imprimirProgramaAnalitico(silabo);
+                NEWSilaboBD.imprimirProgramaAnalitico(silabo);
                 break;
 
             case 1://IMPRIME SILABO DUAL CON UN NUMERO DE SEMANAS
@@ -190,7 +191,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                         int numSemanas = Integer.parseInt(semanas);
                         if (numSemanas >= 6) {
 
-                            SILABO_CONN.imprimirProgramaAnaliticoConSemanas(silabo, numSemanas);
+                            NEWSilaboBD.imprimirProgramaAnaliticoConSemanas(silabo, numSemanas);
 
                         } else {
                             JOptionPane.showMessageDialog(vista, "Debe indicar mas de seis semanas de clases por periodo ");
@@ -213,19 +214,19 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     .getSelectedIndex());
 
             if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-                lista = SILABO_CONN.findBy(
+                lista = NEWSilaboBD.findBy(
                         user.getPersona().getIdentificacion(),
                         periodo.getID()
                 );
 
             } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
 
-                lista = SILABO_CONN.getSilabosPeriodo(
+                lista = NEWSilaboBD.getSilabosPeriodo(
                         getPeriodoCmb().getID()
                 );
 
             } else if (CONS.USUARIO.isIsSuperUser()) {
-                lista = SILABO_CONN.getSilabosPeriodo(periodo.getID());
+                lista = NEWSilaboBD.getSilabosPeriodo(periodo.getID());
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -287,7 +288,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
                     if (modalidad.equalsIgnoreCase("PRESENCIAL")
                             || modalidad.equalsIgnoreCase("TRADICIONAL")) {
 
-                        SILABO_CONN.imprimirSilabo(silabo);
+                        NEWSilaboBD.imprimirSilabo(silabo);
                     } else {
                         imprimirSilabosDuales(silabo);
                     }
@@ -315,7 +316,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         SilaboMD silabo = getSilaboSeleccionadoTbl();
         if (silabo != null) {
 
-            silabo = SILABO_CONN.getDisponibilidad(silabo);
+            //silabo = SILABO_CONN.getDisponibilidad(silabo);
             silabo = SILABO_CONN.getSilaboById(
                     Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
             );
@@ -369,7 +370,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             );
 
             if (opcionEliminado == JOptionPane.YES_OPTION) {
-                boolean estado = SILABO_CONN.eliminar(silabo);
+                boolean estado = NEWSilaboBD.eliminar(silabo);
 
                 if (estado) {
                     JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
@@ -409,7 +410,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
             if (silabo.getEstado() != SilaboMD.getEstadoInt(estado)) {
                 silabo.setEstado(SilaboMD.getEstadoInt(estado));
                 cargarTabla(cargador());
-                SILABO_CONN.editarEstado(silabo);
+                NEWSilaboBD.editarEstado(silabo);
                 //TODO: AGREGAR EL METODO DE LA BASE DE DATOS PARA CAMBIAR EL ESTADO
             }
         }
@@ -419,7 +420,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
         SilaboMD silabo = getSilaboSeleccionadoTbl();
         if (silabo != null) {
-            String informacion = SILABO_CONN.getInformacion(silabo);
+            String informacion = NEWSilaboBD.getInformacion(silabo);
             JOptionPane.showMessageDialog(vista, informacion, "INFORMACION DEL SILABO", JOptionPane.PLAIN_MESSAGE);
 
         }
@@ -435,7 +436,7 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         vista.getCmbPeriodo().removeAllItems();
 
         if (vista.getChxPeriodos().isSelected()) {
-            this.periodos = PERIODO_CONN.selectAllDEV();
+            this.periodos = NEWPeriodoLectivoBD.selectAllDEV();
         } else {
             this.getPeriodos();
         }

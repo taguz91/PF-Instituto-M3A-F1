@@ -19,11 +19,13 @@ import vista.version.VtnDitool;
 public class run {
 
     public static void main(String[] args) {
+        
         ConnDBPool.IniciarConexion();
 
         if (!iniciaEstilo("Windows")) {
             iniciaEstilo("Nimbus");
         }
+        
         if (CONS.M_DESARROLLO) {
             Logger.getLogger(run.class.getName()).log(Level.SEVERE, null, "Iniciamos en modo desarrollo");
 

@@ -20,7 +20,7 @@ import modelo.silabo.mbd.IPeriodoLectivoBD;
  */
 public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
 
-    private final ConnDBPool CON = ConnDBPool.single();
+    private static final ConnDBPool CON = ConnDBPool.single();
     private static NEWPeriodoLectivoBD PBD;
 
     public static NEWPeriodoLectivoBD single() {
@@ -179,7 +179,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
 
     }
 
-    public List<PeriodoLectivoMD> getMisPeriodosBy(int idPersona) {
+    public static List<PeriodoLectivoMD> getMisPeriodosBy(int idPersona) {
 
         String SELECT = ""
                 + "SELECT DISTINCT\n"
@@ -220,7 +220,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
         return lista;
     }
 
-    public List<PeriodoLectivoMD> getPeriodosCoordinador(int idPersona) {
+    public static List<PeriodoLectivoMD> getPeriodosCoordinador(int idPersona) {
 
         String SELECT = ""
                 + "SELECT\n"
@@ -258,7 +258,7 @@ public class NEWPeriodoLectivoBD implements IPeriodoLectivoBD {
         return periodos;
     }
 
-    public List<PeriodoLectivoMD> selectAllDEV() {
+    public static List<PeriodoLectivoMD> selectAllDEV() {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
