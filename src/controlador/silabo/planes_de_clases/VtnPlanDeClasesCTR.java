@@ -1,11 +1,14 @@
 package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
+import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
@@ -40,7 +43,6 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             this.jornadas = JornadaBD.cargarJornadas();
             cargarCmbPeriodos();
             cargarJornadas();
-
         }
 
         InitEventos();
@@ -50,8 +52,20 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     private void InitEventos() {
         this.vista.getChxSuperSu().addActionListener(this::chxSuperSU);
 
-        this.vista.getCmbPeriodos().addItemListener(this::cmbPeriodos);
+        this.vista.getCmbPeriodos().addActionListener(this::cargarTablaAsEvent);
+        this.vista.getCmbJornadas().addActionListener(this::cargarTablaAsEvent);
 
+        boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")
+                || CONS.ROL.getNombre().equalsIgnoreCase("DEV")
+                || CONS.USUARIO.isIsSuperUser();
+
+        vista.getTbl()
+                .getColumnModel()
+                .getColumn(5)
+                .setCellEditor(new ComboBoxCellEditor(
+                        estado,
+                        Arrays.asList("APROBADO", "PENDIENTE", "REVISAR"))
+                );
     }
 
     /*S
@@ -101,8 +115,8 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         this.cargarCmbPeriodos();
     }
 
-    private void cmbPeriodos(ItemEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void cargarTablaAsEvent(ActionEvent e) {
+        //PlandeClasesBD.
     }
 
 }

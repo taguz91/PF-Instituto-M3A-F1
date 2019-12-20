@@ -104,7 +104,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setId_plan_clases(rs.getInt(1));
+                pl.setID(rs.getInt(1));
                 pl.getId_unidad().setIdUnidad(rs.getInt(2));
                 pl.getId_persona().setPrimerApellido(rs.getString(3));
                 pl.getId_persona().setPrimerNombre(rs.getString(4));
@@ -147,7 +147,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
 
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setId_plan_clases(rs.getInt(1));
+                pl.setID(rs.getInt(1));
                 pl.getId_unidad().setIdUnidad(rs.getInt(2));
                 pl.getId_persona().setPrimerApellido(rs.getString(3));
                 pl.getId_persona().setPrimerNombre(rs.getString(4));
@@ -186,7 +186,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
         try {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setId_plan_clases(rs.getInt(1));
+                pl.setID(rs.getInt(1));
                 pl.getId_unidad().setIdUnidad(rs.getInt(2));
                 pl.getId_curso().setId(rs.getInt(3));
                 lista_plan.add(pl);
@@ -252,7 +252,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 planClase = new PlandeClasesMD();
-                planClase.setId_plan_clases(rs.getInt(1));
+                planClase.setID(rs.getInt(1));
 
             }
         } catch (SQLException ex) {
@@ -279,7 +279,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 planClase = new PlandeClasesMD();
-                planClase.setId_plan_clases(rs.getInt(1));
+                planClase.setID(rs.getInt(1));
                 planClase.getId_curso().setId(rs.getInt(2));
                 planClase.getId_unidad().setIdUnidad(rs.getInt(3));
                 planClase.setFecha_generacion(rs.getDate(4).toLocalDate());

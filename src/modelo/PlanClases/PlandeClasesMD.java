@@ -54,7 +54,7 @@ public class PlandeClasesMD {
         return id_plan_clases;
     }
 
-    public void setId_plan_clases(Integer id_plan_clases) {
+    public void setID(Integer id_plan_clases) {
         this.id_plan_clases = id_plan_clases;
     }
 
