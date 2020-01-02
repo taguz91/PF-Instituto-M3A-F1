@@ -636,14 +636,14 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
-        /*FrmAsistencia frm = new FrmAsistencia();
+        FrmAsistencia frm = new FrmAsistencia();
         eventoInternal(frm);
         if (numVtns < 5) {
             FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
             asistencia.Init();
         } else {
             errorNumVentanas();
-        }*/
+        }
         // IDEA
 
         NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
@@ -670,7 +670,6 @@ public class VtnPrincipalCTR {
         VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, vtnPrin);
         cP.iniciaControlador();
         cP.setDesktop(this);
-
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
@@ -741,8 +740,6 @@ public class VtnPrincipalCTR {
             }
             SwingUtilities.updateComponentTreeUI(vtnPrin);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            System.out.println("No se pudo cambiar el estilo de la ventana");
-            System.out.println(e.getMessage());
         }
     }
 
@@ -913,8 +910,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
 
-        //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
-        //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
 
