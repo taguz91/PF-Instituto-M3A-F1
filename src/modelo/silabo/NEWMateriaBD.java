@@ -173,7 +173,7 @@ public class NEWMateriaBD implements IMateriaBD {
                 + ");;"
                 + "";
         System.out.println(SELECT);
-        ResultSet rs = CON.ejecutarQuery(SELECT, null);
+        ResultSet rs = CON.ejecutarQuery(SELECT);
         List<MateriaMD> materias = new ArrayList<>();
         try {
             while (rs.next()) {

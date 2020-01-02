@@ -36,8 +36,12 @@ public class GenerarFechas {
 
                 fechaAux = fechaAux.plusDays(diaAumentar);
                 FechasClase fc = new FechasClase();
-                fc.setFecha(fechaAux.getDayOfMonth() + "/"
-                        + fechaAux.getMonthValue() + "/"
+                fc.setFecha((fechaAux.getDayOfMonth() > 9
+                        ? fechaAux.getDayOfMonth()
+                        : "0" + fechaAux.getDayOfMonth()) + "/"
+                        + (fechaAux.getMonthValue() > 9
+                        ? fechaAux.getMonthValue()
+                        : "0" + fechaAux.getMonthValue()) + "/"
                         + fechaAux.getYear()
                 );
                 fc.setDia(d.getDia());

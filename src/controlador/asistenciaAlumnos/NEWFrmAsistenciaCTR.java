@@ -156,9 +156,13 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             VTN.getCmbFechas().removeAllItems();
             VTN.getCmbFechas().addItem("");
             LocalDate ld = LocalDate.now();
-            String fechaActual = ld.getDayOfMonth() + "/"
-                    + ld.getMonthValue() + "/"
-                    + ld.getYear();
+            String fechaActual = ((ld.getDayOfMonth() > 9
+                    ? ld.getDayOfMonth()
+                    : "0" + ld.getDayOfMonth()) + "/"
+                    + (ld.getMonthValue() > 9
+                    ? ld.getMonthValue()
+                    : "0" + ld.getMonthValue()) + "/"
+                    + ld.getYear());
             fechas.forEach(f -> {
                 VTN.getCmbFechas().addItem(f.getFecha());
                 if (f.getFecha().equals(fechaActual)) {
@@ -191,7 +195,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 fechasSelec.add(f);
             }
         });
-        
+
     }
 
     private void cargarLista() {
