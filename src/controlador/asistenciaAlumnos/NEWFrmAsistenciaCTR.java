@@ -191,6 +191,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 fechasSelec.add(f);
             }
         });
+        
     }
 
     private void cargarLista() {

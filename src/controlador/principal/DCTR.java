@@ -116,7 +116,7 @@ public class DCTR extends CONBD {
                 .addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyReleased(KeyEvent e) {
-                        if (e.getKeyCode() == 10 && cmb.getSelectedIndex() == 0) {
+                        if (e.getKeyCode() == 10) {
                             String aguja = cmb.getEditor().getItem().toString();
                             buscar.apply(aguja.trim());
                             cmb.showPopup();
