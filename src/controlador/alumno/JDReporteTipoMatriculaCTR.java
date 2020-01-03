@@ -49,6 +49,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         vtn.getBtnReporte().addActionListener(e -> seleccioneTipoMatricula());
         vtn.getBtnEgresados().addActionListener(e -> clickReporteEgresados());
         vtn.getBtnNumAlumnos().addActionListener(e -> clickReporteNumeroAlumnos());
+        vtn.getBtnNumAlmnJornada().addActionListener(e -> clickReporteNumeroAlumnosJornada());
         vtn.setLocationRelativeTo(ctrPrin.getVtnPrin());
         vtn.setVisible(true);
         ctrPrin.eventoJDCerrar(vtn);
@@ -149,6 +150,26 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 cols,
                 alumnos,
                 "Número Alumnos " + ids
+        );
+    }
+    
+    private void clickReporteNumeroAlumnosJornada() {
+        String ids = getIDSelect();
+        List<List<String>> alumnos = AMBD.getNumeroAlumnosPorJornada(ids);
+        List<String> cols = new ArrayList<>();
+        cols.add("CARRERA");
+        cols.add("PERIODO");
+        cols.add("CURSOS MATUTINA");
+        cols.add("ALUMNOS MATUTINA");
+        cols.add("CURSOS VESPERTINA");
+        cols.add("ALUMNOS VESPERTINA");
+        cols.add("CURSOS NOCTURNA");
+        cols.add("ALUMNOS NOCTURNA");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                "Número Alumnos Jornada " + ids
         );
     }
 

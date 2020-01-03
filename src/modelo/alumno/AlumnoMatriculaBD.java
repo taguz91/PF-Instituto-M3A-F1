@@ -163,7 +163,7 @@ public class AlumnoMatriculaBD extends CONBD {
                 + "JOIN public.\"PeriodoLectivo\" pl ON\n"
                 + "pl.id_carrera = c.id_carrera\n"
                 + "WHERE pl.id_prd_lectivo IN (\n"
-                + idPrds+ " ) GROUP BY\n"
+                + idPrds + " ) GROUP BY\n"
                 + "pl.id_prd_lectivo,\n"
                 + "carrera_codigo,\n"
                 + "prd_lectivo_nombre\n"
@@ -182,6 +182,102 @@ public class AlumnoMatriculaBD extends CONBD {
                 datos.add(rs.getInt(3) + "");
                 datos.add(rs.getInt(4) + "");
                 datos.add(rs.getInt(5) + "");
+                alms.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "No consultamos el numero de alumnos "
+                    + "por periodos para el reporte. " + e.getMessage()
+            );
+        }
+        return alms;
+    }
+
+    public List<List<String>> getNumeroAlumnosPorJornada(String idPrds) {
+        String sql = "SELECT\n"
+                + "carrera_codigo,\n"
+                + "prd_lectivo_nombre, (\n"
+                + "  SELECT\n"
+                + "  COUNT(DISTINCT curso_nombre)\n"
+                + "  FROM public.\"Cursos\" cr\n"
+                + "  WHERE\n"
+                + "  cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "  cr.id_jornada = 1\n"
+                + ") AS num_matutina, (\n"
+                + "  SELECT\n"
+                + "  count(DISTINCT id_alumno)\n"
+                + "  FROM public.\"AlumnoCurso\" ac\n"
+                + "  WHERE id_curso IN (\n"
+                + "    SELECT id_curso\n"
+                + "    FROM public.\"Cursos\" cr\n"
+                + "    WHERE\n"
+                + "    cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "    cr.id_jornada = 1\n"
+                + "  )\n"
+                + ") AS alum_matu,(\n"
+                + "  SELECT\n"
+                + "  COUNT(DISTINCT curso_nombre)\n"
+                + "  FROM public.\"Cursos\" cr\n"
+                + "  WHERE\n"
+                + "  cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "  cr.id_jornada = 2\n"
+                + ") AS num_vespertina, (\n"
+                + "  SELECT\n"
+                + "  count(DISTINCT id_alumno)\n"
+                + "  FROM public.\"AlumnoCurso\" ac\n"
+                + "  WHERE id_curso IN (\n"
+                + "    SELECT id_curso\n"
+                + "    FROM public.\"Cursos\" cr\n"
+                + "    WHERE\n"
+                + "    cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "    cr.id_jornada = 2\n"
+                + "  )\n"
+                + ") AS alum_vesp, (\n"
+                + "  SELECT\n"
+                + "  COUNT(DISTINCT curso_nombre)\n"
+                + "  FROM public.\"Cursos\" cr\n"
+                + "  WHERE\n"
+                + "  cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "  cr.id_jornada = 3\n"
+                + ") AS num_nocturna, (\n"
+                + "  SELECT\n"
+                + "  count(DISTINCT id_alumno)\n"
+                + "  FROM public.\"AlumnoCurso\" ac\n"
+                + "  WHERE id_curso IN (\n"
+                + "    SELECT id_curso\n"
+                + "    FROM public.\"Cursos\" cr\n"
+                + "    WHERE\n"
+                + "    cr.id_prd_lectivo = pl.id_prd_lectivo AND\n"
+                + "    cr.id_jornada = 3\n"
+                + "  )\n"
+                + ") AS alum_noct\n"
+                + "FROM public.\"Carreras\" c\n"
+                + "JOIN public.\"PeriodoLectivo\" pl ON\n"
+                + "pl.id_carrera = c.id_carrera\n"
+                + "WHERE pl.id_prd_lectivo IN (\n"
+                + "\n"
+                + ") GROUP BY\n"
+                + "pl.id_prd_lectivo,\n"
+                + "carrera_codigo,\n"
+                + "prd_lectivo_nombre\n"
+                + "ORDER BY\n"
+                + "prd_lectivo_fecha_inicio DESC;";
+
+        List<List<String>> alms = new ArrayList<>();
+
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getInt(3) + "");
+                datos.add(rs.getInt(4) + "");
+                datos.add(rs.getInt(5) + "");
+                datos.add(rs.getInt(6) + "");
+                datos.add(rs.getInt(7) + "");
+                datos.add(rs.getInt(8) + "");
                 alms.add(datos);
             }
         } catch (SQLException e) {
