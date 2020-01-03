@@ -68,7 +68,7 @@ public class AlumnoCursoBD extends CONBD {
     }
 
     public boolean actualizarMatricula() {
-        return CON.executeNoSQL(nsqlMatri);
+        return CON.executeNoSQL(nsqlMatriUpdate);
     }
 
     public boolean editarNumMatricula(int idAlmnCurso, int numMatricula) {
