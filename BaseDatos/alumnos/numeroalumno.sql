@@ -38,6 +38,7 @@ prd_lectivo_nombre
 ORDER BY
 prd_lectivo_fecha_inicio DESC;
 
+--
 
 SELECT
 carrera_codigo,
@@ -49,8 +50,38 @@ prd_lectivo_nombre, (
   cr.id_prd_lectivo = pl.id_prd_lectivo AND
   cr.id_jornada = 1
 ) AS num_matutina, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 1
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%H%'
+) AS hombres_matu, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 1
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%M%'
+) AS mujeres_matu, (
   SELECT
-  count(DISTINCT id_alumno)
+  count(DISTINCT ac.id_alumno)
   FROM public."AlumnoCurso" ac
   WHERE id_curso IN (
     SELECT id_curso
@@ -67,8 +98,38 @@ prd_lectivo_nombre, (
   cr.id_prd_lectivo = pl.id_prd_lectivo AND
   cr.id_jornada = 2
 ) AS num_vespertina, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 2
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%H%'
+) AS hombres_vespe, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 2
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%M%'
+) AS mujeres_vesp, (
   SELECT
-  count(DISTINCT id_alumno)
+  count(DISTINCT ac.id_alumno)
   FROM public."AlumnoCurso" ac
   WHERE id_curso IN (
     SELECT id_curso
@@ -85,8 +146,38 @@ prd_lectivo_nombre, (
   cr.id_prd_lectivo = pl.id_prd_lectivo AND
   cr.id_jornada = 3
 ) AS num_nocturna, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 3
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%H%'
+) AS hombres_noctu, (
+  SELECT count(DISTINCT ac.id_alumno)
+  FROM public."AlumnoCurso" ac
+  JOIN public."Alumnos" a ON
+  a.id_alumno = ac.id_alumno
+  JOIN public."Personas" p ON
+  a.id_persona = p.id_persona
+  WHERE id_curso IN (
+    SELECT id_curso
+    FROM public."Cursos" cr
+    WHERE
+    cr.id_prd_lectivo = pl.id_prd_lectivo AND
+    cr.id_jornada = 3
+  ) AND persona_activa = true AND
+  persona_sexo ILIKE '%M%'
+) AS mujeres_noctu, (
   SELECT
-  count(DISTINCT id_alumno)
+  count(DISTINCT ac.id_alumno)
   FROM public."AlumnoCurso" ac
   WHERE id_curso IN (
     SELECT id_curso

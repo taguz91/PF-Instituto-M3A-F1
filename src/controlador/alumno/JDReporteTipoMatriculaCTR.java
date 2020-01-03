@@ -160,10 +160,16 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         cols.add("CARRERA");
         cols.add("PERIODO");
         cols.add("CURSOS MATUTINA");
+        cols.add("HOMBRES MATUTINA");
+        cols.add("MUJERES MATUTINA");
         cols.add("ALUMNOS MATUTINA");
         cols.add("CURSOS VESPERTINA");
+        cols.add("HOMBRES VESPERTINA");
+        cols.add("MUJERES VESPERTINA");
         cols.add("ALUMNOS VESPERTINA");
         cols.add("CURSOS NOCTURNA");
+        cols.add("HOMBRES NOCTURNA");
+        cols.add("MUJERES NOCTURNA");
         cols.add("ALUMNOS NOCTURNA");
         ToExcel excel = new ToExcel();
         excel.exportarExcel(
