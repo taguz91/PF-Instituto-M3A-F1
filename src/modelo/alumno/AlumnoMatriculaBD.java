@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
@@ -128,6 +129,68 @@ public class AlumnoMatriculaBD extends CONBD {
             CON.cerrarCONPS(ps);
         }
         return almnsMatri;
+    }
+
+    public List<List<String>> getNumeroAlumnos(String idPrds) {
+        String sql = "SELECT\n"
+                + "carrera_codigo,\n"
+                + "prd_lectivo_nombre, (\n"
+                + "  SELECT COUNT(*)\n"
+                + "  FROM public.\"Matricula\" m\n"
+                + "  JOIN public.\"Alumnos\" a ON\n"
+                + "  a.id_alumno = m.id_alumno\n"
+                + "  JOIN public.\"Personas\" p ON\n"
+                + "  a.id_persona = p.id_persona\n"
+                + "  WHERE persona_activa = true AND\n"
+                + "  persona_sexo ILIKE '%H%' AND\n"
+                + "  m.id_prd_lectivo = pl.id_prd_lectivo\n"
+                + ") AS hombres, (\n"
+                + "  SELECT COUNT(*)\n"
+                + "  FROM public.\"Matricula\" m\n"
+                + "  JOIN public.\"Alumnos\" a ON\n"
+                + "  a.id_alumno = m.id_alumno\n"
+                + "  JOIN public.\"Personas\" p ON\n"
+                + "  a.id_persona = p.id_persona\n"
+                + "  WHERE persona_activa = true AND\n"
+                + "  persona_sexo ILIKE '%M%' AND\n"
+                + "  m.id_prd_lectivo = pl.id_prd_lectivo\n"
+                + ") AS mujeres, (\n"
+                + "  SELECT COUNT(*)\n"
+                + "  FROM public.\"Matricula\" m\n"
+                + "  WHERE  m.id_prd_lectivo = pl.id_prd_lectivo\n"
+                + ") AS total\n"
+                + "FROM public.\"Carreras\" c\n"
+                + "JOIN public.\"PeriodoLectivo\" pl ON\n"
+                + "pl.id_carrera = c.id_carrera\n"
+                + "WHERE pl.id_prd_lectivo IN (\n"
+                + idPrds+ " ) GROUP BY\n"
+                + "pl.id_prd_lectivo,\n"
+                + "carrera_codigo,\n"
+                + "prd_lectivo_nombre\n"
+                + "ORDER BY\n"
+                + "prd_lectivo_fecha_inicio DESC;";
+
+        List<List<String>> alms = new ArrayList<>();
+
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getInt(3) + "");
+                datos.add(rs.getInt(4) + "");
+                datos.add(rs.getInt(5) + "");
+                alms.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "No consultamos el numero de alumnos "
+                    + "por periodos para el reporte. " + e.getMessage()
+            );
+        }
+        return alms;
     }
 
 }
