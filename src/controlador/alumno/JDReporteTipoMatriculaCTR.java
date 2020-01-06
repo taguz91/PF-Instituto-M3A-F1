@@ -3,12 +3,15 @@ package controlador.alumno;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.alumno.AlumnoMatriculaBD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import utils.Descarga;
+import utils.ToExcel;
 import vista.alumno.JDReporteExcel;
 
 /**
@@ -25,11 +28,12 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
     private final JDReporteExcel vtn;
     // Opciones del combo de tipo matricula
     private final String[] TIPO_MATRICULAS = {
-        "Seleccione",
+        "TODAS",
         "ORDINARIA",
         "EXTRAORDINARIA",
         "ESPECIAL"
     };
+    private final AlumnoMatriculaBD AMBD = AlumnoMatriculaBD.single();
 
     public JDReporteTipoMatriculaCTR(
             VtnPrincipalCTR ctrPrin,
@@ -44,6 +48,8 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         iniciarTbl();
         vtn.getBtnReporte().addActionListener(e -> seleccioneTipoMatricula());
         vtn.getBtnEgresados().addActionListener(e -> clickReporteEgresados());
+        vtn.getBtnNumAlumnos().addActionListener(e -> clickReporteNumeroAlumnos());
+        vtn.getBtnNumAlmnJornada().addActionListener(e -> clickReporteNumeroAlumnosJornada());
         vtn.setLocationRelativeTo(ctrPrin.getVtnPrin());
         vtn.setVisible(true);
         ctrPrin.eventoJDCerrar(vtn);
@@ -109,11 +115,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
     }
 
     private void clickReporteEgresados() {
-        int[] ss = vtn.getTblPeriodos().getSelectedRows();
-        String ids = "[";
-        for (int s : ss) {
-            ids += periodos.get(s).getID() + ",";
-        }
+        String ids = "[" + getIDSelect();
         ids = ids.substring(0, ids.length() - 1);
         ids += "]";
 
@@ -132,6 +134,59 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 JSON,
                 "El reporte de egresados no lo pudimos descargar.\n"
         );
+    }
+
+    private void clickReporteNumeroAlumnos() {
+        String ids = getIDSelect();
+        List<List<String>> alumnos = AMBD.getNumeroAlumnos(ids);
+        List<String> cols = new ArrayList<>();
+        cols.add("CARRERA");
+        cols.add("PERIODO");
+        cols.add("HOMBRES");
+        cols.add("MUJERES");
+        cols.add("TOTAL");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                "Número Alumnos " + ids
+        );
+    }
+    
+    private void clickReporteNumeroAlumnosJornada() {
+        String ids = getIDSelect();
+        List<List<String>> alumnos = AMBD.getNumeroAlumnosPorJornada(ids);
+        List<String> cols = new ArrayList<>();
+        cols.add("CARRERA");
+        cols.add("PERIODO");
+        cols.add("CURSOS MATUTINA");
+        cols.add("HOMBRES MATUTINA");
+        cols.add("MUJERES MATUTINA");
+        cols.add("ALUMNOS MATUTINA");
+        cols.add("CURSOS VESPERTINA");
+        cols.add("HOMBRES VESPERTINA");
+        cols.add("MUJERES VESPERTINA");
+        cols.add("ALUMNOS VESPERTINA");
+        cols.add("CURSOS NOCTURNA");
+        cols.add("HOMBRES NOCTURNA");
+        cols.add("MUJERES NOCTURNA");
+        cols.add("ALUMNOS NOCTURNA");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                "Número Alumnos Jornada " + ids
+        );
+    }
+
+    private String getIDSelect() {
+        int[] ss = vtn.getTblPeriodos().getSelectedRows();
+        String ids = "";
+        for (int s : ss) {
+            ids += periodos.get(s).getID() + ",";
+        }
+        ids = ids.substring(0, ids.length() - 1);
+        return ids;
     }
 
 }

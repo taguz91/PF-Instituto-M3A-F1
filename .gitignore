@@ -11,6 +11,7 @@ README.TXT
 # Aqui guardamos los excel
 /excel/
 *.xlsx
+*.xls
 
 
 #Foto creada temporalmente

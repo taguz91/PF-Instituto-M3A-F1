@@ -224,8 +224,12 @@ public class ConnDBPool {
     public ResultSet ejecutarQuery(String sql, Map<Integer, Object> parametros) {
         Connection conn = getConnection();
         try {
-
-            stmt = prepararStatement(sql, conn, parametros);
+            if (parametros != null) {
+                stmt = prepararStatement(sql, conn, parametros);
+            } else{
+                stmt = prepareStatement(sql);
+            }
+            
             rs = stmt.executeQuery();
         } catch (SQLException e) {
             Logger.getLogger(ConnDBPool.class.getName()).log(Level.SEVERE, null, e);

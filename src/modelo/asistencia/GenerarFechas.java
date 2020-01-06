@@ -23,7 +23,8 @@ public class GenerarFechas {
         AsistenciaSesionMD as = ABD.getInfoSesion(idCurso);
         fechaAux = as.getPrdFechaInicio();
         diaAumentar = 0;
-        diaAnterior = as.getDiaInicio();
+        System.out.println("Dia inicio: " + as.getDiaInicio());
+        diaAnterior = 1;
         while (fechaAux.isBefore(as.getPrdFechaFin())
                 || fechaAux.equals(as.getPrdFechaFin())) {
             ahs.forEach(d -> {
@@ -36,8 +37,12 @@ public class GenerarFechas {
 
                 fechaAux = fechaAux.plusDays(diaAumentar);
                 FechasClase fc = new FechasClase();
-                fc.setFecha(fechaAux.getDayOfMonth() + "/"
-                        + fechaAux.getMonthValue() + "/"
+                fc.setFecha((fechaAux.getDayOfMonth() > 9
+                        ? fechaAux.getDayOfMonth()
+                        : "0" + fechaAux.getDayOfMonth()) + "/"
+                        + (fechaAux.getMonthValue() > 9
+                        ? fechaAux.getMonthValue()
+                        : "0" + fechaAux.getMonthValue()) + "/"
                         + fechaAux.getYear()
                 );
                 fc.setDia(d.getDia());
