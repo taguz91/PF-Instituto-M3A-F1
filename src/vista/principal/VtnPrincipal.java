@@ -283,11 +283,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JLabel getLblEstado() {
         return lblEstado;
     }
-
-    public JMenuItem getMnCtNotasDuales() {
-        return mnCtNotasDuales;
-    }
-
+    
     public JButton getBtnConsola() {
         return btnConsola;
     }
@@ -475,7 +471,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtPlandeClase = new javax.swing.JMenuItem();
         mnCtGestionAcademica = new javax.swing.JMenuItem();
         mnNotas = new javax.swing.JMenu();
-        mnCtNotasDuales = new javax.swing.JMenuItem();
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtRendimientoAcademico = new javax.swing.JMenuItem();
@@ -898,9 +893,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas.setText("Notas");
 
-        mnCtNotasDuales.setText("Registro Notas Duales");
-        mnNotas.add(mnCtNotasDuales);
-
         mnCtTipoNotas.setText("Tipos de notas");
         mnNotas.add(mnCtTipoNotas);
 
@@ -1174,7 +1166,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMiPerfil;
     private javax.swing.JMenuItem mnCtNotas;
     private javax.swing.JMenuItem mnCtNotas1;
-    private javax.swing.JMenuItem mnCtNotasDuales;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPlandeClase;
     private javax.swing.JMenuItem mnCtPrdLectivo;
