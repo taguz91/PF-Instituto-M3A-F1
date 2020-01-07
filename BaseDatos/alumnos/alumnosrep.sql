@@ -40,6 +40,5 @@ Copy (
     AND cr.curso_ciclo = 1
   )
   ORDER BY curso, apellidos
-
 )
 To '/tmp/alumnos.csv' with CSV HEADER;
