@@ -1,4 +1,5 @@
 Copy (
+
   SELECT DISTINCT
   p.persona_identificacion,
   p.persona_primer_nombre || ' ' ||
@@ -20,7 +21,11 @@ Copy (
 
   a.alumno_tipo_colegio AS tipo_colegio,
   a.alumno_tipo_bachillerato AS tipo_bachillerato,
-  age(p.persona_fecha_nacimiento )AS edad
+  age(p.persona_fecha_nacimiento )AS edad,
+
+  consultar_provincia(p.id_lugar_natal) AS "Provincia Nacimiento",
+  consultar_provincia(p.id_lugar_residencia) AS "Provincia Residencia"
+
   FROM public."AlumnoCurso" ac
   JOIN public."Alumnos" a USING(id_alumno)
   JOIN public."Personas" p USING(id_persona)
