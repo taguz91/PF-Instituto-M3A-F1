@@ -86,3 +86,13 @@ CREATE TRIGGER tipo_notas_periodo
 AFTER INSERT
 ON public."PeriodoLectivo" FOR EACH ROW
 EXECUTE PROCEDURE crear_tipos_notas();
+
+-- Agregamos los coordinadores respectivos a cada periodo
+
+UPDATE public."PeriodoLectivo"
+SET prd_lectivo_coordinador = (
+  SELECT id_docente_coordinador
+  FROM public."Carreras"
+  WHERE id_carrera = 12
+)
+WHERE id_carrera = 12
