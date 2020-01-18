@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -167,6 +168,18 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     public JDateChooser getJdcFechaFinClases() {
         return jdcFechaFinClases;
     }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public JTable getTblDocentes() {
+        return tblDocentes;
+    }
+
+    public JTextField getTxtBuscar() {
+        return txtBuscar;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,6 +209,11 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
         jdc_FechaFin = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jdcFechaFinClases = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDocentes = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -234,6 +252,20 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Fecha fin clases: *");
 
+        jLabel8.setText("Coordinador:*");
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
+
+        tblDocentes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null}
+            },
+            new String [] {
+                "Title 1"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDocentes);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -249,7 +281,7 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
                         .addGap(254, 254, 254)
                         .addComponent(Btn_Cancelar)
                         .addGap(10, 10, 10)
-                        .addComponent(Btn_Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+                        .addComponent(Btn_Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,6 +326,17 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
                             .addComponent(Lbl_ErrCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Cbx_Carreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,6 +369,13 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_ErrFecInicio)
                     .addComponent(Lbl_ErrFecFin))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtObservacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -354,16 +404,21 @@ public class FrmPrdLectivo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_ErrNombre;
     private javax.swing.JLabel Lbl_ErrObservacion;
     private javax.swing.JTextField Txt_Nombre;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private com.toedter.calendar.JDateChooser jdcFechaFinClases;
     private com.toedter.calendar.JDateChooser jdc_FechaFin;
     private com.toedter.calendar.JDateChooser jdc_FechaInicio;
+    private javax.swing.JTable tblDocentes;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtObservacion;
     // End of variables declaration//GEN-END:variables
 }

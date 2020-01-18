@@ -6,20 +6,26 @@ import java.awt.Font;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.util.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import modelo.carrera.CarreraMD;
+import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoBD;
 import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteBD;
+import modelo.persona.DocenteMD;
 import modelo.validaciones.CmbValidar;
+import modelo.validaciones.Validar;
 import vista.prdlectivo.FrmPrdLectivo;
 
 /**
@@ -33,6 +39,10 @@ public class FrmPrdLectivoCTR extends DCTR {
     private boolean editar = false; //Variable de edición, donde diferencia si que se edita o se guarda
     private int id_PeriodoLectivo; //Recibe la ID de un Período Lectivo en específico
     private List<CarreraMD> carreras; //Recibe los datos de las Carreras Ingresadas
+    //Para cargar el combo de coordinador  
+    private final DocenteBD DBD = DocenteBD.single();
+    private ArrayList<DocenteMD> docentes;
+    private DefaultTableModel mdTbl;
 
     public FrmPrdLectivoCTR(FrmPrdLectivo frmPrdLectivo, VtnPrincipalCTR ctrPrin) {
         super(ctrPrin);
@@ -51,7 +61,6 @@ public class FrmPrdLectivoCTR extends DCTR {
 
         ActionListener rellenarNombre = (ActionEvent e) -> {
             if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals("|SELECCIONE|") == false) {
-
                 for (int i = 0; i < carreras.size(); i++) {
                     if (frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString().equals(carreras.get(i).getNombre().toUpperCase())) {
                         Font negrita = new Font("Tahoma", Font.BOLD, 13);
@@ -59,28 +68,6 @@ public class FrmPrdLectivoCTR extends DCTR {
                         frmPrdLectivo.getTxt_Nombre().setText(carreras.get(i).getCodigo());
                     }
                 }
-            }
-        };
-
-        KeyListener observacion = new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (modelo.validaciones.Validar.esLetras(frmPrdLectivo.getTxtObservacion().getText()) == false
-                        && frmPrdLectivo.getTxtObservacion().getText().equals("") == false) {
-                    frmPrdLectivo.getLbl_ErrObservacion().setText("Ingrese solo letras");
-                    frmPrdLectivo.getLbl_ErrObservacion().setVisible(true);
-                } else {
-                    frmPrdLectivo.getLbl_ErrObservacion().setVisible(false);
-                }
-                habilitarGuardar();
             }
         };
 
@@ -105,7 +92,43 @@ public class FrmPrdLectivoCTR extends DCTR {
         frmPrdLectivo.getBtn_Guardar().addActionListener(e -> guardarPeriodo());
         frmPrdLectivo.getBtn_Cancelar().addActionListener(Cancelar);
         frmPrdLectivo.getCbx_Carreras().addActionListener(combo_Carreras);
-        frmPrdLectivo.getTxtObservacion().addKeyListener(observacion);
+        frmPrdLectivo.getTxtObservacion().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (Validar.esLetras(frmPrdLectivo.getTxtObservacion().getText()) == false
+                        && frmPrdLectivo.getTxtObservacion().getText().equals("") == false) {
+                    frmPrdLectivo.getLbl_ErrObservacion().setText("Ingrese solo letras");
+                    frmPrdLectivo.getLbl_ErrObservacion().setVisible(true);
+                } else {
+                    frmPrdLectivo.getLbl_ErrObservacion().setVisible(false);
+                }
+                habilitarGuardar();
+            }
+        });
+        // Para la tabla  
+        iniciarTblDocentes();
+    }
+
+    private void iniciarTblDocentes() {
+        //Formato tbl
+        String[] titulo = {"Cédula", "Nombre"};
+        String[][] datos = {};
+        mdTbl = TblEstilo.modelTblSinEditar(datos, titulo);
+        frmPrdLectivo.getTblDocentes().setModel(mdTbl);
+        TblEstilo.formatoTbl(frmPrdLectivo.getTblDocentes());
+        //Buscador 
+        frmPrdLectivo.getBtnBuscar().addActionListener(e -> buscarDocentes(
+                frmPrdLectivo.getTxtBuscar().getText().trim()
+        ));
+        frmPrdLectivo.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String a = frmPrdLectivo.getTxtBuscar().getText().trim();
+                if (e.getKeyCode() == 10) {
+                    buscarDocentes(a);
+                }
+            }
+        });
     }
 
     //Se capturan los datos de Carreras en la Lista
@@ -201,6 +224,17 @@ public class FrmPrdLectivoCTR extends DCTR {
             );
         }
 
+        int posCoord = frmPrdLectivo.getTblDocentes().getSelectedRow();
+        if (posCoord < 0) {
+            error = true;
+            JOptionPane.showMessageDialog(
+                    frmPrdLectivo,
+                    "Debe seleccionar un coordinador.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
         if (error) {
             habilitarGuardar();
         } else {
@@ -209,7 +243,8 @@ public class FrmPrdLectivoCTR extends DCTR {
                 CarreraMD carrera = new CarreraMD();
                 carrera.setId(PLBD.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(periodo, carrera);
-                if (PLBD.guardarPeriodo(periodo, carrera) == true) {
+                periodo.setDocente(docentes.get(posCoord));
+                if (PLBD.guardarPeriodo(periodo, carrera)) {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
                     frmPrdLectivo.dispose();
                     ctrPrin.cerradoJIF();
@@ -225,6 +260,7 @@ public class FrmPrdLectivoCTR extends DCTR {
                 carrera.setId(PLBD.capturarIdCarrera(frmPrdLectivo.getCbx_Carreras().getSelectedItem().toString()).getId());
                 periodo = pasarDatos(periodo, carrera);
                 periodo.setID(id_PeriodoLectivo);
+                periodo.setDocente(docentes.get(posCoord));
                 if (PLBD.editarPeriodo(periodo, carrera)) {
                     JOptionPane.showMessageDialog(null, "Datos editados correctamente");
                     frmPrdLectivo.dispose();
@@ -311,12 +347,35 @@ public class FrmPrdLectivoCTR extends DCTR {
         }
 
         frmPrdLectivo.getCbx_Carreras().setSelectedItem(mdCarrera.getNombre());
+        frmPrdLectivo.getCbx_Carreras().setEnabled(false);
         frmPrdLectivo.getTxt_Nombre().setText(mdPerLectivo.getNombre());
         frmPrdLectivo.getJdc_FechaInicio().setCalendar(fechaIni);
         frmPrdLectivo.getJdc_FechaFin().setCalendar(fechaFin);
         frmPrdLectivo.getTxtObservacion().setText(mdPerLectivo.getObservacion());
         frmPrdLectivo.getJdcFechaFinClases().setCalendar(fechaClasesFin);
+        frmPrdLectivo.getTxtBuscar().setText(mdPerLectivo.getDocente().getIdentificacion());
+        frmPrdLectivo.getBtnBuscar().doClick();
         habilitarGuardar();
+    }
+
+    private void buscarDocentes(String aguja) {
+        if (Validar.esLetrasYNumeros(aguja)) {
+            docentes = DBD.buscar(aguja);
+            llenarTblDocentes(docentes);
+        }
+    }
+
+    private void llenarTblDocentes(ArrayList<DocenteMD> docentes) {
+        mdTbl.setRowCount(0);
+        if (docentes != null) {
+            docentes.forEach(d -> {
+                Object[] valores = {d.getIdentificacion(),
+                    d.getPrimerApellido() + " " + d.getSegundoApellido()
+                    + " " + d.getPrimerNombre() + " "
+                    + " " + d.getSegundoNombre()};
+                mdTbl.addRow(valores);
+            });
+        }
     }
 
 }

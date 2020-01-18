@@ -233,11 +233,14 @@ public class FrmCarreraCTR extends DCTR {
 
         frmCarrera.getCmbModalidad().setSelectedItem(carrera.getModalidad());
         frmCarrera.getTxtSemanas().setText(carrera.getNumSemanas() + "");
-        System.out.println("Coordinador: " + carrera.getCoordinador().getIdentificacion());
+
         if (carrera.getCoordinador().getIdentificacion() != null) {
             frmCarrera.getTxtBuscar().setText(carrera.getCoordinador().getIdentificacion());
             buscarDocentes(carrera.getCoordinador().getIdentificacion());
             frmCarrera.getTblDocentes().selectAll();
+            frmCarrera.getTxtBuscar().setEnabled(false);
+            frmCarrera.getBtnBuscar().setEnabled(false);
+            frmCarrera.getTblDocentes().setEnabled(false);
         }
 
         editar = true;
