@@ -48,7 +48,7 @@
 			<subreport>
 				<reportElement x="278" y="0" width="237" height="100" uuid="713b9a33-6dd0-4057-85bc-f78d30ccc9f2"/>
 				<subreportParameter name="ID_CARR">
-					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{id_silabo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador_aprobacion.jasper"]]></subreportExpression>
