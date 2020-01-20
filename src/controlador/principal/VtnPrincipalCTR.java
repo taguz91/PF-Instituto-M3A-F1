@@ -743,7 +743,7 @@ public class VtnPrincipalCTR {
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                numVtns++;
+                //numVtns++;
                 /*
                 if (numVtns > 5) {
                     errorNumVentanas();
@@ -830,8 +830,7 @@ public class VtnPrincipalCTR {
      * Si se abren mas de 5 ventanas salta este error
      */
     private void errorNumVentanas() {
-        JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
-                "Error Ventana", JOptionPane.ERROR_MESSAGE);
+        
     }
 
     /**
