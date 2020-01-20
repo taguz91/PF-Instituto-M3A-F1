@@ -27,9 +27,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" pref="689" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cmbPeriodo" min="-2" pref="381" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnImprimir" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCargarLista" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="lblInfo" min="-2" pref="351" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -39,20 +53,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cmbFechas" min="-2" pref="160" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="cmbPeriodo" min="-2" pref="380" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnCargarLista" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="lblInfo" min="-2" pref="351" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -64,6 +66,7 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCargarLista" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnImprimir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -76,13 +79,13 @@
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="246" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="258" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                   </Group>
                   <Component id="lblInfo" max="32767" attributes="0"/>
               </Group>
@@ -196,6 +199,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblInfo">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnImprimir">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Imprimir"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

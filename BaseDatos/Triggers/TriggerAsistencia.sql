@@ -16,5 +16,7 @@ END;
 $ingresando_asistencia$ LANGUAGE plpgsql;
 
 CREATE TRIGGER actualizando_faltas
-AFTER INSERT ON public."Asistencia" FOR EACH ROW
+AFTER INSERT OR UPDATE ON public."Asistencia" FOR EACH ROW
 EXECUTE PROCEDURE ingresando_asistencia();
+
+-- 0105014856 
