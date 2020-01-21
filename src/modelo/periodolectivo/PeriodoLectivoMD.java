@@ -3,6 +3,7 @@ package modelo.periodolectivo;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 import modelo.carrera.CarreraMD;
+import modelo.persona.DocenteMD;
 
 public class PeriodoLectivoMD {
 
@@ -11,24 +12,12 @@ public class PeriodoLectivoMD {
     private boolean activo, estado;
     private LocalDate fechaInicio, fechaFin, fechaFinClases;
     private int NumSemanas;
+    private DocenteMD docente;
+    
 
     private int NumDias;
     //Debemos arreglar esot 
     private CarreraMD carrera;
-
-    public PeriodoLectivoMD() {
-    }
-
-    public PeriodoLectivoMD(int id, String nombre, String observacion, boolean activo, boolean estado, LocalDate fechaInicio, LocalDate fechaFin, CarreraMD carrera) {
-        this.id = id;
-        this.nombre = nombre;
-        this.observacion = observacion;
-        this.activo = activo;
-        this.estado = estado;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.carrera = carrera;
-    }
 
     public int getID() {
         return id;
@@ -136,6 +125,14 @@ public class PeriodoLectivoMD {
 
     public void setFechaFinClases(LocalDate fechaFinClases) {
         this.fechaFinClases = fechaFinClases;
+    }
+
+    public DocenteMD getDocente() {
+        return docente;
+    }
+
+    public void setDocente(DocenteMD docente) {
+        this.docente = docente;
     }
 
 }

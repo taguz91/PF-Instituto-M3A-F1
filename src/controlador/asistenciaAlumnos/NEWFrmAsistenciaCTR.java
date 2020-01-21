@@ -1,10 +1,14 @@
 package controlador.asistenciaAlumnos;
 
+import controlador.Libraries.Effects;
+import controlador.Libraries.Middlewares;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -79,6 +83,21 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         VTN.getCmbPeriodo().addActionListener(e -> clickCmbPeriodo());
         VTN.getBtnCargarLista().addActionListener(e -> cargarLista());
         VTN.getBtnGuardar().addActionListener(e -> guardar());
+        VTN.getBtnImprimir().addActionListener(e -> {
+            int posPrd = VTN.getCmbPeriodo().getSelectedIndex();
+            int posMateria = VTN.getCmbMateria().getSelectedIndex();
+            int posFecha = VTN.getCmbFechas().getSelectedIndex();
+            if (posPrd > 0
+                    && posMateria > 0
+                    && posFecha > 0) {
+                imprimirReporte();
+            } else {
+                M.errorMsg(
+                        "Debe selecionar un periodo, una materia "
+                        + "y la fecha para poder imprimir un reporte."
+                );
+            }
+        });
         iniciarAccionesTbl();
     }
 
@@ -256,6 +275,105 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         } else {
             M.errorMsg("Error al guardar las faltas.");
         }
+    }
+
+    private void imprimirReporte() {
+        int r = JOptionPane.showOptionDialog(
+                VTN,
+                "Reporte individual\n"
+                + "¿Elegir el tipo de Reporte?",
+                "REPORTE UBE",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{
+                    "Reporte Asistencia",
+                    "Reporte Asistencia UBE",
+                    "Reporte Asistencia por Día"
+                },
+                "Cancelar"
+        );
+        switch (r) {
+            case 0:
+                generarReporteAsistencia();
+                break;
+            case 1:
+                generarReporteAsistenciaUBE();
+                break;
+            case 2:
+                generarReporteAsistenciaPorDia();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Todos los reportes de asistencia 
+    private void generarReporteAsistencia() {
+        int posCurso = VTN.getCmbMateria().getSelectedIndex();
+
+        String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
+        String ciclo = cs.get(posCurso - 1).getNombre();
+        String materia = cs.get(posCurso - 1).getMateria().getNombre();
+        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
+
+        String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistencia.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+
+        System.out.println(parametros);
+
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia", parametros);
+    }
+
+    private void generarReporteAsistenciaUBE() {
+        int posCurso = VTN.getCmbMateria().getSelectedIndex();
+
+        String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
+        String ciclo = cs.get(posCurso - 1).getNombre();
+        String materia = cs.get(posCurso - 1).getMateria().getNombre();
+        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
+
+        String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaUBE.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+
+        System.out.println(parametros);
+
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia UBE", parametros);
+    }
+
+    private void generarReporteAsistenciaPorDia() {
+        int posCurso = VTN.getCmbMateria().getSelectedIndex();
+
+        String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
+        String ciclo = cs.get(posCurso - 1).getNombre();
+        String materia = cs.get(posCurso - 1).getMateria().getNombre();
+        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
+
+        String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaPorDia.jasper";
+
+        Map parametros = new HashMap();
+
+        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("curso_nombre", ciclo);
+        parametros.put("materia_nombre", materia);
+        parametros.put("fecha_asistencia", fecha);
+
+        System.out.println(parametros);
+        System.out.println("Materia: " + materia);
+        Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia por Día", parametros);
     }
 
 }

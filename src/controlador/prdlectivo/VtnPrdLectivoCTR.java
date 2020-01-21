@@ -94,7 +94,6 @@ public class VtnPrdLectivoCTR extends DCTR {
     public void filtrarCarreras() {
         String nombre;
         int idCarrera = 0;
-//        List<PeriodoLectivoMD> periodos;
         if (vtnPrdLectivo.getCmbx_Filtrar().getSelectedIndex() > 0) {
             nombre = vtnPrdLectivo.getCmbx_Filtrar().getSelectedItem().toString();
             for (int i = 0; i < carreras.size(); i++) {
@@ -142,17 +141,16 @@ public class VtnPrdLectivoCTR extends DCTR {
             mes_Fin = String.valueOf(periodos.get(i).getFechaFin().getMonthValue());
             anio_Fin = String.valueOf(periodos.get(i).getFechaFin().getYear());
 
-//            nombre = periodos.get(i).getCarrera().getCodigo() + "   " + bdPerLectivo.Meses(periodos.get(i).getFecha_Inicio()) + "   "
-//                    + bdPerLectivo.Meses(periodos.get(i).getFecha_Fin());
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getID(), i, 0);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getCarrera().getNombre(), i, 1);
             vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getNombre(), i, 2);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 3);
-            vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 4);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(periodos.get(i).getDocente().getNombreCorto(), i, 3);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Inicio + "/" + mes_Inicio + "/" + dia_Inicio, i, 4);
+            vtnPrdLectivo.getTblPrdLectivo().setValueAt(anio_Fin + "/" + mes_Fin + "/" + dia_Fin, i, 5);
             if (periodos.get(i).isEstado() == true) {
-                vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 5);
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt("ABIERTO", i, 6);
             } else {
-                vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 5);
+                vtnPrdLectivo.getTblPrdLectivo().setValueAt("CERRADO", i, 6);
             }
 
         }
@@ -257,7 +255,6 @@ public class VtnPrdLectivoCTR extends DCTR {
                             JOptionPane.showMessageDialog(null, "NO SE PUDO CERRAR ESTE PERÍODO LECTIVO");
                         }
                     }
-
                 }
             }
         }
@@ -280,19 +277,19 @@ public class VtnPrdLectivoCTR extends DCTR {
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione primero una fila de la tabla");
         }
-
     }
 
     //Inicia los permisos a la Base de Datos
     private void InitPermisos() {
-
         vtnPrdLectivo.getBtnCerrarPeriodo().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Cerrar Periodo");
         vtnPrdLectivo.getBtnEditar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Editar");
         vtnPrdLectivo.getBtnIngresar().getAccessibleContext().setAccessibleName("Periodo-Lectivo-Ingresar");
 
-        CONS.activarBtns(vtnPrdLectivo.getBtnCerrarPeriodo(), vtnPrdLectivo.getBtnEditar(),
-                vtnPrdLectivo.getBtnIngresar());
-
+        CONS.activarBtns(
+                vtnPrdLectivo.getBtnCerrarPeriodo(),
+                vtnPrdLectivo.getBtnEditar(),
+                vtnPrdLectivo.getBtnIngresar()
+        );
     }
 
 }

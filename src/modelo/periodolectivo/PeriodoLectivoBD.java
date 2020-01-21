@@ -12,6 +12,7 @@ import java.util.Map;
 import modelo.ConnDBPool;
 import modelo.carrera.CarreraBD;
 import modelo.carrera.CarreraMD;
+import modelo.persona.DocenteMD;
 import utils.CONBD;
 import utils.M;
 
@@ -47,7 +48,8 @@ public class PeriodoLectivoBD extends CONBD {
                 + "prd_lectivo_observacion, "
                 + "prd_lectivo_activo, "
                 + "prd_lectivo_estado,"
-                + "prd_lectivo_fecha_fin_clases )"
+                + "prd_lectivo_fecha_fin_clases,"
+                + "prd_lectivo_coordinador )"
                 + " VALUES( "
                 + "" + c.getId() + ", "
                 + "'" + p.getNombre().toUpperCase()
@@ -58,7 +60,8 @@ public class PeriodoLectivoBD extends CONBD {
                 + "'" + p.getObservacion().toUpperCase() + "', "
                 + "true, "
                 + "true, "
-                + "'" + p.getFechaFinClases() + "' "
+                + "'" + p.getFechaFinClases() + "', "
+                + p.getDocente().getIdDocente()
                 + ");";
         return CON.executeNoSQL(nsql);
     }
@@ -70,7 +73,8 @@ public class PeriodoLectivoBD extends CONBD {
                 + "prd_lectivo_fecha_inicio = '" + p.getFechaInicio() + "', "
                 + "prd_lectivo_fecha_fin = '" + p.getFechaFin() + "', "
                 + "prd_lectivo_observacion = '" + p.getObservacion() + "', "
-                + "prd_lectivo_fecha_fin_clases = '" + p.getFechaFinClases() + "' "
+                + "prd_lectivo_fecha_fin_clases = '" + p.getFechaFinClases() + "', "
+                + "prd_lectivo_coordinador = " + p.getDocente().getIdDocente()
                 + "WHERE id_prd_lectivo = " + p.getID() + ";";
         return CON.executeNoSQL(nsql);
     }
@@ -104,9 +108,14 @@ public class PeriodoLectivoBD extends CONBD {
                 + "p.prd_lectivo_fecha_inicio, "
                 + "p.prd_lectivo_fecha_fin, "
                 + "p.prd_lectivo_estado, "
-                + "c.carrera_nombre "
-                + "FROM public.\"PeriodoLectivo\" p JOIN public.\"Carreras\" c "
-                + "USING(id_carrera) WHERE c.id_carrera = " + idCarrera + ";";
+                + "c.carrera_nombre,"
+                + "persona_primer_nombre,"
+                + "persona_primer_apellido "
+                + "FROM public.\"PeriodoLectivo\" p "
+                + "JOIN public.\"Carreras\" c USING(id_carrera) "
+                + "JOIN public.\"Docentes\" d ON d.id_docente = p.prd_lectivo_coordinador "
+                + "JOIN public.\"Personas\" pr ON pr.id_persona = d.id_persona "
+                + "WHERE c.id_carrera = " + idCarrera + ";";
         PreparedStatement ps = CON.getPSPOOL(sql);
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         try {
@@ -122,6 +131,12 @@ public class PeriodoLectivoBD extends CONBD {
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
                 p.setEstado(rs.getBoolean("prd_lectivo_estado"));
+
+                DocenteMD d = new DocenteMD();
+                d.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                d.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setDocente(d);
+
                 lista.add(p);
             }
         } catch (SQLException ex) {
@@ -182,7 +197,7 @@ public class PeriodoLectivoBD extends CONBD {
     }
 
     public CarreraMD capturarIdCarrera(String aguja) {
-        String sql = "SELECT id_carrera"
+        String sql = "SELECT id_carrera "
                 + "FROM public.\"Carreras\" "
                 + "WHERE carrera_nombre LIKE '%" + aguja + "%';";
         PreparedStatement ps = CON.getPSPOOL(sql);
@@ -253,11 +268,25 @@ public class PeriodoLectivoBD extends CONBD {
 
     public List<PeriodoLectivoMD> capturarPeriodos(String aguja) {
         List<PeriodoLectivoMD> lista = new ArrayList();
-        String sql = "SELECT id_prd_lectivo, pl.id_carrera, prd_lectivo_nombre, prd_lectivo_fecha_inicio, \n"
-                + "prd_lectivo_fecha_fin, carrera_nombre, carrera_codigo, prd_lectivo_estado\n"
-                + "FROM public.\"PeriodoLectivo\" pl, public.\"Carreras\" c\n"
-                + "WHERE c.id_carrera = pl.id_carrera AND\n"
-                + "prd_lectivo_activo = true AND(\n"
+        String sql = "SELECT "
+                + "id_prd_lectivo, "
+                + "pl.id_carrera, "
+                + "prd_lectivo_nombre, "
+                + "prd_lectivo_fecha_inicio, \n"
+                + "prd_lectivo_fecha_fin, "
+                + "carrera_nombre, "
+                + "carrera_codigo, "
+                + "prd_lectivo_estado, "
+                + "p.persona_primer_nombre, "
+                + "p.persona_primer_apellido "
+                + "FROM public.\"PeriodoLectivo\" pl, "
+                + "public.\"Carreras\" c, "
+                + "public.\"Docentes\" d, "
+                + "public.\"Personas\" p "
+                + "WHERE c.id_carrera = pl.id_carrera "
+                + "AND d.id_docente = pl.prd_lectivo_coordinador "
+                + "AND p.id_persona = d.id_persona "
+                + "AND prd_lectivo_activo = true AND( "
                 + "	prd_lectivo_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_nombre ILIKE '%" + aguja + "%' OR\n"
                 + "	carrera_codigo ILIKE '%" + aguja + "%')\n"
@@ -278,7 +307,12 @@ public class PeriodoLectivoBD extends CONBD {
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
                 p.setEstado(rs.getBoolean("prd_lectivo_estado"));
-
+                
+                DocenteMD d = new DocenteMD();
+                d.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                d.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setDocente(d);
+                
                 lista.add(p);
             }
         } catch (SQLException ex) {
@@ -299,9 +333,13 @@ public class PeriodoLectivoBD extends CONBD {
                 + "p.prd_lectivo_observacion, "
                 + "c.carrera_nombre, "
                 + "p.prd_lectivo_estado,"
-                + "p.prd_lectivo_fecha_fin_clases "
+                + "p.prd_lectivo_fecha_fin_clases, "
+                + "d.id_docente, "
+                + "pr.persona_identificacion "
                 + "FROM public.\"PeriodoLectivo\" p "
                 + "JOIN public.\"Carreras\" c USING(id_carrera) "
+                + "JOIN public.\"Docentes\" d ON p.prd_lectivo_coordinador = d.id_docente "
+                + "JOIN public.\"Personas\" pr ON pr.id_persona = d.id_persona "
                 + "WHERE p.id_prd_lectivo = "
                 + ID + " AND prd_lectivo_activo = true;";
         PreparedStatement ps = CON.getPSPOOL(sql);
@@ -319,7 +357,14 @@ public class PeriodoLectivoBD extends CONBD {
                 carrera.setNombre(rs.getString("carrera_nombre"));
                 m.setEstado(rs.getBoolean("prd_lectivo_estado"));
                 m.setCarrera(carrera);
-                m.setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
+                if (rs.getDate("prd_lectivo_fecha_fin_clases") != null) {
+                    m.setFechaFinClases(rs.getDate("prd_lectivo_fecha_fin_clases").toLocalDate());
+                }
+                DocenteMD d = new DocenteMD();
+                d.setIdDocente(rs.getInt("id_docente"));
+                d.setIdentificacion(rs.getString("persona_identificacion"));
+
+                m.setDocente(d);
             }
             return m;
         } catch (SQLException ex) {
@@ -339,10 +384,16 @@ public class PeriodoLectivoBD extends CONBD {
                 + "prd_lectivo_fecha_fin, "
                 + "carrera_nombre, "
                 + "carrera_codigo, "
-                + "prd_lectivo_estado "
+                + "prd_lectivo_estado,"
+                + "p.persona_primer_nombre, "
+                + "p.persona_primer_apellido "
                 + "FROM public.\"PeriodoLectivo\" pl, "
-                + "public.\"Carreras\" c "
+                + "public.\"Carreras\" c, "
+                + "public.\"Docentes\" d, "
+                + "public.\"Personas\" p "
                 + "WHERE c.id_carrera = pl.id_carrera "
+                + "AND d.id_docente = pl.prd_lectivo_coordinador "
+                + "AND p.id_persona = d.id_persona "
                 + "AND prd_lectivo_activo = true "
                 + "AND carrera_activo = true "
                 + "ORDER BY prd_lectivo_fecha_inicio DESC;";
@@ -361,6 +412,11 @@ public class PeriodoLectivoBD extends CONBD {
                 p.setFechaInicio(rs.getDate("prd_lectivo_fecha_inicio").toLocalDate());
                 p.setFechaFin(rs.getDate("prd_lectivo_fecha_fin").toLocalDate());
                 p.setEstado(rs.getBoolean("prd_lectivo_estado"));
+
+                DocenteMD d = new DocenteMD();
+                d.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                d.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                p.setDocente(d);
 
                 lista.add(p);
             }
