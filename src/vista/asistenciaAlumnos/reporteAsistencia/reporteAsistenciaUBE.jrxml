@@ -3,33 +3,39 @@
 	<property name="ireport.zoom" value="1.1000000000000028"/>
 	<property name="ireport.x" value="22"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_docente" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="curso_nombre" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="materia_nombre" class="java.lang.String">
+	<parameter name="id_curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="prd_lectivo_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
+		<![CDATA[
+SELECT
 Sum("public"."Asistencia".numero_faltas) AS "NUMERO FALTAS",
-ROUND((SUM("Asistencia".numero_faltas) * 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%' AS "% FALTAS",
+ROUND(
+  (SUM("Asistencia".numero_faltas) * 100) / ValidarHorasMateria("Materias".materia_horas_presencial)
+)|| '%' AS "% FALTAS",
 "public"."Alumnos".id_alumno,
 p_alu.persona_identificacion,
-p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS apellidos_al,
-p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS nombres_al,
+p_alu.persona_primer_apellido || ' ' ||
+p_alu.persona_segundo_apellido AS apellidos_al,
+p_alu.persona_primer_nombre || ' ' ||
+p_alu.persona_segundo_nombre AS nombres_al,
 "public"."Materias".materia_nombre,
 "public"."Cursos".curso_nombre,
 "public"."Carreras".carrera_nombre,
 "public"."PeriodoLectivo".prd_lectivo_nombre,
-"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre AS "PROFESOR",
-doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
-  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
+"Docentes".docente_abreviatura ||' ' ||
+"Personas".persona_primer_apellido || ' ' ||
+"Personas".persona_segundo_apellido ||' '||
+"Personas".persona_primer_nombre || ' ' ||
+"Personas".persona_segundo_nombre AS "PROFESOR",
+doc_coor.docente_abreviatura ||' '||
+per_coor.persona_primer_apellido || ' ' ||
+per_coor.persona_segundo_apellido || ' ' ||
+per_coor.persona_primer_nombre || ' ' ||
+per_coor.persona_segundo_nombre AS "COORDINADOR",
 Max("public"."MallaAlumno".malla_almn_num_matricula) AS "N° Matricula",
 "upper"("AlumnoCurso".almn_curso_asistencia) AS "Asistencia",
 p_alu.persona_telefono,
@@ -51,16 +57,9 @@ INNER JOIN "public"."Personas" AS per_coor ON per_coor.id_persona = doc_coor.id_
 INNER JOIN "public"."AlumnosCarrera" ON "public"."AlumnosCarrera".id_alumno = "public"."Alumnos".id_alumno
 INNER JOIN "public"."MallaAlumno" ON "public"."AlumnosCarrera".id_almn_carrera = "public"."MallaAlumno".id_almn_carrera
 INNER JOIN "public"."Asistencia" ON "public"."Asistencia".id_almn_curso = "public"."AlumnoCurso".id_almn_curso
-WHERE
-"public"."Cursos".id_docente = (
-	SELECT id_docente 
-	FROM public."Docentes" ds 
-	WHERE ds.id_persona = $P{id_docente}  
-) AND
-"public"."Cursos".curso_nombre = $P{curso_nombre} AND
-"public"."Materias".materia_nombre = $P{materia_nombre} AND
-"public"."PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre}) AND
-"public"."MallaAlumno".id_materia = "public"."Materias".id_materia
+WHERE "public"."Cursos".id_curso = $P{id_curso}
+AND public."PeriodoLectivo".id_prd_lectivo = "Cursos".id_prd_lectivo AND
+public."MallaAlumno".id_materia = "public"."Materias".id_materia
 AND "AlumnoCurso".almn_curso_activo = true
 GROUP BY
 "public"."Alumnos".id_alumno,
@@ -80,7 +79,8 @@ p_alu.persona_telefono,
 p_alu.persona_celular,
 p_alu.persona_correo
 ORDER BY
-p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido ASC]]>
+p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido ASC
+]]>
 	</queryString>
 	<field name="NUMERO FALTAS" class="java.lang.Long"/>
 	<field name="% FALTAS" class="java.lang.String"/>

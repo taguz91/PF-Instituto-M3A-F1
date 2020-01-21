@@ -3,40 +3,45 @@
 	<property name="ireport.zoom" value="1.0000000000000009"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_docente" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="prd_lectivo_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="curso_nombre" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="materia_nombre" class="java.lang.String">
+	<parameter name="id_curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fecha_asistencia" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-	"Alumnos".id_alumno,
-	p_alu.persona_identificacion,
-	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido AS "apellidos_al",
-	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre AS "nombres_al",
-	"Materias".materia_nombre,
-	"Cursos".curso_nombre,
-	"Carreras".carrera_nombre,
-	"PeriodoLectivo".prd_lectivo_nombre,
-	 "Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre
-	 AS "PROFESOR",
-	ROUND(("Asistencia".numero_faltas* 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%'  as "% Faltas",
-  doc_coor.docente_abreviatura||' '||per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
-  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre AS "COORDINADOR",
-	max("MallaAlumno".malla_almn_num_matricula) AS "N� Matricula",
-	"upper"("AlumnoCurso".almn_curso_asistencia) AS "Asistencia",
-	SUM("Asistencia".numero_faltas),
-	"Asistencia".fecha_asistencia
+		<![CDATA[
+SELECT
+"Alumnos".id_alumno,
+p_alu.persona_identificacion,
+p_alu.persona_primer_apellido || ' ' ||
+p_alu.persona_segundo_apellido AS "apellidos_al",
+p_alu.persona_primer_nombre || ' ' ||
+p_alu.persona_segundo_nombre AS "nombres_al",
+"Materias".materia_nombre,
+"Cursos".curso_nombre,
+"Carreras".carrera_nombre,
+"PeriodoLectivo".prd_lectivo_nombre,
+"Docentes".docente_abreviatura ||' ' ||
+"Personas".persona_primer_apellido || ' ' ||
+"Personas".persona_segundo_apellido ||' '||
+"Personas".persona_primer_nombre || ' ' ||
+"Personas".persona_segundo_nombre AS "PROFESOR",
+ROUND(
+  ("Asistencia".numero_faltas* 100) / ValidarHorasMateria("Materias".materia_horas_presencial)
+) || '%'  AS "% Faltas",
+doc_coor.docente_abreviatura ||' '||
+per_coor.persona_primer_apellido || ' ' ||
+per_coor.persona_segundo_apellido || ' ' ||
+per_coor.persona_primer_nombre || ' ' ||
+per_coor.persona_segundo_nombre AS "COORDINADOR",
+max("MallaAlumno".malla_almn_num_matricula) AS "N� Matricula",
+"upper"("AlumnoCurso".almn_curso_asistencia) AS "Asistencia",
+SUM("Asistencia".numero_faltas),
+"Asistencia".fecha_asistencia
 
 FROM
 	"AlumnoCurso"
@@ -56,35 +61,29 @@ FROM
 	INNER JOIN "Asistencia" on "AlumnoCurso".id_almn_curso = "Asistencia".id_almn_curso
 
 WHERE
-	 "Cursos".id_docente = (
-	SELECT id_docente 
-	FROM public."Docentes" ds 
-	WHERE ds.id_persona = $P{id_docente}  
-	)
-	AND "PeriodoLectivo".id_prd_lectivo = (SELECT "PeriodoLectivo".id_prd_lectivo FROM "PeriodoLectivo" WHERE "PeriodoLectivo".prd_lectivo_nombre = $P{prd_lectivo_nombre})
-	AND "Cursos".curso_nombre= $P{curso_nombre}
-	AND "public"."Materias".materia_nombre = $P{materia_nombre}
-	AND "MallaAlumno".id_materia = "Materias".id_materia
-	and "Asistencia".fecha_asistencia =  to_date($P{fecha_asistencia}, 'DD/MM/YYYY')
+"Cursos".id_curso = $P{id_curso}
+AND "PeriodoLectivo".id_prd_lectivo = "Cursos".id_prd_lectivo
+AND "MallaAlumno".id_materia = "Materias".id_materia
+and "Asistencia".fecha_asistencia =  to_date($P{fecha_asistencia}, 'DD/MM/YYYY')
+GROUP BY "Alumnos".id_alumno,
+p_alu.persona_identificacion,
+p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido,
+p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre,
+"Materias".materia_nombre,
+"Cursos".curso_nombre,
+"Carreras".carrera_nombre,
+"PeriodoLectivo".prd_lectivo_nombre,
+"Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre,
+ROUND(("AlumnoCurso".almn_curso_num_faltas * 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%',
+doc_coor.docente_abreviatura||' '|| per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
+per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
+"upper"("AlumnoCurso".almn_curso_asistencia),
+"Asistencia".fecha_asistencia,
+"Asistencia".numero_faltas,
+"Materias".materia_horas_presencial
 
-	GROUP BY "Alumnos".id_alumno,
-	p_alu.persona_identificacion,
-	p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido,
-	p_alu.persona_primer_nombre || ' ' || p_alu.persona_segundo_nombre,
-	"Materias".materia_nombre,
-	"Cursos".curso_nombre,
-	"Carreras".carrera_nombre,
-	"PeriodoLectivo".prd_lectivo_nombre,
-	 "Docentes".docente_abreviatura ||' ' ||"Personas".persona_primer_apellido || ' ' || "Personas".persona_segundo_apellido ||' '|| "Personas".persona_primer_nombre || ' ' || "Personas".persona_segundo_nombre,
-	ROUND(("AlumnoCurso".almn_curso_num_faltas * 100)/ValidarHorasMateria("Materias".materia_horas_presencial))|| '%',
- doc_coor.docente_abreviatura||' '|| per_coor.persona_primer_apellido || ' ' || per_coor.persona_segundo_apellido || ' ' ||
-  per_coor.persona_primer_nombre || ' ' ||per_coor.persona_segundo_nombre,
-	"upper"("AlumnoCurso".almn_curso_asistencia),
-	"Asistencia".fecha_asistencia,
-	"Asistencia".numero_faltas, 
-	"Materias".materia_horas_presencial
-
-	ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido]]>
+ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido
+]]>
 	</queryString>
 	<field name="id_alumno" class="java.lang.Integer"/>
 	<field name="persona_identificacion" class="java.lang.String"/>
