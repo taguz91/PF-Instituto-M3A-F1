@@ -313,66 +313,40 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         int posCurso = VTN.getCmbMateria().getSelectedIndex();
 
         String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
-        String ciclo = cs.get(posCurso - 1).getNombre();
-        String materia = cs.get(posCurso - 1).getMateria().getNombre();
-        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
-
         String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistencia.jasper";
 
         Map parametros = new HashMap();
-
-        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("id_curso", cs.get(posCurso - 1).getId());
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_nombre", ciclo);
-        parametros.put("materia_nombre", materia);
-
-        System.out.println(parametros);
 
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia", parametros);
     }
 
     private void generarReporteAsistenciaUBE() {
         int posCurso = VTN.getCmbMateria().getSelectedIndex();
-
         String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
-        String ciclo = cs.get(posCurso - 1).getNombre();
-        String materia = cs.get(posCurso - 1).getMateria().getNombre();
-        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
-
         String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaUBE.jasper";
 
         Map parametros = new HashMap();
 
-        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("id_curso", cs.get(posCurso - 1).getId());
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_nombre", ciclo);
-        parametros.put("materia_nombre", materia);
-
-        System.out.println(parametros);
 
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia UBE", parametros);
     }
 
     private void generarReporteAsistenciaPorDia() {
         int posCurso = VTN.getCmbMateria().getSelectedIndex();
-
         String nombrePeriodo = VTN.getCmbPeriodo().getSelectedItem().toString().trim();
-        String ciclo = cs.get(posCurso - 1).getNombre();
-        String materia = cs.get(posCurso - 1).getMateria().getNombre();
-        String fecha = VTN.getCmbFechas().getSelectedItem().toString();
 
         String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaPorDia.jasper";
 
         Map parametros = new HashMap();
 
-        parametros.put("id_docente", CONS.USUARIO.getPersona().getIdPersona());
+        parametros.put("id_curso", cs.get(posCurso - 1).getId());
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_nombre", ciclo);
-        parametros.put("materia_nombre", materia);
-        parametros.put("fecha_asistencia", fecha);
 
         System.out.println(parametros);
-        System.out.println("Materia: " + materia);
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia por Día", parametros);
     }
 
