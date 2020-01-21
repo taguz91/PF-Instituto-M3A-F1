@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f4f1c598-1299-47b1-86c5-7ffeb589a2bc">
 	<property name="ireport.zoom" value="1.1000000000000028"/>
-	<property name="ireport.x" value="22"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -9,9 +9,11 @@
 	<parameter name="prd_lectivo_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUB_REPORTES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/subreportes/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[
-SELECT
+		<![CDATA[SELECT
 Sum("public"."Asistencia".numero_faltas) AS "NUMERO FALTAS",
 ROUND(
   (SUM("Asistencia".numero_faltas) * 100) / ValidarHorasMateria("Materias".materia_horas_presencial)
@@ -79,8 +81,7 @@ p_alu.persona_telefono,
 p_alu.persona_celular,
 p_alu.persona_correo
 ORDER BY
-p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido ASC
-]]>
+p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido ASC]]>
 	</queryString>
 	<field name="NUMERO FALTAS" class="java.lang.Long"/>
 	<field name="% FALTAS" class="java.lang.String"/>
@@ -473,21 +474,14 @@ p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido ASC
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="302" y="63" width="234" height="1" uuid="5ec178bc-302a-49ee-8823-4fe9f871e32d"/>
-			</line>
-			<textField>
-				<reportElement x="302" y="74" width="234" height="20" uuid="841d0a85-f032-4a8a-96b8-995478fb2aa3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="302" y="94" width="234" height="20" uuid="1354316f-4797-4846-ba68-fac3f2fb3d13"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
-			</staticText>
+			<subreport>
+				<reportElement x="272" y="74" width="234" height="40" uuid="bfc87fc8-8158-4aa1-b5dc-643d1c32c9dd"/>
+				<subreportParameter name="periodo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORTES} + "FirmaCoordinador.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>

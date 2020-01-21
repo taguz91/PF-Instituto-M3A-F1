@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c1e8929a-6fc3-4dfe-8500-ee964a4c0dca">
-	<property name="ireport.zoom" value="1.6105100000000008"/>
-	<property name="ireport.x" value="336"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="82"/>
+	<property name="ireport.y" value="42"/>
 	<parameter name="id_curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,6 +11,9 @@
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/asistenciaAlumnos/reporteAsistencia/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUB_REPORTES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/subreportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -86,9 +89,7 @@ per_coor.persona_primer_nombre || ' ' ||
 per_coor.persona_segundo_nombre,
 "upper"("AlumnoCurso".almn_curso_asistencia),
 "Materias".materia_horas_presencial
-ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido;
-
-]]>
+ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido;]]>
 	</queryString>
 	<field name="NUMERO FALTAS" class="java.lang.Long"/>
 	<field name="% FALTAS" class="java.lang.String"/>
@@ -402,36 +403,32 @@ ORDER BY p_alu.persona_primer_apellido || ' ' || p_alu.persona_segundo_apellido;
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="109" y="51" width="234" height="1" uuid="e7eee840-39b1-4a7d-a320-7c82449134c0"/>
-			</line>
 			<staticText>
-				<reportElement x="424" y="83" width="234" height="20" uuid="befa158e-4382-4a0e-b950-9e713f71f325"/>
+				<reportElement x="122" y="83" width="234" height="20" uuid="0c24d030-a35e-4962-82bd-540a99ede8ab"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="424" y="63" width="234" height="20" uuid="3397e147-4951-4668-a16f-ae67c55bbbcc"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="109" y="83" width="234" height="20" uuid="088e14d9-1a0d-4382-a8ad-66915e26e7d8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
+			<line>
+				<reportElement x="122" y="61" width="234" height="1" uuid="5c6cf4b7-3e57-4fa0-95d4-8757acf40dcc"/>
+			</line>
+			<subreport>
+				<reportElement x="424" y="61" width="234" height="40" uuid="091dbaca-1bb4-4096-8556-51e9ff046587"/>
+				<subreportParameter name="periodo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORTES} + "FirmaCoordinador.jasper"]]></subreportExpression>
+			</subreport>
 			<textField>
-				<reportElement x="109" y="63" width="234" height="20" uuid="18ac56a5-577e-40b2-9bc2-7db10f4471de"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Transparent" x="122" y="63" width="234" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d3fb2ef9-c4b0-4740-9cd2-2589158184b0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="424" y="52" width="234" height="1" uuid="ce59d4eb-679c-4b77-9022-50f680e7e36b"/>
-			</line>
 		</band>
 	</summary>
 </jasperReport>
