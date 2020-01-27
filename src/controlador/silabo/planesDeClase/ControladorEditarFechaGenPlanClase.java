@@ -55,7 +55,7 @@ public class ControladorEditarFechaGenPlanClase {
     }
 
     private void CargarFecha(PlandeClasesMD pl) {
-        vista.getDch_fecha_g().setDate(Date.from(pl.getFecha_generacion().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        vista.getDch_fecha_g().setDate(Date.from(pl.getFechaGeneracion().atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }
 
     private void actualizarFecha() {

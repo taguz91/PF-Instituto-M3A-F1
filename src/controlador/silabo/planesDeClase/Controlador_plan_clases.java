@@ -237,10 +237,10 @@ public class Controlador_plan_clases {
     public boolean guardar_plan_de_clase() {
         try {
             plan_claseMD = new PlandeClasesMD(curso, unidadsilabo);
-            plan_claseMD.getId_curso().setId(curso.getId());
-            plan_claseMD.getId_unidad().setIdUnidad(unidadsilabo.getIdUnidad());
+            plan_claseMD.getCurso().setId(curso.getId());
+            plan_claseMD.getUnidad().setIdUnidad(unidadsilabo.getIdUnidad());
             plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
-            plan_claseMD.setTrabajo_autonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
+            plan_claseMD.setTrabajoAutonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
             if (new PlandeClasesBD().insertarPlanClases(plan_claseMD) == true) {
                 insertarRecursosPlanClases();
                 insertarEstrategiasMetodologicas();

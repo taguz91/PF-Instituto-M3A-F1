@@ -4,11 +4,10 @@ import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.swing.JOptionPane;
-import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
@@ -68,7 +67,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
                 );
     }
 
-    /*S
+    /*
         FACTORIZACION
      */
     private List<PeriodoLectivoMD> getPeriodos() {
@@ -105,6 +104,12 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         this.jornadas.stream()
                 .map(c -> c.getNombre())
                 .forEachOrdered(this.vista.getCmbJornadas()::addItem);
+    }
+
+    private Consumer<PlandeClasesMD> cargador() {
+        return obj -> {
+
+        };
     }
 
     /*

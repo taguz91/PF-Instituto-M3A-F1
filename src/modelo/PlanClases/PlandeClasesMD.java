@@ -58,19 +58,19 @@ public class PlandeClasesMD {
         this.id_plan_clases = id_plan_clases;
     }
 
-    public CursoMD getId_curso() {
+    public CursoMD getCurso() {
         return id_curso;
     }
 
-    public void setId_curso(CursoMD id_curso) {
+    public void setCurso(CursoMD id_curso) {
         this.id_curso = id_curso;
     }
 
-    public UnidadSilaboMD getId_unidad() {
+    public UnidadSilaboMD getUnidad() {
         return id_unidad;
     }
 
-    public void setId_unidad(UnidadSilaboMD id_unidad) {
+    public void setUnidad(UnidadSilaboMD id_unidad) {
         this.id_unidad = id_unidad;
     }
 
@@ -82,59 +82,59 @@ public class PlandeClasesMD {
         this.observaciones = observaciones;
     }
 
-    public LocalDate getFecha_revision() {
+    public LocalDate getFechaRevision() {
         return fecha_revision;
     }
 
-    public void setFecha_revision(LocalDate fecha_revision) {
+    public void setFechaRevision(LocalDate fecha_revision) {
         this.fecha_revision = fecha_revision;
     }
 
-    public LocalDate getFecha_generacion() {
+    public LocalDate getFechaGeneracion() {
         return fecha_generacion;
     }
 
-    public void setFecha_generacion(LocalDate fecha_generacion) {
+    public void setFechaGeneracion(LocalDate fecha_generacion) {
         this.fecha_generacion = fecha_generacion;
     }
 
-    public LocalDate getFecha_cierre() {
+    public LocalDate getFechaCierre() {
         return fecha_cierre;
     }
 
-    public void setFecha_cierre(LocalDate fecha_cierre) {
+    public void setFechaCierre(LocalDate fecha_cierre) {
         this.fecha_cierre = fecha_cierre;
     }
 
-    public MateriaMD getId_materia() {
+    public MateriaMD getMateria() {
         return id_materia;
     }
 
-    public void setId_materia(MateriaMD id_materia) {
+    public void setMateria(MateriaMD id_materia) {
         this.id_materia = id_materia;
     }
 
-    public PersonaMD getId_persona() {
+    public PersonaMD getPersona() {
         return id_persona;
     }
 
-    public void setId_persona(PersonaMD id_persona) {
+    public void setPersona(PersonaMD id_persona) {
         this.id_persona = id_persona;
     }
 
-    public String getTrabajo_autonomo() {
+    public String getTrabajoAutonomo() {
         return trabajo_autonomo;
     }
 
-    public void setTrabajo_autonomo(String trabajo_autonomo) {
+    public void setTrabajoAutonomo(String trabajo_autonomo) {
         this.trabajo_autonomo = trabajo_autonomo;
     }
 
-    public int getEstado_plan() {
+    public int getEstado() {
         return estado_plan;
     }
 
-    public void setEstado_plan(int estado_plan) {
+    public void setEstado(int estado_plan) {
         this.estado_plan = estado_plan;
     }
 

@@ -39,14 +39,14 @@ public class PlandeClasesBD extends PlandeClasesMD {
         PreparedStatement stmt = CON.prepareStatement(SELECT);
         try {
 
-            stmt.setInt(1, pl.getId_curso().getId());
-            stmt.setInt(2, pl.getId_unidad().getIdUnidad());
+            stmt.setInt(1, pl.getCurso().getId());
+            stmt.setInt(2, pl.getUnidad().getIdUnidad());
             stmt.setString(3, pl.getObservaciones());
 
             stmt.setDate(4, null);
             stmt.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
             stmt.setDate(6, null);
-            stmt.setString(7, pl.getTrabajo_autonomo());
+            stmt.setString(7, pl.getTrabajoAutonomo());
 //            st.setDate(4, java.sql.Date.valueOf(getFecha_revision()));
 //            st.setDate(5, java.sql.Date.valueOf(getFecha_generacion()));
 //            st.setDate(6, java.sql.Date.valueOf(getFecha_cierre()));
@@ -105,13 +105,13 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getId_unidad().setIdUnidad(rs.getInt(2));
-                pl.getId_persona().setPrimerApellido(rs.getString(3));
-                pl.getId_persona().setPrimerNombre(rs.getString(4));
-                pl.getId_materia().setNombre(rs.getString(5));
-                pl.getId_curso().setNombre(rs.getString(6));
-                pl.setEstado_plan(rs.getInt(7));
-                pl.setFecha_generacion(rs.getDate(8).toLocalDate());
+                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getPersona().setPrimerApellido(rs.getString(3));
+                pl.getPersona().setPrimerNombre(rs.getString(4));
+                pl.getMateria().setNombre(rs.getString(5));
+                pl.getCurso().setNombre(rs.getString(6));
+                pl.setEstado(rs.getInt(7));
+                pl.setFechaGeneracion(rs.getDate(8).toLocalDate());
                 lista_plan.add(pl);
             }
         } catch (SQLException ex) {
@@ -148,13 +148,13 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getId_unidad().setIdUnidad(rs.getInt(2));
-                pl.getId_persona().setPrimerApellido(rs.getString(3));
-                pl.getId_persona().setPrimerNombre(rs.getString(4));
-                pl.getId_materia().setNombre(rs.getString(5));
-                pl.getId_curso().setNombre(rs.getString(6));
-                pl.setEstado_plan(rs.getInt(7));
-                pl.setFecha_generacion(rs.getDate(8).toLocalDate());
+                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getPersona().setPrimerApellido(rs.getString(3));
+                pl.getPersona().setPrimerNombre(rs.getString(4));
+                pl.getMateria().setNombre(rs.getString(5));
+                pl.getCurso().setNombre(rs.getString(6));
+                pl.setEstado(rs.getInt(7));
+                pl.setFechaGeneracion(rs.getDate(8).toLocalDate());
                 lista_plan.add(pl);
             }
         } catch (SQLException ex) {
@@ -187,8 +187,8 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getId_unidad().setIdUnidad(rs.getInt(2));
-                pl.getId_curso().setId(rs.getInt(3));
+                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getCurso().setId(rs.getInt(3));
                 lista_plan.add(pl);
             }
         } catch (SQLException ex) {
@@ -227,7 +227,7 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 PlandeClasesMD pc = new PlandeClasesMD();
                 pc.setObservaciones(rs.getString(1));
-                pc.setTrabajo_autonomo(rs.getString(2));
+                pc.setTrabajoAutonomo(rs.getString(2));
                 lista_plan.add(pc);
 
             }
@@ -280,9 +280,9 @@ public class PlandeClasesBD extends PlandeClasesMD {
             while (rs.next()) {
                 planClase = new PlandeClasesMD();
                 planClase.setID(rs.getInt(1));
-                planClase.getId_curso().setId(rs.getInt(2));
-                planClase.getId_unidad().setIdUnidad(rs.getInt(3));
-                planClase.setFecha_generacion(rs.getDate(4).toLocalDate());
+                planClase.getCurso().setId(rs.getInt(2));
+                planClase.getUnidad().setIdUnidad(rs.getInt(3));
+                planClase.setFechaGeneracion(rs.getDate(4).toLocalDate());
 
             }
         } catch (SQLException ex) {

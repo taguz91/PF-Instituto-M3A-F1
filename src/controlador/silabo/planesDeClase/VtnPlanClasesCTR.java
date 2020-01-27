@@ -211,7 +211,7 @@ public class VtnPlanClasesCTR {
                 String estado = null;
                 Boolean estadoB = null;
 
-                if (plc.getEstado_plan() == 0) {
+                if (plc.getEstado() == 0) {
                     estado = "Por Aprobar";
                     estadoB = false;
                 } else {
@@ -219,8 +219,8 @@ public class VtnPlanClasesCTR {
                     estadoB = true;
                 }
                 modelotabla.addRow(new Object[]{
-                    plc.getID(), plc.getId_persona().getPrimerApellido() + " " + plc.getId_persona().getPrimerNombre(), plc.getId_materia().getNombre(), plc.getId_curso().getNombre(), plc.getId_unidad().getIdUnidad(),
-                    estado, estadoB, plc.getFecha_generacion()
+                    plc.getID(), plc.getPersona().getPrimerApellido() + " " + plc.getPersona().getPrimerNombre(), plc.getMateria().getNombre(), plc.getCurso().getNombre(), plc.getUnidad().getIdUnidad(),
+                    estado, estadoB, plc.getFechaGeneracion()
                 });
             }
 
@@ -311,8 +311,8 @@ public class VtnPlanClasesCTR {
         if (seleccion >= 0) {
             Map parametro = new HashMap();
 
-            parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getId_unidad().getIdUnidad()));
-            parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getId_curso().getId()));
+            parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getUnidad().getIdUnidad()));
+            parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getCurso().getId()));
             parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getID()));
 
             Middlewares.generarReporte(
