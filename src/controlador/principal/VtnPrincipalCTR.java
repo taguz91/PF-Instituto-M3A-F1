@@ -227,7 +227,6 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnCerrarSesion().addActionListener(e -> btnCerrarSesion(e));
         vtnPrin.getMnCtNotas().addActionListener(e -> abrirVtnNotasAlumnoCurso(e));
         vtnPrin.getMnCtTipoNotas().addActionListener(e -> btnTipoNotas(e));
-        vtnPrin.getMnCtNotasDuales().addActionListener(e -> btnNotasDuales(e));
         //vtnPrin.getMnCtActivarNotas().addActionListener(e -> btnActivarNotas(e));
         vtnPrin.getMnCtRendimientoAcademico().addActionListener(e -> abrirVtnControlUB(e));
         vtnPrin.getMnCtAsistencia().addActionListener(e -> abrirFrmAsistencia(e));
@@ -628,16 +627,6 @@ public class VtnPrincipalCTR {
     }
 
     private void abrirFrmAsistencia(ActionEvent e) {
-        /*FrmAsistencia frm = new FrmAsistencia();
-        eventoInternal(frm);
-        if (numVtns < 5) {
-            FrmAsistenciaCTR asistencia = new FrmAsistenciaCTR(vtnPrin, new FrmAsistencia(), usuario, rolSeleccionado);
-            asistencia.Init();
-        } else {
-            errorNumVentanas();
-        }*/
-        // IDEA
-
         NEWFrmAsistenciaCTR ctr = new NEWFrmAsistenciaCTR(this);
         ctr.iniciar();
     }
@@ -730,8 +719,6 @@ public class VtnPrincipalCTR {
             }
             SwingUtilities.updateComponentTreeUI(vtnPrin);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            System.out.println("No se pudo cambiar el estilo de la ventana");
-            System.out.println(e.getMessage());
         }
     }
 
@@ -748,7 +735,7 @@ public class VtnPrincipalCTR {
         internal.addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                numVtns++;
+                //numVtns++;
                 /*
                 if (numVtns > 5) {
                     errorNumVentanas();
@@ -835,8 +822,7 @@ public class VtnPrincipalCTR {
      * Si se abren mas de 5 ventanas salta este error
      */
     private void errorNumVentanas() {
-        JOptionPane.showMessageDialog(vtnPrin, "No se pueden abrir mas de 5 ventanas",
-                "Error Ventana", JOptionPane.ERROR_MESSAGE);
+        
     }
 
     /**
@@ -893,17 +879,12 @@ public class VtnPrincipalCTR {
         vtnPrin.getMnCtRolesPeriodo().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 
-        vtnPrin.getMnCtNotasDuales().setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_F, ActionEvent.CTRL_MASK));
-
         vtnPrin.getMnCtTipoNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, ActionEvent.CTRL_MASK));
 
         vtnPrin.getMnCtNotas().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
 
-        //vtnPrin.getMnCtActivarNotas().setAccelerator(KeyStroke.getKeyStroke(
-        //        KeyEvent.VK_J, ActionEvent.CTRL_MASK));
         vtnPrin.getMnCtAsistencia().setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
 

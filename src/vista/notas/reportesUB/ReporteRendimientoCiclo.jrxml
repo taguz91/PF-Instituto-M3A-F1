@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1520" pageHeight="960" columnWidth="1520" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1114f4d8-d464-43a9-b8e4-f736b5d8fa1c">
-	<property name="ireport.zoom" value="1.0000000000000095"/>
-	<property name="ireport.x" value="118"/>
-	<property name="ireport.y" value="132"/>
+	<property name="ireport.zoom" value="0.8264462809917433"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Aprobado">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$F{Estado}.equals("APROBADO")]]></conditionExpression>
@@ -31,6 +31,9 @@
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["./src/vista/notas/reportesPresencial/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUB_REPORTES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/subreportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -516,23 +519,6 @@ WHERE
 	</pageFooter>
 	<summary>
 		<band height="112" splitType="Stretch">
-			<staticText>
-				<reportElement x="874" y="91" width="234" height="20" uuid="169f5a96-35c8-4abc-a9f3-5e01b5e25233"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
-			</staticText>
-			<line>
-				<reportElement x="357" y="59" width="234" height="1" uuid="59a30e51-48d1-47e9-8aa3-48f6e1ae0905"/>
-			</line>
-			<staticText>
-				<reportElement x="424" y="91" width="100" height="20" uuid="773085ef-dc38-4442-9171-97a48f03dea1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans"/>
-				</textElement>
-				<text><![CDATA[DOCENTE]]></text>
-			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="1312" y="51" width="166" height="20" uuid="ba299c75-2276-4daa-8213-7504845b8493"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -541,18 +527,31 @@ WHERE
 				<textFieldExpression><![CDATA[new java.util.Date().toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="874" y="60" width="234" height="1" uuid="602592b3-1ad5-4640-bdd8-7c19a7f290c3"/>
+				<reportElement x="338" y="69" width="234" height="1" uuid="cafefec2-588c-4136-914c-4d3802b9209b"/>
 			</line>
 			<textField>
-				<reportElement x="874" y="71" width="234" height="20" uuid="bc45e65b-116d-4700-bc1a-31eda132dd99"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="357" y="71" width="234" height="20" uuid="aba1c48d-3b4e-4162-a5a5-d4c841eb3154"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement mode="Transparent" x="338" y="71" width="234" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d18460fd-a86d-4d5f-85fd-17ab5b7a6e76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="338" y="91" width="234" height="20" uuid="ca02b138-c8e0-4321-8f2b-0b93c7e58809"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="769" y="69" width="234" height="40" uuid="1c5edb8d-fcc3-4e67-a5bd-50c1c23ccf4f"/>
+				<subreportParameter name="periodo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORTES} + "FirmaCoordinador.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>

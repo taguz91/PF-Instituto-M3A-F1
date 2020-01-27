@@ -7,26 +7,23 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT CONCAT (
-a.docente_abreviatura, 
-' ', 
-p.persona_primer_apellido, 
-' ',
-p.persona_primer_nombre
-) as nombreCoordinador ,
+		<![CDATA[SELECT CONCAT(
+  d.docente_abreviatura,
+  ' ',
+  p.persona_primer_apellido,
+  ' ',
+  p.persona_primer_nombre
+) as nombreCoordinador
+FROM public."Silabo" s
+JOIN public."PeriodoLectivo" pl ON pl.id_prd_lectivo = s.id_prd_lectivo
+JOIN public."Docentes" d ON d.id_docente = pl.prd_lectivo_coordinador
+JOIN public."Personas" p ON p.id_persona = d.id_persona
+WHERE s.id_silabo = $P{ID_CARR}
+ORDER BY prd_lectivo_fecha_fin
 
-CASE WHEN p.persona_identificacion = '0302298138' THEN 
-'COORDINADOR/A (E) DE LA CARRERA'
-ELSE 'COORDINADOR/A DE LA CARRERA'
-END AS coordinador_carrera
-
-FROM "Carreras" c , "Docentes" a, "Personas" p 
-WHERE c.id_docente_coordinador = a.id_docente 
-AND a.id_persona = p.id_persona 
-AND C.id_carrera = $P{ID_CARR};]]>
+]]>
 	</queryString>
 	<field name="nombrecoordinador" class="java.lang.String"/>
-	<field name="coordinador_carrera" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -53,7 +50,7 @@ AND C.id_carrera = $P{ID_CARR};]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{coordinador_carrera}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["COORDINADOR/A DE LA CARRERA"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

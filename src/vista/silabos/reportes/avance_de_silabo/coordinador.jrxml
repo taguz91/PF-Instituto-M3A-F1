@@ -3,17 +3,18 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="id_carrera" class="java.lang.String">
+	<parameter name="id_perd_lect" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select ca.carrera_nombre,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
+		<![CDATA[select pe.prd_lectivo_coordinador,pe.id_prd_lectivo,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
 			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as 
 apellidos
-from  "Carreras" ca join "Docentes" d on d.id_docente=ca.id_docente_coordinador join "Personas" p 
-on p.id_persona=d.id_persona where ca.id_carrera=$P!{id_carrera}]]>
+from  "PeriodoLectivo" pe join "Docentes" d on d.id_docente=pe.prd_lectivo_coordinador join "Personas" p 
+on p.id_persona=d.id_persona where pe.id_prd_lectivo=$P!{id_perd_lect}]]>
 	</queryString>
-	<field name="carrera_nombre" class="java.lang.String"/>
+	<field name="prd_lectivo_coordinador" class="java.lang.Integer"/>
+	<field name="id_prd_lectivo" class="java.lang.Integer"/>
 	<field name="apellidos" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>

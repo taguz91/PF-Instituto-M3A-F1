@@ -32,6 +32,9 @@
 	<parameter name="prd_lectivo_nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUB_REPORTES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/subreportes/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 	"Alumnos".id_alumno,
@@ -410,46 +413,38 @@ WHERE
 	</pageFooter>
 	<summary>
 		<band height="132" splitType="Stretch">
-			<line>
-				<reportElement x="437" y="61" width="234" height="1" uuid="5353f999-395f-4028-9d37-506962351ee4"/>
-			</line>
-			<staticText>
-				<reportElement x="122" y="92" width="234" height="20" uuid="2c782a0a-74f0-4c55-81cc-406e75e663c3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="9"/>
-				</textElement>
-				<text><![CDATA[DOCENTE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="437" y="92" width="234" height="20" uuid="bbc68f82-d700-4d21-bc52-9ea5e84ef4cd"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="9"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
-			</staticText>
-			<line>
-				<reportElement x="122" y="60" width="234" height="1" uuid="b29804d2-b563-4f34-8ffb-41732f5428ab"/>
-			</line>
-			<textField>
-				<reportElement x="122" y="72" width="234" height="20" uuid="2a3ee341-2741-4419-ab0a-49a660725e75"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="437" y="72" width="234" height="20" uuid="0b5909be-b928-44ac-ab01-e7821c60d95f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
-			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="671" y="92" width="164" height="20" uuid="ee344e6e-ec06-4e32-90d4-e93087486a00"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="408" y="59" width="234" height="40" uuid="48ea8d20-0306-488d-a4ae-eb02c906bda5"/>
+				<subreportParameter name="periodo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORTES} + "FirmaCoordinador.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="130" y="79" width="234" height="20" uuid="c485dbcf-6d9f-4e99-a7f2-5b6787e7a4f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[DOCENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="130" y="57" width="234" height="1" uuid="934f88ed-b1de-4d65-96e2-f07fefe6b74c"/>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="130" y="59" width="234" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7e2b8397-ae6c-455b-b846-ccbc8db8f19a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="DejaVu Sans" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

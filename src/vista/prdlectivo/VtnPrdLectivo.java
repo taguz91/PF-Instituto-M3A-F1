@@ -159,11 +159,11 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id Perido Lectivo", "Carrera", "Nombre Periodo Lectivo", "Fecha Inicio", "Fecha Fin", "Estado"
+                "Id Perido Lectivo", "Carrera", "Nombre Periodo Lectivo", "Coordinador", "Fecha Inicio", "Fecha Fin", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -230,12 +230,12 @@ public class VtnPrdLectivo extends javax.swing.JInternalFrame {
                         .addComponent(btnIngresar)
                         .addComponent(btnEditar)
                         .addComponent(btnCerrarPeriodo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_Filtrar)
                     .addComponent(Cmbx_Filtrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblResultados)

@@ -219,11 +219,6 @@
                 <Property name="text" type="java.lang.String" value="Notas"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mnCtNotasDuales">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Registro Notas Duales"/>
-                  </Properties>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtTipoNotas">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Tipos de notas"/>

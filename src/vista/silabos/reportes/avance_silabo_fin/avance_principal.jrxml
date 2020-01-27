@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1bbd19a5-ae14-4f85-994c-245def644ff2">
 	<property name="ireport.zoom" value="0.9090909090909097"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="349"/>
+	<property name="ireport.y" value="396"/>
 	<parameter name="id_curso" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,7 +11,7 @@
 	</parameter>
 	<parameter name="id_seguimiento" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select c.id_curso,pl.prd_lectivo_nombre,ca.id_carrera,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
+		<![CDATA[select c.id_curso,pl.prd_lectivo_nombre,pl.id_prd_lectivo,ca.id_carrera,concat(d.docente_abreviatura,' ',p.persona_primer_nombre,' ',
 			  p.persona_primer_apellido,' ',p.persona_segundo_apellido) as
 apellidos,m.materia_nombre,ca.carrera_nombre
 ,c.curso_nombre
@@ -21,6 +21,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 	</queryString>
 	<field name="id_curso" class="java.lang.Integer"/>
 	<field name="prd_lectivo_nombre" class="java.lang.String"/>
+	<field name="id_prd_lectivo" class="java.lang.Integer"/>
 	<field name="id_carrera" class="java.lang.Integer"/>
 	<field name="apellidos" class="java.lang.String"/>
 	<field name="materia_nombre" class="java.lang.String"/>
@@ -519,9 +520,9 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<text><![CDATA[Docente]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="277" y="18" width="238" height="100" uuid="534872cc-e7fc-4ad5-8fa4-dac6742497a6"/>
-				<subreportParameter name="id_carrera">
-					<subreportParameterExpression><![CDATA[$F{id_carrera}]]></subreportParameterExpression>
+				<reportElement x="277" y="16" width="200" height="100" uuid="bfc76408-40d4-4b64-a08c-788cd9328294"/>
+				<subreportParameter name="id_per_lect">
+					<subreportParameterExpression><![CDATA[$F{id_prd_lectivo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "coordinador.jasper"]]></subreportExpression>

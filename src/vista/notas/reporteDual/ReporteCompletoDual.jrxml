@@ -32,6 +32,9 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/notas/reporteDual/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUB_REPORTES" class="java.lang.String">
+		<defaultValueExpression><![CDATA["vista/subreportes/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 	"Alumnos".id_alumno,
@@ -660,22 +663,12 @@ WHERE
 	<summary>
 		<band height="104" splitType="Stretch">
 			<staticText>
-				<reportElement x="442" y="47" width="234" height="20" uuid="9d413014-2a14-4e64-982a-7e10ec5d320d"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Sans" size="9"/>
-				</textElement>
-				<text><![CDATA[COORDINADOR DE CARRERA]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="113" y="47" width="234" height="20" uuid="858f3350-7811-445c-bbd4-b46549194006"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[DOCENTE]]></text>
 			</staticText>
-			<line>
-				<reportElement x="442" y="26" width="234" height="1" uuid="a38bc8f2-f47a-4dca-8a33-398264769e53"/>
-			</line>
 			<line>
 				<reportElement x="113" y="25" width="234" height="1" uuid="17bf4501-5d0c-4f8f-a836-aeee249e9155"/>
 			</line>
@@ -686,13 +679,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PROFESOR}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="442" y="27" width="233" height="20" uuid="2cf1216e-8cfc-40d5-b9a6-c8e50d632a7a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Sans" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COORDINADOR}]]></textFieldExpression>
-			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="676" y="47" width="164" height="20" uuid="0d925a11-7de1-42c4-80df-08098d4fcc47"/>
 				<textElement verticalAlignment="Middle">
@@ -700,6 +686,14 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy hh:mm aaa",new Locale("es", "ES"))).format(new Date())]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="405" y="25" width="234" height="40" uuid="99517043-4e20-42f7-9785-3e5d1bd06482"/>
+				<subreportParameter name="periodo_nombre">
+					<subreportParameterExpression><![CDATA[$P{prd_lectivo_nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_REPORTES} + "FirmaCoordinador.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>

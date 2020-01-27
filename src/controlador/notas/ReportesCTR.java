@@ -158,16 +158,31 @@ public class ReportesCTR {
         String ciclo = vista.getCmbCiclo().getSelectedItem().toString();
         String materia = vista.getCmbAsignatura().getSelectedItem().toString();
 
-        String path = "/vista/notas/reportesPresencial/ReporteInterciclo.jasper";
+         if (getModalidad().equalsIgnoreCase("DUAL")) {
 
-        Map parametros = new HashMap();
+            String path = "/vista/notas/reporteDual/ReporteIntercicloDual.jasper";
 
-        parametros.put("id_docente", idDocente);
-        parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
-        parametros.put("curso_nombre", ciclo);
-        parametros.put("materia_nombre", materia);
+            Map parametros = new HashMap();
 
-        Middlewares.generarReporte(getClass().getResource(path), "Reporte Interciclo", parametros);
+            parametros.put("id_docente", idDocente);
+            parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+            parametros.put("curso_nombre", ciclo);
+            parametros.put("materia_nombre", materia);
+            Middlewares.generarReporte(getClass().getResource(path), "Reporte Interciclo Dual", parametros);
+
+        } else {
+            String path = "/vista/notas/reportesPresencial/ReporteInterciclo.jasper";
+
+            Map parametros = new HashMap();
+
+            parametros.put("id_docente", idDocente);
+            parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+            parametros.put("curso_nombre", ciclo);
+            parametros.put("materia_nombre", materia);
+
+            Middlewares.generarReporte(getClass().getResource(path), "Reporte Interciclo", parametros);
+
+        }
     }
 
     /* public void ReportePrueba2(){

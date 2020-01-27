@@ -12,3 +12,13 @@ WHERE id_materia IN (
     OR materia_nombre ILIKE '%EXTRA%'
   )
 );
+
+
+--- Idioma extranjero si esta en la malla ajkdhwgfdwajkdawbjdbawdvawgdv
+
+UPDATE public."Materias"
+SET id_carrera = 4
+WHERE id_materia IN (
+	SELECT id_materia FROM public."Materias"
+	WHERE materia_nombre ILIKE '%EXTRANJERO%'
+)
