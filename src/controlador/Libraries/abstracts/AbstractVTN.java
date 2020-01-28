@@ -87,6 +87,7 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
 
     protected void cargarTabla(Consumer<M> cargador) {
         tableM.setRowCount(0);
+        //System.out.println(lista);
         lista.forEach(cargador);
     }
 

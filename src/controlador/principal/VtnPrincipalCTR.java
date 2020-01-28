@@ -25,7 +25,6 @@ import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
-import controlador.fichas.salud.VtnFsaludCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -266,8 +265,6 @@ public class VtnPrincipalCTR {
             ctr.iniciar();
         });
 
-        //Menus Fichas
-        vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));
 
     }
 
@@ -822,7 +819,7 @@ public class VtnPrincipalCTR {
      * Si se abren mas de 5 ventanas salta este error
      */
     private void errorNumVentanas() {
-        
+
     }
 
     /**
@@ -1237,11 +1234,6 @@ public class VtnPrincipalCTR {
             JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
                     + "Verifique su conexion e intentelo de nuevo.");
         }
-    }
-
-    private void mnctFichaSalud(ActionEvent e) {
-        VtnFsaludCTR vtn = new VtnFsaludCTR(vtnPrin, new VtnFichaSalud());
-        vtn.Init();
     }
 
     private void btnComprobantes(ActionEvent e) {

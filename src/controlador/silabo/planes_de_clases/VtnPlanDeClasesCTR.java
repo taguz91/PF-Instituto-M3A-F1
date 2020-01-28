@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
+import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
@@ -25,6 +26,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     private List<PeriodoLectivoMD> periodos;
     private List<JornadaMD> jornadas;
     private final Integer idPersona = CONS.USUARIO.getPersona().getIdPersona();
+    private final PlandeClasesBD CON = PlandeClasesBD.single();
 
     public VtnPlanDeClasesCTR(VtnPrincipalCTR desktop) {
         super(desktop);
@@ -108,7 +110,16 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
     private Consumer<PlandeClasesMD> cargador() {
         return obj -> {
-
+            tableM.addRow(new Object[]{
+                obj.getID(),
+                tableM.getRowCount() + 1,
+                obj.getInfoDocente(),
+                obj.getCurso().getMateria().getNombre(),
+                obj.getCurso().getNombre(),
+                obj.getUnidad().getNumeroUnidad(),
+                PlandeClasesMD.getEstadoStr(obj.getEstado()),
+                obj.getFechaGeneracion()
+            });
         };
     }
 
@@ -121,7 +132,13 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     }
 
     private void cargarTablaAsEvent(ActionEvent e) {
-        //PlandeClasesBD.
+        String periodo = this.vista.getCmbPeriodos().getSelectedItem().toString();
+        String cedulaDocente = CONS.USUARIO.getPersona().getIdentificacion();
+        String jornada = this.vista.getCmbJornadas().getSelectedItem().toString();
+        setLista(CON.getPlanesBy(cedulaDocente, periodo, jornada));
+
+        cargarTabla(cargador());
+
     }
 
 }

@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteMD;
+import modelo.unidadSilabo.UnidadSilaboMD;
+import utils.CONBD;
 
-public class PlandeClasesBD extends PlandeClasesMD {
-
-    private static final ConnDBPool CON = ConnDBPool.single();
+public class PlandeClasesBD extends CONBD {
 
     private static PlandeClasesBD INSTANCE = null;
 
@@ -389,6 +391,92 @@ public class PlandeClasesBD extends PlandeClasesMD {
         } finally {
             CON.close(st);
         }
+    }
+
+    public List<PlandeClasesMD> getPlanesBy(String cedulaDocente, String periodo, String jornada) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "     \"Docentes\".id_docente,\n"
+                + "     \"Personas\".id_persona,\n"
+                + "     \"Personas\".persona_identificacion,\n"
+                + "     \"Personas\".persona_primer_apellido,\n"
+                + "     \"Personas\".persona_segundo_apellido,\n"
+                + "     \"Personas\".persona_primer_nombre,\n"
+                + "     \"Personas\".persona_segundo_nombre,\n"
+                + "     \"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "     \"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "     \"UnidadSilabo\".id_unidad,\n"
+                + "     \"UnidadSilabo\".numero_unidad,\n"
+                + "     \"PlandeClases\".id_plan_clases,\n"
+                + "     \"PlandeClases\".fecha_generacion,\n"
+                + "     \"Cursos\".id_curso,\n"
+                + "     \"Cursos\".curso_nombre,\n"
+                + "     \"Materias\".id_materia,\n"
+                + "     \"Materias\".materia_nombre\n"
+                + "FROM\n"
+                + "	\"PlandeClases\"\n"
+                + "	INNER JOIN \"Cursos\" ON \"PlandeClases\".id_curso = \"Cursos\".id_curso\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "	INNER JOIN \"UnidadSilabo\" ON \"PlandeClases\".id_unidad = \"UnidadSilabo\".id_unidad \n"
+                + "     INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada\n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
+                + "	AND \"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
+                + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
+                + "";
+        List<PlandeClasesMD> lista = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                DocenteMD docente = new DocenteMD();
+                docente.setIdDocente(rs.getInt("id_docente"));
+                docente.setIdentificacion(rs.getString("persona_identificacion"));
+                docente.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docente.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                docente.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docente.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+
+                PeriodoLectivoMD periodoLectivo = new PeriodoLectivoMD();
+                periodoLectivo.setID(rs.getInt("id_prd_lectivo"));
+                periodoLectivo.setNombre(rs.getString("prd_lectivo_nombre"));
+
+                MateriaMD materiaMD = new MateriaMD();
+                materiaMD.setId(rs.getInt("id_materia"));
+                materiaMD.setNombre(rs.getString("materia_nombre"));
+
+                CursoMD curso = new CursoMD();
+                curso.setId(rs.getInt("id_curso"));
+                curso.setPeriodo(periodoLectivo);
+                curso.setDocente(docente);
+                curso.setMateria(materiaMD);
+                curso.setNombre(rs.getString("curso_nombre"));
+
+                UnidadSilaboMD unidadSilaboMD = new UnidadSilaboMD();
+                unidadSilaboMD.setIdUnidad(rs.getInt("id_unidad"));
+                unidadSilaboMD.setNumeroUnidad(rs.getInt("numero_unidad"));
+
+                PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
+                plandeClasesMD.setID(rs.getInt("id_plan_clases"));
+                plandeClasesMD.setCurso(curso);
+                plandeClasesMD.setUnidad(unidadSilaboMD);
+                plandeClasesMD.setFechaCierre(rs.getDate("fecha_generacion").toLocalDate());
+
+                lista.add(plandeClasesMD);
+                System.out.println(plandeClasesMD);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return lista;
+
     }
 
 }

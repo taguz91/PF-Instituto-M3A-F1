@@ -283,7 +283,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     public JLabel getLblEstado() {
         return lblEstado;
     }
-    
+
     public JButton getBtnConsola() {
         return btnConsola;
     }
@@ -366,10 +366,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
     public JMenuItem getMnRepNumAlumno() {
         return mnRepNumAlumno;
-    }
-
-    public JMenuItem getMnCtFichaSalud() {
-        return mnCtFichaSalud;
     }
 
     public JLabel getLblUsuario() {
@@ -484,8 +480,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtAsistencia = new javax.swing.JMenuItem();
         mnCtReportesEstado = new javax.swing.JMenuItem();
         MnBiblioteca = new javax.swing.JMenuItem();
-        mnFichas = new javax.swing.JMenu();
-        mnCtFichaSalud = new javax.swing.JMenuItem();
         mnCtComprobantes = new javax.swing.JMenuItem();
         mnIngresar = new javax.swing.JMenu();
         mnIgPersona = new javax.swing.JMenuItem();
@@ -938,14 +932,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         MnBiblioteca.setText("Biblioteca");
         mnTipoNotas.add(MnBiblioteca);
 
-        mnFichas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
-        mnFichas.setText("Fichas");
-
-        mnCtFichaSalud.setText("Fichas de Salud");
-        mnFichas.add(mnCtFichaSalud);
-
-        mnTipoNotas.add(mnFichas);
-
         mnCtComprobantes.setText("Comprobantes");
         mnCtComprobantes.setToolTipText("");
         mnTipoNotas.add(mnCtComprobantes);
@@ -1155,7 +1141,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtCurso;
     private javax.swing.JMenuItem mnCtDocente;
     private javax.swing.JMenuItem mnCtDocenteMateria;
-    private javax.swing.JMenuItem mnCtFichaSalud;
     private javax.swing.JMenuItem mnCtGestionAcademica;
     private javax.swing.JMenuItem mnCtHistorialUsers;
     private javax.swing.JMenuItem mnCtInscripcion;
@@ -1177,7 +1162,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtTipoNotas;
     private javax.swing.JMenuItem mnCtUsuarios;
     private javax.swing.JMenu mnEstilo;
-    private javax.swing.JMenu mnFichas;
     private javax.swing.JMenuItem mnIgActivarNotas1;
     private javax.swing.JMenuItem mnIgAlumno;
     private javax.swing.JMenuItem mnIgCarrera;
