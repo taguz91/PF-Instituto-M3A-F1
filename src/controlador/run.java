@@ -23,7 +23,11 @@ public class run {
             iniciaEstilo("Nimbus");
         }
         if (CONS.M_DESARROLLO) {
-            Logger.getLogger(run.class.getName()).log(Level.SEVERE, null, "Iniciamos en modo desarrollo");
+            Logger.getLogger(run.class.getName()).log(
+                    Level.SEVERE, 
+                    null, 
+                    "Iniciamos en modo desarrollo"
+            );
             EventQueue.invokeLater(() -> {
                 LoginCTR login = new LoginCTR();
                 login.Init();
@@ -31,14 +35,16 @@ public class run {
         } else {
             VtnDitool vtnDitool = new VtnDitool();
             vtnDitool.setTitle("Ditool | Version instalada: ");
-            DitoolBD di = new DitoolBD("tsds", "TDSoftware158");
+            DitoolBD di = new DitoolBD(CONS.getBDUser(), CONS.BD_PASS);
             VersionMD v = di.consultarUltimaVersion();
             if (v != null) {
                 VtnDitoolCTR ctrVtn = new VtnDitoolCTR(v, vtnDitool);
                 ctrVtn.iniciar();
             } else {
-                JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso al servidor. \n"
-                        + "Ponganse en contacto con el administrador de la base de datos.");
+                JOptionPane.showMessageDialog(
+                        vtnDitool, "Posiblemente no tengamos acceso al servidor. \n"
+                        + "Ponganse en contacto con el administrador de la base de datos."
+                );
                 System.exit(0);
             }
         }
