@@ -11,39 +11,48 @@
 	<parameter name="id_plan_clase" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-	r.id_carrera,
-	r.carrera_nombre,
-	M.materia_nombre,
-	M.materia_codigo,
-	C.curso_nombre,
-	CURRENT_DATE,
-	concat ( d.docente_abreviatura, P.persona_primer_nombre, ' ', P.persona_primer_apellido ) AS nombre_doc,
-	(
-	SELECT
-		concat ( coor.docente_abreviatura, per_coor.persona_primer_apellido, ' ', per_coor.persona_primer_nombre ) AS "COOR" 
-	FROM
-		"Personas" per_coor
-		INNER JOIN "Docentes" coor ON per_coor.id_persona = coor.id_persona 
-	WHERE
-		coor.id_docente = r.id_docente_coordinador 
-	) AS COORDINADOR,
-	( SELECT numero_unidad FROM "UnidadSilabo" WHERE "UnidadSilabo".id_unidad = $P!{id_unidad} ) AS "UNIDAD_SILABO",
-	( SELECT fecha_generacion FROM "PlandeClases" WHERE id_plan_clases =$P!{id_plan_clase} ) AS fecha_generacion,
-
-
-CASE WHEN p.persona_identificacion = '0302298138' THEN 
-'COORDINADOR/A (E) DE LA CARRERA'
-ELSE 'COORDINADOR/A DE LA CARRERA'
-END AS coordinador_carrera
+r.id_carrera,
+r.carrera_nombre,
+M.materia_nombre,
+M.materia_codigo,
+C.curso_nombre,
+CURRENT_DATE, CONCAT(
+  d.docente_abreviatura,
+  P.persona_primer_nombre, ' ',
+  P.persona_primer_apellido
+) AS nombre_doc, (
+  SELECT CONCAT (
+    dcc.docente_abreviatura,
+    pcc.persona_primer_apellido,
+    ' ',
+    pcc.persona_primer_nombre
+  ) AS "COOR"
+FROM
+  public."PeriodoLectivo" plc
+  JOIN public."Docentes" dcc ON plc.prd_lectivo_coordinador = dcc.id_docente
+  JOIN public."Personas" pcc ON dcc.id_persona = pcc.id_persona
+WHERE
+	plc.id_prd_lectivo = c.id_prd_lectivo
+) AS COORDINADOR, (
+  SELECT numero_unidad
+  FROM "UnidadSilabo"
+  WHERE "UnidadSilabo".id_unidad = $P!{id_unidad}
+)  AS "UNIDAD_SILABO", (
+  SELECT fecha_generacion
+  FROM "PlandeClases"
+  WHERE id_plan_clases =$P!{id_plan_clase}
+) AS fecha_generacion,
+'COORDINADOR/A DE LA CARRERA' AS coordinador_carrera
 
 FROM
-	"Docentes" d
-	JOIN "Personas" P ON d.id_persona = P.id_persona
-	JOIN "Cursos" C ON C.id_docente = d.id_docente
-	JOIN "Materias" M ON C.id_materia = M.id_materia
-	JOIN "Carreras" r ON M.id_carrera = r.id_carrera 
+"Docentes" d
+JOIN "Personas" P ON d.id_persona = P.id_persona
+JOIN "Cursos" C ON C.id_docente = d.id_docente
+JOIN "Materias" M ON C.id_materia = M.id_materia
+JOIN "Carreras" r ON M.id_carrera = r.id_carrera
 WHERE
-	C.id_curso = $P!{id_curso}]]>
+C.id_curso = $P!{id_curso}
+]]>
 	</queryString>
 	<field name="id_carrera" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -458,7 +467,7 @@ WHERE
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
 				<reportElement x="218" y="90" width="143" height="15" uuid="ecc6adb1-de53-4ebd-a3c7-edd99dd5b04e"/>
 				<box>
 					<topPen lineWidth="0.75"/>
