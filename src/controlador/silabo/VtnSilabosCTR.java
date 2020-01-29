@@ -97,10 +97,12 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
         METODOS
      */
     private void cargarCmbPeriodo() {
-        vista.getCmbPeriodo().removeAllItems();
-        periodos.stream()
-                .map(c -> c.getNombre())
-                .forEach(vista.getCmbPeriodo()::addItem);
+        if (periodos != null) {
+            vista.getCmbPeriodo().removeAllItems();
+            periodos.stream()
+                    .map(c -> c.getNombre())
+                    .forEach(vista.getCmbPeriodo()::addItem);
+        }
     }
 
     private PeriodoLectivoMD getPeriodoCmb() {
@@ -200,27 +202,23 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
     }
 
     private void setLista() {
-
         try {
-
-            PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
-                    .getSelectedIndex());
-            if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
-                lista = SILABO_CONN.findBy(
-                        user.getPersona().getIdentificacion(),
-                        periodo.getID()
-                );
-            } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
-
-                lista = SILABO_CONN.getSilabosPeriodo(
-                        getPeriodoCmb().getID()
-                );
-
+            if (periodos != null) {
+                PeriodoLectivoMD periodo = periodos.get(vista.getCmbPeriodo()
+                        .getSelectedIndex());
+                if (CONS.ROL.getNombre().equalsIgnoreCase("DOCENTE")) {
+                    lista = SILABO_CONN.findBy(
+                            user.getPersona().getIdentificacion(),
+                            periodo.getID()
+                    );
+                } else if (CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+                    lista = SILABO_CONN.getSilabosPeriodo(
+                            getPeriodoCmb().getID()
+                    );
+                }
             }
-
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-
     }
 
     private void mensajeEditando() {
@@ -307,10 +305,10 @@ public class VtnSilabosCTR extends AbstractVTN<VtnSilabos, SilaboMD> {
 
             silabo = SILABO_CONN.getDisponibilidad(silabo);
             silabo = SILABO_CONN.getSilaboById(
-                        Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
-                );
-                validarEstadoParaEditar(silabo);
-/*
+                    Integer.valueOf(table.getValueAt(table.getSelectedRow(), 0).toString())
+            );
+            validarEstadoParaEditar(silabo);
+            /*
             if (silabo.getEditadoPor().getIdentificacion() != null) {
                 if (!silabo.getEditadoPor().getIdentificacion().equals(CONS.USUARIO.getPersona().getIdentificacion())
                         || silabo.isEditando()) {
