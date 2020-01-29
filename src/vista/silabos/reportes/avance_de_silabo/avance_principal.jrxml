@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1bbd19a5-ae14-4f85-994c-245def644ff2">
 	<property name="ireport.zoom" value="1.0000000000000009"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="486"/>
+	<property name="ireport.y" value="38"/>
 	<parameter name="id_curso" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/avance_de_silabo/"]]></defaultValueExpression>
@@ -67,7 +67,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[INFORME DE SIGUIMIENTO DEL SILABO]]></text>
+				<text><![CDATA[INFORME DE SEGUIMIENTO DEL SILABO]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="58" y="65" width="497" height="20" uuid="1f9f608a-37d9-4b60-9baf-da4e3aff84fc"/>

@@ -67,7 +67,7 @@ on pl.id_prd_lectivo=c.id_prd_lectivo where c.id_curso=$P!{id_curso}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[INFORME DE SIGUIMIENTO DEL SILABO]]></text>
+				<text><![CDATA[INFORME DE SEGUIMIENTO DEL SILABO]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="58" y="65" width="497" height="20" uuid="1f9f608a-37d9-4b60-9baf-da4e3aff84fc"/>
