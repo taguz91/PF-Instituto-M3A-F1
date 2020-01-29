@@ -7,6 +7,7 @@ package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
@@ -14,6 +15,8 @@ import modelo.curso.CursoMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWCursoBD;
 import modelo.silabo.NEWPeriodoLectivoBD;
+import modelo.silabo.NEWUnidadSilaboBD;
+import modelo.unidadSilabo.UnidadSilaboMD;
 import vista.silabos.new_planes_de_clase.FrmConfigPlan;
 
 /**
@@ -32,6 +35,8 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
 
     private List<CursoMD> cursos;
 
+    private List<UnidadSilaboMD> unidades;
+
     public FrmConfigPlanCTR(VtnPrincipalCTR desktop) {
         super(desktop);
         this.vista = new FrmConfigPlan();
@@ -42,12 +47,17 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
 
         this.cargarCmbPeriodos();
         this.cargarCmbCursos();
+        this.cargarCmbUnidades();
         super.Init();
         this.InitEventos();
     }
 
     private void InitEventos() {
-        this.vista.getCmbPeriodos().addActionListener(e -> cargarCmbCursos());
+        this.vista.getCmbPeriodos().addActionListener(e -> cmbPeriodos(e));
+        this.vista.getCmbCursos().addActionListener(e -> cmbCursos(e));
+
+        this.vista.getBtnSiguiente().addActionListener(this::btnSiguiente);
+
     }
 
     //FACTORIZACION
@@ -59,13 +69,29 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
 
     private void cargarCmbCursos() {
         this.vista.getCmbCursos().removeAllItems();
+
         this.cursos = CURSO_CON.getCursosMateriasBy(
                 this.vista.getCmbPeriodos().getSelectedItem().toString(),
                 this.personaCONS.getIdPersona()
         );
+
+        System.out.println("--------->" + this.cursos.size());
         this.cursos.stream()
                 .map(c -> c.getCursoMateriaNombre())
                 .forEach(this.vista.getCmbCursos()::addItem);
+    }
+
+    private void cargarCmbUnidades() throws NullPointerException {
+        this.vista.getCmbUnidades().removeAllItems();
+        this.unidades = NEWUnidadSilaboBD.getUnidadesBy(
+                getPeriodo().getID(),
+                getCurso().getMateria().getId(),
+                getCurso().getId()
+        );
+
+        this.unidades.stream()
+                .map(c -> String.valueOf(c.getNumeroUnidad()))
+                .forEach(this.vista.getCmbUnidades()::addItem);
     }
 
     private PeriodoLectivoMD getPeriodo() {
@@ -82,5 +108,39 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
                 .get();
     }
 
+    private UnidadSilaboMD getUnidad() {
+        return unidades.stream()
+                .filter(item -> item.getNumeroUnidad() == Integer.parseInt(this.vista.getCmbUnidades().getSelectedItem().toString()))
+                .findFirst()
+                .get();
+    }
+
     //EVENTOS
+    private void btnSiguiente(ActionEvent e) {
+
+        PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
+        CursoMD cursoMD = new CursoMD();
+        cursoMD.setPeriodo(getPeriodo());
+        plandeClasesMD.setCurso(cursoMD);
+        plandeClasesMD.setUnidad(getUnidad());
+    }
+
+    private void cmbPeriodos(ActionEvent e) {
+
+        if (this.periodos.size() > 0) {
+            cargarCmbCursos();
+        }
+
+    }
+
+    private void cmbCursos(ActionEvent e) {
+
+        if (this.cursos.size() > 0) {
+            try {
+                cargarCmbUnidades();
+            } catch (NullPointerException ex) {
+            }
+        }
+
+    }
 }

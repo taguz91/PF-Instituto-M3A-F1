@@ -452,7 +452,8 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return lista;
     }
 
-    public static List<UnidadSilaboMD> getUnidadesBy(int idPeriodo, int idMateria) {
+    public static List<UnidadSilaboMD> getUnidadesBy(int idPeriodo, int idMateria, int idCurso) {
+
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"UnidadSilabo\".id_unidad,\n"
@@ -463,10 +464,21 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 + "	INNER JOIN \"Silabo\" ON \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
                 + "	AND \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
                 + "WHERE\n"
-                + "	\"Silabo\".id_prd_lectivo = \n"
-                + "	AND \"Silabo\".id_materia ="
+                + "	\"Silabo\".id_prd_lectivo = " + idPeriodo + " \n"
+                + "	AND \"Silabo\".id_materia = " + idMateria + " \n"
+                + "	AND \"UnidadSilabo\".id_unidad NOT IN (\n"
+                + "	    SELECT\n"
+                + "		    \"UnidadSilabo\".id_unidad \n"
+                + "	    FROM\n"
+                + "		    \"PlandeClases\"\n"
+                + "		    INNER JOIN \"UnidadSilabo\" ON \"PlandeClases\".id_unidad = \"UnidadSilabo\".id_unidad\n"
+                + "		    INNER JOIN \"Cursos\" ON \"PlandeClases\".id_curso = \"Cursos\".id_curso \n"
+                + "	    WHERE\n"
+                + "		    \"Cursos\".id_curso = " + idCurso + " \n"
+                + "	) \n"
+                + "ORDER BY\n"
+                + "	numero_unidad"
                 + "";
-
         List<UnidadSilaboMD> unidades = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
         try {
