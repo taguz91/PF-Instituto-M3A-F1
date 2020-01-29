@@ -27,27 +27,36 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="cmbMaterias" pref="400" max="32767" attributes="0"/>
-                          <Component id="cmbPeriodos" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel5" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="cmbCursos" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel7" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel3" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="cmbUnidades" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" pref="400" max="32767" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="cmbPeriodos" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="cmbCursos" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="cmbUnidades" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="jLabel6" alignment="0" pref="400" max="32767" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmbUnidades1" alignment="0" min="-2" pref="400" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -64,20 +73,20 @@
               <Component id="jLabel5" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="cmbCursos" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jLabel7" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="cmbMaterias" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="cmbUnidades" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jLabel8" min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <Component id="cmbUnidades1" min="-2" pref="22" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="btnSiguiente" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -150,7 +159,13 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="cmbMaterias">
+    <Component class="javax.swing.JLabel" name="jLabel8">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Referenciar de:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cmbUnidades1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -159,12 +174,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="Materia:"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

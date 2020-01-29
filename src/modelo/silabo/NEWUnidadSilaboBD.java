@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.silabo.mbd.IUnidadSilaboBD;
+import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import org.postgresql.util.PSQLException;
 
@@ -20,7 +21,7 @@ import org.postgresql.util.PSQLException;
  */
 public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
-    private final ConnDBPool CON = ConnDBPool.single();
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     private static NEWUnidadSilaboBD UBD;
 
@@ -54,7 +55,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
@@ -103,7 +104,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(0);
+                u.setId(0);
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
@@ -187,7 +188,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setTituloUnidad(res.getString(3));
                 u.setContenidosUnidad(res.getString(4));
@@ -331,7 +332,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
             try {
                 Integer id = rs.getInt("id_unidad");
-                unidad.setIdUnidad(id);
+                unidad.setId(id);
 
             } catch (PSQLException e) {
             }
@@ -449,6 +450,41 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         }
 
         return lista;
+    }
+
+    public static List<UnidadSilaboMD> getUnidadesBy(int idPeriodo, int idMateria) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"UnidadSilabo\".id_unidad,\n"
+                + "	\"UnidadSilabo\".id_silabo,\n"
+                + "	\"UnidadSilabo\".numero_unidad \n"
+                + "FROM\n"
+                + "	\"UnidadSilabo\"\n"
+                + "	INNER JOIN \"Silabo\" ON \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
+                + "	AND \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
+                + "WHERE\n"
+                + "	\"Silabo\".id_prd_lectivo = \n"
+                + "	AND \"Silabo\".id_materia ="
+                + "";
+
+        List<UnidadSilaboMD> unidades = new ArrayList<>();
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        try {
+            while (rs.next()) {
+
+                UnidadSilaboMD unidadSilaboMD = new UnidadSilaboMD();
+                unidadSilaboMD.setId(rs.getInt("id_unidad"));
+                unidadSilaboMD.setNumeroUnidad(rs.getInt("numero_unidad"));
+
+                unidades.add(unidadSilaboMD);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWUnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return unidades;
     }
 
 }

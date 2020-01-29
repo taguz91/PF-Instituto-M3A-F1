@@ -107,7 +107,7 @@ public class PlandeClasesBD extends CONBD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getUnidad().setId(rs.getInt(2));
                 pl.getPersona().setPrimerApellido(rs.getString(3));
                 pl.getPersona().setPrimerNombre(rs.getString(4));
                 pl.getMateria().setNombre(rs.getString(5));
@@ -150,7 +150,7 @@ public class PlandeClasesBD extends CONBD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getUnidad().setId(rs.getInt(2));
                 pl.getPersona().setPrimerApellido(rs.getString(3));
                 pl.getPersona().setPrimerNombre(rs.getString(4));
                 pl.getMateria().setNombre(rs.getString(5));
@@ -189,7 +189,7 @@ public class PlandeClasesBD extends CONBD {
             while (rs.next()) {
                 PlandeClasesMD pl = new PlandeClasesMD();
                 pl.setID(rs.getInt(1));
-                pl.getUnidad().setIdUnidad(rs.getInt(2));
+                pl.getUnidad().setId(rs.getInt(2));
                 pl.getCurso().setId(rs.getInt(3));
                 lista_plan.add(pl);
             }
@@ -283,7 +283,7 @@ public class PlandeClasesBD extends CONBD {
                 planClase = new PlandeClasesMD();
                 planClase.setID(rs.getInt(1));
                 planClase.getCurso().setId(rs.getInt(2));
-                planClase.getUnidad().setIdUnidad(rs.getInt(3));
+                planClase.getUnidad().setId(rs.getInt(3));
                 planClase.setFechaGeneracion(rs.getDate(4).toLocalDate());
 
             }
@@ -457,7 +457,7 @@ public class PlandeClasesBD extends CONBD {
                 curso.setNombre(rs.getString("curso_nombre"));
 
                 UnidadSilaboMD unidadSilaboMD = new UnidadSilaboMD();
-                unidadSilaboMD.setIdUnidad(rs.getInt("id_unidad"));
+                unidadSilaboMD.setId(rs.getInt("id_unidad"));
                 unidadSilaboMD.setNumeroUnidad(rs.getInt("numero_unidad"));
 
                 PlandeClasesMD plandeClasesMD = new PlandeClasesMD();

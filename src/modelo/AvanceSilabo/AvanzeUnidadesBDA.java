@@ -45,7 +45,7 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
 
                 AvanzeUnidadesMDA tmp = new AvanzeUnidadesMDA();
 
-                tmp.getUnidad().setIdUnidad(rs.getInt(1));
+                tmp.getUnidad().setId(rs.getInt(1));
                 tmp.getUnidad().setTituloUnidad(rs.getString(2));
                 tmp.getUnidad().setContenidosUnidad(rs.getString(3));
                 tmp.getSeguimiento().setId_seguimientoS(rs.getInt(4));

@@ -760,7 +760,7 @@ public class FRMSilaboCTR extends DCTR {
                     // Si se guardo la unidad guardamos
                     // estrategias y evaluaciones
                     if (idUnidadGenerado > 0) {
-                        u.setIdUnidad(idUnidadGenerado);
+                        u.setId(idUnidadGenerado);
                         guardarEstrategias(idUnidadGenerado, u.getNumeroUnidad());
                         guardarEvaluaciones(idUnidadGenerado, u.getNumeroUnidad());
                     } else {

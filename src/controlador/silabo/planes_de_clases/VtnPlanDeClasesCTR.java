@@ -55,6 +55,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
         this.vista.getCmbPeriodos().addActionListener(this::cargarTablaAsEvent);
         this.vista.getCmbJornadas().addActionListener(this::cargarTablaAsEvent);
+        this.vista.getBtnNuevo().addActionListener(this::btnNuevo);
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")
                 || CONS.ROL.getNombre().equalsIgnoreCase("DEV")
@@ -139,6 +140,11 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
         cargarTabla(cargador());
 
+    }
+
+    private void btnNuevo(ActionEvent e) {
+        FrmConfigPlanCTR form = new FrmConfigPlanCTR(desktop);
+        form.Init();
     }
 
 }

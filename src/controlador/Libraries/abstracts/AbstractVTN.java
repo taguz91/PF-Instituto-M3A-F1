@@ -8,6 +8,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.persona.PersonaMD;
 import utils.CONS;
 import modelo.usuario.UsuarioMD;
 
@@ -28,6 +29,7 @@ public abstract class AbstractVTN<V extends JInternalFrame, M> {
     protected boolean showTableMessage = true;
 
     protected final UsuarioMD user = CONS.USUARIO;
+    protected final PersonaMD personaCONS = CONS.USUARIO.getPersona();
 
     public AbstractVTN(VtnPrincipalCTR desktop) {
         this.desktop = desktop;

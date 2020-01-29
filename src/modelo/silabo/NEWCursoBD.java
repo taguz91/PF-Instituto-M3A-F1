@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
 import modelo.silabo.mbd.ICursoBD;
 import utils.CONS;
 
@@ -239,6 +240,51 @@ public class NEWCursoBD implements ICursoBD {
 
         return lista;
 
+    }
+
+    public List<CursoMD> getCursosMateriasBy(String periodo, int idPersona) {
+        String SELEC = ""
+                + "SELECT\n"
+                + "	\"Cursos\".curso_nombre,\n"
+                + "	\"Cursos\".id_curso,\n"
+                + "	\"Materias\".id_materia,\n"
+                + "	\"Materias\".materia_nombre \n"
+                + "FROM\n"
+                + "	\"Cursos\"\n"
+                + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "	INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "	INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo \n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
+                + "	AND \"Docentes\".id_persona = " + idPersona + "\n"
+                + "ORDER BY \"Cursos\".curso_nombre, \"Materias\".materia_nombre"
+                + "";
+
+        List<CursoMD> cursos = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELEC);
+
+        try {
+            while (rs.next()) {
+                MateriaMD materiaMD = new MateriaMD();
+                materiaMD.setId(rs.getInt("id_materia"));
+                materiaMD.setNombre(rs.getString("materia_nombre"));
+
+                CursoMD cursoMD = new CursoMD();
+                cursoMD.setId(rs.getInt("id_curso"));
+                cursoMD.setNombre(rs.getString("curso_nombre"));
+                cursoMD.setMateria(materiaMD);
+
+                cursos.add(cursoMD);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWCursoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return cursos;
     }
 
 }

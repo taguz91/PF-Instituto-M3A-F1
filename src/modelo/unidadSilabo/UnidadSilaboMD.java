@@ -78,7 +78,7 @@ public class UnidadSilaboMD implements Serializable {
         return idUnidad;
     }
 
-    public void setIdUnidad(Integer idUnidad) {
+    public void setId(Integer idUnidad) {
         this.idUnidad = idUnidad;
     }
 
