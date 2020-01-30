@@ -55,14 +55,15 @@ public class VtnSelectRolCTR extends CONBD {
         String nsql = "INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "	VALUES ('" + usuario.getUsername() + "', now(), 'INICIO SESION', 'SISTEMA', 0);";
-
+        CON.executeNoSQL(nsql);
     }
 
     public void cierreSesion() {
         String nsql = " INSERT INTO public.\"HistorialUsuarios\"(\n"
                 + "  	usu_username, historial_fecha, historial_tipo_accion, historial_nombre_tabla, historial_pk_tabla)\n"
                 + "  	VALUES ('" + usuario.getUsername() + "', now(), 'CIERRE SESION', 'SISTEMA', 0);";
-        ConnDBPool pool = new ConnDBPool();
+        CON.executeNoSQL(nsql);
+        ConnDBPool pool = ConnDBPool.single();
         pool.closePool();
     }
 

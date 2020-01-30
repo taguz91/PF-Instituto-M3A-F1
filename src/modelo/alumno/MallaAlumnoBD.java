@@ -53,6 +53,7 @@ public class MallaAlumnoBD extends CONBD {
             default:
                 break;
         }
+        guardarHistoria(idMalla, "UPDATE", "MallaAlumno");
         CON.executeNoSQL(nsql);
     }
 
@@ -71,6 +72,8 @@ public class MallaAlumnoBD extends CONBD {
                 + "WHERE id_malla_alumno=" + idMalla + ";";
         if (CON.executeNoSQL(nsql)) {
             JOptionPane.showMessageDialog(null, "Se actualizo la malla correctamente.");
+            // HISTORIAL 
+            guardarHistoria(idMalla, "UPDATE", "MallaAlumno");
             return true;
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo actualizar malla, \n"
