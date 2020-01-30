@@ -120,9 +120,7 @@ public class CONS {
         if (!ROL.getNombre().equalsIgnoreCase("ROOT") && !ROL.getNombre().equalsIgnoreCase("DEV")
                 && !ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
             Arrays.stream(components)
-                    .forEach(obj -> {
-                        obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName()));
-                    });
+                    .forEach(obj -> obj.setEnabled(CONS.getPermisos().contains(obj.getAccessibleContext().getAccessibleName())));
         }
     }
 
@@ -191,4 +189,11 @@ public class CONS {
 
     }
 
+    public static boolean is(String rol) {
+        return CONS.ROL.getNombre().equalsIgnoreCase(rol);
+    }
+
+    public static boolean isSuperSU() {
+        return CONS.USUARIO.isIsSuperUser();
+    }
 }

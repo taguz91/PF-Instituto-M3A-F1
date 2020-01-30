@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.CONBD;
 import utils.M;
 
@@ -22,11 +25,11 @@ public class JornadaBD extends CONBD {
         return JBD;
     }
 
-    public ArrayList<JornadaMD> cargarJornadas() {
+    public static List<JornadaMD> cargarJornadas() {
         ArrayList<JornadaMD> jornadas = new ArrayList();
         String sql = "SELECT id_jornada, nombre_jornada\n"
                 + "	FROM public.\"Jornadas\";";
-        PreparedStatement ps = CON.getPSPOOL(sql);
+        PreparedStatement ps = CON.prepareStatement(sql);
         try {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -36,9 +39,9 @@ public class JornadaBD extends CONBD {
                 }
             }
         } catch (SQLException e) {
-            M.errorMsg("No pudimos consultar jornadas. " + e.getMessage());
+            Logger.getLogger(JornadaBD.class.getName()).log(Level.SEVERE, null, e);
         } finally {
-            CON.cerrarCONPS(ps);
+            CON.close(ps);
         }
         return jornadas;
     }
@@ -64,7 +67,7 @@ public class JornadaBD extends CONBD {
         }
     }
 
-    private JornadaMD obtenerJornada(ResultSet rs) {
+    private static JornadaMD obtenerJornada(ResultSet rs) {
         JornadaMD j = new JornadaMD();
         try {
             j.setId(rs.getInt("id_jornada"));

@@ -45,7 +45,7 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
 
                 AvanzeUnidadesMDA tmp = new AvanzeUnidadesMDA();
 
-                tmp.getUnidad().setIdUnidad(rs.getInt(1));
+                tmp.getUnidad().setId(rs.getInt(1));
                 tmp.getUnidad().setTituloUnidad(rs.getString(2));
                 tmp.getUnidad().setContenidosUnidad(rs.getString(3));
                 tmp.getSeguimiento().setId_seguimientoS(rs.getInt(4));
@@ -70,7 +70,7 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
                 + "	id_unidad, id_seguimientosilabo, cumplimiento_porcentaje, observaciones)\n"
                 + "	VALUES (?," + idsegui + " , ?, ?);");
         try {
-            st.setInt(1, aus.getUnidad().getIdUnidad());
+            st.setInt(1, aus.getUnidad().getID());
             st.setInt(2, aus.getPortecentaje());
             st.setString(3, aus.getObservaciones());
             st.executeUpdate();

@@ -19,11 +19,11 @@ public class CursoMD {
     private JornadaMD jornada;
     private int capacidad;
     private int ciclo;
-    private String paralelo; 
+    private String paralelo;
     private int numMatriculados;
     private boolean activo;
     //Solo para matriculas 
-    private int numMatricula; 
+    private int numMatricula;
 
     public CursoMD() {
     }
@@ -107,8 +107,8 @@ public class CursoMD {
     public void setNumMatriculados(int numMatriculados) {
         this.numMatriculados = numMatriculados;
     }
-    
-    public int getCapaciadActual(){
+
+    public int getCapaciadActual() {
         return capacidad - numMatriculados;
     }
 
@@ -119,23 +119,31 @@ public class CursoMD {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
+
     /**
      * Esto unicamente se usa en matriculas
+     *
      * @param numMatricula
      */
-    public void setNumMatricula(int numMatricula){
+    public void setNumMatricula(int numMatricula) {
         this.numMatricula = numMatricula;
     }
-    
+
     /**
      * Solo se usa en numero de matriculas
-     * @return 
+     *
+     * @return
      */
     public int getNumMatricula() {
         return numMatricula;
     }
-    
-    
+
+    public String getCursoMateriaNombre() {
+        return String.format(
+                "%s | %s",
+                this.nombre,
+                this.materia.getNombre()
+        );
+    }
 
 }

@@ -144,7 +144,7 @@ public class SeguimientoEvaluacionBD {
                 evaluacion.setIndicador(rs.getString("indicador"));
                 evaluacion.setValoracion(rs.getDouble("valoracion"));
                 UnidadSilaboMD unidad = new UnidadSilaboMD();
-                unidad.setIdUnidad(rs.getInt("id_unidad"));
+                unidad.setId(rs.getInt("id_unidad"));
                 unidad.setNumeroUnidad(rs.getInt("numero_unidad"));
                 unidad.setTituloUnidad(rs.getString("titulo_unidad"));
 

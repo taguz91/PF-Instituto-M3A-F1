@@ -6,6 +6,8 @@
 package modelo.PlanClases;
 
 import java.time.LocalDate;
+import java.util.List;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.persona.PersonaMD;
@@ -13,65 +15,68 @@ import modelo.unidadSilabo.UnidadSilaboMD;
 
 /**
  *
- * @author ANDRES BERMEO
+ * @author MrRainx
  */
 public class PlandeClasesMD {
 
-    private Integer id_plan_clases;
-    private CursoMD id_curso;
-    private UnidadSilaboMD id_unidad;
+    private Integer id;
+    private CursoMD curso;
+    private UnidadSilaboMD unidad;
     private String observaciones;
-    private LocalDate fecha_revision;
-    private LocalDate fecha_generacion;
-    private LocalDate fecha_cierre;
-    private String trabajo_autonomo;
-    private int estado_plan;
+    private LocalDate fechaRevicion;
+    private LocalDate fechaGeneracion;
+    private LocalDate fechaCierre;
+    private String trabajoAutonomo;
+    private int estado;
+
+    private List<RecursosMD> recursos;
+    private List<EstrategiasMetodologicasMD> estrategias;
 
     //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
-    private MateriaMD id_materia;
-    private PersonaMD id_persona;
+    private MateriaMD materia;
+    private PersonaMD persona;
 
     public PlandeClasesMD() {
-        this.id_curso = new CursoMD();
-        this.id_unidad = new UnidadSilaboMD();
-        this.id_materia = new MateriaMD();
-        this.id_persona = new PersonaMD();
+        this.curso = new CursoMD();
+        this.unidad = new UnidadSilaboMD();
+        this.materia = new MateriaMD();
+        this.persona = new PersonaMD();
     }
 
     public PlandeClasesMD(CursoMD id_curso, UnidadSilaboMD id_unidad) {
-        this.id_curso = id_curso;
-        this.id_unidad = id_unidad;
+        this.curso = id_curso;
+        this.unidad = id_unidad;
     }
 
     public PlandeClasesMD(CursoMD id_curso, UnidadSilaboMD id_unidad, MateriaMD id_materia, PersonaMD id_persona) {
-        this.id_curso = id_curso;
-        this.id_unidad = id_unidad;
-        this.id_materia = id_materia;
-        this.id_persona = id_persona;
+        this.curso = id_curso;
+        this.unidad = id_unidad;
+        this.materia = id_materia;
+        this.persona = id_persona;
     }
 
     public Integer getID() {
-        return id_plan_clases;
+        return id;
     }
 
-    public void setId_plan_clases(Integer id_plan_clases) {
-        this.id_plan_clases = id_plan_clases;
+    public void setID(Integer id_plan_clases) {
+        this.id = id_plan_clases;
     }
 
-    public CursoMD getId_curso() {
-        return id_curso;
+    public CursoMD getCurso() {
+        return curso;
     }
 
-    public void setId_curso(CursoMD id_curso) {
-        this.id_curso = id_curso;
+    public void setCurso(CursoMD id_curso) {
+        this.curso = id_curso;
     }
 
-    public UnidadSilaboMD getId_unidad() {
-        return id_unidad;
+    public UnidadSilaboMD getUnidad() {
+        return unidad;
     }
 
-    public void setId_unidad(UnidadSilaboMD id_unidad) {
-        this.id_unidad = id_unidad;
+    public void setUnidad(UnidadSilaboMD id_unidad) {
+        this.unidad = id_unidad;
     }
 
     public String getObservaciones() {
@@ -82,69 +87,123 @@ public class PlandeClasesMD {
         this.observaciones = observaciones;
     }
 
-    public LocalDate getFecha_revision() {
-        return fecha_revision;
+    public LocalDate getFechaRevision() {
+        return fechaRevicion;
     }
 
-    public void setFecha_revision(LocalDate fecha_revision) {
-        this.fecha_revision = fecha_revision;
+    public void setFechaRevision(LocalDate fecha_revision) {
+        this.fechaRevicion = fecha_revision;
     }
 
-    public LocalDate getFecha_generacion() {
-        return fecha_generacion;
+    public LocalDate getFechaGeneracion() {
+        return fechaGeneracion;
     }
 
-    public void setFecha_generacion(LocalDate fecha_generacion) {
-        this.fecha_generacion = fecha_generacion;
+    public void setFechaGeneracion(LocalDate fecha_generacion) {
+        this.fechaGeneracion = fecha_generacion;
     }
 
-    public LocalDate getFecha_cierre() {
-        return fecha_cierre;
+    public LocalDate getFechaCierre() {
+        return fechaCierre;
     }
 
-    public void setFecha_cierre(LocalDate fecha_cierre) {
-        this.fecha_cierre = fecha_cierre;
+    public void setFechaCierre(LocalDate fecha_cierre) {
+        this.fechaCierre = fecha_cierre;
     }
 
-    public MateriaMD getId_materia() {
-        return id_materia;
+    public MateriaMD getMateria() {
+        return materia;
     }
 
-    public void setId_materia(MateriaMD id_materia) {
-        this.id_materia = id_materia;
+    public void setMateria(MateriaMD id_materia) {
+        this.materia = id_materia;
     }
 
-    public PersonaMD getId_persona() {
-        return id_persona;
+    public PersonaMD getPersona() {
+        return persona;
     }
 
-    public void setId_persona(PersonaMD id_persona) {
-        this.id_persona = id_persona;
+    public void setPersona(PersonaMD id_persona) {
+        this.persona = id_persona;
     }
 
-    public String getTrabajo_autonomo() {
-        return trabajo_autonomo;
+    public String getTrabajoAutonomo() {
+        return trabajoAutonomo;
     }
 
-    public void setTrabajo_autonomo(String trabajo_autonomo) {
-        this.trabajo_autonomo = trabajo_autonomo;
+    public void setTrabajoAutonomo(String trabajo_autonomo) {
+        this.trabajoAutonomo = trabajo_autonomo;
     }
 
-    public int getEstado_plan() {
-        return estado_plan;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setEstado_plan(int estado_plan) {
-        this.estado_plan = estado_plan;
+    public void setEstado(int estado_plan) {
+        this.estado = estado_plan;
+    }
+
+    public List<RecursosMD> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<RecursosMD> recursos) {
+        this.recursos = recursos;
+    }
+
+    public List<EstrategiasMetodologicasMD> getEstrategias() {
+        return estrategias;
+    }
+
+    public void setEstrategias(List<EstrategiasMetodologicasMD> estrategias) {
+        this.estrategias = estrategias;
     }
 
     public String descripcion() {
         return "<html>"
                 + "Curso: "
-                + "<br><center>" + id_curso.getNombre() + "</center><br>"
-                + "Materia: "
-                + "<br><center>" + id_materia.getNombre() + "</center>"
+                + "<br><center>" + curso.getNombre() + "</center><br>"
                 + "</html>";
+    }
+
+    public String getInfoDocente() {
+
+        return String.format("%s %s %s %s",
+                this.curso.getDocente().getIdentificacion(),
+                this.curso.getDocente().getPrimerNombre(),
+                this.curso.getDocente().getPrimerApellido(),
+                this.curso.getDocente().getSegundoApellido()
+        );
+
+    }
+
+    public static String getEstadoStr(int estado) {
+        switch (estado) {
+            case 0:
+                return "PENDIENTE";
+            case 1:
+                return "APROBADO";
+            case 2:
+                return "REVISAR";
+        }
+        return null;
+    }
+
+    public static Integer getEstadoInt(String estado) {
+        switch (estado) {
+            case "PENDIENTE":
+                return 0;
+            case "APROBADO":
+                return 1;
+            case "REVISAR":
+                return 2;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "PlandeClasesMD{" + "id=" + id + ", curso=" + curso + ", unidad=" + unidad + ", observaciones=" + observaciones + ", fechaRevicion=" + fechaRevicion + ", fechaGeneracion=" + fechaGeneracion + ", fechaCierre=" + fechaCierre + ", trabajoAutonomo=" + trabajoAutonomo + ", estado=" + estado + ", materia=" + materia + ", persona=" + persona + '}';
     }
 
 }

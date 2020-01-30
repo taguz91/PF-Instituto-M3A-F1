@@ -3,6 +3,7 @@ package controlador.curso;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import modelo.curso.CursoBD;
@@ -42,7 +43,7 @@ public class FrmCursoCTR extends DCTR {
     private ArrayList<MateriaMD> materias;
     //Para cargar jornadas  
     private final JornadaBD JBD = JornadaBD.single();
-    private ArrayList<JornadaMD> jornadas;
+    private List<JornadaMD> jornadas;
     //Private void ciclos de una carrera
     private ArrayList<Integer> ciclos;
 

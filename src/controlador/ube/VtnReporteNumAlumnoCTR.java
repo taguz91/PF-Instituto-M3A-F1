@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ public class VtnReporteNumAlumnoCTR extends DCTR {
     private ArrayList<CarreraMD> carreras;
     private ArrayList<PeriodoLectivoMD> periodos;
     private ArrayList<Integer> ciclos;
-    private ArrayList<JornadaMD> jornadas;
+    private List<JornadaMD> jornadas;
 
     public VtnReporteNumAlumnoCTR(VtnPrincipalCTR ctrPrin, VtnReporteNumAlumno vtn) {
         super(ctrPrin);

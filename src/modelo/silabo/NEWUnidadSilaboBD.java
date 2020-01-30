@@ -10,7 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
+import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.silabo.mbd.IUnidadSilaboBD;
+import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
 import org.postgresql.util.PSQLException;
 
@@ -20,7 +23,7 @@ import org.postgresql.util.PSQLException;
  */
 public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
-    private final ConnDBPool CON = ConnDBPool.single();
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     private static NEWUnidadSilaboBD UBD;
 
@@ -54,7 +57,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
@@ -103,7 +106,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ResultSet res = ps.executeQuery();
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(0);
+                u.setId(0);
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
@@ -187,7 +190,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
             while (res.next()) {
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setTituloUnidad(res.getString(3));
                 u.setContenidosUnidad(res.getString(4));
@@ -294,7 +297,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ps.setDouble(8, u.getHorasPracticaUnidad());
             ps.setDouble(9, u.getHorasAutonomoUnidad());
             ps.setString(10, u.getTituloUnidad());
-            ps.setInt(11, u.getIdUnidad());
+            ps.setInt(11, u.getID());
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la unidad. \n"
@@ -331,7 +334,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
 
             try {
                 Integer id = rs.getInt("id_unidad");
-                unidad.setIdUnidad(id);
+                unidad.setId(id);
 
             } catch (PSQLException e) {
             }
@@ -451,4 +454,102 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return lista;
     }
 
+    public static List<UnidadSilaboMD> getUnidadesBy(int idPeriodo, int idMateria, int idCurso) {
+
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"UnidadSilabo\".id_unidad,\n"
+                + "	\"UnidadSilabo\".id_silabo,\n"
+                + "	\"UnidadSilabo\".numero_unidad,\n"
+                + "	\"UnidadSilabo\".objetivo_especifico_unidad,\n"
+                + "	\"UnidadSilabo\".resultados_aprendizaje_unidad,\n"
+                + "	\"UnidadSilabo\".contenidos_unidad,\n"
+                + "	\"UnidadSilabo\".fecha_inicio_unidad,\n"
+                + "	\"UnidadSilabo\".fecha_fin_unidad,\n"
+                + "	\"UnidadSilabo\".horas_docencia_unidad,\n"
+                + "	\"UnidadSilabo\".horas_practica_unidad,\n"
+                + "	\"UnidadSilabo\".horas_autonomo_unidad,\n"
+                + "	\"UnidadSilabo\".titulo_unidad \n"
+                + "FROM\n"
+                + "	\"UnidadSilabo\"\n"
+                + "	INNER JOIN \"Silabo\" ON \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
+                + "	AND \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
+                + "WHERE\n"
+                + "	\"Silabo\".id_prd_lectivo = " + idPeriodo + " \n"
+                + "	AND \"Silabo\".id_materia = " + idMateria + " \n"
+                + "	AND \"UnidadSilabo\".id_unidad NOT IN (\n"
+                + "	    SELECT\n"
+                + "		    \"UnidadSilabo\".id_unidad \n"
+                + "	    FROM\n"
+                + "		    \"PlandeClases\"\n"
+                + "		    INNER JOIN \"UnidadSilabo\" ON \"PlandeClases\".id_unidad = \"UnidadSilabo\".id_unidad\n"
+                + "		    INNER JOIN \"Cursos\" ON \"PlandeClases\".id_curso = \"Cursos\".id_curso \n"
+                + "	    WHERE\n"
+                + "		    \"Cursos\".id_curso = " + idCurso + " \n"
+                + "	) \n"
+                + "ORDER BY\n"
+                + "	numero_unidad"
+                + "";
+
+        List<UnidadSilaboMD> unidades = new ArrayList<>();
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+        try {
+            while (rs.next()) {
+
+                UnidadSilaboMD unidadSilaboMD = new UnidadSilaboMD();
+                unidadSilaboMD.setId(rs.getInt("id_unidad"));
+                unidadSilaboMD.setNumeroUnidad(rs.getInt("numero_unidad"));
+                unidadSilaboMD.setObjetivoEspecificoUnidad(rs.getString("objetivo_especifico_unidad"));
+                unidadSilaboMD.setResultadosAprendizajeUnidad(rs.getString("resultados_aprendizaje_unidad"));
+                unidadSilaboMD.setContenidosUnidad(rs.getString("contenidos_unidad"));
+                unidadSilaboMD.setFechaInicioUnidad(rs.getDate("fecha_inicio_unidad").toLocalDate());
+                unidadSilaboMD.setFechaFinUnidad(rs.getDate("fecha_fin_unidad").toLocalDate());
+                unidadSilaboMD.setHorasDocenciaUnidad(rs.getDouble("horas_docencia_unidad"));
+                unidadSilaboMD.setHorasPracticaUnidad(rs.getDouble("horas_practica_unidad"));
+                unidadSilaboMD.setHorasAutonomoUnidad(rs.getDouble("horas_autonomo_unidad"));
+                unidadSilaboMD.setTituloUnidad(rs.getString("titulo_unidad"));
+
+                unidadSilaboMD.setEstrategias(getEstrategiasUnidad(rs.getInt("id_unidad")));
+
+                unidades.add(unidadSilaboMD);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWUnidadSilaboBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return unidades;
+    }
+
+    public static List<EstrategiasUnidadMD> getEstrategiasUnidad(int idUnidad) throws SQLException {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"EstrategiasAprendizaje\".descripcion_estrategia \n"
+                + "FROM\n"
+                + "	\"EstrategiasUnidad\"\n"
+                + "	INNER JOIN \"EstrategiasAprendizaje\" ON \"EstrategiasUnidad\".id_estrategia = \"EstrategiasAprendizaje\".id_estrategia \n"
+                + "WHERE\n"
+                + "	\"EstrategiasUnidad\".id_unidad = " + idUnidad
+                + "";
+
+        List<EstrategiasUnidadMD> estrategias = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        while (rs.next()) {
+            EstrategiasAprendizajeMD aprendizajeMD = new EstrategiasAprendizajeMD();
+            aprendizajeMD.setDescripcionEstrategia(rs.getString("descripcion_estrategia"));
+
+            EstrategiasUnidadMD estrategiasUnidadMD = new EstrategiasUnidadMD();
+            estrategiasUnidadMD.setEstrategia(aprendizajeMD);
+
+            estrategias.add(estrategiasUnidadMD);
+        }
+
+        CON.close(rs);
+
+        return estrategias;
+
+    }
 }

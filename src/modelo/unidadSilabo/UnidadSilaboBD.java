@@ -30,7 +30,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             while (res.next()) {
 
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setObjetivoEspecificoUnidad(res.getString(3));
                 u.setResultadosAprendizajeUnidad(res.getString(4));
@@ -79,7 +79,7 @@ public class UnidadSilaboBD extends UnidadSilaboMD {
             while (res.next()) {
 
                 UnidadSilaboMD u = new UnidadSilaboMD();
-                u.setIdUnidad(res.getInt(1));
+                u.setId(res.getInt(1));
                 u.setNumeroUnidad(res.getInt(2));
                 u.setTituloUnidad(res.getString(3));
                 u.setContenidosUnidad(res.getString(4));

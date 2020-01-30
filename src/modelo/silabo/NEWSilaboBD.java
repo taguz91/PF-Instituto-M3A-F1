@@ -39,7 +39,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class NEWSilaboBD implements ISilaboBD {
 
-    private final ConnDBPool CON = ConnDBPool.single();
+    private static final ConnDBPool CON = ConnDBPool.single();
 
     private static NEWSilaboBD SBD;
 
@@ -367,7 +367,7 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
-    private void existeCarpeta(File pdf, JasperPrint jasPDF, SilaboMD silabo) {
+    private static void existeCarpeta(File pdf, JasperPrint jasPDF, SilaboMD silabo) {
         File carpeta = new File("pdfs/");
         if (!carpeta.exists()) {
             if (carpeta.mkdir()) {
@@ -379,17 +379,16 @@ public class NEWSilaboBD implements ISilaboBD {
         try {
             OutputStream output = new FileOutputStream(pdf);
             JasperExportManager.exportReportToPdfStream(jasPDF, output);
-            FileInputStream fis = new FileInputStream(pdf);
+            //FileInputStream fis = new FileInputStream(pdf);
             //guardarPDFSilabo(silabo.getID(), fis, pdf);
         } catch (FileNotFoundException | JRException e) {
             JOptionPane.showMessageDialog(null, "Error guardar PDF: " + e);
         }
     }
 
-    public void imprimirProgramaAnalitico(SilaboMD silabo) {
-        Connection conn = CON.getConnection();
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass()
+    public static void imprimirProgramaAnalitico(SilaboMD silabo) {
+        try (Connection conn = CON.getConnection()) {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(NEWSilaboBD.class
                     .getResource("/vista/silabos/reportes/silabo_duales/primera_pag.jasper"));
 
             Map parametro = new HashMap();
@@ -402,18 +401,15 @@ public class NEWSilaboBD implements ISilaboBD {
 
             File pdf = new File(("pdfs/" + "SD-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             existeCarpeta(pdf, jp, silabo);
-        } catch (JRException e) {
+        } catch (JRException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
-        } finally {
-            CON.close(conn);
         }
     }
 
-    public void imprimirProgramaAnaliticoConSemanas(SilaboMD silabo, int semanas) {
-        Connection conn = CON.getConnection();
+    public static void imprimirProgramaAnaliticoConSemanas(SilaboMD silabo, int semanas) {
 
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass()
+        try (Connection conn = CON.getConnection()) {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(NEWSilaboBD.class
                     .getResource("/vista/silabos/"
                             + "reportes/silabo_duales/"
                             + "primera_pag_param_semanas.jasper")
@@ -431,18 +427,16 @@ public class NEWSilaboBD implements ISilaboBD {
 
             File pdf = new File(("pdfs/" + "SD-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             existeCarpeta(pdf, jp, silabo);
-        } catch (JRException e) {
+        } catch (JRException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e);
-        } finally {
-            CON.close(conn);
         }
 
     }
 
-    public void imprimirSilabo(SilaboMD silabo) {
-        Connection conn = CON.getConnection();
-        try {
-            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
+    public static void imprimirSilabo(SilaboMD silabo) {
+
+        try (Connection conn = CON.getConnection()) {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(NEWSilaboBD.class.getResource("/vista/silabos/reportes/silabo2/primera_pag.jasper"));
             Map parametro = new HashMap();
 
             parametro.put("parameter1", String.valueOf(silabo.getMateria().getId()));
@@ -455,15 +449,13 @@ public class NEWSilaboBD implements ISilaboBD {
             //EXPORTACION A PDF
             File pdf = new File(("pdfs/" + "ST-" + silabo.getMateria().getNombre() + "-" + LocalDate.now() + ".pdf"));
             existeCarpeta(pdf, jp, silabo);
-        } catch (JRException e) {
+        } catch (JRException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error reporte: " + e);
-        } finally {
-            CON.close(conn);
         }
 
     }
 
-    public boolean eliminar(SilaboMD silabo) {
+    public static boolean eliminar(SilaboMD silabo) {
 
         String DELETE = "DELETE FROM public.\"Silabo\"\n"
                 + "	WHERE id_silabo=" + silabo.getID();
@@ -472,7 +464,7 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
-    public List<SilaboMD> findBy(String cedulaDocente, int idPeriodo) {
+    public static List<SilaboMD> findBy(String cedulaDocente, int idPeriodo) {
         String SELECT = ""
                 + "WITH mis_periodos_materias AS (\n"
                 + "	SELECT DISTINCT\n"
@@ -560,7 +552,7 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
-    public String getInformacion(SilaboMD silabo) {
+    public static String getInformacion(SilaboMD silabo) {
 
         String SELECT = ""
                 + "SELECT \n"
@@ -714,7 +706,7 @@ public class NEWSilaboBD implements ISilaboBD {
 
     }
 
-    public List<SilaboMD> getSilabosPeriodo(int idPeriodo) {
+    public static List<SilaboMD> getSilabosPeriodo(int idPeriodo) {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
@@ -782,7 +774,7 @@ public class NEWSilaboBD implements ISilaboBD {
         return silabos;
     }
 
-    public boolean editarEstado(SilaboMD silabo) {
+    public static boolean editarEstado(SilaboMD silabo) {
 
         String UPDATE = ""
                 + "UPDATE \"Silabo\" \n"

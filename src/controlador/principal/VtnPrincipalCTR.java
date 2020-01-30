@@ -25,7 +25,6 @@ import controlador.docente.FrmRolPeriodoCTR;
 import controlador.docente.VtnDocenteMateriaCTR;
 import controlador.docente.VtnRolPeriodosCTR;
 import controlador.estilo.AnimacionCarga;
-import controlador.fichas.salud.VtnFsaludCTR;
 import controlador.login.LoginCTR;
 import controlador.materia.FrmMateriasCTR;
 import controlador.materia.VtnMateriaCTR;
@@ -43,7 +42,6 @@ import controlador.prdlectivo.FrmPrdLectivoCTR;
 import controlador.prdlectivo.VtnPrdLectivoCTR;
 import controlador.referencias.ReferenciasCRUDCTR;
 import controlador.silabo.avance.ControladorCRUDAvanceSilabo;
-import controlador.silabo.planesDeClase.VtnPlanClasesCTR;
 import controlador.silabo.VtnSilabosCTR;
 import controlador.silabo.seguimiento.VtnSeguimientoEvaluacionCTR;
 import controlador.ube.VtnReporteNumAlumnoCTR;
@@ -52,6 +50,7 @@ import controlador.usuario.Roles.VtnRolCTR;
 import controlador.usuario.VtnPerfilUsuarioCTR;
 import controlador.login.VtnSelectRolCTR;
 import controlador.pagos.FRMComprobanteCTR;
+import controlador.silabo.planes_de_clases.VtnPlanDeClasesCTR;
 import controlador.ube.VtnAlumnosSinResponderFSCTR;
 import controlador.usuario.VtnUsuarioCTR;
 import controlador.version.VtnDitoolCTR;
@@ -106,7 +105,6 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
-import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
@@ -123,9 +121,7 @@ public class VtnPrincipalCTR {
     private final RolBD rolSeleccionado;
     private final UsuarioBD usuario;
     private final VtnSelectRolCTR ctrSelecRol;
-    //Agregamos la animacion 
     public AnimacionCarga carga;
-    //Para ver que tanttas ventanas abrimos
     private int numVtns = 0;
 
     /**
@@ -145,13 +141,10 @@ public class VtnPrincipalCTR {
         //Iniciamos la pantala en Fullscream 
         vtnPrin.setExtendedState(JFrame.MAXIMIZED_BOTH);
         registroIngreso(vtnPrin);
-        //carga.iniciar();
         //Le pasamos el icono  
         vtnPrin.setTitle("Zero | PF M3A");
         vtnPrin.setVisible(true);
         InitPermisos();
-
-        System.out.println("-------THREADs----->" + Thread.activeCount());
 
     }
 
@@ -160,15 +153,15 @@ public class VtnPrincipalCTR {
      * animaciones.
      */
     public void iniciar() {
-        //Iniciamos los shortcuts 
         iniciarAtajosTeclado();
-        //Accion al boton de actualizar 
+
         vtnPrin.getBtnActualizar().addActionListener(e -> comprobarActualizacion());
 
         // Seteamos el usuario y su rol  
         String userRol = CONS.USUARIO.getPersona().getPrimerNombre()
                 + " " + CONS.USUARIO.getPersona().getPrimerApellido()
                 + "  |  " + CONS.ROL.getNombre();
+
         vtnPrin.getLblUsuario().setText(userRol);
         vtnPrin.getLblUsuario().setToolTipText(userRol);
 
@@ -240,7 +233,7 @@ public class VtnPrincipalCTR {
         vtnPrin.getBtnAyuda().addActionListener(e -> abrirVtnAyuda());
 
         vtnPrin.getMnCtSilabos().addActionListener(al -> btnSilabo());
-        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> controladorCONFIGURACION_PLAN_DE_CLASES());
+        vtnPrin.getMnCtPlandeClase().addActionListener(a1 -> btnPlanDeClases());
         vtnPrin.getBtnConsultarSilabo().addActionListener(al -> btnSilabo());
         vtnPrin.getBtnIngresarSilabo().addActionListener(al -> controladorIngreso());
         vtnPrin.getMnCAvanceSilabo().addActionListener(a1 -> controladorCONFIGURACION_avance_silabo());
@@ -266,14 +259,11 @@ public class VtnPrincipalCTR {
 
     private void iniciarAccionesRep() {
         vtnPrin.getMnRepNumAlumno().addActionListener(e -> abrirVtnReporteNumAlumno());
-        // Menu reporte fichas sin responder 
         vtnPrin.getMnRepFichasSinResponder().addActionListener(e -> {
             VtnAlumnosSinResponderFSCTR ctr = new VtnAlumnosSinResponderFSCTR(this);
             ctr.iniciar();
         });
 
-        //Menus Fichas
-        vtnPrin.getMnCtFichaSalud().addActionListener(e -> mnctFichaSalud(e));
 
     }
 
@@ -653,10 +643,9 @@ public class VtnPrincipalCTR {
         vtn.Init();
     }
 
-    private void controladorCONFIGURACION_PLAN_DE_CLASES() {
-        VtnPlanClasesCTR cP = new VtnPlanClasesCTR(usuario, rolSeleccionado, vtnPrin);
-        cP.iniciaControlador();
-        cP.setDesktop(this);
+    private void btnPlanDeClases() {
+        VtnPlanDeClasesCTR vtn = new VtnPlanDeClasesCTR(this);
+        vtn.Init();
     }
 
     private void controladorCONFIGURACION_avance_silabo() {
@@ -716,7 +705,6 @@ public class VtnPrincipalCTR {
      * nombre del estilo elejido y actualizara la ventana, para mostrarlo.
      */
     private void estiloVtn(String estilo) {
-        System.out.println(estilo);
         try {
             VtnPrincipal.setDefaultLookAndFeelDecorated(true);
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -830,7 +818,7 @@ public class VtnPrincipalCTR {
      * Si se abren mas de 5 ventanas salta este error
      */
     private void errorNumVentanas() {
-        
+
     }
 
     /**
@@ -1065,10 +1053,6 @@ public class VtnPrincipalCTR {
 
     }
 
-    private void btnActivarNotas(ActionEvent e) {
-
-    }
-
     private void btnMiperfilActionPerformance(ActionEvent e) {
 
         VtnPerfilUsuarioCTR vtn = new VtnPerfilUsuarioCTR(this);
@@ -1080,7 +1064,6 @@ public class VtnPrincipalCTR {
         VtnSelectRolCTR vtn = ctrSelecRol;
         vtn.Init();
         vtnPrin.setVisible(false);
-        System.gc();
     }
 
     private void InitPermisos() {
@@ -1220,10 +1203,6 @@ public class VtnPrincipalCTR {
         });
     }
 
-    public UsuarioBD getUsuario() {
-        return usuario;
-    }
-
     public VtnPrincipal getVtnPrin() {
         return vtnPrin;
     }
@@ -1232,10 +1211,6 @@ public class VtnPrincipalCTR {
         eventoInternal(ji);
         vtnPrin.getDpnlPrincipal().add(ji);
         ji.show();
-    }
-
-    public RolBD getRolSeleccionado() {
-        return rolSeleccionado;
     }
 
     private void mnctReportesEstado(ActionEvent e) {
@@ -1258,11 +1233,6 @@ public class VtnPrincipalCTR {
             JOptionPane.showMessageDialog(vtnDitool, "Posiblemente no tengamos acceso a internet. \n"
                     + "Verifique su conexion e intentelo de nuevo.");
         }
-    }
-
-    private void mnctFichaSalud(ActionEvent e) {
-        VtnFsaludCTR vtn = new VtnFsaludCTR(vtnPrin, new VtnFichaSalud());
-        vtn.Init();
     }
 
     private void btnComprobantes(ActionEvent e) {

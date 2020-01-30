@@ -8,6 +8,7 @@ package modelo.unidadSilabo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.evaluacionSilabo.EvaluacionSilaboMD;
 
 import modelo.silabo.SilaboMD;
@@ -45,7 +46,9 @@ public class UnidadSilaboMD implements Serializable {
     private SilaboMD idSilabo;
 
     private boolean bandera;
-
+    
+    private List<EstrategiasUnidadMD> estrategias;
+    
     public UnidadSilaboMD() {
         this.idSilabo = new SilaboMD();
         this.bandera = false;
@@ -74,11 +77,11 @@ public class UnidadSilaboMD implements Serializable {
         this.bandera = bandera;
     }
 
-    public Integer getIdUnidad() {
+    public Integer getID() {
         return idUnidad;
     }
 
-    public void setIdUnidad(Integer idUnidad) {
+    public void setId(Integer idUnidad) {
         this.idUnidad = idUnidad;
     }
 
@@ -189,6 +192,16 @@ public class UnidadSilaboMD implements Serializable {
     public void setIdSilabo(SilaboMD idSilabo) {
         this.idSilabo = idSilabo;
     }
+
+    public List<EstrategiasUnidadMD> getEstrategias() {
+        return estrategias;
+    }
+
+    public void setEstrategias(List<EstrategiasUnidadMD> estrategias) {
+        this.estrategias = estrategias;
+    }
+    
+    
 
     @Override
     public String toString() {
