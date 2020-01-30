@@ -34,14 +34,13 @@ public class VtnPlanDeClases extends AbstracView {
 
     private void InitDiseño() {
         tbl.setRowHeight(23);
-        RowStyle rowStyle = new RowStyle(5);
+        RowStyle rowStyle = new RowStyle(6);
 
         Map<String, Color> estados = new HashMap<String, Color>() {
             {
+                put("PENDIENTE", new Color(0, 0, 0));
                 put("APROBADO", new Color(37, 107, 187));
-                put("REPROBADO", new Color(214, 48, 12));
-                put("RETIRADO", new Color(0, 0, 0));
-                put("", new Color(0, 0, 0));
+                put("REVISAR", new Color(214, 48, 12));
             }
         };
 

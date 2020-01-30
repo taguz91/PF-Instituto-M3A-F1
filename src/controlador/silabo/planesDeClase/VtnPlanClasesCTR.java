@@ -5,6 +5,7 @@
  */
 package controlador.silabo.planesDeClase;
 
+import controlador.silabo.planes_de_clases.VtnCopiarPlanCTR;
 import controlador.silabo.planes_de_clases.VtnEditarFechaPlanCTR;
 import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
@@ -105,9 +106,9 @@ public class VtnPlanClasesCTR {
                 int columna = vista.getTbl().getSelectedColumn();
                 if (esCordinador && columna == 5) {
                     if (vista.getTbl().getValueAt(fila, columna).equals(true)) {
-                        new PlandeClasesBD().aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 1);
+                        new PlandeClasesBD().editarEstado(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 1);
                     } else {
-                        new PlandeClasesBD().aprobarPlanClase(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 0);
+                        new PlandeClasesBD().editarEstado(Integer.parseInt(vista.getTbl().getValueAt(fila, columna - 5).toString()), 0);
                     }
                 }
 

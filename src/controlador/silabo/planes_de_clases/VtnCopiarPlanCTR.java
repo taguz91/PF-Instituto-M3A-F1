@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo.planesDeClase;
+package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.curso.CursoMD;
-import vista.silabos.planesDeClase.VtnCopiarPlan;
+import vista.silabos.new_planes_de_clase.VtnCopiarPlan;
 
 /**
  *

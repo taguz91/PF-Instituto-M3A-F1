@@ -11,8 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
+import modelo.curso.CursoMD;
 import modelo.jornada.JornadaBD;
 import modelo.jornada.JornadaMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
@@ -75,11 +78,26 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
         vista.getTbl()
                 .getColumnModel()
-                .getColumn(5)
+                .getColumn(6)
                 .setCellEditor(new ComboBoxCellEditor(
                         estado,
                         Arrays.asList("APROBADO", "PENDIENTE", "REVISAR"))
                 );
+        tableM.addTableModelListener(new TableModelListener() {
+            boolean active = false;
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+
+                if (!active && e.getType() == TableModelEvent.UPDATE) {
+                    active = true;
+                    cmbTblEstado();
+                    active = false;
+                }
+
+            }
+
+        });
     }
 
     /*
@@ -212,11 +230,39 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
     private void btnCopiar(ActionEvent e) {
 
-        int row = getSelectedRow();
+int row = vista.getTbl().getSelectedRow();
 
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "SELECCIONE UN PLAN DE CLASES PARA COPIAR",
+                    "AVISO!!",
+                    JOptionPane.OK_OPTION
+            );
         } else {
+
+            int idPlan = (Integer) vista.getTbl().getValueAt(row, 0);
+
+
+            PlandeClasesMD plan = lista.stream()
+                    .filter(item -> item.getID().equals(idPlan))
+                    .findFirst()
+                    .get();
+            List<CursoMD> cursos = CON.cursosSinPlanes(plan.getID());
+
+            if (cursos.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "NO TIENE CURSOS PENDIENTES",
+                        "AVISO!!",
+                        JOptionPane.OK_OPTION
+                );
+            } else {
+                VtnCopiarPlanCTR vtn = new VtnCopiarPlanCTR(desktop);
+                vtn.setModelo(plan);
+                vtn.setCursos(cursos);
+                vtn.Init();
+            }
 
         }
 
@@ -264,6 +310,27 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
         }
 
+    }
+
+    private void cmbTblEstado() {
+        int colum = table.getSelectedColumn();
+        int row = getSelectedRow();
+        int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+        PlandeClasesMD plan = this.lista.stream()
+                .filter(item -> item.getID() == idPlan)
+                .findFirst()
+                .get();
+
+        if (plan != null) {
+            String estado = table.getValueAt(row, colum).toString();
+
+            if (plan.getEstado() != PlandeClasesMD.getEstadoInt(estado)) {
+                plan.setEstado(PlandeClasesMD.getEstadoInt(estado));
+                cargarTabla(cargador());
+                PlandeClasesBD.editarEstado(idPlan, PlandeClasesMD.getEstadoInt(estado));
+
+            }
+        }
     }
 
 }

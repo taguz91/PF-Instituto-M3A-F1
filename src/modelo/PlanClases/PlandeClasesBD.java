@@ -288,16 +288,33 @@ public class PlandeClasesBD extends CONBD {
 
     public List<CursoMD> cursosSinPlanes(int idPlanClasesRef) {
         String SELECT = ""
-                + "WITH mi_plan AS (\n"
+                + "WITH mi_info AS (\n"
                 + "	SELECT\n"
                 + "		\"Cursos\".id_prd_lectivo,\n"
                 + "		\"Cursos\".id_docente,\n"
-                + "		\"Cursos\".id_materia \n"
+                + "		\"Cursos\".id_materia,\n"
+                + "		\"PlandeClases\".id_unidad\n"
                 + "	FROM\n"
                 + "		\"PlandeClases\"\n"
                 + "		INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"PlandeClases\".id_curso \n"
                 + "	WHERE\n"
                 + "		\"PlandeClases\".id_plan_clases = " + idPlanClasesRef + " \n"
+                + "	),\n"
+                + "	mis_planes AS (\n"
+                + "	SELECT\n"
+                + "		\"Cursos\".id_prd_lectivo,\n"
+                + "		\"Cursos\".id_docente,\n"
+                + "		\"Cursos\".id_materia,\n"
+                + "		\"Cursos\".curso_nombre,\n"
+                + "		\"Cursos\".id_curso,\n"
+                + "		\"PlandeClases\".id_unidad\n"
+                + "	FROM\n"
+                + "		\"PlandeClases\"\n"
+                + "		INNER JOIN mi_info ON mi_info.id_unidad = \"PlandeClases\".id_unidad\n"
+                + "		INNER JOIN \"Cursos\" ON \"Cursos\".id_materia = mi_info.id_materia \n"
+                + "		AND \"Cursos\".id_prd_lectivo = mi_info.id_prd_lectivo\n"
+                + "		AND \"Cursos\".id_docente = mi_info.id_docente\n"
+                + "		AND \"Cursos\".id_curso = \"PlandeClases\".id_curso\n"
                 + "	),\n"
                 + "	mis_cursos AS (\n"
                 + "	SELECT\n"
@@ -308,24 +325,17 @@ public class PlandeClasesBD extends CONBD {
                 + "		\"Cursos\".id_curso \n"
                 + "	FROM\n"
                 + "		\"Cursos\"\n"
-                + "		INNER JOIN mi_plan ON mi_plan.id_prd_lectivo = \"Cursos\".id_prd_lectivo \n"
-                + "		AND mi_plan.id_materia = \"Cursos\".id_materia \n"
-                + "		AND mi_plan.id_docente = \"Cursos\".id_docente \n"
-                + "	),\n"
-                + "	mis_planes AS ( \n"
-                + "     SELECT \n"
-                + "             mis_cursos.* \n"
-                + "     FROM \n"
-                + "             \"PlandeClases\" \n"
-                + "             INNER JOIN mis_cursos ON mis_cursos.id_curso = \"PlandeClases\".id_curso \n"
-                + "     ) \n"
-                + "SELECT\n"
+                + "		INNER JOIN mi_info ON mi_info.id_prd_lectivo = \"Cursos\".id_prd_lectivo \n"
+                + "		AND mi_info.id_materia = \"Cursos\".id_materia \n"
+                + "		AND mi_info.id_docente = \"Cursos\".id_docente\n"
+                + "	)\n"
+                + "	SELECT\n"
                 + "    mis_cursos.id_curso,\n"
                 + "    mis_cursos.curso_nombre\n"
-                + "FROM\n"
-                + "	mis_cursos \n"
-                + "WHERE\n"
-                + "	mis_cursos.id_curso NOT IN ( SELECT id_curso FROM mis_planes )"
+                + "	FROM\n"
+                + "		mis_cursos \n"
+                + "	WHERE\n"
+                + "		mis_cursos.id_curso NOT IN ( SELECT id_curso FROM mis_planes )"
                 + "";
 
         List<CursoMD> lista = new ArrayList<>();
@@ -361,26 +371,15 @@ public class PlandeClasesBD extends CONBD {
         return CON.ejecutar(CALL) != null;
     }
 
-    public void aprobarPlanClase(int id_plan, int estado) {
+    public static void editarEstado(int id_plan, int estado) {
+        System.out.println(id_plan);
+        String UPDATE = "UPDATE \"PlandeClases\" \n"
+                + "SET estado_plan = " + estado + " \n"
+                + "WHERE\n"
+                + "	id_plan_clases = " + id_plan;
 
-        String UPDATE = "UPDATE public .\"PlandeClases\"\n"
-                + "SET estado_plan=?"
-                + "where id_plan_clases=?";
+        CON.ejecutar(UPDATE);
 
-        PreparedStatement st = CON.prepareStatement(UPDATE);
-
-        try {
-            st.setInt(1, estado);
-            st.setInt(2, id_plan);
-            st.executeUpdate();
-            st.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(st);
-        }
     }
 
     public static PlandeClasesMD getPlanBy(int id) {
@@ -520,6 +519,7 @@ public class PlandeClasesBD extends CONBD {
                 + "	\"UnidadSilabo\".numero_unidad,\n"
                 + "	\"PlandeClases\".id_plan_clases,\n"
                 + "	\"PlandeClases\".fecha_generacion,\n"
+                + "	\"PlandeClases\".estado_plan,\n"
                 + "	\"Cursos\".id_curso,\n"
                 + "	\"Cursos\".curso_nombre,\n"
                 + "	\"Materias\".id_materia,\n"
@@ -533,11 +533,10 @@ public class PlandeClasesBD extends CONBD {
                 + "	INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
                 + "	INNER JOIN \"UnidadSilabo\" ON \"PlandeClases\".id_unidad = \"UnidadSilabo\".id_unidad\n"
                 + "	INNER JOIN \"Jornadas\" ON \"Cursos\".id_jornada = \"Jornadas\".id_jornada \n"
-                + "	INNER JOIN \"Docentes\" COORDINADOR ON \"PeriodoLectivo\".prd_lectivo_coordinador = COORDINADOR.id_docente\n"
                 + "WHERE\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
-                + "	AND COORDINADOR.docente_codigo = '" + cedulaDocente + "' \n"
                 + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
+                + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
@@ -574,6 +573,7 @@ public class PlandeClasesBD extends CONBD {
 
                 PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
                 plandeClasesMD.setID(rs.getInt("id_plan_clases"));
+                plandeClasesMD.setEstado(rs.getInt("estado_plan"));
                 plandeClasesMD.setCurso(curso);
                 plandeClasesMD.setUnidad(unidadSilaboMD);
                 plandeClasesMD.setFechaGeneracion(rs.getDate("fecha_generacion").toLocalDate());
@@ -606,6 +606,7 @@ public class PlandeClasesBD extends CONBD {
                 + "	\"UnidadSilabo\".numero_unidad,\n"
                 + "	\"PlandeClases\".id_plan_clases,\n"
                 + "	\"PlandeClases\".fecha_generacion,\n"
+                + "	\"PlandeClases\".estado_plan,\n"
                 + "	\"Cursos\".id_curso,\n"
                 + "	\"Cursos\".curso_nombre,\n"
                 + "	\"Materias\".id_materia,\n"
@@ -622,6 +623,7 @@ public class PlandeClasesBD extends CONBD {
                 + "WHERE\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
                 + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
+                + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
@@ -658,6 +660,7 @@ public class PlandeClasesBD extends CONBD {
 
                 PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
                 plandeClasesMD.setID(rs.getInt("id_plan_clases"));
+                plandeClasesMD.setEstado(rs.getInt("estado_plan"));
                 plandeClasesMD.setCurso(curso);
                 plandeClasesMD.setUnidad(unidadSilaboMD);
                 plandeClasesMD.setFechaGeneracion(rs.getDate("fecha_generacion").toLocalDate());
@@ -690,6 +693,7 @@ public class PlandeClasesBD extends CONBD {
                 + "     \"UnidadSilabo\".numero_unidad,\n"
                 + "     \"PlandeClases\".id_plan_clases,\n"
                 + "     \"PlandeClases\".fecha_generacion,\n"
+                + "	\"PlandeClases\".estado_plan,\n"
                 + "     \"Cursos\".id_curso,\n"
                 + "     \"Cursos\".curso_nombre,\n"
                 + "     \"Materias\".id_materia,\n"
@@ -707,6 +711,7 @@ public class PlandeClasesBD extends CONBD {
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
                 + "	AND \"Docentes\".docente_codigo = '" + cedulaDocente + "' \n"
                 + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
+                + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
@@ -745,6 +750,7 @@ public class PlandeClasesBD extends CONBD {
 
                 PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
                 plandeClasesMD.setID(rs.getInt("id_plan_clases"));
+                plandeClasesMD.setEstado(rs.getInt("estado_plan"));
                 plandeClasesMD.setCurso(curso);
                 plandeClasesMD.setUnidad(unidadSilaboMD);
                 plandeClasesMD.setFechaGeneracion(rs.getDate("fecha_generacion").toLocalDate());

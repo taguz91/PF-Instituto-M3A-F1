@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista.silabos.planesDeClase;
+package vista.silabos.new_planes_de_clase;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.ImageIcon;

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import vista.principal.VtnPrincipal;
-import vista.silabos.planesDeClase.frmEditarFechaG;
+import vista.silabos.new_planes_de_clase.frmEditarFechaG;
 
 public class VtnEditarFechaPlanCTR {
 
