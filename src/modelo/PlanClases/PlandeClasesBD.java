@@ -81,13 +81,11 @@ public class PlandeClasesBD extends CONBD {
         return true;
     }
 
-
     public static void eliminarPlanClase(int idPlan) {
 
         String DELETE = "delete from \"PlandeClases\" where id_plan_clases=" + idPlan;
         CON.ejecutar(DELETE);
     }
-
 
     public List<CursoMD> cursosSinPlanes(int idPlanClasesRef) {
         String SELECT = ""
@@ -204,6 +202,8 @@ public class PlandeClasesBD extends CONBD {
                 + "	\"Personas\".persona_segundo_nombre,\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre,\n"
                 + "	\"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_estado,\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_activo,\n"
                 + "	\"Carreras\".carrera_nombre,\n"
                 + "	\"Carreras\".id_carrera,\n"
                 + "	\"Materias\".materia_codigo,\n"
@@ -233,8 +233,6 @@ public class PlandeClasesBD extends CONBD {
                 + "WHERE\n"
                 + "\"PlandeClases\".id_plan_clases = " + id
                 + "";
-
-        System.out.println("---DOC");
         ResultSet rs = CON.ejecutarQuery(SELECT);
         PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
 
@@ -255,6 +253,8 @@ public class PlandeClasesBD extends CONBD {
                 PeriodoLectivoMD periodoLectivoMD = new PeriodoLectivoMD();
                 periodoLectivoMD.setID(rs.getInt("id_prd_lectivo"));
                 periodoLectivoMD.setNombre(rs.getString("prd_lectivo_nombre"));
+                periodoLectivoMD.setEstado(rs.getBoolean("prd_lectivo_estado"));
+                periodoLectivoMD.setActivo(rs.getBoolean("prd_lectivo_activo"));
                 periodoLectivoMD.setCarrera(carreraMD);
 
                 MateriaMD materiaMD = new MateriaMD();

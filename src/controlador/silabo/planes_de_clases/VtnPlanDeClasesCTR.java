@@ -229,10 +229,14 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         } else {
             int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
             PlandeClasesMD plandeClasesMD = PlandeClasesBD.getPlanBy(idPlan);
-            FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
-            form.setAccion("edit");
-            form.setModelo(plandeClasesMD);
-            form.Init();
+            if (plandeClasesMD.getEstado() != 1 && !this.user.isIsSuperUser() && !CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+                FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
+                form.setAccion("edit");
+                form.setModelo(plandeClasesMD);
+                form.Init();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO PUEDE EDITAR UN PLAN DE CLASES QUE YA ESTA APLOBADO");
+            }
         }
     }
 
