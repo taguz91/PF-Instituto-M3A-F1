@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.alumno.Egresado;
-import utils.Descarga;
+import utils.ToExcel;
 
 /**
  *
@@ -95,15 +95,30 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
     private void clickReportePorPeriodo() {
         int posPeriodo = vtn.getCmbPeriodo().getSelectedIndex();
         if (posPeriodo > 0) {
-            String url = "alumnos/reporte/egresados/" + periodos.get(posPeriodo - 1).getID();
             String nombre = vtn.getCmbPeriodo().getSelectedItem()
                     .toString().replace(" ", "")
                     .replace("/", "-") + " | Egresados";
 
-            Descarga.excel(
-                    nombre,
-                    url,
-                    "El reporte de egresados no lo pudimos descargar.\n"
+            List<List<String>> alumnos = EBD.getReportesEgresadosExcel(
+                    periodos.get(posPeriodo - 1).getID() + ""
+            );
+            List<String> cols = new ArrayList<>();
+            cols.add("CÓDIGO DEL IST");
+            cols.add("NOMBRE DEL INSTITUTO");
+            cols.add("PROVINCIA");
+            cols.add("CÓDIGO DE LA CARRERA");
+            cols.add("CARRERA");
+            cols.add("MODALIDAD DE ESTUDIOS");
+            cols.add("TIPO DE IDENTIFICACIÓN");
+            cols.add("NRO. DE IDENTIFICACIÓN");
+            cols.add("APELLIDOS Y NOMBRES");
+            cols.add("NACIONALIDAD");
+            cols.add("TRABAJO DE TITULACIÓN FINALIZADO S/N");
+            ToExcel excel = new ToExcel();
+            excel.exportarExcel(
+                    cols,
+                    alumnos,
+                    nombre
             );
         } else {
             JOptionPane.showMessageDialog(vtn, "No selecciono un periodo lectivo para el reporte.");

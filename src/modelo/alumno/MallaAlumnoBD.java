@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.materia.MateriaMD;
 import modelo.persona.AlumnoMD;
@@ -420,4 +421,101 @@ public class MallaAlumnoBD extends CONBD {
     public String getSql() {
         return sql;
     }
+
+    public List<List<String>> getPorCarrera(int idCarrera) {
+        String sqlrep = "SELECT\n"
+                + "persona_identificacion,\n"
+                + "persona_primer_nombre || ' ' ||\n"
+                + "persona_segundo_nombre || ' ' ||\n"
+                + "persona_segundo_apellido || ' ' ||\n"
+                + "persona_primer_apellido AS \"alumno\",\n"
+                + "materia_nombre,\n"
+                + "malla_almn_estado,\n"
+                + "malla_almn_ciclo,\n"
+                + "malla_almn_num_matricula,\n"
+                + "malla_almn_nota1,\n"
+                + "malla_almn_nota2,\n"
+                + "malla_almn_nota3\n"
+                + "\n"
+                + "FROM public.\"MallaAlumno\" ma,\n"
+                + "public.\"AlumnosCarrera\" ac,\n"
+                + "public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p,\n"
+                + "public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia AND\n"
+                + "ac.id_carrera = " + idCarrera + "\n"
+                + "ORDER BY\n"
+                + "persona_primer_apellido,\n"
+                + "persona_segundo_apellido,\n"
+                + "malla_almn_ciclo;";
+        return getParaReporte(sqlrep);
+    }
+
+    public List<List<String>> getPorAlumnoCarrera(int idAlmCarrera) {
+        String sqlrep = "SELECT\n"
+                + "persona_identificacion,\n"
+                + "persona_primer_nombre || ' ' ||\n"
+                + "persona_segundo_nombre || ' ' ||\n"
+                + "persona_segundo_apellido || ' ' ||\n"
+                + "persona_primer_apellido AS \"alumno\",\n"
+                + "materia_nombre,\n"
+                + "malla_almn_estado,\n"
+                + "malla_almn_ciclo,\n"
+                + "malla_almn_num_matricula,\n"
+                + "malla_almn_nota1,\n"
+                + "malla_almn_nota2,\n"
+                + "malla_almn_nota3\n"
+                + "\n"
+                + "FROM public.\"MallaAlumno\" ma,\n"
+                + "public.\"AlumnosCarrera\" ac,\n"
+                + "public.\"Alumnos\" a,\n"
+                + "public.\"Personas\" p,\n"
+                + "public.\"Materias\" m\n"
+                + "WHERE ac.id_almn_carrera = ma.id_almn_carrera AND\n"
+                + "a.id_alumno = ac.id_alumno AND\n"
+                + "p.id_persona = a.id_persona AND\n"
+                + "m.id_materia = ma.id_materia AND\n"
+                + "ac.id_almn_carrera = " + idAlmCarrera + "\n"
+                + "ORDER BY\n"
+                + "persona_primer_apellido,\n"
+                + "persona_segundo_apellido,\n"
+                + "malla_almn_ciclo;";
+        return getParaReporte(sqlrep);
+    }
+
+    private List<List<String>> getParaReporte(String sqlrep) {
+        List<List<String>> lista = new ArrayList();
+
+        PreparedStatement ps = CON.getPSPOOL(sqlrep);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+
+                datos.add(rs.getInt(5) + "");
+                datos.add(rs.getInt(6) + "");
+                datos.add(rs.getDouble(7) + "");
+                datos.add(rs.getDouble(8) + "");
+                datos.add(rs.getDouble(9) + "");
+
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "No consultamos la malla del alumno por carrera."
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return lista;
+    }
+
 }

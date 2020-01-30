@@ -11,6 +11,7 @@ import modelo.carrera.CarreraMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.persona.AlumnoMD;
 import utils.CONBD;
+import utils.M;
 
 /**
  *
@@ -234,7 +235,7 @@ public class EgresadoBD extends CONBD {
                 CON.getPSPOOL(BASEQUERY_TBLGRADUADOS + ENQUERY_TBLGRADUADOS)
         );
     }
-    
+
     public boolean eliminar(int idEgresado) {
         String sql = "DELETE FROM alumno.\"Egresados\" "
                 + "WHERE id_egresado = ?;";
@@ -333,6 +334,65 @@ public class EgresadoBD extends CONBD {
             CON.cerrarCONPS(ps);
         }
         return es;
+    }
+
+    public List<List<String>> getReportesEgresadosExcel(String ids) {
+        List<List<String>> lista = new ArrayList<>();
+        String sql = "SELECT\n"
+                + "'' AS \"CÓDIGO DEL IST\",\n"
+                + "'ISTA' AS \"NOMBRE DEL INSTITUTO\",\n"
+                + "'AZUAY' AS \"PROVINCIA\",\n"
+                + "carrera_codigo AS \"CÓDIGO DE LA CARRERA\",\n"
+                + "carrera_nombre AS \"CARRERA\",\n"
+                + "carrera_modalidad AS \"MODALIDAD DE ESTUDIOS\",\n"
+                + "'' AS \"TIPO DE IDENTIFICACIÓN\",\n"
+                + "p.persona_identificacion AS \"NRO. DE IDENTIFICACIÓN\",\n"
+                + "p.persona_primer_apellido || ' ' ||\n"
+                + "p.persona_segundo_apellido || ' ' ||\n"
+                + "p.persona_primer_nombre || ' ' ||\n"
+                + "p.persona_segundo_nombre AS \"APELLIDOS Y NOMBRES\",\n"
+                + "consultar_pais(p.id_lugar_natal) AS \"NACIONALIDAD\",\n"
+                + "CASE WHEN trabajo_titulacion THEN 'SI' ELSE 'NO' END\n"
+                + "AS \"TRABAJO DE TITULACIÓN FINALIZADO S/N\"\n"
+                + "\n"
+                + "FROM alumno.\"Egresados\" e\n"
+                + "JOIN public.\"AlumnosCarrera\" ac\n"
+                + "ON ac.id_almn_carrera = e.id_almn_carrera\n"
+                + "JOIN public.\"Carreras\" c\n"
+                + "ON ac.id_carrera = c.id_carrera\n"
+                + "JOIN public.\"Alumnos\" a\n"
+                + "ON a.id_alumno = ac.id_alumno\n"
+                + "JOIN public.\"Personas\" p\n"
+                + "ON p.id_persona = a.id_persona\n"
+                + "WHERE id_prd_lectivo IN (" + ids + ")";
+        
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+                datos.add(rs.getString(6));
+                datos.add(rs.getString(7));
+                datos.add(rs.getString(8));
+                datos.add(rs.getString(9));
+                datos.add(rs.getString(10));
+                datos.add(rs.getString(11));
+                
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "No consultamos los alumnos egresados para el reporte"
+                    + "por periodos para el reporte. " + e.getMessage()
+            );
+        }
+
+        return lista;
     }
 
 }

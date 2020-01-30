@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import utils.Descarga;
+import utils.ToExcel;
 import vista.alumno.VtnMallaAlumno;
 
 /**
@@ -523,31 +525,27 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
             int as = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
             int cs = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
             if (as > 0) {
-                url += "alumno/" + alumnos.get(as - 1).getId();
-
                 nombre = mallas.get(0).getAlumnoCarrera()
                         .getAlumno().getIdentificacion();
+                reportePorAlumnoCarrera(
+                        alumnos.get(as - 1).getId(),
+                        nombre
+                );
 
             } else if (cs > 0) {
-                url += "carrera/" + carreras.get(cs - 1).getId();
                 nombre = vtnMallaAlm.getCmbCarreras().getSelectedItem().toString();
+                reportePorCarrera(
+                        carreras.get(cs - 1).getId(), 
+                        nombre
+                );
             } else {
-                url += "alumno/" + mallas.get(0).getAlumnoCarrera().getId();
                 nombre = mallas.get(0).getAlumnoCarrera()
-                        .getAlumno().getIdentificacion();
+                        .getAlumno().getIdentificacion();   
+                reportePorAlumnoCarrera(
+                        mallas.get(0).getAlumnoCarrera().getId(),
+                        nombre
+                );
             }
-
-            nombre += "-" + LocalDate.now().toString()
-                    .replace(":", "|")
-                    .replace(".", "");
-
-            url += "/" + CONS.USUARIO.getUsername();
-
-            Descarga.excel(
-                    nombre,
-                    url,
-                    "El reporte de malla no pudo ser descargado."
-            );
         } else {
             JOptionPane.showMessageDialog(
                     vtnMallaAlm,
@@ -555,6 +553,43 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
                     + "carrera para poder exportar el reporte."
             );
         }
+    }
+
+    private void reportePorAlumnoCarrera(int idAlmCarrera, String nombre) {
+        nombre += "-" + LocalDate.now().toString()
+                    .replace(":", "|")
+                    .replace(".", "");
+        
+        List<List<String>> lista = MABD.getPorAlumnoCarrera(idAlmCarrera);
+        generaReporte(lista, nombre);
+    }
+
+    private void reportePorCarrera(int idCarrera, String nombre) {
+        nombre += "-" + LocalDate.now().toString()
+                    .replace(":", "|")
+                    .replace(".", "");
+        List<List<String>> lista = MABD.getPorCarrera(idCarrera);
+        generaReporte(lista, nombre);
+    }
+    
+    private void generaReporte(List<List<String>> lista, String nombre) {
+        
+        List<String> cols = new ArrayList<>();
+        cols.add("Cedula/Identificacion");
+        cols.add("Alumno");
+        cols.add("Materia");
+        cols.add("Estado");
+        cols.add("Ciclo");
+        cols.add("Numero de matricula");
+        cols.add("Nota 1");
+        cols.add("Nota 2");
+        cols.add("Nota 3");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                lista,
+                nombre
+        );
     }
 
 }

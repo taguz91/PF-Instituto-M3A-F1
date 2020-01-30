@@ -189,6 +189,8 @@ public class AlumnoMatriculaBD extends CONBD {
                     "No consultamos el numero de alumnos "
                     + "por periodos para el reporte. " + e.getMessage()
             );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return alms;
     }
@@ -381,8 +383,52 @@ public class AlumnoMatriculaBD extends CONBD {
                     "No consultamos el numero de alumnos "
                     + "por periodos para el reporte. " + e.getMessage()
             );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
         return alms;
+    }
+
+    public List<List<String>> getPorTipoMatricula(String idsPeriodo, String tipo) {
+        String sql = "SELECT\n"
+                + "persona_identificacion,\n"
+                + "persona_primer_nombre,\n"
+                + "persona_segundo_nombre,\n"
+                + "persona_primer_apellido,\n"
+                + "persona_segundo_apellido,\n"
+                + "matricula_fecha,\n"
+                + "matricula_tipo\n"
+                + "WHERE\n"
+                + "public.\"Matricula\" m\n"
+                + "JOIN public.\"Alumnos\" a ON m.id_alumno = a.id_alumno\n"
+                + "JOIN public.\"Personas\" p ON p.id_persona = a.id_persona\n"
+                + "WHERE matricula_tipo ILIKE '%" + tipo + "%'\n"
+                + "AND id_prd_lectivo IN ( " + idsPeriodo + ");";
+        List<List<String>> lista = new ArrayList();
+
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+                datos.add(rs.getDate(6).toString());
+                datos.add(rs.getString(7));
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "No consultamos el numero de alumnos "
+                    + "por periodos para el reporte. " + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return lista;
     }
 
 }

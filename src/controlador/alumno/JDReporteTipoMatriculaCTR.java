@@ -8,9 +8,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.alumno.AlumnoMatriculaBD;
+import modelo.alumno.EgresadoBD;
 import modelo.estilo.TblEstilo;
 import modelo.periodolectivo.PeriodoLectivoMD;
-import utils.Descarga;
 import utils.ToExcel;
 import vista.alumno.JDReporteExcel;
 
@@ -34,6 +34,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
         "ESPECIAL"
     };
     private final AlumnoMatriculaBD AMBD = AlumnoMatriculaBD.single();
+    private final EgresadoBD EBD = EgresadoBD.single();
 
     public JDReporteTipoMatriculaCTR(
             VtnPrincipalCTR ctrPrin,
@@ -72,7 +73,7 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 TIPO_MATRICULAS,
-                "Seleccione"
+                "TODAS"
         );
 
         if (np == null) {
@@ -87,52 +88,49 @@ public class JDReporteTipoMatriculaCTR extends DCTR {
     }
 
     private void reporteJSON(String tipo) {
-        int[] ss = vtn.getTblPeriodos().getSelectedRows();
-        String ids = "[";
-        for (int s : ss) {
-            ids += periodos.get(s).getID() + ",";
-        }
-        ids = ids.substring(0, ids.length() - 1);
-        ids += "]";
-        String JSON = "{\"ids_periodos\":" + ids
-                + ", \"tipo_matricula\": "
-                + "\"" + tipo + "\"}";
-
-        if (tipo.length() == 0) {
-            tipo = "TODOS";
-        }
+        String ids = getIDSelect();
         String nombre = tipo + LocalDate.now().toString()
                 .replace(":", "|")
                 .replace(".", "");
-        Descarga.excelWithPost(
-                nombre,
-                "matriculas/reporte/tipo-matricula",
-                JSON,
-                "Error al descargar el reporte "
-                + "por tipo de matricula, vuelva a "
-                + "intentarlo mas tarde."
+        
+        List<List<String>> alumnos = AMBD.getPorTipoMatricula(ids, tipo);
+        List<String> cols = new ArrayList<>();
+        cols.add("Cedula/Identificacion");
+        cols.add("Primer Nombre");
+        cols.add("Seguno Nombre");
+        cols.add("Primer Apellido");
+        cols.add("Segundo Apellido");
+        cols.add("Fecha Matricula");
+        cols.add("Tipo Matricula");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                nombre
         );
+        
     }
 
     private void clickReporteEgresados() {
-        String ids = "[" + getIDSelect();
-        ids = ids.substring(0, ids.length() - 1);
-        ids += "]";
-
-        String JSON = "{\"idsPeriodos\":" + ids
-                + ", \"tipoReporte\": "
-                + "\"EGRESADOS\"}";
-
-        String url = "alumnos/reporte/estados/finales";
-        String nombre = "Egresados" + LocalDate.now().toString()
-                .replace(":", "|")
-                .replace(".", "");
-
-        Descarga.excelWithPost(
-                nombre,
-                url,
-                JSON,
-                "El reporte de egresados no lo pudimos descargar.\n"
+        String ids = getIDSelect();
+        List<List<String>> alumnos = EBD.getReportesEgresadosExcel(ids);
+        List<String> cols = new ArrayList<>();
+        cols.add("CÓDIGO DEL IST");
+        cols.add("NOMBRE DEL INSTITUTO");
+        cols.add("PROVINCIA");
+        cols.add("CÓDIGO DE LA CARRERA");
+        cols.add("CARRERA");
+        cols.add("MODALIDAD DE ESTUDIOS");
+        cols.add("TIPO DE IDENTIFICACIÓN");
+        cols.add("NRO. DE IDENTIFICACIÓN");
+        cols.add("APELLIDOS Y NOMBRES");
+        cols.add("NACIONALIDAD");
+        cols.add("TRABAJO DE TITULACIÓN FINALIZADO S/N");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                "Alumnos Egresados " + ids
         );
     }
 
