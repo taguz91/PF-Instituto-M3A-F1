@@ -144,7 +144,7 @@ public final class UsuarioBD extends UsuarioMD {
                 + "INNER JOIN \"Personas\" ON \"Usuarios\".id_persona = \"Personas\".id_persona\n"
                 + "WHERE\n"
                 + "\"Usuarios\".usu_username = ? AND\n"
-                //+ "\"Usuarios\".usu_password = set_byte( MD5( ? ) :: bytea, 4, 64 ) AND\n"
+                + "\"Usuarios\".usu_password = set_byte( MD5( ? ) :: bytea, 4, 64 ) AND\n"
                 + "\"Usuarios\".usu_estado IS TRUE;";
         UsuarioBD usuario = null;
         try {

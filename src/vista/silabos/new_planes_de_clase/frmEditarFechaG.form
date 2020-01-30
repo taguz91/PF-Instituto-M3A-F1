@@ -34,7 +34,7 @@
                   <Component id="dch_fecha_g" min="-2" pref="142" max="-2" attributes="0"/>
                   <Component id="btn_actualizar_fg" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,15 +43,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel1" max="32767" attributes="0"/>
-                  <Component id="dch_fecha_g" max="32767" attributes="0"/>
+                  <Component id="jLabel1" pref="25" max="32767" attributes="0"/>
+                  <Component id="dch_fecha_g" pref="25" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btn_actualizar_fg" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_Cancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_actualizar_fg" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="btn_Cancelar" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

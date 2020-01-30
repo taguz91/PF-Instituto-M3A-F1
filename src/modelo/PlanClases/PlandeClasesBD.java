@@ -81,126 +81,6 @@ public class PlandeClasesBD extends CONBD {
         return true;
     }
 
-    public static List<PlandeClasesMD> consultarPlanClase(String[] parametros) {
-        List<PlandeClasesMD> lista_plan = new ArrayList<>();
-        String SELECT = "SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre,pla.estado_plan,pla.fecha_generacion\n"
-                + "       FROM \"Silabo\" AS s\n"
-                + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
-                + "					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n"
-                + "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n"
-                + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
-                + "                    WHERE crr.carrera_nombre='" + parametros[0] + "'\n"
-                + "                    AND p.id_persona=" + parametros[3] + "\n"
-                + " AND jo.nombre_jornada='" + parametros[1] + "' \n"
-                + " AND cr.id_prd_lectivo=" + parametros[4] + " \n"
-                + " AND m.materia_nombre ILIKE '%" + parametros[2] + "%'\n"
-                + "ORDER BY p.persona_primer_apellido, cr.curso_nombre";
-
-        ResultSet rs = CON.ejecutarQuery(SELECT);
-
-        try {
-
-            while (rs.next()) {
-                PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setID(rs.getInt(1));
-                pl.getUnidad().setId(rs.getInt(2));
-                pl.getPersona().setPrimerApellido(rs.getString(3));
-                pl.getPersona().setPrimerNombre(rs.getString(4));
-                pl.getMateria().setNombre(rs.getString(5));
-                pl.getCurso().setNombre(rs.getString(6));
-                pl.setEstado(rs.getInt(7));
-                pl.setFechaGeneracion(rs.getDate(8).toLocalDate());
-                lista_plan.add(pl);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(rs);
-        }
-        return lista_plan;
-    }
-
-    public static List<PlandeClasesMD> consultarPlanClaseCoordinador(String[] parametros) {
-        List<PlandeClasesMD> lista_plan = new ArrayList<>();
-        String SELECT = "SELECT DISTINCT pla.id_plan_clases,us.numero_unidad,p.persona_primer_apellido,p.persona_primer_nombre,m.materia_nombre, cr.curso_nombre,pla.estado_plan,pla.fecha_generacion\n"
-                + "       FROM \"Silabo\" AS s\n"
-                + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
-                + "					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n"
-                + "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n"
-                + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
-                + "                    WHERE crr.carrera_nombre='" + parametros[0] + "'\n"
-                + "                    AND jo.nombre_jornada='" + parametros[1] + "' \n"
-                + "AND cr.id_prd_lectivo=" + parametros[3] + " \n"
-                + "AND m.materia_nombre ILIKE '%" + parametros[2] + "%'\n"
-                + "ORDER BY p.persona_primer_apellido, cr.curso_nombre";
-
-        ResultSet rs = CON.ejecutarQuery(SELECT);
-
-        try {
-
-            while (rs.next()) {
-                PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setID(rs.getInt(1));
-                pl.getUnidad().setId(rs.getInt(2));
-                pl.getPersona().setPrimerApellido(rs.getString(3));
-                pl.getPersona().setPrimerNombre(rs.getString(4));
-                pl.getMateria().setNombre(rs.getString(5));
-                pl.getCurso().setNombre(rs.getString(6));
-                pl.setEstado(rs.getInt(7));
-                pl.setFechaGeneracion(rs.getDate(8).toLocalDate());
-                lista_plan.add(pl);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(rs);
-        }
-        return lista_plan;
-    }
-
-    public static List<PlandeClasesMD> consultarPlanClaseExistente(String[] parametros) {
-        List<PlandeClasesMD> lista_plan = new ArrayList<>();
-
-        String SELECT = "SELECT DISTINCT pla.id_plan_clases,us.id_unidad, cr.id_curso\n"
-                + "       FROM \"Silabo\" AS s\n"
-                + "       JOIN \"Materias\" AS m ON s.id_materia=m.id_materia\n"
-                + "       JOIN \"PeriodoLectivo\" AS pr ON pr.id_prd_lectivo=s.id_prd_lectivo\n"
-                + "                    JOIN \"Carreras\" AS crr ON crr.id_carrera = m.id_carrera\n"
-                + "                    JOIN \"Cursos\" AS cr ON cr.id_materia=m.id_materia\n"
-                + "                    JOIN \"Docentes\" AS d ON d.id_docente= cr.id_docente\n"
-                + "                    JOIN \"Personas\" AS p ON d.id_persona=p.id_persona \n"
-                + "					JOIN \"PlandeClases\" AS pla on  cr.id_curso=pla.id_Curso \n"
-                + "					JOIN \"UnidadSilabo\" AS us on pla.id_unidad=us.id_unidad\n"
-                + "					JOIN \"Jornadas\" AS jo on cr.id_jornada=jo.id_jornada\n"
-                + "                    WHERE crr.carrera_nombre= '" + parametros[0] + "'\n"
-                + "                    AND p.id_persona=" + parametros[1] + " AND cr.id_prd_lectivo=" + parametros[2] + " ";
-
-        ResultSet rs = CON.ejecutarQuery(SELECT);
-        try {
-            while (rs.next()) {
-                PlandeClasesMD pl = new PlandeClasesMD();
-                pl.setID(rs.getInt(1));
-                pl.getUnidad().setId(rs.getInt(2));
-                pl.getCurso().setId(rs.getInt(3));
-                lista_plan.add(pl);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(rs);
-        }
-        return lista_plan;
-    }
 
     public static void eliminarPlanClase(int idPlan) {
 
@@ -208,83 +88,6 @@ public class PlandeClasesBD extends CONBD {
         CON.ejecutar(DELETE);
     }
 
-    public static List<PlandeClasesMD> consultarPlanClaseObservacion(int plan_clase) {
-        List<PlandeClasesMD> lista_plan = new ArrayList<>();
-
-        String SELECT = "select observaciones,trabajo_autonomo from \"PlandeClases\" where id_plan_clases=?";
-
-        PreparedStatement stmt = CON.prepareStatement(SELECT);
-        try {
-
-            stmt.setInt(1, plan_clase);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                PlandeClasesMD pc = new PlandeClasesMD();
-                pc.setObservaciones(rs.getString(1));
-                pc.setTrabajoAutonomo(rs.getString(2));
-                lista_plan.add(pc);
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(stmt);
-        }
-        return lista_plan;
-    }
-
-    public static PlandeClasesMD consultarUltimoPlanClase(int id_curso, int id_unidad) {
-        PlandeClasesMD planClase = null;
-        String SELECT = "select id_plan_clases "
-                + "from \"PlandeClases\" where id_curso=? AND id_unidad=?";
-        PreparedStatement st = CON.prepareStatement(SELECT);
-
-        try {
-            st.setInt(1, id_curso);
-            st.setInt(2, id_unidad);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                planClase = new PlandeClasesMD();
-                planClase.setID(rs.getInt(1));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(st);
-        }
-        return planClase;
-    }
-
-    public static PlandeClasesMD consultarIDCURSO_ID_UNIDAD(int id_plan_de_clase) {
-        PlandeClasesMD planClase = null;
-
-        String SELECT = "select distinct id_plan_clases,"
-                + " id_curso,id_unidad ,fecha_generacion from \"PlandeClases\" where id_plan_clases=?";
-
-        PreparedStatement st = CON.prepareStatement(SELECT);
-
-        try {
-            st.setInt(1, id_plan_de_clase);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                planClase = new PlandeClasesMD();
-                planClase.setID(rs.getInt(1));
-                planClase.getCurso().setId(rs.getInt(2));
-                planClase.getUnidad().setId(rs.getInt(3));
-                planClase.setFechaGeneracion(rs.getDate(4).toLocalDate());
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PlandeClasesBD.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            CON.close(st);
-        }
-        return planClase;
-    }
 
     public List<CursoMD> cursosSinPlanes(int idPlanClasesRef) {
         String SELECT = ""
@@ -431,6 +234,7 @@ public class PlandeClasesBD extends CONBD {
                 + "\"PlandeClases\".id_plan_clases = " + id
                 + "";
 
+        System.out.println("---DOC");
         ResultSet rs = CON.ejecutarQuery(SELECT);
         PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
 
@@ -540,6 +344,7 @@ public class PlandeClasesBD extends CONBD {
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
+        System.out.println("---COR");
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -626,7 +431,7 @@ public class PlandeClasesBD extends CONBD {
                 + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
-
+        System.out.println("---SU");
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {

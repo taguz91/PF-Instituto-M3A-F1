@@ -5,11 +5,14 @@ import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -50,6 +53,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             this.jornadas = JornadaBD.cargarJornadas();
             cargarCmbPeriodos();
             cargarJornadas();
+            setLista();
             cargarTabla(cargador());
         }
 
@@ -71,6 +75,15 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         this.vista.getBtnCopiar().addActionListener(e -> btnCopiar(e));
         this.vista.getBtnEditarFecha().addActionListener(e -> btnEditarFecha(e));
         this.vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
+
+        this.vista.getTxtBuscar().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtBuscar(e);
+
+            }
+
+        });
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")
                 || CONS.ROL.getNombre().equalsIgnoreCase("DEV")
@@ -140,8 +153,35 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     }
 
     private Consumer<PlandeClasesMD> cargador() {
-        try {
+        tableM.setRowCount(0);
+        return obj -> {
+            setRow(obj);
+        };
+    }
 
+    private void setRow(PlandeClasesMD obj) {
+        tableM.addRow(new Object[]{
+            obj.getID(),
+            tableM.getRowCount() + 1,
+            obj.getInfoDocente(),
+            obj.getCurso().getMateria().getNombre(),
+            obj.getCurso().getNombre(),
+            obj.getUnidad().getNumeroUnidad(),
+            PlandeClasesMD.getEstadoStr(obj.getEstado()),
+            obj.getFechaGeneracion()
+        });
+    }
+
+    /*
+        EVENTOS
+     */
+    private void chxSuperSU(ActionEvent e) {
+        this.periodos = getPeriodos();
+        this.cargarCmbPeriodos();
+    }
+
+    private void setLista() {
+        try {
             String periodo = this.vista.getCmbPeriodos().getSelectedItem().toString();
             String cedulaDocente = CONS.USUARIO.getPersona().getIdentificacion();
             String jornada = this.vista.getCmbJornadas().getSelectedItem().toString();
@@ -161,35 +201,17 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             } else if (CONS.isSuperSU()) {
                 setLista(CON.getPlanesSuperSu(periodo, jornada));
             }
-
-            return obj -> {
-                tableM.addRow(new Object[]{
-                    obj.getID(),
-                    tableM.getRowCount() + 1,
-                    obj.getInfoDocente(),
-                    obj.getCurso().getMateria().getNombre(),
-                    obj.getCurso().getNombre(),
-                    obj.getUnidad().getNumeroUnidad(),
-                    PlandeClasesMD.getEstadoStr(obj.getEstado()),
-                    obj.getFechaGeneracion()
-                });
-            };
-        } catch (NullPointerException e) {
+            cargarTabla(cargador());
+        } catch (NullPointerException ex) {
         }
-        return obj -> {
-        };
-    }
-
-    /*
-        EVENTOS
-     */
-    private void chxSuperSU(ActionEvent e) {
-        this.periodos = getPeriodos();
-        this.cargarCmbPeriodos();
     }
 
     private void cargarTablaAsEvent(ActionEvent e) {
-        cargarTabla(cargador());
+        try {
+            setLista();
+            cargarTabla(cargador());
+        } catch (NullPointerException ex) {
+        }
 
     }
 
@@ -223,6 +245,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         } else {
             int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
             PlandeClasesBD.eliminarPlanClase(idPlan);
+            setLista();
             cargarTabla(cargador());
         }
 
@@ -230,7 +253,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
     private void btnCopiar(ActionEvent e) {
 
-int row = vista.getTbl().getSelectedRow();
+        int row = vista.getTbl().getSelectedRow();
 
         if (row == -1) {
             JOptionPane.showMessageDialog(
@@ -242,7 +265,6 @@ int row = vista.getTbl().getSelectedRow();
         } else {
 
             int idPlan = (Integer) vista.getTbl().getValueAt(row, 0);
-
 
             PlandeClasesMD plan = lista.stream()
                     .filter(item -> item.getID().equals(idPlan))
@@ -326,11 +348,29 @@ int row = vista.getTbl().getSelectedRow();
 
             if (plan.getEstado() != PlandeClasesMD.getEstadoInt(estado)) {
                 plan.setEstado(PlandeClasesMD.getEstadoInt(estado));
+                setLista();
                 cargarTabla(cargador());
                 PlandeClasesBD.editarEstado(idPlan, PlandeClasesMD.getEstadoInt(estado));
 
             }
         }
+    }
+
+    private void txtBuscar(KeyEvent e) {
+        List<PlandeClasesMD> planes = lista.stream()
+                .filter(
+                        item -> item.getCurso().getDocente().getPrimerNombre().toLowerCase().contains(
+                                vista.getTxtBuscar().getText().toLowerCase())
+                        || item.getCurso().getDocente().getSegundoNombre().toLowerCase().contains(
+                                vista.getTxtBuscar().getText().toLowerCase())
+                        || item.getCurso().getDocente().getIdentificacion().toLowerCase().contains(
+                                vista.getTxtBuscar().getText().toLowerCase())
+                        || item.getCurso().getDocente().getPrimerApellido().toLowerCase().contains(
+                                vista.getTxtBuscar().getText().toLowerCase())
+                        || item.getCurso().getDocente().getSegundoApellido().toLowerCase().contains(
+                                vista.getTxtBuscar().getText().toLowerCase())
+                ).collect(Collectors.toList());
+        planes.forEach(cargador());
     }
 
 }

@@ -163,8 +163,6 @@ public class PlandeClasesMD {
         return "<html>"
                 + "Curso: "
                 + "<br><center>" + curso.getNombre() + "</center><br>"
-                + "Materia: "
-                + "<br><center>" + materia.getNombre() + "</center>"
                 + "</html>";
     }
 
