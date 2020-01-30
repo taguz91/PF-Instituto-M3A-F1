@@ -74,8 +74,6 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
                 this.vista.getCmbPeriodos().getSelectedItem().toString(),
                 this.personaCONS.getIdPersona()
         );
-
-        System.out.println("--------->" + this.cursos.size());
         this.cursos.stream()
                 .map(c -> c.getCursoMateriaNombre())
                 .forEach(this.vista.getCmbCursos()::addItem);
@@ -119,10 +117,17 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
     private void btnSiguiente(ActionEvent e) {
 
         PlandeClasesMD plandeClasesMD = new PlandeClasesMD();
-        CursoMD cursoMD = new CursoMD();
-        cursoMD.setPeriodo(getPeriodo());
-        plandeClasesMD.setCurso(cursoMD);
+
+        plandeClasesMD.setCurso(getCurso());
         plandeClasesMD.setUnidad(getUnidad());
+
+        FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
+
+        form.setModelo(plandeClasesMD);
+        form.Init();
+
+        this.vista.dispose();
+
     }
 
     private void cmbPeriodos(ActionEvent e) {

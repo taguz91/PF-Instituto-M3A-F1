@@ -25,12 +25,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane4" max="32767" attributes="0"/>
+          <Component id="jScrollPane4" alignment="0" pref="1184" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane4" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jScrollPane4" pref="570" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -48,10 +51,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lbltitulo2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lbltitulo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lbltitulo3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lbltitulo1" alignment="0" min="-2" pref="1303" max="-2" attributes="0"/>
+                              <Component id="lblInfo3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfo2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfo1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblTitulo" alignment="0" min="-2" pref="1303" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -76,9 +79,9 @@
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="btnCancelarPC" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <Component id="btnCancelar" min="-2" pref="75" max="-2" attributes="0"/>
                                   <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
-                                  <Component id="btmnGuardarPc" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jScrollPane6" min="-2" pref="351" max="-2" attributes="0"/>
@@ -95,17 +98,17 @@
                                       <Component id="jScrollPane3" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtEstrategias" alignment="0" min="-2" pref="409" max="-2" attributes="0"/>
+                                              <Component id="txtDescripcion" alignment="0" min="-2" pref="409" max="-2" attributes="0"/>
                                               <Component id="tbpEstrategiasPC" alignment="0" min="-2" pref="409" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                  <Component id="btnAgregarPC" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="btnEditar" min="-2" pref="73" max="-2" attributes="0"/>
-                                              <Component id="btnQuitarPC" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                                              <Component id="btnQuitar" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -119,14 +122,14 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="lbltitulo1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblInfo1" min="-2" pref="19" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="lbltitulo3" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="lblInfo2" min="-2" pref="19" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="lbltitulo" min="-2" pref="19" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="lbltitulo2" min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="lblInfo3" min="-2" pref="19" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lbObjetivoPC" min="-2" pref="15" max="-2" attributes="0"/>
@@ -158,15 +161,15 @@
                                       <Component id="lbObservacionesPC" min="-2" pref="15" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="btnAgregarPC" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Component id="btnAgregar" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="btnQuitarPC" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Component id="btnQuitar" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnEditar" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="142" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
-                                      <Component id="txtEstrategias" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Component id="txtDescripcion" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                                       <Component id="tbpEstrategiasPC" pref="0" max="32767" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -181,8 +184,8 @@
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnCancelarPC" min="-2" max="-2" attributes="0"/>
-                          <Component id="btmnGuardarPc" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -190,21 +193,21 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btmnGuardarPc">
+            <Component class="javax.swing.JButton" name="btnGuardar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbltitulo3">
+            <Component class="javax.swing.JLabel" name="lblInfo1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Fecha de Inicio: {asignatura}   Fecha de Fin: {codigoAsignatura}   Duraci&#xf3;n: {duracion}"/>
+                <Property name="text" type="java.lang.String" value="Fecha de Inicio: {fecha_inicio}   Fecha de Fin: {fecha_fin}   Duraci&#xf3;n: {duracion}"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCancelarPC">
+            <Component class="javax.swing.JButton" name="btnCancelar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
               </Properties>
@@ -216,7 +219,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txrObservacionesPc">
+                <Component class="javax.swing.JTextArea" name="txtObservaciones">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="lineWrap" type="boolean" value="true"/>
@@ -241,7 +244,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txrRsAprendizaje">
+                <Component class="javax.swing.JTextArea" name="txtResultadosAprendizaje">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
@@ -275,7 +278,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="listInstrumentos">
+                <Component class="javax.swing.JList" name="txtEstrategiasUnidad">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
@@ -305,7 +308,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JList" name="listAnticipacionPC">
+                    <Component class="javax.swing.JList" name="listAnticipacion">
                       <Properties>
                         <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                           <StringArray count="0"/>
@@ -331,7 +334,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JList" name="listConstruccionPC">
+                    <Component class="javax.swing.JList" name="listConstruccion">
                       <Properties>
                         <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                           <StringArray count="0"/>
@@ -357,7 +360,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JList" name="listConsolidacionPC">
+                    <Component class="javax.swing.JList" name="listConsolidacion">
                       <Properties>
                         <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                           <StringArray count="0"/>
@@ -386,7 +389,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtObjetivo">
+                <Component class="javax.swing.JTextArea" name="txtObjetivos">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
@@ -405,7 +408,7 @@
                 <Property name="text" type="java.lang.String" value="Recursos:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbltitulo">
+            <Component class="javax.swing.JLabel" name="lblInfo2">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
@@ -422,12 +425,12 @@
                 <Property name="text" type="java.lang.String" value="Estrategias Unidad:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAgregarPC">
+            <Component class="javax.swing.JButton" name="btnAgregar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnQuitarPC">
+            <Component class="javax.swing.JButton" name="btnQuitar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Quitar"/>
               </Properties>
@@ -440,7 +443,7 @@
                 <Property name="text" type="java.lang.String" value="Trabajo Aut&#xf3;nomo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtEstrategias">
+            <Component class="javax.swing.JTextField" name="txtDescripcion">
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane5">
               <AuxValues>
@@ -449,7 +452,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txrContenidos">
+                <Component class="javax.swing.JTextArea" name="txtContenidos">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="lineWrap" type="boolean" value="true"/>
@@ -471,7 +474,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="tblRecursos">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
@@ -513,7 +516,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txrTrabajoAutonomo">
+                <Component class="javax.swing.JTextArea" name="txtTrabajoAutonomo">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="lineWrap" type="boolean" value="true"/>
@@ -523,7 +526,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="lbltitulo1">
+            <Component class="javax.swing.JLabel" name="lblTitulo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="20" style="0"/>
@@ -540,13 +543,13 @@
                 <Property name="text" type="java.lang.String" value="Observaciones:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbltitulo2">
+            <Component class="javax.swing.JLabel" name="lblInfo3">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Curso: {curso} Docente: {carrera}"/>
+                <Property name="text" type="java.lang.String" value="Curso: {curso} Docente: {docente}"/>
               </Properties>
             </Component>
           </SubComponents>

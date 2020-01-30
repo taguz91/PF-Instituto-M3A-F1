@@ -458,7 +458,16 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 + "SELECT\n"
                 + "	\"UnidadSilabo\".id_unidad,\n"
                 + "	\"UnidadSilabo\".id_silabo,\n"
-                + "	\"UnidadSilabo\".numero_unidad \n"
+                + "	\"UnidadSilabo\".numero_unidad,\n"
+                + "	\"UnidadSilabo\".objetivo_especifico_unidad,\n"
+                + "	\"UnidadSilabo\".resultados_aprendizaje_unidad,\n"
+                + "	\"UnidadSilabo\".contenidos_unidad,\n"
+                + "	\"UnidadSilabo\".fecha_inicio_unidad,\n"
+                + "	\"UnidadSilabo\".fecha_fin_unidad,\n"
+                + "	\"UnidadSilabo\".horas_docencia_unidad,\n"
+                + "	\"UnidadSilabo\".horas_practica_unidad,\n"
+                + "	\"UnidadSilabo\".horas_autonomo_unidad,\n"
+                + "	\"UnidadSilabo\".titulo_unidad \n"
                 + "FROM\n"
                 + "	\"UnidadSilabo\"\n"
                 + "	INNER JOIN \"Silabo\" ON \"UnidadSilabo\".id_silabo = \"Silabo\".id_silabo \n"
@@ -479,6 +488,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 + "ORDER BY\n"
                 + "	numero_unidad"
                 + "";
+
         List<UnidadSilaboMD> unidades = new ArrayList<>();
         ResultSet rs = CON.ejecutarQuery(SELECT);
         try {
@@ -487,6 +497,15 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 UnidadSilaboMD unidadSilaboMD = new UnidadSilaboMD();
                 unidadSilaboMD.setId(rs.getInt("id_unidad"));
                 unidadSilaboMD.setNumeroUnidad(rs.getInt("numero_unidad"));
+                unidadSilaboMD.setObjetivoEspecificoUnidad(rs.getString("objetivo_especifico_unidad"));
+                unidadSilaboMD.setResultadosAprendizajeUnidad(rs.getString("resultados_aprendizaje_unidad"));
+                unidadSilaboMD.setContenidosUnidad(rs.getString("contenidos_unidad"));
+                unidadSilaboMD.setFechaInicioUnidad(rs.getDate("fecha_inicio_unidad").toLocalDate());
+                unidadSilaboMD.setFechaFinUnidad(rs.getDate("fecha_fin_unidad").toLocalDate());
+                unidadSilaboMD.setHorasDocenciaUnidad(rs.getDouble("horas_docencia_unidad"));
+                unidadSilaboMD.setHorasPracticaUnidad(rs.getDouble("horas_practica_unidad"));
+                unidadSilaboMD.setHorasAutonomoUnidad(rs.getDouble("horas_autonomo_unidad"));
+                unidadSilaboMD.setTituloUnidad(rs.getString("titulo_unidad"));
 
                 unidades.add(unidadSilaboMD);
             }

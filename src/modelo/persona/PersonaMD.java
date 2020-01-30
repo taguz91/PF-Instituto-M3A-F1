@@ -52,7 +52,6 @@ public class PersonaMD {
     private boolean personaActiva;
 
     //33 atributos
-
     public FileInputStream getFile() {
         return file;
     }
@@ -396,6 +395,17 @@ public class PersonaMD {
 
     public String getInfo() {
         return identificacion + " " + primerApellido + " " + primerNombre;
+    }
+
+    public String getInfoCompleta() {
+        return String.format(
+                "%s %s %s %s %s",
+                this.identificacion,
+                this.primerNombre,
+                this.segundoNombre,
+                this.primerApellido,
+                this.segundoApellido
+        );
     }
 
     @Override

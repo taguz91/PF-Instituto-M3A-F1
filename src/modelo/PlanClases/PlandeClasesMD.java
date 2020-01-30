@@ -182,4 +182,9 @@ public class PlandeClasesMD {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "PlandeClasesMD{" + "id=" + id + ", curso=" + curso + ", unidad=" + unidad + ", observaciones=" + observaciones + ", fechaRevicion=" + fechaRevicion + ", fechaGeneracion=" + fechaGeneracion + ", fechaCierre=" + fechaCierre + ", trabajoAutonomo=" + trabajoAutonomo + ", estado=" + estado + ", materia=" + materia + ", persona=" + persona + '}';
+    }
+
 }

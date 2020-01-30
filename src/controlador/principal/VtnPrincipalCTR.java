@@ -105,7 +105,6 @@ import vista.principal.VtnPrincipal;
 import vista.usuario.VtnHistorialUsuarios;
 import vista.alumno.VtnMatriculasAnuladas;
 import vista.alumno.VtnMatricula;
-import vista.fichas.salud.VtnFichaSalud;
 import vista.materia.FrmMaterias;
 import vista.notas.VtnControlUB;
 import vista.silabos.frmCRUDBibliografia;
