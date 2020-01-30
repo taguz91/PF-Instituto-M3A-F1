@@ -25,50 +25,59 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" alignment="0" pref="784" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="lbBuscarPLC" min="-2" max="-2" attributes="0"/>
-                              <Component id="Carreras" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblBuscar" min="-2" pref="43" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtBuscar" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jlbl13" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="CmbJornadas" min="-2" pref="168" max="-2" attributes="0"/>
+                                      <EmptySpace pref="231" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="cmbPeriodos" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="CmbJornadas" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="Cmb_periodos" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtBuscarPLC" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="Cmb_Carreras" alignment="0" pref="393" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnNuevoPLC" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnEditarPLC" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnEliminarPLC" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnImplimirPlan" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="btnEditarFecha" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btn_editar_fecha" min="-2" pref="148" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btnCopiar" min="-2" pref="148" max="-2" attributes="0"/>
+                                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnImprimir" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="btnCopiar" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="chxSuperSu" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="lblEstado" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,73 +86,62 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtBuscarPLC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbBuscarPLC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNuevoPLC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditarPLC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEliminarPLC" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnImplimirPlan" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="lblBuscar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnNuevo" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEditar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnEliminar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="btnImprimir" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Cmb_Carreras" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Carreras" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_editar_fecha" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCopiar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnEditarFecha" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="btnCopiar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cmbPeriodos" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jlbl13" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="CmbJornadas" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="chxSuperSu" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Cmb_periodos" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="CmbJornadas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="322" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane2" pref="306" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="txtBuscarPLC">
+    <Component class="javax.swing.JTextField" name="txtBuscar">
     </Component>
-    <Component class="javax.swing.JLabel" name="lbBuscarPLC">
+    <Component class="javax.swing.JLabel" name="lblBuscar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnNuevoPLC">
+    <Component class="javax.swing.JButton" name="btnNuevo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nuevo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnEditarPLC">
+    <Component class="javax.swing.JButton" name="btnEditar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnEliminarPLC">
+    <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="Cmb_Carreras">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Carreras">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Carrera:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="CmbJornadas">
@@ -172,19 +170,24 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="0">
-                <Column editable="false" title="PlanCod" type="java.lang.Object"/>
+                <Column editable="false" title="ID" type="java.lang.Object"/>
+                <Column editable="true" title="No." type="java.lang.Object"/>
                 <Column editable="false" title="Docente" type="java.lang.Object"/>
                 <Column editable="false" title="Materia" type="java.lang.Object"/>
                 <Column editable="false" title="Curso" type="java.lang.Object"/>
                 <Column editable="false" title="Unidad" type="java.lang.Object"/>
-                <Column editable="false" title="Estado" type="java.lang.Object"/>
-                <Column editable="true" title="Estado" type="java.lang.Boolean"/>
+                <Column editable="true" title="Estado" type="java.lang.Object"/>
                 <Column editable="false" title="Fecha" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="40" minWidth="40" prefWidth="40" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -214,11 +217,6 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="80" minWidth="-1" prefWidth="80" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="80" minWidth="80" prefWidth="80" resizable="true">
                   <Title/>
                   <Editor/>
@@ -236,7 +234,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JComboBox" name="Cmb_periodos">
+    <Component class="javax.swing.JComboBox" name="cmbPeriodos">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -246,17 +244,17 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="jlbl13">
       <Properties>
         <Property name="text" type="java.lang.String" value="Periodo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnImplimirPlan">
+    <Component class="javax.swing.JButton" name="btnImprimir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Imprimir "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_editar_fecha">
+    <Component class="javax.swing.JButton" name="btnEditarFecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar Fecha"/>
       </Properties>
@@ -264,6 +262,20 @@
     <Component class="javax.swing.JButton" name="btnCopiar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Copiar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chxSuperSu">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Todos Los Periodos"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEstado">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="{estado}"/>
       </Properties>
     </Component>
   </SubComponents>

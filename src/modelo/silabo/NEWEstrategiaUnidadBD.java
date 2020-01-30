@@ -91,7 +91,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
                 eu.setIdEstrategiaUnidad(res.getInt(1));
-                eu.getUnidad().setIdUnidad(res.getInt(2));
+                eu.getUnidad().setId(res.getInt(2));
                 eu.getEstrategia().setIdEstrategia(res.getInt(3));
                 eu.getEstrategia().setDescripcionEstrategia(res.getString(4));
                 eu.getUnidad().setNumeroUnidad(res.getInt(5));
@@ -121,7 +121,7 @@ public class NEWEstrategiaUnidadBD extends CONBD implements IEstrategiaUnidadSil
             while (res.next()) {
                 EstrategiasUnidadMD eu = new EstrategiasUnidadMD();
                 eu.setIdEstrategiaUnidad(0);
-                eu.getUnidad().setIdUnidad(res.getInt(2));
+                eu.getUnidad().setId(res.getInt(2));
                 eu.getEstrategia().setIdEstrategia(res.getInt(3));
                 eu.getEstrategia().setDescripcionEstrategia(res.getString(4));
                 eu.getUnidad().setNumeroUnidad(res.getInt(5));

@@ -749,8 +749,8 @@ public class FRMSilaboCTR extends DCTR {
                 ctrPrin.getVtnPrin().getLblEstado().setText("Guardamos silabo con ID: " + silabo.getID());
                 silabo.setID(silabo.getID());
                 unidades.forEach(u -> {
-                    int idUnidadGenerado = u.getIdUnidad();
-                    if (u.getIdUnidad() == 0) {
+                    int idUnidadGenerado = u.getID();
+                    if (u.getID() == 0) {
                         idUnidadGenerado = USBD.guardar(u, silabo.getID());
                     } else {
                         USBD.editar(u);
@@ -760,7 +760,7 @@ public class FRMSilaboCTR extends DCTR {
                     // Si se guardo la unidad guardamos
                     // estrategias y evaluaciones
                     if (idUnidadGenerado > 0) {
-                        u.setIdUnidad(idUnidadGenerado);
+                        u.setId(idUnidadGenerado);
                         guardarEstrategias(idUnidadGenerado, u.getNumeroUnidad());
                         guardarEvaluaciones(idUnidadGenerado, u.getNumeroUnidad());
                     } else {
@@ -1091,8 +1091,8 @@ public class FRMSilaboCTR extends DCTR {
         eliminandoUnidad = true;
         // Eliminamos de la base 
         boolean eliminado = true;
-        if (unidadSelec.getIdUnidad() > 0) {
-            eliminado = USBD.eliminar(unidadSelec.getIdUnidad());
+        if (unidadSelec.getID() > 0) {
+            eliminado = USBD.eliminar(unidadSelec.getID());
         }
 
         if (eliminado) {

@@ -9,7 +9,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.carrera.CarreraMD;
 import modelo.curso.CursoMD;
+import modelo.materia.MateriaMD;
+import modelo.periodolectivo.PeriodoLectivoMD;
+import modelo.persona.DocenteMD;
 import modelo.silabo.mbd.ICursoBD;
 import utils.CONS;
 
@@ -239,6 +243,82 @@ public class NEWCursoBD implements ICursoBD {
 
         return lista;
 
+    }
+
+    public List<CursoMD> getCursosMateriasBy(String periodo, int idPersona) {
+        String SELECT = ""
+                + "SELECT\n"
+                + "     \"Cursos\".curso_nombre,\n"
+                + "     \"Cursos\".id_curso,\n"
+                + "     \"Materias\".id_materia,\n"
+                + "     \"Materias\".materia_nombre,\n"
+                + "     \"Materias\".materia_codigo,\n"
+                + "     \"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "     \"PeriodoLectivo\".prd_lectivo_nombre,\n"
+                + "     \"Personas\".persona_identificacion,\n"
+                + "     \"Personas\".persona_primer_apellido,\n"
+                + "     \"Personas\".persona_segundo_apellido,\n"
+                + "     \"Personas\".persona_primer_nombre,\n"
+                + "     \"Personas\".persona_segundo_nombre,\n"
+                + "     \"PeriodoLectivo\".id_prd_lectivo,\n"
+                + "     \"Carreras\".carrera_nombre,\n"
+                + "     \"Carreras\".id_carrera\n"
+                + "FROM\n"
+                + "     \"Cursos\"\n"
+                + "     INNER JOIN \"Materias\" ON \"Cursos\".id_materia = \"Materias\".id_materia\n"
+                + "     INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
+                + "     INNER JOIN \"PeriodoLectivo\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
+                + "     INNER JOIN \"Personas\" ON \"Docentes\".id_persona = \"Personas\".id_persona\n"
+                + "     INNER JOIN \"Carreras\" ON \"PeriodoLectivo\".id_carrera = \"Carreras\".id_carrera\n"
+                + "WHERE\n"
+                + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
+                + "	AND \"Docentes\".id_persona = " + idPersona + "\n"
+                + "ORDER BY \"Cursos\".curso_nombre, \"Materias\".materia_nombre"
+                + "";
+
+        List<CursoMD> cursos = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        try {
+            while (rs.next()) {
+                MateriaMD materiaMD = new MateriaMD();
+                materiaMD.setId(rs.getInt("id_materia"));
+                materiaMD.setNombre(rs.getString("materia_nombre"));
+                materiaMD.setCodigo(rs.getString("materia_codigo"));
+
+                DocenteMD docenteMD = new DocenteMD();
+                docenteMD.setIdentificacion(rs.getString("persona_identificacion"));
+                docenteMD.setPrimerNombre(rs.getString("persona_primer_nombre"));
+                docenteMD.setSegundoNombre(rs.getString("persona_segundo_nombre"));
+                docenteMD.setPrimerApellido(rs.getString("persona_primer_apellido"));
+                docenteMD.setSegundoApellido(rs.getString("persona_segundo_apellido"));
+
+                CarreraMD carreraMD = new CarreraMD();
+                carreraMD.setId(rs.getInt("id_carrera"));
+                carreraMD.setNombre(rs.getString("carrera_nombre"));
+
+                PeriodoLectivoMD periodoLectivoMD = new PeriodoLectivoMD();
+                periodoLectivoMD.setID(rs.getInt("id_prd_lectivo"));
+                periodoLectivoMD.setNombre(rs.getString("prd_lectivo_nombre"));
+                periodoLectivoMD.setCarrera(carreraMD);
+
+                CursoMD cursoMD = new CursoMD();
+                cursoMD.setId(rs.getInt("id_curso"));
+                cursoMD.setNombre(rs.getString("curso_nombre"));
+                cursoMD.setMateria(materiaMD);
+                cursoMD.setDocente(docenteMD);
+                cursoMD.setPeriodo(periodoLectivoMD);
+                cursos.add(cursoMD);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWCursoBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close(rs);
+        }
+
+        return cursos;
     }
 
 }

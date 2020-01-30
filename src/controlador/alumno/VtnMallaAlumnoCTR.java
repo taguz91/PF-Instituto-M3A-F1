@@ -163,7 +163,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
      * Iniciamos los permisos si son tester
      */
     private void InitPermisosTester() {
-        if (ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
+        if (CONS.ROL.getNombre().equalsIgnoreCase("TESTER")) {
             vtnMallaAlm.getBtnIngNota().setEnabled(false);
             vtnMallaAlm.getBtnActualizarNota().setEnabled(false);
             vtnMallaAlm.getTxtBuscar().setEnabled(false);
@@ -383,7 +383,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         vtnMallaAlm.getCmbCarreras().removeAllItems();
         if (carreras != null) {
             vtnMallaAlm.getCmbCarreras().addItem("Seleccione");
-            if (!ctrPrin.getRolSeleccionado().getNombre().equalsIgnoreCase("TESTER")) {
+            if (!CONS.ROL.getNombre().equalsIgnoreCase("TESTER")) {
                 carreras.forEach(c -> {
                     vtnMallaAlm.getCmbCarreras().addItem(c.getCodigo());
                 });

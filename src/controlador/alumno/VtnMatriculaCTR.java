@@ -86,11 +86,11 @@ public class VtnMatriculaCTR extends DVtnCTR {
     private void clickAnular() {
         posFila = vtnMatri.getTblMatricula().getSelectedRow();
         if (posFila >= 0) {
-            if(CONS.M_DESARROLLO){
+            if (CONS.M_DESARROLLO) {
                 JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(ctrPrin, matriculas.get(posFila));
                 ctr.iniciar();
             }
-            
+
             if (validarFecha()) {
                 JDAnularMatriculaCTR ctr = new JDAnularMatriculaCTR(ctrPrin, matriculas.get(posFila));
                 ctr.iniciar();
@@ -160,8 +160,8 @@ public class VtnMatriculaCTR extends DVtnCTR {
         vtnMatri.getBtnNumMatricula().addActionListener(e -> clickNumMatricula());
         vtnMatri.getBtnReporteTipoMatricula().addActionListener(e -> abrirJDReporteTipoMatricula());
     }
-    
-    private void abrirJDReporteTipoMatricula(){
+
+    private void abrirJDReporteTipoMatricula() {
         JDReporteTipoMatriculaCTR ctr = new JDReporteTipoMatriculaCTR(ctrPrin, periodos);
         ctr.iniciar();
     }
@@ -344,7 +344,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
-            parametro.put("usuario", ctrPrin.getUsuario().getUsername());
+            parametro.put("usuario", CONS.USUARIO.getUsername());
             CON.mostrarReporte(jr, parametro, "Reporte de Matricula");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);
@@ -360,7 +360,7 @@ public class VtnMatriculaCTR extends DVtnCTR {
             Map parametro = new HashMap();
             parametro.put("cedula", matriculas.get(posFila).getAlumno().getIdentificacion());
             parametro.put("idPeriodo", matriculas.get(posFila).getPeriodo().getID());
-            parametro.put("usuario", ctrPrin.getUsuario().getUsername());
+            parametro.put("usuario", CONS.USUARIO.getUsername());
             CON.mostrarReporte(jr, parametro, "Reporte de Matricula | Sin foto");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "error" + ex);

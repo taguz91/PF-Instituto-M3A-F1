@@ -60,7 +60,7 @@ public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion,
                 + "CURSO: " + curso.getNombre()
         );
 
-        this.evaluaciones = EVAL_CONN.getByUnidad(unidad.getIdUnidad(), curso.getId());
+        this.evaluaciones = EVAL_CONN.getByUnidad(unidad.getID(), curso.getId());
 
         if (this.evaluaciones.isEmpty()) {
             vista.dispose();
@@ -76,7 +76,7 @@ public class FrmSeguimientoEvalCTR extends AbstractVTN<FrmSeguimientoEvaluacion,
 
         cargarCmbEvaluaciones();
 
-        System.out.println("ID UNIDAD: " + unidad.getIdUnidad());
+        System.out.println("ID UNIDAD: " + unidad.getID());
         System.out.println("ID SILABO: " + silabo.getID());
         System.out.println("ID CURSO: " + curso.getId());
 

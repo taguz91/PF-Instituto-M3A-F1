@@ -297,21 +297,6 @@
                 <Property name="text" type="java.lang.String" value="Biblioteca"/>
               </Properties>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="mnFichas">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/vista/img/icons8-notas-20px .png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Fichas"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mnCtFichaSalud">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fichas de Salud"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="mnCtComprobantes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Comprobantes"/>
