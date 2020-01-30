@@ -176,7 +176,7 @@ public class PlandeClasesBD extends CONBD {
     }
 
     public static void editarEstado(int id_plan, int estado) {
-        System.out.println(id_plan);
+        
         String UPDATE = "UPDATE \"PlandeClases\" \n"
                 + "SET estado_plan = " + estado + " \n"
                 + "WHERE\n"
@@ -346,8 +346,7 @@ public class PlandeClasesBD extends CONBD {
                 + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
-
-        System.out.println("---COR");
+        
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -434,7 +433,7 @@ public class PlandeClasesBD extends CONBD {
                 + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
-        System.out.println("---SU");
+        
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -522,8 +521,6 @@ public class PlandeClasesBD extends CONBD {
                 + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
-
-        System.out.println(SELECT);
 
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
