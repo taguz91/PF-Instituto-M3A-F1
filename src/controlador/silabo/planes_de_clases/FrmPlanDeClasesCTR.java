@@ -7,6 +7,7 @@ package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import javax.swing.DefaultListModel;
 import modelo.PlanClases.PlandeClasesMD;
 import vista.silabos.new_planes_de_clase.FrmPlanDeClase;
 
@@ -57,6 +58,17 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
         this.vista.getLblInfo2().setText(lblInfo2);
         this.vista.getLblInfo3().setText(lblInfo3);
 
+        this.vista.getTxtObjetivos().setText(this.modelo.getUnidad().getObjetivoEspecificoUnidad());
+        this.vista.getTxtResultadosAprendizaje().setText(this.modelo.getUnidad().getResultadosAprendizajeUnidad());
+        this.vista.getTxtContenidos().setText(this.modelo.getUnidad().getContenidosUnidad());
+
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+
+        this.modelo.getUnidad().getEstrategias()
+                .stream()
+                .map(c -> c.getEstrategia().getDescripcionEstrategia())
+                .forEach(listModel::addElement);
+        this.vista.getTxtEstrategiasUnidad().setModel(listModel);
     }
 
 }

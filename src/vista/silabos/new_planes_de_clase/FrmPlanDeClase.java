@@ -23,148 +23,74 @@ public class FrmPlanDeClase extends AbstracView {
         return btnAgregar;
     }
 
-    public void setBtnAgregar(JButton btnAgregar) {
-        this.btnAgregar = btnAgregar;
-    }
-
     public JButton getBtnCancelar() {
         return btnCancelar;
-    }
-
-    public void setBtnCancelar(JButton btnCancelar) {
-        this.btnCancelar = btnCancelar;
     }
 
     public JButton getBtnEditar() {
         return btnEditar;
     }
 
-    public void setBtnEditar(JButton btnEditar) {
-        this.btnEditar = btnEditar;
-    }
-
     public JButton getBtnGuardar() {
         return btnGuardar;
-    }
-
-    public void setBtnGuardar(JButton btnGuardar) {
-        this.btnGuardar = btnGuardar;
     }
 
     public JButton getBtnQuitar() {
         return btnQuitar;
     }
 
-    public void setBtnQuitar(JButton btnQuitar) {
-        this.btnQuitar = btnQuitar;
-    }
-
     public JLabel getLblInfo1() {
         return lblInfo1;
-    }
-
-    public void setLblInfo1(JLabel lblInfo1) {
-        this.lblInfo1 = lblInfo1;
     }
 
     public JLabel getLblInfo2() {
         return lblInfo2;
     }
 
-    public void setLblInfo2(JLabel lblInfo2) {
-        this.lblInfo2 = lblInfo2;
-    }
-
     public JLabel getLblInfo3() {
         return lblInfo3;
-    }
-
-    public void setLblInfo3(JLabel lblInfo3) {
-        this.lblInfo3 = lblInfo3;
     }
 
     public JLabel getLblTitulo() {
         return lblTitulo;
     }
 
-    public void setLblTitulo(JLabel lblTitulo) {
-        this.lblTitulo = lblTitulo;
-    }
-
     public JTable getTblRecursos() {
         return tblRecursos;
-    }
-
-    public void setTblRecursos(JTable tblRecursos) {
-        this.tblRecursos = tblRecursos;
     }
 
     public JTabbedPane getTbpEstrategiasPC() {
         return tbpEstrategiasPC;
     }
 
-    public void setTbpEstrategiasPC(JTabbedPane tbpEstrategiasPC) {
-        this.tbpEstrategiasPC = tbpEstrategiasPC;
-    }
-
     public JTextArea getTxtContenidos() {
         return txtContenidos;
-    }
-
-    public void setTxtContenidos(JTextArea txtContenidos) {
-        this.txtContenidos = txtContenidos;
     }
 
     public JTextField getTxtDescripcion() {
         return txtDescripcion;
     }
 
-    public void setTxtDescripcion(JTextField txtDescripcion) {
-        this.txtDescripcion = txtDescripcion;
-    }
-
     public JList<String> getTxtEstrategiasUnidad() {
         return txtEstrategiasUnidad;
-    }
-
-    public void setTxtEstrategiasUnidad(JList<String> txtEstrategiasUnidad) {
-        this.txtEstrategiasUnidad = txtEstrategiasUnidad;
     }
 
     public JTextArea getTxtObjetivos() {
         return txtObjetivos;
     }
 
-    public void setTxtObjetivos(JTextArea txtObjetivos) {
-        this.txtObjetivos = txtObjetivos;
-    }
-
     public JTextArea getTxtObservaciones() {
         return txtObservaciones;
-    }
-
-    public void setTxtObservaciones(JTextArea txtObservaciones) {
-        this.txtObservaciones = txtObservaciones;
     }
 
     public JTextArea getTxtResultadosAprendizaje() {
         return txtResultadosAprendizaje;
     }
 
-    public void setTxtResultadosAprendizaje(JTextArea txtResultadosAprendizaje) {
-        this.txtResultadosAprendizaje = txtResultadosAprendizaje;
-    }
-
     public JTextArea getTxtTrabajoAutonomo() {
         return txtTrabajoAutonomo;
     }
 
-    public void setTxtTrabajoAutonomo(JTextArea txtTrabajoAutonomo) {
-        this.txtTrabajoAutonomo = txtTrabajoAutonomo;
-    }
-
-    
-    
     
     
     

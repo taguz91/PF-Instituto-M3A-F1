@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.ConnDBPool;
+import modelo.estrategiasAprendizaje.EstrategiasAprendizajeMD;
+import modelo.estrategiasUnidad.EstrategiasUnidadMD;
 import modelo.silabo.mbd.IUnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboBD;
 import modelo.unidadSilabo.UnidadSilaboMD;
@@ -507,6 +509,8 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
                 unidadSilaboMD.setHorasAutonomoUnidad(rs.getDouble("horas_autonomo_unidad"));
                 unidadSilaboMD.setTituloUnidad(rs.getString("titulo_unidad"));
 
+                unidadSilaboMD.setEstrategias(getEstrategiasUnidad(rs.getInt("id_unidad")));
+
                 unidades.add(unidadSilaboMD);
             }
         } catch (SQLException ex) {
@@ -518,4 +522,34 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return unidades;
     }
 
+    private static List<EstrategiasUnidadMD> getEstrategiasUnidad(int idUnidad) throws SQLException {
+        String SELECT = ""
+                + "SELECT\n"
+                + "	\"EstrategiasAprendizaje\".descripcion_estrategia \n"
+                + "FROM\n"
+                + "	\"EstrategiasUnidad\"\n"
+                + "	INNER JOIN \"EstrategiasAprendizaje\" ON \"EstrategiasUnidad\".id_estrategia = \"EstrategiasAprendizaje\".id_estrategia \n"
+                + "WHERE\n"
+                + "	\"EstrategiasUnidad\".id_unidad = " + idUnidad
+                + "";
+
+        List<EstrategiasUnidadMD> estrategias = new ArrayList<>();
+
+        ResultSet rs = CON.ejecutarQuery(SELECT);
+
+        while (rs.next()) {
+            EstrategiasAprendizajeMD aprendizajeMD = new EstrategiasAprendizajeMD();
+            aprendizajeMD.setDescripcionEstrategia(rs.getString("descripcion_estrategia"));
+
+            EstrategiasUnidadMD estrategiasUnidadMD = new EstrategiasUnidadMD();
+            estrategiasUnidadMD.setEstrategia(aprendizajeMD);
+
+            estrategias.add(estrategiasUnidadMD);
+        }
+
+        CON.close(rs);
+
+        return estrategias;
+
+    }
 }
