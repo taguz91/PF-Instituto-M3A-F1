@@ -79,7 +79,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         mdlTbl = TblEstilo.modelTblSinEditar(datos, titulo);
         TblEstilo.formatoTbl(vtnMallaAlm.getTblMallaAlumno());
         vtnMallaAlm.getTblMallaAlumno().setModel(mdlTbl);
-        TblEstilo.ocualtarID(vtnMallaAlm.getTblMallaAlumno());
+        //TblEstilo.ocualtarID(vtnMallaAlm.getTblMallaAlumno());
 
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 4, 60);
         TblEstilo.columnaMedida(vtnMallaAlm.getTblMallaAlumno(), 5, 60);
