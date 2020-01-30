@@ -1,0 +1,4 @@
+git log --pretty=format:'%h por %an, tiempo: %ar : %s' --graph > logInfo.log 
+
+# Sin BRANCH FORMAT
+git log --pretty=format:'%h por %an, hace %ar, mensaje: %s' > logSinBF.log
