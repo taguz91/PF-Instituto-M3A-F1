@@ -100,6 +100,7 @@ public class PlandeClasesBD extends CONBD {
                 + "		INNER JOIN \"Cursos\" ON \"Cursos\".id_curso = \"PlandeClases\".id_curso \n"
                 + "	WHERE\n"
                 + "		\"PlandeClases\".id_plan_clases = " + idPlanClasesRef + " \n"
+                + "             AND \"Cursos\".curso_activo IS TRUE"
                 + "	),\n"
                 + "	mis_planes AS (\n"
                 + "	SELECT\n"
@@ -123,7 +124,8 @@ public class PlandeClasesBD extends CONBD {
                 + "		\"Cursos\".id_docente,\n"
                 + "		\"Cursos\".id_materia,\n"
                 + "		\"Cursos\".curso_nombre,\n"
-                + "		\"Cursos\".id_curso \n"
+                + "		\"Cursos\".id_curso, \n"
+                + "		\"Cursos\".curso_activo \n"
                 + "	FROM\n"
                 + "		\"Cursos\"\n"
                 + "		INNER JOIN mi_info ON mi_info.id_prd_lectivo = \"Cursos\".id_prd_lectivo \n"
@@ -131,12 +133,13 @@ public class PlandeClasesBD extends CONBD {
                 + "		AND mi_info.id_docente = \"Cursos\".id_docente\n"
                 + "	)\n"
                 + "	SELECT\n"
-                + "    mis_cursos.id_curso,\n"
-                + "    mis_cursos.curso_nombre\n"
+                + "             mis_cursos.id_curso,\n"
+                + "             mis_cursos.curso_nombre\n"
                 + "	FROM\n"
                 + "		mis_cursos \n"
                 + "	WHERE\n"
                 + "		mis_cursos.id_curso NOT IN ( SELECT id_curso FROM mis_planes )"
+                + "             AND mis_cursos.curso_activo IS TRUE"
                 + "";
 
         List<CursoMD> lista = new ArrayList<>();
@@ -173,7 +176,7 @@ public class PlandeClasesBD extends CONBD {
     }
 
     public static void editarEstado(int id_plan, int estado) {
-        System.out.println(id_plan);
+
         String UPDATE = "UPDATE \"PlandeClases\" \n"
                 + "SET estado_plan = " + estado + " \n"
                 + "WHERE\n"
@@ -344,7 +347,6 @@ public class PlandeClasesBD extends CONBD {
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
-        System.out.println("---COR");
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -431,7 +433,7 @@ public class PlandeClasesBD extends CONBD {
                 + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
-        System.out.println("---SU");
+
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -520,8 +522,6 @@ public class PlandeClasesBD extends CONBD {
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
-        System.out.println(SELECT);
-
         ResultSet rs = CON.ejecutarQuery(SELECT);
 
         try {
@@ -601,8 +601,8 @@ public class PlandeClasesBD extends CONBD {
     public static boolean editar(PlandeClasesMD plan) {
         String UPDATE = ""
                 + "UPDATE \"PlandeClases\" \n"
-                + "SET trabajo_autonomo = '',\n"
-                + "observaciones = '' \n"
+                + "SET trabajo_autonomo = '" + plan.getTrabajoAutonomo() + "',\n"
+                + "observaciones = '" + plan.getObservaciones() + "' \n"
                 + "WHERE\n"
                 + "	\"PlandeClases\".id_plan_clases = " + plan.getID()
                 + "";

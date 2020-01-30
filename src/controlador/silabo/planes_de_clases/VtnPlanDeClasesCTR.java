@@ -229,13 +229,13 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         } else {
             int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
             PlandeClasesMD plandeClasesMD = PlandeClasesBD.getPlanBy(idPlan);
-            if (plandeClasesMD.getEstado() != 1 && !this.user.isIsSuperUser() && !CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
+            if (plandeClasesMD.getEstado() != 1 || !this.user.isIsSuperUser() || !CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")) {
                 FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
                 form.setAccion("edit");
                 form.setModelo(plandeClasesMD);
                 form.Init();
             } else {
-                JOptionPane.showMessageDialog(null, "NO PUEDE EDITAR UN PLAN DE CLASES QUE YA ESTA APLOBADO");
+                JOptionPane.showMessageDialog(null, "NO PUEDE EDITAR UN PLAN DE CLASES QUE YA ESTA APROBADO");
             }
         }
     }
@@ -247,10 +247,28 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         if (row == -1) {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
         } else {
-            int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
-            PlandeClasesBD.eliminarPlanClase(idPlan);
-            setLista();
-            cargarTabla(cargador());
+
+            String MENSAJE_ELIMINAR = String.format(
+                    "¿ESTA SEGURO DE ELIMINAR EL PLAN DE CLASES?\n"
+            );
+
+            int opcionEliminado = JOptionPane.showConfirmDialog(
+                    vista,
+                    MENSAJE_ELIMINAR,
+                    "¿ESTA SEGURO?",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (opcionEliminado == JOptionPane.YES_OPTION) {
+                int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+                PlandeClasesBD.eliminarPlanClase(idPlan);
+                setLista();
+                cargarTabla(cargador());
+
+                JOptionPane.showMessageDialog(vista, "SE HA ELIMINADO CORRECTAMENTE");
+
+            }
+
         }
 
     }
@@ -308,6 +326,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
                     .get();
             VtnEditarFechaPlanCTR vtn = new VtnEditarFechaPlanCTR(desktop, plan);
             vtn.Init();
+
         }
 
     }
@@ -342,6 +361,7 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         int colum = table.getSelectedColumn();
         int row = getSelectedRow();
         int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+        
         PlandeClasesMD plan = this.lista.stream()
                 .filter(item -> item.getID() == idPlan)
                 .findFirst()
@@ -352,9 +372,9 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
 
             if (plan.getEstado() != PlandeClasesMD.getEstadoInt(estado)) {
                 plan.setEstado(PlandeClasesMD.getEstadoInt(estado));
+                PlandeClasesBD.editarEstado(idPlan, PlandeClasesMD.getEstadoInt(estado));
                 setLista();
                 cargarTabla(cargador());
-                PlandeClasesBD.editarEstado(idPlan, PlandeClasesMD.getEstadoInt(estado));
 
             }
         }

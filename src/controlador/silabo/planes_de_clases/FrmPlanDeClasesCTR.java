@@ -12,8 +12,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -58,6 +61,11 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
         cargarEstrategias();
         InitEventos();
         super.Init(); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.vista.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(FrmPlanDeClasesCTR.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void InitEventos() {
@@ -237,7 +245,6 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
     private void txtTrabajoAutonomo(KeyEvent e) {
 
         String trabajoAutonomo = this.vista.getTxtTrabajoAutonomo().getText();
-        System.out.println("----------->" + trabajoAutonomo);
         this.modelo.setTrabajoAutonomo(trabajoAutonomo);
 
     }

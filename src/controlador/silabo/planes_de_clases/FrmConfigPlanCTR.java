@@ -10,10 +10,8 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
-import modelo.PlanClases.RecursosMD;
 import modelo.curso.CursoMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWCursoBD;
@@ -89,6 +87,12 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
                 getCurso().getMateria().getId(),
                 getCurso().getId()
         );
+
+        if (this.unidades.size() > 0) {
+            this.vista.getBtnSiguiente().setEnabled(true);
+        } else {
+            this.vista.getBtnSiguiente().setEnabled(false);
+        }
 
         this.unidades.stream()
                 .map(c -> String.valueOf(c.getNumeroUnidad()))
