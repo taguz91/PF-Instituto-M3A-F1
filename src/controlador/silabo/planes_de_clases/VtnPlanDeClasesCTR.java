@@ -1,11 +1,14 @@
 package controlador.silabo.planes_de_clases;
 
+import controlador.Libraries.Middlewares;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.Libraries.cellEditor.ComboBoxCellEditor;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.JOptionPane;
 import modelo.PlanClases.PlandeClasesBD;
@@ -44,7 +47,11 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             this.jornadas = JornadaBD.cargarJornadas();
             cargarCmbPeriodos();
             cargarJornadas();
+            cargarTabla(cargador());
         }
+
+        this.vista.getBtnEliminar().setVisible(CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR"));
+        this.vista.getBtnEditarFecha().setVisible(CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR"));
 
         InitEventos();
         super.Init();
@@ -56,6 +63,11 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
         this.vista.getCmbPeriodos().addActionListener(this::cargarTablaAsEvent);
         this.vista.getCmbJornadas().addActionListener(this::cargarTablaAsEvent);
         this.vista.getBtnNuevo().addActionListener(this::btnNuevo);
+        this.vista.getBtnEditar().addActionListener(e -> btnEditar(e));
+        this.vista.getBtnEliminar().addActionListener(e -> btnEliminar(e));
+        this.vista.getBtnCopiar().addActionListener(e -> btnCopiar(e));
+        this.vista.getBtnEditarFecha().addActionListener(e -> btnEditarFecha(e));
+        this.vista.getBtnImprimir().addActionListener(e -> btnImprimir(e));
 
         boolean estado = CONS.ROL.getNombre().equalsIgnoreCase("COORDINADOR")
                 || CONS.ROL.getNombre().equalsIgnoreCase("DEV")
@@ -110,17 +122,43 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     }
 
     private Consumer<PlandeClasesMD> cargador() {
+        try {
+
+            String periodo = this.vista.getCmbPeriodos().getSelectedItem().toString();
+            String cedulaDocente = CONS.USUARIO.getPersona().getIdentificacion();
+            String jornada = this.vista.getCmbJornadas().getSelectedItem().toString();
+
+            boolean isSuperUserChecked = this.vista.getChxSuperSu().isSelected();
+            if (isSuperUserChecked) {
+
+            } else {
+            }
+
+            if (vista.getChxSuperSu().isSelected()) {
+                setLista(CON.getPlanesSuperSu(periodo, jornada));
+            } else if (CONS.is("DOCENTE")) {
+                setLista(CON.getPlanesBy(cedulaDocente, periodo, jornada));
+            } else if (CONS.is("COORDINADOR")) {
+                setLista(CON.getPlanesCoordinadorBy(cedulaDocente, periodo, jornada));
+            } else if (CONS.isSuperSU()) {
+                setLista(CON.getPlanesSuperSu(periodo, jornada));
+            }
+
+            return obj -> {
+                tableM.addRow(new Object[]{
+                    obj.getID(),
+                    tableM.getRowCount() + 1,
+                    obj.getInfoDocente(),
+                    obj.getCurso().getMateria().getNombre(),
+                    obj.getCurso().getNombre(),
+                    obj.getUnidad().getNumeroUnidad(),
+                    PlandeClasesMD.getEstadoStr(obj.getEstado()),
+                    obj.getFechaGeneracion()
+                });
+            };
+        } catch (NullPointerException e) {
+        }
         return obj -> {
-            tableM.addRow(new Object[]{
-                obj.getID(),
-                tableM.getRowCount() + 1,
-                obj.getInfoDocente(),
-                obj.getCurso().getMateria().getNombre(),
-                obj.getCurso().getNombre(),
-                obj.getUnidad().getNumeroUnidad(),
-                PlandeClasesMD.getEstadoStr(obj.getEstado()),
-                obj.getFechaGeneracion()
-            });
         };
     }
 
@@ -133,11 +171,6 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     }
 
     private void cargarTablaAsEvent(ActionEvent e) {
-        String periodo = this.vista.getCmbPeriodos().getSelectedItem().toString();
-        String cedulaDocente = CONS.USUARIO.getPersona().getIdentificacion();
-        String jornada = this.vista.getCmbJornadas().getSelectedItem().toString();
-        setLista(CON.getPlanesBy(cedulaDocente, periodo, jornada));
-
         cargarTabla(cargador());
 
     }
@@ -145,6 +178,92 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
     private void btnNuevo(ActionEvent e) {
         FrmConfigPlanCTR form = new FrmConfigPlanCTR(desktop);
         form.Init();
+    }
+
+    private void btnEditar(ActionEvent e) {
+
+        int row = getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
+        } else {
+            int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+            PlandeClasesMD plandeClasesMD = PlandeClasesBD.getPlanBy(idPlan);
+            FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
+            form.setAccion("edit");
+            form.setModelo(plandeClasesMD);
+            form.Init();
+        }
+    }
+
+    private void btnEliminar(ActionEvent e) {
+
+        int row = getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
+        } else {
+            int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+            PlandeClasesBD.eliminarPlanClase(idPlan);
+            cargarTabla(cargador());
+        }
+
+    }
+
+    private void btnCopiar(ActionEvent e) {
+
+        int row = getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
+        } else {
+
+        }
+
+    }
+
+    private void btnEditarFecha(ActionEvent e) {
+
+        int row = getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PRIMERO!!");
+        } else {
+            int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+            PlandeClasesMD plan = this.lista.stream()
+                    .filter(item -> item.getID() == idPlan)
+                    .findFirst()
+                    .get();
+            VtnEditarFechaPlanCTR vtn = new VtnEditarFechaPlanCTR(desktop, plan);
+            vtn.Init();
+        }
+
+    }
+
+    private void btnImprimir(ActionEvent e) {
+
+        int row = vista.getTbl().getSelectedRow();
+
+        if (row >= 0) {
+            Map parametro = new HashMap();
+            int idPlan = Integer.valueOf(getTableM().getValueAt(row, 0).toString());
+            PlandeClasesMD plan = this.lista.stream()
+                    .filter(item -> item.getID() == idPlan)
+                    .findFirst()
+                    .get();
+            parametro.put("id_unidad", String.valueOf(plan.getUnidad().getID()));
+            parametro.put("id_curso", String.valueOf(plan.getCurso().getId()));
+            parametro.put("id_plan_clase", String.valueOf(idPlan));
+
+            Middlewares.generarReporte(
+                    getClass().getResource("/vista/silabos/reportes/plan_de_clase/planClasePagPrincipal.jasper"),
+                    "PLAN DE CLASES",
+                    parametro);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "DEBE SELECIONAR EL DOCUMENTO PARA IMPRIMIR");
+        }
+
     }
 
 }

@@ -77,7 +77,7 @@ public class UnidadSilaboMD implements Serializable {
         this.bandera = bandera;
     }
 
-    public Integer getIdUnidad() {
+    public Integer getID() {
         return idUnidad;
     }
 

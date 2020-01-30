@@ -74,7 +74,7 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
         } else {
             vista.getCmbCurso().setEnabled(true);
             vista.getBtnSiguiente().setEnabled(true);
-            cursosRef = CURSO_CONN.getDeReferenciaSeguimientoEval(getUnidad().getIdUnidad());
+            cursosRef = CURSO_CONN.getDeReferenciaSeguimientoEval(getUnidad().getID());
             if (cursosRef.size() < 1) {
 
                 vista.getCmbCursoRef().addItem("NO TIENE");
@@ -147,7 +147,7 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
 
             misCursos = CURSO_CONN.getFaltantesSeguimientoEval(
                     getSilabo(),
-                    getUnidad().getIdUnidad()
+                    getUnidad().getID()
             );
             this.validarCmbCursos();
             misCursos.stream()
@@ -171,9 +171,9 @@ public class VtnConfigSeguimientoEvalCTR extends AbstractVTN<VtnConfigSeguimient
             );
 
             if (vista.getCmbCursoRef().getSelectedIndex() != 0) {
-                CONN.copiarSeguimientos(getCurso().getId(), getUnidad().getIdUnidad(), getCursoRef().getId());
+                CONN.copiarSeguimientos(getCurso().getId(), getUnidad().getID(), getCursoRef().getId());
             } else {
-                CONN.crearSeguimientos(getUnidad().getIdUnidad(), getCurso().getId());
+                CONN.crearSeguimientos(getUnidad().getID(), getCurso().getId());
             }
 
             try {

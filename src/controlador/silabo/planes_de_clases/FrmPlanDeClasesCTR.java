@@ -7,12 +7,19 @@ package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
+import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.PlanClases.RecursosBD;
 import modelo.PlanClases.RecursosMD;
@@ -27,10 +34,17 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
     private List<RecursosMD> recursos;
 
     private DefaultTableModel tableRecursosM;
+    private DefaultTableModel tableEstrategiasM;
+
+    private String accion;
 
     public FrmPlanDeClasesCTR(VtnPrincipalCTR desktop) {
         super(desktop);
         this.vista = new FrmPlanDeClase();
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 
     @Override
@@ -38,8 +52,10 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
 
         this.recursos = RecursosBD.consultarRecursos();
         this.tableRecursosM = (DefaultTableModel) this.vista.getTblRecursos().getModel();
+        this.tableEstrategiasM = (DefaultTableModel) this.vista.getTblEstrategias().getModel();
         cargarRecursos();
         setInformacionUnidad();
+        cargarEstrategias();
         InitEventos();
         super.Init(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -52,10 +68,34 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
             }
 
         });
+
+        this.vista.getBtnAgregar().addActionListener(this::btnAgregar);
+        this.vista.getBtnQuitar().addActionListener(this::btnQuitar);
+
+        this.vista.getBtnCancelar().addActionListener(e -> this.vista.dispose());
+        this.vista.getBtnGuardar().addActionListener(this::btnGuardar);
+
+        this.vista.getTxtTrabajoAutonomo().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtTrabajoAutonomo(e);
+            }
+
+        });
+        this.vista.getTxtObservaciones().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                txtObservaciones(e);
+            }
+
+        });
     }
 
     //FACTORIZACION
     private void setInformacionUnidad() {
+
+        this.vista.getTxtTrabajoAutonomo().setText(this.modelo.getTrabajoAutonomo());
+        this.vista.getTxtObservaciones().setText(this.modelo.getObservaciones());
 
         String lblTitulo = this.vista.getLblTitulo()
                 .getText()
@@ -130,6 +170,21 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
                 });
     }
 
+    private void cargarEstrategias() {
+        this.tableEstrategiasM.setRowCount(0);
+        this.modelo.getEstrategias()
+                .forEach(obj -> {
+                    String uuid = UUID.randomUUID().toString();
+                    obj.setUUID(uuid);
+                    this.tableEstrategiasM.addRow(new Object[]{
+                        uuid,
+                        obj.getNombre_estrategia(),
+                        obj.getTipo_estrategias_metodologicas()
+                    });
+                }
+                );
+    }
+
     private void onTableRecursosClicked(MouseEvent e) {
         RecursosMD recurso = getRecurso();
         if (recurso != null) {
@@ -142,7 +197,72 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
 
         }
 
+    }
+
+    private void btnAgregar(ActionEvent e) {
+        String descripcion = this.vista.getTxtDescripcion().getText();
+
+        if (descripcion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "POR FAVOR INGRESE BIEN LA DESCRIPCION");
+        } else {
+
+            String tipo = this.vista.getCmbTipo().getSelectedItem().toString();
+            EstrategiasMetodologicasMD estrategia = new EstrategiasMetodologicasMD();
+            estrategia.setNombre_estrategia(descripcion);
+            estrategia.setTipo_estrategias_metodologicas(tipo);
+
+            this.modelo.getEstrategias().add(estrategia);
+
+            this.vista.getTxtDescripcion().setText("");
+            this.vista.getCmbTipo().setSelectedIndex(0);
+
+            cargarEstrategias();
+
+        }
+    }
+
+    private void btnQuitar(ActionEvent e) {
+        int row = this.vista.getTblEstrategias().getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "DEBE SELECCIONAR UNA FILA DE LA TABLA!!");
+        } else {
+            String uuid = this.tableEstrategiasM.getValueAt(row, 0).toString();
+            this.modelo.getEstrategias()
+                    .removeIf(item -> item.getUUID().equals(uuid));
+
+            cargarEstrategias();
+        }
+    }
+
+    private void txtTrabajoAutonomo(KeyEvent e) {
+
+        String trabajoAutonomo = this.vista.getTxtTrabajoAutonomo().getText();
+        System.out.println("----------->" + trabajoAutonomo);
+        this.modelo.setTrabajoAutonomo(trabajoAutonomo);
 
     }
 
+    private void txtObservaciones(KeyEvent e) {
+
+        String observaciones = this.vista.getTxtObservaciones().getText();
+        this.modelo.setObservaciones(observaciones);
+
+    }
+
+    private void btnGuardar(ActionEvent e) {
+        JOptionPane.showMessageDialog(null, "SE VA A GUARDAR EL PLAN DE CLASES ESPERE UN MOMENTO");
+        if ("add".equals(accion)) {
+            boolean guardado = PlandeClasesBD.crear(this.modelo);
+            if (guardado) {
+                JOptionPane.showMessageDialog(null, "SE HA GUARDADO CORRECTAMENTE");
+            }
+        }
+        if ("edit".equals(accion)) {
+
+            boolean guardado = PlandeClasesBD.editar(this.modelo);
+            if (guardado) {
+                JOptionPane.showMessageDialog(null, "SE HA GUARDADO CORRECTAMENTE");
+            }
+        }
+    }
 }

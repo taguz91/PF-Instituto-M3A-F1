@@ -285,11 +285,11 @@ public class ControladorEditarPlanClases {
 
     public boolean actualizarPlanClase() {
         try {
-            new PlandeClasesBD().eliminarPlanClase(planClaseMD);
+            //new PlandeClasesBD().eliminarPlanClase(planClaseMD);
 
             plan_claseMD = new PlandeClasesMD(curso, unidadsilabo);
             plan_claseMD.getCurso().setId(curso.getId());
-            plan_claseMD.getUnidad().setId(unidadsilabo.getIdUnidad());
+            plan_claseMD.getUnidad().setId(unidadsilabo.getID());
             plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
             plan_claseMD.setTrabajoAutonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
             if (new PlandeClasesBD().insertarPlanClases(plan_claseMD) == true);
@@ -303,7 +303,7 @@ public class ControladorEditarPlanClases {
     }
 
     private void actualizarRecusosPlanClases() {
-        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getIdUnidad());
+        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getID());
         plan_claseMD.setID(plan_claseMD.getID());
         for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
             recursoPlam.getId_plan_clases().setID(plan_claseMD.getID());
@@ -526,7 +526,7 @@ public class ControladorEditarPlanClases {
             }
         }
 
-        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getIdUnidad());
+        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getID());
         plan_claseMD.setID(plan_claseMD.getID());
         for (EstrategiasMetodologicasMD em : lista_estrategias_metodologicas_antici) {
             em.getId_plan_clases().setID(plan_claseMD.getID());

@@ -78,7 +78,7 @@ public class Controlador_plan_clases {
     }
 
     public void iniciaControlador() {
-        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO" + silabo.getID() + " -------------- ID_UNIDAD" + unidadsilabo.getIdUnidad());
+        System.out.println("-------------------------->>>>>>>>>>>>>>>IDDD_SILABO" + silabo.getID() + " -------------- ID_UNIDAD" + unidadsilabo.getID());
         fPlanClase = new frmPlanClase();
         vtnPrincipal.getDpnlPrincipal().add(fPlanClase);
         fPlanClase.setTitle(silabo.getMateria().getNombre());
@@ -238,7 +238,7 @@ public class Controlador_plan_clases {
         try {
             plan_claseMD = new PlandeClasesMD(curso, unidadsilabo);
             plan_claseMD.getCurso().setId(curso.getId());
-            plan_claseMD.getUnidad().setId(unidadsilabo.getIdUnidad());
+            plan_claseMD.getUnidad().setId(unidadsilabo.getID());
             plan_claseMD.setObservaciones(fPlanClase.getTxrObservacionesPc().getText());
             plan_claseMD.setTrabajoAutonomo(fPlanClase.getTxrTrabajoAutonomo().getText());
             if (new PlandeClasesBD().insertarPlanClases(plan_claseMD) == true) {
@@ -253,7 +253,7 @@ public class Controlador_plan_clases {
     }
 
     private void insertarRecursosPlanClases() {
-        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getIdUnidad());
+        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getID());
         plan_claseMD.setID(plan_claseMD.getID());
         for (RecursosPlanClasesMD recursoPlam : lista_recursoMD1) {
             recursoPlam.getId_plan_clases().setID(plan_claseMD.getID());
@@ -493,7 +493,7 @@ public class Controlador_plan_clases {
             }
         }
 
-        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getIdUnidad());
+        plan_claseMD = PlandeClasesBD.consultarUltimoPlanClase(curso.getId(), unidadsilabo.getID());
         plan_claseMD.setID(plan_claseMD.getID());
         for (EstrategiasMetodologicasMD em : lista_estrategias_metodologicas_antici) {
             em.getId_plan_clases().setID(plan_claseMD.getID());

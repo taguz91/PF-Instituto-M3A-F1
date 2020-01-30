@@ -7,6 +7,7 @@ package modelo.PlanClases;
 
 import java.time.LocalDate;
 import java.util.List;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.persona.PersonaMD;
@@ -29,6 +30,7 @@ public class PlandeClasesMD {
     private int estado;
 
     private List<RecursosMD> recursos;
+    private List<EstrategiasMetodologicasMD> estrategias;
 
     //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
     private MateriaMD materia;
@@ -147,6 +149,14 @@ public class PlandeClasesMD {
 
     public void setRecursos(List<RecursosMD> recursos) {
         this.recursos = recursos;
+    }
+
+    public List<EstrategiasMetodologicasMD> getEstrategias() {
+        return estrategias;
+    }
+
+    public void setEstrategias(List<EstrategiasMetodologicasMD> estrategias) {
+        this.estrategias = estrategias;
     }
 
     public String descripcion() {

@@ -81,7 +81,7 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
         try {
             lista = CONN.getSeguimientosBy(
                     getCurso().getId(),
-                    getUnidad().getIdUnidad()
+                    getUnidad().getID()
             );
             cargarTabla(cargador());
 
@@ -199,7 +199,7 @@ public class VtnSeguimientoEvaluacionCTR extends AbstractVTN<VtnSeguimientoEvalu
             Map params = new HashMap();
 
             params.put("idCurso", getCurso().getId());
-            params.put("idUnidadSilabo", getUnidad().getIdUnidad());
+            params.put("idUnidadSilabo", getUnidad().getID());
 
             Middlewares.generarReporte(
                     getClass().getResource("/vista/silabos/seguimiento/reportes/seguimientoEval/MAIN.jasper"),

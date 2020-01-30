@@ -10,6 +10,7 @@ import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.EstrategiasMetodologicas.EstrategiasMetodologicasMD;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
 import modelo.PlanClases.RecursosMD;
@@ -123,13 +124,13 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
         plandeClasesMD.setCurso(getCurso());
         plandeClasesMD.setUnidad(getUnidad());
 
-        List<RecursosMD> recursos = new ArrayList<>();
-        recursos.add(new RecursosMD(1, "Computadora", ""));
-        plandeClasesMD.setRecursos(recursos);
+        plandeClasesMD.setRecursos(new ArrayList<>());
+        plandeClasesMD.setEstrategias(new ArrayList<>());
 
         FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
 
         form.setModelo(plandeClasesMD);
+        form.setAccion("add");
         form.Init();
 
         this.vista.dispose();

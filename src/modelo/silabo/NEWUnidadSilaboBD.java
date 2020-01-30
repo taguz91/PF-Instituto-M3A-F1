@@ -297,7 +297,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
             ps.setDouble(8, u.getHorasPracticaUnidad());
             ps.setDouble(9, u.getHorasAutonomoUnidad());
             ps.setString(10, u.getTituloUnidad());
-            ps.setInt(11, u.getIdUnidad());
+            ps.setInt(11, u.getID());
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Error al guardar la unidad. \n"
@@ -522,7 +522,7 @@ public class NEWUnidadSilaboBD implements IUnidadSilaboBD {
         return unidades;
     }
 
-    private static List<EstrategiasUnidadMD> getEstrategiasUnidad(int idUnidad) throws SQLException {
+    public static List<EstrategiasUnidadMD> getEstrategiasUnidad(int idUnidad) throws SQLException {
         String SELECT = ""
                 + "SELECT\n"
                 + "	\"EstrategiasAprendizaje\".descripcion_estrategia \n"

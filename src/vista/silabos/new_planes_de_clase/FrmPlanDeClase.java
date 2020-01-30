@@ -1,6 +1,7 @@
 package vista.silabos.new_planes_de_clase;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTabbedPane;
@@ -25,10 +26,6 @@ public class FrmPlanDeClase extends AbstracView {
 
     public JButton getBtnCancelar() {
         return btnCancelar;
-    }
-
-    public JButton getBtnEditar() {
-        return btnEditar;
     }
 
     public JButton getBtnGuardar() {
@@ -59,8 +56,8 @@ public class FrmPlanDeClase extends AbstracView {
         return tblRecursos;
     }
 
-    public JTabbedPane getTbpEstrategiasPC() {
-        return tbpEstrategiasPC;
+    public JTable getTblEstrategias() {
+        return tblEstrategias;
     }
 
     public JTextArea getTxtContenidos() {
@@ -91,9 +88,14 @@ public class FrmPlanDeClase extends AbstracView {
         return txtTrabajoAutonomo;
     }
 
-    
-    
-    
+    public JComboBox<String> getCmbTipo() {
+        return cmbTipo;
+    }
+
+    public void setCmbTipo(JComboBox<String> cmbTipo) {
+        this.cmbTipo = cmbTipo;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,13 +114,6 @@ public class FrmPlanDeClase extends AbstracView {
         lbResultadosAprendizaje = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtEstrategiasUnidad = new javax.swing.JList<>();
-        tbpEstrategiasPC = new javax.swing.JTabbedPane();
-        jScrollPane11 = new javax.swing.JScrollPane();
-        listAnticipacion = new javax.swing.JList<>();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        listConstruccion = new javax.swing.JList<>();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        listConsolidacion = new javax.swing.JList<>();
         lbEstrategiasPC = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObjetivos = new javax.swing.JTextArea();
@@ -131,7 +126,6 @@ public class FrmPlanDeClase extends AbstracView {
         txtDescripcion = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtContenidos = new javax.swing.JTextArea();
-        btnEditar = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblRecursos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -139,6 +133,10 @@ public class FrmPlanDeClase extends AbstracView {
         lblTitulo = new javax.swing.JLabel();
         lbObservacionesPC = new javax.swing.JLabel();
         lblInfo3 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        tblEstrategias = new javax.swing.JTable();
+        lbEstrategiasPC1 = new javax.swing.JLabel();
+        cmbTipo = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -177,18 +175,6 @@ public class FrmPlanDeClase extends AbstracView {
 
         jScrollPane3.setViewportView(txtEstrategiasUnidad);
 
-        jScrollPane11.setViewportView(listAnticipacion);
-
-        tbpEstrategiasPC.addTab("Anticipacion", jScrollPane11);
-
-        jScrollPane9.setViewportView(listConstruccion);
-
-        tbpEstrategiasPC.addTab("Construccion", jScrollPane9);
-
-        jScrollPane10.setViewportView(listConsolidacion);
-
-        tbpEstrategiasPC.addTab("Consolidacion", jScrollPane10);
-
         lbEstrategiasPC.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEstrategiasPC.setText("Descripción:");
 
@@ -221,8 +207,6 @@ public class FrmPlanDeClase extends AbstracView {
         txtContenidos.setRows(5);
         txtContenidos.setWrapStyleWord(true);
         jScrollPane5.setViewportView(txtContenidos);
-
-        btnEditar.setText("Editar");
 
         tblRecursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -275,6 +259,35 @@ public class FrmPlanDeClase extends AbstracView {
         lblInfo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblInfo3.setText("Curso: {curso} Docente: {docente}");
 
+        tblEstrategias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "id", "Estrategia", "Tipo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblEstrategias.getTableHeader().setReorderingAllowed(false);
+        jScrollPane12.setViewportView(tblEstrategias);
+        if (tblEstrategias.getColumnModel().getColumnCount() > 0) {
+            tblEstrategias.getColumnModel().getColumn(0).setMinWidth(40);
+            tblEstrategias.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblEstrategias.getColumnModel().getColumn(0).setMaxWidth(40);
+        }
+
+        lbEstrategiasPC1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbEstrategiasPC1.setText("Tipo:");
+
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anticipacion", "Consolidacion", "Construccion" }));
+
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
@@ -300,37 +313,45 @@ public class FrmPlanDeClase extends AbstracView {
                             .addComponent(jScrollPane5)
                             .addComponent(lbContenidosPC, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(lbRecursosPC, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(452, 452, 452)
-                        .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(bgLayout.createSequentialGroup()
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(11, 11, 11)
-                            .addComponent(btnGuardar))
-                        .addGroup(bgLayout.createSequentialGroup()
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbObservacionesPC, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbTrabajoAutonomo, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbIns_Evaluacion)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(bgLayout.createSequentialGroup()
-                                    .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(bgLayout.createSequentialGroup()
-                                            .addGap(2, 2, 2)
-                                            .addComponent(btnAgregar))
-                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addComponent(lbRecursosPC, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbTrabajoAutonomo, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbObservacionesPC, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbIns_Evaluacion)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtDescripcion)
+                                    .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(bgLayout.createSequentialGroup()
+                                        .addGap(7, 7, 7)
+                                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbEstrategiasPC1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(bgLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(bgLayout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addComponent(btnAgregar))
+                                            .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(btnGuardar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bgLayout.setVerticalGroup(
@@ -356,39 +377,47 @@ public class FrmPlanDeClase extends AbstracView {
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbRecursosPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTrabajoAutonomo, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(bgLayout.createSequentialGroup()
+                        .addComponent(lbRecursosPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbObservacionesPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lbTrabajoAutonomo, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
                             .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 142, Short.MAX_VALUE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(tbpEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbIns_Evaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbEstrategiasPC1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbEstrategiasPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(bgLayout.createSequentialGroup()
+                                        .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(bgLayout.createSequentialGroup()
+                                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbObservacionesPC, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbIns_Evaluacion, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                             .addComponent(jScrollPane7))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         jScrollPane4.setViewportView(bg);
@@ -397,13 +426,11 @@ public class FrmPlanDeClase extends AbstracView {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1174, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -413,12 +440,11 @@ public class FrmPlanDeClase extends AbstracView {
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnQuitar;
+    private javax.swing.JComboBox<String> cmbTipo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -426,9 +452,9 @@ public class FrmPlanDeClase extends AbstracView {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel lbContenidosPC;
     private javax.swing.JLabel lbEstrategiasPC;
+    private javax.swing.JLabel lbEstrategiasPC1;
     private javax.swing.JLabel lbIns_Evaluacion;
     private javax.swing.JLabel lbObjetivoPC;
     private javax.swing.JLabel lbObservacionesPC;
@@ -439,11 +465,8 @@ public class FrmPlanDeClase extends AbstracView {
     private javax.swing.JLabel lblInfo2;
     private javax.swing.JLabel lblInfo3;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JList<String> listAnticipacion;
-    private javax.swing.JList<String> listConsolidacion;
-    private javax.swing.JList<String> listConstruccion;
+    private javax.swing.JTable tblEstrategias;
     private javax.swing.JTable tblRecursos;
-    private javax.swing.JTabbedPane tbpEstrategiasPC;
     private javax.swing.JTextArea txtContenidos;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JList<String> txtEstrategiasUnidad;

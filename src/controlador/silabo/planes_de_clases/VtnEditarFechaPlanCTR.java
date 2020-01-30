@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlador.silabo.planesDeClase;
+package controlador.silabo.planes_de_clases;
 
 import com.toedter.calendar.JDateChooser;
+import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
 import java.time.ZoneId;
 import java.util.Date;
@@ -15,19 +16,19 @@ import modelo.PlanClases.PlandeClasesMD;
 import vista.principal.VtnPrincipal;
 import vista.silabos.planesDeClase.frmEditarFechaG;
 
-public class ControladorEditarFechaGenPlanClase {
+public class VtnEditarFechaPlanCTR {
 
     private final VtnPrincipal principal;
     private frmEditarFechaG vista;
     private PlandeClasesMD planMD;
 
-    public ControladorEditarFechaGenPlanClase(VtnPrincipal principal, PlandeClasesMD planMD) {
+    public VtnEditarFechaPlanCTR(VtnPrincipalCTR principal, PlandeClasesMD planMD) {
 
-        this.principal = principal;
+        this.principal = principal.getVtnPrin();
         this.planMD = planMD;
     }
 
-    public void iniciaControlador() {
+    public void Init() {
         vista = new frmEditarFechaG();
         vista.setLocation((principal.getDpnlPrincipal().getSize().width - vista.getSize().width) / 2,
                 (principal.getDpnlPrincipal().getSize().height - vista.getSize().height) / 2);
@@ -40,7 +41,7 @@ public class ControladorEditarFechaGenPlanClase {
             vista.dispose();
             principal.getMnCtPlandeClase().doClick();
         });
-        
+
         vista.getBtn_actualizar_fg().addActionListener((ActionEvent e) -> {
             if (validarNullo(vista.getDch_fecha_g()) == true) {
 
@@ -69,11 +70,7 @@ public class ControladorEditarFechaGenPlanClase {
     }
 
     private boolean validarNullo(JDateChooser jd) {
-        if (jd.getDate() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return jd.getDate() != null;
     }
 
 }

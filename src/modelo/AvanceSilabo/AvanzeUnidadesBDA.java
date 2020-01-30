@@ -70,7 +70,7 @@ public class AvanzeUnidadesBDA extends AvanzeUnidadesMDA {
                 + "	id_unidad, id_seguimientosilabo, cumplimiento_porcentaje, observaciones)\n"
                 + "	VALUES (?," + idsegui + " , ?, ?);");
         try {
-            st.setInt(1, aus.getUnidad().getIdUnidad());
+            st.setInt(1, aus.getUnidad().getID());
             st.setInt(2, aus.getPortecentaje());
             st.setString(3, aus.getObservaciones());
             st.executeUpdate();

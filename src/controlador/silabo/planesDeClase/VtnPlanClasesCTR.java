@@ -5,6 +5,7 @@
  */
 package controlador.silabo.planesDeClase;
 
+import controlador.silabo.planes_de_clases.VtnEditarFechaPlanCTR;
 import controlador.Libraries.Middlewares;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
@@ -171,8 +172,8 @@ public class VtnPlanClasesCTR {
         vista.getBtn_editar_fecha().addActionListener((ActionEvent ae) -> {
             int row = vista.getTbl().getSelectedRow();
             if (row != -1) {
-                ControladorEditarFechaGenPlanClase cep = new ControladorEditarFechaGenPlanClase(principal, plan_clas_id_c_u());
-                cep.iniciaControlador();
+                //VtnEditarFechaPlanCTR cep = new VtnEditarFechaPlanCTR(principal, plan_clas_id_c_u());
+                //cep.Init();
                 vista.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un plan de clase", "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -219,7 +220,7 @@ public class VtnPlanClasesCTR {
                     estadoB = true;
                 }
                 modelotabla.addRow(new Object[]{
-                    plc.getID(), plc.getPersona().getPrimerApellido() + " " + plc.getPersona().getPrimerNombre(), plc.getMateria().getNombre(), plc.getCurso().getNombre(), plc.getUnidad().getIdUnidad(),
+                    plc.getID(), plc.getPersona().getPrimerApellido() + " " + plc.getPersona().getPrimerNombre(), plc.getMateria().getNombre(), plc.getCurso().getNombre(), plc.getUnidad().getID(),
                     estado, estadoB, plc.getFechaGeneracion()
                 });
             }
@@ -294,7 +295,7 @@ public class VtnPlanClasesCTR {
     private void eliminarPlanClase() {
         int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este plan de clase?", "Eliminar", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            new PlandeClasesBD().eliminarPlanClase(plan_clas_selecc());
+            //new PlandeClasesBD().eliminarPlanClase(plan_clas_selecc());
             JOptionPane.showMessageDialog(null, "Plan de clase eliminado correctamente");
         }
     }
@@ -311,7 +312,7 @@ public class VtnPlanClasesCTR {
         if (seleccion >= 0) {
             Map parametro = new HashMap();
 
-            parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getUnidad().getIdUnidad()));
+            parametro.put("id_unidad", String.valueOf(plan_clas_id_c_u().getUnidad().getID()));
             parametro.put("id_curso", String.valueOf(plan_clas_id_c_u().getCurso().getId()));
             parametro.put("id_plan_clase", String.valueOf(plan_clas_selecc().getID()));
 

@@ -274,7 +274,7 @@ public class ControladorConfiguracion_plan_clases {
         lista_plan_clases = PlandeClasesBD.consultarPlanClaseExistente(parametros);
         for (PlandeClasesMD plmd : lista_plan_clases) {
 
-            if (Objects.equals(plmd.getUnidad().getIdUnidad(), unidad_seleccionada().getIdUnidad())
+            if (Objects.equals(plmd.getUnidad().getID(), unidad_seleccionada().getID())
                     && plmd.getCurso().getId() == cursos_seleccionado().getId()) {
                 valid = false;
             }

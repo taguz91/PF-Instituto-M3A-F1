@@ -142,11 +142,11 @@ public class VtnPlanDeClases extends AbstracView {
 
             },
             new String [] {
-                "PlanCod", "No.", "Docente", "Materia", "Curso", "Unidad", "Estado", "Fecha"
+                "ID", "No.", "Docente", "Materia", "Curso", "Unidad", "Estado", "Fecha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false, false, false
+                false, true, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
