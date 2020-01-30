@@ -7,8 +7,15 @@ package controlador.silabo.planes_de_clases;
 
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import modelo.PlanClases.PlandeClasesMD;
+import modelo.PlanClases.RecursosBD;
+import modelo.PlanClases.RecursosMD;
 import vista.silabos.new_planes_de_clase.FrmPlanDeClase;
 
 /**
@@ -16,6 +23,10 @@ import vista.silabos.new_planes_de_clase.FrmPlanDeClase;
  * @author MrRainx
  */
 public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClasesMD> {
+
+    private List<RecursosMD> recursos;
+
+    private DefaultTableModel tableRecursosM;
 
     public FrmPlanDeClasesCTR(VtnPrincipalCTR desktop) {
         super(desktop);
@@ -25,11 +36,26 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
     @Override
     public void Init() {
 
-        setInformacion();
+        this.recursos = RecursosBD.consultarRecursos();
+        this.tableRecursosM = (DefaultTableModel) this.vista.getTblRecursos().getModel();
+        cargarRecursos();
+        setInformacionUnidad();
+        InitEventos();
         super.Init(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void setInformacion() {
+    private void InitEventos() {
+        this.vista.getTblRecursos().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                onTableRecursosClicked(e);
+            }
+
+        });
+    }
+
+    //FACTORIZACION
+    private void setInformacionUnidad() {
 
         String lblTitulo = this.vista.getLblTitulo()
                 .getText()
@@ -69,6 +95,54 @@ public class FrmPlanDeClasesCTR extends AbstractVTN<FrmPlanDeClase, PlandeClases
                 .map(c -> c.getEstrategia().getDescripcionEstrategia())
                 .forEach(listModel::addElement);
         this.vista.getTxtEstrategiasUnidad().setModel(listModel);
+    }
+
+    private RecursosMD getRecurso() {
+        int row = this.vista.getTblRecursos().getSelectedRow();
+        RecursosMD recurso = null;
+        if (row != -1) {
+            int id = Integer.valueOf(tableRecursosM.getValueAt(row, 0).toString());
+            recurso = this.recursos.stream()
+                    .filter(item -> item.getId_recurso() == id)
+                    .findFirst()
+                    .get();
+        }
+
+        return recurso;
+
+    }
+
+    private void cargarRecursos() {
+        this.tableRecursosM.setRowCount(0);
+        this.recursos.stream()
+                .forEach(obj -> {
+
+                    boolean check = this.modelo.getRecursos().stream()
+                            .map(c -> c.getId_recurso())
+                            .collect(Collectors.toList())
+                            .contains(obj.getId_recurso());
+                    obj.setChecked(check);
+                    this.tableRecursosM.addRow(new Object[]{
+                        obj.getId_recurso(),
+                        obj.getNombre_recursos(),
+                        check
+                    });
+                });
+    }
+
+    private void onTableRecursosClicked(MouseEvent e) {
+        RecursosMD recurso = getRecurso();
+        if (recurso != null) {
+            boolean removed = this.modelo.getRecursos()
+                    .removeIf(item -> item.getId_recurso() == recurso.getId_recurso());
+            if (!removed) {
+                this.modelo.getRecursos().add(recurso);
+                cargarRecursos();
+            }
+
+        }
+
+
     }
 
 }

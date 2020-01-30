@@ -6,6 +6,7 @@
 package modelo.PlanClases;
 
 import java.time.LocalDate;
+import java.util.List;
 import modelo.curso.CursoMD;
 import modelo.materia.MateriaMD;
 import modelo.persona.PersonaMD;
@@ -26,6 +27,8 @@ public class PlandeClasesMD {
     private LocalDate fechaCierre;
     private String trabajoAutonomo;
     private int estado;
+
+    private List<RecursosMD> recursos;
 
     //PARA CARGAR EN LA TABLA NECESITO ESTOS ATRIBUTOS
     private MateriaMD materia;
@@ -136,6 +139,14 @@ public class PlandeClasesMD {
 
     public void setEstado(int estado_plan) {
         this.estado = estado_plan;
+    }
+
+    public List<RecursosMD> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<RecursosMD> recursos) {
+        this.recursos = recursos;
     }
 
     public String descripcion() {

@@ -8,9 +8,11 @@ package controlador.silabo.planes_de_clases;
 import controlador.Libraries.abstracts.AbstractVTN;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import modelo.PlanClases.PlandeClasesBD;
 import modelo.PlanClases.PlandeClasesMD;
+import modelo.PlanClases.RecursosMD;
 import modelo.curso.CursoMD;
 import modelo.periodolectivo.PeriodoLectivoMD;
 import modelo.silabo.NEWCursoBD;
@@ -120,6 +122,10 @@ public class FrmConfigPlanCTR extends AbstractVTN<FrmConfigPlan, PlandeClasesMD>
 
         plandeClasesMD.setCurso(getCurso());
         plandeClasesMD.setUnidad(getUnidad());
+
+        List<RecursosMD> recursos = new ArrayList<>();
+        recursos.add(new RecursosMD(1, "Computadora", ""));
+        plandeClasesMD.setRecursos(recursos);
 
         FrmPlanDeClasesCTR form = new FrmPlanDeClasesCTR(desktop);
 

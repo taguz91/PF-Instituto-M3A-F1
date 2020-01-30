@@ -5,12 +5,12 @@
  */
 package modelo.PlanClases;
 
-
 public class RecursosMD {
-    
+
     private int id_recurso;
     private String nombre_recursos;
     private String tipo_recurso;
+    private boolean checked;
 
     public RecursosMD(int id_recurso, String nombre_recursos, String tipo_recurso) {
         this.id_recurso = id_recurso;
@@ -45,7 +45,14 @@ public class RecursosMD {
         this.tipo_recurso = tipo_recurso;
     }
 
-  
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
     
     
+
 }
