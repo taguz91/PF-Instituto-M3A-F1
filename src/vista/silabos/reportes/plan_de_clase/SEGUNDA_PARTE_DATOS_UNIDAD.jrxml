@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0e5d21e-5378-47c6-8d68-b4f9aa976e8c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="34"/>
+	<property name="ireport.y" value="59"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["vista/silabos/reportes/plan_de_clase/"]]></defaultValueExpression>
 	</parameter>
@@ -106,7 +106,7 @@ WHERE id_unidad =$P!{id_unidad}]]>
 	</background>
 	<detail>
 		<band height="307" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="117" y="68" width="152" height="239" isPrintWhenDetailOverflows="true" uuid="4b68deb8-b5d5-4229-8a35-424ff322687f"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -180,7 +180,7 @@ METODOLÓGICAS]]></text>
 				<text><![CDATA[RESULTADOS DE 
 APRENDIZAJE]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="48" y="0" width="507" height="46" uuid="6794e1d5-06bb-4b39-94ec-677425190de9"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -225,7 +225,7 @@ APRENDIZAJE]]></text>
 				<text><![CDATA[INSTRUMENTOS DE 
 EVALUACIÓN]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="68" width="117" height="239" isPrintWhenDetailOverflows="true" uuid="45b29e86-2dee-4ef3-90a1-62361539252e"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -240,7 +240,7 @@ EVALUACIÓN]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultados_aprendizaje_unidad}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="393" y="68" width="78" height="239" uuid="e2c88465-838f-4ca4-b4d0-c9b5dc2938f2"/>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -257,7 +257,7 @@ EVALUACIÓN]]></text>
 + "<style isBold='true'>MATERIALES:</style> \n\n"
 + $F{RECURSOS_MATERIALES}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="269" y="68" width="124" height="239" uuid="4d7841fb-ad71-46c1-9307-18205cb52d3a"/>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -308,7 +308,7 @@ EVALUACIÓN]]></text>
 				</textElement>
 				<text><![CDATA[   Horas: ]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="437" y="1" width="118" height="36" isPrintWhenDetailOverflows="true" uuid="017b0694-9961-4fca-93fc-b1d482599217"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -339,7 +339,7 @@ EVALUACIÓN]]></text>
 				<text><![CDATA[Trabajo
 Autónomo:]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="63" y="0" width="330" height="37" isPrintWhenDetailOverflows="true" uuid="872690d0-7caf-4b3d-8f7b-62ea7c66b52b"/>
 				<box>
 					<pen lineWidth="0.75"/>
@@ -373,7 +373,7 @@ Autónomo:]]></text>
 				</textElement>
 				<text><![CDATA[Observaciones:]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="63" y="0" width="492" height="36" isPrintWhenDetailOverflows="true" uuid="ba666120-442f-4c0f-91ee-659e29945044"/>
 				<box>
 					<pen lineWidth="0.75"/>
