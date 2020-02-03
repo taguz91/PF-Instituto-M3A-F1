@@ -66,7 +66,8 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         };
         mdTbl = iniciarTblConEditar(
                 VTN.getTblAlumnos(),
-                titulo
+                titulo,
+                3
         );
         TblEstilo.ocualtarID(VTN.getTblAlumnos());
         TblEstilo.columnaMedida(VTN.getTblAlumnos(), 1, 30);
