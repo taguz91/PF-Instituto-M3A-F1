@@ -470,7 +470,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtTipoNotas = new javax.swing.JMenuItem();
         mnCtNotas = new javax.swing.JMenuItem();
         mnCtRendimientoAcademico = new javax.swing.JMenuItem();
-        mnCtNotas1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mnCtUsuarios = new javax.swing.JMenuItem();
         mnCtRoles = new javax.swing.JMenuItem();
@@ -896,9 +895,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnCtRendimientoAcademico.setText("Rendimiento Académico");
         mnNotas.add(mnCtRendimientoAcademico);
 
-        mnCtNotas1.setText("Registro Notas Finales");
-        mnNotas.add(mnCtNotas1);
-
         mnTipoNotas.add(mnNotas);
 
         jMenu3.setText("Administracion");
@@ -1016,7 +1012,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas1.setText("Notas");
 
-        mnIgPrdIngrNotas1.setText("Períodos de ingreso de notas");
+        mnIgPrdIngrNotas1.setText("Periodos de ingreso de notas");
         mnNotas1.add(mnIgPrdIngrNotas1);
 
         mnIgNotas1.setText("Ingreso notas");
@@ -1150,7 +1146,6 @@ public class VtnPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCtMatricula;
     private javax.swing.JMenuItem mnCtMiPerfil;
     private javax.swing.JMenuItem mnCtNotas;
-    private javax.swing.JMenuItem mnCtNotas1;
     private javax.swing.JMenuItem mnCtPersona;
     private javax.swing.JMenuItem mnCtPlandeClase;
     private javax.swing.JMenuItem mnCtPrdLectivo;

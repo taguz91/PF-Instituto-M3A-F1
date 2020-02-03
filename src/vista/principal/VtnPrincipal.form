@@ -234,11 +234,6 @@
                     <Property name="text" type="java.lang.String" value="Rendimiento Acad&#xe9;mico"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="mnCtNotas1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Registro Notas Finales"/>
-                  </Properties>
-                </MenuItem>
               </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu3">
