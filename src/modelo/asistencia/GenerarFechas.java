@@ -23,16 +23,16 @@ public class GenerarFechas {
         AsistenciaSesionMD as = ABD.getInfoSesion(idCurso);
         fechaAux = as.getPrdFechaInicio();
         diaAumentar = 0;
-        System.out.println("Dia inicio: " + as.getDiaInicio());
-        System.out.println("Dia fin clase: " + as.getDiaFin());
+//        System.out.println("Dia inicio: " + as.getDiaInicio());
+//        System.out.println("Dia fin clase: " + as.getDiaFin());
         diaAnterior = 1;
-        
+
         if (as.getDiaInicio() != 1 && (as.getDiaInicio() == as.getDiaFin())) {
             diaAumentar = getDias(diaAnterior, as.getDiaInicio());
             fechaAux = fechaAux.plusDays(diaAumentar);
             diaAnterior = as.getDiaInicio();
         }
-        
+
         while (fechaAux.isBefore(as.getPrdFechaFin())
                 || fechaAux.equals(as.getPrdFechaFin())) {
             ahs.forEach(d -> {
