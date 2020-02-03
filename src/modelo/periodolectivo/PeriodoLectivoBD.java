@@ -682,9 +682,10 @@ public class PeriodoLectivoBD extends CONBD {
                 + "INNER JOIN \"Cursos\" ON \"Cursos\".id_prd_lectivo = \"PeriodoLectivo\".id_prd_lectivo\n"
                 + "INNER JOIN \"Docentes\" ON \"Cursos\".id_docente = \"Docentes\".id_docente\n"
                 + "WHERE\n"
-                + " \"Docentes\".id_docente = ? "
-                + " AND prd_lectivo_activo = true "
-                + " AND prd_lectivo_estado = true ";
+                + " \"Docentes\".id_docente = ? \n"
+                + " AND prd_lectivo_activo = true \n"
+                + " AND prd_lectivo_estado = true \n"
+                + "ORDER BY \"PeriodoLectivo\".prd_lectivo_fecha_inicio DESC";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -741,7 +742,7 @@ public class PeriodoLectivoBD extends CONBD {
                 + " \"Docentes\".docente_codigo = ? "
                 + " AND prd_lectivo_activo = true "
                 + " AND prd_lectivo_estado = true \n"
-                + "ORDER BY prd_lectivo_nombre";
+                + "ORDER BY prd_lectivo_fecha_inicio DESC";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         Map<Integer, Object> parametros = new HashMap<>();
@@ -782,7 +783,7 @@ public class PeriodoLectivoBD extends CONBD {
 
         String SELECT = "SELECT id_prd_lectivo, prd_lectivo_nombre "
                 + "FROM \"PeriodoLectivo\" \n"
-                + "ORDER BY prd_lectivo_fecha_inicio";
+                + "ORDER BY prd_lectivo_fecha_inicio DESC";
 
         List<PeriodoLectivoMD> lista = new ArrayList<>();
         conn = pool.getConnection();
@@ -839,7 +840,7 @@ public class PeriodoLectivoBD extends CONBD {
                 + "	AND ( \"Carreras\".carrera_modalidad ='DUAL' OR \"Carreras\".carrera_modalidad ='DUAL FOCALIZADA' ) \n"
                 + "	)\n"
                 + "	\n"
-                + "ORDER BY p1.prd_lectivo_nombre";
+                + "ORDER BY p1.prd_lectivo_fecha_inicio DESC";
 
         System.out.println(SELECT);
 
