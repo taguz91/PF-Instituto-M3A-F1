@@ -343,7 +343,7 @@ public class PlandeClasesBD extends CONBD {
                 + "WHERE\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
                 + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
-                + "ORDER BY persona_primer_apellido, materia_nombre, , numero_unidad"
+                + "ORDER BY persona_primer_apellido, materia_nombre, \"Cursos\".curso_nombre, numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 
@@ -594,7 +594,7 @@ public class PlandeClasesBD extends CONBD {
         } catch (SQLException ex) {
             Logger.getLogger(PlandeClasesBD.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } finally{
+        } finally {
             CON.close(rs);
         }
         return true;
