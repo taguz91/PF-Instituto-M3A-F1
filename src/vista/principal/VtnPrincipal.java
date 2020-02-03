@@ -865,21 +865,21 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnTipoNotas.add(mnCtRolesPeriodo);
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-carpeta-de-documentos-20.png"))); // NOI18N
-        jMenu2.setText("Documentos Academicos");
+        jMenu2.setText("Documentos Académicos");
 
         mnCtSilabos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
         mnCtSilabos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/consultar_silabo_menu.png"))); // NOI18N
-        mnCtSilabos.setText("Silabos");
+        mnCtSilabos.setText("Sílabos");
         jMenu2.add(mnCtSilabos);
 
-        MnCAvanceSilabo.setText("Avance de Silabo");
+        MnCAvanceSilabo.setText("Avance de Sílabo");
         jMenu2.add(MnCAvanceSilabo);
 
         mnCtPlandeClase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
         mnCtPlandeClase.setText("Plan de clase");
         jMenu2.add(mnCtPlandeClase);
 
-        mnCtGestionAcademica.setText("Cuadro de Gestion Academica");
+        mnCtGestionAcademica.setText("Cuadro de Gestión Académica ");
         jMenu2.add(mnCtGestionAcademica);
 
         mnTipoNotas.add(jMenu2);

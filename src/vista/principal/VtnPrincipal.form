@@ -177,7 +177,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/vista/img/icons8-carpeta-de-documentos-20.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Documentos Academicos"/>
+                <Property name="text" type="java.lang.String" value="Documentos Acad&#xe9;micos"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtSilabos">
@@ -188,12 +188,12 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/vista/img/consultar_silabo_menu.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Silabos"/>
+                    <Property name="text" type="java.lang.String" value="S&#xed;labos"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="MnCAvanceSilabo">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Avance de Silabo"/>
+                    <Property name="text" type="java.lang.String" value="Avance de S&#xed;labo"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtPlandeClase">
@@ -206,7 +206,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="mnCtGestionAcademica">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Cuadro de Gestion Academica"/>
+                    <Property name="text" type="java.lang.String" value="Cuadro de Gesti&#xf3;n Acad&#xe9;mica "/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
