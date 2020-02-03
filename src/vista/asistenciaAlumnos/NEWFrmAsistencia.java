@@ -78,7 +78,7 @@ public class NEWFrmAsistencia extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Formulario Asistencia");
 
-        jLabel1.setText("Periodo:");
+        jLabel1.setText("Período:");
 
         jLabel2.setText("Materia:");
 

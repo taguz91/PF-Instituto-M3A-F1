@@ -91,7 +91,7 @@ public class VtnTipoNotas extends AbstracView {
         setMinimumSize(new java.awt.Dimension(1000, 500));
         setPreferredSize(new java.awt.Dimension(1000, 500));
 
-        jLabel1.setText("Periodo Lectivo:");
+        jLabel1.setText("Período Lectivo:");
 
         btnEliminar.setText("Eliminar");
 

@@ -194,7 +194,7 @@ public class JDHorario extends javax.swing.JDialog {
                 .addComponent(btnGuardar))
         );
 
-        jLabel4.setText("Periodo lectivo:");
+        jLabel4.setText("Período lectivo:");
 
         jLabel5.setText("Docente:");
 

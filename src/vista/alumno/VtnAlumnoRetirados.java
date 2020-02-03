@@ -104,7 +104,7 @@ public class VtnAlumnoRetirados extends javax.swing.JInternalFrame {
 
         btnEliminar.setText("Eliminar");
 
-        btnRepRetirados.setText("Periodo");
+        btnRepRetirados.setText("Período");
 
         jLabel3.setText("Reportes:");
 

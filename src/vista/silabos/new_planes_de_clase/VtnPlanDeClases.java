@@ -178,7 +178,7 @@ public class VtnPlanDeClases extends AbstracView {
             tbl.getColumnModel().getColumn(7).setMaxWidth(80);
         }
 
-        jlbl13.setText("Periodo:");
+        jlbl13.setText("Período:");
 
         btnImprimir.setText("Imprimir ");
 

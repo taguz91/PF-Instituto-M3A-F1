@@ -1016,7 +1016,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         mnNotas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8-notas-20px .png"))); // NOI18N
         mnNotas1.setText("Notas");
 
-        mnIgPrdIngrNotas1.setText("Periodos de ingreso de notas");
+        mnIgPrdIngrNotas1.setText("Períodos de ingreso de notas");
         mnNotas1.add(mnIgPrdIngrNotas1);
 
         mnIgNotas1.setText("Ingreso notas");

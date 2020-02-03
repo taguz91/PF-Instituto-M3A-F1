@@ -84,7 +84,7 @@ public class VtnReporteNumAlumno extends javax.swing.JInternalFrame {
 
         cmbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setText("Periodo:");
+        jLabel2.setText("Período:");
 
         cmbPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

@@ -73,7 +73,7 @@ public class VtnConfigSilabo extends AbstracView {
         lblAsignatura.setText("Asignatura:");
 
         jLabelPeriodo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPeriodo.setText("Periodo Lectivo:");
+        jLabelPeriodo.setText("Período Lectivo:");
 
         btnSiguiente.setText("Siguiente");
 
@@ -85,7 +85,7 @@ public class VtnConfigSilabo extends AbstracView {
         spnUnidades.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         lblPeriodoRef.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblPeriodoRef.setText("Periodo de Referencia:");
+        lblPeriodoRef.setText("Período de Referencia:");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Configuracion del Nuevo Silabo");
