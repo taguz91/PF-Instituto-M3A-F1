@@ -164,7 +164,7 @@ public class VtnSilabos extends AbstracView {
         btnNuevo.setText("Nuevo");
 
         lblCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCarrera.setText("Periodo lectivo:");
+        lblCarrera.setText("Período lectivo:");
 
         btnImprimir.setText("Imprimir");
 

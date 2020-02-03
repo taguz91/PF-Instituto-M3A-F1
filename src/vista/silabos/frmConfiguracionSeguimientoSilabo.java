@@ -167,7 +167,7 @@ public class frmConfiguracionSeguimientoSilabo extends javax.swing.JInternalFram
 
         lblConfiguracion.setText("Configuracion Seguimiento Silabo");
 
-        lblAsignatura.setText("Periodo Lectivo:");
+        lblAsignatura.setText("Período Lectivo:");
 
         lblPeriodo.setText("Silabo:");
 

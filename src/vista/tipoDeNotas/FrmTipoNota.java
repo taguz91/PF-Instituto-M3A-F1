@@ -85,7 +85,7 @@ public class FrmTipoNota extends AbstracView {
         btnGuardar.setText("Guardar");
 
         lblCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCarrera.setText("Periodo Lectivo:");
+        lblCarrera.setText("Período Lectivo:");
 
         tblTipoNota.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

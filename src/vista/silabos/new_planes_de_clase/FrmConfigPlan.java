@@ -61,13 +61,13 @@ public class FrmConfigPlan extends AbstracView {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Configuracion del Plan de Clases");
+        jLabel4.setText("Configuración del Plan de Clases");
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Cursos:");
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("Periodo Lectivo");
+        jLabel6.setText("Período Lectivo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

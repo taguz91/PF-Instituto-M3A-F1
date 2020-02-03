@@ -51,7 +51,7 @@ public class VtnPTI extends AbstracView {
         jLabel1.setText("Docente:");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Periodo Lectivo:");
+        jLabel2.setText("Período Lectivo:");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Curso:");

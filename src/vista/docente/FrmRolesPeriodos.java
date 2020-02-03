@@ -77,7 +77,7 @@ public class FrmRolesPeriodos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("Periodo Lectivo:");
+        jLabel2.setText("Período Lectivo:");
 
         cmbPeriodoLectivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

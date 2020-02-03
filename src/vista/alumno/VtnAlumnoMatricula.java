@@ -71,7 +71,7 @@ public class VtnAlumnoMatricula extends javax.swing.JInternalFrame {
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/img/icons8_Search_15px.png"))); // NOI18N
 
-        jLabel2.setText("Periodo:");
+        jLabel2.setText("Período:");
 
         cmbPeriodos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

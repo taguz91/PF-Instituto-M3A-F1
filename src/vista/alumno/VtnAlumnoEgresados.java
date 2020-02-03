@@ -112,9 +112,9 @@ public class VtnAlumnoEgresados extends javax.swing.JInternalFrame {
 
         cmbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel3.setText("Periodo:");
+        jLabel3.setText("Período:");
 
-        btnRepPeriodo.setText("Periodo");
+        btnRepPeriodo.setText("Período");
 
         jLabel4.setText("Reportes:");
 

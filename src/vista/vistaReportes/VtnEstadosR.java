@@ -77,7 +77,7 @@ public class VtnEstadosR extends AbstracView {
         setMaximizable(true);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Periodo Lectivo:");
+        jLabel1.setText("Período Lectivo:");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Carrera:");

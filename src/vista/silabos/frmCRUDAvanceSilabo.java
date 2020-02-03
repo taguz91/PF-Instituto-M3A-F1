@@ -196,7 +196,7 @@ public class frmCRUDAvanceSilabo extends javax.swing.JInternalFrame {
 
         lblBuscar1.setText("Carreras:");
 
-        lblBuscar2.setText("Periodo:");
+        lblBuscar2.setText("Período:");
 
         lblBuscar3.setText("Jornada:");
 
