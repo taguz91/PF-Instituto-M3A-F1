@@ -349,7 +349,8 @@ public class AlumnoCursoBD extends CONBD {
                 + "\"Materias\".materia_nombre = ? AND\n"
                 + "\"AlumnoCurso\".almn_curso_activo IS TRUE\n"
                 + "ORDER BY\n"
-                + "\"Personas\".persona_primer_apellido, \"Personas\".persona_segundo_apellido ASC";
+                + "\"Personas\".persona_primer_apellido, \"Personas\".persona_segundo_apellido, \n"
+                + "\"Personas\".persona_primer_nombre, \"Personas\".persona_segundo_nombre ASC";
 
         List<AlumnoCursoMD> lista = new ArrayList();
         Map<Integer, Object> parametros = new HashMap<>();
