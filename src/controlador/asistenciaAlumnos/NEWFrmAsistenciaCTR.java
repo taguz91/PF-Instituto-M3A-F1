@@ -1,6 +1,5 @@
 package controlador.asistenciaAlumnos;
 
-import controlador.Libraries.Effects;
 import controlador.Libraries.Middlewares;
 import controlador.principal.DCTR;
 import controlador.principal.VtnPrincipalCTR;
@@ -87,9 +86,7 @@ public class NEWFrmAsistenciaCTR extends DCTR {
             int posPrd = VTN.getCmbPeriodo().getSelectedIndex();
             int posMateria = VTN.getCmbMateria().getSelectedIndex();
             int posFecha = VTN.getCmbFechas().getSelectedIndex();
-            if (posPrd > 0
-                    && posMateria > 0
-                    && posFecha > 0) {
+            if (posPrd > 0 && posMateria > 0) {
                 imprimirReporte();
             } else {
                 M.errorMsg(
@@ -301,7 +298,13 @@ public class NEWFrmAsistenciaCTR extends DCTR {
                 generarReporteAsistenciaUBE();
                 break;
             case 2:
-                generarReporteAsistenciaPorDia();
+                int posFecha = VTN.getCmbFechas().getSelectedIndex();
+                if (posFecha > 0) {
+                    generarReporteAsistenciaPorDia();
+                } else {
+                    M.errorMsg("Debe seleccionar una fecha para su reporte por dia.");
+                }
+
                 break;
             default:
                 break;
@@ -342,9 +345,9 @@ public class NEWFrmAsistenciaCTR extends DCTR {
         String path = "/vista/asistenciaAlumnos/reporteAsistencia/reporteAsistenciaPorDia.jasper";
 
         Map parametros = new HashMap();
-
         parametros.put("id_curso", cs.get(posCurso - 1).getId());
         parametros.put("prd_lectivo_nombre", String.valueOf(nombrePeriodo));
+        parametros.put("fecha_asistencia", VTN.getCmbFechas().getSelectedItem().toString());
 
         System.out.println(parametros);
         Middlewares.generarReporte(getClass().getResource(path), "Reporte Asistencia por Día", parametros);

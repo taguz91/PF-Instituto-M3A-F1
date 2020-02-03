@@ -25,12 +25,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane4" pref="1174" max="32767" attributes="0"/>
+          <Component id="jScrollPane4" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane4" pref="500" max="32767" attributes="0"/>
+          <Component id="jScrollPane4" pref="531" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -93,30 +93,26 @@
                                   <Component id="lbIns_Evaluacion" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jScrollPane3" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="txtDescripcion" max="32767" attributes="0"/>
-                                          <Component id="lbEstrategiasPC" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane12" alignment="1" pref="409" max="32767" attributes="0"/>
-                                      </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lbEstrategiasPC1" alignment="0" min="-2" pref="84" max="-2" attributes="0"/>
-                                                  <Component id="cmbTipo" min="-2" pref="84" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="jScrollPane12" alignment="1" pref="431" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lbEstrategiasPC1" min="-2" pref="84" max="-2" attributes="0"/>
+                                                  <Component id="cmbTipo" min="-2" pref="100" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                      <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="btnQuitar" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="txtDescripcion" alignment="1" max="32767" attributes="0"/>
+                                                  <Component id="lbEstrategiasPC" min="-2" pref="97" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="btnAgregar" max="32767" attributes="0"/>
+                                          <Component id="btnQuitar" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -126,7 +122,7 @@
                               <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -166,28 +162,27 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbTrabajoAutonomo" min="-2" pref="15" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lbTrabajoAutonomo" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                                          <Component id="lbEstrategiasPC1" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Component id="jScrollPane2" pref="182" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lbEstrategiasPC1" alignment="0" min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="lbEstrategiasPC" min="-2" pref="15" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="lbEstrategiasPC" min="-2" pref="15" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txtDescripcion" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="cmbTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnAgregar" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jScrollPane12" pref="0" max="32767" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="cmbTipo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="btnAgregar" min="-2" pref="22" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                               <Component id="btnQuitar" min="-2" pref="22" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="txtDescripcion" min="-2" pref="22" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jScrollPane12" pref="0" max="32767" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>

@@ -264,7 +264,6 @@ public class VtnPrincipalCTR {
             ctr.iniciar();
         });
 
-
     }
 
     public void abrirVtnPersona() {
@@ -970,8 +969,7 @@ public class VtnPrincipalCTR {
     private void btnCerrarSesion(ActionEvent e) {
         ctrSelecRol.cierreSesion();
         vtnPrin.dispose();
-        LoginCTR login = new LoginCTR();
-        login.Init();
+        System.exit(0);
     }
 
     private void btnTipoNotas(ActionEvent e) {
