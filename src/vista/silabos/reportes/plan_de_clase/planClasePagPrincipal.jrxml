@@ -51,8 +51,7 @@ JOIN "Cursos" C ON C.id_docente = d.id_docente
 JOIN "Materias" M ON C.id_materia = M.id_materia
 JOIN "Carreras" r ON M.id_carrera = r.id_carrera
 WHERE
-C.id_curso = $P!{id_curso}
-]]>
+C.id_curso = $P!{id_curso}]]>
 	</queryString>
 	<field name="id_carrera" class="java.lang.Integer"/>
 	<field name="carrera_nombre" class="java.lang.String"/>
@@ -467,7 +466,7 @@ C.id_curso = $P!{id_curso}
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="218" y="90" width="143" height="15" uuid="ecc6adb1-de53-4ebd-a3c7-edd99dd5b04e"/>
 				<box>
 					<topPen lineWidth="0.75"/>

@@ -1,5 +1,6 @@
 package controlador.principal;
 
+import controlador.estilo.TblEditarUnicaColumna;
 import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -64,6 +65,17 @@ public class DCTR extends CONBD {
     protected DefaultTableModel iniciarTblConEditar(JTable tbl, String[] titulo) {
         String[][] datos = {};
         DefaultTableModel mdTbl = new DefaultTableModel(datos, titulo);
+        tbl.setModel(mdTbl);
+        return mdTbl;
+    }
+    
+    protected DefaultTableModel iniciarTblConEditar(JTable tbl, String[] titulo, int colEditar) {
+        String[][] datos = {};
+        DefaultTableModel mdTbl = new TblEditarUnicaColumna(
+                titulo, 
+                datos, 
+                colEditar
+        );
         tbl.setModel(mdTbl);
         return mdTbl;
     }
