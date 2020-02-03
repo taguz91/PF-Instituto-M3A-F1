@@ -373,8 +373,8 @@ public class VtnPlanDeClasesCTR extends AbstractVTN<VtnPlanDeClases, PlandeClase
             if (plan.getEstado() != PlandeClasesMD.getEstadoInt(estado)) {
                 plan.setEstado(PlandeClasesMD.getEstadoInt(estado));
                 PlandeClasesBD.editarEstado(idPlan, PlandeClasesMD.getEstadoInt(estado));
-                setLista();
-                cargarTabla(cargador());
+                //setLista();
+                //cargarTabla(cargador());
 
             }
         }

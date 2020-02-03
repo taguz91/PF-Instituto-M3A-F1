@@ -343,7 +343,7 @@ public class PlandeClasesBD extends CONBD {
                 + "WHERE\n"
                 + "	\"PeriodoLectivo\".prd_lectivo_nombre = '" + periodo + "' \n"
                 + "     AND \"Jornadas\".nombre_jornada = '" + jornada + "'\n"
-                + "ORDER BY persona_primer_apellido, materia_nombre, numero_unidad"
+                + "ORDER BY persona_primer_apellido, materia_nombre, , numero_unidad"
                 + "";
         List<PlandeClasesMD> lista = new ArrayList<>();
 

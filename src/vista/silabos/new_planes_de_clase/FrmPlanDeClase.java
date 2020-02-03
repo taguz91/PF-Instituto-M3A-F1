@@ -288,7 +288,7 @@ public class FrmPlanDeClase extends AbstracView {
         lbEstrategiasPC1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEstrategiasPC1.setText("Tipo:");
 
-        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anticipacion", "Consolidacion", "Construccion" }));
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anticipacion", "Construccion", "Consolidacion", " " }));
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
