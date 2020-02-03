@@ -573,6 +573,12 @@ public class PlandeClasesBD extends CONBD {
     }
 
     public static boolean crear(PlandeClasesMD plan) {
+        if (plan.getObservaciones() == null) {
+            plan.setObservaciones("");
+        }
+        if (plan.getTrabajoAutonomo() == null) {
+            plan.setTrabajoAutonomo("");
+        }
         String INSERT = ""
                 + "INSERT INTO \"PlandeClases\"\n"
                 + "    (id_curso, id_unidad, observaciones, trabajo_autonomo, estado_plan) \n"
@@ -601,6 +607,12 @@ public class PlandeClasesBD extends CONBD {
     }
 
     public static boolean editar(PlandeClasesMD plan) {
+        if (plan.getObservaciones() == null) {
+            plan.setObservaciones("");
+        }
+        if (plan.getTrabajoAutonomo() == null) {
+            plan.setTrabajoAutonomo("");
+        }
         String UPDATE = ""
                 + "UPDATE \"PlandeClases\" \n"
                 + "SET trabajo_autonomo = '" + plan.getTrabajoAutonomo() + "',\n"
