@@ -45,6 +45,8 @@ public abstract class AVtnAlumnoEgresadoCTR extends DCTR {
     protected void iniciarAcciones() {
         vtn.getBtnEliminar().addActionListener(e -> clickEliminar());
         vtn.getBtnEditar().addActionListener(e -> clickEditar());
+        vtn.getBtnNotasAlumno().setVisible(false);
+        vtn.getBtnNotasPeriodo().setVisible(false);
     }
 
     private void clickEliminar() {

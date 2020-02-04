@@ -71,10 +71,6 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         return btnReporteCarrera;
     }
 
-    public JButton getBtnRptEgresados() {
-        return btnRptEgresados;
-    }
-
     public JButton getBtnExportarExcel() {
         return btnExportarExcel;
     }
@@ -102,7 +98,6 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         cmbCiclo = new javax.swing.JComboBox<>();
         btnReporteCarrera = new javax.swing.JButton();
-        btnRptEgresados = new javax.swing.JButton();
         btnExportarExcel = new javax.swing.JButton();
 
         setClosable(true);
@@ -150,8 +145,6 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
 
         btnReporteCarrera.setText("Reporte Carrera");
 
-        btnRptEgresados.setText("Egresados");
-
         btnExportarExcel.setText("Exportar Excel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,12 +185,10 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                                 .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExportarExcel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRptEgresados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReporteCarrera)
                         .addGap(13, 13, 13)
@@ -234,7 +225,6 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(btnReporteMallaAlumno)
                     .addComponent(btnReporteCarrera)
-                    .addComponent(btnRptEgresados)
                     .addComponent(btnExportarExcel))
                 .addGap(5, 5, 5))
         );
@@ -250,7 +240,6 @@ public class VtnMallaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIngNota;
     private javax.swing.JButton btnReporteCarrera;
     private javax.swing.JButton btnReporteMallaAlumno;
-    private javax.swing.JButton btnRptEgresados;
     private javax.swing.JComboBox<String> cmbAlumnos;
     private javax.swing.JComboBox<String> cmbCarreras;
     private javax.swing.JComboBox<String> cmbCiclo;

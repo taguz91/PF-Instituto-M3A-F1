@@ -33,11 +33,15 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
         iniciarClicks();
         vtn.setTitle("Alumnos Egresados");
         ctrPrin.agregarVtn(vtn);
+        vtn.getBtnNotasAlumno().setVisible(true);
+        vtn.getBtnNotasPeriodo().setVisible(true);
         vtnCargada = true;
     }
 
     private void iniciarClicks() {
         vtn.getBtnRepPeriodo().addActionListener(e -> clickReportePorPeriodo());
+        vtn.getBtnNotasAlumno().addActionListener(e -> clickReporteNotasAlumno());
+        vtn.getBtnNotasPeriodo().addActionListener(e -> clickReporteNotasPeriodo());
     }
 
     private void cargarDatos() {
@@ -123,6 +127,165 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
         } else {
             JOptionPane.showMessageDialog(vtn, "No selecciono un periodo lectivo para el reporte.");
         }
+    }
+
+    private void clickReporteNotasPeriodo() {
+        int posPeriodo = vtn.getCmbPeriodo().getSelectedIndex();
+        if (posPeriodo > 0) {
+            int s = JOptionPane.showOptionDialog(vtn,
+                    "Reporte de notas por periodo\n"
+                    + "¿Elegir el tipo de carrera?", "Notas Finales",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Tradicional", "Dual",
+                        "Cancelar"}, "Tradicional");
+            switch (s) {
+                case 0:
+                    reporteNotasPeriodo(posPeriodo);
+                    break;
+                case 1:
+                    reporteNotasPeriodoDual(posPeriodo);
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtn, "No selecciono un periodo lectivo para el reporte.");
+        }
+    }
+
+    private void clickReporteNotasAlumno() {
+        int posEgresado = vtn.getTblEgresados().getSelectedRow();
+        if (posEgresado >= 0) {
+            int s = JOptionPane.showOptionDialog(vtn,
+                    "Reporte de notas por alumno\n"
+                    + "¿Elegir el tipo de carrera?", "Notas Finales",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"Tradicional", "Dual",
+                        "Cancelar"}, "Tradicional");
+            switch (s) {
+                case 0:
+                    reporteNotasAlumno(posEgresado);
+                    break;
+                case 1:
+                    reporteNotasAlumnoDual(posEgresado);
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(vtn, "No selecciono un alumno.");
+        }
+    }
+
+    private void reporteNotasPeriodoDual(int posPeriodo) {
+
+        String nombre = vtn.getCmbPeriodo().getSelectedItem()
+                .toString().replace(" ", "")
+                .replace("/", "-")
+                + " Notas Egresados"
+                + periodos.get(posPeriodo - 1).getID();
+
+        List<List<String>> alumnos = EBD.getNotasPromedioPorPeriodoDual(
+                periodos.get(posPeriodo - 1).getID()
+        );
+        List<String> cols = new ArrayList<>();
+        cols.add("IDENTIFICACIÓN");
+        cols.add("PRIMER NOMBRE");
+        cols.add("SEGUNDO NOMBRE");
+        cols.add("PRIMER APELLIDO");
+        cols.add("SEGUNDO APELLIDO");
+
+        cols.add("FASE TEORICA");
+        cols.add("PTI");
+        cols.add("FASE PRACTICA");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                nombre
+        );
+    }
+
+    private void reporteNotasPeriodo(int posPeriodo) {
+
+        String nombre = vtn.getCmbPeriodo().getSelectedItem()
+                .toString().replace(" ", "")
+                .replace("/", "-")
+                + " Notas Egresados"
+                + periodos.get(posPeriodo - 1).getID();
+
+        List<List<String>> alumnos = EBD.getNotasPromedioPorPeriodo(
+                periodos.get(posPeriodo - 1).getID()
+        );
+        List<String> cols = new ArrayList<>();
+        cols.add("IDENTIFICACIÓN");
+        cols.add("PRIMER NOMBRE");
+        cols.add("SEGUNDO NOMBRE");
+        cols.add("PRIMER APELLIDO");
+        cols.add("SEGUNDO APELLIDO");
+
+        cols.add("PROMEDIO FINAL");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                nombre
+        );
+    }
+
+    private void reporteNotasAlumnoDual(int posEgresado) {
+        String nombre = vtn.getCmbPeriodo().getSelectedItem()
+                .toString().replace(" ", "")
+                .replace("/", "-") + " Notas Alumno Egresados" + egresados.get(posEgresado).getId();
+
+        List<List<String>> alumnos = EBD.getNotasPromedioPorEstudianteDual(
+                egresados.get(posEgresado).getId()
+        );
+        List<String> cols = new ArrayList<>();
+        cols.add("IDENTIFICACIÓN");
+        cols.add("PRIMER NOMBRE");
+        cols.add("SEGUNDO NOMBRE");
+        cols.add("PRIMER APELLIDO");
+        cols.add("SEGUNDO APELLIDO");
+
+        cols.add("CICLO");
+        cols.add("# MATERIAS");
+        cols.add("FASE TEORICA");
+        cols.add("FASE PRACTICA");
+        cols.add("PTI");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                nombre
+        );
+
+    }
+
+    private void reporteNotasAlumno(int posEgresado) {
+        String nombre = vtn.getCmbPeriodo().getSelectedItem()
+                .toString().replace(" ", "")
+                .replace("/", "-") + " Notas Alumno Egresados" + egresados.get(posEgresado).getId();
+
+        List<List<String>> alumnos = EBD.getNotasPromedioPorEstudiante(
+                egresados.get(posEgresado).getId()
+        );
+        List<String> cols = new ArrayList<>();
+        cols.add("IDENTIFICACIÓN");
+        cols.add("PRIMER NOMBRE");
+        cols.add("SEGUNDO NOMBRE");
+        cols.add("PRIMER APELLIDO");
+        cols.add("SEGUNDO APELLIDO");
+
+        cols.add("CICLO");
+        cols.add("# MATERIAS");
+        cols.add("PROMEDIO FINAL");
+        ToExcel excel = new ToExcel();
+        excel.exportarExcel(
+                cols,
+                alumnos,
+                nombre
+        );
     }
 
 }

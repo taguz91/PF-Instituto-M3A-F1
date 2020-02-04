@@ -123,6 +123,8 @@ ma.malla_almn_ciclo;
 
 -- 746 id_almn_carrera
 
+-- Promedio solo por alumno 
+
 SELECT
 ma.id_almn_carrera,
 p.persona_identificacion,

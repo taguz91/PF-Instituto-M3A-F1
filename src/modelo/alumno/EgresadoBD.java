@@ -365,7 +365,7 @@ public class EgresadoBD extends CONBD {
                 + "JOIN public.\"Personas\" p\n"
                 + "ON p.id_persona = a.id_persona\n"
                 + "WHERE id_prd_lectivo IN (" + ids + ")";
-        
+
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ResultSet rs = ps.executeQuery();
@@ -382,7 +382,7 @@ public class EgresadoBD extends CONBD {
                 datos.add(rs.getString(9));
                 datos.add(rs.getString(10));
                 datos.add(rs.getString(11));
-                
+
                 lista.add(datos);
             }
         } catch (SQLException e) {
@@ -390,8 +390,245 @@ public class EgresadoBD extends CONBD {
                     "No consultamos los alumnos egresados para el reporte"
                     + "por periodos para el reporte. " + e.getMessage()
             );
+        } finally {
+            CON.cerrarCONPS(ps);
         }
 
+        return lista;
+    }
+
+    public List<List<String>> getNotasPromedioPorPeriodoDual(int idPeriodo) {
+        String sql = "SELECT DISTINCT\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "\"CALCULAR_PROMEDIO_NOT_SIMILAR_TO\" (\n"
+                + "  ac.id_almn_carrera, '%(PTI|FASE PRÁ|INGLÉS)%'\n"
+                + ") AS fase_teorica,\n"
+                + "\"CALCULAR_PROMEDIO_SIMILAR_TO\" (\n"
+                + "  ac.id_almn_carrera, '%(PTI)%'\n"
+                + ") AS pti,\n"
+                + "\"CALCULAR_PROMEDIO_SIMILAR_TO\" (\n"
+                + "  ac.id_almn_carrera, '%(FASE PR)%'\n"
+                + ") AS fase_practica\n"
+                + "FROM\n"
+                + "alumno.\"Egresados\" eg\n"
+                + "JOIN public.\"AlumnosCarrera\" ac ON ac.id_almn_carrera = eg.id_almn_carrera\n"
+                + "JOIN public.\"Alumnos\" a ON ac.id_alumno = a.id_alumno\n"
+                + "JOIN public.\"Personas\" p ON a.id_persona = p.id_persona\n"
+                + "WHERE eg.id_prd_lectivo  = " + idPeriodo + ";";
+
+        List<List<String>> lista = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+
+                datos.add(rs.getDouble(6) + "");
+                datos.add(rs.getDouble(7) + "");
+                datos.add(rs.getDouble(8) + "");
+
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "Notas del promedio por periodo.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return lista;
+    }
+
+    public List<List<String>> getNotasPromedioPorPeriodo(int idPeriodo) {
+        String sql = "SELECT DISTINCT\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "\"CALCULAR_PROMEDIO_NOT_SIMILAR_TO\" (\n"
+                + "  ac.id_almn_carrera, '%(PTI|FASE PRÁ)%'\n"
+                + ") AS promedio_final\n"
+                + "FROM\n"
+                + "alumno.\"Egresados\" eg\n"
+                + "JOIN public.\"AlumnosCarrera\" ac ON ac.id_almn_carrera = eg.id_almn_carrera\n"
+                + "JOIN public.\"Alumnos\" a ON ac.id_alumno = a.id_alumno\n"
+                + "JOIN public.\"Personas\" p ON a.id_persona = p.id_persona\n"
+                + "WHERE eg.id_prd_lectivo  = " + idPeriodo + " ;";
+
+        List<List<String>> lista = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+                datos.add(rs.getDouble(6) + "");
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "Notas del promedio por periodo.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return lista;
+    }
+
+    public List<List<String>> getNotasPromedioPorEstudianteDual(int idEgresado) {
+        String sql = "SELECT\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "ma.malla_almn_ciclo,\n"
+                + "COUNT(ma.malla_almn_ciclo) AS num_materias,\n"
+                + "promedio_malla_ciclo_not_similar_to(\n"
+                + "  ma.id_almn_carrera, malla_almn_ciclo, '%(PTI|FASE PRÁ|INGLÉS)%'\n"
+                + ") AS fase_teorica,\n"
+                + "promedio_malla_ciclo_similar_to(\n"
+                + "  ma.id_almn_carrera, malla_almn_ciclo, '%(FASE PR)%'\n"
+                + ") AS fase_practica,\n"
+                + "promedio_malla_ciclo_similar_to(\n"
+                + "  ma.id_almn_carrera, malla_almn_ciclo, '%(PTI)%'\n"
+                + ") AS pti\n"
+                + "FROM alumno.\"Egresados\" eg\n"
+                + "JOIN public.\"AlumnosCarrera\" ac\n"
+                + "ON ac.id_almn_carrera = eg.id_almn_carrera\n"
+                + "JOIN public.\"MallaAlumno\" ma\n"
+                + "ON ma.id_almn_carrera = ac.id_almn_carrera\n"
+                + "JOIN public.\"Alumnos\" a\n"
+                + "ON a.id_alumno = ac.id_alumno\n"
+                + "JOIN public.\"Personas\" p\n"
+                + "ON p.id_persona = a.id_persona\n"
+                + "WHERE ma.malla_almn_estado = 'C'\n"
+                + "AND eg.id_egresado = " + idEgresado + "\n"
+                + "GROUP BY\n"
+                + "ma.id_almn_carrera,\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "ma.malla_almn_ciclo\n"
+                + "ORDER BY\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "ma.malla_almn_ciclo;";
+
+        List<List<String>> lista = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+
+                datos.add(rs.getInt(6) + "");
+                datos.add(rs.getInt(7) + "");
+
+                datos.add(rs.getDouble(8) + "");
+                datos.add(rs.getDouble(9) + "");
+                datos.add(rs.getDouble(10) + "");
+
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "Notas del promedio por periodo.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
+        return lista;
+    }
+
+    public List<List<String>> getNotasPromedioPorEstudiante(int idEgresado) {
+        String sql = "SELECT\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "ma.malla_almn_ciclo,\n"
+                + "COUNT(ma.malla_almn_ciclo) AS num_materias,\n"
+                + "promedio_malla_ciclo_not_similar_to(\n"
+                + "  ma.id_almn_carrera, malla_almn_ciclo, '%(PTI|FASE PRÁ)%'\n"
+                + ") AS promedio_final\n"
+                + "FROM alumno.\"Egresados\" eg\n"
+                + "JOIN public.\"AlumnosCarrera\" ac\n"
+                + "ON ac.id_almn_carrera = eg.id_almn_carrera\n"
+                + "JOIN public.\"MallaAlumno\" ma\n"
+                + "ON ma.id_almn_carrera = ac.id_almn_carrera\n"
+                + "JOIN public.\"Alumnos\" a\n"
+                + "ON a.id_alumno = ac.id_alumno\n"
+                + "JOIN public.\"Personas\" p\n"
+                + "ON p.id_persona = a.id_persona\n"
+                + "WHERE ma.malla_almn_estado = 'C'\n"
+                + "AND eg.id_egresado = " + idEgresado + "\n"
+                + "GROUP BY\n"
+                + "ma.id_almn_carrera,\n"
+                + "p.persona_identificacion,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "ma.malla_almn_ciclo\n"
+                + "ORDER BY\n"
+                + "p.persona_primer_apellido,\n"
+                + "p.persona_segundo_apellido,\n"
+                + "p.persona_primer_nombre,\n"
+                + "p.persona_segundo_nombre,\n"
+                + "ma.malla_almn_ciclo;";
+
+        List<List<String>> lista = new ArrayList<>();
+        PreparedStatement ps = CON.getPSPOOL(sql);
+        try {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<String> datos = new ArrayList();
+                datos.add(rs.getString(1));
+                datos.add(rs.getString(2));
+                datos.add(rs.getString(3));
+                datos.add(rs.getString(4));
+                datos.add(rs.getString(5));
+                datos.add(rs.getInt(6) + "");
+                datos.add(rs.getInt(7) + "");
+                datos.add(rs.getDouble(8) + "");
+                lista.add(datos);
+            }
+        } catch (SQLException e) {
+            M.errorMsg(
+                    "Notas del promedio por periodo.\n"
+                    + e.getMessage()
+            );
+        } finally {
+            CON.cerrarCONPS(ps);
+        }
         return lista;
     }
 

@@ -3,7 +3,6 @@ package controlador.alumno;
 import controlador.principal.DVtnCTR;
 import controlador.principal.VtnPrincipalCTR;
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -29,7 +28,6 @@ import modelo.validaciones.Validar;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import utils.Descarga;
 import utils.ToExcel;
 import vista.alumno.VtnMallaAlumno;
 
@@ -100,12 +98,7 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
 
         vtnMallaAlm.getBtnActualizarNota().addActionListener(e -> actualizarNotas());
         vtnMallaAlm.getBtnIngNota().addActionListener(e -> ingresarNota());
-        vtnMallaAlm.getBtnReporteCarrera().addActionListener(e -> reportePorCarrera());
-
-        /*
-            AGREGADO POR DIEGO
-         */
-        vtnMallaAlm.getBtnRptEgresados().addActionListener(this::btnReporteEgresados);
+        vtnMallaAlm.getBtnReporteCarrera().addActionListener(e -> reportePorCarrera());        
 
         vtnMallaAlm.getBtnBuscar().addActionListener(e -> buscarMalla(
                 vtnMallaAlm.getTxtBuscar().getText().trim()));
@@ -510,17 +503,8 @@ public class VtnMallaAlumnoCTR extends DVtnCTR {
         }
     }
 
-    private void btnReporteEgresados(ActionEvent e) {
-        int r = JOptionPane.showOptionDialog(vtnMallaAlm, "Reporte de Notas por Curso\n" + "¿Elegir el tipo de Reporte?",
-                "REPORTE NOTAS", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Alumnos con menos de 70", "Alumnos entre 70 a 80", "Alumnos entre 80 a 90",
-                    "Alumnos entre 90 a 100", "Reporte Completo", "Reporte Interciclo", "Tabla Final"},
-                "Cancelar");
-    }
-
     private void clickReporteExcel() {
         if (mallas.size() > 0 || vtnMallaAlm.getCmbCarreras().getSelectedIndex() > 0) {
-            String url = "malla/reporte/";
             String nombre;
             int as = vtnMallaAlm.getCmbAlumnos().getSelectedIndex();
             int cs = vtnMallaAlm.getCmbCarreras().getSelectedIndex();
