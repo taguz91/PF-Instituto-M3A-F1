@@ -93,6 +93,7 @@ public class VtnRolCTR {
 
     //Metodos de Apoyo
     public void cargarTabla() {
+        tabla.setRowCount(0);
         if (cargarTabla) {
 
             tabla.setRowCount(0);
@@ -133,7 +134,7 @@ public class VtnRolCTR {
     }
 
     private void cargarTablaFilter(String Aguja) {
-
+        tabla.setRowCount(0);
         listaRoles.stream()
                 .filter(item -> item.getNombre().toLowerCase().contains(Aguja.toLowerCase()))
                 .sorted((item1, item2) -> item1.getNombre().compareTo(item2.getNombre()))

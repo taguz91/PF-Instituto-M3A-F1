@@ -365,7 +365,6 @@ public class EgresadoBD extends CONBD {
                 + "JOIN public.\"Personas\" p\n"
                 + "ON p.id_persona = a.id_persona\n"
                 + "WHERE id_prd_lectivo IN (" + ids + ")";
-
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ResultSet rs = ps.executeQuery();

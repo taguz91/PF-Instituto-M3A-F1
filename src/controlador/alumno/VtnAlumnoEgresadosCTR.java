@@ -101,7 +101,7 @@ public class VtnAlumnoEgresadosCTR extends AVtnAlumnoEgresadoCTR implements IAlu
         if (posPeriodo > 0) {
             String nombre = vtn.getCmbPeriodo().getSelectedItem()
                     .toString().replace(" ", "")
-                    .replace("/", "-") + " | Egresados";
+                    .replace("/", "-") + "  Egresados";
 
             List<List<String>> alumnos = EBD.getReportesEgresadosExcel(
                     periodos.get(posPeriodo - 1).getID() + ""
