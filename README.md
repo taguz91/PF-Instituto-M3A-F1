@@ -1,8 +1,10 @@
-# PF-Instituto-M3A-F1
+# Phoenix
+
+## Lenguaje de Programación
+Java 8
 
 ## Base de Datos
-Postgres V.10 
+Postgres V.11
 
 ## Arquitectura de software 
 MVC
-
