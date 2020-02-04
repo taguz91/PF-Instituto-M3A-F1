@@ -51,9 +51,7 @@ public class RolBD extends RolMD {
                 + "	\"Roles\".rol_observaciones,\n"
                 + "	\"Roles\".rol_estado \n"
                 + "FROM\n"
-                + "	\"Roles\" \n"
-                + "WHERE\n"
-                + "	rol_nombre NOT IN ( 'ROOT', 'DEV' );";
+                + "	\"Roles\" \n";
 
         return SelectSimple(SELECT);
     }

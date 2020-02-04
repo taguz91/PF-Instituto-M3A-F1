@@ -63,12 +63,12 @@ public class ToExcel {
 
         try {
             // Guardar el Archivo
+
             FileOutputStream fileOutputStream = new FileOutputStream(reportName + ".xls");
             hssfWorkbook.write(fileOutputStream);
             fileOutputStream.close();
 
             File file = new File(reportName + ".xls");
-
             // Abrir el archivo
             Desktop.getDesktop().open(file);
 

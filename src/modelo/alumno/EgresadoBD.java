@@ -365,7 +365,9 @@ public class EgresadoBD extends CONBD {
                 + "JOIN public.\"Personas\" p\n"
                 + "ON p.id_persona = a.id_persona\n"
                 + "WHERE id_prd_lectivo IN (" + ids + ")";
-        
+
+        System.out.println("---->" + sql);
+
         PreparedStatement ps = CON.getPSPOOL(sql);
         try {
             ResultSet rs = ps.executeQuery();
@@ -382,7 +384,7 @@ public class EgresadoBD extends CONBD {
                 datos.add(rs.getString(9));
                 datos.add(rs.getString(10));
                 datos.add(rs.getString(11));
-                
+
                 lista.add(datos);
             }
         } catch (SQLException e) {
